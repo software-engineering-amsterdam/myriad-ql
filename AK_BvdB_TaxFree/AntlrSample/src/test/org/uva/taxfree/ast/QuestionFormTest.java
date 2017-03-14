@@ -6,12 +6,13 @@ import org.uva.taxfree.gui.QuestionForm;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.node.blocks.BlockNode;
-import org.uva.taxfree.model.node.blocks.FormNode;
 import org.uva.taxfree.model.node.blocks.IfElseStatementNode;
 import org.uva.taxfree.model.node.blocks.IfStatementNode;
 import org.uva.taxfree.model.node.declarations.CalculationNode;
 import org.uva.taxfree.model.node.declarations.DeclarationNode;
-import org.uva.taxfree.model.node.expression.*;
+import org.uva.taxfree.model.node.expression.BinaryExpressionNode;
+import org.uva.taxfree.model.node.expression.ExpressionNode;
+import org.uva.taxfree.model.node.expression.ParenthesizedExpressionNode;
 import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
 import org.uva.taxfree.model.node.literal.VariableLiteralNode;
@@ -21,12 +22,14 @@ import org.uva.taxfree.model.types.DateType;
 import org.uva.taxfree.model.types.IntegerType;
 import org.uva.taxfree.model.types.StringType;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public class QuestionFormTest {
-    private final Set<Node> mCachedNodes = new LinkedHashSet<>();
-    private final Set<DeclarationNode> mCachedDeclarations = new LinkedHashSet<>();
+    private final List<Node> mCachedNodes = new ArrayList<>();
+    private final List<DeclarationNode> mCachedDeclarations = new ArrayList<>();
     private final SymbolTable mSymbolTable = new SymbolTable();
 
 
@@ -47,7 +50,7 @@ public class QuestionFormTest {
 
     private void showForm() {
         mSymbolTable.addDepencendies(mCachedDeclarations);
-        QuestionForm form = new QuestionForm(new FormNode("SimpleForm", mCachedNodes));
+        QuestionForm form = new QuestionForm("SimpleForm", mSymbolTable);
         form.show();
     }
 
@@ -82,23 +85,27 @@ public class QuestionFormTest {
     }
 
     @Test
+    // TODO
     public void testSimpleIfElseStatement() throws Exception {
-        Set<Node> questions = new LinkedHashSet<>();
-        questions.add(new DeclarationNode("Am I in the else?", "isInElse", new BooleanType()));
-        IfElseStatementNode ifElse = new IfElseStatementNode(createMultipleIfStatements(), questions);
+        List<Node> ifQuestions = new ArrayList<>();
+        ifQuestions.add(createNestedIfStatement());
+        List<Node> elseQuestions = new ArrayList<>();
+        elseQuestions.add(new DeclarationNode("Am I in the else?", "isInElse", new BooleanType()));
+
+        IfElseStatementNode ifElse = new IfElseStatementNode(new BooleanLiteralNode("true"), ifQuestions, elseQuestions);
         add(ifElse);
     }
 
     @Test
     public void testSimpleIfStatements() throws Exception {
-        add(createMultipleIfStatements());
+        add(createNestedIfStatement());
     }
 
-    private BlockNode createMultipleIfStatements() {
+    private BlockNode createNestedIfStatement() {
         DeclarationNode boolQuestion = new DeclarationNode("Do you want to see the if declarations?", "hasSoldHouse", new BooleanType());
         add(boolQuestion);
         VariableLiteralNode soldHouseLiteral = new VariableLiteralNode("hasSoldHouse", mSymbolTable);
-        Set<Node> questions = new LinkedHashSet<>();
+        List<Node> questions = new ArrayList<>();
         questions.add(soldHouseLiteral);
         questions.add(new DeclarationNode("Toggle me on and off by selling your house", "sellYourHouse", new StringType()));
         IfStatementNode questionIfStatement = new IfStatementNode(soldHouseLiteral, questions);
@@ -117,12 +124,12 @@ public class QuestionFormTest {
     @Test
     public void testBooleanIf() throws Exception {
         ExpressionNode condition = new BooleanLiteralNode("true");
-        Set<Node> questions = new LinkedHashSet<Node>() {{
+        List<Node> questions = new ArrayList<Node>() {{
             add(new DeclarationNode("Hello, do you have a name?", "hasName", new BooleanType()));
         }};
         add(new IfStatementNode(condition, questions));
 
-        Set<Node> secondQuestions = new LinkedHashSet<Node>() {{
+        List<Node> secondQuestions = new ArrayList<Node>() {{
             add(new BooleanLiteralNode("false"));
             add(new DeclarationNode("If you see me, something's wrong", "noName", new BooleanType()));
         }};

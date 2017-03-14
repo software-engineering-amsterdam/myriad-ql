@@ -1,25 +1,18 @@
 package org.uva.taxfree.model.node.blocks;
 
 import org.uva.taxfree.gui.MessageList;
+import org.uva.taxfree.gui.QuestionForm;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.Node;
 
-import java.util.Set;
+import java.util.List;
 
 public abstract class BlockNode extends Node {
-    private final Set<Node> mChildren;
+    private final List<Node> mChildren;
 
-    public BlockNode(Set<Node> children) {
+    public BlockNode(List<Node> children) {
         mChildren = children; ///< preserves the order in which the items were inserted
     }
-
-    public void setVisible(boolean isVisible) {
-        for (Node child : mChildren) {
-            child.setVisible(isVisible);
-        }
-    }
-
-    protected abstract boolean isVisible();
 
     @Override
     public void fillSymbolTable(SymbolTable symbolTable) {
@@ -32,6 +25,13 @@ public abstract class BlockNode extends Node {
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
         for (Node child : mChildren) {
             child.checkSemantics(symbolTable, semanticsMessages);
+        }
+    }
+
+    @Override
+    public void fillQuestionForm(QuestionForm form) {
+        for (Node child : mChildren) {
+            child.fillQuestionForm(form);
         }
     }
 }

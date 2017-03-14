@@ -1,57 +1,58 @@
 package org.uva.taxfree.gui;
 
-import org.uva.taxfree.model.node.blocks.BlockNode;
-import org.uva.taxfree.model.node.declarations.DeclarationNode;
+import org.uva.taxfree.model.environment.SymbolTable;
+import org.uva.taxfree.model.node.widgets.Widget;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
+public class QuestionForm implements FormListener {
+    private final JFrame mFrame;
+    private final JPanel mWidgetPanel;
+    private final List<Widget> mWidgets;
+    private final SymbolTable mSymbolTable;
 
-public class QuestionForm {
-    private final BlockNode mFormNode;
+    public QuestionForm(String caption, SymbolTable symbolTable) {
+        mFrame = createFrame(caption);
+        mWidgetPanel = createWidgetPanel();
+        mFrame.add(mWidgetPanel);
+        mWidgets = new ArrayList<>();
+        mSymbolTable = symbolTable;
+    }
 
-    public QuestionForm(BlockNode formNode) {
-        mFormNode = formNode;
+    private JFrame createFrame(String caption) {
+        JFrame frame = new JFrame(caption);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        return frame;
+    }
+
+    private JPanel createWidgetPanel() {
+        JPanel widgetPanel = new JPanel();
+        widgetPanel.setLayout(new BoxLayout(widgetPanel, BoxLayout.Y_AXIS));
+        widgetPanel.setVisible(true);
+        return widgetPanel;
     }
 
     public void show() {
-        generateForm();
-        new FormRenderer(this);
-        mFormNode.setVisible(true);
+        mFrame.setLocationRelativeTo(null);
+        mFrame.setVisible(true);
+        mFrame.setPreferredSize(new Dimension(640, 480));
+        mFrame.pack();
+        mFrame.setLocationRelativeTo(null);
+        updateForm();
     }
 
-    private void generateForm() {
-        JFrame frame = new JFrame(mFormNode.toString());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(createComponents());
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        frame.setPreferredSize(new Dimension(640, 480));
-        frame.pack();
-        frame.setLocationRelativeTo(null);
+    public void addWidget(Widget widget) {
+        widget.registerToPanel(mWidgetPanel);
+        widget.callOnUpdate(this);
+        mWidgets.add(widget);
     }
 
-    public JPanel createComponents(){
-        throw new RuntimeException("Unimplemented");
-    }
-
-    private void fillWidgetPanel(JPanel parentPanel) {
-        for (DeclarationNode q : extractDeclarations()) {
-            parentPanel.add(q.getWidget());
+    public void updateForm() {
+        for (Widget w : mWidgets) {
+            w.setVisible(true);
         }
     }
-
-
-    private Set<DeclarationNode> extractDeclarations() {
-        Set<DeclarationNode> questions = new HashSet<>();
-//        mFormNode.retrieveDeclarations(questions);
-        return questions;
-    }
-
-    public void updateVisibility() {
-        mFormNode.setVisible(true);
-    }
-
 }

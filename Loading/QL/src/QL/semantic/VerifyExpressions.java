@@ -54,7 +54,8 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 
     @Override
     public void visit(ComputedQuestion question) {
-        question.getComputedQuestion().accept(this);
+	    Type type = question.getComputedQuestion().accept(this);
+        check(question.getType(), type);
     }
 
     @Override
@@ -72,17 +73,14 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
         statement.getElseBlock().accept(this);
     }
 
-
 	@Override
 	public Type visit(AddExpr expr) {
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        // TODO look up type
         check(new IntegerType(1), type_lhs, type_rhs);
 
         return new IntegerType(expr.getLine());
-
 	}
 
 	@Override
@@ -271,7 +269,6 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 
 
     private void check(Type expected, Type current) {
-    	// TODO is equal in Type or instance of?
         if (!expected.getKeyWord().equals(current.getKeyWord())) {
         	environment.getFaults().add(new Error("The type " + current.getKeyWord() + " is not of the expected type: "
     			+ expected.getKeyWord(), current.getLine()));

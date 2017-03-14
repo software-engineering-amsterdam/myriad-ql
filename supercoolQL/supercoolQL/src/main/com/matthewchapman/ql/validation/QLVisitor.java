@@ -1,9 +1,11 @@
 package com.matthewchapman.ql.validation;
 
+import com.matthewchapman.ql.ast.atomic.*;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
 import com.matthewchapman.ql.ast.expression.unary.Negation;
+import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
@@ -16,43 +18,58 @@ import com.matthewchapman.ql.ast.statement.Question;
 public interface QLVisitor<T> {
 
     //Statement
-    T visit(Question question);
+    T visit(Question question, String context);
 
-    T visit(IfStatement ifStatement);
+    T visit(IfStatement ifStatement, String context);
 
-    T visit(IfElseStatement ifElseStatement);
+    T visit(IfElseStatement ifElseStatement, String context);
+
+    T visit(CalculatedQuestion calculatedQuestion, String context);
 
     //Expression
-    T visit(Parameter parameter);
+    T visit(Parameter parameter, String context);
 
-    T visit(ParameterGroup parameterGroup);
+    T visit(ParameterGroup parameterGroup, String context);
+
+    T visit(StringLiteral stringLiteral, String context);
+
+    T visit(IntegerLiteral integerLiteral, String context);
+
+    T visit(BooleanLiteral booleanLiteral, String context);
 
     //Binary
-    T visit(Addition addition);
+    T visit(Addition addition, String context);
 
-    T visit(Division division);
+    T visit(Division division, String context);
 
-    T visit(Equal equal);
+    T visit(Equal equal, String context);
 
-    T visit(GreaterThan greaterThan);
+    T visit(GreaterThan greaterThan, String context);
 
-    T visit(GreaterThanEqualTo greaterThanEqualTo);
+    T visit(GreaterThanEqualTo greaterThanEqualTo, String context);
 
-    T visit(LessThan lessThan);
+    T visit(LessThan lessThan, String context);
 
-    T visit(LessThanEqualTo lessThanEqualTo);
+    T visit(LessThanEqualTo lessThanEqualTo, String context);
 
-    T visit(LogicalAnd logicalAnd);
+    T visit(LogicalAnd logicalAnd, String context);
 
-    T visit(LogicalOr logicalOr);
+    T visit(LogicalOr logicalOr, String context);
 
-    T visit(Multiplication multiplication);
+    T visit(Multiplication multiplication, String context);
 
-    T visit(NotEqual notEqual);
+    T visit(NotEqual notEqual, String context);
 
-    T visit(Subtraction subtraction);
+    T visit(Subtraction subtraction, String context);
 
     //Unary
-    T visit(Negation negation);
+    T visit(Negation negation, String context);
+
+    //Types
+    T visit(BooleanType booleanType, String context);
+
+    T visit(IntegerType integerType, String context);
+
+    T visit(StringType stringType, String context);
 
 }

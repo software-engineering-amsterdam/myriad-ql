@@ -49,10 +49,13 @@ public class IntegerValue extends Value {
 
 	@Override
 	public Value div(Value other) {
-		
-		// TODO division by null
+
 		if (!isSet() || !other.isSet()) {
 			return new IntegerValue();
+		}
+
+		if (((IntegerValue) other).getValue() == 0) {
+			return new IntegerValue(0);
 		}
 		
 		return new IntegerValue(value / ((IntegerValue) other).getValue() );
@@ -125,7 +128,7 @@ public class IntegerValue extends Value {
 			return new IntegerValue();
 		}
 		
-		return new IntegerValue(+ value );
+		return new IntegerValue(Math.abs(value));
 	}
 
 	@Override

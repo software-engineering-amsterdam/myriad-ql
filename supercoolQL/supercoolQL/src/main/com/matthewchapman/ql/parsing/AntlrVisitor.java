@@ -3,13 +3,12 @@ package com.matthewchapman.ql.parsing;
 import com.matthewchapman.antlr.QLBaseVisitor;
 import com.matthewchapman.antlr.QLParser;
 import com.matthewchapman.ql.ast.*;
-import com.matthewchapman.ql.ast.atomic.BooleanLiteral;
-import com.matthewchapman.ql.ast.atomic.IntegerLiteral;
-import com.matthewchapman.ql.ast.atomic.StringLiteral;
+import com.matthewchapman.ql.ast.atomic.*;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
 import com.matthewchapman.ql.ast.expression.unary.Negation;
+import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
@@ -44,11 +43,10 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
 
         if (ctx.calculatedValue() != null) {
             calculation = (Expression) visit(ctx.calculatedValue());
+            return new CalculatedQuestion(questionID, questionContent, questionReturnType, calculation, ctx.start.getLine(), ctx.start.getCharPositionInLine());
         } else {
-            calculation = null;
+            return new Question(questionID, questionContent, questionReturnType, ctx.start.getLine(), ctx.start.getCharPositionInLine());
         }
-
-        return new Question(questionID, questionContent, questionReturnType, calculation, ctx.start.getLine(), ctx.start.getCharPositionInLine());
     }
 
     @Override
@@ -65,9 +63,7 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
 
     @Override
     public TreeNode visitParameterGroup(QLParser.ParameterGroupContext ctx) {
-        ParameterGroup parameterGroup = new ParameterGroup();
-        parameterGroup.addExpression((Expression) visit(ctx.expression()));
-        return parameterGroup;
+        return new ParameterGroup((Expression) visit(ctx.expression()));
     }
 
     @Override
@@ -134,7 +130,7 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
 
     @Override
     public TreeNode visitStringLiteral(QLParser.StringLiteralContext ctx) {
-        return new StringLiteral();
+        return new StringLiteral(ctx.STRING().getText());
     }
 
     @Override
@@ -163,7 +159,12 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
 
     @Override
     public TreeNode visitIntegerLiteral(QLParser.IntegerLiteralContext ctx) {
-        return new IntegerLiteral();
+        return new IntegerLiteral(ctx.NUMBER().getText());
+    }
+
+    @Override
+    public TreeNode visitBooleanLiteral(QLParser.BooleanLiteralContext ctx) {
+        return new BooleanLiteral(ctx.op.getText());
     }
 
     @Override
@@ -173,16 +174,16 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
 
     @Override
     public TreeNode visitBooleanType(QLParser.BooleanTypeContext ctx) {
-        return new BooleanLiteral();
+        return new BooleanType();
     }
 
     @Override
     public TreeNode visitIntegerType(QLParser.IntegerTypeContext ctx) {
-        return new IntegerLiteral();
+        return new IntegerType();
     }
 
     @Override
     public TreeNode visitStringType(QLParser.StringTypeContext ctx) {
-        return new StringLiteral();
+        return new StringType();
     }
 }

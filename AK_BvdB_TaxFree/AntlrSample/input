@@ -3,5 +3,8 @@ form testForm {
         hasSoldHouse  : boolean
     if (hasSoldHouse) {
         "What's the price of the house?" -> soldHousePrice : boolean
+        if (hasSoldHouse || false) {
+            "What's the price of the house?" -> soldHousePrice : boolean
+        }
     }
 }

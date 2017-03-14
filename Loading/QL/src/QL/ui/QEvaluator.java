@@ -6,7 +6,7 @@ import QL.ast.ComputedQuestion;
 import QL.ast.IfElseStatement;
 import QL.ast.Question;
 import QL.ast.Statement;
-import QL.evaluation.Environment;
+import QL.Environment;
 import QL.evaluation.Evaluator;
 import QL.ui.field.Field;
 import QL.value.BoolValue;
@@ -15,8 +15,8 @@ import QL.value.Value;
 
 public class QEvaluator extends Evaluator {
 
-	private List<Row> activeQuestions; // TODO Row String and type?
-    private QL.evaluation.Environment answers;
+	private List<Row> activeQuestions;
+    private Environment answers;
     private Notifier notifier;
 
 	public QEvaluator(Environment answers, Notifier notifier) {
@@ -38,11 +38,7 @@ public class QEvaluator extends Evaluator {
     
     @Override
     public void visit(ComputedQuestion question) {
-    	
-        System.out.println("Evaluator: computed question");
         Value value = question.getComputedQuestion().accept(this);
-
-        // TODO only works with integers...
         answers.addAnswer(question.getVariable(), value);
 
         activeQuestions.add(createRow(question));
@@ -58,16 +54,8 @@ public class QEvaluator extends Evaluator {
     @Override
     public void visit(Statement statement) {
         Value value = statement.getExpression().accept(this);
-        
-        // TODO assert atom != null
-        if (value == null) {
-//        	throw new AssertionError("The operation " + statement.getExpression().getClass() 
-//        			+ " ")
-        }
-        
-        // TODO nicer check for emptyAtom?
-        if (value.isSet() && ((BoolValue) value).getValue()) { // TODO check booltype?
-            System.out.println("Evaluator: statement, QL.value = " + ((BoolValue) value).getValue());
+
+        if (value.isSet() && ((BoolValue) value).getValue()) {
         	statement.getBlock().accept(this);
         }
     }
@@ -76,18 +64,9 @@ public class QEvaluator extends Evaluator {
     public void visit(IfElseStatement statement) {
         Value value = statement.getExpression().accept(this);
 
-        // TODO assert atom != null
-        if (value == null) {
-        	throw new AssertionError("The operation " + statement.getExpression().getClass()
-        			+ " ");
-        }
-
-        // TODO nicer check for emptyAtom?
-        if (value.isSet() && ((BoolValue) value).getValue()) { // TODO check booltype?
-            System.out.println("Evaluator: statement, QL.value = " + ((BoolValue) value).getValue());
+        if (value.isSet() && ((BoolValue) value).getValue()) {
         	statement.getBlock().accept(this);
         } else {
-            System.out.println("Evaluator: visit elseblock");
             statement.getElseBlock().accept(this);
         }
     }

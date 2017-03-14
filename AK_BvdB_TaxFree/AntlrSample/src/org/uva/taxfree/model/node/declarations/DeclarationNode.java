@@ -1,20 +1,17 @@
 package org.uva.taxfree.model.node.declarations;
 
 import org.uva.taxfree.gui.MessageList;
+import org.uva.taxfree.gui.QuestionForm;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.Node;
-import org.uva.taxfree.model.node.widgets.CalculationWidget;
-import org.uva.taxfree.model.node.widgets.Widget;
 import org.uva.taxfree.model.types.Type;
 
-import javax.swing.*;
 import java.util.Set;
 
 public class DeclarationNode extends Node {
     private final String mId;
     private final String mLabel;
     private final Type mType;
-
 
     public DeclarationNode(String label, String id, Type type) {
         super();
@@ -27,19 +24,13 @@ public class DeclarationNode extends Node {
         return mType;
     }
 
-
-    public JComponent getWidget() {
-        Widget a = new CalculationWidget("Test");
-        a.create();
-        if (1 == 1) {
-            throw new RuntimeException("Not implemented yet");
-        }
-        return new JCheckBox();
-    }
-
     @Override
     public void fillSymbolTable(SymbolTable symbolTable) {
         symbolTable.addDeclaration(this);
+    }
+
+    public void fillQuestionForm(QuestionForm frame) {
+        mType.generateWidget(mLabel, mId, frame);
     }
 
     public String getId() {

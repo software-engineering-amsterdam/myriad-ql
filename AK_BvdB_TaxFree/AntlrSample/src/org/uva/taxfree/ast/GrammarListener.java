@@ -10,7 +10,9 @@ import org.uva.taxfree.model.node.blocks.IfElseStatementNode;
 import org.uva.taxfree.model.node.blocks.IfStatementNode;
 import org.uva.taxfree.model.node.declarations.CalculationNode;
 import org.uva.taxfree.model.node.declarations.DeclarationNode;
-import org.uva.taxfree.model.node.expression.*;
+import org.uva.taxfree.model.node.expression.BinaryExpressionNode;
+import org.uva.taxfree.model.node.expression.ExpressionNode;
+import org.uva.taxfree.model.node.expression.ParenthesizedExpressionNode;
 import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
 import org.uva.taxfree.model.node.literal.StringLiteralNode;
@@ -53,19 +55,18 @@ public class GrammarListener extends QLGrammarBaseListener {
     @Override
     public void enterQuestion(QLGrammarParser.QuestionContext ctx) {
         super.enterQuestion(ctx);
-        String questionText = ctx.LABEL_QUESTION().getText();
+        String questionText = ctx.LABEL().getText();
         String questionId = ctx.VARIABLE_LITERAL().getText();
+        String varTypeText = ctx.varType().getText();
         Type questionType;
-        String parsedVarType = ctx.varType().getText();
-        if ("boolean".equals(parsedVarType)) {
+        if ("boolean".equals(varTypeText)) {
             questionType = new BooleanType();
-        } else if ("string".equals(parsedVarType)) {
+        } else if ("string".equals(varTypeText)) {
             questionType = new StringType();
-        } else if ("integer".equals(parsedVarType)) {
+        } else if ("integer".equals(varTypeText)) {
             questionType = new IntegerType();
         } else {
-            // TODO: Bail out!
-            throw new RuntimeException("Found unexpected variable type: " + ctx.varType().getText());
+            throw new TypeNotPresentException(varTypeText, new Throwable("This is an unsupported type for QL!"));
         }
         DeclarationNode questionNode = new DeclarationNode(questionText, questionId, questionType);
         addDeclaration(questionNode);
@@ -131,17 +132,17 @@ public class GrammarListener extends QLGrammarBaseListener {
     @Override
     public void exitCalculation(QLGrammarParser.CalculationContext ctx) {
         super.exitCalculation(ctx);
-        String fieldDescription = ctx.LABEL_DESCRIPTION().getText();
+        String fieldDescription = ctx.LABEL().getText();
         String fieldId = ctx.VARIABLE_LITERAL().getText();
-        Type fieldType;
 
-        if ("boolean".equals(ctx.varType().getText())) {
+        String varTypeText = ctx.varType().getText();
+        Type fieldType;
+        if ("boolean".equals(varTypeText)) {
             fieldType = new BooleanType();
-        } else if ("integer".equals(ctx.varType().getText())) {
+        } else if ("integer".equals(varTypeText)) {
             fieldType = new IntegerType();
         } else {
-            // TODO: Bail out!
-            throw new RuntimeException("Found unexpected variable type: " + ctx.varType().getText());
+            throw new TypeNotPresentException(varTypeText, new Throwable("This is an unsupported type for QL!"));
         }
         DeclarationNode calculatedNode = new CalculationNode(fieldDescription, fieldId, fieldType, popCachedCondition());
         addDeclaration(calculatedNode);
@@ -174,8 +175,7 @@ public class GrammarListener extends QLGrammarBaseListener {
             case OP_LOGICAL_OR:
                 return new BooleanOperator(operator);
             default:
-                // TODO: bail out!
-                throw new RuntimeException("Unexpected operator");
+                throw new TypeNotPresentException(operator, new Throwable("This is an unsupported operator for QL!"));
         }
     }
 
@@ -193,25 +193,27 @@ public class GrammarListener extends QLGrammarBaseListener {
         addToStack(ifStatementNode);
     }
 
-    private Set<Node> popChildStack() {
-        return new LinkedHashSet<>(mChildsStack.pop());
+    private List<Node> popChildStack() {
+        return mChildsStack.pop();
     }
 
     @Override
     public void exitIfElseStatement(QLGrammarParser.IfElseStatementContext ctx) {
         super.exitIfElseStatement(ctx);
-        Set<Node> content = popChildStack();
-        // TODO
-        BlockNode ifStatementNode = null;
+        List<Node> allChildes = popChildStack();
 
-        BlockNode ifElseStatementNode = new IfElseStatementNode(ifStatementNode, content);
+        int splitIndex= ctx.thenStatements.size();
+        List<Node> thenStatementNodes = new ArrayList<>(allChildes.subList(0, splitIndex));
+        List<Node> elseStatementNodes = new ArrayList<>(allChildes.subList(splitIndex, allChildes.size()));
+
+        BlockNode ifElseStatementNode = new IfElseStatementNode(popCachedCondition(), thenStatementNodes, elseStatementNodes);
         addToStack(ifElseStatementNode);
     }
 
     @Override
     public void exitForm(QLGrammarParser.FormContext ctx) {
         super.exitForm(ctx);
-        mRootNode = new FormNode(ctx.VARIABLE_LITERAL().toString(), popChildStack());
+        mRootNode = new FormNode(ctx.VARIABLE_LITERAL().getText(), popChildStack());
         if (!mChildsStack.isEmpty()) {
             throw new AssertionError("Stack should be empty when we finished creating our AST.");
         }
