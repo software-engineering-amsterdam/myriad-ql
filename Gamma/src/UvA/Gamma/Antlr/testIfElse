@@ -4,7 +4,8 @@
 
 form ifelse{
     "show block 1" block1: boolean
-    "show block 2" block2: boolean
+    "showing block 1" block1Shown: boolean = (block1)
+    "Show block 2 if this is larger than 10" block2: integer
     if(block1){
         "show block 1_1" block1_1: boolean
         if(block1_1){
@@ -15,5 +16,9 @@ form ifelse{
         }else{
             "not yet at max depth" notmax: boolean = (block1 && !block1_1)
         }
+    }
+
+    if(block2 > 10){
+        "max depth of block 2" max2: boolean = (block2/2 > 10 && block1_1_1)
     }
 }

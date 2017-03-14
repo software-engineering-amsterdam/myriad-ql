@@ -40,7 +40,7 @@ public class Number extends Value {
 
     @Override
     public boolean conformsToType(Type type) {
-        return type == Type.DECIMAL || type == Type.INTEGER;
+        return type == Type.DECIMAL || type == Type.INTEGER || type == Type.BOOLEAN;
     }
 
     public double doubleValue() {

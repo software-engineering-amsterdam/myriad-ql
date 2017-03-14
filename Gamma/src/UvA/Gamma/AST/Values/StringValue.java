@@ -38,7 +38,7 @@ public class StringValue extends Value {
 
     @Override
     public void showQuestion(FXMLController screen, Question question) {
-        screen.showQuestion(question); //TODO: Show the String type of the question
+        screen.showQuestion(question);
     }
 
     @Override

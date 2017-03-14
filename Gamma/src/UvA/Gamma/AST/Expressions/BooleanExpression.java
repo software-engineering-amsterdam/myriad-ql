@@ -6,6 +6,8 @@ import UvA.Gamma.AST.Values.Number;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by casboot, 14-02-17.
@@ -22,6 +24,21 @@ public class BooleanExpression extends Expression {
         ScriptEngineManager mgr = new ScriptEngineManager();
         ScriptEngine engine = mgr.getEngineByName("JavaScript");
         return new Boolean(engine.eval(expr).toString());
+    }
+
+    @Override
+    protected String computableExpression() {
+        String expr = super.computableExpression();
+
+        //Default all unknown values to false
+        Pattern pattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9_]*");
+        Matcher matcher = pattern.matcher(expr);
+        while (matcher.find()) {
+            if (matcher.group().matches("^(?i)(true|false)$")) continue;
+            expr = expr.replaceFirst(matcher.group(), "false");
+        }
+
+        return expr;
     }
 
     @Override

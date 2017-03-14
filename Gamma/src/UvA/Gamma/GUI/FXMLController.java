@@ -13,7 +13,9 @@ import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
 
 import java.time.LocalDate;
@@ -25,6 +27,14 @@ public class FXMLController {
 
     public void addFormItem(Form form) {
         rootGrid = grid;
+
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setHalignment(HPos.LEFT);
+        col1.setHgrow(Priority.ALWAYS);
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setHalignment(HPos.RIGHT);
+        grid.getColumnConstraints().addAll(col1, col2);
+
         conditionStack = new Stack<>();
         conditionStack.push(rootGrid);
         this.form = form;
@@ -96,7 +106,8 @@ public class FXMLController {
 
     public GridPane startRenderCondition() {
         rootGrid = new GridPane();
-        GridPane.setHalignment(rootGrid, HPos.RIGHT);
+        rootGrid.getColumnConstraints().addAll(grid.getColumnConstraints());
+
         conditionStack.push(rootGrid);
         rootGrid.managedProperty().bind(rootGrid.visibleProperty());
         return rootGrid;

@@ -20,7 +20,7 @@ public interface FormItem extends ASTNode {
     /* Returns the redeclared identifier, or null if the identifier is not redeclared */
     String validateRedeclaration(FormItem item);
 
-    /* Returns the two identifiers which cause the cyclic dependency */
+    /* Returns the two identifiers which cause the cyclic dependency, if present. Else the Pair contains one or two null values */
     Pair<String> validateCyclicDependency(FormItem item);
 
     boolean hasId(String id);
