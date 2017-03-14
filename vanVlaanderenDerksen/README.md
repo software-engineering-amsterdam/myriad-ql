@@ -4,9 +4,9 @@ Team:
 * Jona Derksen
 
 TODO:
-- NodeVisitor splitsen
-- errors/warnings verzamelen ipv exception
-- question label/identifier check in visitor zoveel mogelijk
+- TypeChecker refactor afmaken
+- GUI verder afronden
+- Tests uitbreiden
 
 - common functies zo hoog mogelijk plaatsen eventueel interface naar class omzetten
 - refactor parameter/variabel namen atom_id --> atomId etc. 
