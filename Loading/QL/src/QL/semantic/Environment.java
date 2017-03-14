@@ -8,10 +8,10 @@ import QL.errorhandling.Error;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Environment {
+class Environment {
 
-	private Map<String, Type> variableType; // Should these two be combined to label - variable/type
-	private Faults faults;
+	private final Map<String, Type> variableType; // Should these two be combined to label - variable/type
+	private final Faults faults;
 	
 	public Environment() {
 		variableType = new HashMap<>();

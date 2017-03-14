@@ -2,10 +2,10 @@ package QL.ast.expression;
 
 public abstract class BinaryExpr extends Expression {
 
-	private Expression lhs;
-	private Expression rhs;
+	private final Expression lhs;
+	private final Expression rhs;
 
-	public BinaryExpr(Expression lhs, Expression rhs, int line) {
+	BinaryExpr(Expression lhs, Expression rhs, int line) {
 		super(line);
 		this.lhs = lhs;
 		this.rhs = rhs;

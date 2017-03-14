@@ -6,7 +6,6 @@ import QL.ast.atom.BoolAtom;
 import QL.ast.atom.IntegerAtom;
 import QL.ast.atom.StringAtom;
 import QL.ast.expression.*;
-import QL.ast.expression.AddExpr;
 import QL.ast.type.BooleanType;
 import QL.ast.type.IntegerType;
 import QL.ast.type.StringType;
@@ -26,7 +25,7 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 
 	private final Environment environment;
 
-	public VerifyExpressions(Environment environment) {
+	VerifyExpressions(Environment environment) {
 		this.environment = environment;
 	}
 
@@ -61,14 +60,14 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
     @Override
     public void visit(Statement statement) {
         Type type = statement.getExpression().accept(this);
-        check(new BooleanType(1), type); // TODO Type without a line number??
+        check(new BooleanType(statement.getLine()), type);
         statement.getBlock().accept(this);
     }
 
     @Override
     public void visit(IfElseStatement statement) {
         Type type = statement.getExpression().accept(this);
-        check(new BooleanType(1), type);
+        check(new BooleanType(statement.getLine()), type);
         statement.getBlock().accept(this);
         statement.getElseBlock().accept(this);
     }
@@ -78,7 +77,7 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        check(new IntegerType(1), type_lhs, type_rhs);
+        check(new IntegerType(expr.getLine()), type_lhs, type_rhs);
 
         return new IntegerType(expr.getLine());
 	}
@@ -88,7 +87,7 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        check(new BooleanType(1), type_lhs, type_rhs);
+        check(new BooleanType(expr.getLine()), type_lhs, type_rhs);
 
         return new BooleanType(expr.getLine());
 	}
@@ -98,7 +97,7 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        check(new IntegerType(1), type_lhs, type_rhs);
+        check(new IntegerType(expr.getLine()), type_lhs, type_rhs);
 
         return new IntegerType(expr.getLine());
 	}
@@ -183,7 +182,7 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 	public Type visit(MinusExpr expr) {
         Type type_lhs = expr.getLhs().accept(this);
 
-        check(new IntegerType(1), type_lhs);
+        check(new IntegerType(expr.getLine()), type_lhs);
 
         return new IntegerType(expr.getLine());
 	}
@@ -193,7 +192,7 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        check(new IntegerType(1), type_lhs, type_rhs);
+        check(new IntegerType(expr.getLine()), type_lhs, type_rhs);
 
         return new IntegerType(expr.getLine());
 	}
@@ -212,7 +211,7 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 	public Type visit(NotExpr expr) {
         Type type_lhs = expr.getLhs().accept(this);
 
-        check(new BooleanType(1), type_lhs);
+        check(new BooleanType(expr.getLine()), type_lhs);
 
         return new BooleanType(expr.getLine());
 	}
@@ -222,7 +221,7 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        check(new BooleanType(1), type_lhs, type_rhs);
+        check(new BooleanType(expr.getLine()), type_lhs, type_rhs);
 
         return new BooleanType(expr.getLine());
 	}
@@ -231,7 +230,7 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 	public Type visit(PlusExpr expr) {
         Type type_lhs = expr.getLhs().accept(this);
 
-        check(new IntegerType(1), type_lhs);
+        check(new IntegerType(expr.getLine()), type_lhs);
 
         return new IntegerType(expr.getLine());
 	}
@@ -241,7 +240,7 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        check(new IntegerType(1), type_lhs, type_rhs);
+        check(new IntegerType(expr.getLine()), type_lhs, type_rhs);
 
         return new IntegerType(expr.getLine());
 	}

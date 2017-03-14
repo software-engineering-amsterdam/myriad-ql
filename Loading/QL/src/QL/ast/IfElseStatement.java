@@ -4,7 +4,7 @@ import QL.ast.expression.Expression;
 
 public class IfElseStatement extends Statement {
 
-	private Block elseBlock;
+	private final Block elseBlock;
 
 	public IfElseStatement(Expression expression, Block block, Block elseBlock, int line) {
 		super(expression, block, line);
