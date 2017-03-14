@@ -7,7 +7,7 @@ from QL.undefined import Undefined
 from QL.GUI.evaluateDrawState import EvaluateDrawState
 from QL.GUI.saveQuestionaire import SaveQuestionaire
 from QL.stages.updateComputedVars import UpdateComputedVars
-import QL.GUI.widgets as Widgets
+import QLS.GUI.widgets as Widgets
 
 """
 Quick rundown of what we probably need to do:
@@ -64,24 +64,38 @@ class DrawGUI(QLDrawGUI):
         # there is a QLS Default styling available.
         self.question_node(question_node)
 
-    # TODO: Functions to return correct Widget type based on QLS Default.
-    def slider_node(self, slider_node):
-        pass
+    def slider_node(self, _):
+        return Widgets.SliderWidget
 
-    def spinbox_node(self, spinbox_node):
-        pass
+    def spinbox_node(self, _):
+        return Widgets.SpinBoxWidget
 
-    def text_node(self, text_node):
-        pass
+    def text_node(self, _):
+        return Widgets.EntryWidget
 
-    def numeric_node(self, numeric_node):
-        pass
+    def numeric_node(self, _):
+        return Widgets.NumericWidget
 
-    def radio_node(self, radio_node):
-        pass
+    def radio_node(self, _):
+        return Widgets.RadioButtonWidget
 
-    def checkbox_node(self, checkbox_node):
-        pass
+    def checkbox_node(self, _):
+        return Widgets.CheckBoxWidget
 
-    def dropdown_node(self, dropdown_node):
-        pass
+    def dropdown_node(self, _):
+        return Widgets.DropDownWidget
+
+    def width_node(self, width_node, widget):
+        widget.set_width(width_node.val)
+
+    def height_node(self, height_node, widget):
+        widget.set_height(height_node.val)
+
+    def font_node(self, font_node, widget):
+        widget.set_font_family(font_node.val)
+
+    def fontsize_node(self, fontsize_node, widget):
+        widget.set_font_size(fontsize_node.val)
+
+    def color_node(self, color_node, widget):
+        widget.set_font_size(color_node.val)
