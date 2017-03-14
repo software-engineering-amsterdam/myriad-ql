@@ -11,10 +11,7 @@ module QL
         visitor.visit_variable(self)
       end
 
-      def eval
-        VariableTable.find(name)
-      end
-
+      # TODO deze eruit!
       def eval_type
         VariableTable.find(name)
       end
