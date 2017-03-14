@@ -32,8 +32,8 @@
                         ""Do you like pie?""
                             pie: boolean (existentialism)
                     } else {
-                        ""Any comments?""
-                            comments: string
+                        ""Some numbers""
+                            comments: decimal (favDecimal + equation)
                     }
                 }
             ";
