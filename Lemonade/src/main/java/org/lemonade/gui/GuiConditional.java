@@ -6,14 +6,22 @@ import org.lemonade.visitors.EvaluateVisitor;
 
 public class GuiConditional extends GuiBody {
 
-    private GuiExpression expression;
+    private GuiExpression condition;
     private boolean isVisible;
     private List<GuiBody> bodies;
 
     public GuiConditional(List<GuiBody> bodies, GuiExpression expression) {
         this.isVisible = false;
         this.bodies = bodies;
-        this.expression = expression;
+        this.condition = expression;
+    }
+
+    public GuiExpression getCondition() {
+        return condition;
+    }
+
+    public List<GuiBody> getBodies() {
+        return bodies;
     }
 
     @Override

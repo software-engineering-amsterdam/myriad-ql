@@ -12,8 +12,6 @@ public abstract class GuiBody {
         return false;
     }
 
-    public void accept(EvaluateVisitor visitor) {
-        visitor.visit(this);
-    }
+    public abstract void accept(EvaluateVisitor visitor);
 
 }

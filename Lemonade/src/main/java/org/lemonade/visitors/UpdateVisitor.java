@@ -9,8 +9,6 @@ public interface UpdateVisitor {
 
     void visit(GuiForm form);
 
-    void visit(GuiBody body);
-
     void visit(GuiQuestion question);
 
     void visit(GuiConditional conditional);
