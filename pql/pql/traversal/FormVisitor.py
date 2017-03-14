@@ -17,6 +17,10 @@ class FormVisitor(metaclass=ABCMeta):
         pass
 
     @abstractmethod
+    def assignment(self, node):
+        pass
+
+    @abstractmethod
     def conditional_if(self, node):
         pass
 

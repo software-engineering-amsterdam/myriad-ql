@@ -37,3 +37,6 @@ class IdentifierChecker(FormVisitor):
 
     def field(self, node):
         self.__symbol_table[node.name.name].append(node.name)
+
+    def assignment(self, node):
+        pass

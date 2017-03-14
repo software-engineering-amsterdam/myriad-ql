@@ -27,15 +27,17 @@ class DependenciesChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
 
     def field(self, node):
         self.properties[node.name.name].append(node.name)
-        if node.expression is not None:
-            children = node.expression.apply(self)
-            bad_reference = []
-            for child in children:
-                if child.name not in self.properties:
-                    bad_reference.append(child)
-            if len(bad_reference) > 0:
-                self.errors.append("Field at {} had the following references that were not resolvable: {} "
-                                   .format(node.location, ["{}: {}".format(ref.name, ref.location) for ref in bad_reference]))
+
+    def assignment(self, node):
+        children = node.expression.apply(self)
+        bad_reference = []
+        for child in children:
+            if child.name not in self.properties:
+                bad_reference.append(child)
+        if len(bad_reference) > 0:
+            self.errors.append("Field at {} had the following references that were not resolvable: {} "
+                               .format(node.location,
+                                       ["{}: {}".format(ref.name, ref.location) for ref in bad_reference]))
 
     def identifier(self, node):
         return [node]

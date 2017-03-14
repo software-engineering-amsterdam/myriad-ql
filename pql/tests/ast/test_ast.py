@@ -51,12 +51,12 @@ class TestAst(Shared):
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.statements[0]
-        self.assertEqual('field', field_node_1.var_type)
-        self.assertEqual('valueResidue', field_node_1.name.name)
-        self.assertEqual('Value residue:', field_node_1.title)
+        assignment_node_1 = form_node.statements[0]
+        self.assertEqual('assignment', assignment_node_1.var_type)
+        self.assertEqual('valueResidue', assignment_node_1.name.name)
+        self.assertEqual('Value residue:', assignment_node_1.title)
 
-        subtraction_node = field_node_1.expression
+        subtraction_node = assignment_node_1.expression
         self.assertEqual('subtraction', subtraction_node.var_type,
                          'Subtraction node should have type subtraction')
 
@@ -73,12 +73,12 @@ class TestAst(Shared):
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.statements[0]
-        self.assertEqual('field', field_node_1.var_type)
-        self.assertEqual('valueResidue', field_node_1.name.name)
-        self.assertEqual('Value residue:', field_node_1.title)
+        assignment_node_1 = form_node.statements[0]
+        self.assertEqual('assignment', assignment_node_1.var_type)
+        self.assertEqual('valueResidue', assignment_node_1.name.name)
+        self.assertEqual('Value residue:', assignment_node_1.title)
 
-        subtraction_node = field_node_1.expression
+        subtraction_node = assignment_node_1.expression
         self.assertEqual('subtraction', subtraction_node.var_type,
                          'Subtraction node should have type subtraction')
         self.assertEqual('interest', subtraction_node.rhs.name)
@@ -100,12 +100,12 @@ class TestAst(Shared):
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.statements[0]
-        self.assertEqual('field', field_node_1.var_type)
-        self.assertEqual('valueResidue', field_node_1.name.name)
-        self.assertEqual('Value residue:', field_node_1.title)
+        assignment_node_1 = form_node.statements[0]
+        self.assertEqual('assignment', assignment_node_1.var_type)
+        self.assertEqual('valueResidue', assignment_node_1.name.name)
+        self.assertEqual('Value residue:', assignment_node_1.title)
 
-        addition_node = field_node_1.expression
+        addition_node = assignment_node_1.expression
         self.assertEqual('addition', addition_node.var_type,
                          'Addition node should have type addition')
         self.assertEqual('interest', addition_node.rhs.name)
@@ -127,13 +127,13 @@ class TestAst(Shared):
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.statements[0]
-        self.assertEqual('field', field_node_1.var_type)
-        self.assertEqual('valueResidue', field_node_1.name.name)
-        self.assertEqual('Value residue:', field_node_1.title)
+        assignment_node_1 = form_node.statements[0]
+        self.assertEqual('assignment', assignment_node_1.var_type)
+        self.assertEqual('valueResidue', assignment_node_1.name.name)
+        self.assertEqual('Value residue:', assignment_node_1.title)
 
 
-        multiplication_node = field_node_1.expression
+        multiplication_node = assignment_node_1.expression
         self.assertEqual('multiplication', multiplication_node.var_type,
                          'Multiplication node should have type multiplication')
         self.assertEqual('debt', multiplication_node.rhs.name)
@@ -155,12 +155,12 @@ class TestAst(Shared):
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.statements[0]
-        self.assertEqual('field', field_node_1.var_type)
-        self.assertEqual('valueResidue', field_node_1.name.name)
-        self.assertEqual('Value residue:', field_node_1.title)
+        assignment_node_1 = form_node.statements[0]
+        self.assertEqual('assignment', assignment_node_1.var_type)
+        self.assertEqual('valueResidue', assignment_node_1.name.name)
+        self.assertEqual('Value residue:', assignment_node_1.title)
 
-        addition_node = field_node_1.expression
+        addition_node = assignment_node_1.expression
         self.assertEqual('addition', addition_node.var_type,
                          'Addition node should have type addition')
         self.assertEqual('interest', addition_node.rhs.name)
@@ -441,7 +441,6 @@ class TestAst(Shared):
         self.assertEqual('buyingPrice', field_node_2.name.name)
         self.assertEqual(DataTypes.money, field_node_2.data_type.data_type)
         self.assertEqual('What was the buying price?', field_node_2.title)
-        self.assertIsNone(field_node_2.expression)
 
     def test_ast_question_with_if_single_question(self):
         input_string = """
@@ -650,12 +649,12 @@ class TestAst(Shared):
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.statements[0]
-        self.assertEqual('field', field_node_1.var_type)
-        self.assertEqual('valueResidue', field_node_1.name.name)
-        self.assertEqual('Value residue:', field_node_1.title)
+        assignment_node_1 = form_node.statements[0]
+        self.assertEqual('assignment', assignment_node_1.var_type)
+        self.assertEqual('valueResidue', assignment_node_1.name.name)
+        self.assertEqual('Value residue:', assignment_node_1.title)
 
-        positive_node = field_node_1.expression
+        positive_node = assignment_node_1.expression
         self.assertEqual('positive', positive_node.var_type,
                          'Positive node should have type positive')
 
@@ -675,12 +674,12 @@ class TestAst(Shared):
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.statements[0]
-        self.assertEqual('field', field_node_1.var_type)
-        self.assertEqual('valueResidue', field_node_1.name.name)
-        self.assertEqual('Value residue:', field_node_1.title)
+        assignment_node_1 = form_node.statements[0]
+        self.assertEqual('assignment', assignment_node_1.var_type)
+        self.assertEqual('valueResidue', assignment_node_1.name.name)
+        self.assertEqual('Value residue:', assignment_node_1.title)
 
-        negative = field_node_1.expression
+        negative = assignment_node_1.expression
         self.assertEqual('negative', negative.var_type,
                          'Negative node should have type negative')
 
@@ -700,12 +699,12 @@ class TestAst(Shared):
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.statements[0]
-        self.assertEqual('field', field_node_1.var_type)
-        self.assertEqual('valueResidue', field_node_1.name.name)
-        self.assertEqual('Value residue:', field_node_1.title)
+        assignment_node_1 = form_node.statements[0]
+        self.assertEqual('assignment', assignment_node_1.var_type)
+        self.assertEqual('valueResidue', assignment_node_1.name.name)
+        self.assertEqual('Value residue:', assignment_node_1.title)
 
-        negative = field_node_1.expression
+        negative = assignment_node_1.expression
         self.assertEqual('negation', negative.var_type,
                          'Negation node should have type negation')
 
@@ -725,12 +724,12 @@ class TestAst(Shared):
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.statements[0]
-        self.assertEqual('field', field_node_1.var_type)
-        self.assertEqual('valueResidue', field_node_1.name.name)
-        self.assertEqual('Value residue:', field_node_1.title)
+        assignment_node_1 = form_node.statements[0]
+        self.assertEqual('assignment', assignment_node_1.var_type)
+        self.assertEqual('valueResidue', assignment_node_1.name.name)
+        self.assertEqual('Value residue:', assignment_node_1.title)
 
-        and_node = field_node_1.expression
+        and_node = assignment_node_1.expression
         self.assertEqual('and', and_node.var_type,
                          'And node should have type and')
 

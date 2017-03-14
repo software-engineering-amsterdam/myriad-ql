@@ -22,13 +22,15 @@ class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
             statement.apply(self)
 
     def field(self, node):
-        if node.expression is not None:
-            result = node.expression.apply(self)
-            if (result is not None) and (node.data_type.data_type is DataTypes.boolean) and (
-                        result.data_type is not node.data_type.data_type):
-                self.errors.append(
-                    "Expression of field [{}] did not match declared type [{}], at location: {}"
-                        .format(result, node.data_type.data_type, node.expression.location))
+        return node.data_type
+
+    def assignment(self, node):
+        result = node.expression.apply(self)
+        if (result is not None) and (node.data_type.data_type is DataTypes.boolean) and (
+                    result.data_type is not node.data_type.data_type):
+            self.errors.append(
+                "Expression of field [{}] did not match declared type [{}], at location: {}"
+                    .format(result, node.data_type.data_type, node.expression.location))
 
     def subtraction(self, node):
         return self.arithmetic_type_detection(node)

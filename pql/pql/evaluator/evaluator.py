@@ -37,8 +37,10 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         return node.apply(self)
 
     def field(self, node):
-        if node.expression is not None:
-            self.__environment[node.name.name] = node.expression.apply(self)
+        pass
+
+    def assignment(self, node):
+        self.__environment[node.name.name] = node.expression.apply(self)
 
     def identifier(self, node):
         return self.__environment[node.name]

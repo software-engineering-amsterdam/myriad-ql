@@ -29,3 +29,6 @@ class TypeEnvironment(FormVisitor):
 
     def field(self, node):
         self.__symbol_table[node.name.name] = node.data_type
+
+    def assignment(self, node):
+        pass

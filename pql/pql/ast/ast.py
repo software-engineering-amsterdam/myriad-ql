@@ -46,15 +46,23 @@ class Form(Node):
 
 
 class Field(Node):
-    def __init__(self, title, identifier, data_type, expression=None):
-        super(Field, self).__init__('field')
-        self.name = identifier
+    def __init__(self, title, name, data_type, var_type='field'):
+        super(Field, self).__init__(var_type)
         self.title = title
+        self.name = name
         self.data_type = data_type
-        self.expression = expression
 
     def apply(self, visitor):
         return visitor.field(self)
+
+
+class Assignment(Field):
+    def __init__(self, title, name, data_type, expression):
+        super(Assignment, self).__init__(title, name, data_type, 'assignment')
+        self.expression = expression
+
+    def apply(self, visitor):
+        return visitor.assignment(self)
 
 
 class If(Node):

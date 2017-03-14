@@ -71,7 +71,8 @@ def parse(input_string):
 
     reserved_words = (lit_form | lit_if | lit_else | boolean | number | data_types)
 
-    name = Combine(~reserved_words + Word(alphas, alphanums + '_') + Optional(Word("*"))).setResultsName('identifier').setParseAction(
+    name = Combine(~reserved_words + Word(alphas, alphanums + '_') + Optional(Word("*"))).setResultsName(
+        'identifier').setParseAction(
         lambda source, position, parsed_tokens: ast.Identifier(position, source, parsed_tokens[0]))
 
     operand_arith = (number | name)
@@ -114,12 +115,16 @@ def parse(input_string):
 
     field_statement = (
         QuotedString('"', unquoteResults=True).setResultsName("title") +
-        name.setResultsName("identifier") + lit_colon + data_types.setResultsName("data_type") +
-        Optional(
-            lit_assign_op +
-            boolean_expression
-        )
+        name.setResultsName("identifier") + lit_colon + data_types.setResultsName("data_type")
     )
+
+    field_assignment_statement = (
+        QuotedString('"', unquoteResults=True).setResultsName("title") +
+        name.setResultsName("identifier") + lit_colon + data_types.setResultsName(
+            "data_type") + lit_assign_op + boolean_expression
+    )
+
+    field_assignment_statement.setParseAction(lambda parsed_tokens: ast.Assignment(*parsed_tokens))
     field_statement.setParseAction(lambda parsed_tokens: ast.Field(*parsed_tokens))
 
     conditional_if = Forward()
@@ -139,11 +144,12 @@ def parse(input_string):
 
     conditional = conditional_if_else | conditional_if
 
-    statement <<= (field_statement | conditional)
+    statement <<= (field_assignment_statement | field_statement | conditional)
 
     body <<= lit_l_curly + OneOrMore(statement) + lit_r_curly
     body.addParseAction(lambda parsed_tokens: [parsed_tokens.asList()])
     body.setResultsName('statement_list')
 
-    form = (lit_form + name + body).addParseAction(lambda parsed_tokens: ast.Form(*parsed_tokens)).setResultsName('form')
+    form = (lit_form + name + body).addParseAction(lambda parsed_tokens: ast.Form(*parsed_tokens)).setResultsName(
+        'form')
     return form.parseString(input_string).form
