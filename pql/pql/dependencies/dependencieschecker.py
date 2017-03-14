@@ -22,11 +22,11 @@ class DependenciesChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisito
                 properties[key] = value
 
     def conditional_if_else(self, node, local_properties=None):
-        self.conditional_if(node)
-        self.conditional(local_properties, node.else_statement_list)
+        self.conditional_if(node, local_properties.copy())
+        self.conditional(local_properties.copy(), node.else_statement_list)
 
     def conditional_if(self, node, local_properties=None):
-        self.conditional(local_properties, node.statements)
+        self.conditional(local_properties.copy(), node.statements)
 
     def conditional(self, local_properties, statements):
         if local_properties is None:
