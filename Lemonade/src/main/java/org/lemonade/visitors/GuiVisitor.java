@@ -73,6 +73,7 @@ import org.lemonade.visitors.interfaces.BaseVisitor;
 import org.lemonade.visitors.interfaces.ExpressionVisitor;
 import org.lemonade.visitors.interfaces.TypeVisitor;
 
+import javafx.geometry.Insets;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 
@@ -106,9 +107,8 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
         GuiQuestion guiQuestion = new GuiQuestion(identifier, labelElement, element);
 
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap(6);
-        gridPane.setVgap(6);
-        gridPane.setMaxWidth(560);
+        gridPane.setPadding(new Insets(3, 6, 3, 6));
+        //        gridPane.setMaxWidth(560);
 
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPercentWidth(50);

@@ -64,7 +64,7 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public void visit(final GuiConditional conditional) {
-        //        if ()
+
     }
 
     @Override

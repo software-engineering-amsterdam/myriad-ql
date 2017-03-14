@@ -10,7 +10,6 @@ public class GuiConditional extends GuiBody {
     private boolean isVisible;
     private List<GuiBody> bodies;
 
-    // TODO: add expression?
     public GuiConditional(List<GuiBody> bodies, GuiExpression expression) {
         this.isVisible = false;
         this.bodies = bodies;
