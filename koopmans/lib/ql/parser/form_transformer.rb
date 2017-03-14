@@ -26,6 +26,7 @@ module QL
 
       # if statement
       rule(if_statement: { condition: subtree(:condition), body: subtree(:body) }) { IfStatement.new(condition, body) }
+      rule(if_else_statement: { if_statement: { condition: subtree(:condition), body: subtree(:if_body) }, body: subtree(:else_body) }) { IfElseStatement.new(condition, if_body, else_body) }
 
       # form
       rule(form: { id: simple(:variable), body: subtree(:body) }) { Form.new(variable, body) }

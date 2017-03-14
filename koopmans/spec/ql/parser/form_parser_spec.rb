@@ -114,6 +114,18 @@ module QL
             ')
           end
         end
+
+        context 'if else statement' do
+          it 'parses' do
+            expect(form_parser.if_else_statement).to parse('if (hasSoldHouse) {
+              "What was the selling price?"
+                sellingPrice: money
+            } else {
+              "How much is?"
+                valueResidue: money
+            }')
+          end
+        end
       end
 
 

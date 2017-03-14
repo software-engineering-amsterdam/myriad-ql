@@ -9,6 +9,12 @@ module QL
         if_statement.body.map { |statement| statement.accept(self) }
       end
 
+      def visit_if_else_statement(if_else_statement)
+        if_body_questions = if_else_statement.if_body.map { |statement| statement.accept(self) }
+        else_body_questions = if_else_statement.else_body.map { |statement| statement.accept(self) }
+        [if_body_questions, else_body_questions]
+      end
+
       def visit_question(question)
         question
       end

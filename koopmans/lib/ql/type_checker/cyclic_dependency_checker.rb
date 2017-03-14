@@ -22,6 +22,12 @@ module QL
         if_statement.body.map { |statement| statement.accept(self) }
       end
 
+      def visit_if_else_statement(if_else_statement)
+        if_body_variables = if_else_statement.if_body.map { |statement| statement.accept(self) }
+        else_body_variables = if_else_statement.else_body.map { |statement| statement.accept(self) }
+        [if_body_variables, else_body_variables]
+      end
+
       # visit operation in expression
       def visit_expression(expression)
         if expression.expression.respond_to? :reduce

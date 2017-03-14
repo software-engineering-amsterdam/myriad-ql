@@ -37,9 +37,14 @@ module QL
       end
 
       describe 'statements' do
-        context 'questions' do
+        context 'question' do
           it 'transforms' do
             expect(form_transformer.apply(question: { label: '"How much is?"', id: 'hasSoldHouse', type: 'boolean' })).to be_a Question
+          end
+        end
+
+        context 'computed question' do
+          it 'transforms' do
             expect(form_transformer.apply(question: { label: '"Value residue:"', id: 'valueResidue', type: 'money', assignment: '_' })).to be_a ComputedQuestion
           end
         end
@@ -47,6 +52,12 @@ module QL
         context 'if statement' do
           it 'transforms' do
             expect(form_transformer.apply(if_statement: { condition: '_', body: {} })).to be_a IfStatement
+          end
+        end
+
+        context 'if else statement' do
+          it 'transforms' do
+            expect(form_transformer.apply(if_else_statement: { if_statement: { condition: '_', body: {} }, body: {} })).to be_a IfElseStatement
           end
         end
       end

@@ -6,7 +6,6 @@ module QL
 
       def check(ast)
         questions = ast.accept(QuestionCollector.new).flatten
-
         duplicate_label_checker(questions)
         duplicate_variable_checker(questions)
         undefined_variable_checker(questions, ast)
