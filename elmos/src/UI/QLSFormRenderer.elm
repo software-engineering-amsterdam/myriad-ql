@@ -296,10 +296,10 @@ styleAsPair x =
             ( "width", toString n ++ "px" )
 
         Font font ->
-            ( "font", font )
+            ( "font-family", font )
 
         FontSize fontSize ->
-            ( "size", toString fontSize ++ "px" )
+            ( "font-size", toString fontSize ++ "px" )
 
         Color c ->
             ( "color", c )
