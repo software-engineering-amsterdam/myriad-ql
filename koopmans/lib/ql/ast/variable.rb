@@ -10,11 +10,6 @@ module QL
       def accept(visitor)
         visitor.visit_variable(self)
       end
-
-      # TODO deze eruit!
-      def eval_type
-        VariableTable.find(name)
-      end
     end
   end
 end

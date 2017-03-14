@@ -19,14 +19,12 @@ module QL
 
       def visit_if_statement(if_statement)
         condition_type = if_statement.condition.accept(self)
-        # check if if condition is of boolean type
         check_if_condition(if_statement, condition_type)
         if_statement.body.map { |statement| statement.accept(self) }
       end
 
       def visit_if_else_statement(if_else_statement)
         condition_type = if_else_statement.condition.accept(self)
-        # check if if condition is of boolean type
         check_if_condition(if_else_statement, condition_type)
 
         if_body_types = if_else_statement.if_body.map { |statement| statement.accept(self) }
@@ -48,7 +46,7 @@ module QL
       # visit both left and right sides of binary expression and perform type check
       # they can be for example BooleanType, IntegerType, StringType or ErrorType
       def visit_binary_expression(left, binary_expression)
-        left  = left.accept(self)
+        left = left.accept(self)
         right = binary_expression.expression.accept(self)
         binary_expression.eval_type(left, right)
       end
@@ -70,6 +68,7 @@ module QL
         @variable_types[variable.name]
       end
 
+      # check if if condition is of boolean type
       def check_if_condition(if_statement, condition_type)
         unless condition_type.is_a?(BooleanType)
           NotificationTable.store(Error.new("#{if_statement.condition} is not of the type boolean"))

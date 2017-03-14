@@ -29,7 +29,7 @@ module QL
       end
 
       def undefined_variable_checker(questions, ast)
-        question_variables   = questions.map(&:variable).map(&:name)
+        question_variables = questions.map(&:variable).map(&:name)
         expression_variables = ast.accept(ExpressionVariableCollector.new).flatten.compact.map(&:name)
 
         (expression_variables - question_variables).each do |undefined_variable|
