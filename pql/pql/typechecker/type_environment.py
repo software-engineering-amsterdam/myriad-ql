@@ -1,20 +1,18 @@
 # coding=utf-8
+from collections import defaultdict
+
 from pql.identifierchecker.identifierchecker import IdentifierChecker
 
 
 class TypeEnvironment(IdentifierChecker):
-    def visit(self, pql_ast):
-        def recursively_build_dictionary(items, dct):
-            for dictionary in items:
-                if isinstance(dictionary, list):
-                    recursively_build_dictionary(dictionary, dct)
-                else:
-                    for d_key, d_value in dictionary.items():
-                        dct[d_key] = d_value
+    def __init__(self):
+        super(TypeEnvironment, self).__init__()
+        self.__symbol_table = defaultdict()
 
-        identifier_dictionary = dict()
-        recursively_build_dictionary([form.apply(self) for form in pql_ast], identifier_dictionary)
-        return identifier_dictionary
+    def visit(self, pql_ast):
+        self.__symbol_table.clear()
+        [form.apply(self) for form in pql_ast]
+        return self.__symbol_table
 
     def field(self, node):
-        return {node.name.name: node.data_type}
+        self.__symbol_table[node.name.name] = node.data_type
