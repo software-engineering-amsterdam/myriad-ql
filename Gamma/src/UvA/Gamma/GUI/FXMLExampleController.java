@@ -6,6 +6,7 @@ import UvA.Gamma.AST.FormItem;
 import UvA.Gamma.AST.Question;
 import UvA.Gamma.Validation.TypeChecker;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -14,7 +15,6 @@ import javafx.scene.text.Text;
 import java.util.Stack;
 
 public class FXMLExampleController {
-    private int rowCount;
     private Form form;
     TypeChecker checker = new TypeChecker();
 
@@ -23,7 +23,7 @@ public class FXMLExampleController {
         conditionStack = new Stack<>();
         conditionStack.push(rootGrid);
         this.form = form;
-        for (FormItem item : form.getFormItems()) {
+        for (FormItem item : form) {
             item.show(this);
         }
     }
@@ -43,12 +43,12 @@ public class FXMLExampleController {
         input.textProperty().addListener((observable, oldValue, newValue) -> {
             if (question.check(checker, newValue)) {
                 input.setStyle("-fx-text-fill: green");
-                form.getFormItems().parallelStream().forEach(item -> item.idChanged(form, question, newValue));
+                form.stream().forEach(item -> item.idChanged(form, question, newValue));
             } else {
                 input.setStyle("-fx-text-fill: red");
             }
         });
-        rootGrid.addRow(++rowCount, questionLabel, input);
+        rootGrid.addRow(getRowCount(rootGrid) + 1, questionLabel, input);
     }
 
     @FXML
@@ -57,13 +57,11 @@ public class FXMLExampleController {
         CheckBox input = new CheckBox();
 
         input.selectedProperty().addListener((observable, oldValue, newValue) ->
-                form.getFormItems().parallelStream().forEach(
+                form.stream().forEach(
                         formItem -> formItem.idChanged(form, question, String.valueOf(newValue))));
 
-        grid.addRow(++rowCount, questionLabel, input);
+        rootGrid.addRow(getRowCount(rootGrid) + 1, questionLabel, input);
     }
-
-
 
 
 //    @FXML
@@ -74,7 +72,6 @@ public class FXMLExampleController {
 //    }
 
 
-
     public void showComputed(Computed computed) {
         assert rootGrid != null;
         Text label = new Text(computed.getLabel());
@@ -82,7 +79,7 @@ public class FXMLExampleController {
 
         result.textProperty().bind(computed.getStringValueProperty());
 
-        rootGrid.addRow(++rowCount, label, result);
+        rootGrid.addRow(getRowCount(rootGrid) + 1, label, result);
     }
 
     public GridPane startRenderCondition() {
@@ -94,6 +91,20 @@ public class FXMLExampleController {
     public void stopRenderCondition() {
         GridPane pane = conditionStack.pop();
         rootGrid = conditionStack.peek();
-        rootGrid.add(pane, 0, ++rowCount, 2, 1);
+        rootGrid.add(pane, 0, getRowCount(rootGrid) + 1, 2, 1);
+    }
+
+    private int getRowCount(GridPane pane) {
+        int numRows = pane.getRowConstraints().size();
+        for (int i = 0; i < pane.getChildren().size(); i++) {
+            Node child = pane.getChildren().get(i);
+            if (child.isManaged()) {
+                Integer rowIndex = GridPane.getRowIndex(child);
+                if (rowIndex != null) {
+                    numRows = Math.max(numRows, rowIndex + 1);
+                }
+            }
+        }
+        return numRows;
     }
 }

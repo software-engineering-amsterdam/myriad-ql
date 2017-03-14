@@ -5,10 +5,15 @@
 form ifelse{
     "show block 1" block1: boolean
     "show block 2" block2: boolean
-    if(true){
+    if(block1){
         "show block 1_1" block1_1: boolean
-        if(true){
-            "Block 1_1!" maxdepth: boolean = (block1 && block1_1)
+        if(block1_1){
+            "show block 1_1_1" block1_1_1: boolean
+            if(block1_1_1){
+                "max depth" max: boolean = (block1 && block1_1)
+            }
+        }else{
+            "not yet at max depth" notmax: boolean = (block1 && !block1_1)
         }
     }
 }

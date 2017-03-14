@@ -55,26 +55,6 @@ public class Number extends Value {
         return value.doubleValue() % 1 == 0;
     }
 
-    public Number add(Number toAdd) {
-        this.value = this.value.add(toAdd.value);
-        return this;
-    }
-
-    public Number subtract(Number toSubtract) {
-        this.value = this.value.subtract(toSubtract.value);
-        return this;
-    }
-
-    public Number divide(Number toDivide) {
-        this.value = this.value.divide(toDivide.value);
-        return this;
-    }
-
-    public Number multiply(Number toMultiply) {
-        this.value = this.value.multiply(toMultiply.value);
-        return this;
-    }
-
     @Override
     public boolean validate(String value, TypeChecker typeChecker) {
         return this.isInteger() ? typeChecker.checkInteger(value) : typeChecker.checkDouble(value);
