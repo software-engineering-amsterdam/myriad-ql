@@ -1,7 +1,7 @@
 module UI.Widget.StringDropdown exposing (view)
 
 import Html exposing (Html, select)
-import Html.Attributes exposing (class, disabled)
+import Html.Attributes exposing (class, disabled, id)
 import List.Extra as List
 import UI.Widget.Base exposing (WidgetContext)
 import UI.Widget.DropdownBase exposing (selectEventHandler, renderPlaceholder, renderOption)
@@ -21,6 +21,7 @@ view { identifier, env, onChange, editable } values =
             [ class "form-control"
             , selectEventHandler (onChange << indexToValue values)
             , disabled (not editable)
+            , id identifier
             ]
             (renderPlaceholder
                 :: List.map
