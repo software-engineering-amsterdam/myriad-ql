@@ -1,40 +1,29 @@
 package org.uva.taxfree.model.environment;
 
 import org.uva.taxfree.gui.MessageList;
+import org.uva.taxfree.model.node.blocks.BlockNode;
 import org.uva.taxfree.model.node.declarations.CalculationNode;
 import org.uva.taxfree.model.node.declarations.DeclarationNode;
-import org.uva.taxfree.model.node.expression.ExpressionNode;
 import org.uva.taxfree.model.types.Type;
 
 import java.util.*;
 
 public class SymbolTable {
-    private final List<DeclarationNode> mDeclarationNodes; // All declaration nodes
     private final List<Declaration> mDeclarations;
-    private final List<String> mUsedVariables;
-    private final List<ExpressionNode> mExpressions;
     private final List<CalculationNode> mCalculations;
+    private final List<BlockNode> mBlocks;
 
     public SymbolTable() {
-        mDeclarationNodes = new ArrayList<>();
         mDeclarations = new ArrayList<>();
-        mUsedVariables = new ArrayList<>();
-        mExpressions = new ArrayList<>();
+        mBlocks = new ArrayList<>();
         mCalculations = new ArrayList<>();
     }
 
-    public void addDependencies(List<DeclarationNode> nodes) {
-        for (DeclarationNode n : nodes) {
-            addDeclaration(n);
-        }
-    }
-
-    public void addExpression(ExpressionNode expression) {
-        mExpressions.add(expression);
+    public void addBlock(BlockNode blockNode) {
+        mBlocks.add(blockNode);
     }
 
     public void addDeclaration(DeclarationNode node) {
-        mDeclarationNodes.add(node);
         mDeclarations.add(new Declaration(node));
     }
 
@@ -42,18 +31,23 @@ public class SymbolTable {
         mCalculations.add(calculation);
     }
 
-    public void addVariable(String variableName) {
-        mUsedVariables.add(variableName);
+    public void updateValue(String variableId, String updatedValue) {
+        updateDeclaration(variableId, updatedValue);
+        recalculate();
     }
 
-    public void updateValue(String variableId, String updatedValue) {
+    private void updateDeclaration(String variableId, String updatedValue) {
         for (Declaration decl : mDeclarations) {
             if (decl.equals(variableId)) {
                 decl.setValue(updatedValue);
-                return;
             }
         }
-        throw new RuntimeException("Trying to set unknown variable in SymbolTable");
+    }
+
+    private void recalculate() {
+        for (CalculationNode calc : mCalculations) {
+            updateDeclaration(calc.getId(), calc.resolveValue());
+        }
     }
 
     public String resolveValue(String variableId) {
@@ -108,24 +102,6 @@ public class SymbolTable {
         }
     }
 
-    /*
-    public void getUndefinedDeclarationErrros(MessageList messageList) {
-        for (String identifier : mUsedVariables) {
-            if (!validDeclaration(identifier)) {
-                messageList.addError("No declaration found: " + identifier);
-            }
-        }
-    }
-
-    private boolean validDeclaration(String identifier) {
-        for (Declaration declaration : mDeclarations) {
-            if (declaration.equals(identifier)) {
-                return true;
-            }
-        }
-        return false;
-    }
-*/
     public void generateDependencies(Set<String> usedVariables) {
         Set<String> dependencies = new HashSet<>(usedVariables);
         for (String variableName : usedVariables) {
@@ -144,6 +120,14 @@ public class SymbolTable {
                 usedVariables.addAll(calc.getUsedVariables());
             }
         }
+    }
+
+    public List<String> visibleIds() {
+        List<String> visibleDeclarations = new ArrayList<>();
+        for (BlockNode blockNode : mBlocks) {
+            blockNode.generateVisibleIds(visibleDeclarations);
+        }
+        return visibleDeclarations;
     }
 
 }
