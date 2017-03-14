@@ -56,13 +56,18 @@ form exampleForm {
     - [x] Integers
 - [ ] AST Processing
   - [ ] Type checking
-    - [ ] reference to undefined questions
-    - [ ] duplicate question declarations with different types
-    - [ ] conditions that are not of the type boolean
-    - [ ] operands of invalid type to operators
+    - [x] reference to undefined questions
+    - [x] duplicate question declarations with different types
+    - [x] conditions that are not of the type boolean
+    - [x] operands of invalid type to operators
     - [ ] cyclic dependencies between questions
     - [x] duplicate labels
-  - [ ] Error output in GUI
+  - [ ] Error handling
+    - [x] Error class
+    - [x] Error collection class
+    - [ ] Make all tests return Error objects
+    - [ ] Halt on bad error - don't throw exception!
+    - [ ] Output in GUI
 - [ ] GUI generation
 - [ ] Unit tests
 
