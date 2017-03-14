@@ -2,22 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="62885f6a-3817-416b-8e65-17efacae74f2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/EnvTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/TypeTest.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/test/parser/QLSParserTest.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/Main.java" afterPath="$PROJECT_DIR$/src/ql/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/types/BooleanType.java" afterPath="$PROJECT_DIR$/src/ql/ast/types/BooleanType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/types/FloatType.java" afterPath="$PROJECT_DIR$/src/ql/ast/types/FloatType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/types/IntType.java" afterPath="$PROJECT_DIR$/src/ql/ast/types/IntType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/types/NumType.java" afterPath="$PROJECT_DIR$/src/ql/ast/types/NumType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/types/StringType.java" afterPath="$PROJECT_DIR$/src/ql/ast/types/StringType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/types/Type.java" afterPath="$PROJECT_DIR$/src/ql/ast/types/Type.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/visistor/EnvASTVisitor.java" afterPath="$PROJECT_DIR$/src/ql/ast/visistor/EnvASTVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/visistor/PrintASTVisitor.java" afterPath="$PROJECT_DIR$/src/ql/ast/visistor/PrintASTVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/visistor/TypeASTVisitor.java" afterPath="$PROJECT_DIR$/src/ql/ast/visistor/TypeASTVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/logger/ErrorHandler.java" afterPath="$PROJECT_DIR$/src/ql/logger/ErrorHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/parser/QLSParserTest.java" afterPath="$PROJECT_DIR$/src/test/parser/QLSParserTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.txt" afterPath="$PROJECT_DIR$/test.txt" />
     </list>
     <list id="76b6b3a2-7088-4438-a30c-090bb2c79e79" name="Revert: " comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -108,8 +94,8 @@
       <file leaf-file-name="EnvTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/EnvTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="114" column="52" lean-forward="true" selection-start-line="114" selection-start-column="52" selection-end-line="114" selection-end-column="52" />
+            <state relative-caret-position="468">
+              <caret line="108" column="79" lean-forward="true" selection-start-line="108" selection-start-column="79" selection-end-line="108" selection-end-column="79" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -1019,7 +1005,7 @@
       <workItem from="1489399103604" duration="7009000" />
       <workItem from="1489414407367" duration="6566000" />
       <workItem from="1489488070433" duration="4616000" />
-      <workItem from="1489493655826" duration="6807000" />
+      <workItem from="1489493655826" duration="6837000" />
     </task>
     <task id="LOCAL-00001" summary="jacc and beginning of ASt">
       <created>1486468125187</created>
@@ -1084,7 +1070,14 @@
       <option name="project" value="LOCAL" />
       <updated>1489495651959</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="added unit tests">
+      <created>1489500484170</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1489500484170</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1120,7 +1113,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57888000" />
+    <option name="totallyTimeSpent" value="57918000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
@@ -1136,7 +1129,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32946146" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3273495" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2998944" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2998944" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32946146" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -1174,7 +1167,8 @@
     <MESSAGE value="environment working" />
     <MESSAGE value="Scope fixed" />
     <MESSAGE value="removed environment and started tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed environment and started tests" />
+    <MESSAGE value="added unit tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="added unit tests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1489,9 +1483,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="203">
           <caret line="21" column="6" lean-forward="false" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="6" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1648,8 +1640,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/EnvTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="114" column="52" lean-forward="true" selection-start-line="114" selection-start-column="52" selection-end-line="114" selection-end-column="52" />
+        <state relative-caret-position="468">
+          <caret line="108" column="79" lean-forward="true" selection-start-line="108" selection-start-column="79" selection-end-line="108" selection-end-column="79" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
