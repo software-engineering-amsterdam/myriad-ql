@@ -10,13 +10,15 @@ import com.matthewchapman.ql.validation.QLVisitor;
  */
 public class StringLiteral extends Expression {
 
-    private String value;
+    private final String value;
 
     public StringLiteral(String value) {
         this.value = value;
     }
 
-    public String getValue() { return this.value; }
+    public String getValue() {
+        return this.value;
+    }
 
     @Override
     public String toString() {

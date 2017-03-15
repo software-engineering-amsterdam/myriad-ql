@@ -31,7 +31,7 @@ public class Form extends TreeNode {
 
         String result = ("form " + formName + "{\n");
 
-        for(Statement statement : this.getStatements()) {
+        for (Statement statement : this.getStatements()) {
 
         }
 

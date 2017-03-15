@@ -3,9 +3,9 @@ package com.matthewchapman.ql;
 /**
  * Created by matt on 13/03/2017.
  */
-public class QLError {
+class QLError {
 
-    private String message;
+    private final String message;
 
     public QLError(Integer stage, String message) {
         this.message = message;

@@ -12,8 +12,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class FileReaderTest {
 
-    File file;
-    FileReader fileReader;
+    private File file;
+    private FileReader fileReader;
 
     @Before
     public void setUp() {

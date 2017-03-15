@@ -16,7 +16,7 @@ import java.util.List;
 public class IfStatement extends Statement {
 
     private final List<Statement> ifCaseStatements;
-    private Expression condition;
+    private final Expression condition;
 
     public IfStatement(Expression e, List<Statement> s, int line, int column) {
         this.ifCaseStatements = new ArrayList<>();
@@ -26,7 +26,7 @@ public class IfStatement extends Statement {
         this.setColumn(column);
     }
 
-    public void addStatements(List<Statement> statements) {
+    private void addStatements(List<Statement> statements) {
         for (Statement s : statements) {
             this.ifCaseStatements.add(s);
         }
