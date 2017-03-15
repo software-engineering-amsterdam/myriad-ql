@@ -15,7 +15,7 @@
         public void AddQuestionName_ShouldThrowExceptionIfInvalidNameIsGiven(string questionName)
         {
             var typeEnv = new QuestionVisitorTypeEnvironment();
-            Assert.Throws<ArgumentException>(() => typeEnv.AddQuestionName(questionName));
+            Assert.Throws<ArgumentException>(() => typeEnv.AddQuestionIdentifier(questionName));
         }
 
         [Fact]
@@ -23,9 +23,9 @@
         {
             var typeEnv = new QuestionVisitorTypeEnvironment();
             var questionName = "HeyWorld!";
-            typeEnv.AddQuestionName(questionName);
+            typeEnv.AddQuestionIdentifier(questionName);
 
-            Assert.True(typeEnv.IsNameDuplicate(questionName));
+            Assert.True(typeEnv.IsIdentifierDuplicate(questionName));
         }
 
         [Theory]
@@ -55,7 +55,7 @@
         public void IsNameDuplicate_ShouldThrowExceptionIfInvalidNameIsGiven(string questionLabel)
         {
             var typeEnv = new QuestionVisitorTypeEnvironment();
-            Assert.Throws<ArgumentException>(() => typeEnv.IsNameDuplicate(questionLabel));
+            Assert.Throws<ArgumentException>(() => typeEnv.IsIdentifierDuplicate(questionLabel));
         }
 
         [Theory]

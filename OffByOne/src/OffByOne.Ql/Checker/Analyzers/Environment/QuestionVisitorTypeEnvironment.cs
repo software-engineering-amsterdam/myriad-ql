@@ -18,7 +18,7 @@
             this.questionNames = new HashSet<string>();
         }
 
-        public void AddQuestionName(string name)
+        public void AddQuestionIdentifier(string name)
         {
             if (name.IsNullOrWhiteSpace())
             {
@@ -42,7 +42,7 @@
             this.questionLables.Add(label);
         }
 
-        public bool IsNameDuplicate(string name)
+        public bool IsIdentifierDuplicate(string name)
         {
             if (name.IsNullOrWhiteSpace())
             {

@@ -1,5 +1,6 @@
 ﻿namespace OffByOne.Ql.Checker.Analyzers
 {
+    using System;
     using System.Collections.Generic;
 
     using MoreDotNet.Extensions.Collections;
@@ -21,12 +22,14 @@
     using OffByOne.Ql.Checker.Messages;
     using OffByOne.Ql.Visitors.Contracts;
 
+    using ValueType = OffByOne.Ql.Ast.ValueTypes.Base.ValueType;
+
     public class TypeAnalyzer
         : IExpressionVisitor<ValueType, VisitorTypeEnvironment>,
         IStatementVisitor<VoidValueType, VisitorTypeEnvironment>,
         IAnalyzer
     {
-        private static readonly IEnumerable<ValueType> NumericValueTypes = new List<ValueType>()
+        private static readonly IEnumerable<ValueType> NumericValueTypes = new List<ValueType>
         {
             new IntegerValueType(),
             new DecimalValueType(),
@@ -40,6 +43,11 @@
 
         public TypeAnalyzer(ICheckerReport report)
         {
+            if (report == null)
+            {
+                throw new ArgumentNullException(nameof(report));
+            }
+
             this.Report = report;
         }
 
@@ -227,14 +235,16 @@
                 return new VoidValueType();
             }
 
-            if (leftExpressionType != new IntegerValueType()
-                && leftExpressionType != new DecimalValueType()
-                && leftExpressionType != new MoneyValueType())
+            if (rightExpressionType != new IntegerValueType()
+                && rightExpressionType != new DecimalValueType()
+                && rightExpressionType != new MoneyValueType())
             {
                 this.Report.Add(new InvalidTypeMessage(
                     expression.RightExpression,
                     NumericValueTypes,
                     rightExpressionType));
+
+                return new VoidValueType();
             }
 
             if (leftExpressionType == new IntegerValueType()

@@ -1,5 +1,6 @@
 ﻿namespace OffByOne.Ql.Checker.Analyzers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -26,6 +27,11 @@
 
         public CyclicDependencyAnalyzer(ICheckerReport report)
         {
+            if (report == null)
+            {
+                throw new ArgumentNullException(nameof(report));
+            }
+
             this.Report = report;
             this.circularDependencyChecker = new CircularDependencyChecker();
         }

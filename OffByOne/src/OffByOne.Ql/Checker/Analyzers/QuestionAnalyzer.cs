@@ -1,5 +1,7 @@
 ﻿namespace OffByOne.Ql.Checker.Analyzers
 {
+    using System;
+
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Checker.Analyzers.Contracts;
     using OffByOne.Ql.Checker.Analyzers.Environment;
@@ -9,14 +11,19 @@
 
     public class QuestionAnalyzer : BaseQlVisitor<object, QuestionVisitorTypeEnvironment>, IAnalyzer
     {
-        public QuestionAnalyzer(ICheckerReport report)
-        {
-            this.Report = report;
-        }
-
         public QuestionAnalyzer()
             : this(new CheckerReport())
         {
+        }
+
+        public QuestionAnalyzer(ICheckerReport report)
+        {
+            if (report == null)
+            {
+                throw new ArgumentNullException(nameof(report));
+            }
+
+            this.Report = report;
         }
 
         public ICheckerReport Report { get; }
@@ -31,22 +38,22 @@
             // TODO: change string primitives to StringValue?
             // [...].Value.Value is ugly. Since StringValues replace string primitives,
             // maybe we should replace them in the code too?
-            if (environment.IsNameDuplicate(statement.Label.Value.Value))
+            if (environment.IsIdentifierDuplicate(statement.Identifier))
             {
                 this.Report.Add(new DuplicateQuestionIdentifierMessage(statement));
             }
             else
             {
-                environment.AddQuestionName(statement.Label.Value.Value);
+                environment.AddQuestionIdentifier(statement.Identifier);
             }
 
-            if (environment.IsLableDuplicate(statement.Identifier))
+            if (environment.IsLableDuplicate(statement.Label.Value.Value))
             {
                 this.Report.Add(new DuplicateQuestionLabelMessage(statement));
             }
             else
             {
-                environment.AddQuestionLabel(statement.Identifier);
+                environment.AddQuestionLabel(statement.Label.Value.Value);
             }
 
             return base.Visit(statement, environment);

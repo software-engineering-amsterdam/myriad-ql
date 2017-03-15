@@ -1,7 +1,6 @@
 ﻿namespace OffByOne.Ql.Tests.Ast.Literals
 {
     using System;
-    using System.Globalization;
 
     using OffByOne.Ql.Ast.Literals;
     using OffByOne.Ql.Values;
