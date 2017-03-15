@@ -27,19 +27,19 @@ namespace Questionnaires.ExpressionEvaluator
 
         private IType Visit(Operators.Positive node)
         {
-            IType operand = Visit((dynamic)node);
+            IType operand = Visit((dynamic)node.Operand);
             return operand.Positive();
         }
 
         public IType Visit(Operators.Negative node)
         {
-            IType operand = Visit((dynamic)node);
+            IType operand = Visit((dynamic)node.Operand);
             return operand.Negative();
         }
 
         public IType Visit(Operators.Bang node)
         {
-            IType operand = Visit((dynamic)node);
+            IType operand = Visit((dynamic)node.Operand);
             return operand.Bang();
         }
 
