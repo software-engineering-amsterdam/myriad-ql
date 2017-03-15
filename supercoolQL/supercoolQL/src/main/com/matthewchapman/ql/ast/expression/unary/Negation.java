@@ -13,7 +13,7 @@ public class Negation extends UnaryOperation implements QLVisitable {
 
     //TODO Implement Negation
 
-    private Expression expression;
+    private final Expression expression;
 
     public Negation(Expression expression) {
         this.expression = expression;

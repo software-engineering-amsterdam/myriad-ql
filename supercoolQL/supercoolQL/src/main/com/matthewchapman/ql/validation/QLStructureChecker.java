@@ -20,7 +20,7 @@ import java.util.*;
  */
 public class QLStructureChecker extends AbstractQLVisitor<Void> {
 
-    HashMap<String, List<Parameter>> expressionMap;
+    private final HashMap<String, List<Parameter>> expressionMap;
 
     public QLStructureChecker() {
         this.expressionMap = new HashMap<>();

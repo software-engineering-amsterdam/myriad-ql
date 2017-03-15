@@ -10,7 +10,7 @@ import com.matthewchapman.ql.validation.QLVisitor;
  */
 public class BooleanLiteral extends Expression {
 
-    private Boolean value;
+    private final Boolean value;
 
     public BooleanLiteral(String value) {
         this.value = Boolean.parseBoolean(value);

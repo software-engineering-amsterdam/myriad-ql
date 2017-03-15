@@ -5,7 +5,7 @@ package com.matthewchapman.ql.ast;
  * <p>
  * Base class for Atomic objects - the smallest objects in the AST hierarchy.
  */
-public abstract class Atomic extends TreeNode {
+abstract class Atomic extends TreeNode {
 
 
 }

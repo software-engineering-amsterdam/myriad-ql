@@ -17,8 +17,8 @@ import java.util.*;
  */
 public class QuestionCollection extends AbstractQLVisitor<Void> {
 
-    private List<Question> questionList;
-    private HashMap<String, Type> typeTable;
+    private final List<Question> questionList;
+    private final HashMap<String, Type> typeTable;
 
     public QuestionCollection() {
         typeTable = new HashMap<>();

@@ -12,11 +12,11 @@ public abstract class TreeNode {
     private int line;
     private int column;
 
-    public void setLine(int line) {
+    protected void setLine(int line) {
         this.line = line;
     }
 
-    public void setColumn(int column) {
+    protected void setColumn(int column) {
         this.column = column;
     }
 
