@@ -32,38 +32,14 @@
 
         public Widget Visit(QuestionStatement statement, GuiEnvironment environment)
         {
-            Widget question;
             var style = new WidgetStyle
             {
                 Color = Colors.Black,
                 Width = 200,
             };
 
-            switch (statement.Type)
-            {
-                case BooleanValueType _:
-                    question = new CheckBoxWidget(new BooleanValue(false), statement, environment, style);
-                    break;
-                case DateValueType _:
-                    question = new DatePickerWidget(new DateValue(DateTime.Now), statement, environment, style);
-                    break;
-                case StringValueType _:
-                    question = new TextFieldWidget(new StringValue(string.Empty), statement, environment, style);
-                    break;
-                case DecimalValueType _:
-                    question = new ValidatedTextFieldWidget(new DecimalValue(0), new DecimalValidator(), statement, environment, style);
-                    break;
-                case IntegerValueType _:
-                    question = new ValidatedTextFieldWidget(new IntegerValue(0), new IntegerValidator(), statement, environment, style);
-                    break;
-                case MoneyValueType _:
-                    question = new ValidatedTextFieldWidget(new MoneyValue(0), new MoneyValidator(), statement, environment, style);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(statement.Type));
-            }
-
-            return question;
+            var questionWidget = this.CreateWidgetForQuestion(statement, environment, style);
+            return questionWidget;
         }
 
         public Widget Visit(IfStatement statement, GuiEnvironment environment)
@@ -82,6 +58,36 @@
         public Widget Visit(Statement statement, GuiEnvironment environment)
         {
             return statement.Accept(this, environment);
+        }
+
+        private Widget CreateWidgetForQuestion(QuestionStatement statement, GuiEnvironment environment, WidgetStyle style)
+        {
+            Widget questionWidget;
+            switch (statement.Type)
+            {
+                case BooleanValueType _:
+                    questionWidget = new CheckBoxWidget(new BooleanValue(false), statement, environment, style);
+                    break;
+                case DateValueType _:
+                    questionWidget = new DatePickerWidget(new DateValue(DateTime.Now), statement, environment, style);
+                    break;
+                case StringValueType _:
+                    questionWidget = new TextFieldWidget(new StringValue(string.Empty), statement, environment, style);
+                    break;
+                case DecimalValueType _:
+                    questionWidget = new ValidatedTextFieldWidget(new DecimalValue(0), new DecimalValidator(), statement, environment, style);
+                    break;
+                case IntegerValueType _:
+                    questionWidget = new ValidatedTextFieldWidget(new IntegerValue(0), new IntegerValidator(), statement, environment, style);
+                    break;
+                case MoneyValueType _:
+                    questionWidget = new ValidatedTextFieldWidget(new MoneyValue(0), new MoneyValidator(), statement, environment, style);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(statement.Type));
+            }
+
+            return questionWidget;
         }
     }
 }
