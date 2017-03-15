@@ -1,12 +1,9 @@
 ﻿namespace OffByOne.Ql.Interpreter.Widgets
 {
-    using System.Windows.Controls;
     using System.Windows.Media;
 
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Interpreter.Validators.Base;
-    using OffByOne.Ql.Interpreter.Widgets.Base;
-    using OffByOne.Ql.Values;
     using OffByOne.Ql.Values.Contracts;
 
     public class ValidatedTextFieldWidget : TextFieldWidget

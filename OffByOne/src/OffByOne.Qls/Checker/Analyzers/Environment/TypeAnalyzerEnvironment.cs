@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Qls.Checker.Analyzers
+﻿namespace OffByOne.Qls.Checker.Analyzers.Environment
 {
     using OffByOne.Ql.Visitors.Contracts;
 

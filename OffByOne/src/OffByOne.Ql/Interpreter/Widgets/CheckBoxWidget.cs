@@ -1,13 +1,10 @@
 ﻿namespace OffByOne.Ql.Interpreter.Widgets
 {
-    using System;
     using System.Windows.Controls;
 
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Interpreter.Widgets.Base;
     using OffByOne.Ql.Values;
-    using OffByOne.Ql.Values.Base;
-    using OffByOne.Ql.Values.Contracts;
 
     public class CheckBoxWidget : QuestionWidget
     {

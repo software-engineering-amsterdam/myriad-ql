@@ -1,8 +1,6 @@
 ﻿namespace OffByOne.Ql.Ast.Expressions.Binary.Base
 {
-    using System;
     using System.Collections.Generic;
-    using OffByOne.Ql.Visitors.Contracts;
 
     public abstract class BinaryExpression : Expression
     {

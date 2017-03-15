@@ -1,10 +1,8 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Widgets
 {
-    using OffByOne.Ql.Ast.Literals;
+    using OffByOne.Qls.Ast.Style.Literals;
     using OffByOne.Qls.Ast.Style.Widgets.Base;
     using OffByOne.Qls.Visitors.Contracts;
-
-    using StringLiteral = OffByOne.Qls.Ast.Style.Literals.StringLiteral;
 
     public class DropDownWidget : ListWidget
     {

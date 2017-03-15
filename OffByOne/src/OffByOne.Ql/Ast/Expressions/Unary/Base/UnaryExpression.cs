@@ -1,8 +1,6 @@
 ﻿namespace OffByOne.Ql.Ast.Expressions.Unary.Base
 {
-    using System;
     using System.Collections.Generic;
-    using OffByOne.Ql.Visitors.Contracts;
 
     public abstract class UnaryExpression : Expression
     {

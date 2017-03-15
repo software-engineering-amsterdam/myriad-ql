@@ -8,11 +8,9 @@
     using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Expressions.Unary;
     using OffByOne.Ql.Ast.Literals;
-    using OffByOne.Ql.Checker;
     using OffByOne.Ql.Checker.Analyzers;
     using OffByOne.Ql.Checker.Analyzers.Environment;
     using OffByOne.Ql.Checker.Messages;
-    using OffByOne.Ql.Values;
 
     using Xunit;
 

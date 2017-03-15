@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Qls.Checker.Analyzers
+﻿namespace OffByOne.Qls.Checker.Analyzers.Environment
 {
     using System.Collections.Generic;
 

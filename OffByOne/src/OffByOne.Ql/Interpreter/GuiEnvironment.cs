@@ -5,7 +5,6 @@
 
     using OffByOne.Ql.Common;
     using OffByOne.Ql.Evaluator;
-    using OffByOne.Ql.Interpreter.Widgets.Base;
     using OffByOne.Ql.Values.Contracts;
     using OffByOne.Ql.Visitors.Contracts;
 

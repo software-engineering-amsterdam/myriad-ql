@@ -1,8 +1,6 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Widgets.Base
 {
-    using OffByOne.Ql.Ast.Literals;
-
-    using StringLiteral = OffByOne.Qls.Ast.Style.Literals.StringLiteral;
+    using OffByOne.Qls.Ast.Style.Literals;
 
     public abstract class ListWidget : Widget
     {

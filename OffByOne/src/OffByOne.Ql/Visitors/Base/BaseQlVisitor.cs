@@ -2,7 +2,6 @@
 {
     using MoreDotNet.Extensions.Collections;
 
-    using OffByOne.Ql.Ast;
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Expressions.Binary.Base;
@@ -13,9 +12,7 @@
     using OffByOne.Ql.Ast.Statements.Base;
     using OffByOne.Ql.Ast.ValueTypes;
     using OffByOne.Ql.Ast.ValueTypes.Base;
-    using OffByOne.Ql.Checker;
     using OffByOne.Ql.Checker.Analyzers.Environment;
-    using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Visitors.Contracts;
 
     public class BaseQlVisitor<TResult, TEnvironment>

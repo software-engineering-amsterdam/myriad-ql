@@ -8,6 +8,7 @@
 
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Checker;
+    using OffByOne.Ql.Checker.Collectors;
     using OffByOne.Ql.Checker.Contracts;
     using OffByOne.Qls.Ast.Style.Statements;
     using OffByOne.Qls.Checker.Analyzers;

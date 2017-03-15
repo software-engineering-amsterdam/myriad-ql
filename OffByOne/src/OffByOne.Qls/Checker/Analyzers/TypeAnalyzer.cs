@@ -12,6 +12,7 @@
     using OffByOne.Qls.Ast.Style.Widgets;
     using OffByOne.Qls.Ast.Style.Widgets.Base;
     using OffByOne.Qls.Checker.Analyzers.Contracts;
+    using OffByOne.Qls.Checker.Analyzers.Environment;
     using OffByOne.Qls.Checker.Messages;
     using OffByOne.Qls.Visitors.Base;
 

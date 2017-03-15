@@ -1,7 +1,5 @@
 ﻿namespace OffByOne.Ql.Ast.Expressions.Binary
 {
-    using System.Collections.Generic;
-
     using OffByOne.Ql.Ast.Expressions.Binary.Base;
     using OffByOne.Ql.Visitors.Contracts;
 

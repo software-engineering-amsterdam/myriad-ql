@@ -3,10 +3,6 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Antlr4.Runtime;
-
-    using OffByOne.Qls.Ast.Style;
-    using OffByOne.Qls.Ast.Style.Rules;
     using OffByOne.Qls.Ast.Style.Statements;
     using OffByOne.Qls.Tests.ParserTests.Base;
 

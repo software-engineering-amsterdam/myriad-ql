@@ -1,7 +1,6 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Literals
 {
     using OffByOne.Ql.Values;
-    using OffByOne.Ql.Visitors.Contracts;
     using OffByOne.Qls.Ast.Style.Literals.Base;
     using OffByOne.Qls.Visitors.Contracts;
 

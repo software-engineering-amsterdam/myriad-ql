@@ -1,6 +1,5 @@
 ﻿namespace OffByOne.Ql.Interpreter
 {
-    using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Values.Contracts;
 
     public class AnswerInput

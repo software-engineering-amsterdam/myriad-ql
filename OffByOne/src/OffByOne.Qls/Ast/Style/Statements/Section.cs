@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
 
-    using OffByOne.Ql.Ast.Literals;
     using OffByOne.Qls.Ast.Style.Rules;
     using OffByOne.Qls.Ast.Style.Statements.Base;
     using OffByOne.Qls.Visitors.Contracts;

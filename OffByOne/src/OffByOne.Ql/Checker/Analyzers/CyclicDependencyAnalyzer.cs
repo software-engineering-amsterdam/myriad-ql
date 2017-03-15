@@ -12,6 +12,7 @@
     using OffByOne.Ql.Checker.Analyzers.CircularDependencies;
     using OffByOne.Ql.Checker.Analyzers.Contracts;
     using OffByOne.Ql.Checker.Analyzers.Environment;
+    using OffByOne.Ql.Checker.Collectors;
     using OffByOne.Ql.Checker.Contracts;
     using OffByOne.Ql.Checker.Messages;
     using OffByOne.Ql.Visitors.Base;

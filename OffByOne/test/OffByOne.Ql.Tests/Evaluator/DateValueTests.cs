@@ -5,7 +5,6 @@
 
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
-    using OffByOne.Ql.Ast.Expressions.Unary;
     using OffByOne.Ql.Ast.Literals;
     using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Values;
