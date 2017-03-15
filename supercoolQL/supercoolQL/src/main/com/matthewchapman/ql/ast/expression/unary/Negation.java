@@ -24,6 +24,11 @@ public class Negation extends UnaryOperation implements QLVisitable {
     }
 
     @Override
+    public String toString() {
+        return "!(" + getExpression().toString() + ")";
+    }
+
+    @Override
     public <T> T accept(QLVisitor<T> visitor, String context) {
         return visitor.visit(this, context);
     }

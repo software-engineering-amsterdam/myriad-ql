@@ -9,11 +9,11 @@ public class StringType extends Type {
 
     @Override
     public boolean isCompatible(Type type) {
-        return type.getType().equals("string");
+        return type.toString().equals("string");
     }
 
     @Override
-    public String getType() {
+    public String toString() {
         return "string";
     }
 }

@@ -34,8 +34,8 @@ public class QuestionCollectionTest {
 
     @Test
     public void testGatherQuestions() throws Exception {
-        final int EXPECTED_QUESTIONS = 11;
-        final int EXPECTED_PARAMETERS = 12;
+        final int EXPECTED_QUESTIONS = 12;
+        final int EXPECTED_PARAMETERS = 13;
         questionCollection.gatherQuestions(form);
 
         assertEquals(EXPECTED_PARAMETERS, questionCollection.getQuestionList().size());

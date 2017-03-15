@@ -23,6 +23,11 @@ public class ParameterGroup extends Expression implements QLVisitable {
     }
 
     @Override
+    public String toString() {
+        return expression.toString();
+    }
+
+    @Override
     public <T> T accept(QLVisitor<T> visitor, String context) {
         return visitor.visit(this, context);
     }

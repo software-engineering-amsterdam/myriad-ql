@@ -14,10 +14,16 @@ public class CalculatedQuestion extends Question {
     public CalculatedQuestion(String name, String text, Type type, Expression calculatedValue, int line, int column) {
         super(name, text, type, line, column);
         this.calculatedValue = calculatedValue;
+        System.out.println(toString());
     }
 
     public Expression getCalculation() {
         return this.calculatedValue;
+    }
+
+    @Override
+    public String toString() {
+        return "\t" + getText() + "\n\t" + getName() + ":" + getType() + " = \n\t" + getCalculation();
     }
 
     @Override

@@ -16,6 +16,13 @@ public class StringLiteral extends Expression {
         this.value = value;
     }
 
+    public String getValue() { return this.value; }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
     @Override
     public <T> T accept(QLVisitor<T> visitor, String context) {
         return visitor.visit(this, context);

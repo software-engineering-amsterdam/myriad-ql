@@ -59,7 +59,7 @@ public class QLStructureChecker extends AbstractQLVisitor<Void> {
                     expressionMap.get(parameter.getID()).addAll(parameters);
 
                     if(expressionMap.get(parameter.getID()).contains(parameter.getID())) {
-                        System.err.println(expressionMap.);
+                        //System.err.println(expressionMap.);
                         break;
                     }
 

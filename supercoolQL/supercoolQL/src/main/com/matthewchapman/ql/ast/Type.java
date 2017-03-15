@@ -8,7 +8,7 @@ public abstract class Type extends TreeNode {
 
     public abstract boolean isCompatible(Type type);
 
-    public abstract String getType();
-
+    @Override
+    public abstract String toString();
 
 }

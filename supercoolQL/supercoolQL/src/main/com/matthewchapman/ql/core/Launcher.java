@@ -31,7 +31,6 @@ public class Launcher {
 
         if (inputContent != null) {
             if (!inputContent.isEmpty()) {
-                //TODO ugh, application result should not be here
                 Form ast = coreParser.buildQLAST(inputContent);
                 coreParser.visitAST(ast);
             } else {

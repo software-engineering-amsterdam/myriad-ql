@@ -26,5 +26,18 @@ public class Form extends TreeNode {
         return formName;
     }
 
+    @Override
+    public String toString() {
+
+        String result = ("form " + formName + "{\n");
+
+        for(Statement statement : this.getStatements()) {
+
+        }
+
+        return null;
+
+    }
+
 
 }

@@ -2,7 +2,9 @@ package com.matthewchapman.ql.core;
 
 import com.matthewchapman.antlr.QLLexer;
 import com.matthewchapman.antlr.QLParser;
+import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Form;
+import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.parsing.AntlrErrorListener;
 import com.matthewchapman.ql.parsing.AntlrVisitor;
 import com.matthewchapman.ql.validation.QLValidator;
@@ -19,24 +21,44 @@ public class CoreParser {
 
     //TODO this should not all be public
     public Form buildQLAST(String input) {
-        AntlrErrorListener errorListener = new AntlrErrorListener();
-        QLLexer lexer = new QLLexer(new ANTLRInputStream(input));
-        lexer.removeErrorListeners();
-        lexer.addErrorListener(errorListener);
 
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        QLParser parser = new QLParser(tokens);
-        parser.removeErrorListeners();
-        parser.addErrorListener(errorListener);
-
-        QLParser.FormDeclarationContext formDeclarationContext = parser.formDeclaration();
-        AntlrVisitor visitor = new AntlrVisitor();
-
-        return (Form) visitor.visit(formDeclarationContext);
+        QLParser parser = getQlParser(input);
+        return getForm(parser);
 
     }
 
-    void visitAST(Form form) {
+    public Form getForm(QLParser parser) {
+        AntlrVisitor visitor = new AntlrVisitor();
+        QLParser.FormDeclarationContext formDeclarationContext = parser.formDeclaration();
+        return (Form) visitor.visit(formDeclarationContext);
+    }
+
+    public Statement getStatement(QLParser parser) {
+        AntlrVisitor visitor = new AntlrVisitor();
+        QLParser.StatementContext statementContext = parser.statement();
+        return (Statement) visitor.visit(statementContext);
+    }
+
+    public Expression getExpression(QLParser parser) {
+        AntlrVisitor visitor = new AntlrVisitor();
+        QLParser.ExpressionContext expressionContext = parser.expression();
+        return (Expression) visitor.visit(expressionContext);
+    }
+
+    public QLParser getQlParser(String input) {
+
+        QLLexer lexer = new QLLexer(new ANTLRInputStream(input));
+        lexer.removeErrorListeners();
+        lexer.addErrorListener(new AntlrErrorListener());
+
+        QLParser parser = new QLParser(new CommonTokenStream(lexer));
+        parser.removeErrorListeners();
+        parser.addErrorListener(new AntlrErrorListener());
+
+        return parser;
+    }
+
+    public void visitAST(Form form) {
         QLValidator checker = new QLValidator(form);
         checker.runChecks();
     }

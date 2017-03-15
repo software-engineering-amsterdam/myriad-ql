@@ -10,10 +10,17 @@ import com.matthewchapman.ql.validation.QLVisitor;
  */
 public class IntegerLiteral extends Expression {
 
-    private Integer value;
+    private int value;
 
     public IntegerLiteral(String value) {
         this.value = Integer.parseInt(value);
+    }
+
+    public int getValue() { return this.value; }
+
+    @Override
+    public String toString() {
+        return Integer.toString(value);
     }
 
     @Override

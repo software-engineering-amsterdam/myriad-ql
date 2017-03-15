@@ -16,6 +16,11 @@ public class LessThanEqualTo extends BinaryOperation implements QLVisitable {
     }
 
     @Override
+    public String toString() {
+        return "(" + getLeft() + " <= " + getRight() + ")";
+    }
+
+    @Override
     public <T> T accept(QLVisitor<T> visitor, String context) {
         return visitor.visit(this, context);
     }

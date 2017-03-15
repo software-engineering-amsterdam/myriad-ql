@@ -21,7 +21,6 @@ public class Question extends Statement {
         this.type = type;
         this.setColumn(column);
         this.setLine(line);
-
     }
 
     public String getName() {
@@ -36,6 +35,10 @@ public class Question extends Statement {
         return this.text;
     }
 
+    @Override
+    public String toString() {
+        return "\t" + this.text + "\n\t" + this.name + ":" + this.type;
+    }
 
     @Override
     public <T> T accept(QLVisitor<T> visitor, String context) {

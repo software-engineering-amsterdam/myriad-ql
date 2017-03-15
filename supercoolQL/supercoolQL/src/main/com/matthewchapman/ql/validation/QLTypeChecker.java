@@ -47,7 +47,7 @@ public class QLTypeChecker extends AbstractQLVisitor<Type> {
         Type left = operation.getLeft().accept(this, null);
         Type right = operation.getRight().accept(this, null);
 
-        if (!left.getType().equals("boolean") || !right.getType().equals("boolean")) {
+        if (!left.toString().equals("boolean") || !right.toString().equals("boolean")) {
             System.err.println("Incorrect boolean expression");     //TODO proper error
             return new ErrorType();
         }
@@ -166,7 +166,7 @@ public class QLTypeChecker extends AbstractQLVisitor<Type> {
     public Type visit(Negation negation, String context) {
         Type type = negation.getExpression().accept(this, null);
 
-        if (!type.getType().equals("boolean")) {
+        if (!type.toString().equals("boolean")) {
             return new ErrorType();
         }
 
