@@ -2,6 +2,7 @@ require 'parslet'
 
 require 'prophet/ast'
 require 'prophet/checkers'
+require 'prophet/collectors'
 require 'prophet/evaluator'
 require 'prophet/parser'
 require 'prophet/transform'
