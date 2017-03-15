@@ -52,7 +52,7 @@
             if (statement.ComputationExpression != null)
             {
                 this.GetVariables(statement.ComputationExpression).ForEach(x => this.circularDependencyChecker
-                    .AddDependency(new Dependency(x, statement.Identifier)));
+                    .AddDependency(new Dependency(statement.Identifier, x)));
             }
 
             return base.Visit(statement, environment);
