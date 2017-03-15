@@ -1,14 +1,12 @@
 package org.uva.taxfree.ast;
 
-import jdk.nashorn.internal.ir.Block;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.uva.taxfree.gen.QLGrammarLexer;
 import org.uva.taxfree.gen.QLGrammarParser;
-import org.uva.taxfree.model.environment.Environment;
-import org.uva.taxfree.model.node.blocks.BlockNode;
+import org.uva.taxfree.model.node.blocks.FormNode;
 
 import java.io.File;
 import java.io.FileReader;
@@ -16,12 +14,10 @@ import java.io.IOException;
 import java.util.BitSet;
 
 public class AstBuilder {
-    private final GrammarListener mListener;
-    private final QLGrammarParser mGrammarParser;
+    private final File mInputFile;
 
-    public AstBuilder(File input) throws IOException {
-        mListener = new GrammarListener();
-        mGrammarParser = createGrammarParser(input);
+    public AstBuilder(File inputFile) throws IOException {
+        mInputFile = inputFile;
     }
 
     private QLGrammarParser createGrammarParser(File inputFile) throws IOException {
@@ -32,12 +28,8 @@ public class AstBuilder {
         return new QLGrammarParser(commonTokenStream);
     }
 
-    public BlockNode generateTree() throws IOException {
-        return generateEnvironment().getRootNode();
 
-    }
-
-    private Environment generateEnvironment() throws IOException {
+    public FormNode generateTree() throws IOException {
         ANTLRErrorListener errorListener = new ANTLRErrorListener() {
             @Override
             public void syntaxError(Recognizer<?, ?> recognizer, Object o, int line, int column, String message, RecognitionException e) {
@@ -59,16 +51,16 @@ public class AstBuilder {
 
             }
         };
+        QLGrammarParser parser = createGrammarParser(mInputFile);
+        parser.addErrorListener(errorListener);
+        parser.addErrorListener(errorListener);
 
-        mGrammarParser.addErrorListener(errorListener);
-        mGrammarParser.addErrorListener(errorListener);
-
-        QLGrammarParser.FormContext formContext = mGrammarParser.form();
+        QLGrammarParser.FormContext formContext = parser.form();
 
         ParseTreeWalker walker = new ParseTreeWalker();
         GrammarListener listener = new GrammarListener();
         walker.walk(listener, formContext);
-        return listener.getEnvironment(); //TODO => replace environment by BlockNode only
+        return listener.getAst();
     }
 }
 

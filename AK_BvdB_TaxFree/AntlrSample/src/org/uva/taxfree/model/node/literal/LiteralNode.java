@@ -1,7 +1,12 @@
 package org.uva.taxfree.model.node.literal;
 
+import org.uva.taxfree.gui.MessageList;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
+import org.uva.taxfree.model.types.Type;
+
+import java.util.List;
+import java.util.Set;
 
 public abstract class LiteralNode extends ExpressionNode {
     private final String mId;
@@ -17,11 +22,26 @@ public abstract class LiteralNode extends ExpressionNode {
 
     @Override
     public void fillSymbolTable(SymbolTable symbolTable) {
-        symbolTable.addVariable(mId);
+        // Intentionally left blank
     }
 
     @Override
-    public boolean isValid() {
-        return false;
+    public Type getType() {
+        return null;
+    }
+
+    @Override
+    public void getDependencies(Set<String> dependencies) {
+        // Intentionally left blank
+    }
+
+    @Override
+    public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
+        // intentionally left blank
+    }
+
+    @Override
+    public void generateVisibleIds(List<String> visibleIds) {
+        // intentionally left blank
     }
 }

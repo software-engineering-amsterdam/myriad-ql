@@ -2,14 +2,16 @@ package QL.ui.error;
 
 import java.util.List;
 
-import QL.Warning;
+import QL.errorhandling.Warning;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Modality;
 
 public class WarningDialog extends FaultDialog {
 
-	List<Warning> warnings;
-	Alert dialog;
+	private final List<Warning> warnings;
+	private final Alert dialog;
 	
 	public WarningDialog(List<Warning> warnings) {
 
@@ -20,10 +22,10 @@ public class WarningDialog extends FaultDialog {
 		dialog.setHeaderText(null);	
 		
 	}
-
+	
 	@Override
 	public void show() {
-		super.show(warnings, dialog);		
+		super.show(warnings, dialog);
 	}
 	
 }

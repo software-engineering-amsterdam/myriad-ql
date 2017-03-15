@@ -9,14 +9,14 @@ import QL.value.Value;
 
 public class Text implements Field {
 	
-	private TextField field;
+	private final TextField field;
 	
 	public Text(String name, Notifier notifier, StringValue value) {
 		this.field = new TextField();
 		
-		if (value.isSet()) {
-			field.setText(value.getValue());
-		}
+		field.setId(name);
+		field.setText(value.getValue());
+		field.positionCaret(value.getValue().length());
 		
 		field.textProperty().addListener(new ChangeListener<String>()  {
             @Override
@@ -40,5 +40,6 @@ public class Text implements Field {
 	public TextField getField() {
 		return field;
 	}
+	
 
 }

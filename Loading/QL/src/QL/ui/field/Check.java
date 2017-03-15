@@ -9,11 +9,13 @@ import QL.value.Value;
 
 public class Check implements Field {
 
-	private CheckBox field;
+	private final CheckBox field;
 	
 	public Check(String name, Notifier notifier, BoolValue value) {
 		
 		this.field = new CheckBox();
+		field.setId(name);
+		
 		field.setSelected(value.getValue());
 		
 		field.selectedProperty().addListener(new ChangeListener<Boolean>()  {

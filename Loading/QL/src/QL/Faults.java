@@ -3,21 +3,40 @@ package QL;
 import java.util.ArrayList;
 import java.util.List;
 
+import QL.errorhandling.Error;
+import QL.errorhandling.Warning;
+import QL.ui.error.ErrorDialog;
+import QL.ui.error.WarningDialog;
+
 public class Faults {
 	
-	private List<Warning> warnings;
-	private List<Error> errors;
+	private final List<Warning> warnings;
+	private final List<Error> errors;
 	
 	public Faults() {
-		warnings = new ArrayList<Warning>();
-		errors = new ArrayList<Error>();
+		warnings = new ArrayList<>();
+		errors = new ArrayList<>();
 	}
 	
-	public boolean hasWarnings() {
+	// TODO this class now depends on the GUI
+    public boolean showAndContinue() {
+    	if (hasErrors()) {
+    		ErrorDialog dialog = new ErrorDialog(errors);
+    		dialog.show();
+    		return false;
+    	}   	
+    	if (hasWarnings()) {
+        	WarningDialog dialog = new WarningDialog(warnings);
+        	dialog.show();
+    	} 
+    	return true;
+    }
+	
+	private boolean hasWarnings() {
 		return !warnings.isEmpty();
 	}
 	
-	public boolean hasErrors() {
+	private boolean hasErrors() {
 		return !errors.isEmpty();
 	}
 	
@@ -28,14 +47,5 @@ public class Faults {
 	public void add(Error error) {
 		errors.add(error);
 	}
-	
-	public List<Warning> getWarnings() {
-		return warnings;
-	}
-	
-	public List<Error> getErrors() {
-		return errors;
-	}
-
 	
 }

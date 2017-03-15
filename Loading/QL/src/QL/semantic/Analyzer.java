@@ -7,18 +7,18 @@ import QL.ast.type.Type;
 
 public class Analyzer {
 	
-	Environment environment;
+	private Environment environment;
 
     public Faults analyze(Form form) {
         this.environment = new Environment();
-        VerifyQuestions QVisitor = new VerifyQuestions(environment);
-        QVisitor.visit(form);
+        VerifyQuestions verifyQuestions = new VerifyQuestions(environment);
+        verifyQuestions.visit(form);
 
         VerifyExpressions verifyExpressions = new VerifyExpressions(environment);
         verifyExpressions.visit(form);
 
-        checkCyclicDependencies cyclicDependenciesVisitor = new checkCyclicDependencies(environment);
-        cyclicDependenciesVisitor.visit(form);
+        CheckCyclicDependencies cyclicVisitor = new CheckCyclicDependencies(environment);
+        cyclicVisitor.visit(form);
 
         return environment.getFaults();
 

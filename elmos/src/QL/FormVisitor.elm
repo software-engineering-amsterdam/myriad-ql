@@ -1,4 +1,4 @@
-module QL.FormVisitor exposing (Config, Order, defaultConfig, actionLambda, inspect, continue, post, pre)
+module QL.FormVisitor exposing (Config, Order, defaultConfig, actionLambda, inspect, continue, on)
 
 import QL.AST exposing (..)
 
@@ -14,8 +14,7 @@ type alias Config context =
 
 type Order context node
     = Continue
-    | Pre (node -> context -> context)
-    | Post (node -> context -> context)
+    | On (node -> context -> context)
 
 
 continue : Order context node
@@ -23,14 +22,9 @@ continue =
     Continue
 
 
-post : (node -> context -> context) -> Order context node
-post =
-    Post
-
-
-pre : (node -> context -> context) -> Order context node
-pre =
-    Pre
+on : (node -> context -> context) -> Order context node
+on =
+    On
 
 
 actionLambda : Order context node -> (context -> context) -> node -> context -> context
@@ -39,10 +33,7 @@ actionLambda action =
         Continue ->
             (\f _ context -> f context)
 
-        Pre g ->
-            (\f node context -> g node context |> f)
-
-        Post g ->
+        On g ->
             (\f node context -> f context |> g node)
 
 

@@ -6,7 +6,7 @@ import QL.ast.ComputedQuestion;
 import QL.ast.IfElseStatement;
 import QL.ast.Question;
 import QL.ast.Statement;
-import QL.evaluation.Environment;
+import QL.Environment;
 import QL.evaluation.Evaluator;
 import QL.ui.field.Field;
 import QL.value.BoolValue;
@@ -15,9 +15,9 @@ import QL.value.Value;
 
 public class QEvaluator extends Evaluator {
 
-	private List<Row> activeQuestions; // TODO Row String and type?
-    private QL.evaluation.Environment answers;
-    private Notifier notifier;
+	private final List<Row> activeQuestions;
+    private final Environment answers;
+    private final Notifier notifier;
 
 	public QEvaluator(Environment answers, Notifier notifier) {
 		super(answers);
@@ -38,38 +38,39 @@ public class QEvaluator extends Evaluator {
     
     @Override
     public void visit(ComputedQuestion question) {
-    	
-        System.out.println("Evaluator: computed question");
         Value value = question.getComputedQuestion().accept(this);
-
-        // TODO only works with integers...
-        if (value.isSet()) {
-            answers.addAnswer(question.getVariable(), value);
-        }
+        answers.addAnswer(question.getVariable(), value);
 
         activeQuestions.add(createRow(question));
     }
     
     private Row createRow(Question question) {
-        Value answer = answers.getAnswer(question.getVariable());
-        Field field = question.getType().getField(question.getVariable(), notifier, answer);
+    	
+    	Value answer = getAnswer(question);
+
+        Field field = answer.getField(question.getVariable(), notifier, answer);
         
-        return new Row(question.getVariable(), question.getLabel(), question.getType(), field);
+        return new Row(question.getVariable(), question.getLabel(), field);
+    }
+
+    private Value getAnswer(Question question) {
+
+        if (!answers.isAnswered(question.getVariable())) {
+            return getDefaultAnswer(question);
+        }
+
+        return answers.getAnswer(question.getVariable());
+    }
+
+    private Value getDefaultAnswer(Question question) {
+        return question.getType().accept(this);
     }
 
     @Override
     public void visit(Statement statement) {
         Value value = statement.getExpression().accept(this);
-        
-        // TODO assert atom != null
-        if (value == null) {
-//        	throw new AssertionError("The operation " + statement.getExpression().getClass() 
-//        			+ " ")
-        }
-        
-        // TODO nicer check for emptyAtom?
-        if (value.isSet() && ((BoolValue) value).getValue()) { // TODO check booltype?
-            System.out.println("Evaluator: statement, QL.value = " + ((BoolValue) value).getValue());
+
+        if (((BoolValue) value).getValue()) {
         	statement.getBlock().accept(this);
         }
     }
@@ -78,18 +79,9 @@ public class QEvaluator extends Evaluator {
     public void visit(IfElseStatement statement) {
         Value value = statement.getExpression().accept(this);
 
-        // TODO assert atom != null
-        if (value == null) {
-        	throw new AssertionError("The operation " + statement.getExpression().getClass()
-        			+ " ");
-        }
-
-        // TODO nicer check for emptyAtom?
-        if (value.isSet() && ((BoolValue) value).getValue()) { // TODO check booltype?
-            System.out.println("Evaluator: statement, QL.value = " + ((BoolValue) value).getValue());
+        if (((BoolValue) value).getValue()) {
         	statement.getBlock().accept(this);
         } else {
-            System.out.println("Evaluator: visit elseblock");
             statement.getElseBlock().accept(this);
         }
     }

@@ -1,6 +1,5 @@
 package QL;
 
-import QL.evaluation.Environment;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -12,9 +11,9 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		String tmp = "form Testing { "
 				 + "Name0: \"Question0\" integer "
-				 + "Name1: \"Question1\" integer (Name0 + 2)"
+				 + "Name1: \"Question1\" boolean "
 				 + "if (Name0 < 5) {"
-				 + "if (Name0 == 4) {"
+				 + "if (Name99 == 4) {"
  		 		 + "Name2: \"Question2\" boolean"
 				 + "} else { "
 				 + "Name9: \"Question9\" boolean } } "
@@ -58,4 +57,5 @@ public class Main {
 		Questionnaire questionnaire = new Questionnaire();
 		questionnaire.main(form, env, faults);
 	}
+	
 }

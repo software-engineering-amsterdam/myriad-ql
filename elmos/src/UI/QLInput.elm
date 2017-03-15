@@ -1,6 +1,6 @@
 module UI.QLInput exposing (Model, Msg, init, asForm, update, view)
 
-import Html exposing (Html, b, div, form, h3, pre, text, textarea)
+import Html exposing (Html, b, div, form, pre, text, textarea)
 import Html.Attributes exposing (class, cols, defaultValue, rows, style, id)
 import Html.Events exposing (onInput)
 import Html.Keyed exposing (node)
@@ -34,6 +34,24 @@ init =
 exampleDsl : String
 exampleDsl =
     """form taxOfficeExample {
+  "What is your gender?"
+    gender: string
+  "What was your age on new year's eve in 2016"
+    age: integer
+  if (age > 0) {
+    "You were born in "
+    birthYear: integer = 2016 - age
+
+    if (age > 50){
+      "Damn you're old!"
+      uselessStatement: string = " "
+    }
+  }
+  "Are you married?"
+    marritalStatus: string
+  "How do you rate the above questions?"
+    rating : integer
+
   "Did you sell a house in 2010?"
     hasSoldHouse: boolean
   "Did you buy a house in 2010?"
@@ -98,10 +116,17 @@ view { rawInput, parsedForm, messages } =
                         ]
                     ]
                 , div [ class "col-md-6" ]
-                    [ h3 [] [ text "TypeChecker" ]
-                    , div []
-                        (List.map renderMessage messages)
-                    ]
+                    (if parsedForm == Nothing then
+                        [ UI.Messages.error
+                            [ text "Invalid Form" ]
+                        ]
+                     else if List.isEmpty messages then
+                        [ UI.Messages.success
+                            [ text "Everything seems OK!" ]
+                        ]
+                     else
+                        List.map renderMessage messages
+                    )
                 ]
           )
         , ( "preview", pre [] [ text <| toString parsedForm ] )
@@ -171,9 +196,9 @@ renderErrorMessage message =
             , UI.Messages.renderType conditionType
             ]
 
-        InvalidComputedFieldType id computedType fieldType ->
+        InvalidComputedFieldType identifier computedType fieldType ->
             [ text "Question "
-            , UI.Messages.renderId id
+            , UI.Messages.renderId identifier
             , text " is defined as "
             , UI.Messages.renderType computedType
             , text " but it's computation is of type "

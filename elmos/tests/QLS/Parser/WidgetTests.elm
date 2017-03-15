@@ -26,6 +26,10 @@ all =
           , "radio( \"Yes\",\"No\" )"
           , Just (Radio [ "Yes", "No" ])
           )
+        , ( "dropdown widget"
+          , "radio( \"Yes\",\"No\", \"Maybe\" )"
+          , Just (Radio [ "Yes", "No", "Maybe" ])
+          )
         , ( "spinbox widget"
           , "spinbox"
           , Just Spinbox

@@ -1,35 +1,25 @@
 package QL.evaluation;
 
+import QL.Environment;
 import QL.ast.*;
 import QL.ast.atom.BoolAtom;
 import QL.ast.atom.IntegerAtom;
 import QL.ast.atom.StringAtom;
-import QL.ast.expression.AddExpression;
-import QL.ast.expression.AndExpression;
-import QL.ast.expression.DivExpression;
-import QL.ast.expression.EqExpression;
-import QL.ast.expression.GEqExpression;
-import QL.ast.expression.GExpression;
-import QL.ast.expression.IdExpression;
-import QL.ast.expression.LEqExpression;
-import QL.ast.expression.LExpression;
-import QL.ast.expression.MinusExpression;
-import QL.ast.expression.MulExpression;
-import QL.ast.expression.NEqExpression;
-import QL.ast.expression.NotExpression;
-import QL.ast.expression.OrExpression;
-import QL.ast.expression.PlusExpression;
-import QL.ast.expression.SubExpression;
+import QL.ast.expression.*;
+import QL.ast.type.BooleanType;
+import QL.ast.type.IntegerType;
+import QL.ast.type.StringType;
+import QL.ast.type.UnknownType;
 import QL.value.BoolValue;
 import QL.value.IntegerValue;
 import QL.value.StringValue;
 import QL.value.Value;
 
-public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value> {
+public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value>, TypeVisitor<Value> {
 
 	private final Environment environment;
 
-	public Evaluator(Environment environment) {
+	protected Evaluator(Environment environment) {
 		this.environment = environment;
 	}
 
@@ -56,106 +46,104 @@ public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value> {
 
     @Override
     public void visit(ComputedQuestion question) {
-        Value value = question.getComputedQuestion().accept(this);
+        question.getComputedQuestion().accept(this);
     }
 
     @Override
     public void visit(Statement statement) {
-        Value value = statement.getExpression().accept(this);
-        // Add to environment
-        statement.getBlock().accept(this); // TODO circulair dependencies?
+	    statement.getExpression().accept(this);
+        statement.getBlock().accept(this);
     }
 
     @Override
     public void visit(IfElseStatement statement) {
-        Value value = statement.getExpression().accept(this);
-        // Add to environment
-        statement.getBlock().accept(this); // TODO circulair dependencies?
-        statement.getElseBlock().accept(this); // TODO circulair dependencies?
+	    statement.getExpression().accept(this);
+        statement.getBlock().accept(this);
+        statement.getElseBlock().accept(this);
     }
 
     @Override
-    public Value visit(AddExpression expr) {
+    public Value visit(AddExpr expr) {
         return expr.getLhs().accept(this).add(expr.getRhs().accept(this));
     }
 
     @Override
-    public Value visit(AndExpression expr) {
+    public Value visit(AndExpr expr) {
         return expr.getLhs().accept(this).and(expr.getRhs().accept(this));
     }
 
     @Override
-    public Value visit(DivExpression expr) {
+    public Value visit(DivExpr expr) {
         return expr.getLhs().accept(this).div(expr.getRhs().accept(this));
     }
 
     @Override
-    public Value visit(EqExpression expr) {
+    public Value visit(EqExpr expr) {
         return expr.getLhs().accept(this).eq(expr.getRhs().accept(this));
     }
 
     @Override
-    public Value visit(GEqExpression expr) {
+    public Value visit(GEqExpr expr) {
         return expr.getLhs().accept(this).greaterEq(expr.getRhs().accept(this));
     }
 
     @Override
-    public Value visit(GExpression expr) {
+    public Value visit(GExpr expr) {
         return expr.getLhs().accept(this).greater(expr.getRhs().accept(this));
     }
 
     @Override
-	public Value visit(IdExpression id) {
-
+	public Value visit(IdExpr id) {
+    	    	
 		if (!environment.isAnswered(id.getName())) {
-			return environment.getType(id.getName()).getValue();
+			return environment.getType(id.getName()).accept(this);
 		}
 
 		return environment.getAnswer(id.getName());
 	}
 
     @Override
-    public Value visit(LEqExpression expr) {
+    public Value visit(LEqExpr expr) {
         return expr.getLhs().accept(this).lessEq(expr.getRhs().accept(this));
     }
 
     @Override
-    public Value visit(LExpression expr) {
+    public Value visit(LExpr expr) {
         return expr.getLhs().accept(this).less(expr.getRhs().accept(this));
     }
 
     @Override
-    public Value visit(MinusExpression expr) {
+    public Value visit(MinusExpr expr) {
         return expr.getLhs().accept(this).min();
     }
 
     @Override
-    public Value visit(MulExpression expr) {
+    public Value visit(MulExpr expr) {
         return expr.getLhs().accept(this).mul(expr.getRhs().accept(this));
     }
 
     @Override
-    public Value visit(NEqExpression expr) {
+    public Value visit(NEqExpr expr) {
         return expr.getLhs().accept(this).notEq(expr.getRhs().accept(this));
     }
 
     @Override
-    public Value visit(NotExpression expr) {
+    public Value visit(NotExpr expr) {
         return expr.getLhs().accept(this).not();
     }
 
     @Override
-    public Value visit(OrExpression expr) {
+    public Value visit(OrExpr expr) {
         return expr.getLhs().accept(this).or(expr.getRhs().accept(this));
     }
 
     @Override
-    public Value visit(PlusExpression expr) {
+    public Value visit(PlusExpr expr) {
         return expr.getLhs().accept(this).plus();
     }
 
     @Override
-    public Value visit(SubExpression expr) {
+    public Value visit(SubExpr expr) {
         return expr.getLhs().accept(this).sub(expr.getRhs().accept(this));
     }
 
@@ -173,6 +161,26 @@ public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value> {
     public Value visit(StringAtom expr) {
 	    return new StringValue(expr.getAtom());
     }
+
+	@Override
+	public Value visit(BooleanType type) {
+		return new BoolValue();
+	}
+
+	@Override
+	public Value visit(IntegerType type) {
+		return new IntegerValue();
+	}
+
+	@Override
+	public Value visit(StringType type) {
+		return new StringValue();
+	}
+
+	@Override
+	public Value visit(UnknownType unknownType) {
+        throw new RuntimeException("Should never visit an unknown type during evaluation");
+	}
 }
 
 

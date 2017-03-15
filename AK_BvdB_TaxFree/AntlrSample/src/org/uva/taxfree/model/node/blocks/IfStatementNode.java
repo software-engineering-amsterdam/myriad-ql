@@ -1,31 +1,36 @@
 package org.uva.taxfree.model.node.blocks;
 
+import org.uva.taxfree.gui.MessageList;
 import org.uva.taxfree.model.environment.SymbolTable;
 import org.uva.taxfree.model.node.Node;
 import org.uva.taxfree.model.node.expression.ExpressionNode;
 
-import java.util.Set;
+import java.util.List;
 
 public class IfStatementNode extends BlockNode {
-    private final ExpressionNode expression;
+    private final ExpressionNode mExpression;
 
-    public IfStatementNode(ExpressionNode expression, Set<Node> children) {
+    public IfStatementNode(ExpressionNode expression, List<Node> children) {
         super(children);
-        this.expression = expression;
+        mExpression = expression;
     }
 
     @Override
-    protected boolean isVisible() {
-        return ("true".equals(expression.evaluate()));
-    }
-
-    @Override
-    public void setVisible(boolean isVisible) {
-        super.setVisible(isVisible() && isVisible);
+    public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
+        super.checkSemantics(symbolTable, semanticsMessages);
+        mExpression.checkSemantics(symbolTable, semanticsMessages);
     }
 
     @Override
     public void fillSymbolTable(SymbolTable symbolTable) {
-        symbolTable.addExpression(expression);
+        super.fillSymbolTable(symbolTable);
+        mExpression.fillSymbolTable(symbolTable);
     }
+
+    @Override
+    public boolean conditionTrue() {
+        return mExpression.evaluate().equals("true");
+    }
+
+
 }

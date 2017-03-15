@@ -49,7 +49,9 @@ formItemsTests =
           , "\"label\" id: integer\nif (bar) { \"label\" id: integer } else { \"label\" id: integer }"
           , Just
                 [ Field "label" ( "id", Location 0 0 ) IntegerType
-                , IfThenElse (Var ( "bar", Location 0 0 )) [ Field "label" ( "id", Location 0 0 ) IntegerType ] [ Field "label" ( "id", Location 0 0 ) IntegerType ]
+                , IfThenElse (Var ( "bar", Location 0 0 ))
+                    [ Field "label" ( "id", Location 0 0 ) IntegerType ]
+                    [ Field "label" ( "id", Location 0 0 ) IntegerType ]
                 ]
           )
         , ( "should parse multiple form items"
@@ -95,7 +97,16 @@ fieldTests =
         , ( "should only support valid types", "\"label\" id: invalid", Nothing )
         , ( "should parse field with expression"
           , "\"label\" id: integer = 1 +3"
-          , Just (ComputedField "label" ( "id", Location 0 0 ) IntegerType (ArithmeticExpression Plus (Location 0 0) (Integer (Location 0 0) 1) (Integer (Location 0 0) 3)))
+          , Just
+                (ComputedField "label"
+                    ( "id", Location 0 0 )
+                    IntegerType
+                    (ArithmeticExpression Plus
+                        (Location 0 0)
+                        (Integer (Location 0 0) 1)
+                        (Integer (Location 0 0) 3)
+                    )
+                )
           )
         , ( "should parse field with expression that is only a var name"
           , "\"label\" id: integer = someVarName"
@@ -124,6 +135,14 @@ ifBlockTests =
               )
             , ( "should parse if with else block"
               , "if (x) {\"label\" id: integer} else {\"label\" id: integer}"
+              , Just (IfThenElse (Var ( "x", Location 0 0 )) basicBlockContent basicBlockContent)
+              )
+            , ( "should allow whitespace between parens in condition for if block"
+              , "if( x ){\"label\" id:integer}"
+              , Just (IfThen (Var ( "x", Location 0 0 )) basicBlockContent)
+              )
+            , ( "should allow whitespace between parens in condition for if else block"
+              , "if ( x ) {\"label\" id: integer} else {\"label\" id: integer}"
               , Just (IfThenElse (Var ( "x", Location 0 0 )) basicBlockContent basicBlockContent)
               )
             ]

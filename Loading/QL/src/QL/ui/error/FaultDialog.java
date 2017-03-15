@@ -2,14 +2,14 @@ package QL.ui.error;
 
 import java.util.List;
 
-import QL.Fault;
+import QL.errorhandling.Fault;
 import javafx.scene.control.Alert;
 
-public abstract class FaultDialog  {
+abstract class FaultDialog  {
 
 	public abstract void show();
 	
-	protected <T extends Fault> void show(List<T> faults, Alert dialog) {
+	<T extends Fault> void show(List<T> faults, Alert dialog) {
 		String message = "";
 		for (Fault fault : faults) {
 			message += fault.show() + "\n\n";

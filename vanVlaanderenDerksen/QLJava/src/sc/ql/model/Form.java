@@ -2,21 +2,24 @@ package sc.ql.model;
 
 import java.util.List;
 
-public class Form implements Node {
-	private final List<Node> form_elements;
+import sc.ql.model.visitors.FormVisitor;
+
+public class Form extends Node {
+	private final List<FormElement> formElements;
 	
-	public Form(List<Node> form_elements) {
-		this.form_elements = form_elements; 
+	public Form(List<FormElement> formElements) {
+		this.formElements = formElements; 
 	}
 	
-	public List<Node> getFormElements() {
-        return this.form_elements;
+	public List<FormElement> getFormElements() {
+        return this.formElements;
     }
 	
-	public Node getFormElement(Integer index) {
-        return this.form_elements.get(index);
+	public FormElement getFormElement(Integer index) {
+        return this.formElements.get(index);
     }
-
-	@Override
-	public <T> T accept(NodeVisitor<T> visitor) { return null; }
+	
+	public <T> T accept(FormVisitor<T> visitor) {
+		return visitor.visit(this);
+	}
 }

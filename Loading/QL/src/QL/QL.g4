@@ -15,15 +15,13 @@ block returns [Block result]
  : '{' blockItems { $result = new Block($blockItems.result, $blockItems.start.getLine()); } '}'
  ;
 
-// TODO decide on maximum characters on one line
-// TODO these string have quotes
 blockItems returns [List<BlockItem> result]
 @ init {
 	$result = new ArrayList<BlockItem>();
 }
- : ( ID ':' STRING type      { $result.add(new Question($ID.text, $STRING.text, $type.result, $ctx.start.getLine())); }
- |   ID ':' STRING type expr { $result.add(new ComputedQuestion($ID.text, $STRING.text, $type.result, $expr.result, $ctx.start.getLine())); }
- |   'if' '(' expr ')' ifblock = block 'else' elseblock = block { $result.add(new IfElseStatement($expr.result, $ifblock.result, $elseblock.result, $ctx.start.getLine())); } // TODO add else
+ : ( ID ':' str type      { $result.add(new Question($ID.text, $str.result, $type.result, $ctx.start.getLine())); }
+ |   ID ':' str type expr { $result.add(new ComputedQuestion($ID.text, $str.result, $type.result, $expr.result, $ctx.start.getLine())); }
+ |   'if' '(' expr ')' ifblock = block 'else' elseblock = block { $result.add(new IfElseStatement($expr.result, $ifblock.result, $elseblock.result, $ctx.start.getLine())); }
  |   'if' '(' expr ')' block { $result.add(new Statement($expr.result, $block.result, $ctx.start.getLine())); }
    )*
  ;
@@ -34,32 +32,35 @@ type returns [Type result]
  | 'string'  { $result = new StringType($ctx.start.getLine()); }
  ;
 
-// TODO implement precedence
 expr returns [Expression result]
  : '(' expr ')' { $result = $expr.result; }
- | lhs = expr '/'  rhs = expr { $result = new DivExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '*'  rhs = expr { $result = new MulExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '+'  rhs = expr { $result = new AddExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '-'  rhs = expr { $result = new SubExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '==' rhs = expr { $result = new EqExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '!=' rhs = expr { $result = new NEqExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '<=' rhs = expr { $result = new LEqExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '>=' rhs = expr { $result = new GEqExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '>'  rhs = expr { $result = new GExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '<'  rhs = expr { $result = new LExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '&&' rhs = expr { $result = new AndExpression($lhs.result, $rhs.result, $lhs.start.getLine()); }
- | lhs = expr '||' rhs = expr { $result = new OrExpression($lhs.result, $rhs.result, $lhs.start.getLine()); } 
- | '!' expr { $result = new NotExpression($expr.result, $expr.start.getLine()); }
- | '+' expr { $result = new PlusExpression($expr.result, $expr.start.getLine()); }
- | '-' expr { $result = new MinusExpression($expr.result, $expr.start.getLine()); } 
- | ID  { $result = new IdExpression($ID.text, $ctx.start.getLine()); }
+ | lhs = expr '/'  rhs = expr { $result = new DivExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '*'  rhs = expr { $result = new MulExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '+'  rhs = expr { $result = new AddExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '-'  rhs = expr { $result = new SubExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '==' rhs = expr { $result = new EqExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '!=' rhs = expr { $result = new NEqExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '<=' rhs = expr { $result = new LEqExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '>=' rhs = expr { $result = new GEqExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '>'  rhs = expr { $result = new GExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '<'  rhs = expr { $result = new LExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '&&' rhs = expr { $result = new AndExpr($lhs.result, $rhs.result, $lhs.start.getLine()); }
+ | lhs = expr '||' rhs = expr { $result = new OrExpr($lhs.result, $rhs.result, $lhs.start.getLine()); } 
+ | '!' expr { $result = new NotExpr($expr.result, $expr.start.getLine()); }
+ | '+' expr { $result = new PlusExpr($expr.result, $expr.start.getLine()); }
+ | '-' expr { $result = new MinusExpr($expr.result, $expr.start.getLine()); } 
+ | ID  { $result = new IdExpr($ID.text, $ctx.start.getLine()); }
  | atom { $result = $atom.result; }
  ;
 
 atom returns [Atom result]
  : INT    { $result = new IntegerAtom(Integer.parseInt($INT.text), $ctx.start.getLine()); }
- | STRING { $result = new StringAtom($STRING.text.substring(1, $STRING.text.length()-1), $ctx.start.getLine()); }
+ | str { $result = new StringAtom($str.result, $ctx.start.getLine()); }
  | BOOL   { $result = new BoolAtom(Boolean.valueOf($BOOL.text), $ctx.start.getLine()); }
+ ;
+
+str returns [String result]
+ : STRING { $result = $STRING.text.substring(1, $STRING.text.length()-1); }
  ;
 
 BOOL: 'true' | 'false';

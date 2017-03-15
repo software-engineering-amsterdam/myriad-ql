@@ -1,42 +1,31 @@
 package QL.semantic;
 
 
-import QL.Error;
 import QL.ast.*;
 import QL.ast.atom.BoolAtom;
 import QL.ast.atom.IntegerAtom;
 import QL.ast.atom.StringAtom;
-import QL.ast.expression.AddExpression;
-import QL.ast.expression.AndExpression;
-import QL.ast.expression.DivExpression;
-import QL.ast.expression.EqExpression;
-import QL.ast.expression.GEqExpression;
-import QL.ast.expression.GExpression;
-import QL.ast.expression.IdExpression;
-import QL.ast.expression.LEqExpression;
-import QL.ast.expression.LExpression;
-import QL.ast.expression.MinusExpression;
-import QL.ast.expression.MulExpression;
-import QL.ast.expression.NEqExpression;
-import QL.ast.expression.NotExpression;
-import QL.ast.expression.OrExpression;
-import QL.ast.expression.PlusExpression;
-import QL.ast.expression.SubExpression;
+import QL.ast.expression.*;
 import QL.ast.type.BooleanType;
 import QL.ast.type.IntegerType;
 import QL.ast.type.StringType;
 import QL.ast.type.Type;
 import QL.ast.type.UnknownType;
+import QL.errorhandling.Error;
 
-// Checks unreferenced variables
-// Checks whether condition returns a boolean
-// operands of invalid type to operators
 
+/**
+ * VerifyExpressions checks for
+ * <li> unreferenced variables
+ * <li> invalid type operations
+ * <li> whether expressions return a boolean
+ *
+ */
 public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<Type>, TypeVisitor {
 
 	private final Environment environment;
 
-	public VerifyExpressions(Environment environment) {
+	VerifyExpressions(Environment environment) {
 		this.environment = environment;
 	}
 
@@ -64,59 +53,57 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 
     @Override
     public void visit(ComputedQuestion question) {
-        question.getComputedQuestion().accept(this);
+	    Type type = question.getComputedQuestion().accept(this);
+        check(question.getType(), type);
     }
 
     @Override
     public void visit(Statement statement) {
         Type type = statement.getExpression().accept(this);
-        check(new BooleanType(1), type); // TODO Type without a line number??
-        statement.getBlock().accept(this); // TODO circulair dependencies?
+        check(new BooleanType(statement.getLine()), type);
+        statement.getBlock().accept(this);
     }
 
     @Override
     public void visit(IfElseStatement statement) {
         Type type = statement.getExpression().accept(this);
-        check(new BooleanType(1), type);
-        statement.getBlock().accept(this); // TODO circulair dependencies?
-        statement.getElseBlock().accept(this); // TODO circulair dependencies?
+        check(new BooleanType(statement.getLine()), type);
+        statement.getBlock().accept(this);
+        statement.getElseBlock().accept(this);
     }
 
-
 	@Override
-	public Type visit(AddExpression expr) {
+	public Type visit(AddExpr expr) {
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        // TODO look up type
-        check(new IntegerType(1), type_lhs, type_rhs);
+        check(new IntegerType(expr.getLine()), type_lhs, type_rhs);
 
         return new IntegerType(expr.getLine());
-
 	}
 
 	@Override
-	public Type visit(AndExpression expr) {
+	public Type visit(AndExpr expr) {
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        check(new BooleanType(1), type_lhs, type_rhs);
+        check(new BooleanType(expr.getLine()), type_lhs, type_rhs);
 
         return new BooleanType(expr.getLine());
 	}
 
 	@Override
-	public Type visit(DivExpression expr) {
+	public Type visit(DivExpr expr) {
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        check(new IntegerType(1), type_lhs, type_rhs);
+        check(new IntegerType(expr.getLine()), type_lhs, type_rhs);
 
         return new IntegerType(expr.getLine());
 	}
 
 	@Override
-	public Type visit(EqExpression expr) {
+	public Type visit(EqExpr expr) {
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
@@ -126,7 +113,7 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 	}
 
 	@Override
-	public Type visit(GEqExpression expr) {
+	public Type visit(GEqExpr expr) {
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
@@ -136,7 +123,7 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 	}
 
 	@Override
-	public Type visit(GExpression expr) {
+	public Type visit(GExpr expr) {
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
@@ -166,13 +153,13 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 	}
 
     @Override
-	public Type visit(IdExpression id) {
+	public Type visit(IdExpr id) {
 
         return environment.getType(id.getName(), id.getLine());
 	}
 
 	@Override
-	public Type visit(LEqExpression expr) {
+	public Type visit(LEqExpr expr) {
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
@@ -182,7 +169,7 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 	}
 
 	@Override
-	public Type visit(LExpression expr) {
+	public Type visit(LExpr expr) {
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
@@ -192,26 +179,26 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 	}
 
 	@Override
-	public Type visit(MinusExpression expr) {
+	public Type visit(MinusExpr expr) {
         Type type_lhs = expr.getLhs().accept(this);
 
-        check(new IntegerType(1), type_lhs);
+        check(new IntegerType(expr.getLine()), type_lhs);
 
         return new IntegerType(expr.getLine());
 	}
 
 	@Override
-	public Type visit(MulExpression expr) {
+	public Type visit(MulExpr expr) {
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        check(new IntegerType(1), type_lhs, type_rhs);
+        check(new IntegerType(expr.getLine()), type_lhs, type_rhs);
 
         return new IntegerType(expr.getLine());
 	}
 
 	@Override
-	public Type visit(NEqExpression expr) {
+	public Type visit(NEqExpr expr) {
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
@@ -221,39 +208,39 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 	}
 
 	@Override
-	public Type visit(NotExpression expr) {
+	public Type visit(NotExpr expr) {
         Type type_lhs = expr.getLhs().accept(this);
 
-        check(new BooleanType(1), type_lhs);
+        check(new BooleanType(expr.getLine()), type_lhs);
 
         return new BooleanType(expr.getLine());
 	}
 
 	@Override
-	public Type visit(OrExpression expr) {
+	public Type visit(OrExpr expr) {
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        check(new BooleanType(1), type_lhs, type_rhs);
+        check(new BooleanType(expr.getLine()), type_lhs, type_rhs);
 
         return new BooleanType(expr.getLine());
 	}
 
 	@Override
-	public Type visit(PlusExpression expr) {
+	public Type visit(PlusExpr expr) {
         Type type_lhs = expr.getLhs().accept(this);
 
-        check(new IntegerType(1), type_lhs);
+        check(new IntegerType(expr.getLine()), type_lhs);
 
         return new IntegerType(expr.getLine());
 	}
 
 	@Override
-	public Type visit(SubExpression expr) {
+	public Type visit(SubExpr expr) {
         Type type_lhs = expr.getLhs().accept(this);
         Type type_rhs = expr.getRhs().accept(this);
 
-        check(new IntegerType(1), type_lhs, type_rhs);
+        check(new IntegerType(expr.getLine()), type_lhs, type_rhs);
 
         return new IntegerType(expr.getLine());
 	}
@@ -279,10 +266,8 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 		check(expected, rhs);
 	}
 
-
     private void check(Type expected, Type current) {
-    	// TODO is equal in Type or instance of?
-        if (!expected.getKeyWord().equals(current.getKeyWord())) {
+    	if (!expected.equals(current)) {
         	environment.getFaults().add(new Error("The type " + current.getKeyWord() + " is not of the expected type: "
     			+ expected.getKeyWord(), current.getLine()));
         }

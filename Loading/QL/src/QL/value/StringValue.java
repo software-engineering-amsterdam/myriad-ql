@@ -1,5 +1,9 @@
 package QL.value;
 
+import QL.ui.Notifier;
+import QL.ui.field.Field;
+import QL.ui.field.Text;
+
 public class StringValue extends Value {
 
 	private final String value;
@@ -9,37 +13,23 @@ public class StringValue extends Value {
     }
     
     public StringValue() {
-    	this.value = null;
-    }
-    
-    @Override
-    public boolean isSet() {
-    	return value != null;
+    	this.value = "";
     }
 
-    @Override
+	@Override
+	public Field getField(String name, Notifier notifier, Value value) {
+		return new Text(name, notifier, (StringValue) value);
+	}
+
+	@Override
 	public BoolValue eq(Value other) {
-    	
-    	if (!isSet() || !other.isSet()) {
-    		return new BoolValue();
-    	}
-    	System.out.println("TODO does this work?");
-    	// return new BoolValue (this.equals(other));
-    	
-		return new BoolValue(value.equals(((StringValue) other).getValue()) );
+
+    	return new BoolValue(value.equals(((StringValue) other).getValue()) );
 	}
 
 	@Override
 	public BoolValue notEq(Value other) {
-		
-		
-    	if (!isSet() || !other.isSet()) {
-    		return new BoolValue();
-    	}
-    	
-    	System.out.println("TODO does this work?");
-    	// return new BoolValue (!this.equals(other));
-		
+
 		return new BoolValue(!value.equals(((StringValue) other).getValue()) );
 	}
 		

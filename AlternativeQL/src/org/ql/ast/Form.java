@@ -4,7 +4,7 @@ import org.ql.ast.form.FormVisitor;
 
 import java.util.List;
 
-public class Form extends AbstractNode {
+public class Form extends Node {
     private final Identifier name;
     private final List<Statement> statements;
 
@@ -21,11 +21,7 @@ public class Form extends AbstractNode {
         return statements;
     }
 
-    public Statement getStatement(int index) {
-        return statements.get(index);
-    }
-
-    public <T> T accept(FormVisitor<T> visitor) throws Throwable {
-        return visitor.visit(this);
+    public <T, C> T accept(FormVisitor<T, C> visitor, C context) {
+        return visitor.visitForm(this, context);
     }
 }

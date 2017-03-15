@@ -1,0 +1,7 @@
+QL:
+
+
+QLS UI:
+-Widgets:
+--> Style clash with bootstrap
+Initialize computed fields.

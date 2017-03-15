@@ -9,25 +9,29 @@ import QL.value.Value;
 
 public class Number implements Field {
 	
-	private TextField field;
-	// private IntegerValue QL.value;
+	private final TextField field;
 	
 	public Number(String name, Notifier notifier, IntegerValue value) {
 		this.field = new TextField();
 		
-		if (value.isSet()) {
-			field.setText(Integer.toString(value.getValue()));
-		}
+		field.setId(name);
+		
+		
+		String valueText = Integer.toString(value.getValue());
+		field.setText(valueText);
+		field.positionCaret(valueText.length());
 		
     	field.textProperty().addListener(new ChangeListener<String>() {
 	      @Override
 	      public void changed(ObservableValue<? extends String> observable, 
 	      				    String oldValue, String newValue) {
+
 	          if (!newValue.matches("\\d*")) {
 	              field.setText(newValue.replaceAll("[^\\d]", ""));
 	          } else if (!newValue.isEmpty()) {
 	        	  notifier.updateQuestionnaire(name, new IntegerValue(Integer.parseInt(newValue)));
-
+	          } else {
+	        	  notifier.updateQuestionnaire(name, new IntegerValue());
 	          }
 	      }
     	});

@@ -10,15 +10,15 @@ public class MessageList {
         mMessages = new ArrayList<>();
     }
 
-    public boolean isEmpty() {
-        return mMessages.isEmpty();
+    public boolean hasMessages() {
+        return 0 < messageAmount();
     }
 
-    public int size() {
+    public int messageAmount() {
         return mMessages.size();
     }
 
-    public boolean fatalError() {
+    public boolean fatalErrors() {
         for (Message m : mMessages) {
             if (m.isFatal()) {
                 return true;
