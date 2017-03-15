@@ -23,21 +23,19 @@ import java.util.Map;
  */
 public class QLValidator {
 
-    private final Form astRoot;
     private final QuestionCollection questionCollection;
     private final QLTypeChecker qlTypeChecker;
     private final QLStructureChecker qlStructureChecker;
     private final ErrorDialogGenerator dialogGenerator;
 
-    public QLValidator(Form form) {
-        this.astRoot = form;
+    public QLValidator() {
         this.questionCollection = new QuestionCollection();
         this.qlTypeChecker = new QLTypeChecker();
         this.qlStructureChecker = new QLStructureChecker();
         this.dialogGenerator = new ErrorDialogGenerator();
     }
 
-    public boolean runChecks() {
+    public boolean runChecks(Form astRoot) {
 
         QLErrorLogger mainLogger = new QLErrorLogger();
 
