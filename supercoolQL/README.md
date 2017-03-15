@@ -65,17 +65,19 @@ form exampleForm {
   - [ ] Error handling
     - [x] Error class
     - [x] Error collection class
-    - [ ] Make all tests return Error objects
-    - [ ] Halt on bad error - don't throw exception!
+    - [x] Make all tests return Error objects
+    - [x] Halt on bad error - don't throw exception!
     - [ ] Output in GUI
 - [ ] GUI generation
-- [ ] Unit tests
+- [x] Unit tests
 
 # ToDo
 
-- [ ] Tests for various parsing stages
+- [x] Tests for various parsing stages
 - [ ] Split QLVisitor Interface into smaller interfaces
 - [ ] Remove AbstractQLVisitor class
-- [ ] Create Runnable GUI class for Main()
-    - [ ] Move GUI logic out of FileReader
+- [x] Create Runnable GUI class for Main()
+    - [x] Move GUI logic out of FileReader
+- [ ] Finish adding line/column metadata to AST nodes
+    - [ ] Clean up line/column inheritance from TreeNode
     

@@ -20,4 +20,8 @@ public abstract class TreeNode {
         this.column = column;
     }
 
+    protected int getLine(){ return this.line; }
+
+    protected int getColumn(){ return this.column; }
+
 }

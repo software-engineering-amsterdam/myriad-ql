@@ -60,7 +60,7 @@ MULTI_LINE_COMMENT
     ;
 
 SINGLE_LINE_COMMENT
-    : '//' .*? -> channel(HIDDEN)
+    : '//' ~[\r\n]* -> channel(HIDDEN)
     ;
 
 TRUE: 'TRUE' ;

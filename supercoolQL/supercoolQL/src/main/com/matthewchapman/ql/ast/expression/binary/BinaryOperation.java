@@ -23,4 +23,8 @@ public abstract class BinaryOperation extends Expression {
         return this.right;
     }
 
+    public int getLine(){ return super.getLine(); }
+
+    public int getColumn(){ return super.getColumn(); }
+
 }

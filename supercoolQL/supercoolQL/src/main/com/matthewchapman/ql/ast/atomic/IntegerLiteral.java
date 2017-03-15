@@ -12,8 +12,10 @@ public class IntegerLiteral extends Expression {
 
     private final int value;
 
-    public IntegerLiteral(String value) {
+    public IntegerLiteral(String value, int line, int column) {
         this.value = Integer.parseInt(value);
+        super.setLine(line);
+        super.setColumn(column);
     }
 
     public int getValue() {

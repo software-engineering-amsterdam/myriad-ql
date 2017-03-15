@@ -1,5 +1,6 @@
 package com.matthewchapman.ql.validation;
 
+import com.matthewchapman.ql.QLErrorLogger;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.Type;
@@ -19,16 +20,22 @@ public class QuestionCollection extends AbstractQLVisitor<Void> {
 
     private final List<Question> questionList;
     private final HashMap<String, Type> typeTable;
+    private final QLErrorLogger logger;
 
     public QuestionCollection() {
         typeTable = new HashMap<>();
         questionList = new ArrayList<>();
+        this.logger = new QLErrorLogger();
     }
 
-    public void gatherQuestions(Form form) {
+    public QLErrorLogger gatherQuestions(Form form) {
         for (Statement statement : form.getStatements()) {
             statement.accept(this, null);
         }
+
+        findDuplicates();
+
+        return this.logger;
     }
 
     public Map<String, Type> getTypeTable() {
@@ -45,7 +52,7 @@ public class QuestionCollection extends AbstractQLVisitor<Void> {
 
         for (Question question : questionList) {
             if (!questionIDs.add(question.getName())) {
-                System.err.println("Error: Duplicate Question found");  //TODO: Proper error
+                logger.addError(question.getLine(), question.getColumn(), question.getName(), "Question with this ID already defined");
             }
         }
     }

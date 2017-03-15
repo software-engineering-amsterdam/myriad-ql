@@ -1,5 +1,6 @@
 package com.matthewchapman.ql.validation;
 
+import com.matthewchapman.ql.QLErrorLogger;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.Type;
@@ -22,13 +23,20 @@ import java.util.Map;
 public class QLTypeChecker extends AbstractQLVisitor<Type> {
 
     private Map<String, Type> typeTable;
+    private QLErrorLogger logger;
 
-    public void checkExpressionTypes(Form form, Map<String, Type> typeTable) {
+    public QLTypeChecker() {
+        logger = new QLErrorLogger();
+    }
+
+    public QLErrorLogger checkExpressionTypes(Form form, Map<String, Type> typeTable) {
         this.typeTable = typeTable;
 
         for (Statement statement : form.getStatements()) {
             statement.accept(this, null);
         }
+
+        return logger;
     }
 
     private Type verifyTypeCorrectness(BinaryOperation operation) {
@@ -36,7 +44,7 @@ public class QLTypeChecker extends AbstractQLVisitor<Type> {
         Type right = operation.getRight().accept(this, null);
 
         if (!left.isCompatible(right)) {
-            System.err.println("incompatible types");   //TODO proper error
+            logger.addError(operation.getLine(), operation.getColumn(), "Binary Operation", "Incompatible types found");
             return new ErrorType();
         }
 
@@ -48,7 +56,7 @@ public class QLTypeChecker extends AbstractQLVisitor<Type> {
         Type right = operation.getRight().accept(this, null);
 
         if (!left.toString().equals("boolean") || !right.toString().equals("boolean")) {
-            System.err.println("Incorrect boolean expression");     //TODO proper error
+            logger.addError(operation.getLine(), operation.getColumn(), "Boolean Expression", "Non-Boolean type found");
             return new ErrorType();
         }
 
@@ -71,7 +79,7 @@ public class QLTypeChecker extends AbstractQLVisitor<Type> {
     public Type visit(CalculatedQuestion calculatedQuestion, String context) {
         Type calculationType = calculatedQuestion.getCalculation().accept(this, null);
         if (!calculatedQuestion.getType().isCompatible(calculationType)) {
-            System.err.println("Incorrect expression");     //TODO proper error
+            logger.addError(calculatedQuestion.getLine(), calculatedQuestion.getColumn(), calculatedQuestion.getName(), "Incompatible types found");     //TODO proper error
         }
 
         return calculatedQuestion.getType();
@@ -167,6 +175,7 @@ public class QLTypeChecker extends AbstractQLVisitor<Type> {
         Type type = negation.getExpression().accept(this, null);
 
         if (!type.toString().equals("boolean")) {
+            logger.addError(negation.getLine(), negation.getColumn(), "Negation", "Non-Boolean type found");
             return new ErrorType();
         }
 

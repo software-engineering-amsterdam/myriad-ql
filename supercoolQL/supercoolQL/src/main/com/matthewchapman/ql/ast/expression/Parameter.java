@@ -15,8 +15,10 @@ public class Parameter extends Expression implements QLVisitable {
 
     private String ID;
 
-    public Parameter(String s) {
+    public Parameter(String s, int line, int column) {
         this.ID = s;
+        super.setLine(line);
+        super.setColumn(column);
     }
 
     public String getID() {
