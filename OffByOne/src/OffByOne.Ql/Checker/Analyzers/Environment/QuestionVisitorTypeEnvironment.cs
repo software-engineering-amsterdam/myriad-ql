@@ -23,7 +23,7 @@
             if (name.IsNullOrWhiteSpace())
             {
                 throw new ArgumentException(
-                    "Question name must not be empty or null.",
+                    "Question identifier must not be empty or null.",
                     nameof(name));
             }
 
@@ -47,7 +47,7 @@
             if (name.IsNullOrWhiteSpace())
             {
                 throw new ArgumentException(
-                    "Question name must not be empty or null.",
+                    "Question identifier must not be empty or null.",
                     nameof(name));
             }
 

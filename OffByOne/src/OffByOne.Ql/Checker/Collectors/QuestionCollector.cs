@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Ql.Checker
+﻿namespace OffByOne.Ql.Checker.Collectors
 {
     using System.Collections.Generic;
 
