@@ -1,5 +1,3 @@
-package qls;
-
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -31,16 +29,16 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-public class QLS {
+public class QLMain {
 
     public static void main(String[] arguments) throws Exception {
         String inputFileQL = "./src/test.ql";
         String inputFileQLS = "./src/test.qls";
 
-        new QLS(inputFileQL, inputFileQLS);
+        new QLMain(inputFileQL, inputFileQLS);
     }
 
-    private QLS(String inputQL, String inputQLS) throws IOException {
+    private QLMain(String inputQL, String inputQLS) throws IOException {
 
         if (!fileExists(inputQL, inputQLS)) {
             throw new IOException();

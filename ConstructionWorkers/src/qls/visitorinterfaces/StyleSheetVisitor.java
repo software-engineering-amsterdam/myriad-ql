@@ -16,12 +16,12 @@ import qls.astnodes.sections.DefaultStyle;
 import qls.astnodes.sections.Section;
 import qls.astnodes.sections.StyleQuestion;
 
-public interface StyleSheetVisitor<T> {
+public interface StyleSheetVisitor {
 
-    T visit(StyleSheet styleSheet);
+    void visit(StyleSheet styleSheet);
 
-    T visit(Section section);
-    T visit(DefaultStyle section);
+    void visit(Section section);
+    void visit(DefaultStyle section);
 
-    T visit(StyleQuestion question);
+    void visit(StyleQuestion question);
 }

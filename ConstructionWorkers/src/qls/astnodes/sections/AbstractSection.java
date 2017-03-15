@@ -21,5 +21,5 @@ public abstract class AbstractSection extends Node{
         super(lineNumber);
     }
 
-    public abstract <T> T accept(StyleSheetVisitor<T> visitor);
+    public abstract void accept(StyleSheetVisitor visitor);
 }
