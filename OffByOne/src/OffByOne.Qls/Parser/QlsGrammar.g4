@@ -1,48 +1,48 @@
 grammar QlsGrammar;
 
 stylesheet
-    : STYLESHEET Identifier (page)*
+    : 'stylesheet' Identifier (page)*
     ;
 
 page
-    : PAGE Identifier OPEN_BRACE (section|defaultBlock)* CLOSE_BRACE
+    : 'page' Identifier '{' (section|defaultBlock)* '}'
     ;
 
 section
-    : SECTION StringLiteral OPEN_BRACE (question|section|defaultBlock)* CLOSE_BRACE
+    : 'section' StringLiteral '{' (question|section|defaultBlock)* '}'
     ;
 
 question	
-	: QUESTION Identifier widget?
+	: 'question' Identifier widget?
 	;
 
 widget
-	: WIDGET widgetType 
+	: 'widget' widgetType 
 	;
 
 defaultBlock
-	: DEFAULT type widget
-	| DEFAULT type OPEN_BRACE (styleRule)* widget CLOSE_BRACE
+	: 'default' type widget
+	| 'default' type '{' (styleRule)* widget '}'
 	;
 
 styleRule
-	: 'height' COLON IntegerLiteral     # heightStyleRule
-    | 'width' COLON IntegerLiteral      # widthStyleRule
-    | 'fontsize' COLON IntegerLiteral   # fontSizeStyleRule
-    | 'color' COLON HexColorLiteral     # colorStyleRule
-    | 'fontstyle' COLON StringLiteral   # fontStyleStyleRule
-    | 'font' COLON StringLiteral        # fontNameStyleRule
+	: 'height' ':' IntegerLiteral     # heightStyleRule
+    | 'width' ':' IntegerLiteral      # widthStyleRule
+    | 'fontsize' ':' IntegerLiteral   # fontSizeStyleRule
+    | 'color' ':' HexColorLiteral     # colorStyleRule
+    | 'fontstyle' ':' StringLiteral   # fontStyleStyleRule
+    | 'font' ':' StringLiteral        # fontNameStyleRule
 	;
 
 widgetType
-    : 'spinbox' # spinboxWidgetType
-    | 'radio' optionsList # radioWidgetType
-    | 'dropdown' optionsList # dropdownWidgetType
-    | 'checkbox' # checkboxWidgetType
+    : 'spinbox'                 # spinboxWidgetType
+    | 'radio' optionsList       # radioWidgetType
+    | 'dropdown' optionsList    # dropdownWidgetType
+    | 'checkbox'                # checkboxWidgetType
     ;
 
 optionsList
-	: OPEN_PARENTHESIS option CLOSE_PARENTHESIS
+	: '(' option ')'
 	;
 
 option
@@ -68,22 +68,8 @@ literal
 
 // Lexer tokens. Move to separate file?
 
-// Keywords
-STYLESHEET : 'stylesheet';
-PAGE : 'page';
-QUESTION : 'question';
-SECTION: 'section';
-WIDGET: 'widget';
-DEFAULT: 'default';
-
 
 // Syntax
-OPEN_BRACE : '{';
-CLOSE_BRACE : '}';
-OPEN_PARENTHESIS : '(';
-CLOSE_PARENTHESIS : ')';
-SEMICOLON : ';';
-COLON: ':';
 
 WhiteSpace : (' ' | '\t' | '\n' | '\r') -> channel(HIDDEN);
 
@@ -92,10 +78,6 @@ Comment
     
 LineComment 
     :   '//' ~[\r\n]* -> channel(HIDDEN);
-
-Boolean : 'bool';
-Integer : 'int';
-String : 'str';
 
 BooleanLieral :  'true' | 'false';
 IntegerLiteral  :   ('0'..'9')+;
