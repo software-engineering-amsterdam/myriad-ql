@@ -1,6 +1,6 @@
-package com.matthewchapman.ql.validation;
+package com.matthewchapman.ql.validation.type;
 
-import com.matthewchapman.ql.QLErrorLogger;
+import com.matthewchapman.ql.core.QLErrorLogger;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.Type;
@@ -12,6 +12,7 @@ import com.matthewchapman.ql.ast.expression.unary.Negation;
 import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
+import com.matthewchapman.ql.validation.visitor.AbstractQLVisitor;
 
 import java.util.Map;
 

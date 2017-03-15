@@ -1,9 +1,9 @@
-package com.matthewchapman.ql;
+package com.matthewchapman.ql.core;
 
 /**
  * Created by matt on 13/03/2017.
  */
-class QLError {
+public class QLError {
 
     private final String message;
     private final int line;

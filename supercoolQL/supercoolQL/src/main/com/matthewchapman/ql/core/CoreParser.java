@@ -2,7 +2,7 @@ package com.matthewchapman.ql.core;
 
 import com.matthewchapman.antlr.QLLexer;
 import com.matthewchapman.antlr.QLParser;
-import com.matthewchapman.ql.ErrorDialogGenerator;
+import com.matthewchapman.ql.gui.errors.ErrorDialogGenerator;
 import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;

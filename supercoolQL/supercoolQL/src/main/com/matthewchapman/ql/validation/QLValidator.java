@@ -1,20 +1,10 @@
 package com.matthewchapman.ql.validation;
 
-import com.matthewchapman.ql.ErrorDialogGenerator;
-import com.matthewchapman.ql.QLErrorLogger;
+import com.matthewchapman.ql.gui.errors.ErrorDialogGenerator;
+import com.matthewchapman.ql.core.QLErrorLogger;
 import com.matthewchapman.ql.ast.Form;
-import com.matthewchapman.ql.ast.Type;
-import com.matthewchapman.ql.ast.statement.Question;
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-
-import java.util.List;
-import java.util.Map;
+import com.matthewchapman.ql.validation.structure.QLStructureChecker;
+import com.matthewchapman.ql.validation.type.QLTypeChecker;
 
 /**
  * Created by matt on 27/02/2017.

@@ -2,7 +2,7 @@ package com.matthewchapman.ql.ast.statement;
 
 import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Type;
-import com.matthewchapman.ql.validation.QLVisitor;
+import com.matthewchapman.ql.validation.visitor.QLVisitor;
 
 /**
  * Created by matt on 08/03/2017.

@@ -1,6 +1,6 @@
-package com.matthewchapman.ql;
+package com.matthewchapman.ql.gui.errors;
 
-import com.matthewchapman.ql.QLErrorLogger;
+import com.matthewchapman.ql.core.QLErrorLogger;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;

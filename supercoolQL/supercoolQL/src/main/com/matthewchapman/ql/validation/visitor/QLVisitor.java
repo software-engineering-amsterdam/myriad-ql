@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.validation;
+package com.matthewchapman.ql.validation.visitor;
 
 import com.matthewchapman.ql.ast.atomic.*;
 import com.matthewchapman.ql.ast.expression.Parameter;
