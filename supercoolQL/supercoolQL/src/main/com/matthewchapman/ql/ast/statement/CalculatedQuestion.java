@@ -14,7 +14,6 @@ public class CalculatedQuestion extends Question {
     public CalculatedQuestion(String name, String text, Type type, Expression calculatedValue, int line, int column) {
         super(name, text, type, line, column);
         this.calculatedValue = calculatedValue;
-        System.out.println(toString());
     }
 
     public Expression getCalculation() {
