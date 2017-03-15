@@ -12,6 +12,8 @@
     <option name="PASS_PARENT_ENVS" value="true" />
     <module name="SuperCoolQL" />
     <envs />
-    <method />
+    <method>
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="All in SuperCoolQL" run_configuration_type="JUnit" />
+    </method>
   </configuration>
 </component>

@@ -19,12 +19,9 @@ import org.antlr.v4.runtime.CommonTokenStream;
  */
 public class CoreParser {
 
-    //TODO this should not all be public
     public Form buildQLAST(String input) {
-
         QLParser parser = getQlParser(input);
         return getForm(parser);
-
     }
 
     public Form getForm(QLParser parser) {

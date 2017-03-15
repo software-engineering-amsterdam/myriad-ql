@@ -16,7 +16,9 @@ public class BooleanLiteral extends Expression {
         this.value = Boolean.parseBoolean(value);
     }
 
-    public boolean getValue() { return this.value; }
+    public boolean getValue() {
+        return this.value;
+    }
 
     @Override
     public String toString() {

@@ -1,5 +1,6 @@
 package com.matthewchapman.ql;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,7 +8,11 @@ import java.util.List;
  */
 class QLErrorLogger {
 
-    private final List<QLError> errors;
+    private List<QLError> errors;
+
+    public QLErrorLogger() {
+        errors = new ArrayList<>();
+    }
 
     public void printErrors() {
         for (QLError error : errors) {

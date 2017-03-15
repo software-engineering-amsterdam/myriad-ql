@@ -1,9 +1,7 @@
 package com.matthewchapman.ql.parsing;
 
 import com.matthewchapman.antlr.QLParser;
-import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Form;
-import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.atomic.IntegerType;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.binary.Addition;
@@ -14,6 +12,7 @@ import com.matthewchapman.ql.ast.statement.Question;
 import com.matthewchapman.ql.core.CoreParser;
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -25,7 +24,7 @@ public class AntlrParserTests {
     private CoreParser coreParser;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         coreParser = new CoreParser();
     }
 

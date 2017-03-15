@@ -11,7 +11,10 @@ import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by matt on 13/03/2017.
@@ -54,11 +57,11 @@ public class QLStructureChecker extends AbstractQLVisitor<Void> {
 
             List<Parameter> parameters = new ArrayList<>(entry.getValue());
 
-            for(Parameter parameter : parameters) {
-                if(expressionMap.containsKey(parameter.getID())) {
+            for (Parameter parameter : parameters) {
+                if (expressionMap.containsKey(parameter.getID())) {
                     expressionMap.get(parameter.getID()).addAll(parameters);
 
-                    if(expressionMap.get(parameter.getID()).contains(parameter.getID())) {
+                    if (expressionMap.get(parameter.getID()).contains(parameter.getID())) {
                         //System.err.println(expressionMap.);
                         break;
                     }

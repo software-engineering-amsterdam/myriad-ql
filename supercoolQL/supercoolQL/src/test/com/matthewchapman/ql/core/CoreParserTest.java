@@ -18,8 +18,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class CoreParserTest extends AbstractQLVisitor<Void> {
 
-    private String testInput;
     private final CoreParser parser = new CoreParser();
+    private String testInput;
     private int questionsCount = 0;
     private int ifStatementCount = 0;
     private int ifElseStatementCount = 0;

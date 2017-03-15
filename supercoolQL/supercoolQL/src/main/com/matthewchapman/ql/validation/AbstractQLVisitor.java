@@ -12,7 +12,7 @@ import com.matthewchapman.ql.ast.statement.Question;
 
 /**
  * Created by matt on 13/03/2017.
- *
+ * <p>
  * Provides default visitor implementation to avoid having to implement everything in every visitor
  */
 public abstract class AbstractQLVisitor<T> implements QLVisitor<T> {

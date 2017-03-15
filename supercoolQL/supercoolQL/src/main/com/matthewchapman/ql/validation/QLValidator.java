@@ -14,12 +14,12 @@ import java.util.Map;
  */
 public class QLValidator {
 
-    private List<Question> questionList;
-    public Map<String, Type> typeTable;
     private final Form astRoot;
     private final QuestionCollection questionCollection;
     private final QLTypeChecker qlTypeChecker;
     private final QLStructureChecker qlStructureChecker;
+    public Map<String, Type> typeTable;
+    private List<Question> questionList;
 
     public QLValidator(Form form) {
         this.astRoot = form;
