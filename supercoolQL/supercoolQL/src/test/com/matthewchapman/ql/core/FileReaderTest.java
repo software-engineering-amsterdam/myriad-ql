@@ -24,7 +24,7 @@ public class FileReaderTest {
     @Test
     public void readFile() {
         String output = fileReader.readFile(file);
-        int expectedLines = 39;
+        int expectedLines = 43;
         String[] lines = output.split(System.getProperty("line.separator"));
 
         assertEquals(expectedLines, lines.length);

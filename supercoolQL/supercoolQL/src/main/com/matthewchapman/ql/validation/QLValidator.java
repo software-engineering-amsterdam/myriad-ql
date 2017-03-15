@@ -9,18 +9,17 @@ import java.util.Map;
 
 /**
  * Created by matt on 27/02/2017.
- *
+ * <p>
  * Type checker for the QL AST.
  */
 public class QLValidator {
 
+    public List<Question> questionList;
+    public Map<String, Type> typeTable;
     private Form astRoot;
     private QuestionCollection questionCollection;
     private QLTypeChecker qlTypeChecker;
     private QLStructureChecker qlStructureChecker;
-
-    public List<Question> questionList;
-    public Map<String, Type> typeTable;
 
     public QLValidator(Form form) {
         this.astRoot = form;
@@ -35,7 +34,7 @@ public class QLValidator {
         questionList = questionCollection.getQuestionList();
         questionCollection.findDuplicates();
 
-        //qlTypeChecker.checkExpressions(astRoot, questionCollection.getTypeTable());
+        //qlTypeChecker.checkExpressionTypes(astRoot, questionCollection.getTypeTable());
 
         qlStructureChecker.checkQLStructure(astRoot, questionCollection.getTypeTable());
 

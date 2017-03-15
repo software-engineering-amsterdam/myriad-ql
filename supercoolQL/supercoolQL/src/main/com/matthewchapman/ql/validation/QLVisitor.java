@@ -12,7 +12,7 @@ import com.matthewchapman.ql.ast.statement.Question;
 
 /**
  * Created by matt on 27/02/2017.
- *
+ * <p>
  * Visitor interface for the QL AST, provides methods for visiting all QL types, expressions, statements, etc.
  */
 public interface QLVisitor<T> {

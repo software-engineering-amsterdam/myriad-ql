@@ -13,7 +13,7 @@ public class ErrorType extends Type {
     }
 
     @Override
-    public String getType() {
+    public String toString() {
         return "ERRORTYPE";
     }
 

@@ -5,7 +5,7 @@ grammar QL;
 // https://github.com/antlr/antlr4/blob/master/doc/parser-rules.md  --parser rule reference
 
 formDeclaration
-    :   'form' id=ID OPEN_BRACKET statement+ CLOSE_BRACKET
+    :   'form' id=ID OPEN_BRACKET statement* CLOSE_BRACKET
     ;
 
 statement
@@ -43,7 +43,7 @@ type
 
 //lexer
 
-ID:   [a-zA-Z$_]+ ;
+ID:   [a-zA-Z_]+[a-zA-Z0-9_]? ;
 
 STRING: '"' .*? '"';
 

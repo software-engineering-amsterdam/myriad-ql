@@ -16,7 +16,14 @@ public class CalculatedQuestion extends Question {
         this.calculatedValue = calculatedValue;
     }
 
-    public Expression getCalculation() { return this.calculatedValue; }
+    public Expression getCalculation() {
+        return this.calculatedValue;
+    }
+
+    @Override
+    public String toString() {
+        return "\t" + getText() + "\n\t" + getName() + ":" + getType() + " = \n\t" + getCalculation();
+    }
 
     @Override
     public <T> T accept(QLVisitor<T> visitor, String context) {

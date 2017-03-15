@@ -9,11 +9,11 @@ public class BooleanType extends Type {
 
     @Override
     public boolean isCompatible(Type type) {
-        return type.getType().equals("boolean");
+        return type.toString().equals("boolean");
     }
 
     @Override
-    public String getType() {
+    public String toString() {
         return "boolean";
     }
 }

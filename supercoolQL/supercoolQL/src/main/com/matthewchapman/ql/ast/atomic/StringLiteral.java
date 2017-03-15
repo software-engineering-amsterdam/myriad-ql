@@ -5,7 +5,7 @@ import com.matthewchapman.ql.validation.QLVisitor;
 
 /**
  * Created by matt on 24/02/2017.
- *
+ * <p>
  * String literal type implementation.
  */
 public class StringLiteral extends Expression {
@@ -14,6 +14,13 @@ public class StringLiteral extends Expression {
 
     public StringLiteral(String value) {
         this.value = value;
+    }
+
+    public String getValue() { return this.value; }
+
+    @Override
+    public String toString() {
+        return value;
     }
 
     @Override

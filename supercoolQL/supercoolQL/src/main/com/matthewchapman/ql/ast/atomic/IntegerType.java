@@ -9,11 +9,11 @@ public class IntegerType extends Type {
 
     @Override
     public boolean isCompatible(Type type) {
-        return type.getType().equals("integer");
+        return type.toString().equals("integer");
     }
 
     @Override
-    public String getType() {
+    public String toString() {
         return "integer";
     }
 }
