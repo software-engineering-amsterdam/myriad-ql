@@ -1,7 +1,9 @@
 package com.matthewchapman.ql.core;
 
 import com.matthewchapman.ql.ast.Form;
+import com.matthewchapman.ql.parsing.AntlrErrorListener;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -40,10 +42,15 @@ public class Launcher extends Application {
 
             CoreParser parser = new CoreParser();
             Form form = parser.buildQLAST(fileContents);
-            parser.validateAST(form);
-            new GUICreator().generateFormUI(primaryStage, form);
-        }
 
+            if(form == null) {
+                Platform.exit();
+            } else if(parser.validateAST(form)) {
+                new GUICreator().generateFormUI(primaryStage, form);
+            } else {
+                Platform.exit();
+            }
+        }
     }
 
     private File getFileSelection(Stage primaryStage) {

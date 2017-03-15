@@ -2,6 +2,7 @@ package com.matthewchapman.ql.core;
 
 import com.matthewchapman.antlr.QLLexer;
 import com.matthewchapman.antlr.QLParser;
+import com.matthewchapman.ql.ErrorDialogGenerator;
 import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
@@ -19,9 +20,26 @@ import org.antlr.v4.runtime.CommonTokenStream;
  */
 public class CoreParser {
 
+    private AntlrErrorListener errorListener;
+    private ErrorDialogGenerator dialogGenerator;
+
+    public CoreParser() {
+        errorListener = new AntlrErrorListener();
+        this.dialogGenerator = new ErrorDialogGenerator();
+    }
+
     public Form buildQLAST(String input) {
         QLParser parser = getQlParser(input);
-        return getForm(parser);
+
+        Form form = getForm(parser);
+
+        if(errorListener.getLogger().getErrorNumber() > 0)
+        {
+            dialogGenerator.generateErrorBox(errorListener.getLogger());
+            return null;
+        } else {
+            return form;
+        }
     }
 
     public Form getForm(QLParser parser) {
@@ -46,17 +64,17 @@ public class CoreParser {
 
         QLLexer lexer = new QLLexer(new ANTLRInputStream(input));
         lexer.removeErrorListeners();
-        lexer.addErrorListener(new AntlrErrorListener());
+        lexer.addErrorListener(errorListener);
 
         QLParser parser = new QLParser(new CommonTokenStream(lexer));
         parser.removeErrorListeners();
-        parser.addErrorListener(new AntlrErrorListener());
+        parser.addErrorListener(errorListener);
 
         return parser;
     }
 
-    public void validateAST(Form form) {
+    public boolean validateAST(Form form) {
         QLValidator checker = new QLValidator(form);
-        checker.runChecks();
+        return checker.runChecks();
     }
 }

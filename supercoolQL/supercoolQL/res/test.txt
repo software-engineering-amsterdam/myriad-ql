@@ -1,19 +1,19 @@
 form exampleForm {
   "Test question 1"
-    testQuestioni: boolean;
+    testQuestion1: boolean;
   "Test question 2"
-    testQuestionii: boolean;
+    testQuestion2: boolean;
   "Test question 3"
-    testQuestioniii: boolean;
+    testQuestion3: boolean;
 
-  if (testQuestioni && testQuestionii || testQuestioniii) {
+  if (testQuestion1 && testQuestion2 || testQuestion3) {
     "Conditional question 1"
-      conditionalQuestioni: integer;
+      conditionalQuestion1: integer;
     "Conditional question 2"
-      conditionalQuestionii: integer;
+      conditionalQuestion2: integer;
     "Math question 1:"
-      mathQuestioni:integer =
-        conditionalQuestioni - (conditionalQuestionii + conditionalQuestioni);
+      mathQuestion1:integer =
+        conditionalQuestion1 - (conditionalQuestion2 + conditionalQuestion1);
   }
 
   if (simpleCondition) {
@@ -23,14 +23,14 @@ form exampleForm {
 
   if (complexConditional) {
     "if Question"
-        complexConditionalQuestioni: boolean;
+        complexConditionalQuestion1: boolean;
   } else {
     "else Question"
-        complexConditionalQuestionii: boolean;
+        complexConditionalQuestion2: boolean;
   }
 
   "Math question 2:"
-    mathQuestionii:integer = testQuestioni + 12;
+    mathQuestion2:integer = testQuestion1 + 12;
 
   "Duplicate question 1"
     duplicateQuestion : boolean;
@@ -38,6 +38,6 @@ form exampleForm {
     duplicateQuestion : boolean;
 
   "Non existing question"
-    nonexistingi:integer =
-        nonexisti + nonexistii;
+    nonexisting1:integer =
+        nonexist1 + nonexist2;
 }
