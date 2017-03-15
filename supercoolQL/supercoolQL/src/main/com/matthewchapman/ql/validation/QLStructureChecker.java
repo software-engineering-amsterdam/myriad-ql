@@ -1,5 +1,6 @@
 package com.matthewchapman.ql.validation;
 
+import com.matthewchapman.ql.QLErrorLogger;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.Type;
@@ -24,12 +25,14 @@ import java.util.Map;
 public class QLStructureChecker extends AbstractQLVisitor<Void> {
 
     private final HashMap<String, List<Parameter>> expressionMap;
+    private final QLErrorLogger logger;
 
     public QLStructureChecker() {
         this.expressionMap = new HashMap<>();
+        this.logger = new QLErrorLogger();
     }
 
-    public void checkQLStructure(Form form, Map<String, Type> typeTable) {
+    public QLErrorLogger checkQLStructure(Form form, Map<String, Type> typeTable) {
 
         for (Statement statement : form.getStatements()) {
             statement.accept(this, null);
@@ -37,14 +40,15 @@ public class QLStructureChecker extends AbstractQLVisitor<Void> {
 
         checkForMissingParameters(typeTable);
         checkForCircularDependencies();
-        System.out.println();
+
+        return this.logger;
     }
 
     private void checkForMissingParameters(Map<String, Type> typeTable) {
         for (HashMap.Entry<String, List<Parameter>> entry : expressionMap.entrySet()) {
             for (Parameter parameter : entry.getValue()) {
                 if (!typeTable.containsKey(parameter.getID())) {
-                    System.err.println("something is missing: " + parameter.getID());    //TODO: Proper error
+                    logger.addError(parameter.getLine(), parameter.getColumn(), parameter.getID(), "Non-existing parameter referenced");
                 }
             }
         }

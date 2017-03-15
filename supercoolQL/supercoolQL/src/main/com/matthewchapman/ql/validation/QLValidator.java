@@ -1,5 +1,6 @@
 package com.matthewchapman.ql.validation;
 
+import com.matthewchapman.ql.QLErrorLogger;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Type;
 import com.matthewchapman.ql.ast.statement.Question;
@@ -18,8 +19,6 @@ public class QLValidator {
     private final QuestionCollection questionCollection;
     private final QLTypeChecker qlTypeChecker;
     private final QLStructureChecker qlStructureChecker;
-    public Map<String, Type> typeTable;
-    private List<Question> questionList;
 
     public QLValidator(Form form) {
         this.astRoot = form;
@@ -30,13 +29,24 @@ public class QLValidator {
 
     public void runChecks() {
 
-        questionCollection.gatherQuestions(astRoot);
-        questionList = questionCollection.getQuestionList();
-        questionCollection.findDuplicates();
+        QLErrorLogger duplicateLog = questionCollection.gatherQuestions(astRoot);
 
-        //qlTypeChecker.checkExpressionTypes(astRoot, questionCollection.getTypeTable());
+        if(duplicateLog.getErrorNumber() > 0) {
+            duplicateLog.printErrors();
+        }
 
-        qlStructureChecker.checkQLStructure(astRoot, questionCollection.getTypeTable());
+        QLErrorLogger structureLog = qlStructureChecker.checkQLStructure(astRoot, questionCollection.getTypeTable());
+
+        if(structureLog.getErrorNumber() > 0) {
+            structureLog.printErrors();
+        } else {
+            QLErrorLogger typeLog = qlTypeChecker.checkExpressionTypes(astRoot, questionCollection.getTypeTable());
+
+            if(typeLog.getErrorNumber() > 0) {
+                typeLog.printErrors();
+            }
+        }
+
 
     }
 

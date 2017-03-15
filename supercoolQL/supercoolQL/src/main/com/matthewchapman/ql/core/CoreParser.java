@@ -55,7 +55,7 @@ public class CoreParser {
         return parser;
     }
 
-    public void visitAST(Form form) {
+    public void validateAST(Form form) {
         QLValidator checker = new QLValidator(form);
         checker.runChecks();
     }

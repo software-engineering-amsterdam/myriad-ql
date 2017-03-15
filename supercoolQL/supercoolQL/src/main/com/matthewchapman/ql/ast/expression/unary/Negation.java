@@ -15,8 +15,10 @@ public class Negation extends UnaryOperation implements QLVisitable {
 
     private final Expression expression;
 
-    public Negation(Expression expression) {
+    public Negation(Expression expression, int line, int column) {
         this.expression = expression;
+        super.setLine(line);
+        super.setColumn(column);
     }
 
     public Expression getExpression() {
