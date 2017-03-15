@@ -66,8 +66,7 @@ public class QuestionConditions implements FormAndStatementVisitor <Void>{
     }
 
     @Override
-    public Void visit(Form form) {
-        return null;
+    public void visit(Form form) {
     }
 
     @Override

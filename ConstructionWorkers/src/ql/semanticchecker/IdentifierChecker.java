@@ -44,11 +44,10 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier> {
     }
 
     @Override
-    public Identifier visit(Form form) {
+    public void visit(Form form) {
         for (Statement statement : form.getStatements()) {
             statement.accept(this);
         }
-        return null;
     }
 
     @Override

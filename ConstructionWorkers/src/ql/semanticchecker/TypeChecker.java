@@ -43,11 +43,10 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     @Override
-    public Void visit(Form form) {
+    public void visit(Form form) {
         for (Statement statement : form.getStatements()) {
             statement.accept(this);
         }
-        return null;
     }
 
     @Override

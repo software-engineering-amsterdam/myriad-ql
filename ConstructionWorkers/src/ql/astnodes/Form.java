@@ -36,7 +36,7 @@ public class Form extends Node {
         return statements;
     }
 
-    public <T> T accept(FormAndStatementVisitor<T> visitor) {
-        return visitor.visit(this);
+    public <T> void accept(FormAndStatementVisitor<T> visitor) {
+        visitor.visit(this);
     }
 }

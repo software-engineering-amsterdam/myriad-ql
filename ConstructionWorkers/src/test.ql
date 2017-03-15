@@ -10,9 +10,6 @@ form taxOfficeExample {
 
     if (hasSoldHouse) {
         money sellingPrice("What was the selling price?");
-        if (hasBoughtHouse) {
-            money buyingPrice("Buying price:");
-        }
         money privateDebt("Private debts for the sold house:");
         money valueResidue("Value residue:") : (sellingPrice - privateDebt);
     }

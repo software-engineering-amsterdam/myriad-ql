@@ -30,7 +30,8 @@ public class QuestionData implements FormAndStatementVisitor<Void>{
     }
 
     private List<SimpleQuestion> setAllQuestions() {
-        List<SimpleQuestion> allQuestions = simpleQuestions;
+        List<SimpleQuestion> allQuestions;
+        allQuestions = simpleQuestions;
         allQuestions.addAll(computedQuestions);
         return allQuestions;
     }
@@ -39,7 +40,7 @@ public class QuestionData implements FormAndStatementVisitor<Void>{
         return computedQuestions;
     }
 
-    public List<IfStatement> getIfStatements(){
+    List<IfStatement> getIfStatements(){
         return ifStatements;
     }
 
@@ -48,11 +49,10 @@ public class QuestionData implements FormAndStatementVisitor<Void>{
     }
 
     @Override
-    public Void visit(Form form) {
+    public void visit(Form form) {
         for (Statement statement : form.getStatements()) {
             statement.accept(this);
         }
-        return null;
     }
 
     @Override

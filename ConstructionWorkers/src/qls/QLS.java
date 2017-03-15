@@ -9,6 +9,8 @@ import ql.astnodes.ASTVisitor;
 import ql.astnodes.Form;
 import ql.astnodes.Node;
 import ql.astnodes.types.Type;
+import ql.gui.GUI;
+import ql.gui.formenvironment.Context;
 import ql.semanticchecker.IdentifierChecker;
 import ql.semanticchecker.TypeChecker;
 import ql.semanticchecker.messagehandling.Message;
@@ -31,41 +33,26 @@ import java.util.Map;
 
 public class QLS {
 
-    private final String inputFileQL;
-    private final String inputFileQLS;
-
-    private static final String ALLOWED_EXTENSION_QL = "ql";
-    private static final String ALLOWED_EXTENSION_QLS = "qls";
-
-    private Map<String, Type> identifierMap;
-
-    private QLS(String inputFileQL, String inputFileQLS) throws IOException, IllegalArgumentException {
-        this.inputFileQL = inputFileQL;
-        this.inputFileQLS = inputFileQLS;
-    }
-
     public static void main(String[] arguments) throws Exception {
         String inputFileQL = "./src/test.ql";
         String inputFileQLS = "./src/test.qls";
-        qls.QLS qls = new qls.QLS(inputFileQL, inputFileQLS);
-        qls.testFunctionality();
+
+        new QLS(inputFileQL, inputFileQLS);
     }
 
-    private void testFunctionality() throws IOException, IllegalArgumentException{
-        if (!fileExists()) {
+    private QLS(String inputQL, String inputQLS) throws IOException {
+
+        if (!fileExists(inputQL, inputQLS)) {
             throw new IOException();
         }
 
-        if (!correctExtension()) {
-            throw new IllegalArgumentException();
-        }
-
-        InputStream qlInputStream = new FileInputStream(inputFileQL);
+        InputStream qlInputStream = new FileInputStream(inputQL);
         Form qlAST = getASTQL(qlInputStream);
 
+        Map<String, Type> identifierMap = new HashMap<>();
         MessageData messages = new MessageData();
 
-        Boolean semanticallyCorrectQL = checkSemanticCorrectnessQL(qlAST, messages);
+        Boolean semanticallyCorrectQL = checkSemanticCorrectnessQL(qlAST, messages, identifierMap);
 
         if(!semanticallyCorrectQL) {
             System.out.println("QL form is semantically incorrect!");
@@ -76,10 +63,10 @@ public class QLS {
             System.exit(1);
         }
 
-        InputStream qlsInputStream = new FileInputStream(inputFileQLS);
+        InputStream qlsInputStream = new FileInputStream(inputQLS);
         StyleSheet qlsAST = getASTQLS(qlsInputStream);
 
-        Boolean semanticallyCorrectQLS = checkSemanticCorrectnessQLS(qlsAST, messages);
+        Boolean semanticallyCorrectQLS = checkSemanticCorrectnessQLS(qlsAST, messages, identifierMap);
 
         if(!semanticallyCorrectQLS) {
             System.out.println("QLS form is semantically incorrect!");
@@ -90,23 +77,17 @@ public class QLS {
             System.exit(1);
         }
 
-        /*
+
         System.out.println("Create GUI...");
         Context questionStates =  new Context();
         buildGUI(qlAST, questionStates);
-        */
+
     }
 
-    private boolean fileExists() {
-        Path pathQL = Paths.get(inputFileQL);
-        Path pathQLS = Paths.get(inputFileQLS);
+    private boolean fileExists(String inputQL, String inputQLS) {
+        Path pathQL = Paths.get(inputQL);
+        Path pathQLS = Paths.get(inputQLS);
         return (Files.exists(pathQL) && Files.exists(pathQLS));
-    }
-
-    private boolean correctExtension() {
-        String fileExtensionQL = inputFileQL.substring(inputFileQL.lastIndexOf(".") + 1, inputFileQL.length());
-        String fileExtensionQLS = inputFileQLS.substring(inputFileQLS.lastIndexOf(".") + 1, inputFileQLS.length());
-        return (fileExtensionQL.equals(ALLOWED_EXTENSION_QL) && fileExtensionQLS.equals(ALLOWED_EXTENSION_QLS));
     }
 
     private Form getASTQL(InputStream inputStream) throws IOException {
@@ -116,7 +97,7 @@ public class QLS {
         QLParser parser = new QLParser(tokens);
 
         ParseTree parseTree = parser.form();
-        ASTVisitor astVisitor = new ASTVisitor(parseTree);
+        ASTVisitor astVisitor = new ASTVisitor();
         Node nodeAST = parseTree.accept(astVisitor);
 
         return (Form) nodeAST;
@@ -135,13 +116,11 @@ public class QLS {
         return (StyleSheet) nodeAST;
     }
 
-    private boolean checkSemanticCorrectnessQL(Form qlAST, MessageData messages) {
-        Map<String, Type> identifierToTypeMap = new HashMap<>();
+    private boolean checkSemanticCorrectnessQL(Form qlAST, MessageData messages,
+                                               Map<String, Type> identifierMap) {
 
-        new IdentifierChecker(qlAST, identifierToTypeMap, messages);
-        new TypeChecker(qlAST, identifierToTypeMap, messages);
-
-        this.identifierMap = identifierToTypeMap;
+        new IdentifierChecker(qlAST, identifierMap, messages);
+        new TypeChecker(qlAST, identifierMap, messages);
 
         if (messages.containsNoWarnings()) {
             for (Message warning : messages.getWarnings()) {
@@ -152,11 +131,16 @@ public class QLS {
         return messages.containsNoErrors();
     }
 
-    private boolean checkSemanticCorrectnessQLS(StyleSheet qlsAST, MessageData messages) {
+    private boolean checkSemanticCorrectnessQLS(StyleSheet qlsAST, MessageData messages,
+                                                Map<String, Type> identifierMap) {
 
         new QLSTypeChecker(messages, identifierMap, qlsAST);
 
         return messages.containsNoErrors();
     }
 
+    private void buildGUI(Form ast, Context context) {
+        GUI gui = new GUI (ast, context);
+        gui.showGUI();
+    }
 }
