@@ -61,27 +61,25 @@
         public override object Visit(IfStatement statement, QuestionVisitorTypeEnvironment environment)
         {
             var conditionVars = this.GetVariables(statement.Condition);
-            var ifBodyVars = statement.Statements.SelectMany(this.GetVariables);
-            var elseBodyVars = statement.ElseStatements.SelectMany(this.GetVariables);
+            var bodyVars = this.GetVariables(statement);
 
-            this.circularDependencyChecker.AddDependencies(ifBodyVars, conditionVars);
-            this.circularDependencyChecker.AddDependencies(elseBodyVars, conditionVars);
+            this.circularDependencyChecker.AddDependencies(bodyVars, conditionVars);
 
             return base.Visit(statement, environment);
         }
 
         private ISet<string> GetVariables(Expression expression)
         {
-            var variableCollector = new VariableCollector();
+            var variableCollector = new DependencyCollector();
             variableCollector.Collect(expression);
-            return variableCollector.Variables;
+            return variableCollector.Dependencies;
         }
 
         private ISet<string> GetVariables(Statement statement)
         {
-            var variableCollector = new VariableCollector();
+            var variableCollector = new DependencyCollector();
             variableCollector.Collect(statement);
-            return variableCollector.Variables;
+            return variableCollector.Dependencies;
         }
     }
 }

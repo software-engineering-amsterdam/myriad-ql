@@ -123,6 +123,7 @@
     <Compile Include="Checker\Analyzers\Contracts\IAnalyzer.cs" />
     <Compile Include="Checker\Analyzers\CyclicDependencyAnalyzer.cs" />
     <Compile Include="Checker\CheckerReport.cs" />
+    <Compile Include="Checker\Collectors\DependencyCollector.cs" />
     <Compile Include="Checker\Contracts\ICheckerReport.cs" />
     <Compile Include="Checker\Messages\Base\CheckerMessage.cs" />
     <Compile Include="Checker\Messages\Base\ErrorMessage.cs" />
