@@ -2,29 +2,21 @@ module Prophet
   module Checkers
     class DuplicateIdentifiers < Base
       def check
-        defined_identifiers.group_by(&:to_s).values.select do |identifiers|
-          identifiers.count > 1
-        end.each do |identifiers|
-          puts error_formatter(identifiers)
+        identifiers = ast.visit(Collectors::DefinedIdentifiers.new)
+
+        identifiers.map(&:name).group_by(&:to_s).values.reject(&:one?).collect do |names|
+          puts error_formatter(names)
         end
       end
 
-      def error_formatter(items)
-        "Identifier `#{items.first}` is defined multiple times (on " \
-        "#{items.map { |i| i.line_and_column.join(':') }.join(', ')})"
+      def error_formatter(names)
+        "Identifier `#{names.first}` is defined multiple times (on " \
+        "#{names.map { |i| i.line_and_column.join(':') }.join(', ')})"
       end
 
       private
 
       attr_reader :ast
-
-      def defined_identifiers
-        ast.select do |node|
-          Ast::Question === node || Ast::Form === node
-        end.map do |question|
-          question.identifier.name
-        end
-      end
     end
   end
 end
