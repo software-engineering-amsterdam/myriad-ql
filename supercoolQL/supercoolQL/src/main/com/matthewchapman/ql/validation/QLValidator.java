@@ -41,29 +41,28 @@ public class QLValidator {
 
         QLErrorLogger mainLogger = new QLErrorLogger();
 
+        //duplicate questions are ok at this point, continue to check the QL
         QLErrorLogger duplicateLog = questionCollection.gatherQuestions(astRoot);
         mainLogger.addMultipleErrors(duplicateLog);
 
         QLErrorLogger structureLog = qlStructureChecker.checkQLStructure(astRoot, questionCollection.getTypeTable());
-
-        if (structureLog.getErrorNumber() > 0) {
+        if(structureLog.getErrorNumber() > 0) {
             mainLogger.addMultipleErrors(structureLog);
+        }
+
+        //if we have any errors at all at this point, halt.
+        if (mainLogger.getErrorNumber() > 0) {
             dialogGenerator.generateErrorBox(mainLogger);
             return false;
-        } else {
-            QLErrorLogger typeLog = qlTypeChecker.checkExpressionTypes(astRoot, questionCollection.getTypeTable());
-
-            if (typeLog.getErrorNumber() > 0) {
-                dialogGenerator.generateErrorBox(typeLog);
-                return false;
-            }
-
-            if (mainLogger.getErrorNumber() > 0) {
-                dialogGenerator.generateErrorBox(mainLogger);
-                return false;
-            } else {
-                return true;
-            }
         }
+
+        //if we continued due to no errors, halt here if we have some
+        QLErrorLogger typeLog = qlTypeChecker.checkExpressionTypes(astRoot, questionCollection.getTypeTable());
+        if(typeLog.getErrorNumber() > 0) {
+            dialogGenerator.generateErrorBox(typeLog);
+            return false;
+        }
+
+        return true;
     }
 }
