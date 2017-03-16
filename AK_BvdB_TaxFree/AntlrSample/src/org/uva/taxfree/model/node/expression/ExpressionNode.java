@@ -31,9 +31,9 @@ public abstract class ExpressionNode extends Node {
 
     public abstract String evaluate();
 
-    protected abstract boolean asBoolean();
+    public abstract boolean asBoolean();
 
-    protected abstract int asInteger();
+    public abstract int asInteger();
 
-    protected abstract String asString();
+    public abstract String asString();
 }

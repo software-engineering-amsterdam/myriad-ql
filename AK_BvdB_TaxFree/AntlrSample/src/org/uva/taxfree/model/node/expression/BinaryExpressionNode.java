@@ -26,18 +26,16 @@ public class BinaryExpressionNode extends ExpressionNode {
 
     @Override
     public String evaluate() {
-        mOperator.evaluate(mLeft, mRight);
-        throw new RuntimeException("Todo: implement!!");
-
+        return mOperator.evaluate(mLeft, mRight);
     }
 
     @Override
-    protected boolean asBoolean() {
+    public boolean asBoolean() {
         return Boolean.valueOf(evaluate());
     }
 
     @Override
-    protected int asInteger() {
+    public int asInteger() {
         return Integer.valueOf(evaluate());
     }
 

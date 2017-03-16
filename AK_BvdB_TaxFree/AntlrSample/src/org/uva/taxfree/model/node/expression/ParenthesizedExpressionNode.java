@@ -21,17 +21,17 @@ public class ParenthesizedExpressionNode extends ExpressionNode {
 
 
     @Override
-    protected boolean asBoolean() {
+    public boolean asBoolean() {
         return Boolean.valueOf(evaluate());
     }
 
     @Override
-    protected int asInteger() {
+    public int asInteger() {
         return Integer.valueOf(evaluate());
     }
 
     @Override
-    protected String asString() {
+    public String asString() {
         return evaluate();
     }
 

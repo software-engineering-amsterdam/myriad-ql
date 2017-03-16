@@ -1,7 +1,10 @@
 package org.uva.taxfree.model.node.operators;
 
-import org.uva.taxfree.model.types.Type;
+import org.uva.taxfree.model.node.expression.ExpressionNode;
 
 public class OrOperator extends BooleanOperator {
-
+    @Override
+    public String evaluate(ExpressionNode left, ExpressionNode right) {
+        return new Boolean(left.asBoolean() || right.asBoolean()).toString();
+    }
 }

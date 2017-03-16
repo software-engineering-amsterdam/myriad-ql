@@ -11,17 +11,17 @@ public class StringLiteralNode extends LiteralNode {
     }
 
     @Override
-    protected boolean asBoolean() {
+    public boolean asBoolean() {
         return Boolean.valueOf(mValue);
     }
 
     @Override
-    protected int asInteger() {
+    public int asInteger() {
         return Integer.valueOf(mValue);
     }
 
     @Override
-    protected String asString() {
+    public String asString() {
         return mValue;
     }
 

@@ -16,17 +16,17 @@ public class IntegerLiteralNode extends LiteralNode {
     }
 
     @Override
-    protected boolean asBoolean() {
+    public boolean asBoolean() {
         return 0 != mValue;
     }
 
     @Override
-    protected int asInteger() {
+    public int asInteger() {
         return mValue;
     }
 
     @Override
-    protected String asString() {
+    public String asString() {
         return String.valueOf(mValue);
     }
 }

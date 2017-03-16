@@ -8,7 +8,5 @@ public abstract class Operator {
 
     public abstract Type getType();
 
-    public String evaluate(ExpressionNode Left, ExpressionNode Right) {
-        throw new RuntimeException("Not implemented yet");
-    }
+    public abstract String evaluate(ExpressionNode left, ExpressionNode right);
 }

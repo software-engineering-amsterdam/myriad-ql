@@ -35,17 +35,17 @@ public class VariableLiteralNode extends LiteralNode {
     }
 
     @Override
-    protected boolean asBoolean() {
+    public boolean asBoolean() {
         return Boolean.valueOf(resolveValue());
     }
 
     @Override
-    protected int asInteger() {
+    public int asInteger() {
         return Integer.valueOf(resolveValue());
     }
 
     @Override
-    protected String asString() {
+    public String asString() {
         return resolveValue();
     }
 
