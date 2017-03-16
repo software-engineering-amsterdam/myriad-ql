@@ -26,6 +26,17 @@ public class IfStatement extends Statement {
         this.setColumn(column);
     }
 
+    @Override
+    public String toString() {
+        String result = "if " + condition + " {\n";
+
+        for(Statement statement:this.ifCaseStatements) {
+            result = result + "\t" + statement + "\n";
+        }
+
+        return result +"}\n";
+    }
+
     private void addStatements(List<Statement> statements) {
         for (Statement s : statements) {
             this.ifCaseStatements.add(s);

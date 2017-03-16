@@ -32,12 +32,12 @@ form exampleForm {
   "Math question 2:"
     mathQuestion2:integer = testQuestion1 + 12;
 
-  "Duplicate question 1"
-    duplicateQuestion : boolean;
-   "Duplicate question 2"
-    duplicateQuestion : boolean;
+//  "Duplicate question 1"
+//    duplicateQuestion : boolean;
+//   "Duplicate question 2"
+//    duplicateQuestion : boolean;
 
-  "Non existing question"
-    nonexisting1:integer =
-        nonexist1 + nonexist2;
+//  "Non existing question"
+//    nonexisting1:integer =
+ //       nonexist1 + nonexist2;
 }

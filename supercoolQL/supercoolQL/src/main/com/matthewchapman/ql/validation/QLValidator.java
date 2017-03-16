@@ -40,14 +40,14 @@ public class QLValidator {
 
         //if we have any errors at all at this point, halt.
         if (mainLogger.getErrorNumber() > 0) {
-            dialogGenerator.generateErrorBox(mainLogger);
+            dialogGenerator.generateErrorBox(mainLogger, "Interpreter Errors Found", "QL encountered an interpreter error", "");
             return false;
         }
 
         //if we continued due to no errors, halt here if we have some
         QLErrorLogger typeLog = qlTypeChecker.checkExpressionTypes(astRoot, questionCollection.getTypeTable());
         if(typeLog.getErrorNumber() > 0) {
-            dialogGenerator.generateErrorBox(typeLog);
+            dialogGenerator.generateErrorBox(typeLog,"Interpreter Errors Found", "QL encountered an interpreter error", "");
             return false;
         }
 

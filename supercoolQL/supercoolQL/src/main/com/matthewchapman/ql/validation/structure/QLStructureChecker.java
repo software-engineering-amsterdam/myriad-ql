@@ -1,5 +1,6 @@
 package com.matthewchapman.ql.validation.structure;
 
+import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.core.QLErrorLogger;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
@@ -27,6 +28,7 @@ public class QLStructureChecker extends AbstractQLVisitor<Void> {
 
     private final HashMap<String, List<Parameter>> expressionMap;
     private final QLErrorLogger logger;
+    private Map<String, Type> typeTable;
 
     public QLStructureChecker() {
         this.expressionMap = new HashMap<>();
@@ -41,6 +43,7 @@ public class QLStructureChecker extends AbstractQLVisitor<Void> {
 
         checkForMissingParameters(typeTable);
         checkForCircularDependencies();
+        this.typeTable = typeTable;
 
         return this.logger;
     }
@@ -49,7 +52,7 @@ public class QLStructureChecker extends AbstractQLVisitor<Void> {
         for (HashMap.Entry<String, List<Parameter>> entry : expressionMap.entrySet()) {
             for (Parameter parameter : entry.getValue()) {
                 if (!typeTable.containsKey(parameter.getID())) {
-                    logger.addError(parameter.getLine(), parameter.getColumn(), parameter.getID(), "Non-existing parameter referenced");
+                    logger.addError(parameter.getLine(), parameter.getColumn(), parameter.getID(), "Referenced parameter does not exist");
                 }
             }
         }
@@ -58,22 +61,22 @@ public class QLStructureChecker extends AbstractQLVisitor<Void> {
     //TODO it works, but it's not nice.
     private void checkForCircularDependencies() {
 
-        for (HashMap.Entry<String, List<Parameter>> entry : expressionMap.entrySet()) {
-
-            List<Parameter> parameters = new ArrayList<>(entry.getValue());
-
-            for (Parameter parameter : parameters) {
-                if (expressionMap.containsKey(parameter.getID())) {
-                    expressionMap.get(parameter.getID()).addAll(parameters);
-
-                    if (expressionMap.get(parameter.getID()).contains(parameter.getID())) {
-                        //System.err.println(expressionMap.);
-                        break;
-                    }
-
-                }
-            }
-        }
+//        for (HashMap.Entry<String, List<Parameter>> entry : expressionMap.entrySet()) {
+//
+//            List<Parameter> parameters = new ArrayList<>(entry.getValue());
+//
+//            for (Parameter parameter : parameters) {
+//                if (expressionMap.containsKey(parameter.getID())) {
+//                    expressionMap.get(parameter.getID()).addAll(parameters);
+//
+//                    if (expressionMap.get(parameter.getID()).contains(parameter.getID())) {
+//                        //System.err.println(expressionMap.);
+//                        break;
+//                    }
+//
+//                }
+//            }
+//        }
     }
 
     @Override
@@ -90,6 +93,8 @@ public class QLStructureChecker extends AbstractQLVisitor<Void> {
     @Override
     public Void visit(IfStatement ifStatement, String context) {
 
+        //ifStatement.getCondition().accept(this, "If Condition");
+
         for (Statement statement : ifStatement.getIfCaseStatements()) {
             statement.accept(this, context);
         }
@@ -99,6 +104,8 @@ public class QLStructureChecker extends AbstractQLVisitor<Void> {
 
     @Override
     public Void visit(IfElseStatement ifElseStatement, String context) {
+
+        //ifElseStatement.getCondition().accept(this, "If Condition");
 
         for (Statement statement : ifElseStatement.getIfCaseStatements()) {
             statement.accept(this, null);
@@ -209,7 +216,12 @@ public class QLStructureChecker extends AbstractQLVisitor<Void> {
 
     @Override
     public Void visit(Parameter parameter, String context) {
-        expressionMap.get(context).add(parameter);
+        if(expressionMap.containsKey(context)) {
+            expressionMap.get(context).add(parameter);
+            return null;
+        } else if (!typeTable.containsKey(parameter.getID())) {
+            logger.addError(parameter.getLine(), parameter.getColumn(), context, "Non-Existing parameter referenced");
+        }
         return null;
     }
 

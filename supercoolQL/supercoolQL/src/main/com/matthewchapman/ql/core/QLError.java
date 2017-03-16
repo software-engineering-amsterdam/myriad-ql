@@ -3,7 +3,7 @@ package com.matthewchapman.ql.core;
 /**
  * Created by matt on 13/03/2017.
  */
-public class QLError {
+public class QLError implements Comparable<QLError>{
 
     private final String message;
     private final int line;
@@ -21,4 +21,8 @@ public class QLError {
         return "Error: " + this.line + ":" + this.column + " - " + this.id + " : " + this.message;
     }
 
+    @Override
+    public int compareTo(QLError o) {
+        return this.line - o.line;
+    }
 }

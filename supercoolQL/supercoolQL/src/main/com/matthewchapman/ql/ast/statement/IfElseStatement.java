@@ -22,6 +22,23 @@ public class IfElseStatement extends IfStatement {
         this.elseCaseStatements = elseCases;
     }
 
+    @Override
+    public String toString() {
+        String result = "if " + this.getCondition() + " {\n";
+
+        for(Statement statement:this.getIfCaseStatements()) {
+            result = result + "\t" + statement + "\n";
+        }
+
+        result = result + "} else {\n";
+
+        for(Statement statement:this.getElseCaseStatements()) {
+            result = result + "\t" + statement + "\n";
+        }
+
+        return result +"}\n";
+    }
+
     public List<Statement> getElseCaseStatements() {
         return this.elseCaseStatements;
     }

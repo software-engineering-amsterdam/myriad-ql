@@ -45,7 +45,7 @@ public class QLTypeChecker extends AbstractQLVisitor<Type> {
         Type right = operation.getRight().accept(this, null);
 
         if (!left.isCompatible(right)) {
-            logger.addError(operation.getLine(), operation.getColumn(), "Binary Operation", "Incompatible types found");
+            logger.addError(operation.getLine(), operation.getColumn(), "Binary Operation", "Incompatible parameter type in use");
             return new ErrorType();
         }
 
@@ -57,7 +57,7 @@ public class QLTypeChecker extends AbstractQLVisitor<Type> {
         Type right = operation.getRight().accept(this, null);
 
         if (!left.toString().equals("boolean") || !right.toString().equals("boolean")) {
-            logger.addError(operation.getLine(), operation.getColumn(), "Boolean Expression", "Non-Boolean type found");
+            logger.addError(operation.getLine(), operation.getColumn(), "Boolean Expression", "Non-Boolean parameter in use");
             return new ErrorType();
         }
 
@@ -66,13 +66,24 @@ public class QLTypeChecker extends AbstractQLVisitor<Type> {
 
     @Override
     public Type visit(IfStatement ifStatement, String context) {
-        ifStatement.getCondition().accept(this, null);
+        Type type = ifStatement.getCondition().accept(this, null);
+
+        if(!type.toString().equals("boolean")) {
+            logger.addError(ifStatement.getLine(), ifStatement.getColumn(), "If Statement", "Non-Boolean parameter in use");
+            return new ErrorType();
+        }
         return new BooleanType();
     }
 
     @Override
     public Type visit(IfElseStatement ifElseStatement, String context) {
-        ifElseStatement.getCondition().accept(this, null);
+        Type type = ifElseStatement.getCondition().accept(this, null);
+
+        if(!type.toString().equals("boolean")) {
+            logger.addError(ifElseStatement.getLine(), ifElseStatement.getColumn(), "If-Else Statement", "Non-Boolean parameter in use");
+            return new ErrorType();
+        }
+
         return new BooleanType();
     }
 
@@ -80,7 +91,7 @@ public class QLTypeChecker extends AbstractQLVisitor<Type> {
     public Type visit(CalculatedQuestion calculatedQuestion, String context) {
         Type calculationType = calculatedQuestion.getCalculation().accept(this, null);
         if (!calculatedQuestion.getType().isCompatible(calculationType)) {
-            logger.addError(calculatedQuestion.getLine(), calculatedQuestion.getColumn(), calculatedQuestion.getName(), "Incompatible types found");     //TODO proper error
+            logger.addError(calculatedQuestion.getLine(), calculatedQuestion.getColumn(), calculatedQuestion.getName(), "Incompatible parameter type in use");
         }
 
         return calculatedQuestion.getType();
@@ -103,7 +114,14 @@ public class QLTypeChecker extends AbstractQLVisitor<Type> {
 
     @Override
     public Type visit(Parameter parameter, String context) {
-        return typeTable.get(parameter.getID());
+        Type type =  typeTable.get(parameter.getID());
+
+        if(type == null) {
+            logger.addError(parameter.getLine(), parameter.getColumn(), parameter.getID(), "Referenced parameter does not exist");
+            return new ErrorType();
+        }
+
+        return type;
     }
 
     @Override

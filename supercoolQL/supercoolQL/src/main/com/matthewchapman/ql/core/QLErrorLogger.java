@@ -1,6 +1,7 @@
 package com.matthewchapman.ql.core;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,6 +26,9 @@ public class QLErrorLogger {
     public int getErrorNumber() { return this.errors.size(); }
 
     public void printErrors() {
+
+        Collections.sort(this.errors);
+
         for (QLError error : errors) {
             System.err.println(error);
         }
@@ -34,6 +38,7 @@ public class QLErrorLogger {
 
     public String toString() {
         String result = "";
+        Collections.sort(this.errors);
 
         for(QLError error : this.errors) {
             result = result.concat(error.toString() + "\n");

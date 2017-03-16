@@ -22,7 +22,7 @@ public class CalculatedQuestion extends Question {
 
     @Override
     public String toString() {
-        return "\t" + getText() + "\n\t" + getName() + ":" + getType() + " = \n\t" + getCalculation();
+        return "\t" + getText() + "\n\t" + getName() + ":" + getType() + " = \n\t" + getCalculation() + "\n";
     }
 
     @Override

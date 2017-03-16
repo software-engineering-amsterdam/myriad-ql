@@ -37,7 +37,7 @@ public class Question extends Statement {
 
     @Override
     public String toString() {
-        return "\t" + this.text + "\n\t" + this.name + ":" + this.type;
+        return "\t" + this.text + "\n\t" + this.name + ":" + this.type + "\n";
     }
 
     @Override
