@@ -3,7 +3,7 @@ package com.matthewchapman.ql.validation;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.core.QLErrorLogger;
 import com.matthewchapman.ql.gui.errors.ErrorDialogGenerator;
-import com.matthewchapman.ql.validation.structure.QLDependencyChecker;
+import com.matthewchapman.ql.validation.structure.cyclic.QLDependencyChecker;
 import com.matthewchapman.ql.validation.structure.QLExpressionChecker;
 import com.matthewchapman.ql.validation.structure.QuestionCollection;
 import com.matthewchapman.ql.validation.type.QLTypeChecker;
