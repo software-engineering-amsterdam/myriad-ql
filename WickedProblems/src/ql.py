@@ -62,13 +62,13 @@ class QL:
     left_parenthesis = Literal('(').suppress()
     right_parenthesis = Literal(')').suppress()
     form_type = oneOf('form')
-    field_boolean = Literal('boolean').addParseAction(lambda: Boolean())
-    field_string = Literal('string').addParseAction(lambda: String())
-    field_integer = Literal('integer').addParseAction(lambda: Integer())
-    # field_data = Literal('data').addParseAction(lambda: Data())
-    field_decimal = Literal('decimal').addParseAction(lambda: Decimal())
-    field_money = Literal('money').addParseAction(lambda: Money())
-    field_type = field_boolean | field_string | field_integer | \
+    field_boolean = Literal('boolean').addParseAction(lambda: Boolean)
+    field_string = Literal('string').addParseAction(lambda: String)
+    field_integer = Literal('integer').addParseAction(lambda: Integer)
+    field_data = Literal('data').addParseAction(lambda: Data)
+    field_decimal = Literal('decimal').addParseAction(lambda: Decimal)
+    field_money = Literal('money').addParseAction(lambda: Money)
+    field_type = field_boolean | field_string | field_integer | field_data | \
         field_decimal | field_money
     word = Word(alphas)
     # identifier = word.setResultsName("identifier")
@@ -169,7 +169,7 @@ class QL:
     form_item << statements
     # outer form
     form = Group(Suppress(form_type) + Word(alphanums)('name') +
-                 Suppress(left_curly) + form_item + Suppress(right_curly))('form')
+                 Suppress(left_curly) + form_item('block') + Suppress(right_curly))('form')
 
 
 

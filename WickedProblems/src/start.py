@@ -39,7 +39,7 @@ if __name__ == '__main__':
 	# parse the ql file
 	form_parsed = grammar.parse()
 
-	# print(form_parsed)
+	print(form_parsed)
 
-	gui = Interface(form_parsed)
-	gui.build_interface()
+	# gui = Interface(form_parsed)
+	# gui.build_interface()

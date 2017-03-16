@@ -20,157 +20,102 @@ from .field_types import *
 https://www.codingunit.com/unary-and-binary-operator-table
 '''
 class BinaryOperation(Node):
-    def __init__(self, identifier, left_hand_side, right_hand_side):
-        Node.__init__(self, identifier)
-        self.left_hand_side = left_hand_side
-        self.right_hand_side = right_hand_side
+    def __init__(self, left_operand, right_operand):
+        self.left_operand = left_operand
+        self.right_operand = right_operand
 
-    def __call__(self, left_hand_side, right_hand_side):
-        self.left_hand_side = left_hand_side
-        self.right_hand_side = right_hand_side
-        return self
-
-    def __iter__(self):
-        return iter([self.left_hand_side,self.right_hand_side])
+    def alg(self, _alg):
+        return _alg.BinaryOperation(self.left_operand.alg(_alg), self.right_operand.alg(_alg))
 
 class UnaryOperation(Node):
-    def __init__(self, identifier, child):
-        Node.__init__(self, identifier)
-        self.right_hand_side = child
-
-    def __iter__(self):
-        return iter([self.right_hand_side])
+    def __init__(self, operand):
+        self.operand = operand
 
 # Binary Operations
 class Inequality(BinaryOperation):
-    def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "inequality", left_hand_side,
-                                 right_hand_side)
-    def eval(self):
-        return bool(self.left_hand_side.eval() != self.right_hand_side.eval())
+    def alg(self, _alg):
+        return _alg.Inequality(self.left_operand.alg(_alg), self.right_operand.alg(_alg))
 
 class LogicalAnd(BinaryOperation):
-    def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "logical_and", left_hand_side,
-                                 right_hand_side)
-    def eval(self):
-        return bool(self.left_hand_side.eval() & self.right_hand_side.eval())
+    def alg(self, _alg):
+        return _alg.LogicalAnd(self.left_operand.alg(_alg), self.right_operand.alg(_alg))
 
 class Multiplication(BinaryOperation):
-    def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "multiplication", left_hand_side,
-                                 right_hand_side)
-
-    def eval(self):
-        return (self.left_hand_side.eval() * self.right_hand_side.eval())
+    def alg(self, _alg):
+        return _alg.Multiplication(self.left_operand.alg(_alg), self.right_operand.alg(_alg))
 
 class Addition(BinaryOperation):
-    def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "addition", left_hand_side,
-                                 right_hand_side)
-    def eval(self):
-        return (self.left_hand_side.eval() + self.right_hand_side.eval())
+    def alg(self, _alg):
+        return _alg.Addition(self.left_operand.alg(_alg), self.right_operand.alg(_alg))
 
 class Substraction(BinaryOperation):
-    def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "substraction", left_hand_side,
-                                 right_hand_side)
-    def eval(self):
-        return (self.left_hand_side.eval() - self.right_hand_side.eval())
+    def alg(self, _alg):
+        return _alg.Substraction(self.left_operand.alg(_alg), self.right_operand.alg(_alg))
 
 class Division(BinaryOperation):
-    def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "division", left_hand_side,
-                                 right_hand_side)
-    def eval(self):
-        return (self.left_hand_side.eval() / self.right_hand_side.eval())
+    def alg(self, _alg):
+        return _alg.Division(self.left_operand.alg(_alg), self.right_operand.alg(_alg))
 
 class LessThan(BinaryOperation):
-    def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "less_than", left_hand_side,
-                                 right_hand_side)
-    def eval(self):
-        return bool(self.left_hand_side.eval() < self.right_hand_side.eval())
+    def alg(self, _alg):
+        return _alg.LessThan(self.left_operand.alg(_alg), self.right_operand.alg(_alg))
 
 class LessThanEquals(BinaryOperation):
-    def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "less_than_equals", left_hand_side,
-                                 right_hand_side)
-    def eval(self):
-        return bool(self.left_hand_side.eval() <= self.right_hand_side.eval())
+    def alg(self, _alg):
+        return _alg.LessThanEquals(self.left_operand.alg(_alg), self.right_operand.alg(_alg))
 
 class Assignment(BinaryOperation):
-    def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "assignment", left_hand_side,
-                                 right_hand_side)
-    def eval(self):
-        return self.left_hand_side.eval()
+    def alg(self, _alg):
+        return _alg.Assignment(self.left_operand.alg(_alg), self.right_operand.alg(_alg))
 
 class Equality(BinaryOperation):
-    def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "equality", left_hand_side,
-                                 right_hand_side)
-    def eval(self):
-        return bool(self.left_hand_side.eval() == self.right_hand_side.eval())
+    def alg(self, _alg):
+        return _alg.Equality(self.left_operand.alg(_alg), self.right_operand.alg(_alg))
 
 class GreaterThan(BinaryOperation):
-    def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "greater_than", left_hand_side,
-                                 right_hand_side)
-    def eval(self):
-        return bool(self.left_hand_side.eval() > self.right_hand_side.eval())
+    def alg(self, _alg):
+        return _alg.GreaterThan(self.left_operand.alg(_alg), self.right_operand.alg(_alg))
 
 class GreaterThanEquals(BinaryOperation):
-    def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "greater_than_equals", left_hand_side,
-                                 right_hand_side)
-    def eval(self):
-        return bool(self.left_hand_side.eval() >= self.right_hand_side.eval())
+    def alg(self, _alg):
+        return _alg.GreaterThanEquals(self.left_operand.alg(_alg), self.right_operand.alg(_alg))
 
 class LogicalOr(BinaryOperation):
-    def __init__(self, left_hand_side, right_hand_side):
-        BinaryOperation.__init__(self, "logical_or", left_hand_side,
-                                 right_hand_side)
-    def eval(self):
-        return bool(self.left_hand_side.eval() | self.right_hand_side.eval())
+    def alg(self, _alg):
+        return _alg.LogicalOr(self.left_operand.alg(_alg), self.right_operand.alg(_alg))
 
 # Unary Operations
 class LogicalNot(UnaryOperation):
-    def __init__(self, child):
-        UnaryOperation.__init__(self, "logical_not", child)
-        self.right_hand_side = child
-
-    def eval(self):
-        return bool(~self.right_hand_side.eval())
+    def alg(self, _alg):
+        return _alg.UnaryNegation(self.operand.alg(_alg))
 
 class UnaryPlus(UnaryOperation):
-    def __init__(self, child):
-        UnaryOperation.__init__(self, "unary_plus", child)
-
-    def eval(self):
-        #TODO
-        pass
-
+    def alg(self, _alg):
+        return _alg.UnaryNegation(self.operand.alg(_alg))
 class UnaryNegation(UnaryOperation):
-    def __init__(self, child):
-        UnaryOperation.__init__(self, "unary_negation", child)
-        self.right_hand_side = child
+    def alg(self, _alg):
+        return _alg.UnaryNegation(self.operand.alg(_alg))
 
-    def eval(self):
-        return -self.right_hand_side.eval()
-
-class Expression(Node):
-    def __init__(self, child):
-        UnaryOperation.__init__(self, "evaluation", child[0])
-        self.right_hand_side = child[0]
-
-    def eval(self):
-        return self.right_hand_side
+class RefVariable(Node):
+    def __init__(self, name):
+        self.name = name
+    
+    def alg(self, _alg):
+        return _alg.RefVariable(self.name)
 
 class Variable(Node):
-    def __init__(self, identifier):
+    def __init__(self, name, datatype):
+        self.name = name
+        self.datatype = datatype
+
+    def alg(self, _alg):
+        return _alg.Variable(self.name, self.datatype.alg(_alg))
+
+
+class Variable1(Node):
+    def __init__(self, name):
         Node.__init__(self, "variable")
-        self._identifier = identifier
+        self.name = name
         self._value = Undefined()
 
     def __str__(self):
