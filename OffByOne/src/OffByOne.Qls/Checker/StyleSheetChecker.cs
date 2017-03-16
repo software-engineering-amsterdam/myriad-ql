@@ -14,8 +14,6 @@
     using OffByOne.Qls.Checker.Analyzers;
     using OffByOne.Qls.Checker.Analyzers.Contracts;
 
-    using ValueType = OffByOne.Ql.Ast.ValueTypes.Base.ValueType;
-
     public class StyleSheetChecker
     {
         private readonly IEnumerable<IAnalyzer> analyzers;
@@ -25,7 +23,8 @@
             this.analyzers = new List<IAnalyzer>
             {
                 new FormAnalyer(),
-                new TypeAnalyzer()
+                new TypeAnalyzer(),
+                new QuestionUsageAnalyzer()
             };
         }
 
