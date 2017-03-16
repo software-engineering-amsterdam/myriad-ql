@@ -37,7 +37,7 @@ public class QuestionConditions implements FormAndStatementVisitor <Void>{
 
         for (SimpleQuestion question : questionData.getAllQuestions()) {
             Field field = question.accept(fieldFactory);
-            context.addValue(field.getId(), field.getValue());
+            context.addValue(field.getIdentifierName(), field.getValue());
             fieldMap.put(field, new ArrayList<>());
             addIfStatements(questionData, question, fieldMap);
         }
@@ -53,7 +53,7 @@ public class QuestionConditions implements FormAndStatementVisitor <Void>{
             if (questionsInIfStatement.contains(question)) {
                 for (Field field : fieldMap.keySet()) {
 
-                    if (question.getIdentifier().getName().equals(field.getId())) {
+                    if (question.getIdentifierName().equals(field.getIdentifierName())) {
                         fieldMap.get(field).add(ifStatement);
                     }
                 }

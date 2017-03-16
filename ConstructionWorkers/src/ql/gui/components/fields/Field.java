@@ -31,7 +31,7 @@ public abstract class Field  {
         return widget;
     }
 
-    public String getId() {
+    public String getIdentifierName() {
         return question.getIdentifier().getName();
     }
 

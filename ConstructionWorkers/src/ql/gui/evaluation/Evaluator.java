@@ -24,7 +24,7 @@ public class Evaluator {
     public Value getValueComputedQuestion(ComputedQuestion computedQuestion) {
         Expression expression = computedQuestion.getExpression();
         Value expressionValue = expression.accept(expressionEvaluator);
-        context.addValue(computedQuestion.getIdentifier().getName(), expressionValue);
+        context.addValue(computedQuestion.getIdentifierName(), expressionValue);
         return expressionValue;
     }
 

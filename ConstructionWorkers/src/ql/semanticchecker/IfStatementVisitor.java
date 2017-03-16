@@ -56,7 +56,7 @@ public class IfStatementVisitor implements FormAndStatementVisitor<Void>, Expres
 
     @Override
     public Void visit(SimpleQuestion statement) {
-        if(identifierList.contains(statement.getIdentifier().getName())) {
+        if(identifierList.contains(statement.getIdentifierName())) {
             identifierDefinedInBody = true;
         }
         return null;
@@ -64,7 +64,7 @@ public class IfStatementVisitor implements FormAndStatementVisitor<Void>, Expres
 
     @Override
     public Void visit(ComputedQuestion statement) {
-        if(identifierList.contains(statement.getIdentifier().getName())) {
+        if(identifierList.contains(statement.getIdentifierName())) {
             this.identifierDefinedInBody = true;
         }
         return null;

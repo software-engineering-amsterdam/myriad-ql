@@ -28,6 +28,10 @@ public class Form extends Node {
         this.statements = statements;
     }
 
+    public String getIdentifierName() {
+        return identifier.getName();
+    }
+
     public Identifier getIdentifier() {
         return identifier;
     }
