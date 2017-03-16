@@ -14,5 +14,10 @@ namespace Questionnaires.Renderer.Containers
         {
             Pages = new List<Page>();
         }
+
+        public void Clear()
+        {
+            Pages.Clear();
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Questionnaires.QL.AST;
+using Questionnaires.Renderer.Containers;
 using Questionnaires.Types;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,13 @@ namespace Questionnaires.QL.Processing
     {
         private ICollection<QL.AST.Question> Questions;
         private ICollection<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> Rules;
+        private DocumentModel DocumentModel;
 
-        public Processor(ICollection<QL.AST.Question> questions, ICollection<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> rules)
+        public Processor(ICollection<QL.AST.Question> questions, ICollection<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> rules, DocumentModel documentModel)
         {
-            this.Questions = questions;
-            this.Rules = rules;
+            Questions = questions;
+            Rules = rules;
+            DocumentModel = documentModel;
         }
 
         public void Process(Form form)
@@ -29,7 +32,16 @@ namespace Questionnaires.QL.Processing
                 Visit((dynamic)statement, defaultVisibilityFunction);
             }
 
-            // TODO: We used to set the renderers window name here. I suppose this should now be part of the document model (or just set it to 'questionnaire'?
+            CreateDocumentModel(form);
+        }
+
+        private void CreateDocumentModel(Form form)
+        {
+            DocumentModel.Clear();
+            var MainPage = new Page(form.Identifier);
+            foreach (var question in Questions)
+                MainPage.Questions.Add(question);
+            DocumentModel.Pages.Add(MainPage);
         }
 
         public void Visit(ComputedQuestion node, Func<ExpressionEvaluator.Evaluator, bool> visibilityCondition)

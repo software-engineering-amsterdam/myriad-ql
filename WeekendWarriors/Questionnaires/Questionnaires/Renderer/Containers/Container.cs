@@ -12,8 +12,9 @@ namespace Questionnaires.Renderer.Containers
         public List<Section> Sections { get; set; }
         public List<Questionnaires.QL.AST.Question> Questions { get; set; }
 
-        public Container()
+        public Container(string name)
         {
+            Name = name;
             Sections = new List<Section>();
             Questions = new List<QL.AST.Question>();
         }

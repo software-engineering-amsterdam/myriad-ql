@@ -18,6 +18,7 @@ using Questionnaires.Types;
 using System.Threading;
 using Questionnaires.Renderer.Style;
 using Questionnaires.QLS.AST;
+using Questionnaires.Renderer.Containers;
 
 namespace Questionnaires
 {
@@ -42,18 +43,21 @@ namespace Questionnaires
                 AnalyzeFormAST(result, FormAST);
 
                 /* 'Flatten' the AST*/
+                DocumentModel DocumentModel = new DocumentModel();
                 List<QL.AST.Question> Questions = new List<QL.AST.Question>();
                 List<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> Rules = new List<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>>();
-                QL.Processing.Processor qlProcessor = new QL.Processing.Processor(Questions, Rules);
+                QL.Processing.Processor qlProcessor = new QL.Processing.Processor(Questions, Rules, DocumentModel);
                 qlProcessor.Process(FormAST);
                 StyleSheet stylesheetAST = null;
                 if (useStyling)
                 {
                     stylesheetAST = BuildStylesheetAST(result);
                     AnalyzeStylesheet(result, Questions, stylesheetAST);
+                    QLS.Processing.Processor qlsProcessor = new QLS.Processing.Processor(Questions, DocumentModel);
+                    qlsProcessor.Process(stylesheetAST);
                 }
 
-                var QuestionnaireBuilder = new QuestionnaireBuilder.QuestionnaireBuilder(FormAST, stylesheetAST);
+                var QuestionnaireBuilder = new QuestionnaireBuilder.QuestionnaireBuilder(Questions, Rules, DocumentModel);
                 QuestionnaireBuilder.Build();
                
             }

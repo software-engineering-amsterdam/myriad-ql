@@ -8,5 +8,9 @@ namespace Questionnaires.Renderer.Containers
 {
     public class Section : Container
     {
+        public Section(string name) : base(name)
+        {
+
+        }
     }
 }

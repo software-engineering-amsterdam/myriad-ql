@@ -23,7 +23,8 @@ namespace Questionnaires.QLS.Processing
         {
             // Fill up the dictionary
             questions.ForEach((question) => { Questions[question.Identifier] = question; });
-            this.DocumentModel = documentModel;
+            DocumentModel = documentModel;
+            DocumentModel.Clear();
         }
 
         public void Process(StyleSheet styleSheet)
@@ -40,7 +41,7 @@ namespace Questionnaires.QLS.Processing
             so child sections can use them */
             AddStylesToStack(page.DefaultStyles);
 
-            var pageContainer = new Renderer.Containers.Page();
+            var pageContainer = new Renderer.Containers.Page(page.Name);
             foreach (var section in page.Sections)
             {
                pageContainer.Sections.Add(Visit((dynamic)section));
@@ -59,7 +60,7 @@ namespace Questionnaires.QLS.Processing
              * so child sections/questions can use them */
             AddStylesToStack(section.Styles);
 
-            var sectionContainer = new Renderer.Containers.Section();
+            var sectionContainer = new Renderer.Containers.Section(section.Name);
             foreach (var question in section.Questions)
             {
                 sectionContainer.Questions.Add(Visit((dynamic)question));
