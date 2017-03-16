@@ -28,8 +28,6 @@ namespace Questionnaires.QLS.Processing
 
         public void Process(StyleSheet styleSheet)
         {
-
-            DocumentModel.Pages = new List<Renderer.Containers.Page>();
             foreach(var page in styleSheet.Pages)
             {
                 DocumentModel.Pages.Add(Visit((dynamic)page));  
@@ -43,7 +41,6 @@ namespace Questionnaires.QLS.Processing
             AddStylesToStack(page.DefaultStyles);
 
             var pageContainer = new Renderer.Containers.Page();
-            pageContainer.Sections = new List<Renderer.Containers.Section>();
             foreach (var section in page.Sections)
             {
                pageContainer.Sections.Add(Visit((dynamic)section));
@@ -63,7 +60,6 @@ namespace Questionnaires.QLS.Processing
             AddStylesToStack(section.Styles);
 
             var sectionContainer = new Renderer.Containers.Section();
-            sectionContainer.Questions = new List<QL.AST.Question>();
             foreach (var question in section.Questions)
             {
                 sectionContainer.Questions.Add(Visit((dynamic)question));
