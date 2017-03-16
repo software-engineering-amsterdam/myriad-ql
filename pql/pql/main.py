@@ -16,6 +16,7 @@ if __name__ == '__main__':
 # TODO: Typechecker kijken naar ons check systeem en evt minder generic maken
 # TODO: Environment een class maken en een update value methode geven
 # TODO: Error messages aan parser toevoegen
+# TODO: duplicate labels (warning)
 # NICE TO HAVES ---------------------------------
 # TODO: LOW PRIO: Eventueel If / IfElse logic combineren in typechecker
 # TODO: LOWEST PRIO : ast.apply(typevisitor) ipv Typenvironment
