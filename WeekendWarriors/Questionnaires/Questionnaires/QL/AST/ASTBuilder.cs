@@ -24,7 +24,7 @@ namespace Questionnaires.QL.AST
         {
             var CST = CSTBuilder.BuildForm(input);
             if (Messages.IsError())
-                throw new Exception();
+                throw new Compilation.ParseException();
 
             return Visit(CST) as Form;
         }
@@ -33,7 +33,7 @@ namespace Questionnaires.QL.AST
         {
             var CST = CSTBuilder.BuildExpression(input);
             if (Messages.IsError())
-                throw new Exception();
+                throw new Compilation.ParseException();
 
             return Visit(CST) as IExpression;
         }
@@ -42,7 +42,7 @@ namespace Questionnaires.QL.AST
         {
             var CST = CSTBuilder.BuildComputedQuestion(input);
             if (Messages.IsError())
-                throw new Exception();
+                throw new Compilation.ParseException();
 
             return Visit(CST) as ComputedQuestion;
         }

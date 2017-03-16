@@ -35,7 +35,7 @@ namespace Questionnaires
 
             Compilation.Result result = new Compilation.Result();
 
-            // TODO: the way we use exceptions here is bad.
+            // TODO: the way we use exceptions for flow control here is bad.
             try
             {
                 var FormAST = BuildFormAST(result);
@@ -57,11 +57,14 @@ namespace Questionnaires
                 QuestionnaireBuilder.Build();
                
             }
-            catch(Exception)
+            catch(Questionnaires.Compilation.ParseException)
             {
                 PrintMessages(result);
             }
-
+            catch (Exception)
+            {
+                PrintMessages(result);
+            }
         }
 
         private static void AnalyzeStylesheet(Compilation.Result result, List<QL.AST.Question> Questions, StyleSheet stylesheetAST)

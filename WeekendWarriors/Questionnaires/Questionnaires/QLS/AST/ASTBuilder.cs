@@ -24,7 +24,7 @@ namespace Questionnaires.QLS.AST
         {
             var CST = CSTBuilder.BuildStyleSheet(input);
             if (Messages.IsError())
-                throw new Exception();
+                throw new Compilation.ParseException();
 
             var stylesheet = Visit(CST);
             Debug.Assert(stylesheet.GetType() == typeof(StyleSheet));

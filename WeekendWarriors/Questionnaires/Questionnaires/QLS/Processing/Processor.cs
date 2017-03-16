@@ -15,7 +15,7 @@ namespace Questionnaires.QLS.Processing
         // A list of the questions parsed from the QL code
         Dictionary<string, QL.AST.Question> Questions = new Dictionary<string, QL.AST.Question>();
         // Document model
-        DocumentModel DocumentModel = new DocumentModel();
+        DocumentModel DocumentModel;
         // Stack of default styles
         Stack Styles = new Stack();
 
