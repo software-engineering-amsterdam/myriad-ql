@@ -41,7 +41,7 @@ class Question(Statement):
         self.label = label
 
     def alg(self, _alg):
-        return _alg.Question(self.variable.alg(_alg), self.label)
+        return _alg.Question(self.variable.alg(_alg), self.label.alg(_alg))
 
 class ComputedQuestion(Statement):
     def __init__(self, variable, label, expression):
@@ -50,7 +50,7 @@ class ComputedQuestion(Statement):
         self.expression = expression
 
     def alg(self, _alg):
-        return _alg.ComputedQuestion(self.variable.alg(_alg), self.label, self.expression.alg(_alg))
+        return _alg.ComputedQuestion(self.variable.alg(_alg), self.label.alg(_alg), self.expression.alg(_alg))
 
 
 class ifThen(Statement):

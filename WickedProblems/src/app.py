@@ -17,11 +17,11 @@ parser = QL()
 form_ast = parser.parse(ql_string)
 
 test_ast = parser.parse('form apple {   "How many people are there in your household?" numberInHoushold: integer}')
-action = operations.ql.ToString
+action = operations.ql.PrettyPrint
 
 
-isinstance_alg = form_ast.alg(action())
-print isinstance_alg.to_string()
+isinstance_alg = form_ast.alg(action(0))
+print isinstance_alg.to_string(0)
 
 # # Make printable AST
 # action = operations.ql.QlAlgView
