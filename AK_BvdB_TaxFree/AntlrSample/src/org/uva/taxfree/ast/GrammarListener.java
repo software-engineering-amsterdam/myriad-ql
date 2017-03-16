@@ -1,5 +1,6 @@
 package org.uva.taxfree.ast;
 
+import org.antlr.v4.runtime.Token;
 import org.uva.taxfree.gen.QLGrammarBaseListener;
 import org.uva.taxfree.gen.QLGrammarParser;
 import org.uva.taxfree.model.node.Node;
@@ -151,31 +152,39 @@ public class GrammarListener extends QLGrammarBaseListener {
     @Override
     public void exitBinaryExpression(BinaryExpressionContext ctx) {
         super.exitBinaryExpression(ctx);
-        Operator operator = createOperator(ctx.op.getType(), ctx.op.getText());
+        Operator operator = createOperator(ctx.op);
         ExpressionNode booleanExpressionNode = new BinaryExpressionNode(popCachedCondition(), operator, popCachedCondition());
         addToStack(booleanExpressionNode);
     }
 
-    private Operator createOperator(int type, String operator) {
-        switch (type) {
+    private Operator createOperator(Token op) {
+        switch (op.getType()) {
             case OP_MULTIPLY:
+                return new MultiplyOperator();
             case OP_DIVIDE:
+                return new DivideOperator();
             case OP_PLUS:
+                return new AddOperator();
             case OP_MINUS:
-                return new NumericOperator(operator);
+                return new SubtractOperator();
             case OP_SMALLER:
+                return new LessThanOperator();
             case OP_SMALLEROREQUAL:
+                return new LessEqualOperator();
             case OP_BIGGER:
+                return new GreaterEqualOperator();
             case OP_BIGGEROREQUAL:
-                return new CompareOperator(operator);
+                return new GreaterEqualOperator();
             case OP_EQUALS:
+                return new EqualsOperator();
             case OP_NOTEQUALS:
-                return new UniformOperator(operator);
+                return new NotEqualsOperator();
             case OP_LOGICAL_AND:
+                return new AndOperator();
             case OP_LOGICAL_OR:
-                return new BooleanOperator(operator);
+                return new OrOperator();
             default:
-                throw new TypeNotPresentException(operator, new Throwable("This is an unsupported operator for QL!"));
+                throw new TypeNotPresentException(op.getText(), new Throwable("This is an unsupported operator for QL!"));
         }
     }
 

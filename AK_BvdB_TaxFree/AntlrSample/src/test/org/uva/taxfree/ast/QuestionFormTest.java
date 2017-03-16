@@ -16,8 +16,7 @@ import org.uva.taxfree.model.node.expression.ParenthesizedExpressionNode;
 import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
 import org.uva.taxfree.model.node.literal.VariableLiteralNode;
-import org.uva.taxfree.model.node.operators.CompareOperator;
-import org.uva.taxfree.model.node.operators.NumericOperator;
+import org.uva.taxfree.model.node.operators.*;
 import org.uva.taxfree.model.types.BooleanType;
 import org.uva.taxfree.model.types.DateType;
 import org.uva.taxfree.model.types.IntegerType;
@@ -71,7 +70,7 @@ public class QuestionFormTest {
         VariableLiteralNode variableSold = new VariableLiteralNode("soldHouseValue");
         VariableLiteralNode variableBought = new VariableLiteralNode("boughtHouseValue");
 
-        BinaryExpressionNode expCalc = new BinaryExpressionNode(variableSold, new NumericOperator("-"), variableBought);
+        BinaryExpressionNode expCalc = new BinaryExpressionNode(variableSold, new SubtractOperator(), variableBought);
         CalculationNode intCalc = new CalculationNode("Money balance:", "moneyBalance", new IntegerType(), expCalc);
 
         Assert.assertEquals(expCalc.resolveValue(), "(0-0)", "Nodes should have ability to resolveValue data");
@@ -137,7 +136,7 @@ public class QuestionFormTest {
     public void testConstantCondition() throws Exception {
         List<Node> questions = new ArrayList<>();
         ExpressionNode parenthesized = new ParenthesizedExpressionNode(CalcOnePlusFive());
-        ExpressionNode cond = new BinaryExpressionNode(new IntegerLiteralNode("0"), new CompareOperator(">"), parenthesized);
+        ExpressionNode cond = new BinaryExpressionNode(new IntegerLiteralNode("0"), new GreaterThanOperator(), parenthesized);
         questions.add(cond);
         questions.add(new DeclarationNode("Do you see me?", "amIVisible?", new BooleanType()));
         IfStatementNode ifStatement = new IfStatementNode(cond, questions);
@@ -168,7 +167,7 @@ public class QuestionFormTest {
 
     private ExpressionNode CalcOnePlusFive() {
         ExpressionNode calc = new BinaryExpressionNode(new IntegerLiteralNode("1"),
-                new NumericOperator("+"),
+                new AddOperator(),
                 new IntegerLiteralNode("5"));
         return calc;
     }
