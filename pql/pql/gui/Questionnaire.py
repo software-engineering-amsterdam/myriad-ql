@@ -129,23 +129,22 @@ class Questionnaire(FormVisitor, TypeVisitor):
 
     def boolean(self, node):
         widget = QCheckBox()
-        widget.stateChanged.connect(lambda value: self.update(widget.objectName(), bool(value)))
-        widget.update = widget.setChecked
-        self.connect_conditionals(widget.stateChanged)
+        self.connect_triggers(widget, widget.stateChanged, bool, widget.setChecked)
         return widget
 
     def string(self, node):
         widget = QLineEdit()
-        widget.textChanged.connect(lambda value: self.update(widget.objectName(), str(value)))
-        widget.update = widget.setText
-        self.connect_conditionals(widget.textChanged)
+        self.connect_triggers(widget, widget.textChanged, str, widget.setText)
         return widget
+
+    def connect_triggers(self, widget, trigger_event, type_conversion, update_method):
+        trigger_event.connect(lambda value: self.update(widget.objectName(), type_conversion(value)))
+        widget.update = update_method
+        self.connect_conditionals(trigger_event)
 
     def numeric(self, value_type, widget_type):
         widget = widget_type()
-        widget.valueChanged[value_type].connect(lambda value: self.update(widget.objectName(), value))
-        widget.update = widget.setValue
-        self.connect_conditionals(widget.valueChanged)
+        self.connect_triggers(widget, widget.valueChanged[value_type], value_type, widget.setValue)
         return widget
 
     def connect_conditionals(self, signal):
