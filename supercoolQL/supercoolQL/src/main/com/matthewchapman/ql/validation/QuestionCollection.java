@@ -1,5 +1,6 @@
 package com.matthewchapman.ql.validation;
 
+import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
 import com.matthewchapman.ql.ast.expression.unary.Negation;
@@ -74,7 +75,6 @@ public class QuestionCollection extends AbstractQLVisitor<Void> {
             statement.accept(this, null);
         }
 
-
         return null;
     }
 
@@ -97,7 +97,4 @@ public class QuestionCollection extends AbstractQLVisitor<Void> {
         typeTable.put(calculatedQuestion.getName(), calculatedQuestion.getType());
         return null;
     }
-
-
-
 }
