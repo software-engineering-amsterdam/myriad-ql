@@ -12,11 +12,11 @@ namespace Questionnaires.QL.Processing
 {
     class Processor
     {
-        private ICollection<RunTime.Question> Questions;
-        private ICollection<Action<VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> Rules;
+        private List<RunTime.Question> Questions;
+        private List<Action<VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> Rules;
         private DocumentModel DocumentModel;
 
-        public Processor(ICollection<RunTime.Question> questions, ICollection<Action<VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> rules, DocumentModel documentModel)
+        public Processor(List<RunTime.Question> questions, List<Action<VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> rules, DocumentModel documentModel)
         {
             Questions = questions;
             Rules = rules;
@@ -36,12 +36,13 @@ namespace Questionnaires.QL.Processing
             CreateDocumentModel(form);
         }
 
-        public void Visit(ComputedQuestion node, Func<ExpressionEvaluator.Evaluator, bool> visibilityCondition)
+        private void Visit(ComputedQuestion node, Func<ExpressionEvaluator.Evaluator, bool> visibilityCondition)
         {
-            var question = Visit(node.Question, visibilityCondition);
-
+            Visit(node.Question, visibilityCondition);
+            var question = Questions.Find((q) => q.Identifier == node.Question.Identifier);
+           
             Rules.Add(
-                new Action<VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>((variableStore, renderer, evaluator) =>
+                (variableStore, renderer, evaluator) =>
                 {
                     if (visibilityCondition(evaluator))
                     {
@@ -52,27 +53,24 @@ namespace Questionnaires.QL.Processing
                         // TODO: we are not quite ready for this since we don't handle values that are not present in the variableStore
                         //variableStore.RemoveValue(node.Question.Identifier);
                     }
-                }));
+                });
         }
 
-        // TODO: this is ugly. One of the visit methods returns a value
-        public RunTime.Question Visit(AST.Question node, Func<ExpressionEvaluator.Evaluator, bool> visibilityCondition)
+        private void Visit(AST.Question node, Func<ExpressionEvaluator.Evaluator, bool> visibilityCondition)
         {
             var runTimeQuestion = new RunTime.Question(node);
             // Add a rule to the rule container that sets the visibility for this question
             Rules.Add(
-                new Action<VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>((variableStore, renderer, evalutor) =>
+                (variableStore, renderer, evalutor) =>
                 {
                     runTimeQuestion.SetVisibility(visibilityCondition(evalutor)); 
-                })
+                }
             );            
 
             Questions.Add(runTimeQuestion);
-
-            return runTimeQuestion;
         }
 
-        public void Visit(Conditional node, Func<ExpressionEvaluator.Evaluator, bool> visibilityCondition)
+        private void Visit(Conditional node, Func<ExpressionEvaluator.Evaluator, bool> visibilityCondition)
         {
             /* The conditional node. This is where we need to do some real work. We need to make function objects
              * That evaluate the condition and based on the outcome set the visibility of questions */

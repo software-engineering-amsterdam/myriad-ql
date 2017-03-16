@@ -168,7 +168,6 @@
     <Compile Include="QL\AST\Types\StringType.cs" />
     <Compile Include="QL\AST\Types\Type.cs" />
     <Compile Include="RunTime\Question.cs" />
-    <Compile Include="RunTime\VariableChangedEventArgs.cs" />
     <Compile Include="RunTime\VariableStore.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
