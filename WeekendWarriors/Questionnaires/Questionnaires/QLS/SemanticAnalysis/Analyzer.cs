@@ -68,6 +68,11 @@ namespace Questionnaires.QLS.SemanticAnalysis
             {
                 Visit((dynamic)style);
             }
+
+            foreach (var innerSection in section.Sections)
+            {
+                Visit((dynamic)innerSection);
+            }
         }
 
         private void Visit(AST.QuestionWithWidget question)
