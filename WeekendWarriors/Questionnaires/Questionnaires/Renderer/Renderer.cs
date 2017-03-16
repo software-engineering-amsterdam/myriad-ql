@@ -35,60 +35,16 @@ namespace Questionnaires.Renderer
 
         public void AddModel(DocumentModel documentModel)
         {
-            foreach (var page in documentModel.Pages)
+            documentModel.Draw(QuestionnaireStack);
+
+            // TODO: I think we should be able to work without this code.
+            var questions = documentModel.GetQuestions();
+            foreach(var question in questions)
             {
-                var pageWidget = new StackPanel();
-                pageWidget.Orientation = Orientation.Vertical;
-                pageWidget.Name = page.Name;
-
-                // Without a QLS we can have questions in the page
-                foreach (var question in page.Questions)
-                {
-                    pageWidget.Children.Add(AddQuestion(question));
-                }
-                
-                foreach (var section in page.Sections)
-                {
-                    pageWidget.Children.Add(AddSection(section));
-                }
-                
-                pageWidget.Width = 1000;
-                pageWidget.Background = new SolidColorBrush(Colors.Green);
-                QuestionnaireStack.Children.Add(pageWidget);
-            }
-        }
-
-        private StackPanel AddSection(Section section)
-        {
-            var panel = new StackPanel();
-            panel.Orientation = Orientation.Vertical;
-            
-            foreach (var sec in section.Sections)
-            {
-                panel.Children.Add(AddSection(sec));
-            }
-            
-            foreach (var question in section.Questions)
-            {
-                panel.Children.Add(AddQuestion(question));
-            }
-            
-            panel.Width = 500;
-            panel.Background = new SolidColorBrush(Colors.Red);
-            return panel;
-        }
-
-        private QuestionWidget AddQuestion(RunTime.Question question)
-        {
-            // Render the question by adding it to the questionnaire stack
-            var inputChangedDelegate = new InputChangedCallback(this.InputChanged);
-            var questionWidget = question.Widget;
-            questionWidget.SetLabel(question.Body);
-            questionWidget.SetOnInputChanged(inputChangedDelegate);
-
-            Questions.Add(question.Identifier, questionWidget);
-            WidgetNames[questionWidget] = question.Identifier;
-            return questionWidget;
+                question.Widget.SetOnInputChanged(new InputChangedCallback(this.InputChanged));
+                Questions.Add(question.Identifier, question.Widget);
+                WidgetNames[question.Widget] = question.Identifier;
+            }        
         }
 
         public void SetValue(string name, Questionnaires.Types.IType value)

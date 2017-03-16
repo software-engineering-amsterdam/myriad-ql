@@ -139,6 +139,7 @@
     <Compile Include="Renderer\Containers\DocumentModel.cs" />
     <Compile Include="Renderer\Containers\Page.cs" />
     <Compile Include="Renderer\Containers\Section.cs" />
+    <Compile Include="Renderer\Containers\SimpleContainer.cs" />
     <Compile Include="Renderer\IRenderer.cs" />
     <Compile Include="Renderer\Renderer.cs" />
     <Compile Include="Renderer\Style\WidgetStyle.cs" />

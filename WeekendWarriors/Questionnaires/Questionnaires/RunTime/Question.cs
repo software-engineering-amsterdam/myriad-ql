@@ -14,7 +14,7 @@ namespace Questionnaires.RunTime
         public Question(QL.AST.Question questionASTNode)
         {
             QuestionASTNode = questionASTNode;
-            Widget = questionASTNode.Type.GetWidget();
+            SetWidget(questionASTNode.Type.GetWidget());
         }
 
         public string Identifier
@@ -29,12 +29,18 @@ namespace Questionnaires.RunTime
 
         public void SetWidget(QLS.AST.Widgets.Widget widget)
         {
-            Widget = widget.CreateWidget((dynamic)QuestionASTNode.Type);
+            SetWidget(widget.CreateWidget((dynamic)QuestionASTNode.Type));
         }
 
         public Types.IType Type // TODO: we need to get rid of this but for now we need it for the typeof we do in the QLS processor
         {
             get { return QuestionASTNode.Type; }
+        }
+
+        private void SetWidget(Renderer.Widgets.QuestionWidget widget)
+        {
+            Widget = widget;
+            Widget.SetLabel(QuestionASTNode.Body);
         }
     }
 }

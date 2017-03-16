@@ -92,7 +92,7 @@ namespace Questionnaires.QLS.Processing
                 var style = (DefaultStyle)stackCopy.Pop();
                 if(style.Type.GetType() == QLQuestion.Type.GetType()) // TODO: The one place where we use typeof. Can we do better?
                 {
-                    QLQuestion.Widget = style.Widget.CreateWidget((dynamic)this.Questions[question.Name].Type);
+                    QLQuestion.SetWidget(style.Widget);
                     WidgetStyle properties = new WidgetStyle();
                     foreach(var property in style.Properties)
                     {
