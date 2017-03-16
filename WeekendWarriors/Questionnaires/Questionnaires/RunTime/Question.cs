@@ -53,12 +53,20 @@ namespace Questionnaires.RunTime
             Widget.InputChanged += (sender, value) => SetValue(value); 
         }
 
-        private void SetValue(Types.IType value)
+        public void SetValue(Types.IType value)
         {
             bool valueChanged = Type.InequalTo(value).GetValue();
             Type = value;
             if (valueChanged)
+            {
+                Widget.SetQuestionValue(Type);
                 OnValueChanged(new EventArgs());
+            }
+        }
+
+        public void SetVisibility(bool visible)
+        {
+            Widget.SetVisibility(visible);
         }
     }
 }

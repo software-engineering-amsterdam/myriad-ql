@@ -48,7 +48,6 @@ namespace Questionnaires.QuestionnaireBuilder
             // Connect the runtime objects
             variableStore.VariableChanged += (sender, args) =>
             {
-                renderer.SetValue(args.Name, args.Value);
                 ruleContainer.ApplyRules();
             };
 

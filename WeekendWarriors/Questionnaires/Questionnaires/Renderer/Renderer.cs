@@ -36,38 +36,12 @@ namespace Questionnaires.Renderer
 
         public void AddModel(DocumentModel documentModel)
         {
-            documentModel.Draw(QuestionnaireStack);
-
-            // TODO: I think we should be able to work without this code.
-            var questions = documentModel.GetQuestions();
-            foreach(var question in questions)
-            {
-            //    question.Widget.SetOnInputChanged(new InputChangedCallback(this.InputChanged));
-                Questions.Add(question.Identifier, question.Widget);
-            //    WidgetNames[question.Widget] = question.Identifier;
-            }        
-        }
-
-        public void SetValue(string name, Questionnaires.Types.IType value)
-        {
-            Questions[name].SetQuestionValue((dynamic)value);
-        }
-
-        public void SetVisibility(string name, bool visible)
-        {
-            Questions[name].SetVisibility(visible);
+            documentModel.Draw(QuestionnaireStack);       
         }
 
         public void SetWindowTitle(string title)
         {
             QuestionnaireWindow.Title = title;
         }
-
-        //public delegate void InputChangedCallback(Widgets.QuestionWidget source, IType value);
-        //public void InputChanged(Widgets.QuestionWidget source, IType value)
-        //{
-        //    Debug.Assert(WidgetNames.ContainsKey(source));
-        //    //VariableStore.SetValue(WidgetNames[source], value);
-        //}
     }
 }

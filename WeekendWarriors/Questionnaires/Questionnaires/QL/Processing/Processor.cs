@@ -48,14 +48,14 @@ namespace Questionnaires.QL.Processing
         public void Visit(ComputedQuestion node, Func<ExpressionEvaluator.Evaluator, bool> visibilityCondition)
         {
             // Make sure to visit the question child node to add it to the renderer
-            Visit(node.Question, visibilityCondition);
+            var question = Visit(node.Question, visibilityCondition);
 
             Rules.Add(
                 new Action<VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>((variableStore, renderer, evaluator) =>
                 {
                     if (visibilityCondition(evaluator))
                     {
-                        variableStore.SetValue(node.Question.Identifier, evaluator.Evaluate(node.Expression));
+                        question.SetValue(evaluator.Evaluate(node.Expression));
                     }
                     else
                     {
@@ -65,17 +65,21 @@ namespace Questionnaires.QL.Processing
                 }));
         }
 
-        public void Visit(AST.Question node, Func<ExpressionEvaluator.Evaluator, bool> visibilityCondition)
+        // TODO: this is ugly. One of the visit methods returns a value
+        public RunTime.Question Visit(AST.Question node, Func<ExpressionEvaluator.Evaluator, bool> visibilityCondition)
         {
+            var runTimeQuestion = new RunTime.Question(node);
             // Add a rule to the rule container that sets the visibility for this question
             Rules.Add(
                 new Action<VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>((variableStore, renderer, evalutor) =>
                 {
-                    renderer.SetVisibility(node.Identifier, visibilityCondition(evalutor));                    
+                    runTimeQuestion.SetVisibility(visibilityCondition(evalutor)); 
                 })
             );            
 
-            Questions.Add(new RunTime.Question(node));
+            Questions.Add(runTimeQuestion);
+
+            return runTimeQuestion;
         }
 
         public void Visit(Conditional node, Func<ExpressionEvaluator.Evaluator, bool> visibilityCondition)
