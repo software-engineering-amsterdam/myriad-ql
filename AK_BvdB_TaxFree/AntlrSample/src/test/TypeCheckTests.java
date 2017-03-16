@@ -10,7 +10,10 @@ import org.uva.taxfree.model.node.declarations.CalculationNode;
 import org.uva.taxfree.model.node.expression.BinaryExpressionNode;
 import org.uva.taxfree.model.node.literal.BooleanLiteralNode;
 import org.uva.taxfree.model.node.literal.IntegerLiteralNode;
-import org.uva.taxfree.model.node.operators.*;
+import org.uva.taxfree.model.node.operators.AddOperator;
+import org.uva.taxfree.model.node.operators.EqualsOperator;
+import org.uva.taxfree.model.node.operators.GreaterThanOperator;
+import org.uva.taxfree.model.node.operators.MultiplyOperator;
 import org.uva.taxfree.model.types.BooleanType;
 import org.uva.taxfree.model.types.IntegerType;
 import org.uva.taxfree.model.types.Type;
@@ -27,9 +30,9 @@ public class TypeCheckTests {
 
     @Test
     public void testCorrectTypes() throws Exception {
-        assertTypes(new BinaryExpressionNode(new IntegerLiteralNode("5"),
+        assertTypes(new BinaryExpressionNode(new IntegerLiteralNode(5),
                         new AddOperator(),
-                        new IntegerLiteralNode("6")),
+                        new IntegerLiteralNode(6)),
                 0);
 
     }
@@ -38,26 +41,26 @@ public class TypeCheckTests {
     public void testCalculationSemantics() throws Exception {
         assertTypes(new CalculationNode("MyCalc", "intCalculation",
                         new IntegerType(),
-                        new BinaryExpressionNode(new IntegerLiteralNode("10"),
+                        new BinaryExpressionNode(new IntegerLiteralNode(10),
                                 new AddOperator(),
-                                new IntegerLiteralNode("5"))),
+                                new IntegerLiteralNode(5))),
                 0);
 
     }
 
     @Test
     public void testIncorrectTypes() throws Exception {
-        assertTypes(new BinaryExpressionNode(new IntegerLiteralNode("10"),
+        assertTypes(new BinaryExpressionNode(new IntegerLiteralNode(10),
                         new EqualsOperator(),
-                        new BooleanLiteralNode("false")),
+                        new BooleanLiteralNode(false)),
                 1);
     }
 
     @Test
     public void testIncorrectTypesAndOperator() throws Exception {
-        assertTypes(new BinaryExpressionNode(new IntegerLiteralNode("12"),
+        assertTypes(new BinaryExpressionNode(new IntegerLiteralNode(12),
                         new MultiplyOperator(),
-                        new BooleanLiteralNode("true")),
+                        new BooleanLiteralNode(true)),
                 2
         );
     }
@@ -70,14 +73,14 @@ public class TypeCheckTests {
 
     @Test
     public void testTypes() throws Exception {
-        BinaryExpressionNode b = new BinaryExpressionNode(new IntegerLiteralNode("5"), new GreaterThanOperator(), new IntegerLiteralNode("10"));
+        BinaryExpressionNode b = new BinaryExpressionNode(new IntegerLiteralNode(5), new GreaterThanOperator(), new IntegerLiteralNode(15));
         Type expressionType = b.getType();
         Assert.assertTrue(expressionType.equals(new BooleanType()), "Comparing ints should yield boolean");
     }
 
     @Test
     public void testBooleanTypes() throws Exception {
-        BinaryExpressionNode b = new BinaryExpressionNode(new BooleanLiteralNode("false"), new EqualsOperator(), new BooleanLiteralNode("true"));
+        BinaryExpressionNode b = new BinaryExpressionNode(new BooleanLiteralNode(true), new EqualsOperator(), new BooleanLiteralNode(true));
         Type expressionType = b.getType();
         Assert.assertTrue(expressionType.equals(new BooleanType()), "Comparing booleans should yield booleans");
     }

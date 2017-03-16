@@ -88,7 +88,7 @@ public class GrammarListener extends QLGrammarBaseListener {
     @Override
     public void enterBooleanLiteral(QLGrammarParser.BooleanLiteralContext ctx) {
         super.enterBooleanLiteral(ctx);
-        ExpressionNode booleanLiteralNode = new BooleanLiteralNode(ctx.getText());
+        ExpressionNode booleanLiteralNode = new BooleanLiteralNode(Boolean.valueOf(ctx.getText()));
         addToStack(booleanLiteralNode);
     }
 
@@ -102,7 +102,7 @@ public class GrammarListener extends QLGrammarBaseListener {
     @Override
     public void enterIntegerLiteral(QLGrammarParser.IntegerLiteralContext ctx) {
         super.enterIntegerLiteral(ctx);
-        ExpressionNode integerLiteralNode = new IntegerLiteralNode(ctx.getText());
+        ExpressionNode integerLiteralNode = new IntegerLiteralNode(Integer.valueOf(ctx.getText()));
         addToStack(integerLiteralNode);
     }
 

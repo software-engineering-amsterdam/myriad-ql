@@ -41,4 +41,5 @@ public class Declaration {
     public Type getType() {
         return mNode.getType();
     }
+
 }

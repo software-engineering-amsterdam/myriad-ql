@@ -4,8 +4,26 @@ import org.uva.taxfree.model.types.BooleanType;
 import org.uva.taxfree.model.types.Type;
 
 public class BooleanLiteralNode extends LiteralNode {
-    public BooleanLiteralNode(String id) {
-        super(id);
+    private boolean mValue;
+
+    public BooleanLiteralNode(boolean constantValue) {
+        mValue = constantValue;
+    }
+
+
+    @Override
+    protected boolean asBoolean() {
+        return mValue;
+    }
+
+    @Override
+    protected int asInteger() {
+        return mValue ? 1 : 0;
+    }
+
+    @Override
+    protected String asString() {
+        return String.valueOf(mValue);
     }
 
     @Override

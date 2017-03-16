@@ -15,8 +15,24 @@ public class ParenthesizedExpressionNode extends ExpressionNode {
     }
 
     @Override
-    public String resolveValue() {
-        return mExpression.resolveValue();
+    public String evaluate() {
+        return mExpression.evaluate();
+    }
+
+
+    @Override
+    protected boolean asBoolean() {
+        return Boolean.valueOf(evaluate());
+    }
+
+    @Override
+    protected int asInteger() {
+        return Integer.valueOf(evaluate());
+    }
+
+    @Override
+    protected String asString() {
+        return evaluate();
     }
 
     @Override

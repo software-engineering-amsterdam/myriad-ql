@@ -9,15 +9,10 @@ import java.util.List;
 import java.util.Set;
 
 public abstract class LiteralNode extends ExpressionNode {
-    private final String mId;
 
-    public LiteralNode(String id) {
-        super();
-        mId = id;
-    }
-
-    public String resolveValue() {
-        return mId;
+    @Override
+    public String evaluate() {
+        return asString();
     }
 
     @Override
