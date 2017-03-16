@@ -13,6 +13,7 @@ import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.core.QLErrorLogger;
 import com.matthewchapman.ql.validation.visitor.AbstractQLVisitor;
+import com.sun.tools.javac.util.Assert;
 
 import java.util.Map;
 
@@ -115,12 +116,7 @@ public class QLTypeChecker extends AbstractQLVisitor<Type> {
     @Override
     public Type visit(Parameter parameter, String context) {
         Type type = typeTable.get(parameter.getID());
-
-        if (type == null) {
-            logger.addError(parameter.getLine(), parameter.getColumn(), parameter.getID(), "Referenced parameter does not exist");
-            return new ErrorType();
-        }
-
+        Assert.checkNonNull(type);  //something very wrong if this happens
         return type;
     }
 
