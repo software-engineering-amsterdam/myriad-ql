@@ -4,6 +4,9 @@ import com.Qlmain.Frame_Listeners.Checkbox_Listener;
 import com.Qlmain.Frame_Listeners.NumberField_Listener;
 import com.Qlmain.Frame_Listeners.StringField_Listener;
 import com.Qlmain.QL.*;
+import com.Qlmain.Types_Of_Expr.Expression;
+import com.Qlmain.Types_Of_Expr.Number_ops.giveValEqual;
+import com.Qlmain.Types_Of_Expr.Type;
 import com.Qlmain.type_check.Type_Checking;
 
 import javax.swing.*;
@@ -12,14 +15,12 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by sotos on 27/2/2017.
- */
+
 public class Frame_Window {
 
     private static Map<String, Object> variablesAndValues;
     private static Map<IfStatement, JPanel> panelsAndConditions;
-    private static Map<Expr, JTextField> textFieldWithExprToEval;
+    private static Map<Expression, JTextField> textFieldWithExprToEval;
 
     public void Custom_Frame(Form dataToDisplay) {
         variablesAndValues = new HashMap<>();
@@ -29,7 +30,6 @@ public class Frame_Window {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension dim = new Dimension(500,500);
         frame.setPreferredSize(dim);
-
         frame.getContentPane().add( questionsToDisplay(dataToDisplay.getStatementList()));
 
         frame.pack();
@@ -40,8 +40,10 @@ public class Frame_Window {
     public static JPanel questionsToDisplay(List<Statement> dataToDisplay){
         JPanel newItemPanel = new JPanel();
         newItemPanel.setLayout(new BoxLayout(newItemPanel,BoxLayout.Y_AXIS));
+        newItemPanel.setBackground(Color.WHITE);
 
         for (Statement statementItem : dataToDisplay) {
+
             if (statementItem instanceof Question) {
 
                 Question questionItem = (Question) statementItem;
@@ -58,7 +60,7 @@ public class Frame_Window {
                 panelsAndConditions.put((IfStatement) statementItem, tempPan );
                 newItemPanel.add(tempPan);
 
-                if (!(boolean) Evaluate_the_expr.evaluateExp(((IfStatement) statementItem).getIfCase())) {
+                if (!(boolean) ((IfStatement) statementItem).getIfCase().exprEvaluateVisitor() ) {
                     tempPan.setVisible(false);
                 }else {
                     tempPan.setVisible(true);
@@ -70,12 +72,16 @@ public class Frame_Window {
     }
 
     private static JPanel defineQuestionType(Question questionItem, JPanel newItemPanel, List<Statement> dataToDisplay, JLabel jlabel) {
-        Map<String,Expr.Type> variablesAndTypes = Type_Checking.getVariablesAndTypes();
+        Map<String,Type> variablesAndTypes = Type_Checking.getVariablesAndTypes();
+
         JPanel temppanel = new JPanel(new GridLayout(1,1));
+        Dimension dim = new Dimension(500,30);
+        temppanel.setMaximumSize(dim);
+        temppanel.setBackground(Color.WHITE);
 
         temppanel.add(jlabel);
-        temppanel.setBackground(Color.WHITE);
-        if (variablesAndTypes.get(questionItem.name) == Expr.Type.BOOLEAN ) {
+
+        if (variablesAndTypes.get(questionItem.name) == Type.BOOLEAN ) {
 
             variablesAndValues.put(questionItem.name, false);
             JCheckBox questionCheckBox = new JCheckBox();
@@ -83,7 +89,7 @@ public class Frame_Window {
             questionCheckBox.addActionListener(new Checkbox_Listener(questionItem,dataToDisplay));
             temppanel.add(questionCheckBox);
 
-        }else if (variablesAndTypes.get(questionItem.name) == Expr.Type.STRING ){
+        }else if (variablesAndTypes.get(questionItem.name) == Type.STRING ){
 
             variablesAndValues.put(questionItem.name, 0);
             JTextField questionTextField = new JTextField();
@@ -91,21 +97,21 @@ public class Frame_Window {
             questionTextField.setBackground(Color.WHITE);
             temppanel.add(questionTextField);
 
-        }else if (variablesAndTypes.get(questionItem.name) == Expr.Type.INTEGER ||
-                variablesAndTypes.get(questionItem.name) == Expr.Type.MONEY) {
-
-            if (variablesAndTypes.get(questionItem.name) == Expr.Type.INTEGER){
-                variablesAndValues.put(questionItem.name, 0);
-            }else{
-                variablesAndValues.put(questionItem.name, 0.0);
-            }
+        }else if (variablesAndTypes.get(questionItem.name) == Type.INTEGER ||
+                variablesAndTypes.get(questionItem.name) == Type.MONEY) {
 
             JTextField questionTextField = new JTextField();
-            if (questionItem.type instanceof Expr.giveValEqual) {
+            if (questionItem.type instanceof giveValEqual) {
                 questionTextField.setEditable(false);
-                questionTextField.setText(Evaluate_the_expr.evaluateExp(questionItem.type).toString());
+                variablesAndValues.put(questionItem.name, questionItem.type.exprEvaluateVisitor());
+                questionTextField.setText(questionItem.type.exprEvaluateVisitor().toString());
                 textFieldWithExprToEval.put(questionItem.type, questionTextField);
             }else{
+                if (variablesAndTypes.get(questionItem.name) == Type.INTEGER){
+                    variablesAndValues.put(questionItem.name, 0);
+                }else{
+                    variablesAndValues.put(questionItem.name, 0.0);
+                }
                 questionTextField.getDocument().addDocumentListener(new NumberField_Listener(questionItem, questionTextField));
             }
             questionTextField.setBackground(Color.WHITE);
@@ -120,5 +126,5 @@ public class Frame_Window {
     public static Map<IfStatement, JPanel> getPanelsAndConditions() {
         return panelsAndConditions;
     }
-    public static Map<Expr, JTextField> gettextFieldWithExprToEval() { return textFieldWithExprToEval; }
+    public static Map<Expression, JTextField> gettextFieldWithExprToEval() { return textFieldWithExprToEval; }
 }

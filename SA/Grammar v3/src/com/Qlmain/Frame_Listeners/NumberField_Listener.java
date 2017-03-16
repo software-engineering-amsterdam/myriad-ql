@@ -3,6 +3,7 @@ package com.Qlmain.Frame_Listeners;
 import com.Qlmain.Frame_Window;
 import com.Qlmain.QL.Expr;
 import com.Qlmain.QL.Question;
+import com.Qlmain.Types_Of_Expr.Type;
 import com.Qlmain.type_check.Type_Checking;
 
 import javax.swing.*;
@@ -10,9 +11,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.util.Map;
 
-/**
- * Created by sotos on 6/3/2017.
- */
+
 public class NumberField_Listener implements DocumentListener {
 
     private Question question;
@@ -49,7 +48,7 @@ public class NumberField_Listener implements DocumentListener {
     private void storeDataAndChangeValue(DocumentEvent e) {
         Map<String,Object> variablesAndValues = Frame_Window.getVariablesAndValues();
         if (qTextField.getText().equals("")) {
-            if (Type_Checking.getVariablesAndTypes().get(question.name) == Expr.Type.INTEGER) {
+            if (Type_Checking.getVariablesAndTypes().get(question.name) == Type.INTEGER) {
                 variablesAndValues.replace(this.question.name, 0);
             }else{
                 variablesAndValues.replace(this.question.name, 0.0);
@@ -58,7 +57,7 @@ public class NumberField_Listener implements DocumentListener {
             new ReevaluateExpr();
         }else {
             try {
-                if (Type_Checking.getVariablesAndTypes().get(question.name) == Expr.Type.INTEGER) {
+                if (Type_Checking.getVariablesAndTypes().get(question.name) == Type.INTEGER) {
                     int temp = Integer.parseInt(qTextField.getText());
                     variablesAndValues.replace(this.question.name, temp);
                 } else {

@@ -1,9 +1,9 @@
 package com.Qlmain;
 
 import com.Qlmain.QL.*;
-import com.Qlmain.type_check.Expression_Type_Check;
+import com.Qlmain.Types_Of_Expr.Type;
 import com.Qlmain.type_check.Type_Checking;
-import com.Qlmain.type_check.UndefinedException;
+import com.Qlmain.Exceptions.UndefinedException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -94,11 +94,11 @@ public class MainFuncTest {
     @Test
     public void checkFormAddIfStatement()
     {
-        Map<String,Expr.Type> variablesAndTypes = Type_Checking.getVariablesAndTypes();
+        Map<String,Type> variablesAndTypes = Type_Checking.getVariablesAndTypes();
         for (Statement qu : formToTest.getStatementList()){
             if (qu instanceof Question) {
                 try {
-                    assertEquals(variablesAndTypes.get(((Question) qu).name), Expression_Type_Check.typeCheckExp( ((Question) qu).type));
+                    assertEquals(variablesAndTypes.get(((Question) qu).name), ((Question) qu).type.exprVisitor());
                 } catch (UndefinedException e) {
                     System.out.println("Undefined variable");
                 }
@@ -115,7 +115,7 @@ public class MainFuncTest {
         for (Statement st : formToTest.getStatementList()){
             if (st instanceof IfStatement) {
                 try {
-                    assertEquals(Expr.Type.BOOLEAN, Expression_Type_Check.typeCheckExp( ((IfStatement) st).getIfCase()));
+                    assertEquals(Type.BOOLEAN, ((IfStatement) st).getIfCase().exprVisitor());
 
                     //if (!(Expression_Type_Check.typeCheckExp( ((IfStatement) st).getIfCase()) == Expr.Type.WRONGTYPE)) {
                     //    assertEquals(true, Evaluate_the_expr.evaluateExp(((IfStatement) st).getIfCase()));

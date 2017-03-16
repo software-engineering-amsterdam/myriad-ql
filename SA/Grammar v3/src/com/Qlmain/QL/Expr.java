@@ -14,9 +14,10 @@ public class Expr {
         this.line=line;
     }
 
-    //public int getLine(){
-     //       return this.line;
-    //}
+    public int getLine(){
+            return this.line;
+    }
+
 
     public enum Type {
         INTEGER, MONEY, STRING, BOOLEAN, WRONGTYPE;
@@ -32,6 +33,7 @@ public class Expr {
         }
         public Type getValEquallhs() { return this.lhs; }
         public Expr getValEqualrhs() { return this.rhs; }
+
     }
 
     public class Add extends Expr {

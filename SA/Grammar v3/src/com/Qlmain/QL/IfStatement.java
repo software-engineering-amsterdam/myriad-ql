@@ -1,5 +1,9 @@
 package com.Qlmain.QL;
 
+
+
+import com.Qlmain.Types_Of_Expr.Expression;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,9 +11,9 @@ import java.util.List;
  * Created by matt on 21/02/2017.
  */
 
-public class IfStatement extends Statement implements Node {
+public class IfStatement implements Statement<IfStatement>, Node {
 
-    private Expr caseStatement;
+    private Expression caseStatement;
     private List<Statement> statementsList;
     private int line;
 
@@ -18,7 +22,7 @@ public class IfStatement extends Statement implements Node {
         this.line=line;
     }
 
-    public void ifStatementAddCase( Expr ifcase)
+    public void ifStatementAddCase( Expression ifcase)
     {
         this.caseStatement = ifcase;
     }
@@ -27,10 +31,16 @@ public class IfStatement extends Statement implements Node {
 
     public void ifStatementAddStatement( IfStatement st) { this.statementsList.add(st); }
 
-    public Expr getIfCase() { return caseStatement; }
+    public Expression getIfCase() { return caseStatement; }
 
     public List<Statement> getStatementsList() { return statementsList; }
 
     public int getIfStatementLine() { return line; }
 
+    @Override
+    public void visitst(IfStatement st) {
+        for (Statement state: st.statementsList){
+            state.visitst(state);
+        }
+    }
 }

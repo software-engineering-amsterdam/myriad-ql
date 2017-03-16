@@ -9,9 +9,6 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by sotos on 27/2/2017.
- */
 public class Checkbox_Listener implements ActionListener {
 
     private boolean checked = false;

@@ -1,11 +1,9 @@
-package com.Qlmain.type_check;
+package com.Qlmain.Exceptions;
 
 /**
  * Created by sotos on 14/3/2017.
  */
 public class UndefinedException extends Exception{
 
-    public UndefinedException()
-    {
-    }
+    public UndefinedException() {}
 }

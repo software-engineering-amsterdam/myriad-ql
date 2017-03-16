@@ -1,16 +1,17 @@
-package com.Qlmain.type_check;
+/*package com.Qlmain.type_check;
 
+import com.Qlmain.Exceptions.UndefinedException;
 import com.Qlmain.QL.Expr;
 
 import java.util.Map;
 
-/**
- * Created by sotos on 13/3/2017.
- */
-public class Expression_Type_Check  {
+public class Expression_Type_Check {
 
     public static Expr.Type typeCheckExp (Expr ifexp) throws UndefinedException {
+        //Expr_Interface inter = ifexp;
+        //inter.exprVisitor(ifexp);
         Map<String,Expr.Type> variablesAndTypes = Type_Checking.getVariablesAndTypes ();
+
         if ( ifexp instanceof Expr.And) {
             Expr.And t = (Expr.And) ifexp;
             return booleanEval( typeCheckExp(t.getAndlhs()), typeCheckExp(t.getAndrhs()));
@@ -60,9 +61,11 @@ public class Expression_Type_Check  {
             Expr.Type evr = typeCheckExp(t.getValEqualrhs());
             if ( evr.equals(t.getValEquallhs())) return t.getValEquallhs();
             else return Expr.Type.WRONGTYPE;
+
         }else if (ifexp instanceof Expr.SympleTypeValue) {
             Expr.SympleTypeValue t = (Expr.SympleTypeValue) ifexp;
             return t.getSympleTypeValue();
+
         }else if (ifexp instanceof Expr.IdValue) {
             Expr.IdValue t = (Expr.IdValue) ifexp;
             if (variablesAndTypes.containsKey(t.getIdValue())) {
@@ -70,15 +73,19 @@ public class Expression_Type_Check  {
             }else {
                 throw new UndefinedException();
             }
+
         }
         else if (ifexp instanceof Expr.TypeBoolean) {
             return ((Expr.TypeBoolean) ifexp).getBooleanType();
+
         }
         else if (ifexp instanceof Expr.IntValue) {
             return ((Expr.IntValue) ifexp).getIntType();
+
         }
         else if (ifexp instanceof Expr.MoneyValue) {
             return ((Expr.MoneyValue) ifexp).getMoneyType();
+
         }
 
         return Expr.Type.WRONGTYPE;
@@ -94,5 +101,5 @@ public class Expression_Type_Check  {
         else if (left.equals(Expr.Type.MONEY) && right.equals(Expr.Type.MONEY)) return Expr.Type.MONEY;
         else return Expr.Type.WRONGTYPE;
     }
-
 }
+*/

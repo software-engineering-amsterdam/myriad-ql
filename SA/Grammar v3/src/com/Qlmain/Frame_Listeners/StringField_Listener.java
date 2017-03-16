@@ -10,9 +10,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.util.Map;
 
-/**
- * Created by sotos on 14/3/2017.
- */
+
 public class StringField_Listener implements DocumentListener {
 
     private Question question;

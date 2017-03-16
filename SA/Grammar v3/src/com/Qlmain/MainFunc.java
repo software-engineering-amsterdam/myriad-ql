@@ -1,12 +1,13 @@
 package com.Qlmain;
 
 import com.Qlmain.QL.*;
+import com.Qlmain.Types_Of_Expr.Expression;
 import com.Qlmain.antlr.QLLexer;
 import com.Qlmain.antlr.QLParser;
-import com.Qlmain.parsing.QLVisitorBuildAST;
-import com.Qlmain.type_check.Expression_Type_Check;
+//import com.Qlmain.parsing.QLVisitorBuildAST;
+import com.Qlmain.parsing.QLVisitorBuildAST_test;
 import com.Qlmain.type_check.Type_Checking;
-import com.Qlmain.type_check.UndefinedException;
+import com.Qlmain.Exceptions.UndefinedException;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
@@ -55,7 +56,8 @@ public class MainFunc {
         try {
             // Specify our entry point
             QLParser.FormDeclarationContext formDeclarationContext = parser.formDeclaration();
-            QLVisitorBuildAST visitor = new QLVisitorBuildAST();
+            //QLVisitorBuildAST visitor = new QLVisitorBuildAST();
+            QLVisitorBuildAST_test visitor = new QLVisitorBuildAST_test();
             traverseResult = (Form) visitor.visit(formDeclarationContext);
 
         }catch(ParseCancellationException ex){
@@ -91,9 +93,9 @@ public class MainFunc {
 
     }
 
-    private void printTypeCheck(Expr typeCheck) {
+    private void printTypeCheck(Expression typeCheck) {
         try {
-            System.out.println( Expression_Type_Check.typeCheckExp(typeCheck));
+            System.out.println( typeCheck.exprVisitor());
         } catch (UndefinedException e) {
             e.printStackTrace();
         }

@@ -1,15 +1,13 @@
 package com.Qlmain;
 
+import com.Qlmain.Exceptions.ConditionDoesNotMatch;
 import com.Qlmain.QL.Expr;
 
 import java.util.Map;
 
-/**
- * Created by sotos on 13/3/2017.
- */
 public class Evaluate_the_expr {
 
-    public static Object evaluateExp (Expr ifexp) {
+    public static Object evaluateExp (Expr ifexp) throws ConditionDoesNotMatch {
         Map<String, Object> variablesAndValues = Frame_Window.getVariablesAndValues();
         if ( ifexp instanceof Expr.And) {
             Expr.And t = (Expr.And) ifexp;
@@ -112,11 +110,8 @@ public class Evaluate_the_expr {
         }
         else if (ifexp instanceof Expr.IdValue) {
             Expr.IdValue t = (Expr.IdValue) ifexp;
-            if (variablesAndValues.containsKey(t.getIdValue())) {
-                return variablesAndValues.get(t.getIdValue());
-            }else {
-                return false;
-            }
+            return variablesAndValues.get(t.getIdValue());
+
         }
         else if (ifexp instanceof Expr.IntValue) {
             Expr.IntValue t = (Expr.IntValue) ifexp;
@@ -130,7 +125,6 @@ public class Evaluate_the_expr {
             Expr.MoneyValue t = (Expr.MoneyValue) ifexp;
             return t.getMoneyValue();
         }
-
-        return true;
+        throw new ConditionDoesNotMatch();
     }
 }
