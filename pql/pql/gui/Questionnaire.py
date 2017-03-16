@@ -37,17 +37,16 @@ class Questionnaire(FormVisitor, TypeVisitor):
         page = Page(node.name, self.wizard)
         layout = QVBoxLayout()
         for statement in node.statements:
-            statement.parent = page
-            layout.addWidget(statement.apply(self))
+            layout.addWidget(statement.apply(self, page))
         page.set_layout(layout)
         return page
 
-    def conditional_if_else(self, node, args=None):
-        if_else_container = QGroupBox(node.parent)
+    def conditional_if_else(self, node, parent=None):
+        if_else_container = QGroupBox(parent)
         if_else_layout = QVBoxLayout()
 
-        if_container = self.create_conditional_container(node, node.statements)
-        else_container = self.create_conditional_container(node, node.else_statement_list)
+        if_container = self.create_conditional_container(node.statements, parent)
+        else_container = self.create_conditional_container(node.else_statement_list, parent)
 
         if_else_layout.addWidget(if_container)
         if_else_layout.addWidget(else_container)
@@ -55,17 +54,16 @@ class Questionnaire(FormVisitor, TypeVisitor):
         self.conditional_if_else_list.append((if_container, else_container, node))
         return if_else_container
 
-    def conditional_if(self, node, args=None):
-        container = self.create_conditional_container(node, node.statements)
+    def conditional_if(self, node, parent=None):
+        container = self.create_conditional_container(node.statements, parent)
         self.conditional_if_list.append((container, node))
         return container
 
-    def create_conditional_container(self, node, statements):
-        container = QGroupBox(node.parent)
+    def create_conditional_container(self, statements, parent):
+        container = QGroupBox(parent)
         layout = QVBoxLayout()
         for statement in statements:
-            statement.parent = node.parent
-            layout.addWidget(statement.apply(self))
+            layout.addWidget(statement.apply(self, parent))
         container.setLayout(layout)
         return container
 
@@ -92,16 +90,16 @@ class Questionnaire(FormVisitor, TypeVisitor):
                 if_container.hide()
                 else_container.show()
 
-    def create_container(self, node, enabled):
-        container = QGroupBox(node.parent)
+    def create_container(self, node, enabled, parent):
+        container = QGroupBox(parent)
         layout = QHBoxLayout()
         label = QLabel(node.title)
 
         widget = node.data_type.apply(self)
-        widget.setParent(node.parent)
+        widget.setParent(parent)
         widget.setEnabled(enabled)
         widget.setObjectName(node.name.name)
-        node.parent.registerField(node.name.name, widget)
+        parent.registerField(node.name.name, widget)
 
         label.setBuddy(widget)
         layout.addWidget(label)
@@ -109,11 +107,11 @@ class Questionnaire(FormVisitor, TypeVisitor):
         container.setLayout(layout)
         return container
 
-    def field(self, node, args=None):
-        return self.create_container(node, True)
+    def field(self, node, parent=None):
+        return self.create_container(node, True, parent)
 
-    def assignment(self, node, args=None):
-        return self.create_container(node, (node.expression is None))
+    def assignment(self, node, parent=None):
+        return self.create_container(node, (node.expression is None), parent)
 
     def money(self, node):
         widget = self.numeric(float, QDoubleSpinBox)

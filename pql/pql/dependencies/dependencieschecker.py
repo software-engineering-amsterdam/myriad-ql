@@ -2,9 +2,22 @@
 from pql.traversal.BinaryExpressionVisitor import BinaryExpressionVisitor
 from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.IdentifierVisitor import IdentifierVisitor
+from pql.traversal.TypeVisitor import TypeVisitor
 
 
-class DependenciesChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor):
+class DependenciesChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVisitor):
+    def boolean(self, node):
+        return []
+
+    def integer(self, node):
+        return []
+
+    def money(self, node):
+        return []
+
+    def string(self, node):
+        return []
+
     def __init__(self, ast):
         self.ast = ast
         self.errors = list()
