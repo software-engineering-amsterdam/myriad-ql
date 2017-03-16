@@ -135,7 +135,7 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
 
     @Override
     public TreeNode visitParameter(QLParser.ParameterContext ctx) {
-        return new Parameter(ctx.ID().getText(), ctx.start.getLine(),ctx.start.getCharPositionInLine());
+        return new Parameter(ctx.ID().getText(), ctx.start.getLine(), ctx.start.getCharPositionInLine());
     }
 
     @Override

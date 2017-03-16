@@ -1,7 +1,6 @@
 package com.matthewchapman.ql.core;
 
 import com.matthewchapman.ql.ast.Form;
-import com.matthewchapman.ql.parsing.AntlrErrorListener;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -43,9 +42,9 @@ public class Launcher extends Application {
             CoreParser parser = new CoreParser();
             Form form = parser.buildQLAST(fileContents);
 
-            if(form == null) {
+            if (form == null) {
                 Platform.exit();
-            } else if(parser.validateAST(form)) {
+            } else if (parser.validateAST(form)) {
                 new GUICreator().generateFormUI(primaryStage, form);
             } else {
                 Platform.exit();

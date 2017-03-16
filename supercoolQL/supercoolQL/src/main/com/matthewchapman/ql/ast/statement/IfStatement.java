@@ -30,11 +30,11 @@ public class IfStatement extends Statement {
     public String toString() {
         String result = "if " + condition + " {\n";
 
-        for(Statement statement:this.ifCaseStatements) {
+        for (Statement statement : this.ifCaseStatements) {
             result = result + "\t" + statement + "\n";
         }
 
-        return result +"}\n";
+        return result + "}\n";
     }
 
     private void addStatements(List<Statement> statements) {

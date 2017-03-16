@@ -1,7 +1,5 @@
 package com.matthewchapman.ql.validation.structure;
 
-import com.matthewchapman.ql.ast.Expression;
-import com.matthewchapman.ql.core.QLErrorLogger;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.Type;
@@ -12,6 +10,7 @@ import com.matthewchapman.ql.ast.expression.unary.Negation;
 import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
+import com.matthewchapman.ql.core.QLErrorLogger;
 import com.matthewchapman.ql.validation.visitor.AbstractQLVisitor;
 import com.sun.tools.javac.util.Assert;
 
@@ -21,32 +20,32 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by matt on 13/03/2017.
+ * Created by matt on 16/03/2017.
  * <p>
- * Provides type checking and missing parameter checking
+ * Exists to ensure that all
  */
-public class QLStructureChecker extends AbstractQLVisitor<Void> {
+public class QLExpressionChecker extends AbstractQLVisitor<Void> {
 
-    private final HashMap<String, List<Parameter>> expressionMap;
-    private final QLErrorLogger logger;
     private Map<String, Type> typeTable;
+    private QLErrorLogger logger;
+    private HashMap<String, List<Parameter>> expressionMap;
 
-    public QLStructureChecker() {
-        this.expressionMap = new HashMap<>();
+    public QLErrorLogger checkExpressions(Form form, Map<String, Type> typeTable) {
+        this.typeTable = typeTable;
         this.logger = new QLErrorLogger();
-    }
-
-    public QLErrorLogger checkQLStructure(Form form, Map<String, Type> typeTable) {
+        this.expressionMap = new HashMap<>();
 
         for (Statement statement : form.getStatements()) {
             statement.accept(this, null);
         }
 
         checkForMissingParameters(typeTable);
-        checkForCircularDependencies();
-        this.typeTable = typeTable;
 
-        return this.logger;
+        return logger;
+    }
+
+    public Map<String, List<Parameter>> getExpressionMap() {
+        return this.expressionMap;
     }
 
     private void checkForMissingParameters(Map<String, Type> typeTable) {
@@ -57,27 +56,6 @@ public class QLStructureChecker extends AbstractQLVisitor<Void> {
                 }
             }
         }
-    }
-
-    //TODO it works, but it's not nice.
-    private void checkForCircularDependencies() {
-
-//        for (HashMap.Entry<String, List<Parameter>> entry : expressionMap.entrySet()) {
-//
-//            List<Parameter> parameters = new ArrayList<>(entry.getValue());
-//
-//            for (Parameter parameter : parameters) {
-//                if (expressionMap.containsKey(parameter.getID())) {
-//                    expressionMap.get(parameter.getID()).addAll(parameters);
-//
-//                    if (expressionMap.get(parameter.getID()).contains(parameter.getID())) {
-//                        //System.err.println(expressionMap.);
-//                        break;
-//                    }
-//
-//                }
-//            }
-//        }
     }
 
     @Override
@@ -94,26 +72,14 @@ public class QLStructureChecker extends AbstractQLVisitor<Void> {
     @Override
     public Void visit(IfStatement ifStatement, String context) {
 
-        //ifStatement.getCondition().accept(this, "If Condition");
-
-        for (Statement statement : ifStatement.getIfCaseStatements()) {
-            statement.accept(this, context);
-        }
-
+        ifStatement.getCondition().accept(this, "If Condition");
         return null;
     }
 
     @Override
     public Void visit(IfElseStatement ifElseStatement, String context) {
 
-        for (Statement statement : ifElseStatement.getIfCaseStatements()) {
-            statement.accept(this, null);
-        }
-
-        for (Statement statement : ifElseStatement.getElseCaseStatements()) {
-            statement.accept(this, null);
-        }
-
+        ifElseStatement.getCondition().accept(this, "If Condition");
         return null;
     }
 
@@ -215,12 +181,19 @@ public class QLStructureChecker extends AbstractQLVisitor<Void> {
 
     @Override
     public Void visit(Parameter parameter, String context) {
-        if(expressionMap.containsKey(context)) {
+        //handle if statements
+        if (!typeTable.containsKey(parameter.getID())) {
+            logger.addError(parameter.getLine(), parameter.getColumn(), parameter.getID(), "Referenced parameter does not exist");
+            return null;
+        }
+
+        //handle calculated questions
+        if (expressionMap.containsKey(context)) {
             expressionMap.get(context).add(parameter);
         } else {
             Assert.checkNonNull(context);
         }
         return null;
-    }
 
+    }
 }

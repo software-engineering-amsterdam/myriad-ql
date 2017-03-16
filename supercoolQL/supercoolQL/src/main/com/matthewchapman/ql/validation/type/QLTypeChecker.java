@@ -1,6 +1,5 @@
 package com.matthewchapman.ql.validation.type;
 
-import com.matthewchapman.ql.core.QLErrorLogger;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.Type;
@@ -12,6 +11,7 @@ import com.matthewchapman.ql.ast.expression.unary.Negation;
 import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
+import com.matthewchapman.ql.core.QLErrorLogger;
 import com.matthewchapman.ql.validation.visitor.AbstractQLVisitor;
 
 import java.util.Map;
@@ -68,7 +68,7 @@ public class QLTypeChecker extends AbstractQLVisitor<Type> {
     public Type visit(IfStatement ifStatement, String context) {
         Type type = ifStatement.getCondition().accept(this, null);
 
-        if(!type.toString().equals("boolean")) {
+        if (!type.toString().equals("boolean")) {
             logger.addError(ifStatement.getLine(), ifStatement.getColumn(), "If Statement", "Non-Boolean parameter in use");
             return new ErrorType();
         }
@@ -79,7 +79,7 @@ public class QLTypeChecker extends AbstractQLVisitor<Type> {
     public Type visit(IfElseStatement ifElseStatement, String context) {
         Type type = ifElseStatement.getCondition().accept(this, null);
 
-        if(!type.toString().equals("boolean")) {
+        if (!type.toString().equals("boolean")) {
             logger.addError(ifElseStatement.getLine(), ifElseStatement.getColumn(), "If-Else Statement", "Non-Boolean parameter in use");
             return new ErrorType();
         }
@@ -114,9 +114,9 @@ public class QLTypeChecker extends AbstractQLVisitor<Type> {
 
     @Override
     public Type visit(Parameter parameter, String context) {
-        Type type =  typeTable.get(parameter.getID());
+        Type type = typeTable.get(parameter.getID());
 
-        if(type == null) {
+        if (type == null) {
             logger.addError(parameter.getLine(), parameter.getColumn(), parameter.getID(), "Referenced parameter does not exist");
             return new ErrorType();
         }

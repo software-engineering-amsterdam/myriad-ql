@@ -3,7 +3,7 @@ package com.matthewchapman.ql.core;
 /**
  * Created by matt on 13/03/2017.
  */
-public class QLError implements Comparable<QLError>{
+public class QLError implements Comparable<QLError> {
 
     private final String message;
     private final int line;

@@ -26,17 +26,17 @@ public class IfElseStatement extends IfStatement {
     public String toString() {
         String result = "if " + this.getCondition() + " {\n";
 
-        for(Statement statement:this.getIfCaseStatements()) {
+        for (Statement statement : this.getIfCaseStatements()) {
             result = result + "\t" + statement + "\n";
         }
 
         result = result + "} else {\n";
 
-        for(Statement statement:this.getElseCaseStatements()) {
+        for (Statement statement : this.getElseCaseStatements()) {
             result = result + "\t" + statement + "\n";
         }
 
-        return result +"}\n";
+        return result + "}\n";
     }
 
     public List<Statement> getElseCaseStatements() {

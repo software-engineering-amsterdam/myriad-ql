@@ -13,11 +13,10 @@ import javafx.scene.layout.Priority;
  */
 public class ErrorDialogGenerator {
 
-    public void generateErrorBox(QLErrorLogger logger, String title, String headerText, String contentText) {
+    public void generateErrorBox(QLErrorLogger logger, String title, String headerText) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(headerText);
-        alert.setContentText(contentText);
 
         String exceptionText = logger.toString();
         Label label = new Label("Resolve the following to continue:");

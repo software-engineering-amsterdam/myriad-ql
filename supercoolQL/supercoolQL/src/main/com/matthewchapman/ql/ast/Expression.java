@@ -8,16 +8,20 @@ package com.matthewchapman.ql.ast;
  */
 public abstract class Expression extends TreeNode implements QLVisitable {
 
+    public int getLine() {
+        return super.getLine();
+    }
+
     protected void setLine(int line) {
         super.setLine(line);
+    }
+
+    public int getColumn() {
+        return super.getColumn();
     }
 
     protected void setColumn(int column) {
         super.setColumn(column);
     }
-
-    public int getLine(){ return super.getLine(); }
-
-    public int getColumn(){ return super.getColumn(); }
 
 }

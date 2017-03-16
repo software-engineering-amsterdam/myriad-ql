@@ -1,9 +1,11 @@
 package com.matthewchapman.ql.validation;
 
-import com.matthewchapman.ql.gui.errors.ErrorDialogGenerator;
-import com.matthewchapman.ql.core.QLErrorLogger;
 import com.matthewchapman.ql.ast.Form;
-import com.matthewchapman.ql.validation.structure.QLStructureChecker;
+import com.matthewchapman.ql.core.QLErrorLogger;
+import com.matthewchapman.ql.gui.errors.ErrorDialogGenerator;
+import com.matthewchapman.ql.validation.structure.QLDependencyChecker;
+import com.matthewchapman.ql.validation.structure.QLExpressionChecker;
+import com.matthewchapman.ql.validation.structure.QuestionCollection;
 import com.matthewchapman.ql.validation.type.QLTypeChecker;
 
 /**
@@ -13,18 +15,20 @@ import com.matthewchapman.ql.validation.type.QLTypeChecker;
  */
 public class QLValidator {
 
+    public static final String INTERPRETER_ERROR_TITLE = "Interpreter Errors Found";
+    public static final String INTERPRETER_ERROR_BODY = "QL encountered an interpreter error";
     private final QuestionCollection questionCollection;
     private final QLTypeChecker qlTypeChecker;
-    private final QLStructureChecker qlStructureChecker;
+    private final QLDependencyChecker qlDependencyChecker;
     private final ErrorDialogGenerator dialogGenerator;
-    private final QLConditionChecker conditionChecker;
+    private final QLExpressionChecker qlExpressionChecker;
 
     public QLValidator() {
+        this.dialogGenerator = new ErrorDialogGenerator();
         this.questionCollection = new QuestionCollection();
         this.qlTypeChecker = new QLTypeChecker();
-        this.qlStructureChecker = new QLStructureChecker();
-        this.dialogGenerator = new ErrorDialogGenerator();
-        this.conditionChecker = new QLConditionChecker();
+        this.qlDependencyChecker = new QLDependencyChecker();
+        this.qlExpressionChecker = new QLExpressionChecker();
     }
 
     public boolean runChecks(Form astRoot) {
@@ -35,26 +39,28 @@ public class QLValidator {
         QLErrorLogger duplicateLog = questionCollection.gatherQuestions(astRoot);
         mainLogger.addMultipleErrors(duplicateLog);
 
-        QLErrorLogger structureLog = qlStructureChecker.checkQLStructure(astRoot, questionCollection.getTypeTable());
-        if(structureLog.getErrorNumber() > 0) {
-            mainLogger.addMultipleErrors(structureLog);
-        }
-
-        QLErrorLogger conditionalLog = conditionChecker.checkConditionals(astRoot, questionCollection.getTypeTable());
-        if(conditionalLog.getErrorNumber() > 0) {
-            mainLogger.addMultipleErrors(conditionalLog);
-        }
+        //missing parameters are bad
+        QLErrorLogger parameterLog = qlExpressionChecker.checkExpressions(astRoot, questionCollection.getTypeTable());
+        mainLogger.addMultipleErrors(parameterLog);
 
         //if we have any errors at all at this point, halt.
         if (mainLogger.getErrorNumber() > 0) {
-            dialogGenerator.generateErrorBox(mainLogger, "Interpreter Errors Found", "QL encountered an interpreter error", "");
+            dialogGenerator.generateErrorBox(mainLogger, INTERPRETER_ERROR_TITLE, INTERPRETER_ERROR_BODY);
             return false;
         }
 
-        //if we continued due to no errors, check types and halt here if we have errors
+        //circular dependencies are bad
+        QLErrorLogger dependencyLog = qlDependencyChecker.checkForCircularDependencies(questionCollection.getTypeTable(), qlExpressionChecker.getExpressionMap());
+        if (dependencyLog.getErrorNumber() > 0) {
+            mainLogger.addMultipleErrors(dependencyLog);
+            dialogGenerator.generateErrorBox(mainLogger, INTERPRETER_ERROR_TITLE, INTERPRETER_ERROR_BODY);
+            return false;
+        }
+
+        //incorrect types are also bad
         QLErrorLogger typeLog = qlTypeChecker.checkExpressionTypes(astRoot, questionCollection.getTypeTable());
-        if(typeLog.getErrorNumber() > 0) {
-            dialogGenerator.generateErrorBox(typeLog,"Interpreter Errors Found", "QL encountered an interpreter error", "");
+        if (typeLog.getErrorNumber() > 0) {
+            dialogGenerator.generateErrorBox(typeLog, INTERPRETER_ERROR_TITLE, INTERPRETER_ERROR_BODY);
             return false;
         }
 

@@ -23,7 +23,9 @@ public class QLErrorLogger {
         this.errors.addAll(logger.getErrors());
     }
 
-    public int getErrorNumber() { return this.errors.size(); }
+    public int getErrorNumber() {
+        return this.errors.size();
+    }
 
     public void printErrors() {
 
@@ -34,13 +36,15 @@ public class QLErrorLogger {
         }
     }
 
-    public List<QLError> getErrors() { return this.errors; }
+    public List<QLError> getErrors() {
+        return this.errors;
+    }
 
     public String toString() {
         String result = "";
         Collections.sort(this.errors);
 
-        for(QLError error : this.errors) {
+        for (QLError error : this.errors) {
             result = result.concat(error.toString() + "\n");
         }
 

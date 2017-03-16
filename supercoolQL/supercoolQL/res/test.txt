@@ -6,7 +6,7 @@ form exampleForm {
   "Test question 3"
     testQuestion3: boolean;
 
-  if (testQuestion1 && testQuestion2 || testQuestion3) {
+  if (testQuestion1 && testQuestion32 || testQuestion3) {
     "Conditional question 1"
       conditionalQuestion1: integer;
     "Conditional question 2"
@@ -40,4 +40,8 @@ form exampleForm {
   "Non existing question"
     nonexisting1:integer =
         nonexist1 + nonexist2;
+
+  "Extra maths"
+    extramaths:integer =
+        foo * bar;
 }

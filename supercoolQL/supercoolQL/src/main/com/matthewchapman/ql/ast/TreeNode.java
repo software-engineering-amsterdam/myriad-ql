@@ -12,16 +12,20 @@ public abstract class TreeNode {
     private int line;
     private int column;
 
+    protected int getLine() {
+        return this.line;
+    }
+
     protected void setLine(int line) {
         this.line = line;
+    }
+
+    protected int getColumn() {
+        return this.column;
     }
 
     protected void setColumn(int column) {
         this.column = column;
     }
-
-    protected int getLine(){ return this.line; }
-
-    protected int getColumn(){ return this.column; }
 
 }

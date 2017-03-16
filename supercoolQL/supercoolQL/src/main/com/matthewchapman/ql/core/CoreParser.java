@@ -2,10 +2,10 @@ package com.matthewchapman.ql.core;
 
 import com.matthewchapman.antlr.QLLexer;
 import com.matthewchapman.antlr.QLParser;
-import com.matthewchapman.ql.gui.errors.ErrorDialogGenerator;
 import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
+import com.matthewchapman.ql.gui.errors.ErrorDialogGenerator;
 import com.matthewchapman.ql.parsing.AntlrErrorListener;
 import com.matthewchapman.ql.parsing.AntlrVisitor;
 import com.matthewchapman.ql.validation.QLValidator;
@@ -30,12 +30,10 @@ public class CoreParser {
 
     public Form buildQLAST(String input) {
         QLParser parser = getQlParser(input);
-
         Form form = getForm(parser);
 
-        if(errorListener.getLogger().getErrorNumber() > 0)
-        {
-            dialogGenerator.generateErrorBox(errorListener.getLogger(), "Parser Error", "QL encountered an parsing error", "");
+        if (errorListener.getLogger().getErrorNumber() > 0) {
+            dialogGenerator.generateErrorBox(errorListener.getLogger(), "Parser Error", "QL encountered an parsing error");
             return null;
         } else {
             return form;
@@ -73,7 +71,7 @@ public class CoreParser {
         return parser;
     }
 
-    public boolean validateAST(Form form) {
+    boolean validateAST(Form form) {
         return new QLValidator().runChecks(form);
     }
 }
