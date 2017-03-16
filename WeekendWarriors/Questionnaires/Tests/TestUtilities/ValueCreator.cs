@@ -22,5 +22,10 @@ namespace Tests.QL.Value
 
             throw new NotSupportedException();
         }
+
+        public static Questionnaires.RunTime.Question CreateQuestion(string name, object value)
+        {
+            return new Questionnaires.RunTime.Question(new Questionnaires.QL.AST.Question(name, "", CreateValue(value)));
+        }
     }
 }

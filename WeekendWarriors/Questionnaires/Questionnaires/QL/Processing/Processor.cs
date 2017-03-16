@@ -36,18 +36,8 @@ namespace Questionnaires.QL.Processing
             CreateDocumentModel(form);
         }
 
-        private void CreateDocumentModel(Form form)
-        {
-            DocumentModel.Clear();
-            var MainPage = new Page(form.Identifier);
-            foreach (var question in Questions)
-                MainPage.Questions.Add(question);
-            DocumentModel.Pages.Add(MainPage);
-        }
-
         public void Visit(ComputedQuestion node, Func<ExpressionEvaluator.Evaluator, bool> visibilityCondition)
         {
-            // Make sure to visit the question child node to add it to the renderer
             var question = Visit(node.Question, visibilityCondition);
 
             Rules.Add(
@@ -97,6 +87,15 @@ namespace Questionnaires.QL.Processing
 
             foreach (var elseStatement in node.ElseStatements)            
                 Visit((dynamic)elseStatement, conditionFunctionElse);            
+        }
+
+        private void CreateDocumentModel(Form form)
+        {
+            DocumentModel.Clear();
+            var MainPage = new Page(form.Identifier);
+            foreach (var question in Questions)
+                MainPage.Questions.Add(question);
+            DocumentModel.Pages.Add(MainPage);
         }
     }
 }

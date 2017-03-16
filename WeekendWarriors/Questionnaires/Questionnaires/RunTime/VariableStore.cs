@@ -24,15 +24,6 @@ namespace Questionnaires.RunTime
             };
         }
 
-        public void SetValue(string name, IType value)
-        {            
-            bool changed = (!Questions.ContainsKey(name) || value.InequalTo((dynamic)Questions[name].Type).GetValue());
-            Questions[name].Type = value;
-
-            if (changed)
-                OnVariableChanged(name, value);
-        }
-
         public void RemoveValue(string name)
         {
             Questions.Remove(name);

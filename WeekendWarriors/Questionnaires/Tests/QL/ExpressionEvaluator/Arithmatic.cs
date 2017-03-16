@@ -16,7 +16,7 @@ namespace Tests.QL.ExpressionEvaluator
         {
             var store = new VariableStore();
             foreach (var value in context)
-                store.SetValue(value.Key, ValueCreator.CreateValue((dynamic)value.Value));
+                store.AddQuestion(ValueCreator.CreateQuestion(value.Key, (dynamic)value.Value));
 
             var astFactory = new ASTBuilder(new Questionnaires.Compilation.Result());
             var AST = astFactory.BuildExpression(expression);
