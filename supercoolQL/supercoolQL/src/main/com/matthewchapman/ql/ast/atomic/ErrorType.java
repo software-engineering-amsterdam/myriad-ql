@@ -1,7 +1,5 @@
 package com.matthewchapman.ql.ast.atomic;
 
-import com.matthewchapman.ql.ast.Type;
-
 /**
  * Created by matt on 13/03/2017.
  */

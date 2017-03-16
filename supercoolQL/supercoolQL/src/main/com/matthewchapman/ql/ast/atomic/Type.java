@@ -1,4 +1,6 @@
-package com.matthewchapman.ql.ast;
+package com.matthewchapman.ql.ast.atomic;
+
+import com.matthewchapman.ql.ast.TreeNode;
 
 /**
  * Created by matt on 21/02/2017.

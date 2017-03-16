@@ -2,7 +2,7 @@ package com.matthewchapman.ql.validation.structure;
 
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
-import com.matthewchapman.ql.ast.Type;
+import com.matthewchapman.ql.ast.atomic.Type;
 import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
@@ -24,8 +24,8 @@ public class QuestionCollection extends AbstractQLVisitor<Void> {
     private final QLErrorLogger logger;
 
     public QuestionCollection() {
-        typeTable = new HashMap<>();
-        questionList = new ArrayList<>();
+        this.typeTable = new HashMap<>();
+        this.questionList = new ArrayList<>();
         this.logger = new QLErrorLogger();
     }
 

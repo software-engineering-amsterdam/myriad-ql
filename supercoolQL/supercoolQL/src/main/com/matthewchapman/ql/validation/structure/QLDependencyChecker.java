@@ -1,6 +1,6 @@
 package com.matthewchapman.ql.validation.structure;
 
-import com.matthewchapman.ql.ast.Type;
+import com.matthewchapman.ql.ast.atomic.Type;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.core.QLErrorLogger;
 import com.matthewchapman.ql.validation.visitor.AbstractQLVisitor;

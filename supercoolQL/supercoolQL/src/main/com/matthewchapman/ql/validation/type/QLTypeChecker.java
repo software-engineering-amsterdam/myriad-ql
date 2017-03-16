@@ -2,7 +2,7 @@ package com.matthewchapman.ql.validation.type;
 
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
-import com.matthewchapman.ql.ast.Type;
+import com.matthewchapman.ql.ast.atomic.Type;
 import com.matthewchapman.ql.ast.atomic.*;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
