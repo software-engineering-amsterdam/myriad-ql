@@ -1,7 +1,5 @@
 ﻿namespace OffByOne.Ql.Ast.Expressions.Binary
 {
-    using System.Collections.Generic;
-
     using OffByOne.Ql.Ast.Expressions.Binary.Base;
     using OffByOne.Ql.Visitors.Contracts;
 
@@ -14,16 +12,11 @@
         {
         }
 
-        public DivideExpression(IList<Expression> expressions)
-            : this(expressions[0], expressions[1])
-        {
-        }
-
         public override TResult Accept<TResult, TContext>(
             IExpressionVisitor<TResult, TContext> visitor,
-            TContext context)
+            TContext environment)
         {
-            return visitor.Visit(this, context);
+            return visitor.Visit(this, environment);
         }
     }
 }
