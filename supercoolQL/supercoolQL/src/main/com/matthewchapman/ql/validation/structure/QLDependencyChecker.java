@@ -13,7 +13,7 @@ import java.util.Map;
  * <p>
  * Provides type checking and missing parameter checking
  */
-public class QLDependencyChecker extends AbstractQLVisitor<Void> {
+public class QLDependencyChecker extends AbstractQLVisitor<Void, String> {
 
     private final QLErrorLogger logger;
 

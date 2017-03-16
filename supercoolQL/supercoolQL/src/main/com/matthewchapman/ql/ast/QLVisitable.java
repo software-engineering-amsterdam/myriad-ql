@@ -9,5 +9,5 @@ import com.matthewchapman.ql.validation.visitor.QLVisitor;
  */
 public interface QLVisitable {
 
-    <T> T accept(QLVisitor<T> visitor, String context);
+    <T, C> T accept(QLVisitor<T, C> visitor, C context);
 }

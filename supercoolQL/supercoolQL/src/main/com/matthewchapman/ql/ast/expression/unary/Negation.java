@@ -31,7 +31,7 @@ public class Negation extends UnaryOperation implements QLVisitable {
     }
 
     @Override
-    public <T> T accept(QLVisitor<T> visitor, String context) {
+    public <T, C> T accept(QLVisitor<T, C> visitor, C context) {
         return visitor.visit(this, context);
     }
 }

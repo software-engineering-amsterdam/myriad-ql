@@ -22,7 +22,7 @@ import java.util.Map;
  * <p>
  * Visitor to check expressions for validity (circular dependency, types, etc).
  */
-public class QLTypeChecker extends AbstractQLVisitor<Type> {
+public class QLTypeChecker extends AbstractQLVisitor<Type, String> {
 
     private Map<String, Type> typeTable;
     private QLErrorLogger logger;

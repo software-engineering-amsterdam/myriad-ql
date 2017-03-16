@@ -24,7 +24,7 @@ import java.util.Map;
  * <p>
  * Exists to ensure that all
  */
-public class QLExpressionChecker extends AbstractQLVisitor<Void> {
+public class QLExpressionChecker extends AbstractQLVisitor<Void, String> {
 
     private Map<String, Type> typeTable;
     private QLErrorLogger logger;

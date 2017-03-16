@@ -17,7 +17,7 @@ import java.util.*;
  * <p>
  * Gathers all of the questions contained within a given Form, allows checking for duplicates
  */
-public class QuestionCollection extends AbstractQLVisitor<Void> {
+public class QuestionCollection extends AbstractQLVisitor<Void, String> {
 
     private final List<Question> questionList;
     private final HashMap<String, Type> typeTable;

@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by matt on 02/03/2017.
  */
-public class CoreParserTest extends AbstractQLVisitor<Void> {
+public class CoreParserTest extends AbstractQLVisitor<Void, String> {
 
     private final CoreParser parser = new CoreParser();
     private String testInput;

@@ -15,129 +15,129 @@ import com.matthewchapman.ql.ast.statement.Question;
  * <p>
  * Provides default visitor implementation to avoid having to implement everything in every visitor
  */
-public abstract class AbstractQLVisitor<T> implements QLVisitor<T> {
+public abstract class AbstractQLVisitor<T, C> implements QLVisitor<T, C> {
     @Override
-    public T visit(Question question, String context) {
+    public T visit(Question question, C context) {
         return null;
     }
 
     @Override
-    public T visit(IfStatement ifStatement, String context) {
+    public T visit(IfStatement ifStatement, C context) {
         return null;
     }
 
     @Override
-    public T visit(IfElseStatement ifElseStatement, String context) {
+    public T visit(IfElseStatement ifElseStatement, C context) {
         return null;
     }
 
     @Override
-    public T visit(CalculatedQuestion calculatedQuestion, String context) {
+    public T visit(CalculatedQuestion calculatedQuestion, C context) {
         return null;
     }
 
     @Override
-    public T visit(Parameter parameter, String context) {
+    public T visit(Parameter parameter, C context) {
         return null;
     }
 
     @Override
-    public T visit(ParameterGroup parameterGroup, String context) {
+    public T visit(ParameterGroup parameterGroup, C context) {
         return null;
     }
 
     @Override
-    public T visit(StringLiteral stringLiteral, String context) {
+    public T visit(StringLiteral stringLiteral, C context) {
         return null;
     }
 
     @Override
-    public T visit(IntegerLiteral integerLiteral, String context) {
+    public T visit(IntegerLiteral integerLiteral, C context) {
         return null;
     }
 
     @Override
-    public T visit(BooleanLiteral booleanLiteral, String context) {
+    public T visit(BooleanLiteral booleanLiteral, C context) {
         return null;
     }
 
     @Override
-    public T visit(Addition addition, String context) {
+    public T visit(Addition addition, C context) {
         return null;
     }
 
     @Override
-    public T visit(Division division, String context) {
+    public T visit(Division division, C context) {
         return null;
     }
 
     @Override
-    public T visit(Equal equal, String context) {
+    public T visit(Equal equal, C context) {
         return null;
     }
 
     @Override
-    public T visit(GreaterThan greaterThan, String context) {
+    public T visit(GreaterThan greaterThan, C context) {
         return null;
     }
 
     @Override
-    public T visit(GreaterThanEqualTo greaterThanEqualTo, String context) {
+    public T visit(GreaterThanEqualTo greaterThanEqualTo, C context) {
         return null;
     }
 
     @Override
-    public T visit(LessThan lessThan, String context) {
+    public T visit(LessThan lessThan, C context) {
         return null;
     }
 
     @Override
-    public T visit(LessThanEqualTo lessThanEqualTo, String context) {
+    public T visit(LessThanEqualTo lessThanEqualTo, C context) {
         return null;
     }
 
     @Override
-    public T visit(LogicalAnd logicalAnd, String context) {
+    public T visit(LogicalAnd logicalAnd, C context) {
         return null;
     }
 
     @Override
-    public T visit(LogicalOr logicalOr, String context) {
+    public T visit(LogicalOr logicalOr, C context) {
         return null;
     }
 
     @Override
-    public T visit(Multiplication multiplication, String context) {
+    public T visit(Multiplication multiplication, C context) {
         return null;
     }
 
     @Override
-    public T visit(NotEqual notEqual, String context) {
+    public T visit(NotEqual notEqual, C context) {
         return null;
     }
 
     @Override
-    public T visit(Subtraction subtraction, String context) {
+    public T visit(Subtraction subtraction, C context) {
         return null;
     }
 
     @Override
-    public T visit(Negation negation, String context) {
+    public T visit(Negation negation, C context) {
         return null;
     }
 
     @Override
-    public T visit(BooleanType booleanType, String context) {
+    public T visit(BooleanType booleanType, C context) {
         return null;
     }
 
     @Override
-    public T visit(IntegerType integerType, String context) {
+    public T visit(IntegerType integerType, C context) {
         return null;
     }
 
     @Override
-    public T visit(StringType stringType, String context) {
+    public T visit(StringType stringType, C context) {
         return null;
     }
 }
