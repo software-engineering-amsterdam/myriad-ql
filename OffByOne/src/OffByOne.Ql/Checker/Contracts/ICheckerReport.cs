@@ -18,6 +18,6 @@
 
         void Add(IEnumerable<CheckerMessage> messages);
 
-        bool ContainsErrors();
+        bool HasErrors();
     }
 }

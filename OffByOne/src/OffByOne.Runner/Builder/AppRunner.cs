@@ -8,7 +8,7 @@
         {
             var astTree = qlLanguageBuilder.BuildAst();
             var report = qlLanguageBuilder.CheckSyntax(astTree);
-            if (!report.ContainsErrors())
+            if (!report.HasErrors())
             {
                 qlLanguageBuilder.RunApplication(astTree);
             }
