@@ -28,6 +28,7 @@ class Questionnaire(FormVisitor, TypeVisitor):
     def visit(self):
         self.wizard.add_page(self.ast.apply(self))
         self.render_conditionals()
+        self.initial_ui()
         return self.wizard
 
     def render_conditionals(self):
@@ -128,7 +129,6 @@ class Questionnaire(FormVisitor, TypeVisitor):
 
     def boolean(self, node):
         widget = QCheckBox()
-        widget.setChecked(False)
         widget.stateChanged.connect(lambda value: self.update(widget.objectName(), bool(value)))
         widget.update = widget.setChecked
         self.connect_conditionals(widget.stateChanged)
@@ -154,6 +154,10 @@ class Questionnaire(FormVisitor, TypeVisitor):
 
     def update(self, widget_name, value):
         environment = self.evaluator.update_value(widget_name, value)
+        self.update_values_in_ui(environment)
+
+    def initial_ui(self):
+        environment = self.evaluator.visit()
         self.update_values_in_ui(environment)
 
     def update_values_in_ui(self, environment):
