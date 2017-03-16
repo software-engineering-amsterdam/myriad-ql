@@ -11,11 +11,11 @@ namespace Questionnaires.QL.Processing
 {
     class Processor
     {
-        private ICollection<QL.AST.Question> Questions;
+        private ICollection<RunTime.Question> Questions;
         private ICollection<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> Rules;
         private DocumentModel DocumentModel;
 
-        public Processor(ICollection<QL.AST.Question> questions, ICollection<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> rules, DocumentModel documentModel)
+        public Processor(ICollection<RunTime.Question> questions, ICollection<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> rules, DocumentModel documentModel)
         {
             Questions = questions;
             Rules = rules;
@@ -74,7 +74,7 @@ namespace Questionnaires.QL.Processing
                 })
             );            
 
-            Questions.Add(node);
+            Questions.Add(new RunTime.Question(node));
         }
 
         public void Visit(Conditional node, Func<ExpressionEvaluator.Evaluator, bool> visibilityCondition)

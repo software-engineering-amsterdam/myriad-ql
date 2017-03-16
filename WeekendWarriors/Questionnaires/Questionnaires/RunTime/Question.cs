@@ -6,25 +6,35 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.RunTime
 {
-    class Question
+    public class Question
     {
         public Questionnaires.Renderer.Widgets.QuestionWidget Widget { get; set; }
+        private QL.AST.Question QuestionASTNode; // TODO: come up with a better name
 
-        public Question(string identifier, string body, Questionnaires.Renderer.Widgets.QuestionWidget widget)
+        public Question(QL.AST.Question questionASTNode)
         {
-            this.Identifier = identifier;
-            this.Body = body;
-            Widget = widget;
+            QuestionASTNode = questionASTNode;
+            Widget = questionASTNode.Type.GetWidget();
         }
 
         public string Identifier
         {
-            get;
+            get { return QuestionASTNode.Identifier; }
         }
 
         public string Body
         {
-            get;
+            get { return QuestionASTNode.Body; }
+        }
+
+        public void SetWidget(QLS.AST.Widgets.Widget widget)
+        {
+            Widget = widget.CreateWidget((dynamic)QuestionASTNode.Type);
+        }
+
+        public Types.IType Type // TODO: we need to get rid of this but for now we need it for the typeof we do in the QLS processor
+        {
+            get { return QuestionASTNode.Type; }
         }
     }
 }

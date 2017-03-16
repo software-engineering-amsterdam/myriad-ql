@@ -15,10 +15,10 @@ namespace Questionnaires.QuestionnaireBuilder
     class QuestionnaireBuilder 
     {
         private DocumentModel DocumentModel;
-        private List<QL.AST.Question> Questions = new List<QL.AST.Question>();
+        private List<RunTime.Question> Questions = new List<RunTime.Question>();
         private List<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> Rules = new List<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>>();
 
-        public QuestionnaireBuilder(List<QL.AST.Question> questions, List<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> rules, DocumentModel documentModel)
+        public QuestionnaireBuilder(List<RunTime.Question> questions, List<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> rules, DocumentModel documentModel)
         {
             Questions = questions;
             Rules = rules;

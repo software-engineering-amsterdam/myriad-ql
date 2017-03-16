@@ -44,7 +44,7 @@ namespace Questionnaires
 
                 /* 'Flatten' the AST*/
                 DocumentModel DocumentModel = new DocumentModel();
-                List<QL.AST.Question> Questions = new List<QL.AST.Question>();
+                List<RunTime.Question> Questions = new List<RunTime.Question>();
                 List<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> Rules = new List<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>>();
                 QL.Processing.Processor qlProcessor = new QL.Processing.Processor(Questions, Rules, DocumentModel);
                 qlProcessor.Process(FormAST);
@@ -71,7 +71,7 @@ namespace Questionnaires
             }
         }
 
-        private static void AnalyzeStylesheet(Compilation.Result result, List<QL.AST.Question> Questions, StyleSheet stylesheetAST)
+        private static void AnalyzeStylesheet(Compilation.Result result, List<RunTime.Question> Questions, StyleSheet stylesheetAST)
         {
             var semanticAnalyzerQLS = new QLS.SemanticAnalysis.Analyzer(result, Questions);
             var semanticMessages = semanticAnalyzerQLS.Analyze(stylesheetAST);

@@ -13,13 +13,13 @@ namespace Questionnaires.QLS.Processing
     class Processor
     {
         // A list of the questions parsed from the QL code
-        Dictionary<string, QL.AST.Question> Questions = new Dictionary<string, QL.AST.Question>();
+        Dictionary<string, RunTime.Question> Questions = new Dictionary<string, RunTime.Question>();
         // Document model
         DocumentModel DocumentModel;
         // Stack of default styles
         Stack Styles = new Stack();
 
-        public Processor(List<QL.AST.Question> questions, DocumentModel documentModel)
+        public Processor(List<RunTime.Question> questions, DocumentModel documentModel)
         {
             // Fill up the dictionary
             questions.ForEach((question) => { Questions[question.Identifier] = question; });
@@ -76,13 +76,13 @@ namespace Questionnaires.QLS.Processing
             return sectionContainer;
         }
 
-        private QL.AST.Question Visit(QuestionWithWidget question)
+        private RunTime.Question Visit(QuestionWithWidget question)
         {
-            this.Questions[question.Name].Widget = question.Widget.CreateWidget((dynamic)this.Questions[question.Name].Type);
+            Questions[question.Name].SetWidget(question.Widget);
             return this.Questions[question.Name];
         }
 
-        private QL.AST.Question Visit(Question question)
+        private RunTime.Question Visit(Question question)
         {
             var QLQuestion = Questions[question.Name];
             var stackCopy = (Stack)Styles.Clone();
@@ -90,7 +90,7 @@ namespace Questionnaires.QLS.Processing
             while(stackCopy.Count > 0)
             {
                 var style = (DefaultStyle)stackCopy.Pop();
-                if(style.Type.GetType() == QLQuestion.Type.GetType())
+                if(style.Type.GetType() == QLQuestion.Type.GetType()) // TODO: The one place where we use typeof. Can we do better?
                 {
                     QLQuestion.Widget = style.Widget.CreateWidget((dynamic)this.Questions[question.Name].Type);
                     WidgetStyle properties = new WidgetStyle();

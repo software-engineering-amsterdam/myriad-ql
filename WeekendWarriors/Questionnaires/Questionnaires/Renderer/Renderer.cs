@@ -78,7 +78,7 @@ namespace Questionnaires.Renderer
             return panel;
         }
 
-        private QuestionWidget AddQuestion(QL.AST.Question question)
+        private QuestionWidget AddQuestion(RunTime.Question question)
         {
             // Render the question by adding it to the questionnaire stack
             var inputChangedDelegate = new InputChangedCallback(this.InputChanged);

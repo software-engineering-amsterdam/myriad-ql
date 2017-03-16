@@ -17,12 +17,12 @@ namespace Questionnaires.QLS.SemanticAnalysis
         */
 
         //private HashSet<QL.AST.Question> QlQuestions = new HashSet<QL.AST.Question>();
-        private Dictionary<string, QL.AST.Question> QLQuestions = new Dictionary<string, QL.AST.Question>();
-        private HashSet<QL.AST.Question> PlacedQuestions = new HashSet<QL.AST.Question>();
+        private Dictionary<string, RunTime.Question> QLQuestions = new Dictionary<string, RunTime.Question>();
+        private HashSet<RunTime.Question> PlacedQuestions = new HashSet<RunTime.Question>();
 
         private Questionnaires.Compilation.Result Result;
 
-        public Analyzer(Compilation.Result result, List<QL.AST.Question> questions)
+        public Analyzer(Compilation.Result result, List<RunTime.Question> questions)
         {
             Result = result;
             questions.ForEach((question) => QLQuestions[question.Identifier] = question);
@@ -36,7 +36,7 @@ namespace Questionnaires.QLS.SemanticAnalysis
             }
 
             // Check if all questions from the QL file are placed by the QLS file
-            var QuestionInQlFile = new HashSet<QL.AST.Question>(QLQuestions.Values);
+            var QuestionInQlFile = new HashSet<RunTime.Question>(QLQuestions.Values);
             if(!QuestionInQlFile.IsSubsetOf(PlacedQuestions))
             {
                 Result.AddEvent(new Questionnaires.Compilation.Error("Not all question in the QL file have been placed by the QLS file"));
@@ -93,11 +93,11 @@ namespace Questionnaires.QLS.SemanticAnalysis
             // Check that type of widget matches type of question
             try
             {
-                question.Widget.CreateWidget((dynamic)qlQuestion.Type);
+                qlQuestion.SetWidget(question.Widget);                
             }
             catch(NotSupportedException)
             {
-                Result.AddEvent(new Questionnaires.Compilation.Error(string.Format("Widget type {0} defined for question {1} is invalid for that question's type: {2} ", question.Widget, question.Name, qlQuestion.Type)));
+                Result.AddEvent(new Questionnaires.Compilation.Error(string.Format("Widget type {0} defined for question {1} is invalid for that question's type", question.Widget, question.Name)));
             }
             
         }
