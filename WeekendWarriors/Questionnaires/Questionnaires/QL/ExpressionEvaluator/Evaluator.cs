@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Questionnaires.RunTime;
 
 using Operators = Questionnaires.QL.AST.Operators;
 using Literals = Questionnaires.QL.AST.Literals;
@@ -13,9 +14,9 @@ namespace Questionnaires.ExpressionEvaluator
 {
     public class Evaluator
     {
-        protected VariableStore.VariableStore VarialbeStore;
+        protected VariableStore VarialbeStore;
 
-        public Evaluator(VariableStore.VariableStore store)
+        public Evaluator(VariableStore store)
         {
             this.VarialbeStore = store;
         }

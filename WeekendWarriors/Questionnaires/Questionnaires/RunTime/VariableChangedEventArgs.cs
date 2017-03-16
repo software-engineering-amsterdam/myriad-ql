@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Questionnaires.VariableStore
+namespace Questionnaires.RunTime
 {
     public class VariableChangedEventArgs
     {

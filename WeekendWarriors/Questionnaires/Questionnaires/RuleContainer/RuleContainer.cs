@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Questionnaires.VariableStore;
+using Questionnaires.RunTime;
 
 namespace Questionnaires.RuleContainer
 {
-    using Rule = Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>;
+    using Rule = Action<VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>;
 
     class RuleContainer
     {
         private List<Rule> Rules = new List<Rule>();
-        private VariableStore.VariableStore VariableStore;  // TODO I feel that we have a namespace issue here. VariableStore.VariableStore, Renderer.Renderer.... Seems a bit redundant...
+        private VariableStore VariableStore;  // TODO I feel that we have a namespace issue here. VariableStore, Renderer.Renderer.... Seems a bit redundant...
         private Renderer.Renderer Renderer;
         private ExpressionEvaluator.Evaluator ExpresionEvaluator;
 
-        public RuleContainer(VariableStore.VariableStore variableStore, Renderer.Renderer renderer, ExpressionEvaluator.Evaluator expresionEvaluator)
+        public RuleContainer(VariableStore variableStore, Renderer.Renderer renderer, ExpressionEvaluator.Evaluator expresionEvaluator)
         {
             this.VariableStore = variableStore;
             this.Renderer = renderer;

@@ -19,6 +19,7 @@ using System.Threading;
 using Questionnaires.Renderer.Style;
 using Questionnaires.QLS.AST;
 using Questionnaires.Renderer.Containers;
+using Questionnaires.RunTime;
 
 namespace Questionnaires
 {
@@ -45,7 +46,7 @@ namespace Questionnaires
                 /* 'Flatten' the AST*/
                 DocumentModel DocumentModel = new DocumentModel();
                 List<RunTime.Question> Questions = new List<RunTime.Question>();
-                List<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> Rules = new List<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>>();
+                List<Action<VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> Rules = new List<Action<VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>>();
                 QL.Processing.Processor qlProcessor = new QL.Processing.Processor(Questions, Rules, DocumentModel);
                 qlProcessor.Process(FormAST);
                 StyleSheet stylesheetAST = null;

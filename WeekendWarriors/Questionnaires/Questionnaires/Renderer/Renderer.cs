@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Questionnaires.RunTime;
 
 namespace Questionnaires.Renderer
 {
@@ -20,9 +21,9 @@ namespace Questionnaires.Renderer
         private Window QuestionnaireWindow = new Window();
         private StackPanel QuestionnaireStack = new StackPanel();
         private Dictionary<string, QuestionWidget> Questions = new Dictionary<string, QuestionWidget>();
-        private VariableStore.VariableStore VariableStore;
+        private VariableStore VariableStore;
 
-        public Renderer(VariableStore.VariableStore variableStore)
+        public Renderer(VariableStore variableStore)
         {
             WidgetNames = new Dictionary<QuestionWidget, string>();
             VariableStore = variableStore;

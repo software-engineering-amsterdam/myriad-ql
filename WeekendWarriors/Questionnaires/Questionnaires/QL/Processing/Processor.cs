@@ -6,16 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Questionnaires.RunTime;
 
 namespace Questionnaires.QL.Processing
 {
     class Processor
     {
         private ICollection<RunTime.Question> Questions;
-        private ICollection<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> Rules;
+        private ICollection<Action<VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> Rules;
         private DocumentModel DocumentModel;
 
-        public Processor(ICollection<RunTime.Question> questions, ICollection<Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> rules, DocumentModel documentModel)
+        public Processor(ICollection<RunTime.Question> questions, ICollection<Action<VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> rules, DocumentModel documentModel)
         {
             Questions = questions;
             Rules = rules;
@@ -50,7 +51,7 @@ namespace Questionnaires.QL.Processing
             Visit(node.Question, visibilityCondition);
 
             Rules.Add(
-                new Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>((variableStore, renderer, evaluator) =>
+                new Action<VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>((variableStore, renderer, evaluator) =>
                 {
                     if (visibilityCondition(evaluator))
                     {
@@ -68,7 +69,7 @@ namespace Questionnaires.QL.Processing
         {
             // Add a rule to the rule container that sets the visibility for this question
             Rules.Add(
-                new Action<VariableStore.VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>((variableStore, renderer, evalutor) =>
+                new Action<VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>((variableStore, renderer, evalutor) =>
                 {
                     renderer.SetVisibility(node.Identifier, visibilityCondition(evalutor));                    
                 })
