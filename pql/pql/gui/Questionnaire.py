@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QSpinBox
 from PyQt5.QtWidgets import QVBoxLayout
+from PyQt5.QtWidgets import QWidget
 
 from pql.environment.environmentcreator import EnvironmentCreator
 from pql.evaluator.evaluator import Evaluator
@@ -128,18 +129,22 @@ class Questionnaire(FormVisitor, TypeVisitor):
     def boolean(self, node):
         widget = QCheckBox()
         widget.setChecked(False)
-        widget.stateChanged.connect(lambda value: self.update_trigger_boolean(widget, bool(value)))
+        widget.stateChanged.connect(lambda value: self.update(widget.objectName(), bool(value)))
+        widget.update = widget.setChecked
         self.connect_conditionals(widget.stateChanged)
         return widget
 
     def string(self, node):
         widget = QLineEdit()
-        widget.textChanged.connect(lambda value: self.update_trigger_string(widget, str(value)))
+        widget.textChanged.connect(lambda value: self.update(widget.objectName(), str(value)))
+        widget.update = widget.setText
+        self.connect_conditionals(widget.textChanged)
         return widget
 
     def numeric(self, value_type, widget_type):
         widget = widget_type()
-        widget.valueChanged[value_type].connect(lambda value: self.update_trigger_numeric(widget, value, widget_type))
+        widget.valueChanged[value_type].connect(lambda value: self.update(widget.objectName(), value))
+        widget.update = widget.setValue
         self.connect_conditionals(widget.valueChanged)
         return widget
 
@@ -147,32 +152,11 @@ class Questionnaire(FormVisitor, TypeVisitor):
         signal.connect(self.trigger_conditional_if)
         signal.connect(self.trigger_conditional_if_else)
 
-    def update_trigger_numeric(self, widget, value, widget_type):
-        self.update(value, widget, widget_type, self.__update_value_numeric)
+    def update(self, widget_name, value):
+        environment = self.evaluator.update_value(widget_name, value)
+        self.update_values_in_ui(environment)
 
-    def update_trigger_boolean(self, widget, value):
-        self.update(value, widget, QCheckBox, self.__update_value_boolean)
-
-    def update_trigger_string(self, widget, value):
-        self.update(value, widget, QLineEdit, self.__update_value_string)
-
-    def update(self, value, widget, widget_type, update_method):
-        environment = self.evaluator.update_value(widget.objectName(), value)
-        self.update_visible_values(widget_type, update_method, environment)
-
-    def update_visible_values(self, widget_type, function, environment):
+    def update_values_in_ui(self, environment):
         for key, value in environment.items():
-            widget = self.wizard.findChild(widget_type, key)
-            function(widget, value)
-
-    @staticmethod
-    def __update_value_boolean(widget, value):
-        widget.setChecked(value)
-
-    @staticmethod
-    def __update_value_numeric(widget, value):
-        widget.setValue(value)
-
-    @staticmethod
-    def __update_value_string(widget, value):
-        widget.setText(value)
+            widget = self.wizard.findChild(QWidget, key)
+            widget.update(value)
