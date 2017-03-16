@@ -17,6 +17,11 @@ namespace Questionnaires.RunTime
         {
             Debug.Assert(!Questions.ContainsKey(question.Identifier));
             Questions.Add(question.Identifier, question);
+            question.ValueChanged += (sender, args) => // todo: clean up
+            {
+                var q = sender as RunTime.Question;
+                OnVariableChanged(q.Identifier, q.Type);
+            };
         }
 
         public void SetValue(string name, IType value)

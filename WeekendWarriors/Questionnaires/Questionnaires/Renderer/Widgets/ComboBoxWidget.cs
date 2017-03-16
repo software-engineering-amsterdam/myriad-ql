@@ -22,7 +22,13 @@ namespace Questionnaires.Renderer.Widgets
             ComboBox.Items.Add("No");
 
             // TODO: this should no longer be required once we support 'undefined' values. (Because all values would be initialized to 'undefined' and thus the first call to ApplyRules would lead to changes in all values and thus updates of the UI elements 
-            ComboBox.SelectedValue = "No";  
+            ComboBox.SelectedValue = "No";
+
+            ComboBox.SelectionChanged += (sender, args) =>
+            {
+                bool value = (sender as ComboBox).SelectedItem as string == "Yes";
+                OnInputChanged(new BooleanType(value));
+            };
         }
 
         public override void SetQuestionValue(IType value)
@@ -40,15 +46,6 @@ namespace Questionnaires.Renderer.Widgets
             {
                 ComboBox.SelectedValue = "No";
             }
-        }
-
-        public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
-        {
-            ComboBox.SelectionChanged += (sender, args) =>
-            {
-                bool value = (sender as ComboBox).SelectedItem as string == "Yes";
-                inputChanged.Invoke(this, new BooleanType(value));
-            };
         }
     }
 }

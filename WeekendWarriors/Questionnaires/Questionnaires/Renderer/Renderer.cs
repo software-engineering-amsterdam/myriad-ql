@@ -42,9 +42,9 @@ namespace Questionnaires.Renderer
             var questions = documentModel.GetQuestions();
             foreach(var question in questions)
             {
-                question.Widget.SetOnInputChanged(new InputChangedCallback(this.InputChanged));
+            //    question.Widget.SetOnInputChanged(new InputChangedCallback(this.InputChanged));
                 Questions.Add(question.Identifier, question.Widget);
-                WidgetNames[question.Widget] = question.Identifier;
+            //    WidgetNames[question.Widget] = question.Identifier;
             }        
         }
 
@@ -63,11 +63,11 @@ namespace Questionnaires.Renderer
             QuestionnaireWindow.Title = title;
         }
 
-        public delegate void InputChangedCallback(Widgets.QuestionWidget source, IType value);
-        public void InputChanged(Widgets.QuestionWidget source, IType value)
-        {
-            Debug.Assert(WidgetNames.ContainsKey(source));
-            VariableStore.SetValue(WidgetNames[source], value);
-        }
+        //public delegate void InputChangedCallback(Widgets.QuestionWidget source, IType value);
+        //public void InputChanged(Widgets.QuestionWidget source, IType value)
+        //{
+        //    Debug.Assert(WidgetNames.ContainsKey(source));
+        //    //VariableStore.SetValue(WidgetNames[source], value);
+        //}
     }
 }

@@ -33,16 +33,32 @@ namespace Questionnaires.RunTime
             SetWidget(widget.CreateWidget((dynamic)QuestionASTNode.Type));
         }
 
-        public Types.IType Type // TODO: we need to get rid of this but for now we need it for the typeof we do in the QLS processor
+        public Types.IType Type // TODO: we need to get rid of this but for now we need it for the typeof we do in the QLS processor. On second thought, maybe not. But it shoul be referred to as value rather than type.
         {
             get;
             set;
+        }
+
+        public event EventHandler ValueChanged;
+        protected virtual void OnValueChanged(EventArgs e)
+        {
+            if (ValueChanged != null)
+                ValueChanged(this, e);
         }
 
         private void SetWidget(Renderer.Widgets.QuestionWidget widget)
         {
             Widget = widget;
             Widget.SetLabel(QuestionASTNode.Body);
+            Widget.InputChanged += (sender, value) => SetValue(value); 
+        }
+
+        private void SetValue(Types.IType value)
+        {
+            bool valueChanged = Type.InequalTo(value).GetValue();
+            Type = value;
+            if (valueChanged)
+                OnValueChanged(new EventArgs());
         }
     }
 }

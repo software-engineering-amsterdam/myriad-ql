@@ -49,7 +49,13 @@ namespace Questionnaires.Renderer.Widgets
             Control.Width = style.Width;
         }
 
-        public abstract void SetOnInputChanged(Renderer.InputChangedCallback inputChanged);
+        public delegate void InputChangedEventHandler(object sender, IType newValue);
+        public event InputChangedEventHandler InputChanged;
+        protected virtual void OnInputChanged(IType newValue)
+        {
+            if (InputChanged != null)
+                InputChanged(this, newValue);
+        }
         public abstract void SetQuestionValue(IType value);
     }
 }

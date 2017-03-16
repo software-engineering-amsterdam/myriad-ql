@@ -17,6 +17,7 @@ namespace Questionnaires.Renderer.Widgets
         public RadioWidget() : base(new BinaryRadioGroup("Yes", "No"))
         {
             Buttons = Control as BinaryRadioGroup;
+            Buttons.ValueChanged += (sender, args) => OnInputChanged(new BooleanType(Buttons.GetValue()));
         }
 
         public override void SetQuestionValue(IType value)
@@ -27,11 +28,6 @@ namespace Questionnaires.Renderer.Widgets
         public void SetQuestionValue(BooleanType value)
         {
             Buttons.SetValue(value.GetValue());
-        }
-
-        public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
-        {
-            Buttons.ValueChanged += (sender, args) => inputChanged.Invoke(this, new BooleanType(Buttons.GetValue()));
         }
     }
 }

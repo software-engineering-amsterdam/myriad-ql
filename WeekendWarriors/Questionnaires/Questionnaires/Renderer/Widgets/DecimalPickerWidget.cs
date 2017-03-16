@@ -19,6 +19,7 @@ namespace Questionnaires.Renderer.Widgets
         {
             SpinBox = Control as DecimalUpDown;
             SpinBox.AllowTextInput = false;
+            SpinBox.ValueChanged += (sender, args) => OnInputChanged(new MoneyType(SpinBox.Value.Value));
         }
 
         public override void SetQuestionValue(IType value)
@@ -29,11 +30,6 @@ namespace Questionnaires.Renderer.Widgets
         public void SetQuestionValue(MoneyType value)
         {
             SpinBox.Text = value.GetValue().ToString();
-        }
-
-        public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
-        {
-            SpinBox.ValueChanged += (sender, args) => inputChanged.Invoke(this, new MoneyType(SpinBox.Value.Value));
         }
     }
 }

@@ -19,6 +19,7 @@ namespace Questionnaires.Renderer.Widgets
         {
             Spinbox = Control as IntegerUpDown;
             Spinbox.AllowTextInput = false;
+            Spinbox.ValueChanged += (sender, args) => OnInputChanged(new IntegerType(Spinbox.Value.Value));
         }
 
         public override void SetQuestionValue(IType value)
@@ -29,11 +30,6 @@ namespace Questionnaires.Renderer.Widgets
         public void SetQuestionValue(IntegerType value)
         {
             Spinbox.Text = value.GetValue().ToString();
-        }
-
-        public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
-        {
-            Spinbox.ValueChanged += (sender, args) => inputChanged.Invoke(this, new IntegerType(Spinbox.Value.Value));
         }
     }
 }

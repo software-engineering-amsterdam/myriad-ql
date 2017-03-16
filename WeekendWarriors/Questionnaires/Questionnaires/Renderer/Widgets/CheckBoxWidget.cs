@@ -19,6 +19,8 @@ namespace Questionnaires.Renderer.Widgets
         public CheckBoxWidget() : base(new CheckBox())
         {
             CheckBox = Control as CheckBox;
+            CheckBox.Checked += (sender, args) => OnInputChanged(new BooleanType(CheckBox.IsChecked.Value));
+            CheckBox.Unchecked += (sender, args) => OnInputChanged(new BooleanType(CheckBox.IsChecked.Value));
         }
 
         public override void SetQuestionValue(IType value)
@@ -29,12 +31,6 @@ namespace Questionnaires.Renderer.Widgets
         public void SetQuestionValue(BooleanType value)
         {
             CheckBox.IsChecked = value.GetValue();
-        }
-
-        public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
-        {
-            CheckBox.Checked += (sender, args) => inputChanged.Invoke(this, new BooleanType(CheckBox.IsChecked.Value));
-            CheckBox.Unchecked += (sender, args) => inputChanged.Invoke(this, new BooleanType(CheckBox.IsChecked.Value));
         }
     }
 }

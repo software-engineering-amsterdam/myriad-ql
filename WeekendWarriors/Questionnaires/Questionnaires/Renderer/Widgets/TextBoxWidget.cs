@@ -17,6 +17,7 @@ namespace Questionnaires.Renderer.Widgets
         public TextBoxWidget() : base(new TextBox())
         {
             TextBox = Control as TextBox;
+            TextBox.TextChanged += (sender, args) => OnInputChanged(new StringType(TextBox.Text));
         }
 
         public override void SetQuestionValue(IType value)
@@ -27,11 +28,6 @@ namespace Questionnaires.Renderer.Widgets
         public void SetQuestionValue(StringType value)
         {
             TextBox.Text = value.GetValue();
-        }
-
-        public override void SetOnInputChanged(Renderer.InputChangedCallback inputChanged)
-        {
-            TextBox.TextChanged += (sender, args) => inputChanged.Invoke(this, new StringType(TextBox.Text));
         }
     }
 }
