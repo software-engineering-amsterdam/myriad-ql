@@ -12,7 +12,7 @@ form exampleForm {
   "Test question 3"
     testQuestion3: boolean;
 
-  if (testQuestion1 AND testQuestion2 OR testQuestion3) {
+  if (testQuestion1 && testQuestion2 || testQuestion3) {
     "Conditional question 1"
       conditionalQuestion1: integer;
     "Conditional question 2"
@@ -62,12 +62,12 @@ form exampleForm {
     - [x] operands of invalid type to operators
     - [ ] cyclic dependencies between questions
     - [x] duplicate labels
-  - [ ] Error handling
+  - [x] Error handling
     - [x] Error class
     - [x] Error collection class
     - [x] Make all tests return Error objects
     - [x] Halt on bad error - don't throw exception!
-    - [ ] Output in GUI
+    - [x] Output in GUI
 - [ ] GUI generation
 - [x] Unit tests
 
