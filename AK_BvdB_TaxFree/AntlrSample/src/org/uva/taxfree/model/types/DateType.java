@@ -26,4 +26,9 @@ public class DateType extends Type {
     public void generateWidget(String label, String id, QuestionForm frame) {
         frame.addWidget(new DateWidget(label, id));
     }
+
+    @Override
+    public String defaultValue() {
+        return "01-01-1900";
+    }
 }

@@ -26,4 +26,9 @@ public class BooleanType extends Type {
     public void generateWidget(String label, String id, QuestionForm frame) {
         frame.addWidget(new BooleanWidget(label, id));
     }
+
+    @Override
+    public String defaultValue() {
+        return "false";
+    }
 }

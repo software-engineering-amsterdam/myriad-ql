@@ -26,4 +26,9 @@ public class StringType extends Type {
     public void generateWidget(String label, String id, QuestionForm frame) {
         frame.addWidget(new StringWidget(label, id));
     }
+
+    @Override
+    public String defaultValue() {
+        return "None...";
+    }
 }
