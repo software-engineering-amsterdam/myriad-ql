@@ -16,6 +16,7 @@ module QL
         store_value
       end
 
+      # TODO move to ast/question
       def assignment
         @ast_question.assignment
       end

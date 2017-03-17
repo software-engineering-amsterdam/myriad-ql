@@ -14,6 +14,7 @@ module QL
         @widget = widget_type.new(@tk_frame)
       end
 
+      # TODO split into render and run
       def render
         @tk_frame = TkFrame.new.grid
         Label.new(@tk_frame, label)
@@ -68,6 +69,8 @@ module QL
         { label => @value }
       end
 
+      # TODO move to ast/question OR remove
+      # init question frame with variable name, label, literal_type, widget_type and a default value
       def variable_name
         @ast_question.variable.name
       end
