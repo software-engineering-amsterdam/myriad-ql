@@ -6,7 +6,7 @@ interact with.
 from tkinter import Tk
 from tkinter import ttk
 from tkinter import BooleanVar, DoubleVar, StringVar
-from .ui_context import UIContext
+from .context import UIContext
 
 
 class UIBuilder(object):

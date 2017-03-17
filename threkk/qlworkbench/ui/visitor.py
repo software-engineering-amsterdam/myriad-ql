@@ -1,4 +1,4 @@
-from .ui_builder import UIBuilder
+from .builder import UIBuilder
 
 
 class UIVisitor(object):
