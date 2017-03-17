@@ -20,8 +20,12 @@ test_ast = parser.parse('form apple {   "How many people are there in your house
 action = operations.ql.PrettyPrint
 
 
-isinstance_alg = form_ast.alg(action(0))
-print isinstance_alg.to_string(0)
+# isinstance_alg = form_ast.alg(action(0))
+# print isinstance_alg.to_string(0)
+state = operations.ql.GetVariables([])
+isinstance_alg = form_ast.alg(state)
+print isinstance_alg.execute()
+print set(state.environment_vars)
 
 # # Make printable AST
 # action = operations.ql.QlAlgView
