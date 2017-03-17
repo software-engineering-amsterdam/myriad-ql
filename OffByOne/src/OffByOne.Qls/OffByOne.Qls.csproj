@@ -95,6 +95,8 @@
     <Compile Include="Checker\Messages\DuplicateSectionNameMessage.cs" />
     <Compile Include="Checker\Messages\DuplicateStyleSheetMesssage.cs" />
     <Compile Include="Checker\Messages\InvalidWidgetTypeMessage.cs" />
+    <Compile Include="Checker\Messages\UndeclaredQuestionMessage.cs" />
+    <Compile Include="Checker\Messages\UnusedQuestionMessage.cs" />
     <Compile Include="Checker\StyleSheetChecker.cs" />
     <Compile Include="Checker\Analyzers\Environment\TypeAnalyzerEnvironment.cs" />
     <Compile Include="Checker\Analyzers\TypeAnalyzer.cs" />
