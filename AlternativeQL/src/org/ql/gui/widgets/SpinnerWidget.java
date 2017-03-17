@@ -9,21 +9,21 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.Value;
-import org.ql.gui.mediator.GUIMediator;
+import org.ql.gui.ValueReviser;
 
 abstract class SpinnerWidget<V> extends Widget {
     private final Spinner<V> spinner;
     private final Label label;
 
-    SpinnerWidget(GUIMediator mediator, Question question) {
+    SpinnerWidget(ValueReviser mediator, Question question) {
         label = new Label(question.getQuestionLabel().toString());
         spinner = new Spinner<>();
         spinner.setValueFactory(createSpinnerValueFactory());
         spinner.setOnMouseClicked(eventHandler(mediator, question));
     }
 
-    private EventHandler<MouseEvent> eventHandler(GUIMediator mediator, Question question) {
-        return event -> mediator.actualizeValue(question.getId(), createValue(spinner.getValue()));
+    private EventHandler<MouseEvent> eventHandler(ValueReviser mediator, Question question) {
+        return event -> mediator.reviseValue(question.getId(), createValue(spinner.getValue()));
     }
 
     @Override

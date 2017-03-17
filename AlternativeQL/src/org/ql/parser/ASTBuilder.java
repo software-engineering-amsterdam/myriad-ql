@@ -1,5 +1,7 @@
 package org.ql.parser;
 
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.ql.ast.*;
@@ -15,14 +17,25 @@ import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.question.QuestionLabel;
 import org.ql.ast.type.*;
+import org.ql.grammar.QLLexer;
 import org.ql.grammar.QLParser;
 import org.ql.grammar.QLVisitor;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ASTBuilder extends AbstractParseTreeVisitor<Node> implements QLVisitor<Node> {
+
+    public Form buildAST(InputStream inputStream) throws IOException {
+        return visitForm(createParser(inputStream).form());
+    }
+
+    private QLParser createParser(InputStream inputStream) throws IOException {
+        return new QLParser(new CommonTokenStream(new QLLexer(new ANTLRInputStream(inputStream))));
+    }
 
     @Override
     public Form visitForm(QLParser.FormContext ctx) {

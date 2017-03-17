@@ -31,16 +31,4 @@ public class IssuesStorage {
     public List<Issue> getWarnings() {
         return warnings;
     }
-
-    public void printIssues() {
-        for(Issue issue : errors) {
-            System.out.println(issue.getMessage());
-        }
-    }
-
-    public void printWarnings() {
-        for(Issue warning : warnings) {
-            System.out.println(warning.getMessage());
-        }
-    }
 }

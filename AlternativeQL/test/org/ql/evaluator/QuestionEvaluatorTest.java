@@ -1,8 +1,6 @@
 package org.ql.evaluator;
 
 import org.junit.Test;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.ql.ast.Form;
 import org.ql.ast.Identifier;
 import org.ql.ast.Statement;
@@ -14,19 +12,13 @@ import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.question.QuestionLabel;
 import org.ql.ast.type.IntegerType;
-import org.ql.evaluator.QuestionEvaluator;
-import org.ql.evaluator.ValueTable;
 import org.ql.evaluator.value.IntegerValue;
 import org.ql.evaluator.value.UnknownValue;
-import org.ql.gui.mediator.GUIMediator;
-import org.ql.gui.widgets.IntegerInputWidget;
-import org.ql.gui.widgets.WidgetContainer;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 public class QuestionEvaluatorTest {
 

@@ -3,17 +3,17 @@ package org.ql.gui.widgets;
 import org.ql.ast.Identifier;
 import org.ql.ast.statement.Question;
 import org.ql.ast.type.*;
-import org.ql.gui.mediator.GUIMediator;
+import org.ql.gui.ValueReviser;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class WidgetContainer implements TypeVisitor<Widget, Question> {
 
-    private final GUIMediator mediator;
+    private final ValueReviser mediator;
     private final Map<Identifier, Widget> widgets;
 
-    public WidgetContainer(GUIMediator mediator) {
+    public WidgetContainer(ValueReviser mediator) {
         this.mediator = mediator;
         widgets = new HashMap<>();
     }

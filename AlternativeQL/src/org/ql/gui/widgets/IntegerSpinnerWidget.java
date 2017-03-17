@@ -4,12 +4,12 @@ import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.IntegerValue;
 import org.ql.evaluator.value.Value;
-import org.ql.gui.mediator.GUIMediator;
+import org.ql.gui.ValueReviser;
 
 public class IntegerSpinnerWidget extends SpinnerWidget<Integer> {
     private final IntegerSpinnerValueFactory spinnerValueFactory;
 
-    public IntegerSpinnerWidget(GUIMediator mediator, Question question) {
+    public IntegerSpinnerWidget(ValueReviser mediator, Question question) {
         super(mediator, question);
         spinnerValueFactory = new IntegerSpinnerValueFactory(
             Integer.MIN_VALUE, Integer.MAX_VALUE, 0, 1

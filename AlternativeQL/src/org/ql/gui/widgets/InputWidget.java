@@ -7,20 +7,20 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.Value;
-import org.ql.gui.mediator.GUIMediator;
+import org.ql.gui.ValueReviser;
 
 abstract class InputWidget extends Widget {
     private final Label label;
     private final TextField textField;
 
 
-    public InputWidget(GUIMediator mediator, Question question) {
+    public InputWidget(ValueReviser mediator, Question question) {
         label = new Label(question.getQuestionLabel().toString());
         textField = new TextField();
-        textField.setOnKeyReleased(event -> mediator.actualizeValue(question.getId(), value(textField.getText())));
+        textField.setOnKeyReleased(event -> mediator.reviseValue(question.getId(), value(textField.getText())));
     }
 
-    public InputWidget(GUIMediator mediator, Question question, TextFormatter textFormatter) {
+    public InputWidget(ValueReviser mediator, Question question, TextFormatter textFormatter) {
         this(mediator, question);
         textField.setTextFormatter(textFormatter);
     }
