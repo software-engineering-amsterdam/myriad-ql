@@ -9,8 +9,11 @@ import org.qls.grammar.QLSLexer;
 import org.qls.grammar.QLSParser;
 import org.qls.grammar.QLSVisitor;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 public class Parser {
-    private final QLSVisitor<Node> visitor = new ASTBuilder();
+    private final QLSVisitor<Node> visitor = new QLSASTBuilder();
 
     public StyleSheet parseStyleSheet(String code) {
         return (StyleSheet) visitor.visit(createParser(code).stylesheet());
@@ -19,7 +22,6 @@ public class Parser {
     public Page parsePage(String code) {
         return (Page) visitor.visit(createParser(code).page());
     }
-
 
     private QLSParser createParser(String code) {
         return new QLSParser(new CommonTokenStream(new QLSLexer(new ANTLRInputStream(code))));

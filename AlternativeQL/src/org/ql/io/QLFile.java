@@ -1,36 +1,27 @@
 package org.ql.io;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.IOException;
 
-public class QLFile {
-    private static final String SRC_FILE_EXT = "aql";
-    private final String file;
+public class QLFile extends SourceFile {
+    private final String SRC_FILE_EXT = "aql";
 
-    public QLFile(String file) throws QLFileNotFoundException, QLIncorrectExtensionException {
-        if (fileExists(file)) {
-            throw new QLFileNotFoundException();
-        }
-
-        if (!isExtensionCorrect(file)) {
-            throw new QLIncorrectExtensionException();
-        }
-
-        this.file = file;
+    public QLFile(String file) throws FileNotFoundException, IOException {
+        super(file);
     }
 
-    public InputStream openStream() throws FileNotFoundException {
-        return new FileInputStream(file);
+    @Override
+    public void throwFileNotFoundException() throws QLFileNotFoundException {
+        throw new QLFileNotFoundException();
     }
 
-    private boolean isExtensionCorrect(String file) {
-        return file.matches("^.+?\\." + SRC_FILE_EXT + "$");
+    @Override
+    public void throwIncorrectExtensionException() throws QLIncorrectExtensionException {
+        throw new QLIncorrectExtensionException();
     }
 
-    private boolean fileExists(String file) {
-        return !Files.exists(Paths.get(file));
+    @Override
+    public String getSourceExtension() {
+        return SRC_FILE_EXT;
     }
 }

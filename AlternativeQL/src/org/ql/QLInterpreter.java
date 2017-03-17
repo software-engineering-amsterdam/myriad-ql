@@ -4,6 +4,7 @@ import org.ql.ast.Form;
 import org.ql.gui.QLApplication;
 import org.ql.io.QLFile;
 import org.ql.parser.ASTBuilder;
+import org.ql.typechecker.SymbolTable;
 import org.ql.typechecker.TypeChecker;
 import org.ql.typechecker.issues.Issue;
 import org.ql.typechecker.issues.IssuesStorage;
@@ -17,7 +18,7 @@ public class QLInterpreter {
 
         Form formAST = astBuilder.buildAST(fileLocation.openStream());
 
-        IssuesStorage issues = typeChecker.checkForm(formAST);
+        IssuesStorage issues = typeChecker.checkForm(formAST, new SymbolTable());
 
         if (issues.hasErrors()) {
             issues.getErrors().forEach(this::printIssue);
