@@ -65,6 +65,7 @@ module QL
         @enabled = false
       end
 
+      # TODO Open/closed principle formatting (https://subvisual.co/blog/posts/19-solid-principles-in-ruby)
       def to_json
         { label => @value }
       end
