@@ -30,13 +30,13 @@ public class QuestionCollectionTest {
 
     @Test
     public void testForDuplicateIDs() throws Exception {
-        //questionCollection.
+        assertEquals(false, questionCollection.findDuplicates());
     }
 
     @Test
     public void testGatherQuestions() throws Exception {
-        final int EXPECTED_QUESTIONS = 12;
-        final int EXPECTED_PARAMETERS = 13;
+        final int EXPECTED_QUESTIONS = 13;
+        final int EXPECTED_PARAMETERS = 14;
         questionCollection.gatherQuestions(form);
 
         assertEquals(EXPECTED_PARAMETERS, questionCollection.getQuestionList().size());

@@ -48,7 +48,7 @@ public class QuestionCollection extends AbstractQLVisitor<Void, String> {
     }
 
     // hooray for O(n) complexity!
-    public void findDuplicates() {
+    public boolean findDuplicates() {
         Set<String> questionIDs = new HashSet<>();
 
         for (Question question : questionList) {
@@ -56,6 +56,12 @@ public class QuestionCollection extends AbstractQLVisitor<Void, String> {
                 logger.addError(question.getLine(), question.getColumn(), question.getName(), "Question with this ID already defined");
             }
         }
+
+        if (logger.getErrorNumber() > 0) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override

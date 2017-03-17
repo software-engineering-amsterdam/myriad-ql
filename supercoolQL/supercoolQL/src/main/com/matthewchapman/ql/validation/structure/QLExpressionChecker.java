@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * Created by matt on 16/03/2017.
  * <p>
- * Exists to ensure that all
+ * Exists to ensure that all expressions reference parameters correctly
  */
 public class QLExpressionChecker extends AbstractQLVisitor<Void, String> {
 

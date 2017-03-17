@@ -50,7 +50,7 @@ public class QLValidator {
         }
 
         //circular dependencies are bad
-        QLErrorLogger dependencyLog = qlDependencyChecker.checkForCircularDependencies(questionCollection.getTypeTable(), qlExpressionChecker.getExpressionMap());
+        QLErrorLogger dependencyLog = qlDependencyChecker.checkForCircularDependencies(qlExpressionChecker.getExpressionMap());
         if (dependencyLog.getErrorNumber() > 0) {
             mainLogger.addMultipleErrors(dependencyLog);
             dialogGenerator.generateErrorBox(mainLogger, INTERPRETER_ERROR_TITLE, INTERPRETER_ERROR_BODY);

@@ -5,12 +5,12 @@ import java.util.Objects;
 /**
  * Created by matt on 16/03/2017.
  */
-public class Pair {
+public class QLDependencyPair {
 
     private String start;
     private String end;
 
-    public Pair(String start, String end) {
+    public QLDependencyPair(String start, String end) {
         this.start = start;
         this.end = end;
     }
@@ -34,11 +34,11 @@ public class Pair {
             return true;
         }
 
-        if (!(obj instanceof Pair)) {
+        if (!(obj instanceof QLDependencyPair)) {
             return false;
         }
 
-        Pair input = (Pair) obj;
+        QLDependencyPair input = (QLDependencyPair) obj;
 
         return Objects.equals(this.start, input.getStart()) && Objects.equals(this.end, input.getEnd());
     }
@@ -47,7 +47,7 @@ public class Pair {
         return this.start.equals(this.end);
     }
 
-    public boolean isTransitive(Pair input) {
+    public boolean isTransitive(QLDependencyPair input) {
         return this.end.equals(input.getStart());
     }
 }

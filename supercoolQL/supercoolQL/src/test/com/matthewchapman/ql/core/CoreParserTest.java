@@ -34,7 +34,7 @@ public class CoreParserTest extends AbstractQLVisitor<Void, String> {
     public void buildQLAST() {
         Form form = parser.buildQLAST(testInput);
 
-        final int EXPECTED_STATEMENTS = 10;
+        final int EXPECTED_STATEMENTS = 11;
         final int EXPECTED_QUESTIONS = 5;
         final int EXPECTED_IFS = 2;
         final int EXPECTED_IF_ELSES = 1;
