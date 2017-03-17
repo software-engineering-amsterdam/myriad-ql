@@ -1,5 +1,7 @@
 package org.qls.ast.widget;
 
+import org.ql.ast.type.*;
+
 public class RadioWidget extends Widget {
     private String yesText;
     private String noText;
@@ -23,5 +25,10 @@ public class RadioWidget extends Widget {
 
     public void setNoText(String noText) {
         this.noText = noText;
+    }
+
+    @Override
+    public void initializeSupportedTypes() {
+        getSupportedTypes().add(new BooleanType());
     }
 }

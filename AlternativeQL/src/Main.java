@@ -11,8 +11,7 @@ public class Main {
             if (args.length == 1) {
                 new QLInterpreter().interpret(new QLFile(args[0]));
             } else if (args.length == 2) {
-                new QLSInterpreter().interpret(new QLFile(args[0]),
-                        new QLSFile(args[1]));
+                new QLSInterpreter().interpret(new QLFile(args[0]), new QLSFile(args[1]));
             } else {
                 System.out.println("No match found for amount of source input arguments.");
             }
