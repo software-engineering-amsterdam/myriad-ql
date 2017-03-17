@@ -17,8 +17,6 @@ module QL
         spinbox.to = @maximum
         spinbox.value = @default_value
         spinbox.command = proc { callback(spinbox.value) }
-
-        callback(spinbox.value)
       end
     end
   end

@@ -9,8 +9,6 @@ module QL
         check_button = TkCheckButton.new(tk_frame).pack
         check_button.variable = variable
         check_button.command = proc { callback(variable.bool) }
-
-        callback(variable.bool)
       end
     end
   end

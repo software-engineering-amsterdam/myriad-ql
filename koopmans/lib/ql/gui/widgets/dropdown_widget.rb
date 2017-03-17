@@ -16,8 +16,6 @@ module QL
         combobox.values = [@true_label, @false_label]
         combobox.value = @false_label
         combobox.bind('<ComboboxSelected>') { callback(to_value(combobox.value)) }
-
-        callback(to_value(combobox.value))
       end
 
       def to_value(textual_value)
