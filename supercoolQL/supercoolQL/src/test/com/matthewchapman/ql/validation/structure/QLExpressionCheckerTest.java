@@ -5,13 +5,12 @@ import com.matthewchapman.ql.ast.atomic.BooleanType;
 import com.matthewchapman.ql.ast.atomic.Type;
 import com.matthewchapman.ql.core.CoreParser;
 import com.matthewchapman.ql.core.QLErrorLogger;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by matt on 17/03/2017.

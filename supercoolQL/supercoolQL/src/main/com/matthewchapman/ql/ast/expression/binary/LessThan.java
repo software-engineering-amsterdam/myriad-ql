@@ -11,8 +11,10 @@ import com.matthewchapman.ql.validation.visitor.QLVisitor;
  */
 public class LessThan extends BinaryOperation implements QLVisitable {
 
-    public LessThan(Expression left, Expression right) {
+    public LessThan(Expression left, Expression right, int line, int charPositionInLine) {
         super(left, right);
+        super.setLine(line);
+        super.setColumn(charPositionInLine);
     }
 
     @Override

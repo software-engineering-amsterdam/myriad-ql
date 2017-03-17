@@ -28,13 +28,16 @@ public class IfStatement extends Statement {
 
     @Override
     public String toString() {
-        String result = "if " + condition + " {\n";
+        StringBuilder result = new StringBuilder("if " + condition + " {\n");
 
         for (Statement statement : this.ifCaseStatements) {
-            result = result + "\t" + statement + "\n";
+            result.append("\t");
+            result.append(statement);
+            result.append("\n");
         }
 
-        return result + "}\n";
+        result.append("}\n");
+        return result.toString();
     }
 
     private void addStatements(List<Statement> statements) {

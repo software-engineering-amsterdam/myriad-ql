@@ -11,8 +11,10 @@ import com.matthewchapman.ql.validation.visitor.QLVisitor;
  */
 public class Multiplication extends BinaryOperation implements QLVisitable {
 
-    public Multiplication(Expression left, Expression right) {
+    public Multiplication(Expression left, Expression right, int line, int charPositionInLine) {
         super(left, right);
+        super.setLine(line);
+        super.setColumn(charPositionInLine);
     }
 
     @Override

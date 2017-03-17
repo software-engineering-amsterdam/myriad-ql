@@ -11,8 +11,10 @@ import com.matthewchapman.ql.validation.visitor.QLVisitor;
  */
 public class LogicalOr extends BinaryOperation implements QLVisitable {
 
-    public LogicalOr(Expression left, Expression right) {
+    public LogicalOr(Expression left, Expression right, int line, int charPositionInLine) {
         super(left, right);
+        super.setLine(line);
+        super.setColumn(charPositionInLine);
     }
 
     @Override

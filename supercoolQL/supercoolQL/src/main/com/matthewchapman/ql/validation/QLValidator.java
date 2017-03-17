@@ -3,9 +3,9 @@ package com.matthewchapman.ql.validation;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.core.QLErrorLogger;
 import com.matthewchapman.ql.gui.errors.ErrorDialogGenerator;
-import com.matthewchapman.ql.validation.structure.cyclic.QLDependencyChecker;
 import com.matthewchapman.ql.validation.structure.QLExpressionChecker;
 import com.matthewchapman.ql.validation.structure.QuestionCollection;
+import com.matthewchapman.ql.validation.structure.cyclic.QLDependencyChecker;
 import com.matthewchapman.ql.validation.type.QLTypeChecker;
 
 /**
@@ -47,7 +47,7 @@ public class QLValidator {
 
         //if we have any errors at all at this point, halt.
         if (mainLogger.getErrorNumber() > 0) {
-            dialogGenerator.generateErrorBox(mainLogger, INTERPRETER_ERROR_TITLE, INTERPRETER_ERROR_BODY);
+            dialogGenerator.generateErrorListBox(mainLogger.toString(), INTERPRETER_ERROR_TITLE, INTERPRETER_ERROR_BODY);
             return false;
         }
 
@@ -55,14 +55,14 @@ public class QLValidator {
         QLErrorLogger dependencyLog = qlDependencyChecker.checkForCircularDependencies(qlExpressionChecker.getExpressionMap());
         if (dependencyLog.getErrorNumber() > 0) {
             mainLogger.addMultipleErrors(dependencyLog);
-            dialogGenerator.generateErrorBox(mainLogger, INTERPRETER_ERROR_TITLE, INTERPRETER_ERROR_BODY);
+            dialogGenerator.generateErrorListBox(mainLogger.toString(), INTERPRETER_ERROR_TITLE, INTERPRETER_ERROR_BODY);
             return false;
         }
 
         //incorrect types are also bad
         QLErrorLogger typeLog = qlTypeChecker.checkExpressionTypes(astRoot, questionCollection.getTypeTable());
         if (typeLog.getErrorNumber() > 0) {
-            dialogGenerator.generateErrorBox(typeLog, INTERPRETER_ERROR_TITLE, INTERPRETER_ERROR_BODY);
+            dialogGenerator.generateErrorListBox(typeLog.toString(), INTERPRETER_ERROR_TITLE, INTERPRETER_ERROR_BODY);
             return false;
         }
 

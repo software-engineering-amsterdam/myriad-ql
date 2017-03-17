@@ -12,8 +12,10 @@ public class StringLiteral extends Expression {
 
     private final String value;
 
-    public StringLiteral(String value) {
+    public StringLiteral(String value, int line, int charPositionInLine) {
         this.value = value;
+        super.setLine(line);
+        super.setColumn(charPositionInLine);
     }
 
     public String getValue() {

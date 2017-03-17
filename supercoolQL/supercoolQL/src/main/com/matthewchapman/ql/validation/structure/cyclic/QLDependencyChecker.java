@@ -1,6 +1,5 @@
 package com.matthewchapman.ql.validation.structure.cyclic;
 
-import com.matthewchapman.ql.ast.atomic.Type;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.core.QLErrorLogger;
 import com.matthewchapman.ql.validation.visitor.AbstractQLVisitor;
@@ -70,7 +69,7 @@ public class QLDependencyChecker extends AbstractQLVisitor<Void, String> {
         return result;
     }
 
-    public Set<QLDependencyPair> makeClosure(Set<QLDependencyPair> input) {
+    Set<QLDependencyPair> makeClosure(Set<QLDependencyPair> input) {
 
         Set<QLDependencyPair> closure = new HashSet<>();
         closure.addAll(input);

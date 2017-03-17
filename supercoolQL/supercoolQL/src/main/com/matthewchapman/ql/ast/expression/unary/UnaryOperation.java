@@ -7,12 +7,4 @@ import com.matthewchapman.ql.ast.Expression;
  */
 abstract class UnaryOperation extends Expression {
 
-    public int getLine() {
-        return super.getLine();
-    }
-
-    public int getColumn() {
-        return super.getColumn();
-    }
-
 }

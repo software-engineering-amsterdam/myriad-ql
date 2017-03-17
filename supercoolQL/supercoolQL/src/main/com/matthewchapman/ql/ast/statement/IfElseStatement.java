@@ -24,16 +24,21 @@ public class IfElseStatement extends IfStatement {
 
     @Override
     public String toString() {
-        String result = "if " + this.getCondition() + " {\n";
+        StringBuilder result = new StringBuilder("if " + this.getCondition() + " {\n");
+
 
         for (Statement statement : this.getIfCaseStatements()) {
-            result = result + "\t" + statement + "\n";
+            result.append("\t");
+            result.append(statement);
+            result.append("\n");
         }
 
-        result = result + "} else {\n";
+        result.append("} else {\n");
 
         for (Statement statement : this.getElseCaseStatements()) {
-            result = result + "\t" + statement + "\n";
+            result.append("\t");
+            result.append(statement);
+            result.append("\n");
         }
 
         return result + "}\n";

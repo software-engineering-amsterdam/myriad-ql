@@ -28,16 +28,11 @@ public class Form extends TreeNode {
 
     @Override
     public String toString() {
-
-        String result = ("form " + formName + "{\n");
+        StringBuilder builder = new StringBuilder("form " + formName + "{\n");
 
         for (Statement statement : this.getStatements()) {
-            result = result + statement;
+            builder.append(statement);
         }
-
-        return result;
-
+        return builder.toString();
     }
-
-
 }

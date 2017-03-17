@@ -12,7 +12,6 @@ import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.core.QLErrorLogger;
 import com.matthewchapman.ql.validation.visitor.AbstractQLVisitor;
-import com.sun.tools.javac.util.Assert;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -191,7 +190,7 @@ public class QLExpressionChecker extends AbstractQLVisitor<Void, String> {
         if (expressionMap.containsKey(context)) {
             expressionMap.get(context).add(parameter);
         } else {
-            Assert.checkNonNull(context);
+            assert context != null;
         }
         return null;
 

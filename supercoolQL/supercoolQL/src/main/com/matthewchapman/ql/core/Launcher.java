@@ -24,6 +24,7 @@ public class Launcher extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         File file = new File("res/test.txt");
+        String fileContents = "";
 
         if (!this.getParameters().getUnnamed().contains("-debug")) {
             file = getFileSelection(primaryStage);
@@ -37,8 +38,10 @@ public class Launcher extends Application {
             alert.showAndWait();
         } else {
             FileReader reader = new FileReader();
-            String fileContents = reader.readFile(file);
+            fileContents = reader.readFile(file);
+        }
 
+        if(fileContents != null) {
             CoreParser parser = new CoreParser();
             Form form = parser.buildQLAST(fileContents);
 
@@ -46,8 +49,6 @@ public class Launcher extends Application {
                 Platform.exit();
             } else if (parser.validateAST(form)) {
                 new GUICreator().generateFormUI(primaryStage, form);
-            } else {
-                Platform.exit();
             }
         }
     }

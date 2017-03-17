@@ -1,9 +1,10 @@
 package com.matthewchapman.ql.core;
 
+import com.matthewchapman.ql.gui.errors.ErrorDialogGenerator;
+import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by matt on 15/03/2017
@@ -21,7 +22,9 @@ public class FileReader {
                 fileContents = fileContents.concat(line + '\n');
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getAnonymousLogger().log(Level.SEVERE, "Exception", e);
+            new ErrorDialogGenerator().generateErrorListBox(e.getMessage(), "File Read Error", "There was an error reading the input file");
+            return null;
         }
         return fileContents;
     }

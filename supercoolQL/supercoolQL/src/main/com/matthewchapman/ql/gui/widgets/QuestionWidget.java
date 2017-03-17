@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
 /**
@@ -31,7 +30,7 @@ public class QuestionWidget extends GridPane {
         this.add(label, 0, 0);
         GridPane.setHalignment(label, HPos.RIGHT);
 
-        if(question.getType().toString().equals("boolean")) {
+        if("boolean".equals(question.getType().toString())) {
             CheckBox answer = new CheckBox();
             this.add(answer, 1, 0);
             GridPane.setHalignment(answer, HPos.LEFT);

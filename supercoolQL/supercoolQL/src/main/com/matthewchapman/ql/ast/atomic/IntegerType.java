@@ -7,7 +7,7 @@ public class IntegerType extends Type {
 
     @Override
     public boolean isCompatible(Type type) {
-        return type.toString().equals("integer");
+        return "integer".equals(type.toString());
     }
 
     @Override

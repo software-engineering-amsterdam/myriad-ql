@@ -7,7 +7,7 @@ public class StringType extends Type {
 
     @Override
     public boolean isCompatible(Type type) {
-        return type.toString().equals("string");
+        return "string".equals(type.toString());
     }
 
     @Override

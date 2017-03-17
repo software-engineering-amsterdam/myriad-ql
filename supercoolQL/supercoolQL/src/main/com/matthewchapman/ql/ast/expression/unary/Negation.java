@@ -11,8 +11,6 @@ import com.matthewchapman.ql.validation.visitor.QLVisitor;
  */
 public class Negation extends UnaryOperation implements QLVisitable {
 
-    //TODO Implement Negation
-
     private final Expression expression;
 
     public Negation(Expression expression, int line, int column) {

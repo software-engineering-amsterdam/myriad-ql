@@ -11,12 +11,6 @@ import java.util.List;
  */
 public class FormWindow extends VBox {
 
-    private String label;
-
-    public FormWindow(String name) {
-        this.label = name;
-    }
-
     public FormWindow makeForm(List<Question> questionList) {
 
         for (Question question : questionList) {
@@ -24,7 +18,5 @@ public class FormWindow extends VBox {
         }
 
         return this;
-
     }
-
 }

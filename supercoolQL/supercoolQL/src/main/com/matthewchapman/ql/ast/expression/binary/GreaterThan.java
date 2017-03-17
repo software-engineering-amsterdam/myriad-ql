@@ -11,8 +11,10 @@ import com.matthewchapman.ql.validation.visitor.QLVisitor;
  */
 public class GreaterThan extends BinaryOperation implements QLVisitable {
 
-    public GreaterThan(Expression left, Expression right) {
+    public GreaterThan(Expression left, Expression right, int line, int charPositionInLine) {
         super(left, right);
+        super.setLine(line);
+        super.setColumn(charPositionInLine);
     }
 
     @Override

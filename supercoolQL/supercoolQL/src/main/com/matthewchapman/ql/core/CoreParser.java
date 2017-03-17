@@ -33,7 +33,7 @@ public class CoreParser {
         Form form = getForm(parser);
 
         if (errorListener.getLogger().getErrorNumber() > 0) {
-            dialogGenerator.generateErrorBox(errorListener.getLogger(), "Parser Error", "QL encountered an parsing error");
+            dialogGenerator.generateErrorListBox(errorListener.getLogger().toString(), "Parser Error", "QL encountered an parsing error");
             return null;
         } else {
             return form;

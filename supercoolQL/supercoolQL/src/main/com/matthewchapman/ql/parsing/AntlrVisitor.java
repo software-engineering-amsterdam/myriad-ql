@@ -2,7 +2,10 @@ package com.matthewchapman.ql.parsing;
 
 import com.matthewchapman.antlr.QLBaseVisitor;
 import com.matthewchapman.antlr.QLParser;
-import com.matthewchapman.ql.ast.*;
+import com.matthewchapman.ql.ast.Expression;
+import com.matthewchapman.ql.ast.Form;
+import com.matthewchapman.ql.ast.Statement;
+import com.matthewchapman.ql.ast.TreeNode;
 import com.matthewchapman.ql.ast.atomic.*;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
@@ -23,14 +26,14 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
 
     @Override
     public TreeNode visitFormDeclaration(QLParser.FormDeclarationContext ctx) {
-        String ID = ctx.ID().getText();
+        String id = ctx.ID().getText();
         List<Statement> statements = new ArrayList<>();
 
         for (QLParser.StatementContext statementContext : ctx.statement()) {
             statements.add((Statement) visit(statementContext));
         }
 
-        return new Form(ID, statements);
+        return new Form(id, statements);
     }
 
     @Override
@@ -54,10 +57,10 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
         Expression left = (Expression) visit(ctx.left);
         Expression right = (Expression) visit(ctx.right);
 
-        if (ctx.op.getText().equals("+")) {
-            return new Addition(left, right);
+        if ("+".equals(ctx.op.getText())) {
+            return new Addition(left, right, ctx.start.getLine(), ctx.start.getCharPositionInLine());
         } else {
-            return new Subtraction(left, right);
+            return new Subtraction(left, right, ctx.start.getLine(), ctx.start.getCharPositionInLine());
         }
     }
 
@@ -71,10 +74,10 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
         Expression left = (Expression) visit(ctx.left);
         Expression right = (Expression) visit(ctx.right);
 
-        if (ctx.op.getText().equals("*")) {
-            return new Multiplication(left, right);
+        if ("*".equals(ctx.op.getText())) {
+            return new Multiplication(left, right, ctx.start.getLine(), ctx.start.getCharPositionInLine());
         } else {
-            return new Division(left, right);
+            return new Division(left, right, ctx.start.getLine(), ctx.start.getCharPositionInLine());
         }
     }
 
@@ -83,18 +86,18 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
         Expression left = (Expression) visit(ctx.left);
         Expression right = (Expression) visit(ctx.right);
 
-        if (ctx.op.getText().equals("<")) {
-            return new LessThan(left, right);
-        } else if (ctx.op.getText().equals(">")) {
-            return new GreaterThan(left, right);
-        } else if (ctx.op.getText().equals("<=")) {
-            return new LessThanEqualTo(left, right);
-        } else if (ctx.op.getText().equals(">=")) {
-            return new GreaterThanEqualTo(left, right);
-        } else if (ctx.op.getText().equals("!=")) {
-            return new NotEqual(left, right);
+        if ("<".equals(ctx.op.getText())) {
+            return new LessThan(left, right, ctx.start.getLine(), ctx.start.getCharPositionInLine());
+        } else if (">".equals(ctx.op.getText())) {
+            return new GreaterThan(left, right, ctx.start.getLine(), ctx.start.getCharPositionInLine());
+        } else if ("<=".equals(ctx.op.getText())) {
+            return new LessThanEqualTo(left, right, ctx.start.getLine(), ctx.start.getCharPositionInLine());
+        } else if (">=".equals(ctx.op.getText())) {
+            return new GreaterThanEqualTo(left, right, ctx.start.getLine(), ctx.start.getCharPositionInLine());
+        } else if ("!=".equals(ctx.op.getText())) {
+            return new NotEqual(left, right, ctx.start.getLine(), ctx.start.getCharPositionInLine());
         } else {
-            return new Equal(left, right);
+            return new Equal(left, right, ctx.start.getLine(), ctx.start.getCharPositionInLine());
         }
 
     }
@@ -130,7 +133,7 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
 
     @Override
     public TreeNode visitStringLiteral(QLParser.StringLiteralContext ctx) {
-        return new StringLiteral(ctx.STRING().getText());
+        return new StringLiteral(ctx.STRING().getText(), ctx.start.getLine(), ctx.start.getCharPositionInLine());
     }
 
     @Override
@@ -142,14 +145,14 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
     public TreeNode visitLogicalAnd(QLParser.LogicalAndContext ctx) {
         Expression left = (Expression) visit(ctx.left);
         Expression right = (Expression) visit(ctx.right);
-        return new LogicalAnd(left, right);
+        return new LogicalAnd(left, right, ctx.start.getLine(), ctx.start.getCharPositionInLine());
     }
 
     @Override
     public TreeNode visitLogicalOr(QLParser.LogicalOrContext ctx) {
         Expression left = (Expression) visit(ctx.left);
         Expression right = (Expression) visit(ctx.right);
-        return new LogicalOr(left, right);
+        return new LogicalOr(left, right, ctx.start.getLine(), ctx.start.getCharPositionInLine());
     }
 
     @Override
