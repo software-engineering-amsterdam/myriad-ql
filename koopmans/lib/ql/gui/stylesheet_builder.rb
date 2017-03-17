@@ -1,3 +1,4 @@
+# TODO use wrapper pattern to apply styles
 module QL
   module GUI
     class StylesheetBuilder
