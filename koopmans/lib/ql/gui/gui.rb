@@ -3,6 +3,7 @@ require 'tk'
 module QL
   module GUI
     class GUI
+      # TODO question_frames class? ( First class collections)
       attr_writer :question_frames
 
       def initialize(question_frames=nil)
