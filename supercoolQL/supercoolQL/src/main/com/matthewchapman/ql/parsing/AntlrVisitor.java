@@ -36,7 +36,7 @@ public class AntlrVisitor extends QLBaseVisitor<TreeNode> {
     @Override
     public TreeNode visitQuestion(QLParser.QuestionContext ctx) {
         String questionID = ctx.ID().getText();
-        String questionContent = ctx.STRING().getText();
+        String questionContent = ctx.STRING().getText().replaceAll("^\"|\"$", "");
 
         Type questionReturnType = (Type) visit(ctx.type());
         Expression calculation;

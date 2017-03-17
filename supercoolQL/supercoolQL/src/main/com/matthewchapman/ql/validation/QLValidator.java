@@ -31,6 +31,8 @@ public class QLValidator {
         this.qlExpressionChecker = new QLExpressionChecker();
     }
 
+    public QuestionCollection getQuestionCollection() { return this.questionCollection; }
+
     public boolean runChecks(Form astRoot) {
 
         QLErrorLogger mainLogger = new QLErrorLogger();

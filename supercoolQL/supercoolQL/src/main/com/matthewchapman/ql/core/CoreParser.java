@@ -72,6 +72,7 @@ public class CoreParser {
     }
 
     boolean validateAST(Form form) {
+
         return new QLValidator().runChecks(form);
     }
 }
