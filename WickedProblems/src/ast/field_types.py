@@ -26,6 +26,12 @@ class String(Value):
     def alg(self, _alg):
         return _alg.String(self.value)
 
+class StringLiteral(Value):
+    def __init__(self, value=""):
+        self.value = str(value)
+
+    def alg(self, _alg):
+        return _alg.StringLiteral(self.value)
 
 class Integer(Value):
 

@@ -25,7 +25,13 @@ action = operations.ql.PrettyPrint
 state = operations.ql.GetVariables([])
 isinstance_alg = form_ast.alg(state)
 print isinstance_alg.execute()
-print set(state.environment_vars)
+print set(state.environment.get_variables())
+print state.environment.undefined_variables()
+print state.environment.questions
+print "---"*10
+print state.environment.duplicate_labels()
+print "-"*10
+print state.environment.check_types()
 
 # # Make printable AST
 # action = operations.ql.QlAlgView

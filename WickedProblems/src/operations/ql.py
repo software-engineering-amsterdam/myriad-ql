@@ -185,9 +185,65 @@ class PrettyPrint(QlAlg):
         return _anon()
 
 
+class Environment(object):
+    variables = []
+    ref_variables = []
+    questions = []
+
+    def __init__(self):
+        pass
+
+    def add_var(self, var):
+        self.variables.append(var)
+
+    def add_ref(self, var):
+        self.ref_variables.append(var)
+    
+    def add_question(self, variable, label):
+        self.questions.append((variable, label))
+
+    def check_type(self, variable):
+        pass
+    
+    def check_question_type(self, question):
+        pass
+
+    def check_types(self):
+        sequence = [(_var,_datatype) for _var, _datatype in self.variables]
+        var_table = {}
+        issues = []
+        for _var,_datatype in sequence:
+            if var_table.has_key(_var):
+                existing_var = var_table.get(_var)
+                if  existing_var != _datatype:
+                    issues.append('{} is already defined with {}, it can\'t be redeclared with {}'.format(_var, existing_var, _datatype))
+            else:
+                var_table.update({_var:_datatype})
+
+        return issues #[v for v,d in sequence]
+    
+    def all_labels(self):
+        return [y for x,y in self.questions]
+
+    def duplicate_labels(self):
+        labels = self.all_labels()
+        frequency = {_label:labels.count(_label) for _var, _label in self.questions}
+        return {label for label, x in frequency.items() if x > 1}
+
+    def is_registerd(self, var):
+        return var in set([_var for _var,_type in self.variables])
+
+    def get_variables(self):
+        return self.variables
+
+    def undefined_variables(self):
+        return set([_var for _var in  self.ref_variables if self.is_registerd(_var) == False])
+
 class GetVariables(QlAlg):
+
     def __init__(self, environment_vars):
         self.environment_vars = environment_vars
+        self.environment = Environment()
 
     def Literal(self, value):
         class _anon():
@@ -210,16 +266,17 @@ class GetVariables(QlAlg):
 
     def Variable(self, name, datatype):
         def _register():
-            self.environment_vars.append(name)
-            datatype.execute()
+            self.environment.add_var((name, datatype.execute()))
+            return (name, datatype.execute())
+            
         class _anon():
             execute = lambda self: _register()
         return _anon()
 
     def RefVariable(self, name):
         def _register():
-            self.environment_vars.append(name)
-      
+            self.environment.add_ref((name))
+            print self.environment.is_registerd(name)
         class _anon():
             execute = lambda self: _register()
         return _anon()
@@ -227,8 +284,7 @@ class GetVariables(QlAlg):
 
     def Question(self, variable, label):
         def _register():
-            variable.execute()
-            label.execute()
+            self.environment.add_question(variable.execute(), label.execute())
             
         class _anon():
             execute = lambda self: _register()
@@ -255,16 +311,16 @@ class GetVariables(QlAlg):
 
     
     def Boolean(self, value = False):
-        def _register():    
-            pass
+        def _register(self):    
+            return 'boolean'
 
         class _anon():
-            execute = lambda self: _register()
+            execute = lambda self: _register(self)
         return _anon()
 
     def Money(self, value = False):
         def _register():    
-            pass
+            return 'money'
 
         class _anon():
             execute = lambda self: _register()
@@ -281,7 +337,15 @@ class GetVariables(QlAlg):
 
     def Integer(self, value):
         def _register():    
-            pass
+            return 'integer'
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
+    def StringLiteral(self, value):
+        def _register():    
+            return value
 
         class _anon():
             execute = lambda self: _register()
@@ -289,7 +353,7 @@ class GetVariables(QlAlg):
 
     def String(self, value):
         def _register():    
-            pass
+            return 'string'
 
         class _anon():
             execute = lambda self: _register()

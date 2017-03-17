@@ -118,7 +118,7 @@ class QL:
                     boolean_expression | reference_variable)
 
     string = QuotedString('"')
-    string.addParseAction(lambda _, __, tokens: String(*tokens))
+    string.addParseAction(lambda _, __, tokens: StringLiteral(*tokens))
 
     label = QuotedString('"')("value").addParseAction(
         lambda _, __, tokens: String(**tokens.asDict()))
