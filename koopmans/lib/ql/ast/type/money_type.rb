@@ -6,8 +6,8 @@ module QL
       end
 
       def widget
-        QL::GUI::TextWidget
-        # QL::GUI::SpinboxWidget
+        # QL::GUI::TextWidget
+        QL::GUI::SpinboxWidget
         # QL::GUI::SliderWidget
       end
     end

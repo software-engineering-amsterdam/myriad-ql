@@ -6,8 +6,8 @@ module QL
       end
 
       def widget
-        QL::GUI::RadioWidget
-        # QL::GUI::CheckboxWidget
+        # QL::GUI::RadioWidget
+        QL::GUI::CheckboxWidget
         # QL::GUI::DropdownWidget
       end
     end
