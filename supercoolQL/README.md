@@ -73,11 +73,6 @@ form exampleForm {
 
 # ToDo
 
-- [x] Tests for various parsing stages
-- [ ] Split QLVisitor Interface into smaller interfaces
-- [ ] Remove AbstractQLVisitor class
-- [x] Create Runnable GUI class for Main()
-    - [x] Move GUI logic out of FileReader
 - [ ] Finish adding line/column metadata to AST nodes
     - [ ] Clean up line/column inheritance from TreeNode
     
