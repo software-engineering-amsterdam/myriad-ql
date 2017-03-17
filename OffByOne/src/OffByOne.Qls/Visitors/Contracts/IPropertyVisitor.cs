@@ -6,16 +6,16 @@
     public interface IPropertyVisitor<out TResult, in TEnvironment> : IVisitor
         where TEnvironment : IEnvironment
     {
-        TResult Visit(ColorProperty expression, TEnvironment environment);
+        TResult Visit(ColorProperty property, TEnvironment environment);
 
-        TResult Visit(FontNameProperty expression, TEnvironment environment);
+        TResult Visit(FontNameProperty property, TEnvironment environment);
 
-        TResult Visit(FontSizeProperty expression, TEnvironment environment);
+        TResult Visit(FontSizeProperty property, TEnvironment environment);
 
-        TResult Visit(FontStyleProperty expression, TEnvironment environment);
+        TResult Visit(FontStyleProperty property, TEnvironment environment);
 
-        TResult Visit(HeightProperty expression, TEnvironment environment);
+        TResult Visit(HeightProperty property, TEnvironment environment);
 
-        TResult Visit(WidthProperty expression, TEnvironment environment);
+        TResult Visit(WidthProperty property, TEnvironment environment);
     }
 }

@@ -11,7 +11,7 @@
             this.StyleSheetNames = new HashSet<string>();
             this.PageLabels = new HashSet<string>();
             this.SectionNames = new HashSet<string>();
-            this.QuestionLabels = new HashSet<string>();
+            this.QuestionIdentifier = new HashSet<string>();
         }
 
         public ISet<string> StyleSheetNames { get; set; }
@@ -20,6 +20,6 @@
 
         public ISet<string> SectionNames { get; }
 
-        public ISet<string> QuestionLabels { get; }
+        public ISet<string> QuestionIdentifier { get; }
     }
 }

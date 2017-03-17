@@ -10,15 +10,15 @@
     public class QuestionRule : Rule
     {
         public QuestionRule(
-            string name,
+            string identifier,
             Widget widget,
             IEnumerable<Property> properties)
             : base(widget, properties)
         {
-            this.Name = name;
+            this.Identifier = identifier;
         }
 
-        public string Name { get; private set; }
+        public string Identifier { get; private set; }
 
         public override TResult Accept<TResult, TContext>(
             IRuleVisitor<TResult, TContext> visitor,

@@ -6,8 +6,8 @@
     public interface IRuleVisitor<out TResult, in TEnvironment> : IVisitor
         where TEnvironment : IEnvironment
     {
-        TResult Visit(QuestionRule expression, TEnvironment environment);
+        TResult Visit(QuestionRule rule, TEnvironment environment);
 
-        TResult Visit(ValueTypeRule expression, TEnvironment environment);
+        TResult Visit(ValueTypeRule rule, TEnvironment environment);
     }
 }

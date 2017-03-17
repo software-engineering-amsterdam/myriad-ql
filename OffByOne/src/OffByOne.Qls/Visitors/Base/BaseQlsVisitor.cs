@@ -75,113 +75,113 @@
             return default(TResult);
         }
 
-        public virtual TResult Visit(ColorProperty expression, TEnvironment environment)
+        public virtual TResult Visit(ColorProperty property, TEnvironment environment)
         {
-            expression.Value.Accept(this, environment);
+            property.Value.Accept(this, environment);
             return default(TResult);
         }
 
-        public virtual TResult Visit(FontNameProperty expression, TEnvironment environment)
+        public virtual TResult Visit(FontNameProperty property, TEnvironment environment)
         {
-            expression.Value.Accept(this, environment);
+            property.Value.Accept(this, environment);
             return default(TResult);
         }
 
-        public virtual TResult Visit(FontSizeProperty expression, TEnvironment environment)
+        public virtual TResult Visit(FontSizeProperty property, TEnvironment environment)
         {
-            expression.Value.Accept(this, environment);
+            property.Value.Accept(this, environment);
             return default(TResult);
         }
 
-        public virtual TResult Visit(FontStyleProperty expression, TEnvironment environment)
+        public virtual TResult Visit(FontStyleProperty property, TEnvironment environment)
         {
-            expression.Value.Accept(this, environment);
+            property.Value.Accept(this, environment);
             return default(TResult);
         }
 
-        public virtual TResult Visit(HeightProperty expression, TEnvironment environment)
+        public virtual TResult Visit(HeightProperty property, TEnvironment environment)
         {
-            expression.Value.Accept(this, environment);
+            property.Value.Accept(this, environment);
             return default(TResult);
         }
 
-        public virtual TResult Visit(WidthProperty expression, TEnvironment environment)
+        public virtual TResult Visit(WidthProperty property, TEnvironment environment)
         {
-            expression.Value.Accept(this, environment);
+            property.Value.Accept(this, environment);
             return default(TResult);
         }
 
-        public virtual TResult Visit(QuestionRule expression, TEnvironment environment)
+        public virtual TResult Visit(QuestionRule rule, TEnvironment environment)
         {
-            expression.Properties?.ForEach(x => x.Accept(this, environment));
-            expression.Widget?.Accept(this, environment);
+            rule.Properties?.ForEach(x => x.Accept(this, environment));
+            rule.Widget?.Accept(this, environment);
             return default(TResult);
         }
 
-        public virtual TResult Visit(ValueTypeRule expression, TEnvironment environment)
+        public virtual TResult Visit(ValueTypeRule rule, TEnvironment environment)
         {
-            expression.ValueType.Accept(this, environment);
-            expression.Properties.ForEach(x => x.Accept(this, environment));
-            expression.Widget.Accept(this, environment);
+            rule.ValueType.Accept(this, environment);
+            rule.Properties.ForEach(x => x.Accept(this, environment));
+            rule.Widget.Accept(this, environment);
             return default(TResult);
         }
 
-        public virtual TResult Visit(Page expression, TEnvironment environment)
+        public virtual TResult Visit(Page statement, TEnvironment environment)
         {
-            expression.Sections.ForEach(x => x.Accept(this, environment));
-            expression.ValueTypeRules.ForEach(x => x.Accept(this, environment));
+            statement.Sections.ForEach(x => x.Accept(this, environment));
+            statement.ValueTypeRules.ForEach(x => x.Accept(this, environment));
             return default(TResult);
         }
 
-        public virtual TResult Visit(Section expression, TEnvironment environment)
+        public virtual TResult Visit(Section statement, TEnvironment environment)
         {
-            expression.Name.Accept(this, environment);
-            expression.Sections.ForEach(x => x.Accept(this, environment));
-            expression.QuestionRules.ForEach(x => x.Accept(this, environment));
-            expression.ValueTypeRules.ForEach(x => x.Accept(this, environment));
+            statement.Name.Accept(this, environment);
+            statement.Sections.ForEach(x => x.Accept(this, environment));
+            statement.QuestionRules.ForEach(x => x.Accept(this, environment));
+            statement.ValueTypeRules.ForEach(x => x.Accept(this, environment));
             return default(TResult);
         }
 
-        public virtual TResult Visit(StyleSheet expression, TEnvironment environment)
+        public virtual TResult Visit(StyleSheet statement, TEnvironment environment)
         {
-            expression.Pages.ForEach(x => x.Accept(this, environment));
+            statement.Pages.ForEach(x => x.Accept(this, environment));
             return default(TResult);
         }
 
-        public virtual TResult Visit(CheckBoxWidget expression, TEnvironment environment)
-        {
-            return default(TResult);
-        }
-
-        public virtual TResult Visit(DropDownWidget expression, TEnvironment environment)
-        {
-            expression.Values.ForEach(x => x.Accept(this, environment));
-            return default(TResult);
-        }
-
-        public virtual TResult Visit(RadioButtonWidget expression, TEnvironment environment)
-        {
-            expression.Values.ForEach(x => x.Accept(this, environment));
-            return default(TResult);
-        }
-
-        public virtual TResult Visit(DefaultWidget expression, TEnvironment environment)
+        public virtual TResult Visit(CheckBoxWidget widget, TEnvironment environment)
         {
             return default(TResult);
         }
 
-        public virtual TResult Visit(SliderWidget expression, TEnvironment environment)
+        public virtual TResult Visit(DropDownWidget widget, TEnvironment environment)
         {
-            expression.Values.ForEach(x => x.Accept(this, environment));
+            widget.Values.ForEach(x => x.Accept(this, environment));
             return default(TResult);
         }
 
-        public virtual TResult Visit(SpinboxWidget expression, TEnvironment environment)
+        public virtual TResult Visit(RadioButtonWidget widget, TEnvironment environment)
+        {
+            widget.Values.ForEach(x => x.Accept(this, environment));
+            return default(TResult);
+        }
+
+        public virtual TResult Visit(DefaultWidget widget, TEnvironment environment)
         {
             return default(TResult);
         }
 
-        public virtual TResult Visit(TextFieldWidget expression, TEnvironment environment)
+        public virtual TResult Visit(SliderWidget widget, TEnvironment environment)
+        {
+            widget.Values.ForEach(x => x.Accept(this, environment));
+            return default(TResult);
+        }
+
+        public virtual TResult Visit(SpinboxWidget widget, TEnvironment environment)
+        {
+            return default(TResult);
+        }
+
+        public virtual TResult Visit(TextFieldWidget widget, TEnvironment environment)
         {
             return default(TResult);
         }

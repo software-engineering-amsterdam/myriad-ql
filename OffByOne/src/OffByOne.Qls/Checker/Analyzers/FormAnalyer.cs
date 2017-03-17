@@ -31,60 +31,60 @@
             this.Visit(root, new FormAnalyzerEnvironment());
         }
 
-        public override object Visit(StyleSheet expression, FormAnalyzerEnvironment environment)
+        public override object Visit(StyleSheet statement, FormAnalyzerEnvironment environment)
         {
-            if (environment.StyleSheetNames.Contains(expression.Id))
+            if (environment.StyleSheetNames.Contains(statement.Id))
             {
-                this.Report.Add(new DuplicateStyleSheetMesssage(expression));
+                this.Report.Add(new DuplicateStyleSheetMesssage(statement));
             }
             else
             {
-                environment.StyleSheetNames.Add(expression.Id);
+                environment.StyleSheetNames.Add(statement.Id);
             }
 
-            return base.Visit(expression, environment);
+            return base.Visit(statement, environment);
         }
 
-        public override object Visit(Page expression, FormAnalyzerEnvironment environment)
+        public override object Visit(Page statement, FormAnalyzerEnvironment environment)
         {
-            if (environment.PageLabels.Contains(expression.Id))
+            if (environment.PageLabels.Contains(statement.Id))
             {
-                this.Report.Add(new DuplicatePageMessage(expression));
+                this.Report.Add(new DuplicatePageMessage(statement));
             }
             else
             {
-                environment.PageLabels.Add(expression.Id);
+                environment.PageLabels.Add(statement.Id);
             }
 
-            return base.Visit(expression, environment);
+            return base.Visit(statement, environment);
         }
 
-        public override object Visit(Section expression, FormAnalyzerEnvironment environment)
+        public override object Visit(Section statement, FormAnalyzerEnvironment environment)
         {
-            if (environment.SectionNames.Contains(expression.Name.Value))
+            if (environment.SectionNames.Contains(statement.Name.Value))
             {
-                this.Report.Add(new DuplicateSectionNameMessage(expression));
+                this.Report.Add(new DuplicateSectionNameMessage(statement));
             }
             else
             {
-                environment.SectionNames.Add(expression.Name.Value);
+                environment.SectionNames.Add(statement.Name.Value);
             }
 
-            return base.Visit(expression, environment);
+            return base.Visit(statement, environment);
         }
 
-        public override object Visit(QuestionRule expression, FormAnalyzerEnvironment environment)
+        public override object Visit(QuestionRule rule, FormAnalyzerEnvironment environment)
         {
-            if (environment.SectionNames.Contains(expression.Name))
+            if (environment.SectionNames.Contains(rule.Identifier))
             {
-                this.Report.Add(new DuplicateQuestionLabelMessage(expression));
+                this.Report.Add(new DuplicateQuestionLabelMessage(rule));
             }
             else
             {
-                environment.SectionNames.Add(expression.Name);
+                environment.SectionNames.Add(rule.Identifier);
             }
 
-            return base.Visit(expression, environment);
+            return base.Visit(rule, environment);
         }
     }
 }

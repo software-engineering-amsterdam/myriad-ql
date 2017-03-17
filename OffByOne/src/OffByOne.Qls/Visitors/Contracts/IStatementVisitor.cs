@@ -6,10 +6,10 @@
     public interface IStatementVisitor<out TResult, in TEnvironment> : IVisitor
         where TEnvironment : IEnvironment
     {
-        TResult Visit(Page expression, TEnvironment environment);
+        TResult Visit(Page statement, TEnvironment environment);
 
-        TResult Visit(Section expression, TEnvironment environment);
+        TResult Visit(Section statement, TEnvironment environment);
 
-        TResult Visit(StyleSheet expression, TEnvironment environment);
+        TResult Visit(StyleSheet statement, TEnvironment environment);
     }
 }

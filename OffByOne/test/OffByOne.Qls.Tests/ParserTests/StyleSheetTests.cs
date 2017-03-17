@@ -89,7 +89,7 @@
                 .SelectMany(x => x.Sections)
                 .Where(x => x.Name.Value == "You sold a house")
                 .SelectMany(x => x.QuestionRules)
-                .Any(x => x.Name == "valueResidue");
+                .Any(x => x.Identifier == "valueResidue");
 
             Assert.True(assumption);
         }

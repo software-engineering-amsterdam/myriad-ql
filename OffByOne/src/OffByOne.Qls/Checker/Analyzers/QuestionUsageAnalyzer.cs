@@ -4,12 +4,15 @@
 
     using OffByOne.Ql.Checker;
     using OffByOne.Ql.Checker.Contracts;
+    using OffByOne.Qls.Ast.Style.Rules;
     using OffByOne.Qls.Ast.Style.Statements;
     using OffByOne.Qls.Checker.Analyzers.Contracts;
+    using OffByOne.Qls.Checker.Analyzers.Environment;
+    using OffByOne.Qls.Visitors.Base;
 
     using ValueType = OffByOne.Ql.Ast.ValueTypes.Base.ValueType;
 
-    public class QuestionUsageAnalyzer : IAnalyzer
+    public class QuestionUsageAnalyzer : BaseQlsVisitor<object, FormAnalyzerEnvironment>, IAnalyzer
     {
         public QuestionUsageAnalyzer()
             : this(new CheckerReport())
@@ -25,6 +28,11 @@
 
         public void Analyze(StyleSheet root, IDictionary<string, ValueType> qlQuestionMappings)
         {
+        }
+
+        public override object Visit(QuestionRule rule, FormAnalyzerEnvironment environment)
+        {
+            return null;
         }
     }
 }

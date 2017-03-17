@@ -6,7 +6,7 @@
     public class DuplicateQuestionLabelMessage : ErrorMessage
     {
         public DuplicateQuestionLabelMessage(QuestionRule question)
-            : base($"Duplicate question label \"{question.Name}\" at: {question.SourceCode}")
+            : base($"Duplicate question label \"{question.Identifier}\" at: {question.SourceCode}")
         {
         }
     }

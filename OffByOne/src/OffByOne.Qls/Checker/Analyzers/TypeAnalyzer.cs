@@ -94,19 +94,19 @@
             this.Visit(root, new TypeAnalyzerEnvironment());
         }
 
-        public override object Visit(QuestionRule expression, TypeAnalyzerEnvironment environment)
+        public override object Visit(QuestionRule rule, TypeAnalyzerEnvironment environment)
         {
-            var questionType = this.qlQuestionMappings[expression.Name];
-            this.CheckWidgetTyping(expression.Widget, questionType);
+            var questionType = this.qlQuestionMappings[rule.Identifier];
+            this.CheckWidgetTyping(rule.Widget, questionType);
 
-            return base.Visit(expression, environment);
+            return base.Visit(rule, environment);
         }
 
-        public override object Visit(ValueTypeRule expression, TypeAnalyzerEnvironment environment)
+        public override object Visit(ValueTypeRule rule, TypeAnalyzerEnvironment environment)
         {
-            this.CheckWidgetTyping(expression.Widget, expression.ValueType);
+            this.CheckWidgetTyping(rule.Widget, rule.ValueType);
 
-            return base.Visit(expression, environment);
+            return base.Visit(rule, environment);
         }
 
         private void CheckWidgetTyping(Widget widget, ValueType questionType)
