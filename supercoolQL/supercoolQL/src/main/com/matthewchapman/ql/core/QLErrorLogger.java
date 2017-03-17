@@ -27,19 +27,11 @@ public class QLErrorLogger {
         return this.errors.size();
     }
 
-    public void printErrors() {
-
-        Collections.sort(this.errors);
-
-        for (QLError error : errors) {
-            System.err.println(error);
-        }
-    }
-
     public List<QLError> getErrors() {
         return this.errors;
     }
 
+    @Override
     public String toString() {
         String result = "";
         Collections.sort(this.errors);

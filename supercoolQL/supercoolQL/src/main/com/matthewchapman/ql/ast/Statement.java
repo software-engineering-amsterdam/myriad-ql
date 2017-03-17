@@ -8,10 +8,12 @@ package com.matthewchapman.ql.ast;
  */
 public abstract class Statement extends TreeNode implements QLVisitable {
 
+    @Override
     public int getLine() {
         return super.getLine();
     }
 
+    @Override
     public int getColumn() {
         return super.getColumn();
     }

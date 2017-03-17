@@ -15,61 +15,61 @@ import com.matthewchapman.ql.ast.statement.Question;
  * <p>
  * Visitor interface for the QL AST, provides methods for visiting all QL types, expressions, statements, etc.
  */
-public interface QLVisitor<T> {
+public interface QLVisitor<T, C> {
 
     //Statement
-    T visit(Question question, String context);
+    T visit(Question question, C context);
 
-    T visit(IfStatement ifStatement, String context);
+    T visit(IfStatement ifStatement, C context);
 
-    T visit(IfElseStatement ifElseStatement, String context);
+    T visit(IfElseStatement ifElseStatement, C context);
 
-    T visit(CalculatedQuestion calculatedQuestion, String context);
+    T visit(CalculatedQuestion calculatedQuestion, C context);
 
     //Expression
-    T visit(Parameter parameter, String context);
+    T visit(Parameter parameter, C context);
 
-    T visit(ParameterGroup parameterGroup, String context);
+    T visit(ParameterGroup parameterGroup, C context);
 
-    T visit(StringLiteral stringLiteral, String context);
+    T visit(StringLiteral stringLiteral, C context);
 
-    T visit(IntegerLiteral integerLiteral, String context);
+    T visit(IntegerLiteral integerLiteral, C context);
 
-    T visit(BooleanLiteral booleanLiteral, String context);
+    T visit(BooleanLiteral booleanLiteral, C context);
 
     //Binary
-    T visit(Addition addition, String context);
+    T visit(Addition addition, C context);
 
-    T visit(Division division, String context);
+    T visit(Division division, C context);
 
-    T visit(Equal equal, String context);
+    T visit(Equal equal, C context);
 
-    T visit(GreaterThan greaterThan, String context);
+    T visit(GreaterThan greaterThan, C context);
 
-    T visit(GreaterThanEqualTo greaterThanEqualTo, String context);
+    T visit(GreaterThanEqualTo greaterThanEqualTo, C context);
 
-    T visit(LessThan lessThan, String context);
+    T visit(LessThan lessThan, C context);
 
-    T visit(LessThanEqualTo lessThanEqualTo, String context);
+    T visit(LessThanEqualTo lessThanEqualTo, C context);
 
-    T visit(LogicalAnd logicalAnd, String context);
+    T visit(LogicalAnd logicalAnd, C context);
 
-    T visit(LogicalOr logicalOr, String context);
+    T visit(LogicalOr logicalOr, C context);
 
-    T visit(Multiplication multiplication, String context);
+    T visit(Multiplication multiplication, C context);
 
-    T visit(NotEqual notEqual, String context);
+    T visit(NotEqual notEqual, C context);
 
-    T visit(Subtraction subtraction, String context);
+    T visit(Subtraction subtraction, C context);
 
     //Unary
-    T visit(Negation negation, String context);
+    T visit(Negation negation, C context);
 
     //Types
-    T visit(BooleanType booleanType, String context);
+    T visit(BooleanType booleanType, C context);
 
-    T visit(IntegerType integerType, String context);
+    T visit(IntegerType integerType, C context);
 
-    T visit(StringType stringType, String context);
+    T visit(StringType stringType, C context);
 
 }

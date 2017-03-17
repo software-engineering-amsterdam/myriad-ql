@@ -17,7 +17,7 @@ import java.util.*;
  * <p>
  * Gathers all of the questions contained within a given Form, allows checking for duplicates
  */
-public class QuestionCollection extends AbstractQLVisitor<Void> {
+public class QuestionCollection extends AbstractQLVisitor<Void, String> {
 
     private final List<Question> questionList;
     private final HashMap<String, Type> typeTable;
@@ -48,7 +48,7 @@ public class QuestionCollection extends AbstractQLVisitor<Void> {
     }
 
     // hooray for O(n) complexity!
-    public void findDuplicates() {
+    public boolean findDuplicates() {
         Set<String> questionIDs = new HashSet<>();
 
         for (Question question : questionList) {
@@ -56,6 +56,12 @@ public class QuestionCollection extends AbstractQLVisitor<Void> {
                 logger.addError(question.getLine(), question.getColumn(), question.getName(), "Question with this ID already defined");
             }
         }
+
+        if (logger.getErrorNumber() > 0) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override

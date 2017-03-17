@@ -11,8 +11,6 @@ import com.matthewchapman.ql.validation.visitor.QLVisitor;
  */
 public class Negation extends UnaryOperation implements QLVisitable {
 
-    //TODO Implement Negation
-
     private final Expression expression;
 
     public Negation(Expression expression, int line, int column) {
@@ -31,7 +29,7 @@ public class Negation extends UnaryOperation implements QLVisitable {
     }
 
     @Override
-    public <T> T accept(QLVisitor<T> visitor, String context) {
+    public <T, C> T accept(QLVisitor<T, C> visitor, C context) {
         return visitor.visit(this, context);
     }
 }

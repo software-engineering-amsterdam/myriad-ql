@@ -1,6 +1,5 @@
 package com.matthewchapman.ql.gui.errors;
 
-import com.matthewchapman.ql.core.QLErrorLogger;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -13,15 +12,14 @@ import javafx.scene.layout.Priority;
  */
 public class ErrorDialogGenerator {
 
-    public void generateErrorBox(QLErrorLogger logger, String title, String headerText) {
+    public void generateErrorListBox(String content, String title, String headerText) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(headerText);
 
-        String exceptionText = logger.toString();
         Label label = new Label("Resolve the following to continue:");
 
-        TextArea textArea = new TextArea(exceptionText);
+        TextArea textArea = new TextArea(content);
         textArea.setEditable(false);
         textArea.setWrapText(true);
 

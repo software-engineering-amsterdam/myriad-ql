@@ -54,13 +54,13 @@ form exampleForm {
     - [x] Strings
     - [x] Booleans
     - [x] Integers
-- [ ] AST Processing
-  - [ ] Type checking
+- [x] AST Processing
+  - [x] Type checking
     - [x] reference to undefined questions
     - [x] duplicate question declarations with different types
     - [x] conditions that are not of the type boolean
     - [x] operands of invalid type to operators
-    - [ ] cyclic dependencies between questions
+    - [x] cyclic dependencies between questions
     - [x] duplicate labels
   - [x] Error handling
     - [x] Error class
@@ -73,11 +73,6 @@ form exampleForm {
 
 # ToDo
 
-- [x] Tests for various parsing stages
-- [ ] Split QLVisitor Interface into smaller interfaces
-- [ ] Remove AbstractQLVisitor class
-- [x] Create Runnable GUI class for Main()
-    - [x] Move GUI logic out of FileReader
 - [ ] Finish adding line/column metadata to AST nodes
     - [ ] Clean up line/column inheritance from TreeNode
     

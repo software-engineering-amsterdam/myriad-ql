@@ -7,7 +7,8 @@ import com.matthewchapman.ql.validation.visitor.QLVisitor;
  * <p>
  * Provides a generic interface for classes to become "visitable" by the QLVisitor Interface
  */
+@FunctionalInterface
 public interface QLVisitable {
 
-    <T> T accept(QLVisitor<T> visitor, String context);
+    <T, C> T accept(QLVisitor<T, C> visitor, C context);
 }

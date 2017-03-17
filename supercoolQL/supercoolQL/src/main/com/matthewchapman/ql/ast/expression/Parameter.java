@@ -9,33 +9,27 @@ import com.matthewchapman.ql.validation.visitor.QLVisitor;
  * Parameter class, for inserting Question return values into Expressions
  */
 
-//TODO Parameter shouldn't extend Expression. Atomic type perhaps?
-
 public class Parameter extends Expression implements QLVisitable {
 
-    private String ID;
+    private String id;
 
     public Parameter(String s, int line, int column) {
-        this.ID = s;
+        this.id = s;
         super.setLine(line);
         super.setColumn(column);
     }
 
     public String getID() {
-        return this.ID;
-    }
-
-    public void setID(String s) {
-        this.ID = s;
+        return this.id;
     }
 
     @Override
     public String toString() {
-        return this.ID;
+        return this.id;
     }
 
     @Override
-    public <T> T accept(QLVisitor<T> visitor, String context) {
+    public <T, C> T accept(QLVisitor<T, C> visitor, C context) {
         return visitor.visit(this, context);
     }
 }

@@ -11,8 +11,10 @@ import com.matthewchapman.ql.validation.visitor.QLVisitor;
  */
 public class LogicalAnd extends BinaryOperation implements QLVisitable {
 
-    public LogicalAnd(Expression left, Expression right) {
+    public LogicalAnd(Expression left, Expression right, int line, int charPositionInLine) {
         super(left, right);
+        super.setLine(line);
+        super.setColumn(charPositionInLine);
     }
 
     @Override
@@ -21,7 +23,7 @@ public class LogicalAnd extends BinaryOperation implements QLVisitable {
     }
 
     @Override
-    public <T> T accept(QLVisitor<T> visitor, String context) {
+    public <T, C> T accept(QLVisitor<T, C> visitor, C context) {
         return visitor.visit(this, context);
     }
 }
