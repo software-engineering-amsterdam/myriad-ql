@@ -20,9 +20,12 @@ class QLLexer(object):
     reserved = {
         'boolean': 'BOOLEAN',
         'decimal': 'DECIMAL',
+        'else': 'ELSE',
+        'false': 'FALSE',
         'form': 'FORM',
         'if': 'IF',
-        'string': 'STRING'
+        'string': 'STRING',
+        'true': 'TRUE'
     }
 
     # List of tokens used in the lexer.
@@ -47,7 +50,7 @@ class QLLexer(object):
         'DIV',       # /
         'ASSIGN',    # =
         'ID',        # anyString
-        'LABEL',     # "A question?"
+        'STR',       # "A question?"
         'COMMENT',   # // This is a comment
         'WHITESPACE'
     ) + tuple(reserved.values())  # Added also the reserved words.
@@ -71,12 +74,14 @@ class QLLexer(object):
     t_MULT = r'\*'
     t_DIV = r'/'
     t_ASSIGN = r'='
+    t_NOT = r'!'
+    t_STR = r'\".+\"'
 
     # Regular expressions for tokens that require special interactions.
     ID = r'[a-zA-Z_][a-zA-Z_0-9]*'
     COMMENT = r'\/\/.*'
     WHITESPACE = r'\s+'
-    LABEL = r'\".+\"'
+    DECIMAL = r'\d+(.\d+)?'
 
     @TOKEN(ID)
     def t_ID(self, t):
@@ -98,10 +103,10 @@ class QLLexer(object):
         """White spaces are ignored"""
         pass
 
-    @TOKEN(LABEL)
-    def t_LABEL(self, t):
-        """We extract the label without the quotes."""
-        t.value = t.value[1:-1]
+    @TOKEN(DECIMAL)
+    def t_DECIMAL(self, t):
+        """We make sure the value returned is an float"""
+        t.value = float(t.value)
         return t
 
     def t_error(self, t):

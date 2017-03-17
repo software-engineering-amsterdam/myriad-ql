@@ -1,15 +1,24 @@
 class Expression(object):
-    def __init__(self, operation, lnode, rnode):
-        # if lnode.type != rnode.type:
-        #    raise Exception('Invalid node')
-
-        self.operation = operation
-        self.lnode = lnode
-        self.rnode = rnode
-        self.type = None
+    def __init__(self, type):
+        self.type = type
 
     def read(self, context):
         pass
+
+    def depends_on(self):
+        pass
+
+    def get_type(self):
+        return self.type
+
+
+# BINARY EXPRESSIONS
+class BinaryExpression(Expression):
+    def __init__(self, type, operation, lnode, rnode):
+        super().__init__(type)
+        self.operation = operation
+        self.lnode = lnode
+        self.rnode = rnode
 
     def depends_on(self):
         return self.lnode.depends_on() + self.rnode.depends_on()
@@ -19,109 +28,97 @@ class Expression(object):
                                  self.rnode)
 
 
-class AndExpression(Expression):
+class AndExpression(BinaryExpression):
     def __init__(self, lnode, rnode):
-        super().__init__('&&', lnode, rnode)
-        self.type = 'boolean'
+        super().__init__('boolean', '&&', lnode, rnode)
 
     def read(self, context):
         return self.lnode.read(context) and self.rnode.read(context)
 
 
-class OrExpression(Expression):
+class OrExpression(BinaryExpression):
     def __init__(self, lnode, rnode):
-        super().__init__('||', lnode, rnode)
-        self.type = 'boolean'
+        super().__init__('boolean', '||', lnode, rnode)
 
     def read(self, context):
         return self.lnode.read(context) or self.rnode.read(context)
 
 
-class LTExpression(Expression):
+class LTExpression(BinaryExpression):
     def __init__(self, lnode, rnode):
-        super().__init__('<', lnode, rnode)
-        self.type = 'boolean'
+        super().__init__('boolean', '<', lnode, rnode)
 
     def read(self, context):
         return self.lnode.read(context) < self.rnode.read(context)
 
 
-class LETExpression(Expression):
+class LETExpression(BinaryExpression):
     def __init__(self, lnode, rnode):
-        super().__init__('<=', lnode, rnode)
-        self.type = 'boolean'
+        super().__init__('boolean', '<=', lnode, rnode)
 
     def read(self, context):
         return self.lnode.read(context) <= self.rnode.read(context)
 
 
-class GTExpression(Expression):
+class GTExpression(BinaryExpression):
     def __init__(self, lnode, rnode):
-        super().__init__('>', lnode, rnode)
-        self.type = 'boolean'
+        super().__init__('boolean', '>', lnode, rnode)
 
     def read(self, context):
         return self.lnode.read(context) > self.rnode.read(context)
 
 
-class GETExpression(Expression):
+class GETExpression(BinaryExpression):
     def __init__(self, lnode, rnode):
-        super().__init__('>=', lnode, rnode)
-        self.type = 'boolean'
+        super().__init__('boolean', '>=', lnode, rnode)
 
     def read(self, context):
         return self.lnode.read(context) >= self.rnode.read(context)
 
 
-class NEQExpression(Expression):
+class NEQExpression(BinaryExpression):
     def __init__(self, lnode, rnode):
-        super().__init__('!=', lnode, rnode)
-        self.type = 'boolean'
+        super().__init__('boolean', '!=', lnode, rnode)
 
     def read(self, context):
         return self.lnode.read(context) != self.rnode.read(context)
 
 
-class EQExpression(Expression):
+class EQExpression(BinaryExpression):
     def __init__(self, lnode, rnode):
-        super().__init__('==', lnode, rnode)
-        self.type = 'boolean'
+        super().__init__('boolean', '==', lnode, rnode)
 
     def read(self, context):
         return self.lnode.read(context) == self.rnode.read(context)
 
 
-class PlusExpression(Expression):
+class PlusExpression(BinaryExpression):
     def __init__(self, lnode, rnode):
-        super().__init__('+', lnode, rnode)
-        self.type = 'decimal'
+        super().__init__('decimal', '+', lnode, rnode)
 
     def read(self, context):
         return self.lnode.read(context) + self.rnode.read(context)
 
 
-class MinusExpression(Expression):
+class MinusExpression(BinaryExpression):
     def __init__(self, lnode, rnode):
-        super().__init__('-', lnode, rnode)
-        self.type = 'decimal'
+        super().__init__('decima', '-', lnode, rnode)
 
     def read(self, context):
         return self.lnode.read(context) - self.rnode.read(context)
 
 
-class MultExpression(Expression):
+class MultExpression(BinaryExpression):
     def __init__(self, lnode, rnode):
-        super().__init__('*', lnode, rnode)
-        self.type = 'decimal'
+        super().__init__('decial', '*', lnode, rnode)
 
     def read(self, context):
         return self.lnode.read(context) * self.rnode.read(context)
 
 
-class DivExpression(Expression):
+class DivExpression(BinaryExpression):
     def __init__(self, lnode, rnode):
-        super().__init__('/', lnode, rnode)
-        self.type = 'decimal'
+        super().__init__('decimal', '/', lnode, rnode)
 
     def read(self, context):
         if self.rnode.read(context) == 0.0:
@@ -130,9 +127,87 @@ class DivExpression(Expression):
             return self.lnode.read(context) / self.rnode.read(context)
 
 
-class IdExpression(Expression):
+# UNARY EXPRESSIONS
+class UnaryExpression(Expression):
+    def __init__(self, type, operation, node):
+        super().__init__(type)
+        self.node = node
+        self.operation = operation
+
+    def __str__(self):
+        return '{}{}'.format(self.operation, self.node)
+
+    def depends_on(self):
+        return self.node.depends_on()
+
+
+class NotExpression(UnaryExpression):
+    def __init__(self, node):
+        super().__init__('boolean', '!', node)
+
+    def read(self, context):
+        return not self.node.read(context)
+
+
+# LEAF EXPRESSIONS
+class LeafExpression(Expression):
+    def __init__(self, type):
+        super().__init__(type)
+
+    def depends_on(self):
+        return []
+
+
+class TrueExpression(LeafExpression):
+    def __init__(self):
+        super().__init__('boolean')
+
+    def read(self, context):
+        return True
+
+    def __str__(self):
+        return 'true'
+
+
+class FalseExpression(LeafExpression):
+    def __init__(self):
+        super().__init__('boolean')
+
+    def read(self, context):
+        return False
+
+    def __str__(self):
+        return 'false'
+
+
+class DecimalExpression(LeafExpression):
+    def __init__(self, decimal):
+        super().__init__('decimal')
+        self.decimal = decimal
+
+    def read(self, context):
+        return float(self.decimal)
+
+    def __str__(self):
+        return self.decimal
+
+
+class StringExpression(LeafExpression):
+    def __init__(self, string):
+        super().__init__('string')
+        self.string = string
+
+    def read(self, context):
+        return self.string[1:-1]
+
+    def __str__(self):
+        return self.string
+
+
+# A leaf expression which is quite unique.
+class IdExpression(LeafExpression):
     def __init__(self, id):
-        super().__init__('id', None, None)
+        super().__init__(None)
         self.id = id
 
     def read(self, context):

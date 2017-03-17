@@ -64,7 +64,7 @@ class StringDeclaration(Declaration):
 class Assignation(Node):
     def __init__(self, text, variable, type, expression):
         super().__init__(variable, type)
-        self.text = text
+        self.text = text[1:-1]
         self.expression = expression
 
     def __str__(self):

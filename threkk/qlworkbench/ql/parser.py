@@ -12,9 +12,9 @@ in qlworkbench.ql.parser, the grammar formaly expressed is the following:
                | assignation
                | condition
 
-    declaration -> LABEL ID COLON type
+    declaration -> STR ID COLON type
 
-    assgination -> LABEL ID COLON type ASSIGN expression
+    assgination -> STR ID COLON type ASSIGN expression
 
     condition -> IF LPAREN cond RPARENT LBRACK statements RBRACK
 
@@ -52,7 +52,6 @@ the tuple is the type of the tuple, and the upcoming elements are properties,
 which can be also other tuples or arrays of tuples.
 """
 from ply import yacc
-from .ast.expression import Expression
 from .ast.expression import AndExpression
 from .ast.expression import OrExpression
 from .ast.expression import LTExpression
@@ -65,6 +64,11 @@ from .ast.expression import PlusExpression
 from .ast.expression import MinusExpression
 from .ast.expression import MultExpression
 from .ast.expression import DivExpression
+from .ast.expression import NotExpression
+from .ast.expression import TrueExpression
+from .ast.expression import FalseExpression
+from .ast.expression import StringExpression
+from .ast.expression import DecimalExpression
 from .ast.expression import IdExpression
 from .ast.node import BooleanAssignation
 from .ast.node import DecimalAssignation
@@ -83,7 +87,7 @@ class QLParser(object):
         self.parser = yacc.yacc(module=self)
 
     def parse(self, input):
-        self.parser.parse(input, debug=False)
+        self.parser.parse(input, debug=True)
 
     def p_start(self, p):
         """
@@ -121,9 +125,9 @@ class QLParser(object):
 
     def p_declaration(self, p):
         """
-        declaration : LABEL ID COLON BOOLEAN
-                    | LABEL ID COLON DECIMAL
-                    | LABEL ID COLON STRING
+        declaration : STR ID COLON BOOLEAN
+                    | STR ID COLON DECIMAL
+                    | STR ID COLON STRING
         """
         if p[4] == 'string':
             p[0] = StringDeclaration(p[1], p[2])
@@ -137,11 +141,10 @@ class QLParser(object):
 
     def p_assignation(self, p):
         """
-        assignation : LABEL ID COLON BOOLEAN ASSIGN expression
-                    | LABEL ID COLON DECIMAL ASSIGN expression
-                    | LABEL ID COLON STRING ASSIGN expression
+        assignation : STR ID COLON BOOLEAN ASSIGN expression
+                    | STR ID COLON DECIMAL ASSIGN expression
+                    | STR ID COLON STRING ASSIGN expression
         """
-        # ('assignation', p[1], p[2], p[4], p[6])
         if p[4] == 'string':
             p[0] = StringAssignation(p[1], p[2], p[6])
         elif p[4] == 'boolean':
@@ -155,12 +158,20 @@ class QLParser(object):
     def p_condition(self, p):
         """
         condition : IF LPAREN cond RPAREN LBRACK statements RBRACK
-        """
+                  | IF LPAREN cond RPAREN LBRACK statements RBRACK ELSE LBRACK statements RBRACK 
+        """  # noqa
         # Add the condition to the statements and keep iterating.
         for statement in p[6]:
             statement.add_condition(p[3])
 
-        p[0] = p[6]
+        # Add the negative of the condition to those if p[10]:
+        if len(p) == 12:
+            for statement in p[10]:
+                statement.add_condition(NotExpression(p[3]))
+
+            p[0] = p[6] + p[10]
+        else:
+            p[0] = p[6]
 
     def p_cond(self, p):
         """
@@ -174,7 +185,7 @@ class QLParser(object):
             elif p[2] == '||':
                 p[0] = OrExpression(p[1], p[3])
             else:
-                p[0] = Expression(p[2], p[1], p[3])
+                print(p[1])
         else:
             p[0] = p[1]
 
@@ -193,16 +204,16 @@ class QLParser(object):
                 p[0] = LTExpression(p[1], p[3])
             elif p[2] == '<=':
                 p[0] = LETExpression(p[1], p[3])
-            elif p[3] == '>':
+            elif p[2] == '>':
                 p[0] = GTExpression(p[1], p[3])
-            elif [3] == '>=':
+            elif [2] == '>=':
                 p[0] = GETExpression(p[1], p[3])
-            elif p[3] == '!=':
+            elif p[2] == '!=':
                 p[0] = NEQExpression(p[1], p[3])
-            elif p[3] == '==':
+            elif p[2] == '==':
                 p[0] = EQExpression(p[1], p[3])
             else:
-                p[0] = Expression(p[2], p[1], p[3])
+                print(p[1], p[2], p[3])
         else:
             p[0] = p[1]
 
@@ -218,7 +229,7 @@ class QLParser(object):
             elif p[2] == '-':
                 p[0] = MinusExpression(p[1], p[3])
             else:
-                p[0] = Expression(p[2], p[1], p[3])
+                print(p[1])
         else:
             p[0] = p[1]
 
@@ -234,17 +245,32 @@ class QLParser(object):
             elif p[2] == '/':
                 p[0] = DivExpression(p[1], p[3])
             else:
-                p[0] = Expression(p[2], p[1], p[3])
+                print(p[1])
         else:
             p[0] = p[1]
 
     def p_factor(self, p):
         """
         factor : LPAREN cond RPAREN
+               | NOT factor
+               | TRUE
+               | FALSE
+               | DECIMAL
+               | STR
                | ID
         """
         if len(p) == 4:
             p[0] = p[2]
+        elif len(p) == 3:
+            p[0] = NotExpression(p[2])
+        elif p[1] == 'true':
+            p[0] = TrueExpression()
+        elif p[1] == 'false':
+            p[0] = FalseExpression()
+        elif type(p[1]) == float:
+            p[0] = DecimalExpression(p[1])
+        elif p[1][0] == '"' and p[1][-1] == '"':
+            p[0] = StringExpression(p[1])
         else:
             p[0] = IdExpression(p[1])
 
