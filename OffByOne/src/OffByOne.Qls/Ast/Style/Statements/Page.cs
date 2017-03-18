@@ -1,6 +1,9 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Statements
 {
+    using System;
     using System.Collections.Generic;
+
+    using MoreDotNet.Wrappers;
 
     using OffByOne.Qls.Ast.Style.Rules;
     using OffByOne.Qls.Ast.Style.Statements.Base;
@@ -13,6 +16,11 @@
             IEnumerable<Section> sections,
             IEnumerable<ValueTypeRule> valueTypeRules)
         {
+            if (id.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("A non-null, non-empty identifier must be given.");
+            }
+
             this.Id = id;
             this.Sections = sections;
             this.ValueTypeRules = valueTypeRules;

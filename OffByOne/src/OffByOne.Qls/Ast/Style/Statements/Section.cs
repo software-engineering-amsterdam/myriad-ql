@@ -1,5 +1,6 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Statements
 {
+    using System;
     using System.Collections.Generic;
 
     using OffByOne.Qls.Ast.Style.Rules;
@@ -16,6 +17,11 @@
             IEnumerable<QuestionRule> questionRules,
             IEnumerable<ValueTypeRule> valueTypeRules)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             this.Name = name;
             this.Sections = sections;
             this.QuestionRules = questionRules;

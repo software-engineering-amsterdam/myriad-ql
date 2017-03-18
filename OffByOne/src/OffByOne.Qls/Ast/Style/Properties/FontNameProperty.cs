@@ -1,5 +1,7 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Properties
 {
+    using System;
+
     using OffByOne.Qls.Ast.Style.Properties.Base;
     using OffByOne.Qls.Common.Visitors.Contracts;
 
@@ -9,6 +11,11 @@
     {
         public FontNameProperty(StringLiteral value)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             this.Value = value;
         }
 

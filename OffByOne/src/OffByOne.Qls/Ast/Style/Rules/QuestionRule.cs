@@ -1,6 +1,9 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Rules
 {
+    using System;
     using System.Collections.Generic;
+
+    using MoreDotNet.Wrappers;
 
     using OffByOne.Qls.Ast.Style.Properties.Base;
     using OffByOne.Qls.Ast.Style.Rules.Base;
@@ -15,6 +18,11 @@
             IEnumerable<Property> properties)
             : base(widget, properties)
         {
+            if (identifier.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("A non-null, non-empty identifier must be given.");
+            }
+
             this.Identifier = identifier;
         }
 

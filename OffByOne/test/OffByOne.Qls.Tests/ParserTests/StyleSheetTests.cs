@@ -70,7 +70,7 @@
             var castAstTree = (StyleSheet)astTree;
 
             Assert.Equal("taxOfficeExample", castAstTree.Id);
-            Assert.Equal(2, castAstTree.Pages.Count);
+            Assert.Equal(2, castAstTree.Pages.Count());
 
             var sectionsOnFirstPage = castAstTree
                 .Pages

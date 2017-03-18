@@ -1,5 +1,6 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Rules.Base
 {
+    using System;
     using System.Collections.Generic;
 
     using OffByOne.Ql.Ast;
