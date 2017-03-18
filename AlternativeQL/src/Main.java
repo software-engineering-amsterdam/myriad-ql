@@ -19,7 +19,5 @@ public class Main {
             System.out.println("Cannot load file: "  + e.getMessage());
             System.exit(1);
         }
-
-        System.exit(0);
     }
 }
