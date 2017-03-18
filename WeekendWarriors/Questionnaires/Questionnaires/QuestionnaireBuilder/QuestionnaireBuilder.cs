@@ -26,27 +26,38 @@ namespace Questionnaires.QuestionnaireBuilder
             var expressionEvaluator = new ExpressionEvaluator.Evaluator(variableStore);
             var ruleContainer = new RuleContainer.RuleContainer(variableStore, renderer, expressionEvaluator);
 
-            foreach (var question in Questions)
-            {
-                variableStore.AddQuestion(question);
-            }
+            AddQuestionsToQuestionStore(variableStore);
 
             renderer.RenderModel(DocumentModel);
-
-            foreach (var rule in Rules)
-            {
-                ruleContainer.AddRule(rule);
-            }
-
-            // Connect the runtime objects
-            variableStore.VariableChanged += (sender, args) =>
-            {
-                ruleContainer.ApplyRules();
-            };
+            AddRulesToRuleContainer(ruleContainer);            
+            ConntectRunTimeObjects(variableStore, ruleContainer);
 
             // Kick off initialization
             ruleContainer.ApplyRules();
         }
 
+        private static void ConntectRunTimeObjects(VariableStore variableStore, RuleContainer.RuleContainer ruleContainer)
+        {
+            variableStore.VariableChanged += (sender, args) =>
+            {
+                ruleContainer.ApplyRules();
+            };
+        }
+
+        private void AddRulesToRuleContainer(RuleContainer.RuleContainer ruleContainer)
+        {
+            foreach (var rule in Rules)
+            {
+                ruleContainer.AddRule(rule);
+            }
+        }
+
+        private void AddQuestionsToQuestionStore(VariableStore variableStore)
+        {
+            foreach (var question in Questions)
+            {
+                variableStore.AddQuestion(question);
+            }
+        }
     }
 }
