@@ -70,7 +70,7 @@ namespace Questionnaires.QL.AST
         public override INode VisitQuestion([NotNull] QLParser.QuestionContext context)
         {
             var identifier = context.Identifier().GetText();
-            var body = context.StringLiteral().GetText();
+            var body = RemoveDoubleQuotes(context.StringLiteral().GetText());
             var type = context.Type().GetText();
             IType parsedType;
 
@@ -227,6 +227,12 @@ namespace Questionnaires.QL.AST
         public override INode VisitParens([NotNull] QLParser.ParensContext context)
         {
             return context.expression().Accept(this);
+        }
+
+        private string RemoveDoubleQuotes(string unmodifiedString)
+        {
+            var modifiedString = unmodifiedString.Replace('\"', ' ');
+            return modifiedString;
         }
     }
 }
