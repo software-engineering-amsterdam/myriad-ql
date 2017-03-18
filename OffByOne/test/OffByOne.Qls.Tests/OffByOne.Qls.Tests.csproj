@@ -77,6 +77,12 @@
     <Compile Include="Ast\Style\Literals\HexLiteralTests.cs" />
     <Compile Include="Ast\Style\Literals\IntegerLiteralTests.cs" />
     <Compile Include="Ast\Style\Literals\StringLiteralTests.cs" />
+    <Compile Include="Ast\Style\Properties\ColorPropertyTests.cs" />
+    <Compile Include="Ast\Style\Properties\FontNamePropertyTests.cs" />
+    <Compile Include="Ast\Style\Properties\FontSizePropertyTests.cs" />
+    <Compile Include="Ast\Style\Properties\FontStylePropertyTests.cs" />
+    <Compile Include="Ast\Style\Properties\HeightPropertyTests.cs" />
+    <Compile Include="Ast\Style\Properties\WidthPropertyTests.cs" />
     <Compile Include="ParserTests\Base\ParserTest.cs" />
     <Compile Include="ParserTests\PageTests.cs" />
     <Compile Include="ParserTests\SectionTests.cs" />
@@ -103,6 +109,7 @@
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Ast\Style\Rules\" />
     <Folder Include="Checker\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
