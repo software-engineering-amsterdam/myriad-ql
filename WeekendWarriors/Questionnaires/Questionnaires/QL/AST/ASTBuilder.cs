@@ -174,12 +174,12 @@ namespace Questionnaires.QL.AST
 
         public INode VisitPositiveOperation(Number number)
         {
-            return new Number("+" + number.StringType);
+            return new Number("+" + number.ValueAsString);
         }
 
         public INode VisitPositiveOperation(Money money)
         {
-            return new Money("+" + money.StringType);
+            return new Money("+" + money.ValueAsString);
         }
 
         public INode VisitPositiveOperation(IExpression expression)
@@ -189,12 +189,12 @@ namespace Questionnaires.QL.AST
 
         public INode VisitNegativeOperation(Number number)
         {
-            return new Number("-" + number.StringType);
+            return new Number("-" + number.ValueAsString);
         }
 
         public INode VisitNegativeOperation(Money money)
         {
-            return new Money("-" + money.StringType);
+            return new Money("-" + money.ValueAsString);
         }
 
         public INode VisitNegativeOperation(IExpression expression)

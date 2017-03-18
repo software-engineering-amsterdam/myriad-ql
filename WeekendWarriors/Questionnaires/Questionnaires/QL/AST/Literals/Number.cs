@@ -8,15 +8,14 @@ namespace Questionnaires.QL.AST.Literals
 {
     public class Number : IExpression
     {
+        public string ValueAsString { get; }
+        public int Value { get { return int.Parse(ValueAsString); } }
+
         public Number(string value)
         {
-            StringType = value;
+            ValueAsString = value;
         }
-
-        public string StringType { get; }
-
-        public int Value { get { return int.Parse(StringType); } }
-
+        
         public bool CheckSemantics(QLContext context, List<Message> messages)
         {
             try
@@ -26,11 +25,11 @@ namespace Questionnaires.QL.AST.Literals
             }
             catch (FormatException)
             {
-                messages.Add(new Error(string.Format("Cannot convert literal {0} to number", StringType)));
+                messages.Add(new Error(string.Format("Cannot convert literal {0} to number", ValueAsString)));
             }
             catch (OverflowException)
             {
-                messages.Add(new Error(string.Format("Value {0} is too large for number variable", StringType)));
+                messages.Add(new Error(string.Format("Value {0} is too large for number variable", ValueAsString)));
             }
             return false;
         }

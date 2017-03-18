@@ -9,15 +9,14 @@ namespace Questionnaires.QL.AST.Literals
 {
     public class Money : IExpression
     {
-        public string StringType { get; }
+        public string ValueAsString { get; }
+        public decimal Value { get { return decimal.Parse(ValueAsString, NumberStyles.Any, CultureInfo.InvariantCulture); } }
 
         public Money(string value)
         {
-            StringType = value;
+            ValueAsString = value;
         }        
-
-        public decimal Value { get { return decimal.Parse(StringType, NumberStyles.Any, CultureInfo.InvariantCulture); } }
-
+        
         public bool CheckSemantics(QLContext context, List<Message> messages)
         {
             try
@@ -28,11 +27,11 @@ namespace Questionnaires.QL.AST.Literals
             }
             catch (FormatException)
             {
-                messages.Add(new Error(string.Format("Cannot convert literal {0} to money", StringType)));
+                messages.Add(new Error(string.Format("Cannot convert literal {0} to money", ValueAsString)));
             }
             catch (OverflowException)
             {
-                messages.Add(new Error(string.Format("Value {0} is too large for decimal variable", StringType)));
+                messages.Add(new Error(string.Format("Value {0} is too large for decimal variable", ValueAsString)));
             }
 
             return false;
