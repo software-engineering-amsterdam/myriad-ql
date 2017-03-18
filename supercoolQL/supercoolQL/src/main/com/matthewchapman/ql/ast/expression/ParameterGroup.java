@@ -1,8 +1,7 @@
 package com.matthewchapman.ql.ast.expression;
 
 import com.matthewchapman.ql.ast.Expression;
-import com.matthewchapman.ql.ast.QLVisitable;
-import com.matthewchapman.ql.validation.visitor.QLVisitor;
+import com.matthewchapman.ql.validation.visitor.QLExpressionVisitor;
 
 /**
  * Created by matt on 24/02/2017.
@@ -10,7 +9,7 @@ import com.matthewchapman.ql.validation.visitor.QLVisitor;
  * Contains multiple expressions to be evaluated in one block and return a single result
  */
 
-public class ParameterGroup extends Expression implements QLVisitable {
+public class ParameterGroup extends Expression {
 
     private final Expression expression;
 
@@ -28,7 +27,7 @@ public class ParameterGroup extends Expression implements QLVisitable {
     }
 
     @Override
-    public <T, C> T accept(QLVisitor<T, C> visitor, C context) {
+    public <T, C> T accept(QLExpressionVisitor<T, C> visitor, C context) {
         return visitor.visit(this, context);
     }
 }

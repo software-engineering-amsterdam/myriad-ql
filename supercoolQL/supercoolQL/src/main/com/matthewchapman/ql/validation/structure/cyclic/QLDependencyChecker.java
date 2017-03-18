@@ -2,7 +2,6 @@ package com.matthewchapman.ql.validation.structure.cyclic;
 
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.core.QLErrorLogger;
-import com.matthewchapman.ql.validation.visitor.AbstractQLVisitor;
 
 import java.util.HashSet;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.Set;
  *
  * Thanks to Theodore & Yoan for the basic algorithm for closure generation
  */
-public class QLDependencyChecker extends AbstractQLVisitor<Void, String> {
+public class QLDependencyChecker {
 
     private Set<QLDependencyPair> dependencies;
 

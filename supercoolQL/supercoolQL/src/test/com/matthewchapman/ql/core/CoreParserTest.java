@@ -2,10 +2,11 @@ package com.matthewchapman.ql.core;
 
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
+import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
-import com.matthewchapman.ql.validation.visitor.AbstractQLVisitor;
+import com.matthewchapman.ql.validation.visitor.QLStatementVisitor;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by matt on 02/03/2017.
  */
-public class CoreParserTest extends AbstractQLVisitor<Void, String> {
+public class CoreParserTest implements QLStatementVisitor<Void, String> {
 
     private final CoreParser parser = new CoreParser();
     private String testInput;
@@ -64,6 +65,11 @@ public class CoreParserTest extends AbstractQLVisitor<Void, String> {
     @Override
     public Void visit(IfElseStatement ifElseStatement, String context) {
         ++ifElseStatementCount;
+        return null;
+    }
+
+    @Override
+    public Void visit(CalculatedQuestion calculatedQuestion, String context) {
         return null;
     }
 }

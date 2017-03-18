@@ -1,15 +1,14 @@
 package com.matthewchapman.ql.ast.expression.binary;
 
 import com.matthewchapman.ql.ast.Expression;
-import com.matthewchapman.ql.ast.QLVisitable;
-import com.matthewchapman.ql.validation.visitor.QLVisitor;
+import com.matthewchapman.ql.validation.visitor.QLExpressionVisitor;
 
 /**
  * Created by matt on 24/02/2017.
  * <p>
  * Integer < class
  */
-public class LessThan extends BinaryOperation implements QLVisitable {
+public class LessThan extends BinaryOperation {
 
     public LessThan(Expression left, Expression right, int line, int charPositionInLine) {
         super(left, right);
@@ -23,7 +22,7 @@ public class LessThan extends BinaryOperation implements QLVisitable {
     }
 
     @Override
-    public <T, C> T accept(QLVisitor<T, C> visitor, C context) {
+    public <T, C> T accept(QLExpressionVisitor<T, C> visitor, C context) {
         return visitor.visit(this, context);
     }
 }

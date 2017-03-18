@@ -6,12 +6,17 @@ import com.matthewchapman.ql.ast.atomic.Type;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
+import com.matthewchapman.ql.ast.expression.literal.BooleanLiteral;
+import com.matthewchapman.ql.ast.expression.literal.IntegerLiteral;
+import com.matthewchapman.ql.ast.expression.literal.StringLiteral;
 import com.matthewchapman.ql.ast.expression.unary.Negation;
 import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
+import com.matthewchapman.ql.ast.statement.Question;
 import com.matthewchapman.ql.core.QLErrorLogger;
-import com.matthewchapman.ql.validation.visitor.AbstractQLVisitor;
+import com.matthewchapman.ql.validation.visitor.QLExpressionVisitor;
+import com.matthewchapman.ql.validation.visitor.QLStatementVisitor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +28,7 @@ import java.util.Map;
  * <p>
  * Exists to ensure that all expressions reference parameters correctly
  */
-public class QLExpressionChecker extends AbstractQLVisitor<Void, String> {
+public class QLExpressionChecker implements QLStatementVisitor<Void, String>, QLExpressionVisitor<Void, String> {
 
     private Map<String, Type> typeTable;
     private QLErrorLogger logger;
@@ -69,6 +74,11 @@ public class QLExpressionChecker extends AbstractQLVisitor<Void, String> {
     }
 
     @Override
+    public Void visit(Question question, String context) {
+        return null;
+    }
+
+    @Override
     public Void visit(IfStatement ifStatement, String context) {
 
         ifStatement.getCondition().accept(this, "If Condition");
@@ -85,6 +95,21 @@ public class QLExpressionChecker extends AbstractQLVisitor<Void, String> {
     @Override
     public Void visit(ParameterGroup parameterGroup, String context) {
         parameterGroup.getExpression().accept(this, context);
+        return null;
+    }
+
+    @Override
+    public Void visit(StringLiteral stringLiteral, String context) {
+        return null;
+    }
+
+    @Override
+    public Void visit(IntegerLiteral integerLiteral, String context) {
+        return null;
+    }
+
+    @Override
+    public Void visit(BooleanLiteral booleanLiteral, String context) {
         return null;
     }
 

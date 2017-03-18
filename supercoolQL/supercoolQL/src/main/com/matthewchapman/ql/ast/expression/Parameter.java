@@ -1,15 +1,14 @@
 package com.matthewchapman.ql.ast.expression;
 
 import com.matthewchapman.ql.ast.Expression;
-import com.matthewchapman.ql.ast.QLVisitable;
-import com.matthewchapman.ql.validation.visitor.QLVisitor;
+import com.matthewchapman.ql.validation.visitor.QLExpressionVisitor;
 
 /**
  * Created by matt on 24/02/2017.
  * Parameter class, for inserting Question return values into Expressions
  */
 
-public class Parameter extends Expression implements QLVisitable {
+public class Parameter extends Expression {
 
     private String id;
 
@@ -29,7 +28,7 @@ public class Parameter extends Expression implements QLVisitable {
     }
 
     @Override
-    public <T, C> T accept(QLVisitor<T, C> visitor, C context) {
+    public <T, C> T accept(QLExpressionVisitor<T, C> visitor, C context) {
         return visitor.visit(this, context);
     }
 }

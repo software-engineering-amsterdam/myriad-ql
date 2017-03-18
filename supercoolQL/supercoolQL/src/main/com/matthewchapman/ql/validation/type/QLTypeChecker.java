@@ -2,10 +2,7 @@ package com.matthewchapman.ql.validation.type;
 
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
-import com.matthewchapman.ql.ast.atomic.*;
-import com.matthewchapman.ql.ast.expression.literal.BooleanLiteral;
-import com.matthewchapman.ql.ast.expression.literal.IntegerLiteral;
-import com.matthewchapman.ql.ast.expression.literal.StringLiteral;
+import com.matthewchapman.ql.ast.atomic.Type;
 import com.matthewchapman.ql.ast.atomic.type.BooleanType;
 import com.matthewchapman.ql.ast.atomic.type.ErrorType;
 import com.matthewchapman.ql.ast.atomic.type.IntegerType;
@@ -13,12 +10,18 @@ import com.matthewchapman.ql.ast.atomic.type.StringType;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
+import com.matthewchapman.ql.ast.expression.literal.BooleanLiteral;
+import com.matthewchapman.ql.ast.expression.literal.IntegerLiteral;
+import com.matthewchapman.ql.ast.expression.literal.StringLiteral;
 import com.matthewchapman.ql.ast.expression.unary.Negation;
 import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
+import com.matthewchapman.ql.ast.statement.Question;
 import com.matthewchapman.ql.core.QLErrorLogger;
-import com.matthewchapman.ql.validation.visitor.AbstractQLVisitor;
+import com.matthewchapman.ql.validation.visitor.QLExpressionVisitor;
+import com.matthewchapman.ql.validation.visitor.QLStatementVisitor;
+import com.matthewchapman.ql.validation.visitor.QLTypeVisitor;
 
 import java.util.Map;
 
@@ -27,7 +30,7 @@ import java.util.Map;
  * <p>
  * Visitor to check expressions for validity (circular dependency, types, etc).
  */
-public class QLTypeChecker extends AbstractQLVisitor<Type, String> {
+public class QLTypeChecker implements QLStatementVisitor<Type, String>, QLExpressionVisitor<Type, String>, QLTypeVisitor<Type, String> {
 
     private Map<String, Type> typeTable;
     private QLErrorLogger logger;
@@ -71,6 +74,11 @@ public class QLTypeChecker extends AbstractQLVisitor<Type, String> {
         }
 
         return new BooleanType();
+    }
+
+    @Override
+    public Type visit(Question question, String context) {
+        return null;
     }
 
     @Override
