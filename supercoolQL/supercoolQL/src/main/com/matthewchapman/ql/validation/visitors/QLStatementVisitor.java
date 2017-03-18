@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.visitor;
+package com.matthewchapman.ql.validation.visitors;
 
 import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
