@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace Questionnaires.QLS.AST
 {
-    class ASTBuilder : QLSBaseVisitor<INode>
+    public class ASTBuilder : QLSBaseVisitor<INode>
     {
         private Compilation.Result Messages;
         private CSTBuilder CSTBuilder;

@@ -1,6 +1,6 @@
 ﻿namespace Questionnaires.QLS.AST
 {
-    interface INode
+    public interface INode
     {
     }
 }
