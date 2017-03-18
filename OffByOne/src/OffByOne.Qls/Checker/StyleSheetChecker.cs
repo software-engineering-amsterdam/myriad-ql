@@ -41,6 +41,16 @@
 
         public ICheckerReport Check(FormStatement structureNode, StyleSheet styleNode)
         {
+            if (structureNode == null)
+            {
+                throw new ArgumentNullException(nameof(structureNode));
+            }
+
+            if (styleNode == null)
+            {
+                throw new ArgumentNullException(nameof(styleNode));
+            }
+
             var collector = new QuestionCollector();
             collector.Collect(structureNode);
             var finalReport = new CheckerReport();

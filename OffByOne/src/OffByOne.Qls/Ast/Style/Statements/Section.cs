@@ -15,9 +15,9 @@
     {
         public Section(
             StringLiteral name,
-            IEnumerable<Section> sections,
-            IEnumerable<QuestionRule> questionRules,
-            IEnumerable<ValueTypeRule> valueTypeRules)
+            IEnumerable<Section> sections = null,
+            IEnumerable<QuestionRule> questionRules = null,
+            IEnumerable<ValueTypeRule> valueTypeRules = null)
         {
             if (name == null)
             {

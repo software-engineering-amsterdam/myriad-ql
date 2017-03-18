@@ -13,8 +13,8 @@
     {
         public Page(
             string id,
-            IEnumerable<Section> sections,
-            IEnumerable<ValueTypeRule> valueTypeRules)
+            IEnumerable<Section> sections = null,
+            IEnumerable<ValueTypeRule> valueTypeRules = null)
         {
             if (id.IsNullOrWhiteSpace())
             {

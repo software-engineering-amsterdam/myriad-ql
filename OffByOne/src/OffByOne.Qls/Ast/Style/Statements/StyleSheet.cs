@@ -12,7 +12,7 @@
     {
         public StyleSheet(
             string id,
-            IEnumerable<Page> pages)
+            IEnumerable<Page> pages = null)
         {
             if (id.IsNullOrWhiteSpace())
             {

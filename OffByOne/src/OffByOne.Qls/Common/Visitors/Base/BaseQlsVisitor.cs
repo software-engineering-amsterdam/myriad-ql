@@ -120,24 +120,24 @@
         public virtual TResult Visit(ValueTypeRule rule, TEnvironment environment)
         {
             rule.ValueType.Accept(this, environment);
-            rule.Properties.ForEach(x => x.Accept(this, environment));
-            rule.Widget.Accept(this, environment);
+            rule.Properties?.ForEach(x => x.Accept(this, environment));
+            rule.Widget?.Accept(this, environment);
             return default(TResult);
         }
 
         public virtual TResult Visit(Page statement, TEnvironment environment)
         {
-            statement.Sections.ForEach(x => x.Accept(this, environment));
-            statement.ValueTypeRules.ForEach(x => x.Accept(this, environment));
+            statement.Sections?.ForEach(x => x.Accept(this, environment));
+            statement.ValueTypeRules?.ForEach(x => x.Accept(this, environment));
             return default(TResult);
         }
 
         public virtual TResult Visit(Section statement, TEnvironment environment)
         {
             statement.Name.Accept(this, environment);
-            statement.Sections.ForEach(x => x.Accept(this, environment));
-            statement.QuestionRules.ForEach(x => x.Accept(this, environment));
-            statement.ValueTypeRules.ForEach(x => x.Accept(this, environment));
+            statement.Sections?.ForEach(x => x.Accept(this, environment));
+            statement.QuestionRules?.ForEach(x => x.Accept(this, environment));
+            statement.ValueTypeRules?.ForEach(x => x.Accept(this, environment));
             return default(TResult);
         }
 

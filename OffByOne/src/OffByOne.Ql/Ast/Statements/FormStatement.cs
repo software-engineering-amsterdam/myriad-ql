@@ -7,7 +7,9 @@
 
     public class FormStatement : Statement
     {
-        public FormStatement(string identifier, IEnumerable<Statement> statements)
+        public FormStatement(
+            string identifier,
+            IEnumerable<Statement> statements = null)
         {
             this.Identifier = identifier;
             this.Statements = statements;

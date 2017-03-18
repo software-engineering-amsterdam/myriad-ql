@@ -64,8 +64,9 @@
             {
                 typeof(SpinboxWidget), new List<ValueType>
                 {
-                    new StringValueType(),
-                    new BooleanValueType()
+                    new IntegerValueType(),
+                    new MoneyValueType(),
+                    new DecimalValueType()
                 }
             }
         };
@@ -77,6 +78,11 @@
 
         public TypeAnalyzer(ICheckerReport report)
         {
+            if (report == null)
+            {
+                throw new ArgumentNullException(nameof(report));
+            }
+
             this.Report = report;
         }
 
@@ -90,12 +96,28 @@
 
         public void Analyze(StyleSheet root, IDictionary<string, ValueType> questionMappings)
         {
+            if (root == null)
+            {
+                throw new ArgumentNullException(nameof(root));
+            }
+
+            if (questionMappings == null)
+            {
+                throw new ArgumentNullException(nameof(questionMappings));
+            }
+
             this.qlQuestionMappings = questionMappings;
             this.Visit(root, new TypeAnalyzerEnvironment());
         }
 
         public override object Visit(QuestionRule rule, TypeAnalyzerEnvironment environment)
         {
+            if (!this.qlQuestionMappings.ContainsKey(rule.Identifier))
+            {
+                this.Report.Add(new UndeclaredQuestionMessage(rule.Identifier));
+                return base.Visit(rule, environment);
+            }
+
             var questionType = this.qlQuestionMappings[rule.Identifier];
             this.CheckWidgetTyping(rule.Widget, questionType);
 
