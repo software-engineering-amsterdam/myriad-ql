@@ -57,11 +57,8 @@ public class QuestionCollection implements QLStatementVisitor<Void, String> {
             }
         }
 
-        if (logger.getErrorNumber() > 0) {
-            return true;
-        }
+        return logger.getErrorNumber() > 0;
 
-        return false;
     }
 
     @Override

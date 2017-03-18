@@ -10,7 +10,7 @@ import com.matthewchapman.ql.visitor.QLExpressionVisitor;
 
 public class Parameter extends Expression {
 
-    private String id;
+    private final String id;
 
     public Parameter(String s, int line, int column) {
         this.id = s;

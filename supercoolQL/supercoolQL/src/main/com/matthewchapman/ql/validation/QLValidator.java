@@ -15,8 +15,8 @@ import com.matthewchapman.ql.validation.type.QLTypeChecker;
  */
 public class QLValidator {
 
-    public static final String INTERPRETER_ERROR_TITLE = "Interpreter Errors Found";
-    public static final String INTERPRETER_ERROR_BODY = "QL encountered an interpreter error";
+    private static final String INTERPRETER_ERROR_TITLE = "Interpreter Errors Found";
+    private static final String INTERPRETER_ERROR_BODY = "QL encountered an interpreter error";
     private final QuestionCollection questionCollection;
     private final QLTypeChecker qlTypeChecker;
     private final QLDependencyChecker qlDependencyChecker;

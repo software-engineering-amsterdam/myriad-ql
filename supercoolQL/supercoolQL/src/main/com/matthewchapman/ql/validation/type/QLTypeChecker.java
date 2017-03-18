@@ -33,7 +33,7 @@ import java.util.Map;
 public class QLTypeChecker implements QLStatementVisitor<Type, String>, QLExpressionVisitor<Type, String>, QLTypeVisitor<Type, String> {
 
     private Map<String, Type> typeTable;
-    private QLErrorLogger logger;
+    private final QLErrorLogger logger;
     private static final String INCOMPATIBLE_TYPE = "Incompatible parameter type in use";
     private static final String NON_BOOLEAN = "Non-boolean parameter in use";
     private static final String BOOLEAN = "boolean";

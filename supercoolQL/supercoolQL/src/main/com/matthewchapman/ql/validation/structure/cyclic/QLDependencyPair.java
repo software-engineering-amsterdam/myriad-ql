@@ -5,10 +5,10 @@ import java.util.Objects;
 /**
  * Created by matt on 16/03/2017.
  */
-public class QLDependencyPair {
+class QLDependencyPair {
 
-    private String start;
-    private String end;
+    private final String start;
+    private final String end;
 
     public QLDependencyPair(String start, String end) {
         this.start = start;

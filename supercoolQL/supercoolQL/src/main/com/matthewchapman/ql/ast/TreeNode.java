@@ -12,7 +12,7 @@ public abstract class TreeNode {
     private int line;
     private int column;
 
-    protected int getLine() {
+    int getLine() {
         return this.line;
     }
 
@@ -20,7 +20,7 @@ public abstract class TreeNode {
         this.line = line;
     }
 
-    protected int getColumn() {
+    int getColumn() {
         return this.column;
     }
 
