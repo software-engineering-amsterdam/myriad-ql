@@ -2,6 +2,7 @@
 {
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Common;
+    using OffByOne.Ql.Common.Observers.Conracts;
     using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Values.Contracts;
 

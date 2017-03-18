@@ -8,11 +8,11 @@
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.Statements.Base;
     using OffByOne.Ql.Ast.ValueTypes;
+    using OffByOne.Ql.Common.Visitors.Contracts;
     using OffByOne.Ql.Interpreter.Validators;
     using OffByOne.Ql.Interpreter.Widgets;
     using OffByOne.Ql.Interpreter.Widgets.Base;
     using OffByOne.Ql.Values;
-    using OffByOne.Ql.Visitors.Contracts;
 
     public class Interpreter
         : IStatementVisitor<Widget, GuiEnvironment>

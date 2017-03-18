@@ -1,6 +1,6 @@
 ﻿namespace OffByOne.Qls.Visitors.Contracts
 {
-    using OffByOne.Ql.Visitors.Contracts;
+    using OffByOne.Ql.Common.Visitors.Contracts;
 
     public interface IVisitableProperty : IVisitable
     {

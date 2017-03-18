@@ -6,7 +6,7 @@
     using MoreDotNet.Extensions.Collections;
     using MoreDotNet.Wrappers;
 
-    using OffByOne.Ql.Visitors.Contracts;
+    using OffByOne.Ql.Common.Visitors.Contracts;
 
     using ValueType = OffByOne.Ql.Ast.ValueTypes.Base.ValueType;
 

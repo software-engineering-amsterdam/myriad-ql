@@ -1,6 +1,6 @@
 ﻿namespace OffByOne.Qls.Visitors.Contracts
 {
-    using OffByOne.Ql.Visitors.Contracts;
+    using OffByOne.Ql.Common.Visitors.Contracts;
     using OffByOne.Qls.Ast.Style.Properties;
 
     public interface IPropertyVisitor<out TResult, in TEnvironment> : IVisitor

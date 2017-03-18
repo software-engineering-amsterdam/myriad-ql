@@ -1,7 +1,7 @@
 ﻿namespace OffByOne.Ql.Ast.Expressions.Unary
 {
     using OffByOne.Ql.Ast.Expressions.Unary.Base;
-    using OffByOne.Ql.Visitors.Contracts;
+    using OffByOne.Ql.Common.Visitors.Contracts;
 
     public class NegativeExpression : UnaryExpression
     {

@@ -4,7 +4,7 @@
 
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Statements.Base;
-    using OffByOne.Ql.Visitors.Contracts;
+    using OffByOne.Ql.Common.Visitors.Contracts;
 
     public class IfStatement : Statement
     {

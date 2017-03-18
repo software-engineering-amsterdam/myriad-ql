@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Ql.Common
+﻿namespace OffByOne.Ql.Common.Observers.Conracts
 {
     public interface IObservable<T>
     {

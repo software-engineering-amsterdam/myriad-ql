@@ -11,7 +11,7 @@
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.Statements.Base;
     using OffByOne.Ql.Checker.Analyzers.Environment;
-    using OffByOne.Ql.Visitors.Base;
+    using OffByOne.Ql.Common.Visitors.Base;
 
     public class DependencyCollector : BaseQlVisitor<object, VisitorTypeEnvironment>
     {

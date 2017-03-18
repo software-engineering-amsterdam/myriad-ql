@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Ql.Visitors.Contracts
+﻿namespace OffByOne.Ql.Common.Visitors.Contracts
 {
     using OffByOne.Ql.Ast.ValueTypes.Base;
 

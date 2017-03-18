@@ -3,8 +3,8 @@
     using System;
 
     using OffByOne.Ql.Ast.Literals.Base;
+    using OffByOne.Ql.Common.Visitors.Contracts;
     using OffByOne.Ql.Values;
-    using OffByOne.Ql.Visitors.Contracts;
 
     public class MoneyLiteral : Literal
     {

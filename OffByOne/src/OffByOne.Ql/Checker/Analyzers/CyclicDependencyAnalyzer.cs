@@ -15,7 +15,7 @@
     using OffByOne.Ql.Checker.Collectors;
     using OffByOne.Ql.Checker.Contracts;
     using OffByOne.Ql.Checker.Messages;
-    using OffByOne.Ql.Visitors.Base;
+    using OffByOne.Ql.Common.Visitors.Base;
 
     public class CyclicDependencyAnalyzer : BaseQlVisitor<object, QuestionVisitorTypeEnvironment>, IAnalyzer
     {

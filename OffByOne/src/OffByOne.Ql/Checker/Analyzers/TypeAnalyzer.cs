@@ -20,7 +20,7 @@
     using OffByOne.Ql.Checker.Analyzers.Environment;
     using OffByOne.Ql.Checker.Contracts;
     using OffByOne.Ql.Checker.Messages;
-    using OffByOne.Ql.Visitors.Contracts;
+    using OffByOne.Ql.Common.Visitors.Contracts;
 
     using ValueType = OffByOne.Ql.Ast.ValueTypes.Base.ValueType;
 

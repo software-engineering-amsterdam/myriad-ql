@@ -7,7 +7,7 @@
     using OffByOne.Ql.Checker.Analyzers.Environment;
     using OffByOne.Ql.Checker.Contracts;
     using OffByOne.Ql.Checker.Messages;
-    using OffByOne.Ql.Visitors.Base;
+    using OffByOne.Ql.Common.Visitors.Base;
 
     public class QuestionAnalyzer : BaseQlVisitor<object, QuestionVisitorTypeEnvironment>, IAnalyzer
     {

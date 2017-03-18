@@ -3,7 +3,7 @@
     using MoreDotNet.Extensions.Collections;
 
     using OffByOne.Ql.Ast.ValueTypes;
-    using OffByOne.Ql.Visitors.Contracts;
+    using OffByOne.Ql.Common.Visitors.Contracts;
     using OffByOne.Qls.Ast.Style.Literals;
     using OffByOne.Qls.Ast.Style.Properties;
     using OffByOne.Qls.Ast.Style.Rules;

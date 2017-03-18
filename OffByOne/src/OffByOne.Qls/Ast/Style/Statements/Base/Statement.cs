@@ -1,7 +1,7 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Statements.Base
 {
     using OffByOne.Ql.Ast;
-    using OffByOne.Ql.Visitors.Contracts;
+    using OffByOne.Ql.Common.Visitors.Contracts;
 
     using IVisitableStatement = OffByOne.Qls.Visitors.Contracts.IVisitableStatement;
 

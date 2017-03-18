@@ -5,6 +5,7 @@
     using System.Windows.Controls;
 
     using OffByOne.Ql.Common;
+    using OffByOne.Ql.Common.Observers.Conracts;
 
     public abstract class Widget : IObserver<AnswerInput>
     {

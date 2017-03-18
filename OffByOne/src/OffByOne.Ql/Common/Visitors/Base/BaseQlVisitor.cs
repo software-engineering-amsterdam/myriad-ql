@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Ql.Visitors.Base
+﻿namespace OffByOne.Ql.Common.Visitors.Base
 {
     using MoreDotNet.Extensions.Collections;
 
@@ -13,7 +13,7 @@
     using OffByOne.Ql.Ast.ValueTypes;
     using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Ql.Checker.Analyzers.Environment;
-    using OffByOne.Ql.Visitors.Contracts;
+    using OffByOne.Ql.Common.Visitors.Contracts;
 
     public class BaseQlVisitor<TResult, TEnvironment>
         : IValueTypeVisitor<TResult, TEnvironment>,

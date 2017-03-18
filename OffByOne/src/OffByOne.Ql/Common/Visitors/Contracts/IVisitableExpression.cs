@@ -1,4 +1,4 @@
-﻿namespace OffByOne.Ql.Visitors.Contracts
+﻿namespace OffByOne.Ql.Common.Visitors.Contracts
 {
     public interface IVisitableExpression : IVisitable
     {

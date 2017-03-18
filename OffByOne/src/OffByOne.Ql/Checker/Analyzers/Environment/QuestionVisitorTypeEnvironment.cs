@@ -5,7 +5,7 @@
 
     using MoreDotNet.Wrappers;
 
-    using OffByOne.Ql.Visitors.Contracts;
+    using OffByOne.Ql.Common.Visitors.Contracts;
 
     public class QuestionVisitorTypeEnvironment : IEnvironment
     {

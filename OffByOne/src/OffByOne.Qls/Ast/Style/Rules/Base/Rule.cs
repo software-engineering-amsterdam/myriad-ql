@@ -3,7 +3,7 @@
     using System.Collections.Generic;
 
     using OffByOne.Ql.Ast;
-    using OffByOne.Ql.Visitors.Contracts;
+    using OffByOne.Ql.Common.Visitors.Contracts;
     using OffByOne.Qls.Ast.Style.Properties.Base;
     using OffByOne.Qls.Ast.Style.Widgets.Base;
     using OffByOne.Qls.Visitors.Contracts;

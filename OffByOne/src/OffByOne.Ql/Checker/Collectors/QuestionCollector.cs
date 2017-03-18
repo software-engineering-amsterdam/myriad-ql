@@ -5,7 +5,7 @@
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Ql.Checker.Analyzers.Environment;
-    using OffByOne.Ql.Visitors.Base;
+    using OffByOne.Ql.Common.Visitors.Base;
 
     public class QuestionCollector : BaseQlVisitor<object, QuestionVisitorTypeEnvironment>
     {

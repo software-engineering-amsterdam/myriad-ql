@@ -6,7 +6,7 @@
     using OffByOne.Ql.Ast.Literals;
     using OffByOne.Ql.Ast.Statements.Base;
     using OffByOne.Ql.Ast.ValueTypes.Base;
-    using OffByOne.Ql.Visitors.Contracts;
+    using OffByOne.Ql.Common.Visitors.Contracts;
 
     public class QuestionStatement : Statement
     {

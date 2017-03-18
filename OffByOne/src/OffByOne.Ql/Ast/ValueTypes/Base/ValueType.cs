@@ -2,7 +2,7 @@
 {
     using System;
 
-    using OffByOne.Ql.Visitors.Contracts;
+    using OffByOne.Ql.Common.Visitors.Contracts;
 
     public abstract class ValueType : AstNode, IVisitableValueType, IEquatable<ValueType>
     {

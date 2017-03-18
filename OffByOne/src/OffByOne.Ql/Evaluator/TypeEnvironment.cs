@@ -7,8 +7,8 @@
     using MoreDotNet.Wrappers;
 
     using OffByOne.Ql.Ast.Expressions;
+    using OffByOne.Ql.Common.Visitors.Contracts;
     using OffByOne.Ql.Values.Contracts;
-    using OffByOne.Ql.Visitors.Contracts;
 
     public class TypeEnvironment : IEnvironment
     {
