@@ -209,7 +209,7 @@ namespace Questionnaires.QL.AST
 
         public override INode VisitBool([NotNull] QLParser.BoolContext context)
         {
-            System.Diagnostics.Debug.Assert(context.GetText() == "true" || context.GetText() == "false");
+            Debug.Assert(context.GetText() == "true" || context.GetText() == "false");
             return new Literals.Boolean(context.GetText() == "true");
         }
 

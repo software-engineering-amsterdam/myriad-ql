@@ -147,7 +147,6 @@ namespace Questionnaires.QLS.AST
                 case "checkbox": return new Widgets.CheckBox();
                 case "dropdown": return new Widgets.DropDown();
             }
-            Debug.Assert(false);
             throw new InvalidProgramException();
         }
 
