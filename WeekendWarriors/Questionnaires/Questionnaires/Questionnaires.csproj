@@ -132,7 +132,7 @@
     <Compile Include="QL\AST\Operators\Bang.cs" />
     <Compile Include="QL\AST\Operators\Negative.cs" />
     <Compile Include="QL\AST\Operators\Positive.cs" />
-    <Compile Include="QL\ExpressionEvaluator\Evaluator.cs" />
+    <Compile Include="ExpressionEvaluator\Evaluator.cs" />
     <Compile Include="QL\Processing\Processor.cs" />
     <Compile Include="QuestionnaireBuilder\QuestionnaireBuilder.cs" />
     <Compile Include="Renderer\Containers\Container.cs" />
@@ -151,7 +151,7 @@
     <Compile Include="Renderer\Widgets\RadioWidget.cs" />
     <Compile Include="Renderer\Widgets\SliderWidget.cs" />
     <Compile Include="Renderer\Widgets\TextBoxWidget.cs" />
-    <Compile Include="RuleContainer\RuleContainer.cs" />
+    <Compile Include="RunTime\RuleContainer.cs" />
     <Compile Include="QL\SemanticAnalysis\QLContext.cs" />
     <Compile Include="QL\SemanticAnalysis\DeclarationValidator.cs" />
     <Compile Include="Compilation\Result.cs" />
@@ -236,7 +236,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="RuleContainer\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>java org.antlr.v4.Tool -visitor -Dlanguage=CSharp "$(ProjectDir)\QL\Grammar\QL.g4" -o "$(ProjectDir)\QL\Generated"

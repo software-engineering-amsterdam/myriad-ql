@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Questionnaires.RunTime;
 using Questionnaires.Renderer.Containers;
+using RunTime.RuleContainer;
 
 namespace Questionnaires.QuestionnaireBuilder
 {
@@ -24,30 +25,21 @@ namespace Questionnaires.QuestionnaireBuilder
             var questionStore = new QuestionStore(Questions);
             var renderer = new Renderer.Renderer();
             var expressionEvaluator = new ExpressionEvaluator.Evaluator(questionStore);
-            var ruleContainer = new RuleContainer.RuleContainer(questionStore, renderer, expressionEvaluator);
+            var ruleContainer = new RuleContainer(expressionEvaluator, Rules);
 
-            renderer.RenderModel(DocumentModel);
-            AddRulesToRuleContainer(ruleContainer);            
+            renderer.RenderModel(DocumentModel);         
             ConntectRunTimeObjects(questionStore, ruleContainer);
 
             // Kick off initialization
             ruleContainer.ApplyRules();
         }
 
-        private static void ConntectRunTimeObjects(QuestionStore questionStore, RuleContainer.RuleContainer ruleContainer)
+        private static void ConntectRunTimeObjects(QuestionStore questionStore, RuleContainer ruleContainer)
         {
             questionStore.VariableChanged += (sender, args) =>
             {
                 ruleContainer.ApplyRules();
             };
-        }
-
-        private void AddRulesToRuleContainer(RuleContainer.RuleContainer ruleContainer)
-        {
-            foreach (var rule in Rules)
-            {
-                ruleContainer.AddRule(rule);
-            }
         }
     }
 }
