@@ -12,6 +12,7 @@ from PyQt5.QtWidgets import QWidget
 from pql.environment.environmentcreator import EnvironmentCreator
 from pql.evaluator.evaluator import Evaluator
 from pql.gui.Wizard import Wizard, Page
+from pql.gui.widgets import IntegerInput, MoneyInput, BooleanInput, StringInput
 from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.TypeVisitor import TypeVisitor
 
@@ -116,35 +117,30 @@ class Questionnaire(FormVisitor, TypeVisitor):
         return self.create_container(node, (node.expression is None), parent)
 
     def money(self, node):
-        widget = self.numeric(float, QDoubleSpinBox)
-        widget.setDecimals(2)
-        widget.setMaximum(10**10)
-        widget.setMinimum(-(10**10))
-        widget.setPrefix("\u20ac")
+        widget = self.numeric(float, MoneyInput)
         return widget
 
     def integer(self, node):
-        widget = self.numeric(int, QSpinBox)
+        widget = self.numeric(int, IntegerInput)
         return widget
 
     def boolean(self, node):
-        widget = QCheckBox()
-        self.connect_triggers(widget, widget.stateChanged, bool, widget.setChecked)
+        widget = BooleanInput()
+        self.connect_triggers(widget, widget.stateChanged, bool)
         return widget
 
     def string(self, node):
-        widget = QLineEdit()
-        self.connect_triggers(widget, widget.textChanged, str, widget.setText)
+        widget = StringInput()
+        self.connect_triggers(widget, widget.textChanged, str)
         return widget
 
-    def connect_triggers(self, widget, trigger_event, type_conversion, update_method):
+    def connect_triggers(self, widget, trigger_event, type_conversion):
         trigger_event.connect(lambda value: self.update(widget.objectName(), type_conversion(value)))
-        widget.update = update_method
         self.connect_conditionals(trigger_event)
 
     def numeric(self, value_type, widget_type):
         widget = widget_type()
-        self.connect_triggers(widget, widget.valueChanged[value_type], value_type, widget.setValue)
+        self.connect_triggers(widget, widget.valueChanged[value_type], value_type)
         return widget
 
     def connect_conditionals(self, signal):
@@ -162,4 +158,4 @@ class Questionnaire(FormVisitor, TypeVisitor):
     def update_values_in_ui(self, environment):
         for key, value in environment.items():
             widget = self.wizard.findChild(QWidget, key)
-            widget.update(value)
+            widget.set_value(value)
