@@ -1,6 +1,6 @@
 ﻿namespace Questionnaires.Compilation
 {
-    class Error : Message
+    public class Error : Message
     {
         public Error(string message) : base("Error: " + message)
         {

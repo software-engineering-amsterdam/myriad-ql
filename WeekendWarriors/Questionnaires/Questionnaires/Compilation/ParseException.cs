@@ -2,7 +2,7 @@
 
 namespace Questionnaires.Compilation
 {
-    class ParseException : Exception
+    public class ParseException : Exception
     {
     }
 }

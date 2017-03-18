@@ -27,7 +27,7 @@ namespace Questionnaires.QLS.Processing
         {
             foreach (var page in styleSheet.Pages)
             {
-                DocumentModel.Pages.Add(Visit((dynamic)page));
+                DocumentModel.AddPage(Visit((dynamic)page));
             }
         }
 
