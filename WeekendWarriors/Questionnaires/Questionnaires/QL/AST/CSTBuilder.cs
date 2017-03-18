@@ -13,19 +13,19 @@ namespace Questionnaires.QL.AST
 
         public QLParser.FormContext BuildForm(string input)
         {
-            QLParser parser = CreateParser(input);
+            var parser = CreateParser(input);
             return parser.form();
         }
 
         public QLParser.ExpressionContext BuildExpression(string input)
         {
-            QLParser parser = CreateParser(input);
+            var parser = CreateParser(input);
             return parser.expression();
         }
 
         public QLParser.ComputedQuestionContext BuildComputedQuestion(string input)
         {
-            QLParser parser = CreateParser(input);
+            var parser = CreateParser(input);
             return parser.computedQuestion();
         }
 
