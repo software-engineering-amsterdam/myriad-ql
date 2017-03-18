@@ -37,3 +37,42 @@ class TestEnvironmentCreator(Shared):
 
         environemnt = self.acquire_environment(form_node)
         self.assertEqual(environemnt['valueResidue'], False, 'valueResidue should be in environment')
+
+    def test_parse_field_boolean_assign(self):
+        input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: boolean = true
+        }
+        """
+        form_node = self.acquire_ast(input_string)
+
+        environemnt = self.acquire_environment(form_node)
+        self.assertEqual(environemnt['valueResidue'], False, 'valueResidue should be in environment')
+
+    def test_parse_field_in_if_boolean_default(self):
+        input_string = """
+        form taxOfficeExample {
+            if(test){
+            "Value residue:" valueResidue: boolean
+            }
+        }
+        """
+        form_node = self.acquire_ast(input_string)
+
+        environemnt = self.acquire_environment(form_node)
+        self.assertEqual(environemnt['valueResidue'], False, 'valueResidue should be in environment')
+
+    def test_parse_field_in_if_else_boolean_default(self):
+        input_string = """
+        form taxOfficeExample {
+            if(test){
+             "Value:" value: boolean
+            } else {
+            "Value residue:" valueResidue: boolean
+            }
+        }
+        """
+        form_node = self.acquire_ast(input_string)
+
+        environemnt = self.acquire_environment(form_node)
+        self.assertEqual(environemnt['valueResidue'], False, 'valueResidue should be in environment')

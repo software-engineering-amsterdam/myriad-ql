@@ -44,8 +44,6 @@ class DependenciesChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisito
         self.conditional(local_properties.copy(), node.statements)
 
     def conditional(self, local_properties, statements):
-        if local_properties is None:
-            local_properties = dict()
         for statement in statements:
             result = statement.apply(self, local_properties)
             if result is not None:
