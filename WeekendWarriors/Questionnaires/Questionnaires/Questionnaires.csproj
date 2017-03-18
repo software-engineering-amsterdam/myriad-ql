@@ -113,6 +113,7 @@
     <Compile Include="QLS\Generated\QLSVisitor.cs" />
     <Compile Include="QLS\Processing\Processor.cs" />
     <Compile Include="QLS\SemanticAnalysis\Analyzer.cs" />
+    <Compile Include="QLS\SemanticAnalysis\PlacementChecker.cs" />
     <Compile Include="QL\AST\CSTBuilder.cs" />
     <Compile Include="QL\AST\IStatement.cs" />
     <Compile Include="QL\AST\Operators\Addition.cs" />
