@@ -4,6 +4,16 @@ from tests.shared import Shared
 
 
 class TestIdentifierChecker(Shared):
+    def test_single_field(self):
+        input_string = """
+        form taxOfficeExample {
+            "Did you sell a house in 2010?" hasSoldHouse: boolean
+        }
+        """
+        form_node = self.acquire_ast(input_string)
+        errors = self.acquire_identifiers(form_node)
+        self.assertEqual(len(errors), 0, "There should be no errors")
+
     def test_duplicate_field(self):
         input_string = """
         form taxOfficeExample {
