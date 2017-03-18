@@ -13,11 +13,7 @@ namespace Questionnaires.QLS.AST
 
         public QLSParser.StylesheetContext BuildStyleSheet(string input)
         {
-            var inputStream = new AntlrInputStream(input);
-            var lexer = new QLSLexer(inputStream);
-            var tokens = new CommonTokenStream(lexer);
-            var parser = new QLSParser(tokens);
-            AddErrorListener(parser);
+            var parser = CreateParser(input);
             return parser.stylesheet();
         }
 
@@ -25,6 +21,16 @@ namespace Questionnaires.QLS.AST
         {
             parser.RemoveErrorListeners();
             parser.AddErrorListener(new AntlrErrorListener(Messages));
+        }
+
+        private QLSParser CreateParser(string input)
+        {
+            var inputStream = new AntlrInputStream(input);
+            var lexer = new QLSLexer(inputStream);
+            var tokens = new CommonTokenStream(lexer);
+            var parser = new QLSParser(tokens);
+            AddErrorListener(parser);
+            return parser;
         }
     }
 }
