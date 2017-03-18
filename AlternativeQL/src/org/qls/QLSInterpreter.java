@@ -17,25 +17,19 @@ import java.io.IOException;
 
 public class QLSInterpreter {
     private final QLASTBuilder qlAstBuilder = new QLASTBuilder();
-    private final QLTypeChecker qlTypeChecker = new QLTypeChecker();
     private final QLSASTBuilder qlsAstBuilder = new QLSASTBuilder();
     private final QLSTypeChecker qlsTypeChecker = new QLSTypeChecker();
 
     public void interpret(QLFile qlFileLocation, QLSFile qlsFileLocation) throws IOException {
+        Form form = qlAstBuilder.buildAST(qlFileLocation.openStream());
+        StyleSheet styleSheet = qlsAstBuilder.buildAST(qlsFileLocation.openStream());
 
-        Form formAST = qlAstBuilder.buildAST(qlFileLocation.openStream());
-        StyleSheet styleSheetAST = qlsAstBuilder.buildAST(qlsFileLocation.openStream());
-        SymbolTable symbolTable = new SymbolTable();
+        IssuesStorage issues  = qlsTypeChecker.checkStyleSheet(form, styleSheet);
+        checkErrors(issues);
 
-        IssuesStorage qlIssues = qlTypeChecker.checkForm(formAST, symbolTable);
-        checkErrors(qlIssues);
+        issues.getWarnings().forEach(this::printIssue);
 
-        IssuesStorage qlsIssues  = qlsTypeChecker.checkStyleSheet(styleSheetAST, symbolTable);
-        checkErrors(qlsIssues);
-
-        qlIssues.getWarnings().forEach(this::printIssue);
-
-        QLApplication.run(formAST);
+        QLApplication.run(form);
     }
 
     private void checkErrors(IssuesStorage issues) {

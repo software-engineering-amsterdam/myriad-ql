@@ -5,12 +5,23 @@ stylesheet
     ;
 
 page
-    :   'page' id=identifier '{' (section | defaultWidget)* '}'
+    :   'page' id=identifier '{' pageItem* '}'
+    ;
+
+pageItem
+    :   section         #pageSection
+    |   defaultWidget   #pageDefaultWidget
     ;
 
 section
-    :   'section' name=STRING_LITERAL '{' (question | section | defaultWidget)* '}'
-    |   'section' name=STRING_LITERAL (question | section | defaultWidget)
+    :   'section' name=STRING_LITERAL '{' sectionItem* '}'
+    |   'section' name=STRING_LITERAL sectionItem
+    ;
+
+sectionItem
+    :   question        #sectionQuestion
+    |   section         #sectionNested
+    |   defaultWidget   #sectionDefaultWidget
     ;
 
 question

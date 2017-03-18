@@ -21,6 +21,8 @@ import org.ql.grammar.QLLexer;
 import org.ql.grammar.QLParser;
 import org.ql.grammar.QLVisitor;
 
+import static org.util.ast.SourceLocationHydrator.*;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -45,10 +47,7 @@ public class QLASTBuilder extends AbstractParseTreeVisitor<Node> implements QLVi
             statements.add((Statement) visit(statementContext));
         }
 
-        Form form = new Form((Identifier) visit(ctx.id), statements);
-        form.setSourceLocation(extractSourceLocation(ctx));
-
-        return form;
+        return hydrateSourceLocation(new Form((Identifier) visit(ctx.id), statements), ctx);
     }
 
     @Override

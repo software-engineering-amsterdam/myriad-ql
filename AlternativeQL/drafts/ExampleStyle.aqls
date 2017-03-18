@@ -1,8 +1,9 @@
 stylesheet taxOfficeExample
+
 page Housing {
-section "Buying"
-  question firstName
-    widget string
-section "Loaning"
-  question lastName
+    section "Buying"
+      question firstName
+        widget string
+    section "Loaning"
+      question lastName
 }

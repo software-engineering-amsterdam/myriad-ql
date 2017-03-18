@@ -22,6 +22,8 @@ import org.qls.grammar.QLSLexer;
 import org.qls.grammar.QLSParser;
 import org.qls.grammar.QLSVisitor;
 
+import static org.util.ast.SourceLocationHydrator.*;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -44,15 +46,33 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
             pages.add((Page) visit(pageContext));
         }
 
-        return new StyleSheet((Identifier) visit(ctx.identifier()), pages);
+        return hydrateSourceLocation(new StyleSheet((Identifier) visit(ctx.identifier()), pages), ctx);
     }
 
     @Override
     public Node visitPage(QLSParser.PageContext ctx) {
-        List<Section> sections = getSections(ctx.section());
-        List<DefaultWidget> defaultWidgets = getDefaultWidgets(ctx.defaultWidget());
+        List<PageItem> pageItems = visitPageItems(ctx);
+        Identifier identifier = (Identifier) visit(ctx.identifier());
 
-        return new Page((Identifier) visit(ctx.identifier()), sections, defaultWidgets);
+        return new Page(identifier, pageItems);
+    }
+
+    private List<PageItem> visitPageItems(QLSParser.PageContext ctx) {
+        List<PageItem> pageItems = new ArrayList<>();
+        for (QLSParser.PageItemContext pageItem : ctx.pageItem()) {
+            pageItems.add((PageItem) visit(pageItem));
+        }
+        return pageItems;
+    }
+
+    @Override
+    public Node visitPageSection(QLSParser.PageSectionContext ctx) {
+        return visit(ctx.section());
+    }
+
+    @Override
+    public Node visitPageDefaultWidget(QLSParser.PageDefaultWidgetContext ctx) {
+        return visit(ctx.defaultWidget());
     }
 
     @Override
@@ -62,6 +82,21 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
         List<Question> questions = getQuestions(ctx.question());
 
         return new Section(ctx.name.getText(), questions, sections, defaultWidgets);
+    }
+
+    @Override
+    public Node visitSectionQuestion(QLSParser.SectionQuestionContext ctx) {
+        return null;
+    }
+
+    @Override
+    public Node visitSectionNested(QLSParser.SectionNestedContext ctx) {
+        return null;
+    }
+
+    @Override
+    public Node visitSectionDefaultWidget(QLSParser.SectionDefaultWidgetContext ctx) {
+        return null;
     }
 
     @Override
@@ -205,7 +240,7 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
     private List<Section> getSections(List<QLSParser.SectionContext> sectionContexts) {
         List<Section> sections = new ArrayList<>();
 
-        for(QLSParser.SectionContext section : sectionContexts) {
+        for (QLSParser.SectionContext section : sectionContexts) {
             sections.add((Section) visit(section));
         }
 
@@ -215,7 +250,7 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
     private List<Question> getQuestions(List<QLSParser.QuestionContext> questionContexts) {
         List<Question> questions = new ArrayList<>();
 
-        for(QLSParser.QuestionContext question : questionContexts) {
+        for (QLSParser.QuestionContext question : questionContexts) {
             questions.add((Question) visit(question));
         }
 

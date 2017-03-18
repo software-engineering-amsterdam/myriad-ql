@@ -1,18 +1,24 @@
 package org.qls.typechecker;
 
+import org.ql.ast.Form;
+import org.ql.typechecker.QLTypeChecker;
 import org.ql.typechecker.SymbolTable;
 import org.ql.typechecker.issues.IssuesStorage;
 import org.qls.ast.StyleSheet;
 
 public class QLSTypeChecker {
-    private final IssuesStorage issuesStorage;
+    private final QLTypeChecker qlTypeChecker;
     private QLSQuestionVisitor qlsQuestionReferenceVisitor;
 
     public QLSTypeChecker() {
-        issuesStorage = new IssuesStorage();
+        qlTypeChecker = new QLTypeChecker();
     }
 
-    public IssuesStorage checkStyleSheet(StyleSheet styleSheet, SymbolTable symbolTable) {
+    public IssuesStorage checkStyleSheet(Form formAST, StyleSheet styleSheet) {
+
+        SymbolTable symbolTable = new SymbolTable();
+        IssuesStorage issuesStorage = qlTypeChecker.checkForm(formAST, symbolTable);
+
         qlsQuestionReferenceVisitor = new QLSQuestionVisitor(issuesStorage, styleSheet, symbolTable);
 
         return issuesStorage;
