@@ -2,7 +2,7 @@ package com.matthewchapman.ql.parsing;
 
 import com.matthewchapman.antlr.QLParser;
 import com.matthewchapman.ql.ast.Form;
-import com.matthewchapman.ql.ast.atomic.IntegerType;
+import com.matthewchapman.ql.ast.atomic.type.IntegerType;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.binary.Addition;
 import com.matthewchapman.ql.ast.expression.binary.Subtraction;

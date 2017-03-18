@@ -1,6 +1,11 @@
 package com.matthewchapman.ql.validation.visitor;
 
-import com.matthewchapman.ql.ast.atomic.*;
+import com.matthewchapman.ql.ast.expression.literal.BooleanLiteral;
+import com.matthewchapman.ql.ast.expression.literal.IntegerLiteral;
+import com.matthewchapman.ql.ast.expression.literal.StringLiteral;
+import com.matthewchapman.ql.ast.atomic.type.BooleanType;
+import com.matthewchapman.ql.ast.atomic.type.IntegerType;
+import com.matthewchapman.ql.ast.atomic.type.StringType;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;

@@ -1,4 +1,6 @@
-package com.matthewchapman.ql.ast.atomic;
+package com.matthewchapman.ql.ast.atomic.type;
+
+import com.matthewchapman.ql.ast.atomic.Type;
 
 /**
  * Created by matt on 13/03/2017.
