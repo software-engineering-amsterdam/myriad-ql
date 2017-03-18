@@ -97,12 +97,12 @@ namespace Questionnaires.QL.AST
         public override INode VisitConditionalBlock([NotNull] QLParser.ConditionalBlockContext context)
         {
             INode expression = context.condition.Accept(this);
+            Debug.Assert(expression is IExpression);
+
             var thenStatements = GetStatements(context.thenBlock.statement());
             var elseStatements = new List<IStatement>();
             if (context.elseBlock != null)
-                elseStatements = GetStatements(context.elseBlock.statement());
-
-            Debug.Assert(expression is IExpression);
+                elseStatements = GetStatements(context.elseBlock.statement());            
 
             return new Conditional((dynamic)expression, thenStatements, elseStatements);
         }

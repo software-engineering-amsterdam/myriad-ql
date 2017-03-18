@@ -89,31 +89,8 @@ namespace Questionnaires.QLS.AST
 
         public override INode VisitDefaultStyle([NotNull] QLSParser.DefaultStyleContext context)
         {
-            Widgets.Widget widget = null;
-            var widgetType = context.widget().Widget().GetText();
-            switch (widgetType)
-            {
-                case "spinbox": widget = new Widgets.Spinbox(); break;
-                case "slider": widget = new Widgets.Slider(); break;
-                case "text": widget = new Widgets.Text(); break;
-                case "radio": widget = new Widgets.Radio(); break;
-                case "checkbox": widget = new Widgets.CheckBox(); break;
-                case "dropdown": widget = new Widgets.DropDown(); break;
-                default:
-                    Debug.Assert(false);
-                    break;
-            }
-            Questionnaires.Types.IType type;
-            switch (context.Type().GetText())
-            {
-                //boolean' | 'int' | 'string' | 'money
-                case "boolean": type = new Questionnaires.Types.BooleanType(); break;
-                case "int": type = new Questionnaires.Types.IntegerType(); break;
-                case "string": type = new Questionnaires.Types.StringType(); break;
-                case "money": type = new Questionnaires.Types.MoneyType(); break;
-                default:
-                    throw new InvalidProgramException();
-            }
+            Widgets.Widget widget = GetWidgetFromStyleContext(context);
+            Questionnaires.Types.IType type = GetTypeFromStyleContext(context);
 
             var defaultStyle = new DefaultStyle(type, (dynamic)widget);
 
@@ -126,9 +103,42 @@ namespace Questionnaires.QLS.AST
             return defaultStyle;
         }
 
+        private static Widgets.Widget GetWidgetFromStyleContext(QLSParser.DefaultStyleContext context)
+        {
+            var widgetType = context.widget().Widget().GetText();
+            Debug.Assert(widgetType == "spinbox" | widgetType == "slider" | widgetType == "text" | widgetType == "radio" | widgetType == "checkbox" | widgetType == "dropdown");
+            switch (widgetType)
+            {
+                case "spinbox": return new Widgets.Spinbox(); 
+                case "slider": return new Widgets.Slider(); 
+                case "text": return new Widgets.Text(); 
+                case "radio": return new Widgets.Radio(); 
+                case "checkbox": return new Widgets.CheckBox(); 
+                case "dropdown": return new Widgets.DropDown(); 
+            }
+            throw new InvalidProgramException();
+        }
+
+        private Types.IType GetTypeFromStyleContext(QLSParser.DefaultStyleContext context)
+        {
+            var type = context.Type().GetText();
+            Debug.Assert(type == "boolean" || type == "int" || type == "string" || type == "money");
+            switch (type)
+            {
+                case "boolean": return new Questionnaires.Types.BooleanType(); 
+                case "int": return new Questionnaires.Types.IntegerType();
+                case "string": return new Questionnaires.Types.StringType(); 
+                case "money": return new Questionnaires.Types.MoneyType();                     
+            }
+            throw new InvalidProgramException();
+        }
+
+        // TODO: this is just a copy of GetWidgetFromStyleContext
         public override INode VisitWidget([NotNull] QLSParser.WidgetContext context)
         {
-            switch (context.Widget().GetText())
+            var widgetType = context.Widget().GetText();
+            Debug.Assert(widgetType == "spinbox" | widgetType == "slider" | widgetType == "text" | widgetType == "radio" | widgetType == "checkbox" | widgetType == "dropdown");
+            switch (widgetType)
             {
                 case "spinbox": return new Widgets.Spinbox();
                 case "slider": return new Widgets.Slider();
@@ -136,10 +146,8 @@ namespace Questionnaires.QLS.AST
                 case "radio": return new Widgets.Radio();
                 case "checkbox": return new Widgets.CheckBox();
                 case "dropdown": return new Widgets.DropDown();
-                default:
-                    Debug.Assert(false);
-                    break;
             }
+            Debug.Assert(false);
             throw new InvalidProgramException();
         }
 
