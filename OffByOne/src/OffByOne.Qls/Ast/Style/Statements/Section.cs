@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using MoreDotNet.Wrappers;
+
     using OffByOne.Qls.Ast.Style.Rules;
     using OffByOne.Qls.Ast.Style.Statements.Base;
     using OffByOne.Qls.Common.Visitors.Contracts;
@@ -20,6 +22,11 @@
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
+            }
+
+            if (name.Value.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("A non-null, non-empty section name must be given.");
             }
 
             this.Name = name;
