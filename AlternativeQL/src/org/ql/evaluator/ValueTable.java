@@ -21,7 +21,7 @@ public class ValueTable {
         return values.get(id.toString());
     }
 
-    public boolean isDeclared(Identifier id) {
+    private boolean isDeclared(Identifier id) {
         return values.containsKey(id.toString());
     }
 

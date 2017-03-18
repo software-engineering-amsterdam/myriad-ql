@@ -1,6 +1,7 @@
 package org.ql.gui.widgets;
 
 import org.ql.ast.Identifier;
+import org.ql.ast.statement.ComputableQuestion;
 import org.ql.ast.statement.Question;
 import org.ql.ast.type.*;
 import org.ql.gui.ValueReviser;
@@ -51,7 +52,7 @@ public class WidgetContainer implements TypeVisitor<Widget, Question> {
     }
 
     @Override
-    public Widget visitMoneyType(MoneyType moneyType, Question question) {
+    public DecimalSpinnerWidget visitMoneyType(MoneyType moneyType, Question question) {
         return new DecimalSpinnerWidget(mediator, question);
     }
 

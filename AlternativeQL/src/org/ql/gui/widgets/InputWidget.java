@@ -5,6 +5,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import org.ql.ast.statement.ComputableQuestion;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.Value;
 import org.ql.gui.ValueReviser;
@@ -14,13 +15,13 @@ abstract class InputWidget extends Widget {
     private final TextField textField;
 
 
-    public InputWidget(ValueReviser mediator, Question question) {
-        label = new Label(question.getQuestionLabel().toString());
+    InputWidget(ValueReviser mediator, Question question) {
+        label = new Label(question.getLabel().toString());
         textField = new TextField();
         textField.setOnKeyReleased(event -> mediator.reviseValue(question.getId(), value(textField.getText())));
     }
 
-    public InputWidget(ValueReviser mediator, Question question, TextFormatter textFormatter) {
+    InputWidget(ValueReviser mediator, Question question, TextFormatter textFormatter) {
         this(mediator, question);
         textField.setTextFormatter(textFormatter);
     }

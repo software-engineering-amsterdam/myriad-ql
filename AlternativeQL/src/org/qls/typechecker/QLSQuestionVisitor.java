@@ -23,25 +23,16 @@ public class QLSQuestionVisitor {
     }
 
     public void visitStyleSheet(StyleSheet styleSheet) {
-        for (Page page : styleSheet.getPages()) {
-            visitPage(page);
-        }
+        styleSheet.getPages().forEach(this::visitPage);
     }
 
     public void visitPage(Page page) {
-        for (Section section : page.getSections()) {
-            visitSection(section);
-        }
+        page.getSections().forEach(this::visitSection);
     }
 
     public void visitSection(Section section) {
-        for (Question question : section.getQuestions()) {
-            visitQuestion(question);
-        }
-
-        for (Section innerSection : section.getSections()) {
-            visitSection(innerSection);
-        }
+        section.getQuestions().forEach(this::visitQuestion);
+        section.getSections().forEach(this::visitSection);
     }
 
     public void visitQuestion(Question question) {

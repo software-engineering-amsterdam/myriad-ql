@@ -5,6 +5,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import org.ql.ast.statement.ComputableQuestion;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.Value;
 import org.ql.gui.ValueReviser;
@@ -14,10 +15,15 @@ abstract class SpinnerWidget<V> extends Widget {
     private final Label label;
 
     public SpinnerWidget(ValueReviser mediator, Question question, SpinnerValueFactory<V> valueFactory) {
-        label = new Label(question.getQuestionLabel().toString());
+        label = new Label(question.getLabel().toString());
         spinner = new Spinner<>();
         spinner.setValueFactory(valueFactory);
-        spinner.setOnMouseClicked(event -> mediator.reviseValue(question.getId(), createValue(spinner)));
+        spinner.setOnMouseClicked(event -> reviseValue(mediator, question));
+        spinner.setOnKeyReleased(event -> reviseValue(mediator, question));
+    }
+
+    private void reviseValue(ValueReviser mediator, Question question) {
+        mediator.reviseValue(question.getId(), createValue(spinner));
     }
 
     @Override

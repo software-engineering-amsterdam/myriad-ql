@@ -10,7 +10,7 @@ public abstract class SourceFile {
     private final String file;
 
     public SourceFile(String file) throws IOException {
-        if (fileExists(file)) {
+        if (!fileExists(file)) {
             throw new FileNotFoundException();
         }
 
@@ -30,7 +30,7 @@ public abstract class SourceFile {
     }
 
     private boolean fileExists(String file) {
-        return !Files.exists(Paths.get(file));
+        return Files.exists(Paths.get(file));
     }
 
     protected abstract String extension();

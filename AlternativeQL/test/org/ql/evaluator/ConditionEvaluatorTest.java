@@ -8,6 +8,7 @@ import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.arithmetic.Addition;
 import org.ql.ast.expression.literal.BooleanLiteral;
 import org.ql.ast.expression.literal.IntegerLiteral;
+import org.ql.ast.statement.ComputableQuestion;
 import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.question.QuestionLabel;
@@ -32,10 +33,10 @@ public class ConditionEvaluatorTest {
         ConditionEvaluator visitor = new ConditionEvaluator();
         List<Question> visibleElements = visitor.visitForm(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
             add(new IfThenElse(new BooleanLiteral(true), new ArrayList<Statement>() {{
-                add(new Question(new Identifier("first"), new QuestionLabel("Question"), new IntegerType(), new IntegerLiteral(12)));
+                add(new ComputableQuestion(new Identifier("first"), new QuestionLabel("ComputableQuestion"), new IntegerType(), new IntegerLiteral(12)));
             }}, new ArrayList<Statement>() {{
-                add(new Question(new Identifier("second"), new QuestionLabel("Question2"), new IntegerType(), new Parameter(new Identifier("third"))));
-                add(new Question(new Identifier("third"), new QuestionLabel("Question2"), new IntegerType(), new Addition(
+                add(new ComputableQuestion(new Identifier("second"), new QuestionLabel("Question2"), new IntegerType(), new Parameter(new Identifier("third"))));
+                add(new ComputableQuestion(new Identifier("third"), new QuestionLabel("Question2"), new IntegerType(), new Addition(
                         new IntegerLiteral(13), new IntegerLiteral(35)
                 )));
             }}));

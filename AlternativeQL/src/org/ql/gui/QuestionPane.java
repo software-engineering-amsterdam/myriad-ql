@@ -20,7 +20,7 @@ class QuestionPane {
         gridPane.setVgap(10);
     }
 
-    public void add(Pane pane) {
+    void add(Pane pane) {
         gridPane.add(pane, 0, row++);
     }
 

@@ -4,10 +4,7 @@ import org.ql.ast.Expression;
 import org.ql.ast.Form;
 import org.ql.ast.Statement;
 import org.ql.ast.form.FormVisitor;
-import org.ql.ast.statement.IfThen;
-import org.ql.ast.statement.IfThenElse;
-import org.ql.ast.statement.Question;
-import org.ql.ast.statement.StatementVisitor;
+import org.ql.ast.statement.*;
 import org.ql.evaluator.value.UnknownValue;
 import org.ql.evaluator.value.Value;
 
@@ -57,12 +54,18 @@ public class ConditionEvaluator implements FormVisitor<List<Question>, ValueTabl
     }
 
     @Override
-    public Void visitQuestion(Question question, ValueTable valueTable) {
+    public Void visitQuestion(Question question, ValueTable context) {
         visibleQuestions.add(question);
         return null;
     }
 
-    public boolean evaluateIfCondition(Expression expression, ValueTable valueTable) {
+    @Override
+    public Void visitComputableQuestion(ComputableQuestion question, ValueTable valueTable) {
+        visibleQuestions.add(question);
+        return null;
+    }
+
+    private boolean evaluateIfCondition(Expression expression, ValueTable valueTable) {
         Value value = expressionEvaluator.evaluate(expression, valueTable);
 
         if (value instanceof UnknownValue) {

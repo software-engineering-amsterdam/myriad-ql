@@ -4,7 +4,6 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
-import org.ql.ast.*;
 import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.arithmetic.*;
 import org.ql.ast.expression.literal.BooleanLiteral;
@@ -12,6 +11,7 @@ import org.ql.ast.expression.literal.DecimalLiteral;
 import org.ql.ast.expression.literal.IntegerLiteral;
 import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.*;
+import org.ql.ast.statement.ComputableQuestion;
 import org.ql.ast.statement.IfThen;
 import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
@@ -52,12 +52,25 @@ public class ASTBuilder extends AbstractParseTreeVisitor<Node> implements QLVisi
     }
 
     @Override
-    public Question visitQuestion(QLParser.QuestionContext ctx) {
+    public ComputableQuestion visitComputableQuestion(QLParser.ComputableQuestionContext ctx) {
+        ComputableQuestion question = new ComputableQuestion(
+            (Identifier) visit(ctx.id),
+            (QuestionLabel) visit(ctx.text),
+            (Type) visit(ctx.type()),
+            (Expression) visit(ctx.expression())
+        );
+
+        question.setSourceLocation(extractSourceLocation(ctx));
+
+        return question;
+    }
+
+    @Override
+    public Question visitBlankQuestion(QLParser.BlankQuestionContext ctx) {
         Question question = new Question(
-                (Identifier) visit(ctx.id),
-                (QuestionLabel) visit(ctx.text),
-                (Type) visit(ctx.type()),
-                ctx.value() == null ? null : (Expression) visit(ctx.value())
+            (Identifier) visit(ctx.id),
+            (QuestionLabel) visit(ctx.text),
+            (Type) visit(ctx.type())
         );
 
         question.setSourceLocation(extractSourceLocation(ctx));
@@ -110,11 +123,6 @@ public class ASTBuilder extends AbstractParseTreeVisitor<Node> implements QLVisi
 
     private String removeQuotes(String text) {
         return text.substring(1, text.length() - 1);
-    }
-
-    @Override
-    public Expression visitValue(QLParser.ValueContext ctx) {
-        return (Expression) visit(ctx.expression());
     }
 
     @Override

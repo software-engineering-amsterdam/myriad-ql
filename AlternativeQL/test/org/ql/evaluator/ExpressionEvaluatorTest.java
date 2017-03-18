@@ -526,10 +526,10 @@ public class ExpressionEvaluatorTest {
     public void shouldDeclareQuestionDefaultValueInValueTable() {
         ValueTable valueTable = new ValueTable();
         ExpressionEvaluator evaluator = new ExpressionEvaluator(valueTable);
-        Question question = new Question(new Identifier("example"), new QuestionLabel("example question?"),
+        ComputableQuestion question = new ComputableQuestion(new Identifier("example"), new QuestionLabel("example question?"),
                 new BooleanType(), new Addition(new IntegerLiteral(3), new IntegerLiteral(4)));
 
-        evaluator.visitQuestion(question, null);
+        evaluator.visitComputableQuestion(question, null);
 
         assertSame(1, valueTable.size());
         assertSame(7, valueTable.lookup(new Identifier("example")).getPlainValue());
@@ -540,9 +540,9 @@ public class ExpressionEvaluatorTest {
         ValueTable valueTable = new ValueTable();
         ExpressionEvaluator evaluator = new ExpressionEvaluator(valueTable);
         List<Statement> statements = new ArrayList<>();
-        Question firstQuestion = new Question(new Identifier("firstExample"), new QuestionLabel("example question?"),
+        ComputableQuestion firstQuestion = new ComputableQuestion(new Identifier("firstExample"), new QuestionLabel("example question?"),
                 new BooleanType(), new Addition(new IntegerLiteral(3), new IntegerLiteral(4)));
-        Question secondQuestion = new Question(new Identifier("secondExample"), new QuestionLabel("example question?"),
+        ComputableQuestion secondQuestion = new ComputableQuestion(new Identifier("secondExample"), new QuestionLabel("example question?"),
                 new BooleanType(), new Addition(new IntegerLiteral(2), new IntegerLiteral(3)));
         statements.add(firstQuestion);
         statements.add(secondQuestion);
@@ -562,12 +562,12 @@ public class ExpressionEvaluatorTest {
         ExpressionEvaluator evaluator = new ExpressionEvaluator(valueTable);
 
         List<Statement> ifStatements = new ArrayList<>();
-        Question firstQuestion = new Question(new Identifier("firstExample"), new QuestionLabel("example question?"),
+        ComputableQuestion firstQuestion = new ComputableQuestion(new Identifier("firstExample"), new QuestionLabel("example question?"),
                 new BooleanType(), new Addition(new IntegerLiteral(3), new IntegerLiteral(4)));
         ifStatements.add(firstQuestion);
 
         List<Statement> elseStatements = new ArrayList<>();
-        Question secondQuestion = new Question(new Identifier("secondExample"), new QuestionLabel("example question?"),
+        ComputableQuestion secondQuestion = new ComputableQuestion(new Identifier("secondExample"), new QuestionLabel("example question?"),
                 new BooleanType(), new Addition(new IntegerLiteral(2), new IntegerLiteral(3)));
         elseStatements.add(secondQuestion);
 
@@ -586,7 +586,7 @@ public class ExpressionEvaluatorTest {
         ExpressionEvaluator evaluator = new ExpressionEvaluator(valueTable);
 
         List<Statement> statements = new ArrayList<>();
-        Question firstQuestion = new Question(new Identifier("example"), new QuestionLabel("example question?"),
+        ComputableQuestion firstQuestion = new ComputableQuestion(new Identifier("example"), new QuestionLabel("example question?"),
                 new BooleanType(), new Addition(new IntegerLiteral(3), new IntegerLiteral(4)));
         statements.add(firstQuestion);
 

@@ -9,6 +9,7 @@ import org.ql.ast.expression.literal.DecimalLiteral;
 import org.ql.ast.expression.literal.IntegerLiteral;
 import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.*;
+import org.ql.ast.statement.ComputableQuestion;
 import org.ql.ast.statement.IfThen;
 import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
@@ -49,13 +50,17 @@ public class TypeMismatchVisitor extends AbstractTypeCheckVisitor<Type, SymbolTa
     }
 
     @Override
-    public Type visitQuestion(Question question, SymbolTable symbolTable) {
-        if (question.getValue() != null) {
-            Type valueType = question.getValue().accept(this, symbolTable);
+    public Type visitQuestion(Question question, SymbolTable context) {
+        return null;
+    }
 
-            if (!question.getType().isCompatibleWith(valueType)) {
-                issuesStorage.addError(new TypeMismatch(question.getType(), valueType));
-            }
+    @Override
+    public Type visitComputableQuestion(ComputableQuestion question, SymbolTable symbolTable) {
+        Type valueType = question.getComputableValue().accept(this, symbolTable);
+        Type questionType = question.getType();
+
+        if (!questionType.isCompatibleWith(valueType)) {
+            issuesStorage.addError(new TypeMismatch(questionType, valueType));
         }
         return null;
     }

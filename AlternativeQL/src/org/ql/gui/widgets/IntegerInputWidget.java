@@ -1,6 +1,7 @@
 package org.ql.gui.widgets;
 
 import javafx.scene.control.TextFormatter;
+import org.ql.ast.statement.ComputableQuestion;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.IntegerValue;
 import org.ql.evaluator.value.UnknownValue;

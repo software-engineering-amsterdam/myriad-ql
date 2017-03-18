@@ -1,6 +1,7 @@
 package org.ql.gui.widgets;
 
 
+import org.ql.ast.statement.ComputableQuestion;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.StringValue;
 import org.ql.evaluator.value.Value;

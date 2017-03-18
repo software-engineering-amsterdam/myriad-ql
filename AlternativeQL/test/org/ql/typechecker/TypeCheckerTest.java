@@ -11,6 +11,7 @@ import org.ql.ast.expression.arithmetic.Product;
 import org.ql.ast.expression.literal.BooleanLiteral;
 import org.ql.ast.expression.literal.IntegerLiteral;
 import org.ql.ast.expression.relational.Negation;
+import org.ql.ast.statement.ComputableQuestion;
 import org.ql.ast.statement.Question;
 import org.ql.ast.statement.question.QuestionLabel;
 import org.ql.ast.type.*;
@@ -33,8 +34,8 @@ public class TypeCheckerTest {
         TypeChecker typeChecker = new TypeChecker();
 
         IssuesStorage issues = typeChecker.checkForm(new Form(new Identifier("exampleForm"), new ArrayList<Statement>() {{
-            add(new Question(new Identifier(questionLabel), new QuestionLabel("example question?"), new BooleanType(), null));
-            add(new Question(new Identifier(questionLabel), new QuestionLabel("example question?"), new BooleanType(), null));
+            add(new Question(new Identifier(questionLabel), new QuestionLabel("example question?"), new BooleanType()));
+            add(new Question(new Identifier(questionLabel), new QuestionLabel("example question?"), new BooleanType()));
         }}), new SymbolTable());
 
         assertEquals(1, issues.getErrors().size());
@@ -48,20 +49,20 @@ public class TypeCheckerTest {
         TypeChecker typeChecker = new TypeChecker();
 
         IssuesStorage issues = typeChecker.checkForm(new Form(new Identifier("exampleForm"), new ArrayList<Statement>() {{
-            add(new Question(new Identifier("example"), new QuestionLabel("example question?"), new BooleanType(), null));
-            add(new Question(new Identifier("example"), new QuestionLabel("example question?"), new BooleanType(), null));
-            add(new Question(new Identifier("typemismatch"), new QuestionLabel("example question2?"), new BooleanType(),
+            add(new Question(new Identifier("example"), new QuestionLabel("example question?"), new BooleanType()));
+            add(new Question(new Identifier("example"), new QuestionLabel("example question?"), new BooleanType()));
+            add(new ComputableQuestion(new Identifier("typemismatch"), new QuestionLabel("example question2?"), new BooleanType(),
                     new IntegerLiteral(12)));
-            add(new Question(new Identifier("first"), new QuestionLabel("dependency?"), new BooleanType(),
+            add(new ComputableQuestion(new Identifier("first"), new QuestionLabel("dependency?"), new BooleanType(),
                     new Negation(new Parameter(new Identifier("second")))));
-            add(new Question(new Identifier("second"), new QuestionLabel("dependency2?"), new BooleanType(),
+            add(new ComputableQuestion(new Identifier("second"), new QuestionLabel("dependency2?"), new BooleanType(),
                     new Parameter(new Identifier("first"))));
-            add(new Question(new Identifier(""), new QuestionLabel("wrong"), new BooleanType(), null));
-            add(new Question(new Identifier("number_expected_1"), new QuestionLabel("not a number"), new IntegerType(),
+            add(new Question(new Identifier(""), new QuestionLabel("wrong"), new BooleanType()));
+            add(new ComputableQuestion(new Identifier("number_expected_1"), new QuestionLabel("not a number"), new IntegerType(),
                     new Increment(new BooleanLiteral(true))));
-            add(new Question(new Identifier("number_expected_2"), new QuestionLabel("not a number2"), new IntegerType(),
+            add(new ComputableQuestion(new Identifier("number_expected_2"), new QuestionLabel("not a number2"), new IntegerType(),
                     new Decrement(new BooleanLiteral(true))));
-            add(new Question(new Identifier("typemismatch2"), new QuestionLabel("typemismatch"), new IntegerType(),
+            add(new ComputableQuestion(new Identifier("typemismatch2"), new QuestionLabel("typemismatch"), new IntegerType(),
                     new Product(new BooleanLiteral(true), new BooleanLiteral(false))));
         }}), new SymbolTable());
 

@@ -2,6 +2,7 @@ package org.ql.gui;
 
 import org.ql.ast.Form;
 import org.ql.ast.Identifier;
+import org.ql.ast.statement.ComputableQuestion;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.ValueTable;
 import org.ql.evaluator.value.Value;

@@ -11,10 +11,7 @@ import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.*;
 import org.ql.evaluator.value.*;
 
-// TODO make value table to be passed as a context
 public class ExpressionEvaluator implements ExpressionVisitor<Value, ValueTable> {
-
-
     @Override
     public Value visitProduct(Product node, ValueTable valueTable) {
         Value left = node.getLeft().accept(this, valueTable);
@@ -163,11 +160,6 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, ValueTable>
     }
 
     public Value evaluate(Expression expression, ValueTable valueTable) {
-        // TODO use visitor with a special node EmptyExpression (or similar)
-        if (expression == null) {
-            return new UnknownValue();
-        }
-
         return expression.accept(this, valueTable);
     }
 }

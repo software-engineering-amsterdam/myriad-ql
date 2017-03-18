@@ -4,10 +4,7 @@ import org.ql.ast.Form;
 import org.ql.ast.Identifier;
 import org.ql.ast.Statement;
 import org.ql.ast.form.FormVisitor;
-import org.ql.ast.statement.IfThen;
-import org.ql.ast.statement.IfThenElse;
-import org.ql.ast.statement.Question;
-import org.ql.ast.statement.StatementVisitor;
+import org.ql.ast.statement.*;
 import org.ql.evaluator.value.UnknownValue;
 import org.ql.evaluator.value.Value;
 
@@ -62,7 +59,17 @@ public class QuestionEvaluator implements FormVisitor<Void, ValueTable>, Stateme
     @Override
     public Void visitQuestion(Question question, ValueTable valueTable) {
         if (!modifiedQuestions.contains(question.getId())) {
-            valueTable.declare(question.getId(), expressionEvaluator.evaluate(question.getValue(), valueTable));
+            valueTable.declare(question.getId(), new UnknownValue());
+        }
+
+        return null;
+    }
+
+    @Override
+    public Void visitComputableQuestion(ComputableQuestion question, ValueTable valueTable) {
+        if (!modifiedQuestions.contains(question.getId())) {
+            Value value = expressionEvaluator.evaluate(question.getComputableValue(), valueTable);
+            valueTable.declare(question.getId(), value);
         }
 
         return null;
