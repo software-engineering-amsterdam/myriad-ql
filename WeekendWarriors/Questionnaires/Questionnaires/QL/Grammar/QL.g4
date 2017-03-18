@@ -12,14 +12,13 @@ Whitespace: [ \t\r\n\u000C]+ -> skip;
 MultiLineComment: '/*' .*? '*/' -> skip;
 SingleLineComment: '//' ~('\r' | '\n')* -> skip;
 
-// Literal values in the code
 StringLiteral: '"' (~'"')* '"';
 BooleanLiteral: 'true' | 'false';
 NumberLiteral: ('0'..'9')+;
 // Money literal is basically a floating point number. We support xx.xxx, .xx and xx. format
 MoneyLiteral: (('0'..'9')+ '.' ('0'..'9')+) | '.' ('0'..'9')+ | ('0'..'9')+ '.';
 
-// Allowed: a-zA-Z_$ as first char followed by a-zA-Z0-9_$ -> unspecified if correct
+// Allowed: a-zA-Z_ as first char followed by a-zA-Z0-9_$ -> unspecified if correct
 Type: 'boolean' | 'int' | 'string' | 'money' ;
 Identifier: ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
