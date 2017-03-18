@@ -58,7 +58,26 @@ export let test6 =
     hasBoughtHouse: boolean
     question 'Did you enter a loan?'
     hasMaintLoan: string
-    if (!(hasSoldHouse && hasBoughtHouse)) {
+    if (hasSoldHouse) {
+        question 'What was the selling price?'
+        sellingPrice: money
+        question 'What was the private debts for the sold house?'
+        privateDebt: date
+        answer 'Value residue:'
+        valueResidue: money = (hasSoldHouse-hasMaintLoan)
+    } else {question 'Secondlabel' sellingPrice: money}
+     }`;
+
+
+export let test7 =
+    `form taxOfficeExample{
+    question 'Did you sell a house in 2010?'
+    hasSoldHouse: boolean
+    question 'Did you buy a house in 2010?'
+    hasBoughtHouse: boolean
+    question 'Did you enter a loan?'
+    hasMaintLoan: string
+    if (!(hasSoldHouse && hasBoughtHouse) && (hasSoldHouse && hasBoughtHouse)) {
         question 'What was the selling price?'
         sellingPrice: money
         question 'What was the private debts for the sold house?'

@@ -123,7 +123,7 @@ export class ASTBuilder {
     }
 
     property(data, location) {
-        return new Property(data[0].join(''), location);
+        return new Property(data[0], location);
     }
 
     toString(data) {

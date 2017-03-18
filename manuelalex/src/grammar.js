@@ -1,6 +1,8 @@
-import {ASTBuilder as Builder} from './ast/ASTBuilder.js'; var ASTBuilder = new Builder();
 // Generated automatically by nearley
 // http://github.com/Hardmath123/nearley
+
+import {ASTBuilder as Builder} from './ast/ASTBuilder.js'; var ASTBuilder = new Builder();
+
 (function () {
 function id(x) {return x[0]; }
 
@@ -194,7 +196,7 @@ var grammar = {
     {"name": "multiply_divide_expression$subexpression$1", "symbols": [{"literal":"*"}]},
     {"name": "multiply_divide_expression", "symbols": ["multiply_divide_expression", "_", "multiply_divide_expression$subexpression$1", "_", "multiply_divide_expression"], "postprocess": ASTBuilder.deepExpression},
     {"name": "factor", "symbols": ["digits"]},
-    {"name": "factor", "symbols": ["propertyName"]},
+    {"name": "factor", "symbols": ["propertyName"], "postprocess": ASTBuilder.property},
     {"name": "factor", "symbols": [{"literal":"("}, "expression", {"literal":")"}], "postprocess": (data)=> data[1]},
     {"name": "digits$ebnf$1", "symbols": [/[0-9]/]},
     {"name": "digits$ebnf$1", "symbols": [/[0-9]/, "digits$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},

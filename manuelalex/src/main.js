@@ -4,6 +4,7 @@
 
 import {Parser} from './Parser.js';
 import {ASTValidationVisitor} from './ASTValidationVisitor.js';
+import {ASTDependencyVisitor} from './ASTDependencyVisitor.js';
 
 import {GUI}                                     from './gui/Gui.js';
 import {AST}                                     from './ast/AST.js';
@@ -20,8 +21,13 @@ if (errors.length) {
 }
 
 let ast = new AST(result[0]);
+let dependencyVisitor = new ASTDependencyVisitor();
+dependencyVisitor.visitAST(ast);
+console.log(dependencyVisitor.graph);
+
 let visitor = new ASTValidationVisitor();
 visitor.visitAST(ast);
+
 
 
 if (visitor.hasDetectedErrors()) {

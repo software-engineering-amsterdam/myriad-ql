@@ -54,6 +54,7 @@ export class ASTValidationVisitor {
 
     }
 
+
     /**
      * Check duplicate question declarations with different types
      * @param question
@@ -125,7 +126,9 @@ export class ASTValidationVisitor {
         }
     }
 
+    visitProperty(condition) {
 
+    }
 
     validateOperator(condition, validOperators, validType) {
         const typeLeftHand = this.memoryState.getType(condition.leftHand);

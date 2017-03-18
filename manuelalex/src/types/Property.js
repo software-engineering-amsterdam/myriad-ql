@@ -21,4 +21,8 @@ export class Property {
         const value = memoryState.getValue(this.getName()) || undefined;
         return eval(value);
     }
+
+    accept(visitor) {
+        visitor.visitProperty(self);
+    }
 }
