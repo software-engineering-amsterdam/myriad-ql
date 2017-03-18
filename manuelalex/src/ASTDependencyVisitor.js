@@ -73,7 +73,7 @@ export class ASTDependencyVisitor {
     }
 
     visitProperty(property){
-        //this.graph.push(property.getName());
+        this.graph.push(property.name);
     }
 
     hasDetectedErrors(){
