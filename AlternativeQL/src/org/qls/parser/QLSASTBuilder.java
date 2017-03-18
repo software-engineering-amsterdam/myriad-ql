@@ -54,7 +54,7 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
         List<PageItem> pageItems = visitPageItems(ctx);
         Identifier identifier = (Identifier) visit(ctx.identifier());
 
-        return new Page(identifier, pageItems);
+        return hydrateSourceLocation(new Page(identifier, pageItems), ctx);
     }
 
     private List<PageItem> visitPageItems(QLSParser.PageContext ctx) {
@@ -81,7 +81,7 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
         List<DefaultWidget> defaultWidgets = getDefaultWidgets(ctx.defaultWidget());
         List<Question> questions = getQuestions(ctx.question());
 
-        return new Section(ctx.name.getText(), questions, sections, defaultWidgets);
+        return hydrateSourceLocation(new Section(ctx.name.getText(), questions, sections, defaultWidgets), ctx);
     }
 
     @Override
@@ -101,12 +101,12 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
 
     @Override
     public Node visitQuestionNoWidget(QLSParser.QuestionNoWidgetContext ctx) {
-        return new Question((Identifier) visit(ctx.identifier()), null);
+        return hydrateSourceLocation(new Question((Identifier) visit(ctx.identifier()), null), ctx);
     }
 
     @Override
     public Node visitQuestionWidget(QLSParser.QuestionWidgetContext ctx) {
-        return new Question((Identifier) visit(ctx.identifier()), (Widget) visit(ctx.widget()));
+        return hydrateSourceLocation( new Question((Identifier) visit(ctx.identifier()), (Widget) visit(ctx.widget())), ctx);
     }
 
     @Override
@@ -116,37 +116,37 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
 
     @Override
     public Node visitSpinboxWidget(QLSParser.SpinboxWidgetContext ctx) {
-        return new SpinboxWidget();
+        return hydrateSourceLocation(new SpinboxWidget(), ctx);
     }
 
     @Override
     public Node visitSliderWidget(QLSParser.SliderWidgetContext ctx) {
-        return new SliderWidget();
+        return hydrateSourceLocation(new SliderWidget(), ctx);
     }
 
     @Override
     public Node visitTextWidget(QLSParser.TextWidgetContext ctx) {
-        return new TextWidget();
+        return hydrateSourceLocation(new TextWidget(), ctx);
     }
 
     @Override
     public Node visitCheckboxWidget(QLSParser.CheckboxWidgetContext ctx) {
-        return new CheckboxWidget();
+        return hydrateSourceLocation(new CheckboxWidget(), ctx);
     }
 
     @Override
     public Node visitRadioWidget(QLSParser.RadioWidgetContext ctx) {
-        return new RadioWidget(ctx.yes.getText(), ctx.no.getText());
+        return hydrateSourceLocation(new RadioWidget(ctx.yes.getText(), ctx.no.getText()), ctx);
     }
 
     @Override
     public Node visitDropdownWidget(QLSParser.DropdownWidgetContext ctx) {
-        return new DropdownWidget(ctx.yes.getText(), ctx.no.getText());
+        return hydrateSourceLocation(new DropdownWidget(ctx.yes.getText(), ctx.no.getText()), ctx);
     }
 
     @Override
     public Node visitDefaultNoStyle(QLSParser.DefaultNoStyleContext ctx) {
-        return new DefaultWidgetNoStyle((Type) visit(ctx.type()), (Widget) visit(ctx.widget()));
+        return hydrateSourceLocation(new DefaultWidgetNoStyle((Type) visit(ctx.type()), (Widget) visit(ctx.widget())), ctx);
     }
 
     @Override
@@ -157,74 +157,52 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
             styleRules.add((StyleRule) visit(styleRuleContext));
         }
 
-        return new DefaultWidgetWithStyle((Type) visit(ctx.type()), (Widget) visit(ctx.widget()), styleRules);
+        return hydrateSourceLocation(new DefaultWidgetWithStyle((Type) visit(ctx.type()), (Widget) visit(ctx.widget()), styleRules), ctx);
     }
 
     @Override
     public Node visitWidthRule(QLSParser.WidthRuleContext ctx) {
-        return new WidthRule(Integer.parseInt(ctx.INTEGER_LITERAL().getSymbol().getText()));
+        return hydrateSourceLocation(new WidthRule(Integer.parseInt(ctx.INTEGER_LITERAL().getSymbol().getText())), ctx);
     }
 
     @Override
     public Node visitFontRule(QLSParser.FontRuleContext ctx) {
-        return new FontRule(ctx.STRING_LITERAL().getText());
+        return hydrateSourceLocation(new FontRule(ctx.STRING_LITERAL().getText()), ctx);
     }
 
     @Override
     public Node visitFontSizeRule(QLSParser.FontSizeRuleContext ctx) {
-        return new FontSizeRule(Integer.parseInt(ctx.INTEGER_LITERAL().getSymbol().getText()));
+        return hydrateSourceLocation(new FontSizeRule(Integer.parseInt(ctx.INTEGER_LITERAL().getSymbol().getText())), ctx);
     }
 
     @Override
     public Node visitTypeBoolean(QLSParser.TypeBooleanContext ctx) {
-        BooleanType booleanType = new BooleanType();
-        booleanType.setSourceLocation(extractSourceLocation(ctx));
-
-        return booleanType;
+        return hydrateSourceLocation(new BooleanType(), ctx);
     }
 
     @Override
     public Node visitTypeFloat(QLSParser.TypeFloatContext ctx) {
-        FloatType floatType = new FloatType();
-        floatType.setSourceLocation(extractSourceLocation(ctx));
-
-        return floatType;
+        return hydrateSourceLocation(new FloatType(), ctx);
     }
 
     @Override
     public Node visitTypeInteger(QLSParser.TypeIntegerContext ctx) {
-        IntegerType integerType = new IntegerType();
-        integerType.setSourceLocation(extractSourceLocation(ctx));
-
-        return integerType;
+        return hydrateSourceLocation(new IntegerType(), ctx);
     }
 
     @Override
     public Node visitTypeString(QLSParser.TypeStringContext ctx) {
-        StringType stringType = new StringType();
-        stringType.setSourceLocation(extractSourceLocation(ctx));
-
-        return stringType;
+        return hydrateSourceLocation(new StringType(), ctx);
     }
 
     @Override
     public Node visitTypeMoney(QLSParser.TypeMoneyContext ctx) {
-        MoneyType moneyType = new MoneyType();
-        moneyType.setSourceLocation(extractSourceLocation(ctx));
-
-        return moneyType;
+        return hydrateSourceLocation(new MoneyType(), ctx);
     }
 
     @Override
     public Node visitIdentifier(QLSParser.IdentifierContext ctx) {
-        Identifier identifier = new Identifier(ctx.ID().getText());
-        identifier.setSourceLocation(extractSourceLocation(ctx));
-
-        return identifier;
-    }
-
-    private SourceLocation extractSourceLocation(ParserRuleContext context) {
-        return new SourceLocation(context.start.getLine(), context.start.getCharPositionInLine());
+        return hydrateSourceLocation(new Identifier(ctx.ID().getText()), ctx);
     }
 
     private List<DefaultWidget> getDefaultWidgets(List<QLSParser.DefaultWidgetContext> defaultWidgetContexts) {

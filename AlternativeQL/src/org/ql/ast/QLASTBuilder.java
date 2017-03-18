@@ -59,9 +59,7 @@ public class QLASTBuilder extends AbstractParseTreeVisitor<Node> implements QLVi
             (Expression) visit(ctx.expression())
         );
 
-        question.setSourceLocation(extractSourceLocation(ctx));
-
-        return question;
+        return hydrateSourceLocation(question, ctx);
     }
 
     @Override
@@ -72,9 +70,7 @@ public class QLASTBuilder extends AbstractParseTreeVisitor<Node> implements QLVi
             (Type) visit(ctx.type())
         );
 
-        question.setSourceLocation(extractSourceLocation(ctx));
-
-        return question;
+        return hydrateSourceLocation(question, ctx);
     }
 
     @Override
@@ -84,9 +80,7 @@ public class QLASTBuilder extends AbstractParseTreeVisitor<Node> implements QLVi
                 createStatements(ctx.thenStatements)
         );
 
-        ifThen.setSourceLocation(extractSourceLocation(ctx));
-
-        return ifThen;
+        return hydrateSourceLocation(ifThen, ctx);
     }
 
     @Override
@@ -97,9 +91,7 @@ public class QLASTBuilder extends AbstractParseTreeVisitor<Node> implements QLVi
                 createStatements(ctx.elseStatements)
         );
 
-        ifThenElse.setSourceLocation(extractSourceLocation(ctx));
-
-        return ifThenElse;
+        return hydrateSourceLocation(ifThenElse, ctx);
     }
 
     private List<Statement> createStatements(List<QLParser.StatementContext> statementsContext) {
@@ -108,16 +100,13 @@ public class QLASTBuilder extends AbstractParseTreeVisitor<Node> implements QLVi
         for (QLParser.StatementContext statementContext : statementsContext) {
             thenStatements.add((Statement) visit(statementContext));
         }
+
         return thenStatements;
     }
 
     @Override
     public QuestionLabel visitQuestionLabel(QLParser.QuestionLabelContext ctx) {
-        QuestionLabel questionLabel = new QuestionLabel(removeQuotes(ctx.getText()));
-
-        questionLabel.setSourceLocation(extractSourceLocation(ctx));
-
-        return questionLabel;
+        return hydrateSourceLocation(new QuestionLabel(removeQuotes(ctx.getText())), ctx);
     }
 
     private String removeQuotes(String text) {
@@ -126,242 +115,141 @@ public class QLASTBuilder extends AbstractParseTreeVisitor<Node> implements QLVi
 
     @Override
     public DecimalLiteral visitDecimalLiteral(QLParser.DecimalLiteralContext ctx) {
-        DecimalLiteral decimalLiteral = new DecimalLiteral(new BigDecimal(ctx.DECIMAL_LITERAL().getText()));
-
-        decimalLiteral.setSourceLocation(extractSourceLocation(ctx));
-
-        return decimalLiteral;
+        return hydrateSourceLocation(new DecimalLiteral(new BigDecimal(ctx.DECIMAL_LITERAL().getText())), ctx);
     }
 
     @Override
     public Negation visitNegation(QLParser.NegationContext ctx) {
-        Negation negation = new Negation((Expression) visit(ctx.expression()));
-
-        negation.setSourceLocation(extractSourceLocation(ctx));
-
-        return negation;
+        return hydrateSourceLocation(new Negation((Expression) visit(ctx.expression())), ctx);
     }
 
     @Override
     public Product visitProduct(QLParser.ProductContext ctx) {
-        Product product = new Product((Expression) visit(ctx.left), (Expression) visit(ctx.right));
-
-        product.setSourceLocation(extractSourceLocation(ctx));
-
-        return product;
+        return hydrateSourceLocation(new Product((Expression) visit(ctx.left), (Expression) visit(ctx.right)), ctx);
     }
 
     @Override
     public Increment visitIncrement(QLParser.IncrementContext ctx) {
-        Increment increment = new Increment((Expression) visit(ctx.expression()));
-        increment.setSourceLocation(extractSourceLocation(ctx));
-
-        return increment;
+        return hydrateSourceLocation(new Increment((Expression) visit(ctx.expression())), ctx);
     }
 
     @Override
     public Subtraction visitSubtraction(QLParser.SubtractionContext ctx) {
-        Subtraction subtraction = new Subtraction((Expression) visit(ctx.left), (Expression) visit(ctx.right));
-
-        subtraction.setSourceLocation(extractSourceLocation(ctx));
-
-        return subtraction;
+        return hydrateSourceLocation(new Subtraction((Expression) visit(ctx.left), (Expression) visit(ctx.right)), ctx);
     }
 
     @Override
     public NotEqual visitNotEqual(QLParser.NotEqualContext ctx) {
-        NotEqual notEqual = new NotEqual((Expression) visit(ctx.left), (Expression) visit(ctx.right));
-
-        notEqual.setSourceLocation(extractSourceLocation(ctx));
-
-        return notEqual;
+        return hydrateSourceLocation(new NotEqual((Expression) visit(ctx.left), (Expression) visit(ctx.right)), ctx);
     }
 
     @Override
     public LogicalAnd visitLogicalAnd(QLParser.LogicalAndContext ctx) {
-        LogicalAnd logicalAnd = new LogicalAnd((Expression) visit(ctx.left), (Expression) visit(ctx.right));
-
-        logicalAnd.setSourceLocation(extractSourceLocation(ctx));
-
-        return logicalAnd;
+        return hydrateSourceLocation(new LogicalAnd((Expression) visit(ctx.left), (Expression) visit(ctx.right)), ctx);
     }
 
     @Override
     public LowerThan visitLowerThan(QLParser.LowerThanContext ctx) {
-        LowerThan lowerThan = new LowerThan((Expression) visit(ctx.left), (Expression) visit(ctx.right));
-
-        lowerThan.setSourceLocation(extractSourceLocation(ctx));
-
-        return lowerThan;
+        return hydrateSourceLocation(new LowerThan((Expression) visit(ctx.left), (Expression) visit(ctx.right)), ctx);
     }
 
     @Override
     public GreaterThanOrEqual visitGreaterThanOrEqual(QLParser.GreaterThanOrEqualContext ctx) {
-        GreaterThanOrEqual greaterThanOrEqual = new GreaterThanOrEqual((Expression) visit(ctx.left), (Expression) visit(ctx.right));
-
-        greaterThanOrEqual.setSourceLocation(extractSourceLocation(ctx));
-
-        return greaterThanOrEqual;
+        return hydrateSourceLocation(new GreaterThanOrEqual((Expression) visit(ctx.left), (Expression) visit(ctx.right)), ctx);
     }
 
     @Override
     public Division visitDivision(QLParser.DivisionContext ctx) {
-        Division division = new Division((Expression) visit(ctx.left), (Expression) visit(ctx.right));
-
-        division.setSourceLocation(extractSourceLocation(ctx));
-
-        return division;
+        return hydrateSourceLocation(new Division((Expression) visit(ctx.left), (Expression) visit(ctx.right)), ctx);
     }
 
     @Override
     public Parameter visitParameter(QLParser.ParameterContext ctx) {
-        return new Parameter(new Identifier(ctx.ID().getText()));
+        return hydrateSourceLocation(new Parameter(new Identifier(ctx.ID().getText())), ctx);
     }
 
     @Override
     public Identifier visitIdentifier(QLParser.IdentifierContext ctx) {
-        Identifier identifier = new Identifier(ctx.ID().getText());
-        identifier.setSourceLocation(extractSourceLocation(ctx));
-
-        return identifier;
+        return hydrateSourceLocation(new Identifier(ctx.ID().getText()), ctx);
     }
 
     @Override
     public BooleanLiteral visitBooleanLiteral(QLParser.BooleanLiteralContext ctx) {
-        BooleanLiteral booleanLiteral = new BooleanLiteral(Boolean.parseBoolean(ctx.BOOLEAN_LITERAL().getText()));
-
-        booleanLiteral.setSourceLocation(extractSourceLocation(ctx));
-
-        return booleanLiteral;
+        return hydrateSourceLocation(new BooleanLiteral(Boolean.parseBoolean(ctx.BOOLEAN_LITERAL().getText())), ctx);
     }
 
     @Override
     public Group visitGroup(QLParser.GroupContext ctx) {
-        Group group = new Group((Expression) visit(ctx.expression()));
-        group.setSourceLocation(extractSourceLocation(ctx));
-        return group;
+        return hydrateSourceLocation(new Group((Expression) visit(ctx.expression())), ctx);
     }
 
     @Override
     public Addition visitAddition(QLParser.AdditionContext ctx) {
-        Addition addition = new Addition((Expression) visit(ctx.left), (Expression) visit(ctx.right));
-
-        addition.setSourceLocation(extractSourceLocation(ctx));
-
-        return addition;
+        return hydrateSourceLocation(new Addition((Expression) visit(ctx.left), (Expression) visit(ctx.right)), ctx);
     }
 
     @Override
     public GreaterThan visitGreaterThan(QLParser.GreaterThanContext ctx) {
-        GreaterThan greaterThan = new GreaterThan((Expression) visit(ctx.left), (Expression) visit(ctx.right));
-
-        greaterThan.setSourceLocation(extractSourceLocation(ctx));
-
-        return greaterThan;
+        return hydrateSourceLocation(new GreaterThan((Expression) visit(ctx.left), (Expression) visit(ctx.right)), ctx);
     }
 
     @Override
     public StringLiteral visitStringLiteral(QLParser.StringLiteralContext ctx) {
-        StringLiteral stringLiteral = new StringLiteral(removeQuotes(ctx.STRING_LITERAL().getText()));
-
-        stringLiteral.setSourceLocation(extractSourceLocation(ctx));
-
-        return stringLiteral;
+        return hydrateSourceLocation(new StringLiteral(removeQuotes(ctx.STRING_LITERAL().getText())), ctx);
     }
 
     @Override
     public Decrement visitDecrement(QLParser.DecrementContext ctx) {
-        Decrement decrement = new Decrement((Expression) visit(ctx.expression()));
-
-        decrement.setSourceLocation(extractSourceLocation(ctx));
-
-        return decrement;
+        return hydrateSourceLocation(new Decrement((Expression) visit(ctx.expression())), ctx);
     }
 
     @Override
     public Equals visitEquals(QLParser.EqualsContext ctx) {
-        Equals equals = new Equals((Expression) visit(ctx.left), (Expression) visit(ctx.right));
-
-        equals.setSourceLocation(extractSourceLocation(ctx));
-
-        return equals;
+        return hydrateSourceLocation(new Equals((Expression) visit(ctx.left), (Expression) visit(ctx.right)), ctx);
     }
 
     @Override
     public LowerThanOrEqual visitLowerThanOrEqual(QLParser.LowerThanOrEqualContext ctx) {
-        LowerThanOrEqual lowerThanOrEqual = new LowerThanOrEqual((Expression) visit(ctx.left), (Expression) visit(ctx.right));
-
-        lowerThanOrEqual.setSourceLocation(extractSourceLocation(ctx));
-
-        return lowerThanOrEqual;
+        return hydrateSourceLocation(new LowerThanOrEqual((Expression) visit(ctx.left), (Expression) visit(ctx.right)), ctx);
     }
 
     @Override
     public IntegerLiteral visitIntegerLiteral(QLParser.IntegerLiteralContext ctx) {
-        IntegerLiteral integerLiteral = new IntegerLiteral(Integer.parseInt(ctx.INTEGER_LITERAL().getText()));
-
-        integerLiteral.setSourceLocation(extractSourceLocation(ctx));
-
-        return integerLiteral;
+        return hydrateSourceLocation(new IntegerLiteral(Integer.parseInt(ctx.INTEGER_LITERAL().getText())), ctx);
     }
 
     @Override
     public LogicalOr visitLogicalOr(QLParser.LogicalOrContext ctx) {
-        LogicalOr logicalOr = new LogicalOr((Expression) visit(ctx.left), (Expression) visit(ctx.right));
-
-        logicalOr.setSourceLocation(extractSourceLocation(ctx));
-
-        return logicalOr;
+        return hydrateSourceLocation(new LogicalOr((Expression) visit(ctx.left), (Expression) visit(ctx.right)), ctx);
     }
 
     @Override
     public BooleanType visitTypeBoolean(QLParser.TypeBooleanContext ctx) {
-        BooleanType booleanType = new BooleanType();
-        booleanType.setSourceLocation(extractSourceLocation(ctx));
-        return booleanType;
+        return hydrateSourceLocation(new BooleanType(), ctx);
     }
 
     @Override
     public FloatType visitTypeFloat(QLParser.TypeFloatContext ctx) {
-        FloatType floatType = new FloatType();
-        floatType.setSourceLocation(extractSourceLocation(ctx));
-
-        return floatType;
+        return hydrateSourceLocation(new FloatType(), ctx);
     }
 
     @Override
     public IntegerType visitTypeInteger(QLParser.TypeIntegerContext ctx) {
-        IntegerType integerType = new IntegerType();
-        integerType.setSourceLocation(extractSourceLocation(ctx));
-
-        return integerType;
+        return hydrateSourceLocation(new IntegerType(), ctx);
     }
 
     @Override
     public StringType visitTypeString(QLParser.TypeStringContext ctx) {
-        StringType stringType = new StringType();
-        stringType.setSourceLocation(extractSourceLocation(ctx));
-
-        return stringType;
+        return hydrateSourceLocation(new StringType(), ctx);
     }
 
     @Override
     public MoneyType visitTypeMoney(QLParser.TypeMoneyContext ctx) {
-        MoneyType moneyType = new MoneyType();
-        moneyType.setSourceLocation(extractSourceLocation(ctx));
-
-        return moneyType;
+        return hydrateSourceLocation(new MoneyType(), ctx);
     }
 
     @Override
     public DateType visitTypeDate(QLParser.TypeDateContext ctx) {
-        DateType dateType = new DateType();
-        dateType.setSourceLocation(extractSourceLocation(ctx));
-
-        return dateType;
-    }
-
-    private SourceLocation extractSourceLocation(ParserRuleContext context) {
-        return new SourceLocation(context.start.getLine(), context.start.getCharPositionInLine());
+        return hydrateSourceLocation(new DateType(), ctx);
     }
 }
