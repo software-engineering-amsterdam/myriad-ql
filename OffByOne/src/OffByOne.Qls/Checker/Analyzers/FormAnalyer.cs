@@ -10,7 +10,7 @@
     using OffByOne.Qls.Checker.Analyzers.Contracts;
     using OffByOne.Qls.Checker.Analyzers.Environment;
     using OffByOne.Qls.Checker.Messages;
-    using OffByOne.Qls.Visitors.Base;
+    using OffByOne.Qls.Common.Visitors.Base;
 
     public class FormAnalyer : BaseQlsVisitor<object, FormAnalyzerEnvironment>, IAnalyzer
     {
