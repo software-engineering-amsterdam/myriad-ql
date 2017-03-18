@@ -51,11 +51,11 @@ class UIBuilder(object):
         value = variable.type.init_variable()
         field = variable.type.init_field(self, value)
 
-        value.trace('w', lambda *args: self.__tracer(variable.name))
+        value.trace('w', lambda *args: self.__tracer(variable))
         ui = {'field': field, 'label': label}
 
         self.elements.append(ui)
-        self.register.add(variable.name, variable.type, value, ui, conditions)
+        self.register.add(variable, value, ui, conditions=conditions)
         self.register.set_value(variable.name, variable.type.default_value())
 
     def add_assignation(self, text, variable, expr, conditions):
@@ -63,12 +63,12 @@ class UIBuilder(object):
         value = variable.type.init_variable()
         field = variable.type.init_field(self, value, assignation=True)
 
-        value.trace('w', lambda *args: self.__tracer(variable.name))
+        value.trace('w', lambda *args: self.__tracer(variable))
         ui = {'field': field, 'label': label}
 
         self.elements.append(ui)
-        self.register.add(variable.name, variable.type, value, ui,
-                          conditions, expr)
+        self.register.add(variable, value, ui, conditions=conditions,
+                          expression=expr)
 
     def run(self):
         """
@@ -97,4 +97,4 @@ class UIBuilder(object):
         values of the register once it is updated. It updates the variable and
         all the other variables that depends on it.
         """
-        self.register.update(variable)
+        self.register.update(variable.name)
