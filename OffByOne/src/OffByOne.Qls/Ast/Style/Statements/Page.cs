@@ -4,7 +4,7 @@
 
     using OffByOne.Qls.Ast.Style.Rules;
     using OffByOne.Qls.Ast.Style.Statements.Base;
-    using OffByOne.Qls.Visitors.Contracts;
+    using OffByOne.Qls.Common.Visitors.Contracts;
 
     public class Page : Statement
     {

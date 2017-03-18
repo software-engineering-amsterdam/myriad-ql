@@ -1,7 +1,7 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Widgets
 {
     using OffByOne.Qls.Ast.Style.Widgets.Base;
-    using OffByOne.Qls.Visitors.Contracts;
+    using OffByOne.Qls.Common.Visitors.Contracts;
 
     public class TextFieldWidget : Widget
     {

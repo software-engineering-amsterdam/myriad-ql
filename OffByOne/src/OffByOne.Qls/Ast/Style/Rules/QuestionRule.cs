@@ -5,7 +5,7 @@
     using OffByOne.Qls.Ast.Style.Properties.Base;
     using OffByOne.Qls.Ast.Style.Rules.Base;
     using OffByOne.Qls.Ast.Style.Widgets.Base;
-    using OffByOne.Qls.Visitors.Contracts;
+    using OffByOne.Qls.Common.Visitors.Contracts;
 
     public class QuestionRule : Rule
     {

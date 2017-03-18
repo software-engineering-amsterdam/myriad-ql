@@ -2,7 +2,7 @@
 {
     using OffByOne.Qls.Ast.Style.Literals;
     using OffByOne.Qls.Ast.Style.Widgets.Base;
-    using OffByOne.Qls.Visitors.Contracts;
+    using OffByOne.Qls.Common.Visitors.Contracts;
 
     public class DropDownWidget : ListWidget
     {

@@ -6,7 +6,7 @@
     using OffByOne.Ql.Common.Visitors.Contracts;
     using OffByOne.Qls.Ast.Style.Properties.Base;
     using OffByOne.Qls.Ast.Style.Widgets.Base;
-    using OffByOne.Qls.Visitors.Contracts;
+    using OffByOne.Qls.Common.Visitors.Contracts;
 
     public abstract class Rule : AstNode, IVisitibleRule
     {

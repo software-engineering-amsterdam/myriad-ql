@@ -1,7 +1,7 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Properties
 {
     using OffByOne.Qls.Ast.Style.Properties.Base;
-    using OffByOne.Qls.Visitors.Contracts;
+    using OffByOne.Qls.Common.Visitors.Contracts;
 
     using HexLiteral = OffByOne.Qls.Ast.Style.Literals.HexLiteral;
 

@@ -2,7 +2,7 @@
 {
     using OffByOne.Ql.Ast;
     using OffByOne.Ql.Common.Visitors.Contracts;
-    using OffByOne.Qls.Visitors.Contracts;
+    using OffByOne.Qls.Common.Visitors.Contracts;
 
     public abstract class Widget : AstNode, IVisitableWidget
     {
