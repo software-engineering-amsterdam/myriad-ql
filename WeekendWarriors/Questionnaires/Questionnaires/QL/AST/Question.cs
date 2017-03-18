@@ -31,7 +31,7 @@ namespace Questionnaires.QL.AST
 
         public bool CheckSemantics(QLContext context, List<Message> messages)
         {
-            // Nothing to check for a qestion
+            // Nothing to check for a question
             return true;
         }
     }
