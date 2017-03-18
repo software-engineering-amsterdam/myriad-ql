@@ -16,6 +16,10 @@ import org.uva.hatt.taxform.ast.nodes.types.*;
 import org.uva.hatt.taxform.ast.nodes.types.Boolean;
 import org.uva.hatt.taxform.ast.nodes.types.Integer;
 import org.uva.hatt.taxform.ast.nodes.types.String;
+import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.DuplicateDeclaration;
+import org.uva.hatt.taxform.ast.visitors.exceptionHandler.ExceptionHandler;
+import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.UndefinedReference;
+import org.uva.hatt.taxform.ast.visitors.exceptionHandler.warning.DuplicateLabel;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -50,11 +54,11 @@ public class TypeChecker implements Visitor{
     @Override
     public Question visit(Question node){
         if (declarations.containsKey(node.getValue())) {
-            exceptionHandler.addError(new Error(ErrorType.DUPLICATE_DECLARATION, node.getLineNumber(), node.getValue()));
+            exceptionHandler.addError(new DuplicateDeclaration(node.getLineNumber(), node.getValue()));
         }
 
         if (questions.contains(node.getQuestion().toLowerCase())) {
-            exceptionHandler.addError(new Error(ErrorType.DUPLICATE_LABEL, node.getLineNumber(), node.getQuestion()));
+            exceptionHandler.addWarning(new DuplicateLabel(node.getLineNumber(), node.getQuestion()));
         }
 
         declarations.put(node.getValue(), node.getType());
@@ -130,7 +134,7 @@ public class TypeChecker implements Visitor{
             return declarations.get(identifier.getId());
         }
 
-        exceptionHandler.addError(new Error(ErrorType.UNDEFINED_REFERENCE, identifier.getLineNumber(), identifier.getId()));
+        exceptionHandler.addError(new UndefinedReference(identifier.getLineNumber(), identifier.getId()));
         return null;
     }
 
