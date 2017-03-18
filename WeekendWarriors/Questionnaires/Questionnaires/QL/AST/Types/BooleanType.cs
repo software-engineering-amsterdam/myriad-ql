@@ -1,6 +1,6 @@
 ﻿using Questionnaires.UI.Widgets;
 
-namespace Questionnaires.Types
+namespace Questionnaires.QL.AST.Types
 {
     public class BooleanType : Type<bool>
     {

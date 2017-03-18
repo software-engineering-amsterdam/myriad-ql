@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Questionnaires.UI.Widgets
@@ -31,7 +32,7 @@ namespace Questionnaires.UI.Widgets
             return trueButton.IsChecked == true;
         }
 
-        private void Button_Checked(object sender, System.Windows.RoutedEventArgs e)
+        private void Button_Checked(object sender, RoutedEventArgs e)
         {
             OnValueChanged(new EventArgs());
         }

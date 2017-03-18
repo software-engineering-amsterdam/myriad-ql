@@ -1,4 +1,4 @@
-﻿namespace Questionnaires.Types
+﻿namespace Questionnaires.QL.AST.Types
 {
     public interface IType
     {

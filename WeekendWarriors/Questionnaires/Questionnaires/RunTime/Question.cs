@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Questionnaires.QL.AST.Types;
+using Questionnaires.QLS.AST.Widgets;
+using Questionnaires.UI.Widgets;
+using Questionnaires.UI.Widgets.Style;
+using System;
 using System.Diagnostics;
 using System.Windows.Controls;
 
@@ -6,9 +10,9 @@ namespace Questionnaires.RunTime
 {
     public class Question
     {
-        private Questionnaires.UI.Widgets.QuestionWidget Widget;
+        private QuestionWidget Widget;
         private QL.AST.Question ASTNode;
-        private Types.IType Value;
+        private IType Value;
 
         public Question(QL.AST.Question questionASTNode)
         {
@@ -22,7 +26,7 @@ namespace Questionnaires.RunTime
             get { return ASTNode.Identifier; }
         }        
 
-        public void SetWidget(QLS.AST.Widgets.Widget widget)
+        public void SetWidget(Widget widget)
         {
             SetWidget(widget.CreateWidget((dynamic)Value));
         }
@@ -32,24 +36,24 @@ namespace Questionnaires.RunTime
             target.Children.Add(Widget);
         }
 
-        public void SetStyle(UI.Widgets.Style.WidgetStyle style) // TODO: I think this can be removed once we properly refactor the style creation in the QLS processor
+        public void SetStyle(WidgetStyle style) // TODO: I think this can be removed once we properly refactor the style creation in the QLS processor
         {
             Widget.SetStyle(style);
         }
 
-        public Types.IType GetValue()
+        public IType GetValue()
         {
             return Value;
         }        
 
-        private void SetWidget(UI.Widgets.QuestionWidget widget)
+        private void SetWidget(QuestionWidget widget)
         {
             Widget = widget;
             Widget.SetLabel(ASTNode.Body);
             Widget.InputChanged += (sender, value) => SetValue(value);
         }
 
-        public void SetValue(Types.IType value)
+        public void SetValue(IType value)
         {
             Debug.Assert(value.GetType() == ASTNode.Type.GetType()); 
 

@@ -2,7 +2,7 @@
 using Questionnaires.ErrorHandling;
 using Questionnaires.QL.AST.Literals;
 using Questionnaires.QL.AST.Operators;
-using Questionnaires.Types;
+using Questionnaires.QL.AST.Types;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,7 +20,7 @@ namespace Questionnaires.QL.AST
             CSTBuilder = new CSTBuilder(Messages);
         }
 
-        public AST.Form BuildForm(string input)
+        public Form BuildForm(string input)
         {
             var CST = CSTBuilder.BuildForm(input);
             if (Messages.ContainsErrors())
@@ -29,7 +29,7 @@ namespace Questionnaires.QL.AST
             return Visit(CST) as Form;
         }
 
-        public AST.IExpression BuildExpression(string input)
+        public IExpression BuildExpression(string input)
         {
             var CST = CSTBuilder.BuildExpression(input);
             if (Messages.ContainsErrors())
@@ -38,7 +38,7 @@ namespace Questionnaires.QL.AST
             return Visit(CST) as IExpression;
         }
 
-        public AST.ComputedQuestion BuildComputedQuestion(string input)
+        public ComputedQuestion BuildComputedQuestion(string input)
         {
             var CST = CSTBuilder.BuildComputedQuestion(input);
             if (Messages.ContainsErrors())

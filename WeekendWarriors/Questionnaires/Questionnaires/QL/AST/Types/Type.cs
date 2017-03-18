@@ -1,7 +1,7 @@
 ﻿using Questionnaires.UI.Widgets;
 using System;
 
-namespace Questionnaires.Types
+namespace Questionnaires.QL.AST.Types
 {
     public abstract class Type<T> : IType
     {

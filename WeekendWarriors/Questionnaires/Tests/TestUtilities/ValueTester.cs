@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Questionnaires.Types;
+using Questionnaires.QL.AST.Types;
 using System;
 using System.Reflection;
 

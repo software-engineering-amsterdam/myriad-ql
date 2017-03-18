@@ -1,7 +1,7 @@
 ﻿using Questionnaires.QL.AST;
 using Questionnaires.ErrorHandling;
 
-namespace Questionnaires.SemanticAnalysis
+namespace Questionnaires.QL.SemanticAnalysis
 {
     class DeclarationValidator
     {

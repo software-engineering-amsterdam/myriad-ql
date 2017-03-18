@@ -2,6 +2,7 @@
 using Antlr4.Runtime.Misc;
 using System.Diagnostics;
 using Questionnaires.ErrorHandling;
+using Questionnaires.QL.AST.Types;
 
 namespace Questionnaires.QLS.AST
 {
@@ -120,16 +121,16 @@ namespace Questionnaires.QLS.AST
             throw new InvalidProgramException();
         }
 
-        private Types.IType GetTypeFromStyleContext(QLSParser.DefaultStyleContext context)
+        private IType GetTypeFromStyleContext(QLSParser.DefaultStyleContext context)
         {
             var type = context.Type().GetText();
             Debug.Assert(type == "boolean" || type == "int" || type == "string" || type == "money");
             switch (type)
             {
-                case "boolean": return new Questionnaires.Types.BooleanType(); 
-                case "int": return new Questionnaires.Types.IntegerType();
-                case "string": return new Questionnaires.Types.StringType(); 
-                case "money": return new Questionnaires.Types.MoneyType();                     
+                case "boolean": return new BooleanType(); 
+                case "int": return new IntegerType();
+                case "string": return new StringType(); 
+                case "money": return new MoneyType();                     
             }
             throw new InvalidProgramException();
         }

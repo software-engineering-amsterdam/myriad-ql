@@ -1,5 +1,5 @@
-﻿using Questionnaires.SemanticAnalysis;
-using Questionnaires.Types;
+﻿using Questionnaires.QL.SemanticAnalysis;
+using Questionnaires.QL.AST.Types;
 
 namespace Questionnaires.QL.AST.Operators
 {

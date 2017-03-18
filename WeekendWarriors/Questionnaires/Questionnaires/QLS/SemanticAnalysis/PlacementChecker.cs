@@ -1,9 +1,5 @@
 ﻿using Questionnaires.ErrorHandling;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Questionnaires.QLS.SemanticAnalysis
 {
@@ -15,7 +11,7 @@ namespace Questionnaires.QLS.SemanticAnalysis
         Result Result;
 
         public PlacementChecker(Result result, IEnumerable<RunTime.Question> questionsInQL)
-        {            
+        {
             Result = result;
 
             foreach (var question in questionsInQL)
@@ -48,9 +44,9 @@ namespace Questionnaires.QLS.SemanticAnalysis
 
         public void CheckIfAllQuestionsArePlaced()
         {
-            foreach(var QLQuestion in QLQuestions.Values)
+            foreach (var QLQuestion in QLQuestions.Values)
             {
-                if(!PlacedQuestions.Contains(QLQuestion))
+                if (!PlacedQuestions.Contains(QLQuestion))
                 {
                     Result.AddEvent(new Error(string.Format("Question {0} in the QL file is notplaced by the QLS file", QLQuestion.Identifier)));
                 }

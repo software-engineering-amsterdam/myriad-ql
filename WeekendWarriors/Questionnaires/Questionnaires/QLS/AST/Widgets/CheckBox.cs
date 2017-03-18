@@ -1,5 +1,5 @@
 ﻿using Questionnaires.UI.Widgets;
-using Questionnaires.Types;
+using Questionnaires.QL.AST.Types;
 
 namespace Questionnaires.QLS.AST.Widgets
 {

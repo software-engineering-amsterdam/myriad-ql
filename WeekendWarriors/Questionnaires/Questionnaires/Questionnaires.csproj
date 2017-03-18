@@ -128,7 +128,6 @@
     <Compile Include="QL\AST\Operators\Multiply.cs" />
     <Compile Include="QL\AST\Operators\Or.cs" />
     <Compile Include="QL\AST\Operators\Subtraction.cs" />
-    <Compile Include="QL\AST\Visitor\IASTVisitor.cs" />
     <Compile Include="QL\AST\IExpression.cs" />
     <Compile Include="QL\AST\Operators\Bang.cs" />
     <Compile Include="QL\AST\Operators\Negative.cs" />

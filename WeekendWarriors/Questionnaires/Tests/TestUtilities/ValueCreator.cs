@@ -1,4 +1,4 @@
-﻿using Questionnaires.Types;
+﻿using Questionnaires.QL.AST.Types;
 using System;
 
 namespace Tests.QL.Value

@@ -1,7 +1,7 @@
 ﻿using Questionnaires.QL.AST;
 using Questionnaires.RunTime.DocumentModel;
 using Questionnaires.RunTime;
-using Questionnaires.Types;
+using Questionnaires.QL.AST.Types;
 using System;
 using System.Collections.Generic;
 

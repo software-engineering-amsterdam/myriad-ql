@@ -1,4 +1,5 @@
 ﻿using Questionnaires.UI.Widgets;
+using Questionnaires.QL.AST.Types;
 
 namespace Questionnaires.QLS.AST.Widgets
 {
@@ -6,12 +7,12 @@ namespace Questionnaires.QLS.AST.Widgets
     {
         // TODO: Add support to slider for different types
 
-        public override QuestionWidget CreateWidget(Types.IntegerType type)
+        public override QuestionWidget CreateWidget(IntegerType type)
         {
             return new SliderWidget();
         }
 
-        public override QuestionWidget CreateWidget(Types.MoneyType type)
+        public override QuestionWidget CreateWidget(MoneyType type)
         {
             return new SliderWidget();
         }

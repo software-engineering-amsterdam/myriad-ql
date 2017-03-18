@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Questionnaires.UI;
+using System;
 using System.Collections.Generic;
 
 namespace Questionnaires.RunTime
@@ -6,10 +7,10 @@ namespace Questionnaires.RunTime
     class QuestionnaireBuilder
     {
         private DocumentModel.DocumentModel DocumentModel;
-        private List<RunTime.Question> Questions = new List<RunTime.Question>();
+        private List<Question> Questions = new List<Question>();
         private List<Action<ExpressionEvaluator>> Rules = new List<Action<ExpressionEvaluator>>();
 
-        public QuestionnaireBuilder(List<RunTime.Question> questions, List<Action<ExpressionEvaluator>> rules, DocumentModel.DocumentModel documentModel)
+        public QuestionnaireBuilder(List<Question> questions, List<Action<ExpressionEvaluator>> rules, DocumentModel.DocumentModel documentModel)
         {
             Questions = questions;
             Rules = rules;
@@ -20,9 +21,9 @@ namespace Questionnaires.RunTime
         {
             // Create the run-time objects 
             var questionStore = new QuestionStore(Questions);
-            var renderer = new UI.Renderer();
+            var renderer = new Renderer();
             var expressionEvaluator = new ExpressionEvaluator(questionStore);
-            var ruleContainer = new RuleContainer.RuleContainer(expressionEvaluator, Rules);
+            var ruleContainer = new RuleContainer(expressionEvaluator, Rules);
 
             renderer.RenderModel(DocumentModel);         
             ConntectRunTimeObjects(questionStore, ruleContainer);
@@ -31,7 +32,7 @@ namespace Questionnaires.RunTime
             ruleContainer.ApplyRules();
         }
 
-        private static void ConntectRunTimeObjects(QuestionStore questionStore, RuleContainer.RuleContainer ruleContainer)
+        private static void ConntectRunTimeObjects(QuestionStore questionStore, RuleContainer ruleContainer)
         {
             questionStore.VariableChanged += (sender, args) =>
             {

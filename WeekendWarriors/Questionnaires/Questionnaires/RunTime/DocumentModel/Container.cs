@@ -7,7 +7,7 @@ namespace Questionnaires.RunTime.DocumentModel
     {
         protected string Name { get; set; }
         private List<Section> Sections;
-        private List<RunTime.Question> Questions;
+        private List<Question> Questions;
 
         public Container(string name)
         {
@@ -21,7 +21,7 @@ namespace Questionnaires.RunTime.DocumentModel
             Sections.Add(section);
         }
 
-        public void AddQuestion(RunTime.Question question)
+        public void AddQuestion(Question question)
         {
             Questions.Add(question);
         }

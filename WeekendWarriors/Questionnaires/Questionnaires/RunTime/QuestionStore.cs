@@ -1,15 +1,15 @@
-﻿using System;
+﻿using Questionnaires.QL.AST.Types;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-
 
 namespace Questionnaires.RunTime
 {
     public class QuestionStore
     {
-        private Dictionary<string, RunTime.Question> Questions = new Dictionary<string, RunTime.Question>();
+        private Dictionary<string, Question> Questions = new Dictionary<string, Question>();
 
-        public QuestionStore(IEnumerable<RunTime.Question> questions)
+        public QuestionStore(IEnumerable<Question> questions)
         {
             foreach(var question in questions)
             {
@@ -19,7 +19,7 @@ namespace Questionnaires.RunTime
             }
         }
 
-        public Questionnaires.Types.IType GetValue(string name)
+        public IType GetValue(string name)
         {
             Debug.Assert(Questions.ContainsKey(name));
             return Questions[name].GetValue();

@@ -1,10 +1,10 @@
 ﻿using Questionnaires.ErrorHandling;
-using Questionnaires.SemanticAnalysis;
-using Questionnaires.Types;
+using Questionnaires.QL.SemanticAnalysis;
+using Questionnaires.QL.AST.Types;
 using System;
 using System.Collections.Generic;
 
-namespace Questionnaires.QL.AST
+namespace Questionnaires.QL.AST.Operators
 {
     public abstract class Binary : IExpression
     {

@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using Questionnaires.Types;
+using Questionnaires.QL.AST.Types;
 using Questionnaires.UI.Widgets.Style;
 using System.Windows;
 using System.Windows.Media;

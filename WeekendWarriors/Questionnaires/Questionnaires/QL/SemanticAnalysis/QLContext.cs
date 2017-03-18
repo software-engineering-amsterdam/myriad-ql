@@ -1,7 +1,7 @@
-﻿using Questionnaires.Types;
+﻿using Questionnaires.QL.AST.Types;
 using System.Collections.Generic;
 
-namespace Questionnaires.SemanticAnalysis
+namespace Questionnaires.QL.SemanticAnalysis
 {
     public class QLContext
     {

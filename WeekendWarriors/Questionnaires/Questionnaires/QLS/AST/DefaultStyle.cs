@@ -1,14 +1,16 @@
 ﻿using System.Collections.Generic;
+using Questionnaires.QL.AST.Types;
+using Questionnaires.QLS.AST.Widgets;
 
 namespace Questionnaires.QLS.AST
 {
     public class DefaultStyle : INode
     {
-        public Questionnaires.Types.IType Type { get; }
+        public IType Type { get; }
         public Dictionary<string, string> Properties { get; }
-        public Widgets.Widget Widget { get; }
+        public Widget Widget { get; }
 
-        public DefaultStyle(Questionnaires.Types.IType type, Widgets.Widget widget)
+        public DefaultStyle(IType type, Widget widget)
         {
             Properties = new Dictionary<string, string>();
             Type = type;

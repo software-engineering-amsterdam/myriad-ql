@@ -1,4 +1,4 @@
-﻿using Questionnaires.Types;
+﻿using Questionnaires.QL.AST.Types;
 using System.Diagnostics;
 using System.Windows.Controls;
 
@@ -21,7 +21,7 @@ namespace Questionnaires.UI.Widgets
 
             ComboBox.SelectionChanged += (sender, args) =>
             {
-                bool value = (sender as ComboBox).SelectedItem as string == "Yes";
+                var value = (sender as ComboBox).SelectedItem as string == "Yes";
                 OnInputChanged(new BooleanType(value));
             };
         }

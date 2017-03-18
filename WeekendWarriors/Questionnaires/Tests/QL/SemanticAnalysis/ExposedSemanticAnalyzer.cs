@@ -1,5 +1,5 @@
 ﻿using Questionnaires.ErrorHandling;
-using Questionnaires.SemanticAnalysis;
+using Questionnaires.QL.SemanticAnalysis;
 
 namespace Tests.QL.SemanticAnalysis
 {

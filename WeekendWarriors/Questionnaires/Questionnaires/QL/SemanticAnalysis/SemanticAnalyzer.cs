@@ -1,6 +1,7 @@
 ﻿using Questionnaires.ErrorHandling;
+using Questionnaires.QL.AST;
 
-namespace Questionnaires.SemanticAnalysis
+namespace Questionnaires.QL.SemanticAnalysis
 {
     public class SemanticAnalyzer
     {
@@ -11,12 +12,12 @@ namespace Questionnaires.SemanticAnalysis
             Result = result;
         }
 
-        public void AnalyzeForm(QL.AST.Form form)
+        public void AnalyzeForm(Form form)
         {
             AnalyzeAstNode(form);
         }
 
-        protected void AnalyzeAstNode(QL.AST.INode node)
+        protected void AnalyzeAstNode(INode node)
         {
             QLContext Context = new QLContext();
 

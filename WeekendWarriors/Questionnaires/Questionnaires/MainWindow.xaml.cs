@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using Questionnaires.ErrorHandling;
+using Questionnaires.QL.SemanticAnalysis;
 
 namespace Questionnaires
 {
@@ -83,7 +84,7 @@ namespace Questionnaires
             if (result.ContainsErrors())
                 return;
 
-            var semanticAnalyzer = new SemanticAnalysis.SemanticAnalyzer(result);
+            var semanticAnalyzer = new SemanticAnalyzer(result);
             semanticAnalyzer.AnalyzeForm(FormAST);
 
             if (result.ContainsErrors())
