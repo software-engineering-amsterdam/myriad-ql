@@ -2,6 +2,7 @@
 using Questionnaires.QL.AST;
 using System;
 using System.Collections.Generic;
+using Questionnaires.ErrorHandling;
 
 namespace Tests.QL.AST
 {
@@ -18,7 +19,7 @@ namespace Tests.QL.AST
         [TestInitialize]
         public void SetupTestFactory()
         {
-            astFactory = new ASTBuilder(new Questionnaires.Compilation.Result());
+            astFactory = new ASTBuilder(new Result());
         }
 
         [TestMethod]

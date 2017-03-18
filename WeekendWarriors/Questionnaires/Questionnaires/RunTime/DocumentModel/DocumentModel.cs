@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Controls;
 
-namespace Questionnaires.Renderer.Containers
+namespace Questionnaires.RunTime.DocumentModel
 {
     public class DocumentModel
     {

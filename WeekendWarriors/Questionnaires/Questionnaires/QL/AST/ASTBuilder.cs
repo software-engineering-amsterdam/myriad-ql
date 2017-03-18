@@ -1,4 +1,5 @@
 ﻿using Antlr4.Runtime.Misc;
+using Questionnaires.ErrorHandling;
 using Questionnaires.QL.AST.Literals;
 using Questionnaires.QL.AST.Operators;
 using Questionnaires.Types;
@@ -10,10 +11,10 @@ namespace Questionnaires.QL.AST
 {
     public class ASTBuilder : QLBaseVisitor<INode>
     {
-        private Compilation.Result Messages;
+        private Result Messages;
         private CSTBuilder CSTBuilder;
 
-        public ASTBuilder(Compilation.Result result)
+        public ASTBuilder(Result result)
         {
             Messages = result;
             CSTBuilder = new CSTBuilder(Messages);
@@ -23,7 +24,7 @@ namespace Questionnaires.QL.AST
         {
             var CST = CSTBuilder.BuildForm(input);
             if (Messages.ContainsErrors())
-                throw new Compilation.ParseException();
+                throw new ParseException();
 
             return Visit(CST) as Form;
         }
@@ -32,7 +33,7 @@ namespace Questionnaires.QL.AST
         {
             var CST = CSTBuilder.BuildExpression(input);
             if (Messages.ContainsErrors())
-                throw new Compilation.ParseException();
+                throw new ParseException();
 
             return Visit(CST) as IExpression;
         }
@@ -41,7 +42,7 @@ namespace Questionnaires.QL.AST
         {
             var CST = CSTBuilder.BuildComputedQuestion(input);
             if (Messages.ContainsErrors())
-                throw new Compilation.ParseException();
+                throw new ParseException();
 
             return Visit(CST) as ComputedQuestion;
         }

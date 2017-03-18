@@ -1,7 +1,7 @@
 ﻿using Questionnaires.Types;
 using System.Diagnostics;
 
-namespace Questionnaires.Renderer.Widgets
+namespace Questionnaires.UI.Widgets
 {
     class RadioWidget : QuestionWidget
     {

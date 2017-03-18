@@ -1,8 +1,8 @@
-﻿using Questionnaires.Renderer.Containers;
+﻿using Questionnaires.RunTime.DocumentModel;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Questionnaires.Renderer
+namespace Questionnaires.UI
 {
     public class Renderer
     {

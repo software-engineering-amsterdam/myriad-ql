@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
 
-namespace Questionnaires.Renderer.Widgets
+namespace Questionnaires.UI.Widgets
 {
     class BinaryRadioGroup : StackPanel
     {

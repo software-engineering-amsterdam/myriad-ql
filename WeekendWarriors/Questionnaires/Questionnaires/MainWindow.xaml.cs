@@ -1,10 +1,11 @@
 ﻿using Questionnaires.QL.AST;
 using Questionnaires.QLS.AST;
-using Questionnaires.Renderer.Containers;
+using Questionnaires.RunTime.DocumentModel;
 using Questionnaires.RunTime;
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using Questionnaires.ErrorHandling;
 
 namespace Questionnaires
 {
@@ -20,7 +21,7 @@ namespace Questionnaires
             bool useStyling = !String.IsNullOrEmpty(InputQLS.Text);
             ClearOutputWindow();
 
-            Compilation.Result result = new Compilation.Result();
+            var result = new Result();
 
             // TODO: the way we use exceptions for flow control here is bad.
             try
@@ -43,11 +44,11 @@ namespace Questionnaires
                     qlsProcessor.Process(stylesheetAST);
                 }
 
-                var QuestionnaireBuilder = new QuestionnaireBuilder.QuestionnaireBuilder(Questions, Rules, DocumentModel);
+                var QuestionnaireBuilder = new QuestionnaireBuilder(Questions, Rules, DocumentModel);
                 QuestionnaireBuilder.Build();
 
             }
-            catch (Questionnaires.Compilation.ParseException)
+            catch (Questionnaires.ErrorHandling.ParseException)
             {
                 PrintMessages(result);
             }
@@ -57,7 +58,7 @@ namespace Questionnaires
             }
         }
 
-        private static void AnalyzeStylesheet(Compilation.Result result, List<RunTime.Question> Questions, StyleSheet stylesheetAST)
+        private static void AnalyzeStylesheet(Result result, List<RunTime.Question> Questions, StyleSheet stylesheetAST)
         {
             var semanticAnalyzerQLS = new QLS.SemanticAnalysis.Analyzer(result, Questions);
             var semanticMessages = semanticAnalyzerQLS.Analyze(stylesheetAST);
@@ -65,7 +66,7 @@ namespace Questionnaires
                 throw new Exception();
         }
 
-        private StyleSheet BuildStylesheetAST(Compilation.Result result)
+        private StyleSheet BuildStylesheetAST(Result result)
         {
             var qlsAstBuilder = new QLS.AST.ASTBuilder(result);
             var stylesheetAST = qlsAstBuilder.BuildStylesheet(InputQLS.Text);
@@ -77,7 +78,7 @@ namespace Questionnaires
             Output.Text = "";
         }
 
-        private static void AnalyzeFormAST(Compilation.Result result, Form FormAST)
+        private static void AnalyzeFormAST(Result result, Form FormAST)
         {
             if (result.ContainsErrors())
                 return;
@@ -89,13 +90,13 @@ namespace Questionnaires
                 throw new Exception();
         }
 
-        private QL.AST.Form BuildFormAST(Compilation.Result result)
+        private QL.AST.Form BuildFormAST(Result result)
         {
             var qlAstBuilder = new QL.AST.ASTBuilder(result);
             return qlAstBuilder.BuildForm(InputQL.Text);
         }
 
-        private void PrintMessages(Compilation.Result result)
+        private void PrintMessages(Result result)
         {
             foreach (var message in result.Events)
                 Output.Text += message.ToString() + '\n';

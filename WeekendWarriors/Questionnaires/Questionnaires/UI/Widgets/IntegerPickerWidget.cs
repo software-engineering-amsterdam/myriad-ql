@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using Xceed.Wpf.Toolkit;
 
-namespace Questionnaires.Renderer.Widgets
+namespace Questionnaires.UI.Widgets
 {
     class IntegerPickerWidget : QuestionWidget
     {

@@ -6,7 +6,7 @@ namespace Questionnaires.RunTime
 {
     public class Question
     {
-        private Questionnaires.Renderer.Widgets.QuestionWidget Widget;
+        private Questionnaires.UI.Widgets.QuestionWidget Widget;
         private QL.AST.Question ASTNode;
         private Types.IType Value;
 
@@ -32,7 +32,7 @@ namespace Questionnaires.RunTime
             target.Children.Add(Widget);
         }
 
-        public void SetStyle(Renderer.Style.WidgetStyle style) // TODO: I think this can be removed once we properly refactor the style creation in the QLS processor
+        public void SetStyle(UI.Widgets.Style.WidgetStyle style) // TODO: I think this can be removed once we properly refactor the style creation in the QLS processor
         {
             Widget.SetStyle(style);
         }
@@ -42,7 +42,7 @@ namespace Questionnaires.RunTime
             return Value;
         }        
 
-        private void SetWidget(Renderer.Widgets.QuestionWidget widget)
+        private void SetWidget(UI.Widgets.QuestionWidget widget)
         {
             Widget = widget;
             Widget.SetLabel(ASTNode.Body);

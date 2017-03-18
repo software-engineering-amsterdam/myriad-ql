@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Questionnaires.Renderer.Style
+namespace Questionnaires.UI.Widgets.Style
 {
     public class WidgetStyle
     {

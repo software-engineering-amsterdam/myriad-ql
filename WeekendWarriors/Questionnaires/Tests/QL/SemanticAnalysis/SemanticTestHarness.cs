@@ -1,18 +1,19 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Questionnaires.QL.AST;
 using Questionnaires.SemanticAnalysis;
+using Questionnaires.ErrorHandling;
 
 namespace Tests.QL.SemanticAnalysis
 {
     public class SemanticTestHarness
     {
         protected uint ErrorCount = 0;
-        protected ASTBuilder ASTFactory = new ASTBuilder(new Questionnaires.Compilation.Result());
+        protected ASTBuilder ASTFactory = new ASTBuilder(new Result());
 
         public void TestExpression(string input, int exprectedErrorCount, string failureMessage)
         {
-            Questionnaires.Compilation.Result result = new Questionnaires.Compilation.Result();
-            ExposedSemanticAnalyzer SemanticAnalyzer = new ExposedSemanticAnalyzer(result);
+            var result = new Result();
+            var SemanticAnalyzer = new ExposedSemanticAnalyzer(result);
             var node = ASTFactory.BuildExpression(input);
             SemanticAnalyzer.AnalyzeAstNode(node);
 
@@ -21,8 +22,8 @@ namespace Tests.QL.SemanticAnalysis
 
         public void TestForm(string input, int exprectedErrorCount, string failureMessage)
         {
-            Questionnaires.Compilation.Result result = new Questionnaires.Compilation.Result();
-            SemanticAnalyzer SemanticAnalyzer = new SemanticAnalyzer(result);
+            var result = new Result();
+            var SemanticAnalyzer = new SemanticAnalyzer(result);
             var node = ASTFactory.BuildForm(input);
             SemanticAnalyzer.AnalyzeForm(node);
 
@@ -31,8 +32,8 @@ namespace Tests.QL.SemanticAnalysis
 
         public void TestComputedQuestion(string input, int exprectedErrorCount, string failureMessage)
         {
-            Questionnaires.Compilation.Result result = new Questionnaires.Compilation.Result();
-            ExposedSemanticAnalyzer SemanticAnalyzer = new ExposedSemanticAnalyzer(result);
+            var result = new Result();
+            var SemanticAnalyzer = new ExposedSemanticAnalyzer(result);
             var node = ASTFactory.BuildComputedQuestion(input);
             SemanticAnalyzer.AnalyzeAstNode(node);
 

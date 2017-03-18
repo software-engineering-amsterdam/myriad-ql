@@ -1,16 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using Questionnaires.ErrorHandling;
+using System.Collections.Generic;
 
 namespace Questionnaires.SemanticAnalysis
 {
     public class TypeChecker
     {
         private QLContext Context;
-        private Compilation.Result result = new Compilation.Result();
+        private Result result = new Result();
 
-        public Compilation.Result Analyze(QL.AST.INode node, QLContext context)
+        public Result Analyze(QL.AST.INode node, QLContext context)
         {
             Context = context;
-            List<Compilation.Message> messages = new List<Compilation.Message>();
+            List<Message> messages = new List<Message>();
             node.CheckSemantics(context, messages);
 
             foreach (var message in messages)

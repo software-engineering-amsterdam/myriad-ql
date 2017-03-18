@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Questionnaires.Compilation
+namespace Questionnaires.ErrorHandling
 {
     public class ParseException : Exception
     {

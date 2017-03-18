@@ -1,10 +1,12 @@
-﻿namespace Questionnaires.SemanticAnalysis
+﻿using Questionnaires.ErrorHandling;
+
+namespace Questionnaires.SemanticAnalysis
 {
     public class SemanticAnalyzer
     {
-        private Compilation.Result Result;
+        private Result Result;
 
-        public SemanticAnalyzer(Compilation.Result result)
+        public SemanticAnalyzer(Result result)
         {
             Result = result;
         }

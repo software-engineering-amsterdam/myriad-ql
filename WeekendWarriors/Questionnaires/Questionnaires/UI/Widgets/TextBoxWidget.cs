@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Controls;
 
-namespace Questionnaires.Renderer.Widgets
+namespace Questionnaires.UI.Widgets
 {
     class TextBoxWidget : QuestionWidget
     {

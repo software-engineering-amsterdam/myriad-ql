@@ -1,12 +1,13 @@
 ﻿using Antlr4.Runtime;
+using Questionnaires.ErrorHandling;
 
 namespace Questionnaires.QL.AST
 {
     class CSTBuilder
     {
-        private Compilation.Result Messages;
+        private Result Messages;
 
-        public CSTBuilder(Compilation.Result result)
+        public CSTBuilder(Result result)
         {
             Messages = result;
         }

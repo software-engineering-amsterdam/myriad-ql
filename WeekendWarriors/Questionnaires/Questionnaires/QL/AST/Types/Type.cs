@@ -1,4 +1,4 @@
-﻿using Questionnaires.Renderer.Widgets;
+﻿using Questionnaires.UI.Widgets;
 using System;
 
 namespace Questionnaires.Types

@@ -21,6 +21,6 @@
         BooleanType EqualTo(IType value);
         BooleanType InequalTo(IType value);
 
-        Questionnaires.Renderer.Widgets.QuestionWidget GetWidget();
+        Questionnaires.UI.Widgets.QuestionWidget GetWidget();
     }
 }

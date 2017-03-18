@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
 
-namespace Questionnaires.Compilation
+namespace Questionnaires.ErrorHandling
 {
     public class Result
     {
         private bool ContainsError = false;
-        public List<Compilation.Message> Events { get; }
+        public List<Message> Events { get; }
 
         public Result()
         {
-            Events = new List<Compilation.Message>();
+            Events = new List<Message>();
         }      
 
-        public void AddEvent(Compilation.Message analysisEvent)
+        public void AddEvent(Message analysisEvent)
         {
             if (analysisEvent.IsError())
                 ContainsError = true;

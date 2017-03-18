@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Questionnaires.QLS.AST;
-using Questionnaires.Renderer.Style;
-using Questionnaires.Renderer.Containers;
+using Questionnaires.UI.Widgets.Style;
+using Questionnaires.RunTime.DocumentModel;
 
 namespace Questionnaires.QLS.Processing
 {
@@ -27,13 +27,13 @@ namespace Questionnaires.QLS.Processing
             }
         }
 
-        private Renderer.Containers.Page Visit(QLS.AST.Page page)
+        private RunTime.DocumentModel.Page Visit(QLS.AST.Page page)
         {
             /* Push the default style of this page into the stack
             so child sections can use them */
             AddStylesToStack(page.DefaultStyles);
 
-            var pageContainer = new Renderer.Containers.Page(page.Name);
+            var pageContainer = new RunTime.DocumentModel.Page(page.Name);
             foreach (var section in page.Sections)
             {
                 pageContainer.AddSection(Visit((dynamic)section));
@@ -45,13 +45,13 @@ namespace Questionnaires.QLS.Processing
             return pageContainer;
         }
 
-        private Renderer.Containers.Section Visit(QLS.AST.Section section)
+        private RunTime.DocumentModel.Section Visit(QLS.AST.Section section)
         {
             /* Push the default styles of this section onto the stack
              * so child sections/questions can use them */
             AddStylesToStack(section.Styles);
 
-            var sectionContainer = new Renderer.Containers.Section(section.Name);
+            var sectionContainer = new RunTime.DocumentModel.Section(section.Name);
             foreach (var question in section.Questions)
             {
                 sectionContainer.AddQuestion(Visit((dynamic)question));

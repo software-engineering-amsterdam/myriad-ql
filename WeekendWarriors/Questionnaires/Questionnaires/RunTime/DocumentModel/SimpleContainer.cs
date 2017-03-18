@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Questionnaires.Renderer.Containers
+namespace Questionnaires.RunTime.DocumentModel
 {
     /* Abstact class for very simple container types. The container is nothing more than a 
      * stack panel with a header. Scope is shown solely by indentation */

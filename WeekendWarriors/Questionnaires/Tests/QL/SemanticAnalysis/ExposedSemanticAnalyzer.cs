@@ -1,4 +1,5 @@
-﻿using Questionnaires.SemanticAnalysis;
+﻿using Questionnaires.ErrorHandling;
+using Questionnaires.SemanticAnalysis;
 
 namespace Tests.QL.SemanticAnalysis
 {
@@ -6,7 +7,7 @@ namespace Tests.QL.SemanticAnalysis
      * unit tests since we are unable to uniquely verify certain properties at the form level */
     public class ExposedSemanticAnalyzer : SemanticAnalyzer
     {
-        public ExposedSemanticAnalyzer(Questionnaires.Compilation.Result result) : base(result)
+        public ExposedSemanticAnalyzer(Result result) : base(result)
         {
 
         }

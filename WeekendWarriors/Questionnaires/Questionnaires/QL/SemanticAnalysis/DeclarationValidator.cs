@@ -1,5 +1,5 @@
 ﻿using Questionnaires.QL.AST;
-using Questionnaires.Compilation;
+using Questionnaires.ErrorHandling;
 
 namespace Questionnaires.SemanticAnalysis
 {
@@ -50,9 +50,9 @@ namespace Questionnaires.SemanticAnalysis
              * If it is of another type, it is an error */
             var storedType = Context.GetQuestionType(node.Identifier);
             if (storedType.GetType() == node.Type.GetType())
-                result.AddEvent(new Compilation.Warning(string.Format("Redeclaration of question {0}", node.Identifier)));
+                result.AddEvent(new Warning(string.Format("Redeclaration of question {0}", node.Identifier)));
             else
-                result.AddEvent(new Compilation.Error(string.Format("Redeclaration of question {0} with conflicting types {1} and {2}", node.Identifier, node.Type, storedType)));
+                result.AddEvent(new Error(string.Format("Redeclaration of question {0} with conflicting types {1} and {2}", node.Identifier, node.Type, storedType)));
         }
 
         public void Visit(INode node)

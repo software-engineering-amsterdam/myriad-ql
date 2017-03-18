@@ -1,15 +1,16 @@
 ﻿using System;
 using Antlr4.Runtime.Misc;
 using System.Diagnostics;
+using Questionnaires.ErrorHandling;
 
 namespace Questionnaires.QLS.AST
 {
     public class ASTBuilder : QLSBaseVisitor<INode>
     {
-        private Compilation.Result Messages;
+        private Result Messages;
         private CSTBuilder CSTBuilder;
 
-        public ASTBuilder(Compilation.Result result)
+        public ASTBuilder(Result result)
         {
             Messages = result;
             CSTBuilder = new CSTBuilder(Messages);
@@ -19,7 +20,7 @@ namespace Questionnaires.QLS.AST
         {
             var CST = CSTBuilder.BuildStyleSheet(input);
             if (Messages.ContainsErrors())
-                throw new Compilation.ParseException();
+                throw new ParseException();
 
             var stylesheet = Visit(CST);
             Debug.Assert(stylesheet.GetType() == typeof(StyleSheet));

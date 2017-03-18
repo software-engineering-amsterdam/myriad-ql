@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using Questionnaires.RunTime;
-using Questionnaires.Renderer.Containers;
-using RunTime.RuleContainer;
 
-namespace Questionnaires.QuestionnaireBuilder
+namespace Questionnaires.RunTime
 {
     class QuestionnaireBuilder
     {
-        private DocumentModel DocumentModel;
+        private DocumentModel.DocumentModel DocumentModel;
         private List<RunTime.Question> Questions = new List<RunTime.Question>();
         private List<Action<ExpressionEvaluator>> Rules = new List<Action<ExpressionEvaluator>>();
 
-        public QuestionnaireBuilder(List<RunTime.Question> questions, List<Action<ExpressionEvaluator>> rules, DocumentModel documentModel)
+        public QuestionnaireBuilder(List<RunTime.Question> questions, List<Action<ExpressionEvaluator>> rules, DocumentModel.DocumentModel documentModel)
         {
             Questions = questions;
             Rules = rules;
@@ -23,9 +20,9 @@ namespace Questionnaires.QuestionnaireBuilder
         {
             // Create the run-time objects 
             var questionStore = new QuestionStore(Questions);
-            var renderer = new Renderer.Renderer();
+            var renderer = new UI.Renderer();
             var expressionEvaluator = new ExpressionEvaluator(questionStore);
-            var ruleContainer = new RuleContainer(expressionEvaluator, Rules);
+            var ruleContainer = new RuleContainer.RuleContainer(expressionEvaluator, Rules);
 
             renderer.RenderModel(DocumentModel);         
             ConntectRunTimeObjects(questionStore, ruleContainer);
@@ -34,7 +31,7 @@ namespace Questionnaires.QuestionnaireBuilder
             ruleContainer.ApplyRules();
         }
 
-        private static void ConntectRunTimeObjects(QuestionStore questionStore, RuleContainer ruleContainer)
+        private static void ConntectRunTimeObjects(QuestionStore questionStore, RuleContainer.RuleContainer ruleContainer)
         {
             questionStore.VariableChanged += (sender, args) =>
             {

@@ -1,10 +1,10 @@
 ﻿using System.Windows.Controls;
 using Questionnaires.Types;
-using Questionnaires.Renderer.Style;
+using Questionnaires.UI.Widgets.Style;
 using System.Windows;
 using System.Windows.Media;
 
-namespace Questionnaires.Renderer.Widgets
+namespace Questionnaires.UI.Widgets
 {
     public abstract class QuestionWidget : StackPanel
     {

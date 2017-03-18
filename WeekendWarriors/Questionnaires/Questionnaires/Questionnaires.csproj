@@ -86,8 +86,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AntlrErrorListener.cs" />
-    <Compile Include="Compilation\ParseException.cs" />
+    <Compile Include="ErrorHandling\AntlrErrorListener.cs" />
+    <Compile Include="ErrorHandling\ParseException.cs" />
     <Compile Include="QLS\AST\ASTBuilder.cs" />
     <Compile Include="QLS\AST\CSTBuilder.cs" />
     <Compile Include="QLS\AST\INode.cs" />
@@ -134,32 +134,32 @@
     <Compile Include="QL\AST\Operators\Positive.cs" />
     <Compile Include="RunTime\ExpressionEvaluator.cs" />
     <Compile Include="QL\Processing\Processor.cs" />
-    <Compile Include="QuestionnaireBuilder\QuestionnaireBuilder.cs" />
-    <Compile Include="Renderer\Containers\Container.cs" />
-    <Compile Include="Renderer\Containers\DocumentModel.cs" />
-    <Compile Include="Renderer\Containers\Page.cs" />
-    <Compile Include="Renderer\Containers\Section.cs" />
-    <Compile Include="Renderer\Containers\SimpleContainer.cs" />
-    <Compile Include="Renderer\Renderer.cs" />
-    <Compile Include="Renderer\Style\WidgetStyle.cs" />
-    <Compile Include="Renderer\Widgets\BinaryRadioGroup.cs" />
-    <Compile Include="Renderer\Widgets\CheckBoxWidget.cs" />
-    <Compile Include="Renderer\Widgets\ComboBoxWidget.cs" />
-    <Compile Include="Renderer\Widgets\DecimalPickerWidget.cs" />
-    <Compile Include="Renderer\Widgets\IntegerPickerWidget.cs" />
-    <Compile Include="Renderer\Widgets\QuestionWidget.cs" />
-    <Compile Include="Renderer\Widgets\RadioWidget.cs" />
-    <Compile Include="Renderer\Widgets\SliderWidget.cs" />
-    <Compile Include="Renderer\Widgets\TextBoxWidget.cs" />
+    <Compile Include="RunTime\QuestionnaireBuilder.cs" />
+    <Compile Include="RunTime\DocumentModel\Container.cs" />
+    <Compile Include="RunTime\DocumentModel\DocumentModel.cs" />
+    <Compile Include="RunTime\DocumentModel\Page.cs" />
+    <Compile Include="RunTime\DocumentModel\Section.cs" />
+    <Compile Include="RunTime\DocumentModel\SimpleContainer.cs" />
+    <Compile Include="UI\Renderer.cs" />
+    <Compile Include="UI\Widgets\Style\WidgetStyle.cs" />
+    <Compile Include="UI\Widgets\BinaryRadioGroup.cs" />
+    <Compile Include="UI\Widgets\CheckBoxWidget.cs" />
+    <Compile Include="UI\Widgets\ComboBoxWidget.cs" />
+    <Compile Include="UI\Widgets\DecimalPickerWidget.cs" />
+    <Compile Include="UI\Widgets\IntegerPickerWidget.cs" />
+    <Compile Include="UI\Widgets\QuestionWidget.cs" />
+    <Compile Include="UI\Widgets\RadioWidget.cs" />
+    <Compile Include="UI\Widgets\SliderWidget.cs" />
+    <Compile Include="UI\Widgets\TextBoxWidget.cs" />
     <Compile Include="RunTime\RuleContainer.cs" />
     <Compile Include="QL\SemanticAnalysis\QLContext.cs" />
     <Compile Include="QL\SemanticAnalysis\DeclarationValidator.cs" />
-    <Compile Include="Compilation\Result.cs" />
+    <Compile Include="ErrorHandling\Result.cs" />
     <Compile Include="QL\SemanticAnalysis\SemanticAnalyzer.cs" />
     <Compile Include="QL\SemanticAnalysis\TypeChecker.cs" />
-    <Compile Include="Compilation\Error.cs" />
-    <Compile Include="Compilation\Message.cs" />
-    <Compile Include="Compilation\Warning.cs" />
+    <Compile Include="ErrorHandling\Error.cs" />
+    <Compile Include="ErrorHandling\Message.cs" />
+    <Compile Include="ErrorHandling\Warning.cs" />
     <Compile Include="QL\AST\Types\BooleanType.cs" />
     <Compile Include="QL\AST\Types\MoneyType.cs" />
     <Compile Include="QL\AST\Types\IntegerType.cs" />
@@ -236,9 +236,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="RuleContainer\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>java org.antlr.v4.Tool -visitor -Dlanguage=CSharp "$(ProjectDir)\QL\Grammar\QL.g4" -o "$(ProjectDir)\QL\Generated"
