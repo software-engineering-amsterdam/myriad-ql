@@ -6,18 +6,14 @@ using Questionnaires.Renderer.Containers;
 
 namespace Questionnaires.QLS.Processing
 {
-    class Processor
+    public class Processor
     {
-        // A list of the questions parsed from the QL code
-        Dictionary<string, RunTime.Question> Questions = new Dictionary<string, RunTime.Question>();
-        // Document model
-        DocumentModel DocumentModel;
-        // Stack of default styles
-        Stack Styles = new Stack();
+        private Dictionary<string, RunTime.Question> Questions = new Dictionary<string, RunTime.Question>();
+        private DocumentModel DocumentModel;
+        private Stack Styles = new Stack();
 
         public Processor(List<RunTime.Question> questions, DocumentModel documentModel)
         {
-            // Fill up the dictionary
             questions.ForEach((question) => { Questions[question.Identifier] = question; });
             DocumentModel = documentModel;
             DocumentModel.Clear();

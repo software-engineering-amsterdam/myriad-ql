@@ -22,7 +22,6 @@ ColorLiteral: '#' HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit;
 StringLiteral: '"' (~'"')* '"';
 NumberLiteral: ('0'..'9')+;
 
-
 /**
  * Parser rules
  */

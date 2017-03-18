@@ -5,18 +5,8 @@ namespace Questionnaires.QLS.SemanticAnalysis
 {
     public class Analyzer
     {
-        /*
-         * The type checker detects:
-        --no references to questions that are not in the QL program
-        all questions of the QL program are placed by the QLS program.
-        --(default) widget assignments are compatible with question types (e.g. no radio button for integer widgets).
-        --you cannot place a single question multiple times.
-        */
-
-        //private HashSet<QL.AST.Question> QlQuestions = new HashSet<QL.AST.Question>();
         private Dictionary<string, RunTime.Question> QLQuestions = new Dictionary<string, RunTime.Question>();
         private HashSet<RunTime.Question> PlacedQuestions = new HashSet<RunTime.Question>();
-
         private Questionnaires.Compilation.Result Result;
 
         public Analyzer(Compilation.Result result, List<RunTime.Question> questions)
