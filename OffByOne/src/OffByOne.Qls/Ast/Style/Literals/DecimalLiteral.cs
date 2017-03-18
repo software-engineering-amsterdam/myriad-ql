@@ -1,6 +1,7 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Literals
 {
     using System;
+    using System.Globalization;
 
     using MoreDotNet.Wrappers;
 
@@ -21,7 +22,7 @@
                 throw new ArgumentException("A non-null, non-empty string must be given", nameof(value));
             }
 
-            this.Value = double.Parse(value);
+            this.Value = double.Parse(value, CultureInfo.InvariantCulture);
         }
 
         public double Value { get; }

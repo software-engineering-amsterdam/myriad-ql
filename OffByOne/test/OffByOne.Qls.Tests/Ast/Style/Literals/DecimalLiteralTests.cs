@@ -9,7 +9,7 @@
     public class DecimalLiteralTests
     {
         [Fact]
-        public void CreatingNewObject_ShouldHaveCorrectValueCorectDataGiven()
+        public void CreatingNewObject_ShouldHaveCorrectValueCorrectDataGiven()
         {
             var actual = new DecimalLiteral("0.66");
 
