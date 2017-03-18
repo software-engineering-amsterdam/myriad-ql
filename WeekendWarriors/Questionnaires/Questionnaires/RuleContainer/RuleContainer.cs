@@ -4,18 +4,18 @@ using System.Collections.Generic;
 
 namespace Questionnaires.RuleContainer
 {
-    using Rule = Action<VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>;
+    using Rule = Action<QuestionStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>;
 
     class RuleContainer
     {
         private List<Rule> Rules = new List<Rule>();
-        private VariableStore VariableStore;  // TODO I feel that we have a namespace issue here. VariableStore, Renderer.Renderer.... Seems a bit redundant...
+        private QuestionStore QuestionStore;  
         private Renderer.Renderer Renderer;
         private ExpressionEvaluator.Evaluator ExpresionEvaluator;
 
-        public RuleContainer(VariableStore variableStore, Renderer.Renderer renderer, ExpressionEvaluator.Evaluator expresionEvaluator)
+        public RuleContainer(QuestionStore questionStore, Renderer.Renderer renderer, ExpressionEvaluator.Evaluator expresionEvaluator)
         {
-            VariableStore = variableStore;
+            QuestionStore = questionStore;
             Renderer = renderer;
             ExpresionEvaluator = expresionEvaluator;
         }
@@ -29,7 +29,7 @@ namespace Questionnaires.RuleContainer
         {
             foreach (var rule in Rules)
             {
-                rule(VariableStore, Renderer, ExpresionEvaluator);
+                rule(QuestionStore, Renderer, ExpresionEvaluator);
             }
         }
     }

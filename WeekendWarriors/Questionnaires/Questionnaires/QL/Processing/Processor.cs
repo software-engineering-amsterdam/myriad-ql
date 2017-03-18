@@ -10,10 +10,10 @@ namespace Questionnaires.QL.Processing
     class Processor
     {
         private List<RunTime.Question> Questions;
-        private List<Action<VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> Rules;
+        private List<Action<QuestionStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> Rules;
         private DocumentModel DocumentModel;
 
-        public Processor(List<RunTime.Question> questions, List<Action<VariableStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> rules, DocumentModel documentModel)
+        public Processor(List<RunTime.Question> questions, List<Action<QuestionStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> rules, DocumentModel documentModel)
         {
             Questions = questions;
             Rules = rules;

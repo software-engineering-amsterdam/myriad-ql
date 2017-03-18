@@ -167,7 +167,7 @@
     <Compile Include="QL\AST\Types\StringType.cs" />
     <Compile Include="QL\AST\Types\Type.cs" />
     <Compile Include="RunTime\Question.cs" />
-    <Compile Include="RunTime\VariableStore.cs" />
+    <Compile Include="RunTime\QuestionStore.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -5,15 +5,18 @@ using System.Diagnostics;
 
 namespace Questionnaires.RunTime
 {
-    public class VariableStore
+    public class QuestionStore
     {
         private Dictionary<string, RunTime.Question> Questions = new Dictionary<string, RunTime.Question>();
 
-        public void AddQuestion(RunTime.Question question)
+        public QuestionStore(IEnumerable<RunTime.Question> questions)
         {
-            Debug.Assert(!Questions.ContainsKey(question.Identifier));
-            Questions.Add(question.Identifier, question);
-            question.ValueChanged += (sender, args) => OnVariableChanged();
+            foreach(var question in questions)
+            {
+                Debug.Assert(!Questions.ContainsKey(question.Identifier));
+                Questions.Add(question.Identifier, question);
+                question.ValueChanged += (sender, args) => OnVariableChanged();
+            }
         }
 
         public Questionnaires.Types.IType GetValue(string name)
