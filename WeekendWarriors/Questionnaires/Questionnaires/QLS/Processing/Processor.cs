@@ -40,9 +40,8 @@ namespace Questionnaires.QLS.Processing
             var pageContainer = new Renderer.Containers.Page(page.Name);
             foreach (var section in page.Sections)
             {
-                pageContainer.Sections.Add(Visit((dynamic)section));
+                pageContainer.AddSection(Visit((dynamic)section));
             }
-            pageContainer.Name = page.Name;
 
             /* Pop the styles specific from this page from the stack */
             RemoveStylesFromStack(page.DefaultStyles);
@@ -59,14 +58,13 @@ namespace Questionnaires.QLS.Processing
             var sectionContainer = new Renderer.Containers.Section(section.Name);
             foreach (var question in section.Questions)
             {
-                sectionContainer.Questions.Add(Visit((dynamic)question));
+                sectionContainer.AddQuestion(Visit((dynamic)question));
             }
 
             foreach (var sec in section.Sections)
             {
-                sectionContainer.Sections.Add(Visit((dynamic)sec));
+                sectionContainer.AddQuestion(Visit((dynamic)sec));
             }
-            sectionContainer.Name = section.Name;
 
             RemoveStylesFromStack(section.Styles);
             return sectionContainer;

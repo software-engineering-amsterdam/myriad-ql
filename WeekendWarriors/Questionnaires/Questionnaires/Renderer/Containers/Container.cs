@@ -3,17 +3,27 @@ using System.Windows.Controls;
 
 namespace Questionnaires.Renderer.Containers
 {
-    public abstract class Container // TODO: should we make this abstract as we only want it to be inherited?
+    public abstract class Container 
     {
-        public string Name { get; set; }
-        public List<Section> Sections { get; set; }
-        public List<RunTime.Question> Questions { get; set; }
+        protected string Name { get; set; }
+        private List<Section> Sections;
+        private List<RunTime.Question> Questions;
 
         public Container(string name)
         {
             Name = name;
             Sections = new List<Section>();
             Questions = new List<RunTime.Question>();
+        }
+
+        public void AddSection(Section section)
+        {
+            Sections.Add(section);
+        }
+
+        public void AddQuestion(RunTime.Question question)
+        {
+            Questions.Add(question);
         }
 
         public void Draw(Panel target)
