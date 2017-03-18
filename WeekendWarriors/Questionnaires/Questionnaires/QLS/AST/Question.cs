@@ -5,7 +5,7 @@
         public string Name { get; }
         public Question(string name)
         {
-            this.Name = name;
+            Name = name;
         }
 
     }

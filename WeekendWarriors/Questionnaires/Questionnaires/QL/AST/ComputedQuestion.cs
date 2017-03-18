@@ -8,8 +8,8 @@ namespace Questionnaires.QL.AST
     {
         public ComputedQuestion(Question question, IExpression expression)
         {
-            this.Question = question;
-            this.Expression = expression;
+            Question = question;
+            Expression = expression;
         }
 
         public Question Question

@@ -9,12 +9,12 @@ namespace Questionnaires.QL.AST.Literals
 {
     public class Money : IExpression
     {
+        public string StringType { get; }
+
         public Money(string value)
         {
-            this.StringType = value;
-        }
-
-        public string StringType { get; }
+            StringType = value;
+        }        
 
         public decimal Value { get { return decimal.Parse(StringType, NumberStyles.Any, CultureInfo.InvariantCulture); } }
 

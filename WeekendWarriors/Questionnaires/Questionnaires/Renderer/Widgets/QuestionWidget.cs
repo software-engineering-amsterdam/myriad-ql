@@ -13,7 +13,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public QuestionWidget(FrameworkElement control)
         {
-            this.Control = control;
+            Control = control;
             Orientation = Orientation.Horizontal;
             Children.Add(Label);
             Children.Add(Control);

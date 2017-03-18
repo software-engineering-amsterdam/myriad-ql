@@ -10,7 +10,7 @@ namespace Questionnaires.QL.AST
     {
         public Form(string identifier, List<IStatement> statements)
         {
-            this.Identifier = identifier;
+            Identifier = identifier;
             Statements = statements;
         }
 

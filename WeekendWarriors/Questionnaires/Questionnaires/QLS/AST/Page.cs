@@ -12,7 +12,7 @@ namespace Questionnaires.QLS.AST
         {
             Sections = new List<Section>();
             DefaultStyles = new List<DefaultStyle>();
-            this.Name = name;
+            Name = name;
         }
 
         public void AddSection(Section section)

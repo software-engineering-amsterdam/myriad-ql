@@ -13,7 +13,7 @@ namespace Questionnaires.QLS.AST
             Sections = new List<Section>();
             Questions = new List<Question>();
             Styles = new List<DefaultStyle>();
-            this.Name = name;
+            Name = name;
         }
 
         public void AddChild(Section section)

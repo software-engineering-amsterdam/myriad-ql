@@ -9,7 +9,7 @@ namespace Questionnaires.SemanticAnalysis
 
         public Compilation.Result Analyze(QL.AST.INode node, QLContext context)
         {
-            this.Context = context;
+            Context = context;
             List<Compilation.Message> messages = new List<Compilation.Message>();
             node.CheckSemantics(context, messages);
 

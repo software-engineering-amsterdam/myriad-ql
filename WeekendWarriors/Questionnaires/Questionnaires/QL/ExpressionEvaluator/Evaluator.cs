@@ -12,7 +12,7 @@ namespace Questionnaires.ExpressionEvaluator
 
         public Evaluator(VariableStore store)
         {
-            this.VarialbeStore = store;
+            VarialbeStore = store;
         }
 
         public IType Evaluate(IExpression expression)
@@ -60,7 +60,7 @@ namespace Questionnaires.ExpressionEvaluator
 
         public IType Visit(Identifier node)
         {
-            return this.VarialbeStore.GetValue(node.Name);
+            return VarialbeStore.GetValue(node.Name);
         }
 
         public IType Visit(Operators.And node)

@@ -9,7 +9,7 @@ namespace Questionnaires.QL.AST.Literals
     {
         public String(string value)
         {
-            this.Value = value;
+            Value = value;
         }
 
         public string Value

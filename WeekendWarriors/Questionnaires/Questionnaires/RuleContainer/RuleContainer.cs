@@ -15,9 +15,9 @@ namespace Questionnaires.RuleContainer
 
         public RuleContainer(VariableStore variableStore, Renderer.Renderer renderer, ExpressionEvaluator.Evaluator expresionEvaluator)
         {
-            this.VariableStore = variableStore;
-            this.Renderer = renderer;
-            this.ExpresionEvaluator = expresionEvaluator;
+            VariableStore = variableStore;
+            Renderer = renderer;
+            ExpresionEvaluator = expresionEvaluator;
         }
 
         public void AddRule(Rule rule)

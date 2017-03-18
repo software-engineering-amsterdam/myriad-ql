@@ -10,14 +10,14 @@ namespace Questionnaires.QLS.AST
 
         public DefaultStyle(Questionnaires.Types.IType type, Widgets.Widget widget)
         {
-            this.Properties = new Dictionary<string, string>();
-            this.Type = type;
-            this.Widget = widget;
+            Properties = new Dictionary<string, string>();
+            Type = type;
+            Widget = widget;
         }
 
         public void AddWidgetProperty(Setting setting)
         {
-            this.Properties[setting.Key] = setting.Value;
+            Properties[setting.Key] = setting.Value;
         }
     }
 }

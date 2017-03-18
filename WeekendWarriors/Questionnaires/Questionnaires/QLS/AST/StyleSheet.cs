@@ -10,7 +10,7 @@ namespace Questionnaires.QLS.AST
         public StyleSheet(string name)
         {
             Pages = new List<Page>();
-            this.Name = name;
+            Name = name;
         }
 
         public void AddPage(Page page)

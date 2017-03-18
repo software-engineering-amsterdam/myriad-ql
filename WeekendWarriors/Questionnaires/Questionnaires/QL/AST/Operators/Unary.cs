@@ -10,7 +10,7 @@ namespace Questionnaires.QL.AST
     {
         public Unary(IExpression operand)
         {
-            this.Operand = operand;
+            Operand = operand;
         }
 
         public IExpression Operand

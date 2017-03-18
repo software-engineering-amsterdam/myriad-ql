@@ -9,9 +9,9 @@ namespace Questionnaires.QL.AST
     {
         public Question(string identifier, string body, IType type)
         {
-            this.Identifier = identifier;
-            this.Body = body;
-            this.Type = type;
+            Identifier = identifier;
+            Body = body;
+            Type = type;
         }
 
         public string Identifier

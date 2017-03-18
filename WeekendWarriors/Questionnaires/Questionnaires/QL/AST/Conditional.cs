@@ -9,9 +9,9 @@ namespace Questionnaires.QL.AST
     {
         public Conditional(IExpression condition, List<IStatement> thenStatements, List<IStatement> elseStatements)
         {
-            this.Condition = condition;
-            this.ThenStatements = thenStatements;
-            this.ElseStatements = elseStatements;
+            Condition = condition;
+            ThenStatements = thenStatements;
+            ElseStatements = elseStatements;
         }
 
         public IExpression Condition

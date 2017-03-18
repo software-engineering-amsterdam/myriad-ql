@@ -10,8 +10,8 @@ namespace Questionnaires.QL.AST
     {
         protected Binary(IExpression lhs, IExpression rhs)
         {
-            this.Lhs = lhs;
-            this.Rhs = rhs;
+            Lhs = lhs;
+            Rhs = rhs;
         }
 
         public IExpression Lhs

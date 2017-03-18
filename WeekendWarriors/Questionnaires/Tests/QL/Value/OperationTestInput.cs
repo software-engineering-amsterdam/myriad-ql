@@ -4,8 +4,8 @@
     {
         public OperationTestInput(object leftHandSideOperand, object expectedResult)
         {
-            this.LeftHandSideOperand = leftHandSideOperand;
-            this.ExpectedResult = expectedResult;
+            LeftHandSideOperand = leftHandSideOperand;
+            ExpectedResult = expectedResult;
         }
         public object LeftHandSideOperand
         {

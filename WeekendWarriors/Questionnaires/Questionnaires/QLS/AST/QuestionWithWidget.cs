@@ -7,7 +7,7 @@ namespace Questionnaires.QLS.AST
         public Widget Widget { get; }
         public QuestionWithWidget(string name, Widget widget) : base(name)
         {
-            this.Widget = widget;
+            Widget = widget;
         }
     }
 }

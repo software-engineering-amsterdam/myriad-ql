@@ -75,7 +75,7 @@ namespace Questionnaires.QLS.Processing
         private RunTime.Question Visit(QuestionWithWidget question)
         {
             Questions[question.Name].SetWidget(question.Widget);
-            return this.Questions[question.Name];
+            return Questions[question.Name];
         }
 
         private RunTime.Question Visit(Question question)
@@ -112,13 +112,13 @@ namespace Questionnaires.QLS.Processing
         private void AddStylesToStack(List<DefaultStyle> styles)
         {
             foreach (var style in styles)
-                this.Styles.Push(style);
+                Styles.Push(style);
         }
 
         private void RemoveStylesFromStack(List<DefaultStyle> styles)
         {
             foreach (var style in styles)
-                this.Styles.Pop();
+                Styles.Pop();
         }
     }
 }

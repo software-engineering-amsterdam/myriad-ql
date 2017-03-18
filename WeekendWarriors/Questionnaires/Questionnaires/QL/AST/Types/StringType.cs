@@ -11,17 +11,17 @@ namespace Questionnaires.Types
 
         public StringType(String value)
         {
-            this.Val = value;
+            Val = value;
         }
 
         public override BooleanType EqualTo(StringType value)
         {
-            return new BooleanType(this.Val == value.GetValue());
+            return new BooleanType(Val == value.GetValue());
         }
 
         public override BooleanType InequalTo(StringType value)
         {
-            return new BooleanType(this.Val != value.GetValue());
+            return new BooleanType(Val != value.GetValue());
         }
 
         public override QuestionWidget GetWidget()

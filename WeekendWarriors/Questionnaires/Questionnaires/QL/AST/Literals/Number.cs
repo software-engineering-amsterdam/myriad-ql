@@ -10,7 +10,7 @@ namespace Questionnaires.QL.AST.Literals
     {
         public Number(string value)
         {
-            this.StringType = value;
+            StringType = value;
         }
 
         public string StringType { get; }

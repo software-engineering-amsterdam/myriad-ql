@@ -9,7 +9,7 @@ namespace Questionnaires.QL.AST.Literals
     {
         public Boolean(bool value)
         {
-            this.Value = value;
+            Value = value;
         }
 
         public bool Value

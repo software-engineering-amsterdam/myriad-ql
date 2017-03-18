@@ -6,7 +6,7 @@
 
         public Message(string messsage)
         {
-            this.Content = messsage;
+            Content = messsage;
         }
 
         public abstract bool IsError();

@@ -4,7 +4,7 @@
     {
         public BinaryOperationTestInput(object leftHandSideOperand, object rightHandSideOperand, object expectedResult) : base(leftHandSideOperand, expectedResult)
         {
-            this.RightHandSideOperand = rightHandSideOperand;
+            RightHandSideOperand = rightHandSideOperand;
         }
         public object RightHandSideOperand
         {
