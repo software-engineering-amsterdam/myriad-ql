@@ -1,7 +1,7 @@
 package com.matthewchapman.ql.validation.structure;
 
 import com.matthewchapman.ql.ast.Form;
-import com.matthewchapman.ql.ast.atomic.BooleanType;
+import com.matthewchapman.ql.ast.atomic.type.BooleanType;
 import com.matthewchapman.ql.ast.atomic.Type;
 import com.matthewchapman.ql.core.CoreParser;
 import com.matthewchapman.ql.core.QLErrorLogger;
