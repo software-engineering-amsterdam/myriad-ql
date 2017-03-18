@@ -89,6 +89,7 @@
     <Compile Include="Ast\Style\Statements\SectionTests.cs" />
     <Compile Include="Ast\Style\Statements\StyleSheetTests.cs" />
     <Compile Include="Ast\Style\Widgets\DropDownListWidgetTests.cs" />
+    <Compile Include="Checker\Analyzers\FormAnalyerTests.cs" />
     <Compile Include="Checker\Analyzers\TypeAnalyzerTests.cs" />
     <Compile Include="Checker\StyleSheetCheckerTests.cs" />
     <Compile Include="ParserTests\Base\ParserTest.cs" />

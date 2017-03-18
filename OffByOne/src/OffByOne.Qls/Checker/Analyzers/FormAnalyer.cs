@@ -1,8 +1,8 @@
 ﻿namespace OffByOne.Qls.Checker.Analyzers
 {
+    using System;
     using System.Collections.Generic;
 
-    using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Ql.Checker;
     using OffByOne.Ql.Checker.Contracts;
     using OffByOne.Qls.Ast.Style.Rules;
@@ -11,6 +11,8 @@
     using OffByOne.Qls.Checker.Analyzers.Environment;
     using OffByOne.Qls.Checker.Messages;
     using OffByOne.Qls.Common.Visitors.Base;
+
+    using ValueType = OffByOne.Ql.Ast.ValueTypes.Base.ValueType;
 
     public class FormAnalyer : BaseQlsVisitor<object, FormAnalyzerEnvironment>, IAnalyzer
     {
@@ -21,13 +23,23 @@
 
         public FormAnalyer(ICheckerReport report)
         {
+            if (report == null)
+            {
+                throw new ArgumentNullException(nameof(report));
+            }
+
             this.Report = report;
         }
 
         public ICheckerReport Report { get; }
 
-        public void Analyze(StyleSheet root, IDictionary<string, ValueType> qlQuestionMappings)
+        public void Analyze(StyleSheet root, IDictionary<string, ValueType> questionMappings)
         {
+            if (root == null)
+            {
+                throw new ArgumentNullException(nameof(root));
+            }
+
             this.Visit(root, new FormAnalyzerEnvironment());
         }
 
