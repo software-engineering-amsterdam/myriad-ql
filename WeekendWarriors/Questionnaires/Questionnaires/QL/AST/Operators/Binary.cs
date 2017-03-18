@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Questionnaires.Compilation;
 using Questionnaires.SemanticAnalysis;
-using Questionnaires.Compilation;
 using Questionnaires.Types;
+using System;
+using System.Collections.Generic;
 
 namespace Questionnaires.QL.AST
 {

@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Questionnaires.QLS.AST;
 using Questionnaires.Renderer.Style;
 using Questionnaires.Renderer.Containers;
 
 namespace Questionnaires.QLS.Processing
-{   
+{
     class Processor
     {
         // A list of the questions parsed from the QL code

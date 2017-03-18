@@ -1,14 +1,8 @@
-﻿using Questionnaires.Types;
-using Questionnaires.QL.AST;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Questionnaires.QL.AST;
 using Questionnaires.RunTime;
-
-using Operators = Questionnaires.QL.AST.Operators;
+using Questionnaires.Types;
 using Literals = Questionnaires.QL.AST.Literals;
+using Operators = Questionnaires.QL.AST.Operators;
 
 namespace Questionnaires.ExpressionEvaluator
 {

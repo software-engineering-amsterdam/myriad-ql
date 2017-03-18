@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Questionnaires.QL.AST;
-using Questionnaires.QL.AST.Operators;
-using Questionnaires.QL.AST.Visitor;
+﻿using System.Collections.Generic;
 
 namespace Questionnaires.SemanticAnalysis
 {

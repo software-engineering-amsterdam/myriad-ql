@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Questionnaires.QL.AST;
+using System;
+using System.Collections.Generic;
 
 namespace Tests.QL.AST
 {

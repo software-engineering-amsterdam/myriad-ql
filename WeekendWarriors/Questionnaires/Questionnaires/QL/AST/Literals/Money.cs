@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Questionnaires.Compilation;
-using System.Globalization;
+﻿using Questionnaires.Compilation;
 using Questionnaires.SemanticAnalysis;
 using Questionnaires.Types;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace Questionnaires.QL.AST.Literals
 {

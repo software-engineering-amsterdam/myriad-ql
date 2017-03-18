@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Questionnaires.QL.AST;
-using Questionnaires.SemanticAnalysis;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests.QL.SemanticAnalysis
 {

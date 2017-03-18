@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using Questionnaires.Compilation;
+﻿using Questionnaires.Compilation;
 using Questionnaires.SemanticAnalysis;
 using Questionnaires.Types;
+using System.Collections.Generic;
 
 namespace Questionnaires.QL.AST.Literals
 {

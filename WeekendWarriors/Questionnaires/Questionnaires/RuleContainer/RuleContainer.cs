@@ -1,9 +1,6 @@
-﻿using System;
+﻿using Questionnaires.RunTime;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Questionnaires.RunTime;
 
 namespace Questionnaires.RuleContainer
 {

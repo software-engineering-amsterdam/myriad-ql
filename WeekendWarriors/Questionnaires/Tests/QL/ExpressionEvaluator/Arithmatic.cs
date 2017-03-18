@@ -1,11 +1,9 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Questionnaires.ExpressionEvaluator;
-using Questionnaires.RunTime;
 using Questionnaires.QL.AST;
-using Questionnaires.Types;
-using Tests.QL.Value;
+using Questionnaires.RunTime;
 using System.Collections.Generic;
+using Tests.QL.Value;
 
 namespace Tests.QL.ExpressionEvaluator
 {

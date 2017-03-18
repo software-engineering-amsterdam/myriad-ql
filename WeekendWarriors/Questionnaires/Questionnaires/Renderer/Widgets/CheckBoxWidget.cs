@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Questionnaires.Types;
+﻿using Questionnaires.Types;
 using System.Windows.Controls;
-using System.Windows.Markup;
-using System.Windows;
-using Questionnaires.Renderer.Style;
-using System.Windows.Media;
 
 namespace Questionnaires.Renderer.Widgets
 {
