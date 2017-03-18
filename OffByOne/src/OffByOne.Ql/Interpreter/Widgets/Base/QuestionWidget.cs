@@ -34,6 +34,11 @@
             }
         }
 
+        public bool IsReadOnly()
+        {
+            return this.Statement.ComputationExpression != null;
+        }
+
         public override void OnObserve(AnswerInput value)
         {
             if (!this.Statement.IsComputable(value.Identifier))

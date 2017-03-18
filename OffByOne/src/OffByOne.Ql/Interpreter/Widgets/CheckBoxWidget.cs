@@ -37,6 +37,7 @@
             this.Input = new CheckBox();
             this.Input.Checked += this.UpdateValue;
             this.Input.Unchecked += this.UpdateValue;
+            this.Input.IsEnabled = !this.IsReadOnly();
 
             style.Apply(label);
             style.Apply(this.Input);

@@ -35,16 +35,6 @@
                         ""Some numbers""
                             comments: decimal (favDecimal + equation)
                     }
-
-                    if (x){ 
-                        ""Y?"" 
-                            y: boolean 
-                    }
-
-                    if (y) { 
-                        ""X?"" 
-                            x: boolean 
-                    }
                 }
             ";
 
