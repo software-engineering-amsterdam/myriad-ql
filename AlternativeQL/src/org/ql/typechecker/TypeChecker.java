@@ -22,8 +22,7 @@ public class TypeChecker {
         circularDependenciesVisitor = new CircularDependencyVisitor(issuesStorage);
     }
 
-    public IssuesStorage checkForm(Form form) {
-        SymbolTable symbolTable = new SymbolTable();
+    public IssuesStorage checkForm(Form form, SymbolTable symbolTable) {
         questionsVisitor.visitForm(form, symbolTable);
         typeMismatchVisitor.visitForm(form, symbolTable);
         circularDependenciesVisitor.visitForm(form, null);

@@ -1,5 +1,7 @@
 package org.qls.parser;
 
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.ql.ast.Identifier;
@@ -16,13 +18,24 @@ import org.qls.ast.widget.defaultWidget.style.FontRule;
 import org.qls.ast.widget.defaultWidget.style.FontSizeRule;
 import org.qls.ast.widget.defaultWidget.style.StyleRule;
 import org.qls.ast.widget.defaultWidget.style.WidthRule;
+import org.qls.grammar.QLSLexer;
 import org.qls.grammar.QLSParser;
 import org.qls.grammar.QLSVisitor;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ASTBuilder extends AbstractParseTreeVisitor<Node> implements QLSVisitor<Node> {
+public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLSVisitor<Node> {
+    public StyleSheet buildAST(InputStream inputStream) throws IOException {
+        return (StyleSheet) visitStylesheet(createParser(inputStream).stylesheet());
+    }
+
+    private QLSParser createParser(InputStream inputStream) throws IOException {
+        return new QLSParser(new CommonTokenStream(new QLSLexer(new ANTLRInputStream(inputStream))));
+    }
+
     @Override
     public Node visitStylesheet(QLSParser.StylesheetContext ctx) {
         List<Page> pages = new ArrayList<>();
