@@ -10,7 +10,6 @@ namespace Questionnaires.Renderer.Widgets
 
         public BinaryRadioGroup(string trueLabel, string falseLabel)
         {
-
             trueButton.Content = trueLabel;
             falseButton.Content = falseLabel;
             Orientation = Orientation.Horizontal;
@@ -24,7 +23,7 @@ namespace Questionnaires.Renderer.Widgets
         public void SetValue(bool value)
         {
             trueButton.IsChecked = value;
-            falseButton.IsChecked = !value;
+            falseButton.IsChecked = !trueButton.IsChecked;
         }
 
         public bool GetValue()

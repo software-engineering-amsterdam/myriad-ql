@@ -1,4 +1,5 @@
 ﻿using Questionnaires.Types;
+using System.Diagnostics;
 using System.Windows.Controls;
 
 namespace Questionnaires.Renderer.Widgets
@@ -9,6 +10,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public ComboBoxWidget() : base(new ComboBox())
         {
+            Debug.Assert(Control.GetType() == typeof(ComboBox));
             ComboBox = Control as ComboBox;
 
             ComboBox.Items.Add("Yes");
@@ -26,6 +28,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetQuestionValue(IType value)
         {
+            Debug.Assert(value.GetType() == typeof(BooleanType));
             SetQuestionValue((dynamic)value);
         }
 

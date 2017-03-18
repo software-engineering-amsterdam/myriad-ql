@@ -1,4 +1,5 @@
 ﻿using Questionnaires.Types;
+using System.Diagnostics;
 using Xceed.Wpf.Toolkit;
 
 namespace Questionnaires.Renderer.Widgets
@@ -9,6 +10,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public DecimalPickerWidget() : base(new DecimalUpDown())
         {
+            Debug.Assert(Control.GetType() == typeof(DecimalUpDown));
             SpinBox = Control as DecimalUpDown;
             SpinBox.AllowTextInput = false;
             SpinBox.ValueChanged += (sender, args) => OnInputChanged(new MoneyType(SpinBox.Value.Value));
@@ -16,6 +18,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetQuestionValue(IType value)
         {
+            Debug.Assert(value.GetType() == typeof(MoneyType));
             SetQuestionValue((dynamic)value);
         }
 

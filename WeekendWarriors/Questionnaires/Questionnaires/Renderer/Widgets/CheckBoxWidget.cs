@@ -1,4 +1,5 @@
 ﻿using Questionnaires.Types;
+using System.Diagnostics;
 using System.Windows.Controls;
 
 namespace Questionnaires.Renderer.Widgets
@@ -9,6 +10,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public CheckBoxWidget() : base(new CheckBox())
         {
+            Debug.Assert(Control.GetType() == typeof(CheckBox));
             CheckBox = Control as CheckBox;
             CheckBox.Checked += (sender, args) => OnInputChanged(new BooleanType(CheckBox.IsChecked.Value));
             CheckBox.Unchecked += (sender, args) => OnInputChanged(new BooleanType(CheckBox.IsChecked.Value));
@@ -16,6 +18,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetQuestionValue(IType value)
         {
+            Debug.Assert(value.GetType() == typeof(BooleanType));
             SetQuestionValue((dynamic)value);
         }
 

@@ -1,4 +1,5 @@
 ﻿using Questionnaires.Types;
+using System.Diagnostics;
 using Xceed.Wpf.Toolkit;
 
 namespace Questionnaires.Renderer.Widgets
@@ -9,6 +10,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public IntegerPickerWidget() : base(new IntegerUpDown())
         {
+            Debug.Assert(Control.GetType() == typeof(IntegerUpDown));
             Spinbox = Control as IntegerUpDown;
             Spinbox.AllowTextInput = false;
             Spinbox.ValueChanged += (sender, args) => OnInputChanged(new IntegerType(Spinbox.Value.Value));
@@ -16,6 +18,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetQuestionValue(IType value)
         {
+            Debug.Assert(value.GetType() == typeof(IntegerType));
             SetQuestionValue((dynamic)value);
         }
 

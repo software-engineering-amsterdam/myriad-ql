@@ -1,4 +1,5 @@
 ﻿using Questionnaires.Types;
+using System.Diagnostics;
 using System.Windows.Controls;
 
 namespace Questionnaires.Renderer.Widgets
@@ -9,6 +10,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public SliderWidget() : base(new Slider())
         {
+            Debug.Assert(Control.GetType() == typeof(Slider));
             Slider = Control as Slider;
 
             Slider.Maximum = 1E6;
@@ -20,6 +22,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public override void SetQuestionValue(IType value)
         {
+            Debug.Assert(value.GetType() == typeof(MoneyType));
             SetQuestionValue((dynamic)value);
         }
 
