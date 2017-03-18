@@ -23,7 +23,7 @@ namespace Questionnaires.RunTime
 
         public Questionnaires.Types.IType GetValue(string name)
         {
-            return Questions[name].Type;
+            return Questions[name].GetValue();
         }
 
         public event EventHandler VariableChanged;

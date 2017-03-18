@@ -84,7 +84,7 @@ namespace Questionnaires.QLS.Processing
             while (stackCopy.Count > 0)
             {
                 var style = (DefaultStyle)stackCopy.Pop();
-                if (style.Type.GetType() == QLQuestion.Type.GetType()) // TODO: The one place where we use typeof. Can we do better?
+                if (style.Type.GetType() == QLQuestion.GetValue().GetType()) // TODO: The one place where we use typeof. Can we do better?
                 {
                     QLQuestion.SetWidget(style.Widget);
                     WidgetStyle properties = new WidgetStyle();
@@ -99,7 +99,7 @@ namespace Questionnaires.QLS.Processing
                         }
                     }
 
-                    QLQuestion.Widget.SetStyle(properties);
+                    QLQuestion.SetStyle(properties);
 
                     break;
                 }

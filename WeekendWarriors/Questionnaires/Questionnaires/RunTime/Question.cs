@@ -1,61 +1,63 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Windows.Controls;
 
 namespace Questionnaires.RunTime
 {
     public class Question
     {
-        public Questionnaires.Renderer.Widgets.QuestionWidget Widget { get; set; }
-        private QL.AST.Question QuestionASTNode; // TODO: come up with a better name
+        private Questionnaires.Renderer.Widgets.QuestionWidget Widget;
+        private QL.AST.Question ASTNode;
+        private Types.IType Value;
 
         public Question(QL.AST.Question questionASTNode)
         {
-            QuestionASTNode = questionASTNode;
+            ASTNode = questionASTNode;
             SetWidget(questionASTNode.Type.GetWidget());
-            Type = QuestionASTNode.Type;
+            Value = ASTNode.Type;
         }
 
         public string Identifier
         {
-            get { return QuestionASTNode.Identifier; }
-        }
-
-        public string Body
-        {
-            get { return QuestionASTNode.Body; }
-        }
+            get { return ASTNode.Identifier; }
+        }        
 
         public void SetWidget(QLS.AST.Widgets.Widget widget)
         {
-            SetWidget(widget.CreateWidget((dynamic)QuestionASTNode.Type));
+            SetWidget(widget.CreateWidget((dynamic)Value));
         }
 
-        public Types.IType Type // TODO: we need to get rid of this but for now we need it for the typeof we do in the QLS processor. On second thought, maybe not. But it shoul be referred to as value rather than type.
+        public void Draw(Panel target)
         {
-            get;
-            set;
+            target.Children.Add(Widget);
         }
 
-        public event EventHandler ValueChanged;
-        protected virtual void OnValueChanged(EventArgs e)
+        public void SetStyle(Renderer.Style.WidgetStyle style) // TODO: I think this can be removed once we properly refactor the style creation in the QLS processor
         {
-            if (ValueChanged != null)
-                ValueChanged(this, e);
+            Widget.SetStyle(style);
         }
+
+        public Types.IType GetValue()
+        {
+            return Value;
+        }        
 
         private void SetWidget(Renderer.Widgets.QuestionWidget widget)
         {
             Widget = widget;
-            Widget.SetLabel(QuestionASTNode.Body);
+            Widget.SetLabel(ASTNode.Body);
             Widget.InputChanged += (sender, value) => SetValue(value);
         }
 
         public void SetValue(Types.IType value)
         {
-            bool valueChanged = Type.InequalTo(value).GetValue();
-            Type = value;
+            Debug.Assert(value.GetType() == ASTNode.Type.GetType()); 
+
+            bool valueChanged = Value.InequalTo(value).GetValue();
+            Value = value;
             if (valueChanged)
             {
-                Widget.SetQuestionValue(Type);
+                Widget.SetQuestionValue(Value);
                 OnValueChanged(new EventArgs());
             }
         }
@@ -63,6 +65,13 @@ namespace Questionnaires.RunTime
         public void SetVisibility(bool visible)
         {
             Widget.SetVisibility(visible);
+        }
+
+        public event EventHandler ValueChanged;
+        protected virtual void OnValueChanged(EventArgs e)
+        {
+            if (ValueChanged != null)
+                ValueChanged(this, e);
         }
     }
 }

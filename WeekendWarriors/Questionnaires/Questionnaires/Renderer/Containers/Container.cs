@@ -30,17 +30,26 @@ namespace Questionnaires.Renderer.Containers
         {
             var container = GetContainer();
 
-            foreach (var question in Questions)
-            {
-                container.Children.Add(question.Widget);
-            }
+            AddQuestionsToContainer(container);
+            AddSectionsToContainer(container);
 
+            target.Children.Add(container);
+        }
+
+        private void AddSectionsToContainer(Panel container)
+        {
             foreach (var section in Sections)
             {
                 section.Draw(container);
             }
+        }
 
-            target.Children.Add(container);
+        private void AddQuestionsToContainer(Panel container)
+        {
+            foreach (var question in Questions)
+            {
+                question.Draw(container);
+            }
         }
 
         protected abstract Panel GetContainer();
