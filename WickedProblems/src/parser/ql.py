@@ -12,12 +12,12 @@ def binary_node(node):
 
 
 def if_action(string, location, tokens):
-    print tokens
+    print(tokens)
     return ifThen(**tokens[0].asDict())
 
 
 def computed_question_action(string, location, tokens):
-    print tokens.asDict()
+    print(tokens.asDict())
     return ComputedQuestion(**tokens[0].asDict())
 
 
