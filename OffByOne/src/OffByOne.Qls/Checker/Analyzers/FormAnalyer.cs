@@ -9,12 +9,13 @@
     using OffByOne.Qls.Ast.Style.Statements;
     using OffByOne.Qls.Checker.Analyzers.Contracts;
     using OffByOne.Qls.Checker.Analyzers.Environment;
+    using OffByOne.Qls.Checker.Analyzers.Environment.Contracts;
     using OffByOne.Qls.Checker.Messages;
     using OffByOne.Qls.Common.Visitors.Base;
 
     using ValueType = OffByOne.Ql.Ast.ValueTypes.Base.ValueType;
 
-    public class FormAnalyer : BaseQlsVisitor<object, FormAnalyzerEnvironment>, IAnalyzer
+    public class FormAnalyer : BaseQlsVisitor<object, IFormAnalyzerEnvironment>, IAnalyzer
     {
         public FormAnalyer()
             : this(new CheckerReport())
@@ -43,7 +44,7 @@
             this.Visit(root, new FormAnalyzerEnvironment());
         }
 
-        public override object Visit(StyleSheet statement, FormAnalyzerEnvironment environment)
+        public override object Visit(StyleSheet statement, IFormAnalyzerEnvironment environment)
         {
             if (environment.StyleSheetNames.Contains(statement.Id))
             {
@@ -57,7 +58,7 @@
             return base.Visit(statement, environment);
         }
 
-        public override object Visit(Page statement, FormAnalyzerEnvironment environment)
+        public override object Visit(Page statement, IFormAnalyzerEnvironment environment)
         {
             if (environment.PageLabels.Contains(statement.Id))
             {
@@ -71,7 +72,7 @@
             return base.Visit(statement, environment);
         }
 
-        public override object Visit(Section statement, FormAnalyzerEnvironment environment)
+        public override object Visit(Section statement, IFormAnalyzerEnvironment environment)
         {
             if (environment.SectionNames.Contains(statement.Name.Value))
             {
@@ -85,7 +86,7 @@
             return base.Visit(statement, environment);
         }
 
-        public override object Visit(QuestionRule rule, FormAnalyzerEnvironment environment)
+        public override object Visit(QuestionRule rule, IFormAnalyzerEnvironment environment)
         {
             if (environment.SectionNames.Contains(rule.Identifier))
             {

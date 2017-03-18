@@ -89,6 +89,9 @@
     <Compile Include="Ast\Style\Widgets\SpinboxWidget.cs" />
     <Compile Include="Ast\Style\Widgets\TextFieldWidget.cs" />
     <Compile Include="Checker\Analyzers\Contracts\IAnalyzer.cs" />
+    <Compile Include="Checker\Analyzers\Environment\Contracts\IFormAnalyzerEnvironment.cs" />
+    <Compile Include="Checker\Analyzers\Environment\Contracts\IQuestionUsageEnviorment.cs" />
+    <Compile Include="Checker\Analyzers\Environment\Contracts\ITypeAnalyzerEnvironment.cs" />
     <Compile Include="Checker\Analyzers\Environment\QuestionUsageEnviorment.cs" />
     <Compile Include="Checker\Analyzers\QuestionUsageAnalyzer.cs" />
     <Compile Include="Checker\Messages\DuplicatePageMessage.cs" />

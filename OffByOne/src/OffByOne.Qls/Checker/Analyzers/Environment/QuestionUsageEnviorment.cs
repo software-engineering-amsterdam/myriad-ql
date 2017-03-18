@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using OffByOne.Ql.Common.Visitors.Contracts;
+    using OffByOne.Qls.Checker.Analyzers.Environment.Contracts;
 
-    public class QuestionUsageEnviorment : IEnvironment
+    public class QuestionUsageEnviorment : IQuestionUsageEnviorment
     {
         private readonly IDictionary<string, bool> usageMap;
 

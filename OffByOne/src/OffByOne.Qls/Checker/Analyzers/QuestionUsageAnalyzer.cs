@@ -11,12 +11,13 @@
     using OffByOne.Qls.Ast.Style.Statements;
     using OffByOne.Qls.Checker.Analyzers.Contracts;
     using OffByOne.Qls.Checker.Analyzers.Environment;
+    using OffByOne.Qls.Checker.Analyzers.Environment.Contracts;
     using OffByOne.Qls.Checker.Messages;
     using OffByOne.Qls.Common.Visitors.Base;
 
     using ValueType = OffByOne.Ql.Ast.ValueTypes.Base.ValueType;
 
-    public class QuestionUsageAnalyzer : BaseQlsVisitor<object, QuestionUsageEnviorment>, IAnalyzer
+    public class QuestionUsageAnalyzer : BaseQlsVisitor<object, IQuestionUsageEnviorment>, IAnalyzer
     {
         public QuestionUsageAnalyzer()
             : this(new CheckerReport())
@@ -60,7 +61,7 @@
             }
         }
 
-        public override object Visit(QuestionRule rule, QuestionUsageEnviorment environment)
+        public override object Visit(QuestionRule rule, IQuestionUsageEnviorment environment)
         {
             if (environment.HasQuestion(rule.Identifier))
             {

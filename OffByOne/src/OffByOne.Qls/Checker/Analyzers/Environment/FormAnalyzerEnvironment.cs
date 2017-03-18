@@ -2,9 +2,9 @@
 {
     using System.Collections.Generic;
 
-    using OffByOne.Ql.Common.Visitors.Contracts;
+    using OffByOne.Qls.Checker.Analyzers.Environment.Contracts;
 
-    public class FormAnalyzerEnvironment : IEnvironment
+    public class FormAnalyzerEnvironment : IFormAnalyzerEnvironment
     {
         public FormAnalyzerEnvironment()
         {
