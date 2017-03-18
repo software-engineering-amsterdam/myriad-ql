@@ -182,7 +182,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="QL\AST\Node.cs" />
+    <Compile Include="QL\AST\INode.cs" />
     <Compile Include="QL\AST\Operators\Binary.cs" />
     <Compile Include="QL\AST\Operators\Unary.cs" />
     <Compile Include="QL\AST\ComputedQuestion.cs" />
