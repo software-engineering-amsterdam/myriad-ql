@@ -9,9 +9,9 @@ namespace Questionnaires.QuestionnaireBuilder
     {
         private DocumentModel DocumentModel;
         private List<RunTime.Question> Questions = new List<RunTime.Question>();
-        private List<Action<QuestionStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> Rules = new List<Action<QuestionStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>>();
+        private List<Action<ExpressionEvaluator.Evaluator>> Rules = new List<Action<ExpressionEvaluator.Evaluator>>();
 
-        public QuestionnaireBuilder(List<RunTime.Question> questions, List<Action<QuestionStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> rules, DocumentModel documentModel)
+        public QuestionnaireBuilder(List<RunTime.Question> questions, List<Action<ExpressionEvaluator.Evaluator>> rules, DocumentModel documentModel)
         {
             Questions = questions;
             Rules = rules;
@@ -34,9 +34,9 @@ namespace Questionnaires.QuestionnaireBuilder
             ruleContainer.ApplyRules();
         }
 
-        private static void ConntectRunTimeObjects(QuestionStore variableStore, RuleContainer.RuleContainer ruleContainer)
+        private static void ConntectRunTimeObjects(QuestionStore questionStore, RuleContainer.RuleContainer ruleContainer)
         {
-            variableStore.VariableChanged += (sender, args) =>
+            questionStore.VariableChanged += (sender, args) =>
             {
                 ruleContainer.ApplyRules();
             };

@@ -10,10 +10,10 @@ namespace Questionnaires.QL.Processing
     class Processor
     {
         private List<RunTime.Question> Questions;
-        private List<Action<QuestionStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> Rules;
+        private List<Action<ExpressionEvaluator.Evaluator>> Rules;
         private DocumentModel DocumentModel;
 
-        public Processor(List<RunTime.Question> questions, List<Action<QuestionStore, Renderer.Renderer, ExpressionEvaluator.Evaluator>> rules, DocumentModel documentModel)
+        public Processor(List<RunTime.Question> questions, List<Action<ExpressionEvaluator.Evaluator>> rules, DocumentModel documentModel)
         {
             Questions = questions;
             Rules = rules;
@@ -39,7 +39,7 @@ namespace Questionnaires.QL.Processing
             var question = Questions.Find((q) => q.Identifier == node.Question.Identifier);
 
             Rules.Add(
-                (variableStore, renderer, evaluator) =>
+                (evaluator) =>
                 {
                     if (visibilityCondition(evaluator))
                     {
@@ -58,9 +58,9 @@ namespace Questionnaires.QL.Processing
             var runTimeQuestion = new RunTime.Question(node);
             // Add a rule to the rule container that sets the visibility for this question
             Rules.Add(
-                (variableStore, renderer, evalutor) =>
+                (evaluator) =>
                 {
-                    runTimeQuestion.SetVisibility(visibilityCondition(evalutor));
+                    runTimeQuestion.SetVisibility(visibilityCondition(evaluator));
                 }
             );
 
