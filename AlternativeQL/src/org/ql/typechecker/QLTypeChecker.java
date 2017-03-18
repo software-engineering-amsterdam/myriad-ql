@@ -6,7 +6,7 @@ import org.ql.typechecker.visitor.CircularDependencyVisitor;
 import org.ql.typechecker.visitor.QuestionsVisitor;
 import org.ql.typechecker.visitor.TypeMismatchVisitor;
 
-public class TypeChecker {
+public class QLTypeChecker {
 
     private final QuestionsVisitor questionsVisitor;
     private final TypeMismatchVisitor typeMismatchVisitor;
@@ -14,7 +14,7 @@ public class TypeChecker {
 
     private final IssuesStorage issuesStorage;
 
-    public TypeChecker() {
+    public QLTypeChecker() {
         this.issuesStorage = new IssuesStorage();
 
         questionsVisitor = new QuestionsVisitor(issuesStorage);

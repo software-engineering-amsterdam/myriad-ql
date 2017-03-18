@@ -1,3 +1,2 @@
 - Fix name inconsistencies (float vs decimal) - probably just do not use float as a name of a type
-- Elements - abstract common logic
 - assoc=left division is currently stronger than *. need to make it equally

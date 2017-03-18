@@ -3,16 +3,16 @@ package org.ql;
 import org.ql.ast.Form;
 import org.ql.gui.QLApplication;
 import org.ql.io.QLFile;
-import org.ql.ast.ASTBuilder;
+import org.ql.ast.QLASTBuilder;
 import org.ql.typechecker.SymbolTable;
-import org.ql.typechecker.TypeChecker;
+import org.ql.typechecker.QLTypeChecker;
 import org.ql.typechecker.issues.Issue;
 import org.ql.typechecker.issues.IssuesStorage;
 import java.io.IOException;
 
 public class QLInterpreter {
-    private final ASTBuilder astBuilder = new ASTBuilder();
-    private final TypeChecker typeChecker = new TypeChecker();
+    private final QLASTBuilder astBuilder = new QLASTBuilder();
+    private final QLTypeChecker typeChecker = new QLTypeChecker();
 
     /**
      * Attempts to interpret a QL program

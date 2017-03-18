@@ -1,11 +1,11 @@
 package org.qls;
 
-import org.ql.ast.ASTBuilder;
+import org.ql.ast.QLASTBuilder;
 import org.ql.ast.Form;
 import org.ql.gui.QLApplication;
 import org.ql.io.QLFile;
 import org.ql.typechecker.SymbolTable;
-import org.ql.typechecker.TypeChecker;
+import org.ql.typechecker.QLTypeChecker;
 import org.ql.typechecker.issues.Issue;
 import org.ql.typechecker.issues.IssuesStorage;
 import org.qls.ast.StyleSheet;
@@ -16,8 +16,8 @@ import org.qls.typechecker.QLSTypeChecker;
 import java.io.IOException;
 
 public class QLSInterpreter {
-    private final ASTBuilder qlAstBuilder = new ASTBuilder();
-    private final TypeChecker qlTypeChecker = new TypeChecker();
+    private final QLASTBuilder qlAstBuilder = new QLASTBuilder();
+    private final QLTypeChecker qlTypeChecker = new QLTypeChecker();
     private final QLSASTBuilder qlsAstBuilder = new QLSASTBuilder();
     private final QLSTypeChecker qlsTypeChecker = new QLSTypeChecker();
 

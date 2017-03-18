@@ -23,7 +23,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class TypeCheckerTest {
+public class QLTypeCheckerTest {
 
     @Test
     public void shouldAddErrorWhenDuplicateLabelsAndTypeForQuestion() {
@@ -31,7 +31,7 @@ public class TypeCheckerTest {
         String expectedError = "Question '" + questionLabel + "' has duplicate(s)";
         String expectedWarning = "Question '" + questionLabel + "' label has duplicate(s)";
 
-        TypeChecker typeChecker = new TypeChecker();
+        QLTypeChecker typeChecker = new QLTypeChecker();
 
         IssuesStorage issues = typeChecker.checkForm(new Form(new Identifier("exampleForm"), new ArrayList<Statement>() {{
             add(new Question(new Identifier(questionLabel), new QuestionLabel("example question?"), new BooleanType()));
@@ -46,7 +46,7 @@ public class TypeCheckerTest {
 
     @Test
     public void shouldCollectAllKindsOfErrorsAndWarnings() {
-        TypeChecker typeChecker = new TypeChecker();
+        QLTypeChecker typeChecker = new QLTypeChecker();
 
         IssuesStorage issues = typeChecker.checkForm(new Form(new Identifier("exampleForm"), new ArrayList<Statement>() {{
             add(new Question(new Identifier("example"), new QuestionLabel("example question?"), new BooleanType()));

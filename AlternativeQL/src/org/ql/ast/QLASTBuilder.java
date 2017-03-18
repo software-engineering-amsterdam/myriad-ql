@@ -27,7 +27,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ASTBuilder extends AbstractParseTreeVisitor<Node> implements QLVisitor<Node> {
+public class QLASTBuilder extends AbstractParseTreeVisitor<Node> implements QLVisitor<Node> {
 
     public Form buildAST(InputStream inputStream) throws IOException {
         return visitForm(createParser(inputStream).form());
