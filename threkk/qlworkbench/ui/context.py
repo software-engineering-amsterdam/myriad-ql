@@ -57,11 +57,11 @@ class UIContext(object):
             for condition in reg.conditions:
                 visible = visible and condition.read(self)
                 if visible:
-                    reg.ui['label'].grid()
-                    reg.ui['field'].grid()
+                    reg.get_label().grid()
+                    reg.get_field().grid()
                 else:
-                    reg.ui['label'].grid_remove()
-                    reg.ui['field'].grid_remove()
+                    reg.get_label().grid_remove()
+                    reg.get_field().grid_remove()
 
 
 class _UIRegister(object):
@@ -87,3 +87,9 @@ class _UIRegister(object):
 
     def get_dependants(self):
         return self.dependants
+
+    def get_label(self):
+        return self.ui['label']
+
+    def get_field(self):
+        return self.ui['field']

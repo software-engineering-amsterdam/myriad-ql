@@ -47,6 +47,11 @@ class UIBuilder(object):
         self.root.title(text)
 
     def add_question(self, text, variable, conditions):
+        """
+        Adds a question to the form using the given text, variable and
+        conditions. The type and format of the questions will depend on the
+        type of the variable given.
+        """
         label = ttk.Label(self.mainframe, text=text, wraplength=200)
         value = variable.type.init_variable()
         field = variable.type.init_field(self, value)
@@ -59,6 +64,11 @@ class UIBuilder(object):
         self.register.set_value(variable.name, variable.type.default_value())
 
     def add_assignation(self, text, variable, expr, conditions):
+        """
+        Adds an assignation to the form using the given text, variable,
+        expression and conditions. The type and format of the questions will
+        depend on the type of the variable given.
+        """
         label = ttk.Label(self.mainframe, text=text, wraplength=200)
         value = variable.type.init_variable()
         field = variable.type.init_field(self, value, assignation=True)
