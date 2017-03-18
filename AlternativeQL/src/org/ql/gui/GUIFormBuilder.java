@@ -42,7 +42,7 @@ public class GUIFormBuilder implements ValueReviser {
     }
 
     public void constructGUIForm() {
-        window.resetStage();
+        window.reset();
         questionEvaluator.updateValueTable(form, valueTable);
         conditionEvaluator.visitForm(form, valueTable).forEach(this::addQuestionAsWidgetToForm);
     }
@@ -58,9 +58,9 @@ public class GUIFormBuilder implements ValueReviser {
         Value value = valueTable.lookup(question.getId());
 
         if (value.isKnown() && !modifiedQuestions.contains(question.getId())) {
-            widget.updateValue(value);
+            widget.updateWidgetValue(value);
         }
 
-        window.attachWidgetToPane(widget);
+        window.attachWidget(widget);
     }
 }

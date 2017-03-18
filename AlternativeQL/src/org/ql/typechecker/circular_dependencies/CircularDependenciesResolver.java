@@ -1,6 +1,9 @@
 package org.ql.typechecker.circular_dependencies;
 
-
+/**
+ * Keeps a set of identifier pairs and can produce transitive closure and
+ * with its help - circular dependency detection
+ */
 public class CircularDependenciesResolver {
     private final DependencySet dependencies = new DependencySet();
 

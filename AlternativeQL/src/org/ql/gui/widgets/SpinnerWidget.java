@@ -1,10 +1,8 @@
 package org.ql.gui.widgets;
 
-import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import org.ql.ast.statement.Question;
@@ -15,15 +13,11 @@ abstract class SpinnerWidget<V> extends Widget {
     private final Spinner<V> spinner;
     private final Label label;
 
-    SpinnerWidget(ValueReviser mediator, Question question) {
+    public SpinnerWidget(ValueReviser mediator, Question question, SpinnerValueFactory<V> valueFactory) {
         label = new Label(question.getQuestionLabel().toString());
         spinner = new Spinner<>();
-        spinner.setValueFactory(createSpinnerValueFactory());
-        spinner.setOnMouseClicked(eventHandler(mediator, question));
-    }
-
-    private EventHandler<MouseEvent> eventHandler(ValueReviser mediator, Question question) {
-        return event -> mediator.reviseValue(question.getId(), createValue(spinner.getValue()));
+        spinner.setValueFactory(valueFactory);
+        spinner.setOnMouseClicked(event -> mediator.reviseValue(question.getId(), createValue(spinner)));
     }
 
     @Override
@@ -34,7 +28,11 @@ abstract class SpinnerWidget<V> extends Widget {
         return gridPane;
     }
 
-    protected abstract Value createValue(V value);
+    public void updateWidgetValue(Value value) {
+        spinner.getValueFactory().setValue(extractSpinnerValue(value));
+    }
 
-    protected abstract SpinnerValueFactory<V> createSpinnerValueFactory();
+    protected abstract V extractSpinnerValue(Value value);
+
+    protected abstract Value createValue(Spinner<V> spinner);
 }

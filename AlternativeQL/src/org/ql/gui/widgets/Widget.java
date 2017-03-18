@@ -5,7 +5,7 @@ import org.ql.evaluator.value.Value;
 
 public abstract class Widget {
 
-    public abstract void updateValue(Value value);
+    public abstract void updateWidgetValue(Value value);
 
     public abstract Pane createGridPane();
 }

@@ -21,7 +21,7 @@ public class CheckBoxWidget extends Widget {
     }
 
     @Override
-    public void updateValue(Value value) {
+    public void updateWidgetValue(Value value) {
         checkBox.setSelected(value.toBoolean());
     }
 

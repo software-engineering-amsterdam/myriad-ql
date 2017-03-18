@@ -3,7 +3,7 @@ package org.ql;
 import org.ql.ast.Form;
 import org.ql.gui.QLApplication;
 import org.ql.io.QLFile;
-import org.ql.parser.ASTBuilder;
+import org.ql.ast.ASTBuilder;
 import org.ql.typechecker.TypeChecker;
 import org.ql.typechecker.issues.Issue;
 import org.ql.typechecker.issues.IssuesStorage;
@@ -13,9 +13,17 @@ public class QLInterpreter {
     private final ASTBuilder astBuilder = new ASTBuilder();
     private final TypeChecker typeChecker = new TypeChecker();
 
-    public void interpret(QLFile fileLocation) throws IOException {
+    /**
+     * Attempts to interpret a QL program
+     *
+     * Initializes AST building, type-checking and running a GUI application
+     *
+     * @param file A correct QL file value object holding input stream from the source file
+     * @throws IOException
+     */
+    public void interpret(QLFile file) throws IOException {
 
-        Form formAST = astBuilder.buildAST(fileLocation.openStream());
+        Form formAST = astBuilder.buildAST(file.openStream());
 
         IssuesStorage issues = typeChecker.checkForm(formAST);
 

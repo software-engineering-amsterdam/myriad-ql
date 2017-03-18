@@ -15,11 +15,11 @@ public class Window {
         stage.setScene(mainPane.createScene());
     }
 
-    public void resetStage() {
+    public void reset() {
         mainPane.reset();
     }
 
-    public void attachWidgetToPane(Widget widget) {
+    public void attachWidget(Widget widget) {
         mainPane.add(widget.createGridPane());
     }
 }

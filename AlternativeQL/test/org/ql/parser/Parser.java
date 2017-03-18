@@ -2,14 +2,14 @@ package org.ql.parser;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.ql.ast.Expression;
-import org.ql.ast.Form;
-import org.ql.ast.Node;
-import org.ql.ast.Statement;
+import org.ql.ast.*;
 import org.ql.grammar.QLLexer;
 import org.ql.grammar.QLParser;
 import org.ql.grammar.QLVisitor;
 
+/**
+ * Only used for testing
+ */
 public class Parser {
 
     private final QLVisitor<Node> visitor = new ASTBuilder();

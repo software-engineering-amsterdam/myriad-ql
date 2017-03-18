@@ -28,7 +28,7 @@ abstract class InputWidget extends Widget {
     protected abstract Value value(String textFieldText);
 
     @Override
-    public void updateValue(Value value) {
+    public void updateWidgetValue(Value value) {
         textField.setText(value.toString());
     }
 
