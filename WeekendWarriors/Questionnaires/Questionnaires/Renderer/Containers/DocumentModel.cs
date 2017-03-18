@@ -5,7 +5,7 @@ namespace Questionnaires.Renderer.Containers
 {
     public class DocumentModel
     {
-        public List<Page> Pages { get; set; }
+        private List<Page> Pages;
 
         public DocumentModel()
         {
@@ -15,6 +15,11 @@ namespace Questionnaires.Renderer.Containers
         public void Clear()
         {
             Pages.Clear();
+        }
+
+        public void AddPage(Page page)
+        {
+            Pages.Add(page);
         }
 
         public void Draw(Panel target)

@@ -90,7 +90,7 @@ namespace Questionnaires.QL.Processing
             var MainPage = new Page(form.Identifier);
             foreach (var question in Questions)
                 MainPage.AddQuestion(question);
-            DocumentModel.Pages.Add(MainPage);
+            DocumentModel.AddPage(MainPage);
         }
     }
 }
