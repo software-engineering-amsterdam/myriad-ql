@@ -42,7 +42,7 @@ class Evaluator(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVis
                 statement.apply(self)
 
     def field(self, node, args=None):
-        pass
+        return node.name.apply(self)
 
     def assignment(self, node, args=None):
         self.__environment[node.name.name] = node.expression.apply(self)

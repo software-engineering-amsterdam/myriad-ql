@@ -382,6 +382,8 @@ class TestEvaluator(Shared):
             "q1" v1: integer = v2 * 2
             "q2" v2: integer = v3
             "q3" v3: integer
+            "q4" v4: integer = v3 + v2
+            "q5" v5: integer
         }
         """
         ast = self.acquire_ast(input_string)
@@ -397,8 +399,17 @@ class TestEvaluator(Shared):
         expected_identifier_3 = 'v3'
         self.assertTrue(expected_identifier_3 in environment, "Environment should contain key v3")
         self.assertEqual(0, environment[expected_identifier_3], "Evaluation should result in 0")
+        expected_identifier_4 = 'v4'
+        self.assertTrue(expected_identifier_4 in environment, "Environment should contain key v4")
+        self.assertEqual(0, environment[expected_identifier_4], "Evaluation should result in 0")
+        expected_identifier_5 = 'v5'
+        self.assertTrue(expected_identifier_4 in environment, "Environment should contain key v4")
+        self.assertEqual(0, environment[expected_identifier_5], "Evaluation should result in 0")
 
-        environment = evaluator.update_value(expected_identifier_3, 2)
+        evaluator.update_value(expected_identifier_3, 2)
+        environment = evaluator.update_value(expected_identifier_5, 10)
         self.assertEqual(4, environment[expected_identifier_1], "Evaluation should result in 4")
         self.assertEqual(2, environment[expected_identifier_2], "Evaluation should result in 2")
         self.assertEqual(2, environment[expected_identifier_3], "Evaluation should result in 2")
+        self.assertEqual(4, environment[expected_identifier_4], "Evaluation should result in 2")
+        self.assertEqual(10, environment[expected_identifier_5], "Evaluation should result in 2")
