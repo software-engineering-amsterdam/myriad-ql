@@ -83,6 +83,12 @@
     <Compile Include="Ast\Style\Properties\FontStylePropertyTests.cs" />
     <Compile Include="Ast\Style\Properties\HeightPropertyTests.cs" />
     <Compile Include="Ast\Style\Properties\WidthPropertyTests.cs" />
+    <Compile Include="Ast\Style\Rules\QuestionRuleTests.cs" />
+    <Compile Include="Ast\Style\Rules\ValueTypeRuleTests.cs" />
+    <Compile Include="Ast\Style\Statements\PageTests.cs" />
+    <Compile Include="Ast\Style\Statements\SectionTests.cs" />
+    <Compile Include="Ast\Style\Statements\StyleSheetTests.cs" />
+    <Compile Include="Ast\Style\Widgets\DropDownListWidgetTests.cs" />
     <Compile Include="ParserTests\Base\ParserTest.cs" />
     <Compile Include="ParserTests\PageTests.cs" />
     <Compile Include="ParserTests\SectionTests.cs" />
@@ -109,7 +115,6 @@
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Ast\Style\Rules\" />
     <Folder Include="Checker\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
