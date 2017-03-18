@@ -29,7 +29,7 @@ namespace Questionnaires.QuestionnaireBuilder
         {
             // Create the run-time objects 
             var variableStore = new VariableStore();
-            var renderer = new Renderer.Renderer(variableStore);
+            var renderer = new Renderer.Renderer();
             var expressionEvaluator = new ExpressionEvaluator.Evaluator(variableStore);
             var ruleContainer = new RuleContainer.RuleContainer(variableStore, renderer, expressionEvaluator);
 
@@ -38,7 +38,7 @@ namespace Questionnaires.QuestionnaireBuilder
                 variableStore.AddQuestion(question);
             }
 
-            renderer.AddModel(DocumentModel);
+            renderer.RenderModel(DocumentModel);
 
             foreach (var rule in Rules)
             {

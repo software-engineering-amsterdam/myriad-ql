@@ -17,31 +17,20 @@ namespace Questionnaires.Renderer
 {
     public class Renderer
     {
-        private Dictionary<Widgets.QuestionWidget, string> WidgetNames;
         private Window QuestionnaireWindow = new Window();
-        private StackPanel QuestionnaireStack = new StackPanel();
-        private Dictionary<string, QuestionWidget> Questions = new Dictionary<string, QuestionWidget>();
-        private VariableStore VariableStore;
+        private StackPanel QuestionnaireStack = new StackPanel();        
 
-        public Renderer(VariableStore variableStore)
+        public Renderer()
         {
-            WidgetNames = new Dictionary<QuestionWidget, string>();
-            VariableStore = variableStore;
-
             QuestionnaireStack.Orientation = Orientation.Vertical;
             QuestionnaireWindow.Content = QuestionnaireStack;
+            QuestionnaireWindow.Title = "Questionnaire";
+        }
 
+        public void RenderModel(DocumentModel documentModel)
+        {
+            documentModel.Draw(QuestionnaireStack);
             QuestionnaireWindow.Show();
-        }
-
-        public void AddModel(DocumentModel documentModel)
-        {
-            documentModel.Draw(QuestionnaireStack);       
-        }
-
-        public void SetWindowTitle(string title)
-        {
-            QuestionnaireWindow.Title = title;
         }
     }
 }
