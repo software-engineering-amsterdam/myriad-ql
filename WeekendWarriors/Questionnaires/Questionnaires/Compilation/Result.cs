@@ -4,29 +4,25 @@ namespace Questionnaires.Compilation
 {
     public class Result
     {
+        private bool ContainsError = false;
+        public List<Compilation.Message> Events { get; }
+
         public Result()
         {
             Events = new List<Compilation.Message>();
-        }
-
-        public List<Compilation.Message> Events
-        {
-            get;
-        }
-
-        bool Error;
+        }      
 
         public void AddEvent(Compilation.Message analysisEvent)
         {
             if (analysisEvent.IsError())
-                Error = true;
+                ContainsError = true;
 
             Events.Add(analysisEvent);
         }
 
-        public bool IsError()
+        public bool ContainsErrors()
         {
-            return Error;
+            return ContainsError;
         }
 
         public void Combine(Result result)

@@ -20,7 +20,7 @@
 
             // Get and check question declarations
             Result.Combine(new DeclarationValidator().Analyze(node, Context));
-            if (!Result.IsError()) // Only apply type checking if the declaration validator passed
+            if (!Result.ContainsErrors()) // Only apply type checking if the declaration validator passed
             {
                 var TypeCheckerResult = new TypeChecker().Analyze(node, Context);
                 Result.Combine(TypeCheckerResult);

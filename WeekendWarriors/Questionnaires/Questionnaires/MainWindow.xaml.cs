@@ -61,7 +61,7 @@ namespace Questionnaires
         {
             var semanticAnalyzerQLS = new QLS.SemanticAnalysis.Analyzer(result, Questions);
             var semanticMessages = semanticAnalyzerQLS.Analyze(stylesheetAST);
-            if (result.IsError())
+            if (result.ContainsErrors())
                 throw new Exception();
         }
 
@@ -79,13 +79,13 @@ namespace Questionnaires
 
         private static void AnalyzeFormAST(Compilation.Result result, Form FormAST)
         {
-            if (result.IsError())
+            if (result.ContainsErrors())
                 return;
 
             var semanticAnalyzer = new SemanticAnalysis.SemanticAnalyzer(result);
             semanticAnalyzer.AnalyzeForm(FormAST);
 
-            if (result.IsError())
+            if (result.ContainsErrors())
                 throw new Exception();
         }
 
