@@ -89,7 +89,7 @@
         {
             var typeAnalyzer = new TypeAnalyzer();
 
-            typeAnalyzer.Visit(sampleExpression, new VisitorTypeEnvironment());
+            typeAnalyzer.Visit(sampleExpression, new TypeEnvironment());
 
             Assert.NotEmpty(typeAnalyzer.Report.Errors);
             Assert.Equal(1, typeAnalyzer.Report.Errors.Count());

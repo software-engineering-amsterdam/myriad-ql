@@ -5,11 +5,12 @@
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Checker.Analyzers.Contracts;
     using OffByOne.Ql.Checker.Analyzers.Environment;
+    using OffByOne.Ql.Checker.Analyzers.Environment.Contracts;
     using OffByOne.Ql.Checker.Contracts;
     using OffByOne.Ql.Checker.Messages;
     using OffByOne.Ql.Common.Visitors.Base;
 
-    public class QuestionAnalyzer : BaseQlVisitor<object, QuestionVisitorTypeEnvironment>, IAnalyzer
+    public class QuestionAnalyzer : BaseQlVisitor<object, IQuestionEnvironment>, IAnalyzer
     {
         public QuestionAnalyzer()
             : this(new CheckerReport())
@@ -30,10 +31,10 @@
 
         public void Analyze(FormStatement root)
         {
-            this.Visit(root, new QuestionVisitorTypeEnvironment());
+            this.Visit(root, new QuestionEnvironment());
         }
 
-        public override object Visit(QuestionStatement statement, QuestionVisitorTypeEnvironment environment)
+        public override object Visit(QuestionStatement statement, IQuestionEnvironment environment)
         {
             // TODO: change string primitives to StringValue?
             // [...].Value.Value is ugly. Since StringValues replace string primitives,

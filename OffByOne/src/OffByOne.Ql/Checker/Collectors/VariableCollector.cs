@@ -8,7 +8,7 @@
     using OffByOne.Ql.Checker.Analyzers.Environment;
     using OffByOne.Ql.Common.Visitors.Base;
 
-    public class VariableCollector : BaseQlVisitor<object, VisitorTypeEnvironment>
+    public class VariableCollector : BaseQlVisitor<object, TypeEnvironment>
     {
         public VariableCollector()
         {
@@ -19,21 +19,21 @@
 
         public void Collect(Expression root)
         {
-            this.Visit(root, new VisitorTypeEnvironment());
+            this.Visit(root, new TypeEnvironment());
         }
 
         public void Collect(Statement root)
         {
-            this.Visit(root, new VisitorTypeEnvironment());
+            this.Visit(root, new TypeEnvironment());
         }
 
-        public override object Visit(VariableExpression expression, VisitorTypeEnvironment environment)
+        public override object Visit(VariableExpression expression, TypeEnvironment environment)
         {
             this.Variables.Add(expression.Identifier);
             return base.Visit(expression, environment);
         }
 
-        public override object Visit(QuestionStatement statement, VisitorTypeEnvironment environment)
+        public override object Visit(QuestionStatement statement, TypeEnvironment environment)
         {
             this.Variables.Add(statement.Identifier);
             return base.Visit(statement, environment);

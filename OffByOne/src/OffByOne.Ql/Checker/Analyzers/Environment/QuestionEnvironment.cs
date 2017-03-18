@@ -5,14 +5,14 @@
 
     using MoreDotNet.Wrappers;
 
-    using OffByOne.Ql.Common.Visitors.Contracts;
+    using OffByOne.Ql.Checker.Analyzers.Environment.Contracts;
 
-    public class QuestionVisitorTypeEnvironment : IEnvironment
+    public class QuestionEnvironment : IQuestionEnvironment
     {
         private readonly ISet<string> questionNames;
         private readonly ISet<string> questionLables;
 
-        public QuestionVisitorTypeEnvironment()
+        public QuestionEnvironment()
         {
             this.questionLables = new HashSet<string>();
             this.questionNames = new HashSet<string>();

@@ -7,7 +7,7 @@
     using OffByOne.Ql.Checker.Analyzers.Environment;
     using OffByOne.Ql.Common.Visitors.Base;
 
-    public class QuestionCollector : BaseQlVisitor<object, QuestionVisitorTypeEnvironment>
+    public class QuestionCollector : BaseQlVisitor<object, QuestionEnvironment>
     {
         public QuestionCollector()
         {
@@ -18,10 +18,10 @@
 
         public void Collect(FormStatement root)
         {
-            this.Visit(root, new QuestionVisitorTypeEnvironment());
+            this.Visit(root, new QuestionEnvironment());
         }
 
-        public override object Visit(QuestionStatement statement, QuestionVisitorTypeEnvironment environment)
+        public override object Visit(QuestionStatement statement, QuestionEnvironment environment)
         {
             this.Mappings[statement.Identifier] = statement.Type;
             return base.Visit(statement, environment);

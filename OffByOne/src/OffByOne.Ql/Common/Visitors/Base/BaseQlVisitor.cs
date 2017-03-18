@@ -209,37 +209,37 @@
             return default(TResult);
         }
 
-        public ValueType Visit(IntegerLiteral literal, VisitorTypeEnvironment environment)
+        public ValueType Visit(IntegerLiteral literal, TypeEnvironment environment)
         {
             return new IntegerValueType();
         }
 
-        public ValueType Visit(MoneyLiteral literal, VisitorTypeEnvironment environment)
+        public ValueType Visit(MoneyLiteral literal, TypeEnvironment environment)
         {
             return new MoneyValueType();
         }
 
-        public ValueType Visit(DecimalLiteral literal, VisitorTypeEnvironment environment)
+        public ValueType Visit(DecimalLiteral literal, TypeEnvironment environment)
         {
             return new DecimalValueType();
         }
 
-        public ValueType Visit(BooleanLiteral literal, VisitorTypeEnvironment environment)
+        public ValueType Visit(BooleanLiteral literal, TypeEnvironment environment)
         {
             return new BooleanValueType();
         }
 
-        public ValueType Visit(StringLiteral literal, VisitorTypeEnvironment environment)
+        public ValueType Visit(StringLiteral literal, TypeEnvironment environment)
         {
             return new StringValueType();
         }
 
-        public ValueType Visit(DateLiteral literal, VisitorTypeEnvironment environment)
+        public ValueType Visit(DateLiteral literal, TypeEnvironment environment)
         {
             return new DateValueType();
         }
 
-        public ValueType Visit(HexLiteral literal, VisitorTypeEnvironment environment)
+        public ValueType Visit(HexLiteral literal, TypeEnvironment environment)
         {
             return new StringValueType();
         }

@@ -6,15 +6,15 @@
     using MoreDotNet.Extensions.Collections;
     using MoreDotNet.Wrappers;
 
-    using OffByOne.Ql.Common.Visitors.Contracts;
+    using OffByOne.Ql.Checker.Analyzers.Environment.Contracts;
 
     using ValueType = OffByOne.Ql.Ast.ValueTypes.Base.ValueType;
 
-    public class VisitorTypeEnvironment : IVisitorTypeEnvironment
+    public class TypeEnvironment : ITypeEnvironment
     {
         private readonly IDictionary<string, ValueType> symbolMappings;
 
-        public VisitorTypeEnvironment()
+        public TypeEnvironment()
         {
             this.symbolMappings = new Dictionary<string, ValueType>();
         }
