@@ -33,6 +33,7 @@
             var label = new Label { Content = statement.Label };
             this.Input = new TextBox();
             this.Input.KeyUp += this.UpdateValue;
+            this.Input.IsEnabled = !this.IsReadOnly();
 
             style.Apply(label);
             style.Apply(this.Input);

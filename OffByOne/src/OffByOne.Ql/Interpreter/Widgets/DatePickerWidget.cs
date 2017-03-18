@@ -36,6 +36,7 @@
             var label = new Label { Content = statement.Label };
             this.Input = new DatePicker { SelectedDateFormat = DatePickerFormat.Short };
             this.Input.SelectedDateChanged += this.UpdateValue;
+            this.Input.IsEnabled = !this.IsReadOnly();
 
             style.Apply(label);
             style.Apply(this.Input);
