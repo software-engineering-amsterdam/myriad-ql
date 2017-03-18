@@ -56,24 +56,24 @@ namespace Questionnaires.QL.AST
 
         private bool CheckChildNodeSemantics(QLContext context, List<Message> messages)
         {
-            bool semanticsInChildNdodesOk = true;
+            bool semanticsInChildNodesOk = true;
 
             foreach (var statement in ThenStatements)
             {
                 if (!statement.CheckSemantics(context, messages))
-                    semanticsInChildNdodesOk = false;
+                    semanticsInChildNodesOk = false;
             }
 
             foreach (var statement in ElseStatements)
             {
                 if (!statement.CheckSemantics(context, messages))
-                    semanticsInChildNdodesOk = false;
+                    semanticsInChildNodesOk = false;
             }
 
             if (!Condition.CheckSemantics(context, messages))
-                semanticsInChildNdodesOk = false;
+                semanticsInChildNodesOk = false;
 
-            return semanticsInChildNdodesOk;
+            return semanticsInChildNodesOk;
         }
     }
 }
