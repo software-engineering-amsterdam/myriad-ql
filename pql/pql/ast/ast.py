@@ -37,12 +37,6 @@ class Form(Node):
     def apply(self, visitor, args=None):
         return visitor.form(self, args)
 
-    def __str__(self, level=0):
-        ret = "\t" * level + repr(self.var_type) + "\n"
-        for child in self.children:
-            ret += child.__str__()
-        return ret
-
 
 class Field(Node):
     def __init__(self, position, source, title, name, data_type, var_type='field'):

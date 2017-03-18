@@ -283,4 +283,12 @@ class TestParser(TestCase):
             "Value residue:" valueResidue: money = (sellingPrice - +-privateDebt)
         }
         """
-        parse(input_string)
+        self.assertIsNotNone(parse(input_string))
+
+    def test_parse_money_assign(self):
+        input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: money = 100.00
+        }
+        """
+        self.assertIsNotNone(parse(input_string))
