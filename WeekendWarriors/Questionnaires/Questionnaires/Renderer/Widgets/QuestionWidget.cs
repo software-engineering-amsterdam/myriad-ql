@@ -46,7 +46,7 @@ namespace Questionnaires.Renderer.Widgets
 
         public delegate void InputChangedEventHandler(object sender, IType newValue);
         public event InputChangedEventHandler InputChanged;
-        protected virtual void OnInputChanged(IType newValue)
+        protected void OnInputChanged(IType newValue)
         {
             if (InputChanged != null)
                 InputChanged(this, newValue);

@@ -37,8 +37,7 @@ namespace Questionnaires.Renderer.Widgets
         }
 
         public event EventHandler ValueChanged;
-
-        protected virtual void OnValueChanged(EventArgs e)
+        private void OnValueChanged(EventArgs e)
         {
             if (ValueChanged != null)
                 ValueChanged(this, e);

@@ -16,18 +16,14 @@ namespace Questionnaires.RunTime
             question.ValueChanged += (sender, args) => OnVariableChanged();
         }
 
-        public void RemoveValue(string name)
-        {
-            Questions.Remove(name);
-        }
-
         public Questionnaires.Types.IType GetValue(string name)
         {
+            Debug.Assert(Questions.ContainsKey(name));
             return Questions[name].GetValue();
         }
 
         public event EventHandler VariableChanged;
-        public void OnVariableChanged()
+        private void OnVariableChanged()
         {
             if (VariableChanged != null)
                 VariableChanged(this, new EventArgs());
