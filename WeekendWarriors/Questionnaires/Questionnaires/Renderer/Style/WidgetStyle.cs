@@ -21,8 +21,8 @@ namespace Questionnaires.Renderer.Style
         }
 
         public int Width { get; set; }
-        public String Font { get; set; }
+        public string Font { get; set; }
         public int FontSize { get; set; }
-        public String Color { get; set; }
+        public string Color { get; set; }
     }
 }
