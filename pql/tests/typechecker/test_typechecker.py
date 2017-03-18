@@ -460,3 +460,94 @@ class TestTypeChecker(Shared):
         """
         type_checker_result = self.apply_type_checking(input_string)
         self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
+
+    def test_typecheck_field_incorrect_negation_boolean_integer(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: boolean = !1
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
+
+    def test_typecheck_field_correct_string(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: string = 'text'
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertEqual(len(type_checker_result), 0, "This cases is assumed to succeed.")
+
+    def test_typecheck_field_correct_string_addition(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: string = 'text' + 'abc'
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertEqual(len(type_checker_result), 0, "This cases is assumed to succeed.")
+
+    def test_typecheck_field_correct_negative_integer(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: integer = -1
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertEqual(len(type_checker_result), 0, "This cases is assumed to succeed.")
+
+    def test_typecheck_field_correct_posative_integer(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: integer = +1
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertEqual(len(type_checker_result), 0, "This cases is assumed to succeed.")
+
+    def test_typecheck_field_correct_negation_boolean(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: boolean = !true
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertEqual(len(type_checker_result), 0, "This cases is assumed to succeed.")
+
+    def test_typecheck_field_incorrect_boolean__if_integer(self):
+        input_string = """
+        form taxOfficeExample {
+            if(v1){
+                "q1" v1: integer = 1
+            }
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
+
+    def test_typecheck_field_incorrect_boolean__if_else_integer(self):
+        input_string = """
+        form taxOfficeExample {
+            if(v1){
+                "q1" v1: integer = 1
+            } else {
+                "q2" v2: integer = 1
+            }
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
+
+    def test_typecheck_field_incorrect_boolean_if_else_and_integer(self):
+        input_string = """
+        form taxOfficeExample {
+            if(v1 && v2){
+                "q1" v1: integer = 1
+            } else {
+                "q2" v2: integer = 1
+            }
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertEqual(len(type_checker_result), 2, "This cases is assumed to fail.")

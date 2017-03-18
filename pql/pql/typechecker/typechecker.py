@@ -92,28 +92,30 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
         return self.boolean_type_detection(node, allowed_arithmetic_types=set())
 
     def negation(self, node):
-        if node.operand.apply(self) is DataTypes.boolean:
-            return DataTypes.boolean
+        result = node.operand.apply(self)
+        if result.data_type is DataTypes.boolean:
+            return result
         self.errors.append("Negation was passed a non-boolean value on location {} ".format(node.location))
         return None
 
     def positive(self, node):
         result = node.operand.apply(self)
-        if result is (DataTypes.integer or DataTypes.money):
+        if result.data_type is (DataTypes.integer or DataTypes.money):
             return result
         self.errors.append("Positive was passed a non-numeric value on location {} ".format(node.location))
         return None
 
     def negative(self, node):
         result = node.operand.apply(self)
-        if result is (DataTypes.integer or DataTypes.money):
+        if result.data_type is (DataTypes.integer or DataTypes.money):
             return result
         self.errors.append("Negative was passed a non-numeric value on location {} ".format(node.location))
         return None
 
-    def arithmetic_type_detection(self, node, allowed_arithmetic_types={DataTypes.integer, DataTypes.money}, allowed_special_tyepes={DataTypes.string}):
+    def arithmetic_type_detection(self, node, allowed_arithmetic_types={DataTypes.integer, DataTypes.money},
+                                  allowed_special_types={DataTypes.string}):
         dominant_type = None
-        allowed_types = allowed_arithmetic_types.union(allowed_special_tyepes)
+        allowed_types = allowed_arithmetic_types.union(allowed_special_types)
         type_set = {node.lhs.apply(self), node.rhs.apply(self)}
         type_set_data_types = {d_type.data_type for d_type in type_set if d_type is not None}
 
