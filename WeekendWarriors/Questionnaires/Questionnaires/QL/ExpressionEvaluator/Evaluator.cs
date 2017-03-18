@@ -8,7 +8,7 @@ namespace Questionnaires.ExpressionEvaluator
 {
     public class Evaluator
     {
-        protected VariableStore VariableStore;
+        private VariableStore VariableStore;
 
         public Evaluator(VariableStore store)
         {
