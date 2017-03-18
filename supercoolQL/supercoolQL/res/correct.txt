@@ -12,4 +12,7 @@ form testForm {
     "Question 4"
     question4: integer;
 
+    "Question 5"
+    question5: integer = 12 + question4;
+
 }
