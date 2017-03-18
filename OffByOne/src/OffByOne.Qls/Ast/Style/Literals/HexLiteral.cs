@@ -4,7 +4,6 @@
 
     using OffByOne.Qls.Ast.Style.Literals.Base;
     using OffByOne.Qls.Common.Visitors.Contracts;
-    using OffByOne.Qls.Visitors.Contracts;
 
     public class HexLiteral : Literal
     {

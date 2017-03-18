@@ -1,6 +1,9 @@
 ﻿namespace OffByOne.Qls.Ast
 {
+    using System.Collections.Generic;
     using System.Linq;
+
+    using MoreDotNet.Extensions.Common;
 
     using OffByOne.Ql.Ast;
     using OffByOne.Ql.Ast.ValueTypes;
@@ -167,7 +170,7 @@
 
         public override AstNode VisitOptionsList(QlsGrammarParser.OptionsListContext context)
         {
-            return (OptionsList<StringLiteral>)this.VisitOption(context.option());
+            return this.VisitOption(context.option());
         }
 
         public override AstNode VisitOption(QlsGrammarParser.OptionContext context)
@@ -182,7 +185,7 @@
                 return outputList;
             }
 
-            outputList.AddRange((OptionsList<StringLiteral>)this.VisitOption(context.option()));
+            outputList.AddRange(this.VisitOption(context.option()).As<IList<StringLiteral>>());
 
             return outputList;
         }

@@ -10,13 +10,12 @@
     using OffByOne.Qls.Ast.Style.Statements;
     using OffByOne.Qls.Ast.Style.Widgets;
     using OffByOne.Qls.Common.Visitors.Contracts;
-    using OffByOne.Qls.Visitors.Contracts;
 
     public class BaseQlsVisitor<TResult, TEnvironment>
         : ILiteralVisitor<TResult, TEnvironment>,
         IValueTypeVisitor<TResult, TEnvironment>,
         IPropertyVisitor<TResult, TEnvironment>,
-        IRuleVisitor<TResult, TEnvironment>, Qls.Visitors.Contracts.IStatementVisitor<TResult, TEnvironment>,
+        IRuleVisitor<TResult, TEnvironment>, Contracts.IStatementVisitor<TResult, TEnvironment>,
         IWidigetVisitor<TResult, TEnvironment>
         where TEnvironment : IEnvironment
     {

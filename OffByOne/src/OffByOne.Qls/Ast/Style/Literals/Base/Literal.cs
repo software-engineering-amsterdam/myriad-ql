@@ -3,7 +3,6 @@
     using OffByOne.Ql.Ast;
     using OffByOne.Ql.Common.Visitors.Contracts;
     using OffByOne.Qls.Common.Visitors.Contracts;
-    using OffByOne.Qls.Visitors.Contracts;
 
     public abstract class Literal : AstNode
     {
