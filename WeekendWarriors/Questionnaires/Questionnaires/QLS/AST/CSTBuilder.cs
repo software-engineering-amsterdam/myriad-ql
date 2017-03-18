@@ -2,7 +2,7 @@
 
 namespace Questionnaires.QLS.AST
 {
-    class CSTBuilder
+    public class CSTBuilder
     {
         private Compilation.Result Messages;
 

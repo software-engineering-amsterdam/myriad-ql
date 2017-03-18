@@ -2,7 +2,7 @@
 
 namespace Questionnaires.QLS.AST.Widgets
 {
-    class Slider : Widget
+    public class Slider : Widget
     {
         // TODO: Add support to slider for different types
 

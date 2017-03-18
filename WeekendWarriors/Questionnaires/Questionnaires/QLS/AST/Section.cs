@@ -8,6 +8,7 @@ namespace Questionnaires.QLS.AST
         public List<Section> Sections { get; }
         public List<Question> Questions { get; }
         public List<DefaultStyle> Styles { get; }
+
         public Section(string name)
         {
             Sections = new List<Section>();

@@ -89,8 +89,8 @@ namespace Questionnaires.QLS.AST
 
         public override INode VisitDefaultStyle([NotNull] QLSParser.DefaultStyleContext context)
         {
-            Widgets.Widget widget = GetWidgetFromStyleContext(context);
-            Questionnaires.Types.IType type = GetTypeFromStyleContext(context);
+            var widget = GetWidgetFromStyleContext(context);
+            var type = GetTypeFromStyleContext(context);
 
             var defaultStyle = new DefaultStyle(type, (dynamic)widget);
 
