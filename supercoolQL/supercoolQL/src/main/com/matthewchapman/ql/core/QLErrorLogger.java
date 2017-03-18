@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class QLErrorLogger {
 
-    private List<QLError> errors;
+    private final List<QLError> errors;
 
     public QLErrorLogger() {
         errors = new ArrayList<>();
@@ -27,7 +27,7 @@ public class QLErrorLogger {
         return this.errors.size();
     }
 
-    public List<QLError> getErrors() {
+    private List<QLError> getErrors() {
         return this.errors;
     }
 

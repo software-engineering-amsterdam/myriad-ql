@@ -10,7 +10,7 @@ import org.antlr.v4.runtime.Recognizer;
  */
 public class AntlrErrorListener extends BaseErrorListener {
 
-    private QLErrorLogger logger;
+    private final QLErrorLogger logger;
 
     public AntlrErrorListener() {
         this.logger = new QLErrorLogger();

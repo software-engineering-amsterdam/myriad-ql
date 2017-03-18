@@ -20,8 +20,8 @@ import org.antlr.v4.runtime.CommonTokenStream;
  */
 public class CoreParser {
 
-    private AntlrErrorListener errorListener;
-    private ErrorDialogGenerator dialogGenerator;
+    private final AntlrErrorListener errorListener;
+    private final ErrorDialogGenerator dialogGenerator;
 
     public CoreParser() {
         errorListener = new AntlrErrorListener();

@@ -8,7 +8,7 @@ import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
 import com.matthewchapman.ql.core.QLErrorLogger;
-import com.matthewchapman.ql.validation.visitor.AbstractQLVisitor;
+import com.matthewchapman.ql.visitor.QLStatementVisitor;
 
 import java.util.*;
 
@@ -17,7 +17,7 @@ import java.util.*;
  * <p>
  * Gathers all of the questions contained within a given Form, allows checking for duplicates
  */
-public class QuestionCollection extends AbstractQLVisitor<Void, String> {
+public class QuestionCollection implements QLStatementVisitor<Void, String> {
 
     private final List<Question> questionList;
     private final HashMap<String, Type> typeTable;
@@ -57,11 +57,8 @@ public class QuestionCollection extends AbstractQLVisitor<Void, String> {
             }
         }
 
-        if (logger.getErrorNumber() > 0) {
-            return true;
-        }
+        return logger.getErrorNumber() > 0;
 
-        return false;
     }
 
     @Override
