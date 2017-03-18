@@ -15,7 +15,7 @@ class Evaluator(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVis
 
     def visit(self, environment=None):
         if environment is None:
-            environment = self.__environment
+            environment = self.__environment.copy()
         self.ast.apply(self)
 
         while set(self.__environment.items()) ^ set(environment.items()):
@@ -40,9 +40,6 @@ class Evaluator(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVis
         if node.condition.apply(self):
             for statement in node.statements:
                 statement.apply(self)
-
-    def expression(self, node):
-        return node.apply(self)
 
     def field(self, node, args=None):
         pass
@@ -70,8 +67,6 @@ class Evaluator(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVis
         rhs_result = node.rhs.apply(self)
         if lhs_result is True or rhs_result is True:
             return True
-        else:
-            return self.apply_operator(node, (lambda lhs, rhs: lhs or rhs), False)
 
     def greater_inclusive(self, node):
         return self.apply_operator(node, operator.ge)
@@ -80,13 +75,13 @@ class Evaluator(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVis
         return self.apply_operator(node, operator.lt)
 
     def and_(self, node):
-        return self.apply_operator(node, (lambda lhs, rhs: lhs and rhs), default_value=False)
+        return self.apply_operator(node, (lambda lhs, rhs: lhs and rhs))
 
     def greater_exclusive(self, node):
         return self.apply_operator(node, operator.gt)
 
     def division(self, node):
-        return self.apply_operator(node, operator.truediv)
+        return self.apply_operator(node, lambda lhs, rhs:  0.00 if (rhs == 0.00) else operator.truediv(lhs,rhs))
 
     def subtraction(self, node):
         return self.apply_operator(node, operator.sub)
@@ -106,22 +101,19 @@ class Evaluator(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVis
     def inequality(self, node):
         return self.apply_operator(node, operator.ne)
 
-    def apply_operator(self, node, operator_function, default_value=None):
+    def apply_operator(self, node, operator_function):
         lhs_result = node.lhs.apply(self)
         rhs_result = node.rhs.apply(self)
-        if lhs_result is None or rhs_result is None:
-            return default_value
-        else:
-            return operator_function(lhs_result, rhs_result)
+        return operator_function(lhs_result, rhs_result)
 
     def positive(self, node):
-        return +node.rhs.apply(self)
+        return +node.operand.apply(self)
 
     def negative(self, node):
-        return -node.rhs.apply(self)
+        return -node.operand.apply(self)
 
     def negation(self, node):
-        return not node.rhs.apply(self)
+        return not node.operand.apply(self)
 
     def update_value(self, key, value):
         self.__environment[key] = value
