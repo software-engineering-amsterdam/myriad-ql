@@ -2,7 +2,7 @@ package com.matthewchapman.ql.ast.statement;
 
 import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Statement;
-import com.matthewchapman.ql.validation.visitor.QLStatementVisitor;
+import com.matthewchapman.ql.visitor.QLStatementVisitor;
 
 import java.util.ArrayList;
 import java.util.List;

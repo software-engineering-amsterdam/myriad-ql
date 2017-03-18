@@ -1,6 +1,6 @@
 package com.matthewchapman.ql.ast;
 
-import com.matthewchapman.ql.validation.visitor.QLExpressionVisitor;
+import com.matthewchapman.ql.visitor.QLExpressionVisitor;
 
 /**
  * Created by matt on 24/02/2017.

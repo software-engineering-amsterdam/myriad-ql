@@ -6,7 +6,7 @@ import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
-import com.matthewchapman.ql.validation.visitor.QLStatementVisitor;
+import com.matthewchapman.ql.visitor.QLStatementVisitor;
 import org.junit.Before;
 import org.junit.Test;
 
