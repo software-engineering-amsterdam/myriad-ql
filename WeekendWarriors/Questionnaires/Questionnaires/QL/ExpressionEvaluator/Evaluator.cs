@@ -8,11 +8,11 @@ namespace Questionnaires.ExpressionEvaluator
 {
     public class Evaluator
     {
-        protected VariableStore VarialbeStore;
+        protected VariableStore VariableStore;
 
         public Evaluator(VariableStore store)
         {
-            VarialbeStore = store;
+            VariableStore = store;
         }
 
         public IType Evaluate(IExpression expression)
@@ -60,7 +60,7 @@ namespace Questionnaires.ExpressionEvaluator
 
         public IType Visit(Identifier node)
         {
-            return VarialbeStore.GetValue(node.Name);
+            return VariableStore.GetValue(node.Name);
         }
 
         public IType Visit(Operators.And node)

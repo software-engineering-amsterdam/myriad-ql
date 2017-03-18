@@ -56,7 +56,7 @@ namespace Questionnaires.QL.AST
 
         private bool CheckChildNodeSemantics(QLContext context, List<Message> messages)
         {
-            bool semanticsInChildNodesOk = true;
+            var semanticsInChildNodesOk = true;
 
             foreach (var statement in ThenStatements)
             {
