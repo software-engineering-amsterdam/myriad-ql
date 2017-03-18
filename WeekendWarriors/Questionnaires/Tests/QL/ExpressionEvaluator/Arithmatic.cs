@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Questionnaires.ExpressionEvaluator;
 using Questionnaires.QL.AST;
 using Questionnaires.RunTime;
 using System.Collections.Generic;
@@ -23,7 +22,7 @@ namespace Tests.QL.ExpressionEvaluator
             var astFactory = new ASTBuilder(new Questionnaires.Compilation.Result());
             var AST = astFactory.BuildExpression(expression);
 
-            var evaluator = new Evaluator(store);
+            var evaluator = new Questionnaires.RunTime.ExpressionEvaluator(store);
             var result = evaluator.Evaluate((IExpression)AST);
             Value.ValueTester.Test((dynamic)result, expectedResult);
         }

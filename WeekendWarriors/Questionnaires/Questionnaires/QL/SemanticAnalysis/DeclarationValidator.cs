@@ -49,7 +49,7 @@ namespace Questionnaires.SemanticAnalysis
              * If this question is of the same type as the previous one this is a warning
              * If it is of another type, it is an error */
             var storedType = Context.GetQuestionType(node.Identifier);
-            if (storedType == node.Type)
+            if (storedType.GetType() == node.Type.GetType())
                 result.AddEvent(new Compilation.Warning(string.Format("Redeclaration of question {0}", node.Identifier)));
             else
                 result.AddEvent(new Compilation.Error(string.Format("Redeclaration of question {0} with conflicting types {1} and {2}", node.Identifier, node.Type, storedType)));

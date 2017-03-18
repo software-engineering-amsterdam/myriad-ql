@@ -10,9 +10,9 @@ namespace Questionnaires.QuestionnaireBuilder
     {
         private DocumentModel DocumentModel;
         private List<RunTime.Question> Questions = new List<RunTime.Question>();
-        private List<Action<ExpressionEvaluator.Evaluator>> Rules = new List<Action<ExpressionEvaluator.Evaluator>>();
+        private List<Action<ExpressionEvaluator>> Rules = new List<Action<ExpressionEvaluator>>();
 
-        public QuestionnaireBuilder(List<RunTime.Question> questions, List<Action<ExpressionEvaluator.Evaluator>> rules, DocumentModel documentModel)
+        public QuestionnaireBuilder(List<RunTime.Question> questions, List<Action<ExpressionEvaluator>> rules, DocumentModel documentModel)
         {
             Questions = questions;
             Rules = rules;
@@ -24,7 +24,7 @@ namespace Questionnaires.QuestionnaireBuilder
             // Create the run-time objects 
             var questionStore = new QuestionStore(Questions);
             var renderer = new Renderer.Renderer();
-            var expressionEvaluator = new ExpressionEvaluator.Evaluator(questionStore);
+            var expressionEvaluator = new ExpressionEvaluator(questionStore);
             var ruleContainer = new RuleContainer(expressionEvaluator, Rules);
 
             renderer.RenderModel(DocumentModel);         

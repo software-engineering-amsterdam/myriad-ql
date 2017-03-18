@@ -10,10 +10,10 @@ namespace Questionnaires.QL.Processing
     class Processor
     {
         private List<RunTime.Question> Questions;
-        private List<Action<ExpressionEvaluator.Evaluator>> Rules;
+        private List<Action<ExpressionEvaluator>> Rules;
         private DocumentModel DocumentModel;
 
-        public Processor(List<RunTime.Question> questions, List<Action<ExpressionEvaluator.Evaluator>> rules, DocumentModel documentModel)
+        public Processor(List<RunTime.Question> questions, List<Action<ExpressionEvaluator>> rules, DocumentModel documentModel)
         {
             Questions = questions;
             Rules = rules;
@@ -22,7 +22,7 @@ namespace Questionnaires.QL.Processing
 
         public void Process(Form form)
         {
-            var defaultVisibilityFunction = new Func<ExpressionEvaluator.Evaluator, bool>((evaluator) => { return true; });
+            var defaultVisibilityFunction = new Func<ExpressionEvaluator, bool>((evaluator) => { return true; });
 
             foreach (var statement in form.Statements)
             {
@@ -33,7 +33,7 @@ namespace Questionnaires.QL.Processing
             CreateDocumentModel(form);
         }
 
-        private void Visit(ComputedQuestion node, Func<ExpressionEvaluator.Evaluator, bool> visibilityCondition)
+        private void Visit(ComputedQuestion node, Func<ExpressionEvaluator, bool> visibilityCondition)
         {
             Visit(node.Question, visibilityCondition);
             var question = Questions.Find((q) => q.Identifier == node.Question.Identifier);
@@ -53,7 +53,7 @@ namespace Questionnaires.QL.Processing
                 });
         }
 
-        private void Visit(AST.Question node, Func<ExpressionEvaluator.Evaluator, bool> visibilityCondition)
+        private void Visit(AST.Question node, Func<ExpressionEvaluator, bool> visibilityCondition)
         {
             var runTimeQuestion = new RunTime.Question(node);
             // Add a rule to the rule container that sets the visibility for this question
@@ -67,15 +67,15 @@ namespace Questionnaires.QL.Processing
             Questions.Add(runTimeQuestion);
         }
 
-        private void Visit(Conditional node, Func<ExpressionEvaluator.Evaluator, bool> visibilityCondition)
+        private void Visit(Conditional node, Func<ExpressionEvaluator, bool> visibilityCondition)
         {
             /* The conditional node. This is where we need to do some real work. We need to make function objects
              * That evaluate the condition and based on the outcome set the visibility of questions */
 
-            Func<ExpressionEvaluator.Evaluator, bool> conditionFunctionThen =
+            Func<ExpressionEvaluator, bool> conditionFunctionThen =
                 (evaluator) => { return visibilityCondition(evaluator) && (evaluator.Evaluate(node.Condition) as BooleanType).GetValue(); };
 
-            Func<ExpressionEvaluator.Evaluator, bool> conditionFunctionElse = (evaluator) => { return !conditionFunctionThen(evaluator); };
+            Func<ExpressionEvaluator, bool> conditionFunctionElse = (evaluator) => { return !conditionFunctionThen(evaluator); };
 
             foreach (var thenStatement in node.ThenStatements)
                 Visit((dynamic)thenStatement, conditionFunctionThen);

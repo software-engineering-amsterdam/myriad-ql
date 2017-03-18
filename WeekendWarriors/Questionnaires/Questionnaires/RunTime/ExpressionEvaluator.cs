@@ -4,13 +4,13 @@ using Questionnaires.Types;
 using Literals = Questionnaires.QL.AST.Literals;
 using Operators = Questionnaires.QL.AST.Operators;
 
-namespace Questionnaires.ExpressionEvaluator
+namespace Questionnaires.RunTime
 {
-    public class Evaluator
+    public class ExpressionEvaluator
     {
         private QuestionStore QuestionStore;
 
-        public Evaluator(QuestionStore store)
+        public ExpressionEvaluator(QuestionStore store)
         {
             QuestionStore = store;
         }

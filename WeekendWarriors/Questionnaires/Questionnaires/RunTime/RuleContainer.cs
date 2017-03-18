@@ -1,18 +1,17 @@
 ﻿using Questionnaires.RunTime;
 using System;
 using System.Collections.Generic;
-using Questionnaires.ExpressionEvaluator;
 
 namespace RunTime.RuleContainer
 {
-    using Rule = Action<Evaluator>;
+    using Rule = Action<ExpressionEvaluator>;
 
     class RuleContainer
     {
         private List<Rule> Rules = new List<Rule>();
-        private Evaluator ExpresionEvaluator;
+        private ExpressionEvaluator ExpresionEvaluator;
 
-        public RuleContainer(Evaluator expresionEvaluator, List<Rule> rules)
+        public RuleContainer(ExpressionEvaluator expresionEvaluator, List<Rule> rules)
         {
             Rules = rules;
             ExpresionEvaluator = expresionEvaluator;
