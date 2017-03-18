@@ -5,11 +5,11 @@ namespace Questionnaires.Types
 {
     public abstract class Type<T> : IType
     {
-        protected T Val = default(T);
+        protected T Value = default(T);
 
         public T GetValue()
         {
-            return Val;
+            return Value;
         }
 
         public virtual IType Positive()

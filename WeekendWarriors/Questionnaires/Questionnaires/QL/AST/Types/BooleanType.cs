@@ -10,32 +10,32 @@ namespace Questionnaires.Types
 
         public BooleanType(bool value)
         {
-            Val = value;
+            Value = value;
         }
 
         public override BooleanType Bang()
         {
-            return new BooleanType(!Val);
+            return new BooleanType(!Value);
         }
 
         public override BooleanType And(BooleanType value)
         {
-            return new BooleanType(Val && value.GetValue());
+            return new BooleanType(Value && value.GetValue());
         }
 
         public override BooleanType Or(BooleanType value)
         {
-            return new BooleanType(Val || value.GetValue());
+            return new BooleanType(Value || value.GetValue());
         }
 
         public override BooleanType EqualTo(BooleanType value)
         {
-            return new BooleanType(Val == value.GetValue());
+            return new BooleanType(Value == value.GetValue());
         }
 
         public override BooleanType InequalTo(BooleanType value)
         {
-            return new BooleanType(Val != value.GetValue());
+            return new BooleanType(Value != value.GetValue());
         }
 
         public override QuestionWidget GetWidget()
