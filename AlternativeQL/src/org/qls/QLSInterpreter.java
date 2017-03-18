@@ -1,9 +1,9 @@
 package org.qls;
 
+import org.ql.ast.ASTBuilder;
 import org.ql.ast.Form;
 import org.ql.gui.QLApplication;
 import org.ql.io.QLFile;
-import org.ql.parser.ASTBuilder;
 import org.ql.typechecker.SymbolTable;
 import org.ql.typechecker.TypeChecker;
 import org.ql.typechecker.issues.Issue;
