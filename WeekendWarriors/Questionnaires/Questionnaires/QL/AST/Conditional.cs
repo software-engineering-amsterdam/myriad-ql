@@ -36,7 +36,7 @@ namespace Questionnaires.QL.AST
                 return false;
 
             // We only accept conditions of boolean types (this is not C)
-            if(!ValidateConditionType((dynamic)Condition.GetResultType(context)))
+            if (!ValidateConditionType((dynamic)Condition.GetResultType(context)))
             {
                 messages.Add(new Error("Condition for conditional statement cannot be resolved to boolean"));
                 return false;

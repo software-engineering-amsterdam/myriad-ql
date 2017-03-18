@@ -4,7 +4,7 @@
     {
         public Warning(string message) : base("Warning: " + message)
         {
-           
+
         }
 
         public override bool IsError()

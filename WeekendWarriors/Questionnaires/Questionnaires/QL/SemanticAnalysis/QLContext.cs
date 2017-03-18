@@ -13,7 +13,7 @@ namespace Questionnaires.SemanticAnalysis
         }
 
         public IType GetQuestionType(string name)
-        {            
+        {
             return Context[name];
         }
 

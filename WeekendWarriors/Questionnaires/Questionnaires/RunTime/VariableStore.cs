@@ -13,7 +13,7 @@ namespace Questionnaires.RunTime
         {
             Debug.Assert(!Questions.ContainsKey(question.Identifier));
             Questions.Add(question.Identifier, question);
-            question.ValueChanged += (sender, args) =>  OnVariableChanged();
+            question.ValueChanged += (sender, args) => OnVariableChanged();
         }
 
         public void RemoveValue(string name)
@@ -25,12 +25,12 @@ namespace Questionnaires.RunTime
         {
             return Questions[name].Type;
         }
-        
+
         public event EventHandler VariableChanged;
         public void OnVariableChanged()
         {
             if (VariableChanged != null)
                 VariableChanged(this, new EventArgs());
-        }        
+        }
     }
 }

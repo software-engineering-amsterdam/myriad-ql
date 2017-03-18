@@ -16,11 +16,11 @@ namespace Tests.QL.Value
                 new BinaryOperationTestInput(10.5m, 5.0m, 2.1m),
                 // Integer and decimal
                 new BinaryOperationTestInput(10, 10.0m, 1.0m),
-                new BinaryOperationTestInput(10.0m, 20, 0.5m)                
+                new BinaryOperationTestInput(10.0m, 20, 0.5m)
             }
             );
         }
-        
+
         [TestMethod]
         public void DivisionInvalidOperators()
         {

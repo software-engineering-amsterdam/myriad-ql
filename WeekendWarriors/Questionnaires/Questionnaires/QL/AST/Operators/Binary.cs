@@ -23,7 +23,7 @@ namespace Questionnaires.QL.AST
         {
             get;
         }
-        
+
         public bool CheckSemantics(QLContext context, List<Message> messages)
         {
             // check the two child nodes have semantic errors
@@ -45,7 +45,7 @@ namespace Questionnaires.QL.AST
                 messages.Add(new Error(string.Format("Cannot apply operator {0} on arguments of type {1} and {2}", this, Lhs.GetResultType(context), Rhs.GetResultType(context))));
                 return false;
             }
-            catch(DivideByZeroException)
+            catch (DivideByZeroException)
             {
                 return true;
             }

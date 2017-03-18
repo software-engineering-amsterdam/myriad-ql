@@ -25,9 +25,9 @@ namespace Questionnaires.QLS.Processing
 
         public void Process(StyleSheet styleSheet)
         {
-            foreach(var page in styleSheet.Pages)
+            foreach (var page in styleSheet.Pages)
             {
-                DocumentModel.Pages.Add(Visit((dynamic)page));  
+                DocumentModel.Pages.Add(Visit((dynamic)page));
             }
         }
 
@@ -40,7 +40,7 @@ namespace Questionnaires.QLS.Processing
             var pageContainer = new Renderer.Containers.Page(page.Name);
             foreach (var section in page.Sections)
             {
-               pageContainer.Sections.Add(Visit((dynamic)section));
+                pageContainer.Sections.Add(Visit((dynamic)section));
             }
             pageContainer.Name = page.Name;
 
@@ -83,16 +83,16 @@ namespace Questionnaires.QLS.Processing
             var QLQuestion = Questions[question.Name];
             var stackCopy = (Stack)Styles.Clone();
 
-            while(stackCopy.Count > 0)
+            while (stackCopy.Count > 0)
             {
                 var style = (DefaultStyle)stackCopy.Pop();
-                if(style.Type.GetType() == QLQuestion.Type.GetType()) // TODO: The one place where we use typeof. Can we do better?
+                if (style.Type.GetType() == QLQuestion.Type.GetType()) // TODO: The one place where we use typeof. Can we do better?
                 {
                     QLQuestion.SetWidget(style.Widget);
                     WidgetStyle properties = new WidgetStyle();
-                    foreach(var property in style.Properties)
+                    foreach (var property in style.Properties)
                     {
-                        switch(property.Key)
+                        switch (property.Key)
                         {
                             case "width": properties.Width = int.Parse(property.Value); break;
                             case "font": properties.Font = property.Value.Replace('"', ' ').Trim(); break; // TODO: OMG this is so horrible it makes my eyes bleed :'(
@@ -100,7 +100,7 @@ namespace Questionnaires.QLS.Processing
                             case "color": properties.Color = property.Value; break;
                         }
                     }
-                                        
+
                     QLQuestion.Widget.SetStyle(properties);
 
                     break;

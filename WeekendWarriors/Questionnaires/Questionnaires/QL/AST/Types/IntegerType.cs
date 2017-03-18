@@ -11,7 +11,7 @@ namespace Questionnaires.Types
         public IntegerType(int value)
         {
             this.Val = value;
-        }        
+        }
 
         public override IType Positive()
         {

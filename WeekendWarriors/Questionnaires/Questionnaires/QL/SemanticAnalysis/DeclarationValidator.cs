@@ -54,10 +54,10 @@ namespace Questionnaires.SemanticAnalysis
             else
                 result.AddEvent(new Compilation.Error(string.Format("Redeclaration of question {0} with conflicting types {1} and {2}", node.Identifier, node.Type, storedType)));
         }
-        
+
         public void Visit(INode node)
         {
-            
-        }      
+
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace Questionnaires
     {
         public MainWindow()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         private void Interpret_Click(object sender, RoutedEventArgs e)
@@ -45,9 +45,9 @@ namespace Questionnaires
 
                 var QuestionnaireBuilder = new QuestionnaireBuilder.QuestionnaireBuilder(Questions, Rules, DocumentModel);
                 QuestionnaireBuilder.Build();
-               
+
             }
-            catch(Questionnaires.Compilation.ParseException)
+            catch (Questionnaires.Compilation.ParseException)
             {
                 PrintMessages(result);
             }
@@ -90,7 +90,7 @@ namespace Questionnaires
         }
 
         private QL.AST.Form BuildFormAST(Compilation.Result result)
-        {            
+        {
             var qlAstBuilder = new QL.AST.ASTBuilder(result);
             return qlAstBuilder.BuildForm(InputQL.Text);
         }

@@ -32,7 +32,7 @@ namespace Questionnaires.QL.AST
 
             // Computed question is like an assignment. Only valid when question type is
             // equal to the expression type. We do not support (implicit) casts
-            if(Question.Type.GetType() != Expression.GetResultType(context).GetType())
+            if (Question.Type.GetType() != Expression.GetResultType(context).GetType())
             {
                 messages.Add(new Error(string.Format("Cannot assign expression with type {0} to question of type {1}", Question.Type, Expression.GetResultType(context))));
                 return false;

@@ -47,7 +47,7 @@ namespace Questionnaires.QL.AST
         }
 
         private List<IStatement> GetStatements(QLParser.StatementContext[] context)
-        {            
+        {
             var statements = new List<IStatement>();
             foreach (QLParser.StatementContext statement in context)
             {
@@ -58,7 +58,7 @@ namespace Questionnaires.QL.AST
         }
 
         public override INode VisitForm([NotNull] QLParser.FormContext context)
-        {                        
+        {
             string identifier = context.Identifier().GetText();
             var statements = GetStatements(context.statement());
             Form form = new Form(identifier, statements);
@@ -77,7 +77,7 @@ namespace Questionnaires.QL.AST
             {
                 case "boolean":
                     parsedType = new BooleanType();
-                    break;                   
+                    break;
                 case "money":
                     parsedType = new MoneyType();
                     break;
@@ -90,7 +90,7 @@ namespace Questionnaires.QL.AST
                 default:
                     throw new ArgumentException();
             }
-            
+
             return new Question(identifier, body, parsedType);
         }
 
@@ -99,7 +99,7 @@ namespace Questionnaires.QL.AST
             INode expression = context.condition.Accept(this);
             var thenStatements = GetStatements(context.thenBlock.statement());
             var elseStatements = new List<IStatement>();
-            if(context.elseBlock != null)
+            if (context.elseBlock != null)
                 elseStatements = GetStatements(context.elseBlock.statement());
 
             Debug.Assert(expression is IExpression);
@@ -127,13 +127,13 @@ namespace Questionnaires.QL.AST
             switch (context.op.Text)
             {
                 case "+":
-                   return new Addition((dynamic)lhs, (dynamic)rhs);
-                case "-": 
+                    return new Addition((dynamic)lhs, (dynamic)rhs);
+                case "-":
                     return new Subtraction((dynamic)lhs, (dynamic)rhs);
                 case "*":
                     return new Multiply((dynamic)lhs, (dynamic)rhs);
                 case "/":
-                    return new Division((dynamic)lhs,(dynamic)rhs);
+                    return new Division((dynamic)lhs, (dynamic)rhs);
                 case ">":
                     return new GreaterThan((dynamic)lhs, (dynamic)rhs);
                 case ">=":
@@ -169,7 +169,7 @@ namespace Questionnaires.QL.AST
                     return VisitNegativeOperation((dynamic)operand);
                 default:
                     throw new ArgumentException();
-            }          
+            }
         }
 
         public INode VisitPositiveOperation(Number number)
@@ -189,8 +189,8 @@ namespace Questionnaires.QL.AST
 
         public INode VisitNegativeOperation(Number number)
         {
-            return new Number("-" + number.StringType);            
-        }       
+            return new Number("-" + number.StringType);
+        }
 
         public INode VisitNegativeOperation(Money money)
         {

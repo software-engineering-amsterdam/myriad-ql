@@ -7,7 +7,7 @@ namespace Questionnaires.QL.AST.Operators
     {
         public Bang(IExpression operand) : base(operand)
         {
-            
+
         }
 
         public override IType GetResultType(QLContext context)

@@ -20,12 +20,12 @@ namespace Questionnaires.Renderer.Containers
         {
             var container = GetContainer();
 
-            foreach(var question in Questions)
+            foreach (var question in Questions)
             {
                 container.Children.Add(question.Widget);
             }
 
-            foreach(var section in Sections)
+            foreach (var section in Sections)
             {
                 section.Draw(container);
             }

@@ -45,7 +45,7 @@ namespace Questionnaires.ExpressionEvaluator
 
         public IType Visit(Literals.String node)
         {
-            return new StringType(node.Value); 
+            return new StringType(node.Value);
         }
 
         public IType Visit(Literals.Number node)
@@ -125,21 +125,21 @@ namespace Questionnaires.ExpressionEvaluator
             var rightHandSideValue = Visit((dynamic)node.Rhs);
             return leftHandSideValue.LessThan(rightHandSideValue);
         }
-        
+
         public IType Visit(Operators.LessThanOrEqual node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
             return leftHandSideValue.LessThanOrEqual(rightHandSideValue);
         }
-        
+
         public IType Visit(Operators.Inequal node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);
             var rightHandSideValue = Visit((dynamic)node.Rhs);
             return leftHandSideValue.InequalTo(rightHandSideValue);
         }
-        
+
         public IType Visit(Operators.Equal node)
         {
             var leftHandSideValue = Visit((dynamic)node.Lhs);

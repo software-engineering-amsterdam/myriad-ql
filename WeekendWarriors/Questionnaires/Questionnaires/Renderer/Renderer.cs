@@ -7,7 +7,7 @@ namespace Questionnaires.Renderer
     public class Renderer
     {
         private Window QuestionnaireWindow = new Window();
-        private StackPanel QuestionnaireStack = new StackPanel();        
+        private StackPanel QuestionnaireStack = new StackPanel();
 
         public Renderer()
         {

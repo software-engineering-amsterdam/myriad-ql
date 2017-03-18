@@ -12,7 +12,7 @@ namespace Questionnaires.QL.AST
         {
             this.Identifier = identifier;
             Statements = statements;
-        }   
+        }
 
         public List<IStatement> Statements
         {
@@ -28,7 +28,7 @@ namespace Questionnaires.QL.AST
         {
             // Check all child nodes
             bool childNodesSemanticallyOk = true;
-            foreach(var node in Statements)
+            foreach (var node in Statements)
             {
                 if (!node.CheckSemantics(context, messages))
                     childNodesSemanticallyOk = false;

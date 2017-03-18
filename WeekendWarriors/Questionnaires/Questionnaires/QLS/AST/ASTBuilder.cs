@@ -32,7 +32,7 @@ namespace Questionnaires.QLS.AST
             var name = context.Identifier().GetText();
             var pages = context.page();
             var styleSheet = new StyleSheet(name);
-            foreach(var page in pages)
+            foreach (var page in pages)
             {
                 styleSheet.AddPage((dynamic)page.Accept(this));
             }
@@ -46,8 +46,8 @@ namespace Questionnaires.QLS.AST
             var sections = context.section();
             var defaultStyles = context.defaultStyle();
             var page = new Page(name);
-            
-            foreach(var section in sections)
+
+            foreach (var section in sections)
             {
                 page.AddSection((dynamic)section.Accept(this));
             }
@@ -63,7 +63,7 @@ namespace Questionnaires.QLS.AST
         public override INode VisitSection([NotNull] QLSParser.SectionContext context)
         {
             var section = new Section(context.StringLiteral().GetText());
-            foreach(var question in context.question())
+            foreach (var question in context.question())
             {
                 section.AddChild((dynamic)question.Accept(this));
             }
@@ -103,8 +103,8 @@ namespace Questionnaires.QLS.AST
                     Debug.Assert(false);
                     break;
             }
-            Questionnaires.Types.IType type; 
-            switch(context.Type().GetText())
+            Questionnaires.Types.IType type;
+            switch (context.Type().GetText())
             {
                 //boolean' | 'int' | 'string' | 'money
                 case "boolean": type = new Questionnaires.Types.BooleanType(); break;
@@ -117,7 +117,7 @@ namespace Questionnaires.QLS.AST
 
             var defaultStyle = new DefaultStyle(type, (dynamic)widget);
 
-            foreach(var setting in context.setting())
+            foreach (var setting in context.setting())
             {
                 var keyValuePair = setting.Accept(this);
                 defaultStyle.AddWidgetProperty((dynamic)keyValuePair);

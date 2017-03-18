@@ -4,7 +4,7 @@ namespace Questionnaires.QLS.AST
 {
     public class Section : INode
     {
-        public string Name {  get; }
+        public string Name { get; }
         public List<Section> Sections { get; }
         public List<Question> Questions { get; }
         public List<DefaultStyle> Styles { get; }

@@ -8,7 +8,7 @@ namespace Tests.QL.Value
     class ValueTester
     {
         public static void TestBinaryOperation(string operation, OperationTestInput[] testSet)
-        {            
+        {
             foreach (var testCase in testSet)
             {
                 try
@@ -20,7 +20,7 @@ namespace Tests.QL.Value
                 {
                     Assert.IsTrue(testCase.ExpectedResult == null, string.Format("Operation {0} on operand type {1} is not supported while it should be", operation, testCase.LeftHandSideOperand.GetType()));
                 }
-            }            
+            }
         }
 
         // Use reflection to test operators

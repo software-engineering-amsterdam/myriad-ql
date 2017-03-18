@@ -20,7 +20,7 @@ namespace Questionnaires.QL.AST.Visitor
         ReturnType Visit(LessThan node);
         ReturnType Visit(LessThanOrEqual node);
         ReturnType Visit(Equal node);
-        ReturnType Visit(Inequal node);        
+        ReturnType Visit(Inequal node);
         ReturnType Visit(Positive node);
         ReturnType Visit(Negative node);
         ReturnType Visit(Bang node);

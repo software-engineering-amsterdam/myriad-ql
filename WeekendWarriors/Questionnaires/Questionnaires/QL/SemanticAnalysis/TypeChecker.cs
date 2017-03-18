@@ -13,9 +13,9 @@ namespace Questionnaires.SemanticAnalysis
             List<Compilation.Message> messages = new List<Compilation.Message>();
             node.CheckSemantics(context, messages);
 
-            foreach(var message in messages)
+            foreach (var message in messages)
                 result.AddEvent(message);
-            
+
             return result;
         }
     }

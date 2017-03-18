@@ -5,7 +5,7 @@ using Questionnaires.Renderer.Containers;
 
 namespace Questionnaires.QuestionnaireBuilder
 {
-    class QuestionnaireBuilder 
+    class QuestionnaireBuilder
     {
         private DocumentModel DocumentModel;
         private List<RunTime.Question> Questions = new List<RunTime.Question>();
@@ -15,7 +15,7 @@ namespace Questionnaires.QuestionnaireBuilder
         {
             Questions = questions;
             Rules = rules;
-            DocumentModel = documentModel;    
+            DocumentModel = documentModel;
         }
 
         public void Build()
@@ -46,7 +46,7 @@ namespace Questionnaires.QuestionnaireBuilder
 
             // Kick off initialization
             ruleContainer.ApplyRules();
-        }  
-        
+        }
+
     }
 }

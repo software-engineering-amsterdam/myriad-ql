@@ -15,7 +15,7 @@ namespace Questionnaires.QL.AST
         public string Name
         {
             get;
-        }        
+        }
 
         public bool CheckSemantics(QLContext context, List<Message> messages)
         {
@@ -24,7 +24,7 @@ namespace Questionnaires.QL.AST
                 messages.Add(new Error(string.Format("Invalid use of undefined identifier {0}", Name)));
                 return false;
             }
-            
+
             return true;
         }
 

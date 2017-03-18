@@ -46,7 +46,7 @@ namespace Questionnaires.RunTime
         {
             Widget = widget;
             Widget.SetLabel(QuestionASTNode.Body);
-            Widget.InputChanged += (sender, value) => SetValue(value); 
+            Widget.InputChanged += (sender, value) => SetValue(value);
         }
 
         public void SetValue(Types.IType value)

@@ -12,7 +12,7 @@ namespace Questionnaires.QLS.AST
             Pages = new List<Page>();
             this.Name = name;
         }
-        
+
         public void AddPage(Page page)
         {
             Pages.Add(page);

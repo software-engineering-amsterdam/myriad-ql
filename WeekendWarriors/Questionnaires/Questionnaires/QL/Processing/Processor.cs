@@ -37,7 +37,7 @@ namespace Questionnaires.QL.Processing
         {
             Visit(node.Question, visibilityCondition);
             var question = Questions.Find((q) => q.Identifier == node.Question.Identifier);
-           
+
             Rules.Add(
                 (variableStore, renderer, evaluator) =>
                 {
@@ -60,9 +60,9 @@ namespace Questionnaires.QL.Processing
             Rules.Add(
                 (variableStore, renderer, evalutor) =>
                 {
-                    runTimeQuestion.SetVisibility(visibilityCondition(evalutor)); 
+                    runTimeQuestion.SetVisibility(visibilityCondition(evalutor));
                 }
-            );            
+            );
 
             Questions.Add(runTimeQuestion);
         }
@@ -72,16 +72,16 @@ namespace Questionnaires.QL.Processing
             /* The conditional node. This is where we need to do some real work. We need to make function objects
              * That evaluate the condition and based on the outcome set the visibility of questions */
 
-            Func<ExpressionEvaluator.Evaluator, bool> conditionFunctionThen = 
+            Func<ExpressionEvaluator.Evaluator, bool> conditionFunctionThen =
                 (evaluator) => { return visibilityCondition(evaluator) && (evaluator.Evaluate(node.Condition) as BooleanType).GetValue(); };
 
             Func<ExpressionEvaluator.Evaluator, bool> conditionFunctionElse = (evaluator) => { return !conditionFunctionThen(evaluator); };
 
-            foreach (var thenStatement in node.ThenStatements)            
-                Visit((dynamic)thenStatement, conditionFunctionThen);            
+            foreach (var thenStatement in node.ThenStatements)
+                Visit((dynamic)thenStatement, conditionFunctionThen);
 
-            foreach (var elseStatement in node.ElseStatements)            
-                Visit((dynamic)elseStatement, conditionFunctionElse);            
+            foreach (var elseStatement in node.ElseStatements)
+                Visit((dynamic)elseStatement, conditionFunctionElse);
         }
 
         private void CreateDocumentModel(Form form)

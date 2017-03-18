@@ -8,11 +8,11 @@ namespace Tests.QL.SemanticAnalysis
     {
         protected uint ErrorCount = 0;
         protected ASTBuilder ASTFactory = new ASTBuilder(new Questionnaires.Compilation.Result());
-        
+
         public void TestExpression(string input, int exprectedErrorCount, string failureMessage)
         {
             Questionnaires.Compilation.Result result = new Questionnaires.Compilation.Result();
-            ExposedSemanticAnalyzer SemanticAnalyzer = new ExposedSemanticAnalyzer(result);            
+            ExposedSemanticAnalyzer SemanticAnalyzer = new ExposedSemanticAnalyzer(result);
             var node = ASTFactory.BuildExpression(input);
             SemanticAnalyzer.AnalyzeAstNode(node);
 

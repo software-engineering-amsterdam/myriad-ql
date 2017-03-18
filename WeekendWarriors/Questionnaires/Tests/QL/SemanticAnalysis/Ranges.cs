@@ -54,7 +54,7 @@ namespace Tests.QL.SemanticAnalysis
             TestHarness.TestComputedQuestion(
                 "question : \"body\" money(" + overflow.ToString() + ".0)",
                 1,
-                "using a number that is too large");            
+                "using a number that is too large");
 
             TestHarness.TestComputedQuestion(
                 "question : \"body\" money(" + underflow.ToString() + ".0)",

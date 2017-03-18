@@ -13,14 +13,14 @@ namespace Questionnaires.QL.AST.Literals
             this.StringType = value;
         }
 
-        public string StringType { get; }        
+        public string StringType { get; }
 
         public int Value { get { return int.Parse(StringType); } }
 
         public bool CheckSemantics(QLContext context, List<Message> messages)
         {
             try
-            {                
+            {
                 var val = Value;
                 return true;
             }

@@ -7,7 +7,7 @@ namespace Tests.QL.Value
     public class EqualityOperations
     {
 
-        [TestMethod]        
+        [TestMethod]
         public void EqualityValidOperators()
         {
             ValueTester.TestBinaryOperation("EqualTo", new[]
@@ -29,7 +29,7 @@ namespace Tests.QL.Value
                 // Strings
                 new BinaryOperationTestInput("string", "string", true),
                 new BinaryOperationTestInput("string", "String", false),
-                new BinaryOperationTestInput("string", " string", false)               
+                new BinaryOperationTestInput("string", " string", false)
             }
             );
         }

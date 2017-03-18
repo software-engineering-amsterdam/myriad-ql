@@ -27,14 +27,14 @@ namespace Questionnaires.QLS.SemanticAnalysis
 
         public Questionnaires.Compilation.Result Analyze(AST.StyleSheet stylesheet)
         {
-            foreach(var page in stylesheet.Pages)
+            foreach (var page in stylesheet.Pages)
             {
                 Visit((dynamic)page);
             }
 
             // Check if all questions from the QL file are placed by the QLS file
             var QuestionInQlFile = new HashSet<RunTime.Question>(QLQuestions.Values);
-            if(!QuestionInQlFile.IsSubsetOf(PlacedQuestions))
+            if (!QuestionInQlFile.IsSubsetOf(PlacedQuestions))
             {
                 Result.AddEvent(new Questionnaires.Compilation.Error("Not all question in the QL file have been placed by the QLS file"));
             }
@@ -95,13 +95,13 @@ namespace Questionnaires.QLS.SemanticAnalysis
             // Check that type of widget matches type of question
             try
             {
-                qlQuestion.SetWidget(question.Widget);                
+                qlQuestion.SetWidget(question.Widget);
             }
-            catch(NotSupportedException)
+            catch (NotSupportedException)
             {
                 Result.AddEvent(new Questionnaires.Compilation.Error(string.Format("Widget type {0} defined for question {1} is invalid for that question's type", question.Widget, question.Name)));
             }
-            
+
         }
 
         private void Visit(QLS.AST.Question question)
@@ -130,7 +130,7 @@ namespace Questionnaires.QLS.SemanticAnalysis
             {
                 style.Widget.CreateWidget((dynamic)style.Type);
             }
-            catch(NotSupportedException)
+            catch (NotSupportedException)
             {
                 Result.AddEvent(new Questionnaires.Compilation.Error(string.Format("Widget type {0} defined as default for question type {1} is invalid.", style.Widget, style.Type)));
             }

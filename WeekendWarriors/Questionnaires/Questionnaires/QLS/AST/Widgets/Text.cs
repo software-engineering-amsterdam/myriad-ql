@@ -20,6 +20,6 @@ namespace Questionnaires.QLS.AST.Widgets
             return new TextBoxWidget();
         }
 
-       
+
     }
 }

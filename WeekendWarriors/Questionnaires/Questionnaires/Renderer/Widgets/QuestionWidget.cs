@@ -10,7 +10,7 @@ namespace Questionnaires.Renderer.Widgets
     {
         protected TextBlock Label = new TextBlock();
         protected FrameworkElement Control;
-        
+
         public QuestionWidget(FrameworkElement control)
         {
             this.Control = control;
@@ -23,7 +23,7 @@ namespace Questionnaires.Renderer.Widgets
         {
             Label.Text = text;
         }
-        
+
         public void SetVisibility(bool visible)
         {
             if (visible)
