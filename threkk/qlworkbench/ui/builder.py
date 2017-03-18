@@ -5,7 +5,7 @@ interact with.
 """
 from tkinter import Tk
 from tkinter import ttk
-from tkinter import BooleanVar, DoubleVar, StringVar
+
 from .context import UIContext
 
 
@@ -46,109 +46,29 @@ class UIBuilder(object):
         """
         self.root.title(text)
 
-    def add_boolean_question(self, text, variable, conditions):
-        """
-        Adds a boolean checkbox for a certain variable. It is initialised as
-        False.
-        """
+    def add_question(self, text, variable, conditions):
         label = ttk.Label(self.mainframe, text=text, wraplength=200)
-        value = BooleanVar()
-        field = ttk.Checkbutton(self.mainframe, text='', command=None,
-                                onvalue=True, offvalue=False,
-                                variable=value)
+        value = variable.type.init_variable()
+        field = variable.type.init_field(self, value)
 
-        value.trace('w', lambda *args: self.__tracer(variable))
+        value.trace('w', lambda *args: self.__tracer(variable.name))
         ui = {'field': field, 'label': label}
 
         self.elements.append(ui)
-        self.register.add(variable, 'boolean', value, ui, conditions)
-        self.register.set_value(variable, False)
+        self.register.add(variable.name, variable.type, value, ui, conditions)
+        self.register.set_value(variable.name, variable.type.default_value())
 
-    def add_decimal_question(self, text, variable, conditions):
-        """
-        Adds a decimal entry for a variable. This entry has a strong validate
-        function attached to it. It will only accept character which produce a
-        valid decimal value. It will also accept an empty string, which will be
-        substituted by a zero. It is initialised as 0.
-        """
+    def add_assignation(self, text, variable, expr, conditions):
         label = ttk.Label(self.mainframe, text=text, wraplength=200)
-        value = DoubleVar()
-        field = ttk.Entry(self.mainframe, textvariable=value, validate='key',
-                          validatecommand=(self.root.register(
-                              self.__decimal_validator), '%P'),
-                          invalidcommand=(self.root.register(
-                              self.__decimal_empty_fix), variable, '%P'))
+        value = variable.type.init_variable()
+        field = variable.type.init_field(self, value, assignation=True)
 
-        value.trace('w', lambda *args: self.__tracer(variable))
+        value.trace('w', lambda *args: self.__tracer(variable.name))
         ui = {'field': field, 'label': label}
 
         self.elements.append(ui)
-        self.register.add(variable, 'decimal', value, ui, conditions)
-        self.register.set_value(variable, 0)
-
-    def add_string_question(self, text, variable, conditions):
-        """
-        Adds a string entry for a certain variable. It is initialised as empty
-        string.
-        """
-        label = ttk.Label(self.mainframe, text=text, wraplength=200)
-        value = StringVar()
-        field = ttk.Entry(self.mainframe, textvariable=value)
-
-        value.trace('w', lambda *args: self.__tracer(variable))
-        ui = {'field': field, 'label': label}
-
-        self.elements.append(ui)
-        self.register.add(variable, 'string', value, ui, conditions)
-        self.register.set_value(variable, '')
-
-    def add_boolean_assignation(self, text, variable, expr, conditions):
-        """
-        Defines a read-only boolean checkbox which contains the result of an
-        assignation, like checking if two existing declarations are true.
-        """
-        label = ttk.Label(self.mainframe, text=text, wraplength=200)
-        value = BooleanVar()
-        field = ttk.Checkbutton(self.mainframe, text='', command=None,
-                                onvalue=True, offvalue=False,
-                                variable=value, state='disabled')
-
-        value.trace('w', lambda *args: self.__tracer(variable))
-        ui = {'field': field, 'label': label}
-
-        self.elements.append(ui)
-        self.register.add(variable, 'boolean', value, ui, conditions, expr)
-
-    def add_decimal_assignation(self, text, variable, expr, conditions):
-        """
-        Defines a read-only decimal entry which contains the result of an
-        assignation, like the difference between two existing declarations.
-        """
-        label = ttk.Label(self.mainframe, text=text, wraplength=200)
-        value = DoubleVar()
-        field = ttk.Entry(self.mainframe, textvariable=value, state='readonly')
-
-        value.trace('w', lambda *args: self.__tracer(variable))
-        ui = {'field': field, 'label': label}
-
-        self.elements.append(ui)
-        self.register.add(variable, 'decimal', value, ui, conditions, expr)
-
-    def add_string_assignation(self, text, variable, expr, conditions):
-        """
-        Defines a read-only string entry which contains the result of
-        an assignation. In practice, it is barely used as there are no
-        expressions which make use of strings but the identity expression.
-        """
-        label = ttk.Label(self.mainframe, text=text, wraplength=200)
-        value = StringVar()
-        field = ttk.Entry(self.mainframe, textvariable=value, state='readonly')
-
-        value.trace('w', lambda *args: self.__tracer(variable))
-        ui = {'field': field, 'label': label}
-
-        self.elements.append(ui)
-        self.register.add(variable, 'string', value, ui, conditions, expr)
+        self.register.add(variable.name, variable.type, value, ui,
+                          conditions, expr)
 
     def run(self):
         """
@@ -170,31 +90,6 @@ class UIBuilder(object):
         # Get focus and execute.
         self.root.grab_set_global()
         self.root.mainloop()
-
-    def __decimal_validator(self, value):
-        """
-        Used in the decimal entry box to make sure that the number written is a
-        valid decimal. It takes advantage of the float exceptions to detect the
-        format.
-        """
-        try:
-            float(value)
-            return True
-        except ValueError:
-            return False
-
-    def __decimal_empty_fix(self, variable, new_value):
-        """
-        Executed when an invlidad decimal is detected. In a normal case, it
-        will not update the value in the entry box as it would make it
-        invalidad (the user will press the key but nothing will happen).
-        However, if the new value is an empty string, which means that the user
-        decided to "delete" the value, it will be substituted by a zero
-        instead. This makes sure that the register does not crash with an
-        invalidad value.
-        """
-        if new_value == '':
-            self.register.set_value(variable, 0)
 
     def __tracer(self, variable):
         """

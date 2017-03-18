@@ -31,33 +31,12 @@ class Declaration(Node):
         super().__init__(variable, type)
         self.text = text
 
+    def build_ui(self, ui):
+        ui.add_question(self.text, self.variable, self.conditions)
+
     def __str__(self):
         return '(declaration, {}, {}, {})"'.format(self.text, self.variable,
                                                    self.variable.type)
-
-
-class BooleanDeclaration(Declaration):
-    def __init__(self, text, variable):
-        super().__init__(text, variable, 'boolean')
-
-    def build_ui(self, ui):
-        ui.add_boolean_question(self.text, self.variable.name, self.conditions)
-
-
-class DecimalDeclaration(Declaration):
-    def __init__(self, text, variable):
-        super().__init__(text, variable, 'decimal')
-
-    def build_ui(self, ui):
-        ui.add_decimal_question(self.text, self.variable.name, self.conditions)
-
-
-class StringDeclaration(Declaration):
-    def __init__(self, text, variable):
-        super().__init__(text, variable, 'string')
-
-    def build_ui(self, ui):
-        ui.add_string_question(self.text, self.variable.name, self.conditions)
 
 
 # ASSIGNATIONS
@@ -67,34 +46,11 @@ class Assignation(Node):
         self.text = text[1:-1]
         self.expression = expression
 
+    def build_ui(self, ui):
+        ui.add_assignation(self.text, self.variable, self.expression,
+                           self.conditions)
+
     def __str__(self):
         return '(assignation, {}, {}, {}, {})'.format(self.text, self.variable,
                                                       self.variable.type,
                                                       self.expression)
-
-
-class BooleanAssignation(Assignation):
-    def __init__(self, text, variable, expression):
-        super().__init__(text, variable, 'boolean', expression)
-
-    def build_ui(self, ui):
-        ui.add_boolean_assignation(self.text, self.variable.name,
-                                   self.expression, self.conditions)
-
-
-class DecimalAssignation(Assignation):
-    def __init__(self, text, variable, expression):
-        super().__init__(text, variable, 'decimal', expression)
-
-    def build_ui(self, ui):
-        ui.add_decimal_assignation(self.text, self.variable.name,
-                                   self.expression, self.conditions)
-
-
-class StringAssignation(Assignation):
-    def __init__(self, text, variable, expression):
-        super().__init__(text, variable, 'string', expression)
-
-    def build_ui(self, ui):
-        ui.add_string_assignation(self.text, self.variable.name,
-                                  self.expression, self.conditions)

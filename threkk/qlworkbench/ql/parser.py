@@ -70,13 +70,12 @@ from .ast.expression import FalseExpression
 from .ast.expression import StringExpression
 from .ast.expression import DecimalExpression
 from .ast.expression import IdExpression
-from .ast.node import BooleanAssignation
-from .ast.node import DecimalAssignation
-from .ast.node import StringAssignation
-from .ast.node import BooleanDeclaration
-from .ast.node import DecimalDeclaration
-from .ast.node import StringDeclaration
+from .ast.node import Assignation
+from .ast.node import Declaration
 from .ast.root import QLAST
+from .ast.type import Boolean
+from .ast.type import Decimal
+from .ast.type import String
 
 
 class QLParser(object):
@@ -125,40 +124,35 @@ class QLParser(object):
 
     def p_declaration(self, p):
         """
-        declaration : STR ID COLON BOOLEAN
-                    | STR ID COLON DECIMAL
-                    | STR ID COLON STRING
+        declaration : STR ID COLON type
         """
-        if p[4] == 'string':
-            p[0] = StringDeclaration(p[1], p[2])
-        elif p[4] == 'boolean':
-            p[0] = BooleanDeclaration(p[1], p[2])
-        elif p[4] == 'decimal':
-            p[0] = DecimalDeclaration(p[1], p[2])
-        else:
-            # something something error
-            pass
+        p[0] = Declaration(p[1], p[2], p[4])
 
     def p_assignation(self, p):
         """
-        assignation : STR ID COLON BOOLEAN ASSIGN expression
-                    | STR ID COLON DECIMAL ASSIGN expression
-                    | STR ID COLON STRING ASSIGN expression
+        assignation : STR ID COLON type ASSIGN expression
         """
-        if p[4] == 'string':
-            p[0] = StringAssignation(p[1], p[2], p[6])
-        elif p[4] == 'boolean':
-            p[0] = BooleanAssignation(p[1], p[2], p[6])
-        elif p[4] == 'decimal':
-            p[0] = DecimalAssignation(p[1], p[2], p[6])
+        p[0] = Assignation(p[1], p[2], p[4], p[6])
+
+    def p_type(self, p):
+        """
+        type : BOOLEAN
+             | DECIMAL
+             | STRING
+        """
+        if p[1] == 'boolean':
+            p[0] = Boolean()
+        elif p[1] == 'decimal':
+            p[0] = Decimal()
+        elif p[1] == 'string':
+            p[0] = String()
         else:
-            # something something error
-            pass
+            print(p)
 
     def p_condition(self, p):
         """
         condition : IF LPAREN cond RPAREN LBRACK statements RBRACK
-                  | IF LPAREN cond RPAREN LBRACK statements RBRACK ELSE LBRACK statements RBRACK 
+                  | IF LPAREN cond RPAREN LBRACK statements RBRACK ELSE LBRACK statements RBRACK
         """  # noqa
         # Add the condition to the statements and keep iterating.
         for statement in p[6]:
@@ -169,6 +163,7 @@ class QLParser(object):
             for statement in p[10]:
                 statement.add_condition(NotExpression(p[3]))
 
+            # We add the if-statements and the else-statements to the list.
             p[0] = p[6] + p[10]
         else:
             p[0] = p[6]

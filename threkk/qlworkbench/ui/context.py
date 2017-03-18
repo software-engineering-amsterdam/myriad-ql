@@ -14,7 +14,7 @@ class UIContext(object):
         self.register[id]['value'].set(new_value)
 
     def get_type(self, id):
-        return self.register[id]['type']
+        return self.register[id]['type'].__str__()
 
     def add(self, id, type, value, ui, conditions, expr=None):
         self.register[id] = {
