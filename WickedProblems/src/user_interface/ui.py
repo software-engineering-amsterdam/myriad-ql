@@ -76,6 +76,20 @@ class InputElement(FormElement):
         entry = Entry(self.parent, textvariable=self.variable)
         entry.pack()
 
+class DisabledInputElement(FormElement):
+    label = "DisabledInputElement "
+
+    def __init__(self, parent, label, variable):
+        self.parent = parent
+        self.label = label
+        self.variable = variable
+
+    def pack(self):
+        label = Label(master=self.parent, cnf={'text': self.label})
+        label.pack()
+        entry = Entry(self.parent, textvariable=self.variable, state='readonly')
+        entry.pack()
+
 class ScaleElement(FormElement):
     def __init__(self, parent):
         self.parent = parent
@@ -167,7 +181,7 @@ class ReadOnlyController(FormElement):
     def __init__(self, parent, variable):
         self.parent = parent
         self.variable = variable
-        self.element = InputElement(parent, self.label, self.variable)
+        self.element = DisabledInputElement(parent, self.label, self.variable)
 
     def render(self):
         self.element.label = self.label
