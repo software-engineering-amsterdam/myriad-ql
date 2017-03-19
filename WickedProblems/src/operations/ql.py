@@ -426,6 +426,14 @@ class GetVariables(QlAlg):
             execute = lambda self: _register(self)
         return _anon()
 
+    def UnaryNegation(self, value=False):
+        def _register(self):
+            return 'negation'
+
+        class _anon():
+            execute = lambda self: _register(self)
+        return _anon()
+
     def Money(self, value=False):
         def _register():
             return 'money'
@@ -561,6 +569,11 @@ class RegisterComputedQuestions(QlAlg):
 
         class _anon():
             execute = lambda self: _register(self)
+        return _anon()
+
+    def UnaryNegation(self, lhs):
+        class _anon():
+            execute = lambda self: UnaryNegation(lhs.execute())
         return _anon()
 
     def Money(self, value=False):

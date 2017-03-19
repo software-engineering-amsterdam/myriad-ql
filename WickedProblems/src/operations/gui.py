@@ -42,7 +42,6 @@ class BuildGui(QlAlg):
         return _anon()
 
     def RefVariable(self, name):
-
         def _register():
             self.environment.add_ref((name))
 
@@ -81,10 +80,8 @@ class BuildGui(QlAlg):
             execute=lambda self, form: _register(form)
         return _anon()
 
-
     def Boolean(self, value=False):
         def _register(key):
-            #get variable to store
             var = IntVar()
             self.environment.update_var(key, var)
             controller = BooleanController(self.parent, var)
@@ -109,6 +106,14 @@ class BuildGui(QlAlg):
         def _register():
             lhs.execute()
             rhs.execute()
+
+        class _anon():
+            execute=lambda self: _register()
+        return _anon()
+
+    def UnaryNegation(self, lhs):
+        def _register():
+            lhs.execute()
 
         class _anon():
             execute=lambda self: _register()

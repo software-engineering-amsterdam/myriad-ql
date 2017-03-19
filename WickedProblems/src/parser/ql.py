@@ -9,6 +9,11 @@ def binary_node(node):
         return node(*tokens[0])
     return makeNode
 
+def unary_node(node):
+    def makeNode(_, __, tokens):
+        return node(*tokens[0])
+    return makeNode
+
 def if_action(string, location, tokens):
     return ifThen(**tokens[0].asDict())
 
@@ -61,7 +66,7 @@ class QL:
                           (literal_or, 2, opAssoc.LEFT,
                            binary_node(LogicalOr)),
                           (literal_not, 1, opAssoc.RIGHT,
-                           binary_node(LogicalAnd))]
+                           unary_node(LogicalNot))]
 
     comparison_precedence = [(literal_greater_than, 2, opAssoc.LEFT,
                               binary_node(GreaterThan)),
@@ -137,7 +142,7 @@ class QL:
     statements.addParseAction(statements_action)
 
     form_item << statements
-    
+
     # outer form
     form = Group(Suppress(form_type) + Word(alphanums)('name') +
                  Suppress(left_curly) + form_item + \
