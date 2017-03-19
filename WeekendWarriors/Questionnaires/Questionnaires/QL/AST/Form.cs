@@ -42,9 +42,9 @@ namespace Questionnaires.QL.AST
             }
 
             var checker = new DependencyChecker();
-            foreach (var kvp in dependencies)
+            foreach (var dependency in dependencies)
             {
-                checker.AddDependencies(kvp.Key, kvp.Value);
+                checker.AddDependencies(dependency.Key, dependency.Value);
             }
 
             checker.Check(messages);

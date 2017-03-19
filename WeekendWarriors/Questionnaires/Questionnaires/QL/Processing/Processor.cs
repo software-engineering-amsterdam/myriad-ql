@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Questionnaires.QL.Processing
 {
-    class Processor
+    public class Processor
     {
         private List<RunTime.Question> Questions;
         private List<Action<ExpressionEvaluator>> Rules;
@@ -44,11 +44,6 @@ namespace Questionnaires.QL.Processing
                     if (visibilityCondition(evaluator))
                     {
                         question.SetValue(evaluator.Evaluate(node.Expression));
-                    }
-                    else
-                    {
-                        // TODO: we don't support this yet
-                        //question.SetValue(undefined)
                     }
                 });
         }

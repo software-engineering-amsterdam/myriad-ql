@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Questionnaires.QL.SemanticAnalysis
 {
-    class LabelUniqueNessChecker
+    public class LabelUniquenessChecker
     {
         private Dictionary<string, List<Question>> QuestionBodies = new Dictionary<string, List<Question>>();
 

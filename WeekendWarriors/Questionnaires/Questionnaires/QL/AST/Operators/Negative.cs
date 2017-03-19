@@ -7,7 +7,6 @@ namespace Questionnaires.QL.AST.Operators
     {
         public Negative(IExpression operand) : base(operand)
         {
-
         }
 
         public override IType GetResultType(QLContext context)
