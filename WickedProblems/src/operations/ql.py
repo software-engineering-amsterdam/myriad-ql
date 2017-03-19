@@ -81,9 +81,14 @@ class Eval(ExpressionAlg):
             execute = lambda self: lhs.execute() + rhs.execute()
         return _anon()
 
+    def Division(self, lhs, rhs):
+        class _anon():
+            execute = lambda self: lhs.execute() / rhs.execute() if (lhs.execute() != 0 and rhs.execute() != 0) else 0
+        return _anon()
+
     def Multiplication(self, lhs, rhs):
         class _anon():
-            execute = lambda self: lhs.execute() * rhs.execute()
+            execute = lambda self: lhs.execute() * rhs.execute() if (lhs.execute() != 0 and rhs.execute() != 0) else 0
         return _anon()
 
 
@@ -439,6 +444,24 @@ class GetVariables(QlAlg):
             execute = lambda self: _register()
         return _anon()
 
+    def Division(self, lhs, rhs):
+        def _register():
+            lhs.execute()
+            rhs.execute()
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
+    def Multiplication(self, lhs, rhs):
+        def _register():
+            lhs.execute()
+            rhs.execute()
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
     def Integer(self, value):
         def _register():
             return 'integer'
@@ -548,6 +571,16 @@ class RegisterComputedQuestions(QlAlg):
     def Addition(self, lhs, rhs):
         class _anon():
             execute = lambda self: Addition(lhs.execute(), rhs.execute())
+        return _anon()
+
+    def Division(self, lhs, rhs):
+        class _anon():
+            execute = lambda self: Division(lhs.execute(), rhs.execute())
+        return _anon()
+
+    def Multiplication(self, lhs, rhs):
+        class _anon():
+            execute = lambda self: Multiplication(lhs.execute(), rhs.execute())
         return _anon()
 
     def Integer(self, value):

@@ -122,6 +122,24 @@ class BuildGui(QlAlg):
             execute=lambda self: _register()
         return _anon()
 
+    def Multiplication(self, lhs, rhs):
+        def _register():
+            lhs.execute()
+            rhs.execute()
+
+        class _anon():
+            execute=lambda self: _register()
+        return _anon()
+
+    def Division(self, lhs, rhs):
+        def _register():
+            lhs.execute()
+            rhs.execute()
+
+        class _anon():
+            execute=lambda self: _register()
+        return _anon()
+
     def Integer(self, value):
         def _register(key):
             var = IntVar()
