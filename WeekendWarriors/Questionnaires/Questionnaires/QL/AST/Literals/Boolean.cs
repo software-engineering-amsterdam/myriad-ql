@@ -2,7 +2,6 @@
 using Questionnaires.QL.SemanticAnalysis;
 using Questionnaires.QL.AST.Types;
 using System.Collections.Generic;
-using System;
 
 namespace Questionnaires.QL.AST.Literals
 {
