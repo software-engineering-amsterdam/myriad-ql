@@ -3,6 +3,9 @@ form testForm {
     "Question 1"
     question1:boolean;
 
+    "Question 1"
+    question6:boolean;
+
     "Question 2"
     question2: boolean;
 

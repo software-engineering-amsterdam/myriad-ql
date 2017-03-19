@@ -19,6 +19,11 @@ public class QLError implements Comparable<QLError> {
         this.id = id;
     }
 
+    public int getLine() { return this.line; }
+    public int getColumn() { return this.column; }
+    public String getId() { return this.id; }
+    public String getMessage() { return this.message; }
+
     @Override
     public String toString() {
         return "Error: " + this.line + ":" + this.column + " - " + this.id + " : " + this.message;
