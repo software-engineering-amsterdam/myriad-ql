@@ -9,10 +9,7 @@ using System.Threading.Tasks;
 
 namespace Questionnaires.QL.SemanticAnalysis
 {
-    /* What we would really need here is some relational algebra. The dependecies are simply relations and the
-     * transitive closure of those relations could tell us if there are cyclic dependencies. Unfortunately
-     * we could not find a proper library for relational algebra */
-    class DependencyChecker
+    public class DependencyChecker
     {
         Dictionary<string, HashSet<string>> Dependencies = new Dictionary<string, HashSet<string>>();
 

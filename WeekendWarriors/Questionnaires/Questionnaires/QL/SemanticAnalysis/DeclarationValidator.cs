@@ -8,7 +8,7 @@ namespace Questionnaires.QL.SemanticAnalysis
     {
         private QLContext Context;
         private Result Result = new Result();
-        private LabelUniqueNessChecker LabelChecker = new LabelUniqueNessChecker();
+        private LabelUniquenessChecker LabelChecker = new LabelUniquenessChecker();
 
         private Dictionary<string, List<Question>> QuestionBodies = new Dictionary<string, List<Question>>();
 
