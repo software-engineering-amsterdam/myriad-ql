@@ -147,6 +147,7 @@
     <Compile Include="UI\Widgets\DecimalBoxWidget.cs" />
     <Compile Include="UI\Widgets\IntegerBoxWidget.cs" />
     <Compile Include="UI\Widgets\IntegerSliderWidget.cs" />
+    <Compile Include="UI\Widgets\SliderWidget.cs" />
     <Compile Include="UI\Widgets\Style\WidgetStyle.cs" />
     <Compile Include="UI\Widgets\BinaryRadioGroup.cs" />
     <Compile Include="UI\Widgets\CheckBoxWidget.cs" />
