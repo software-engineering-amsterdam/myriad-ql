@@ -1,7 +1,8 @@
 package model
 
 import ast.{ ExpressionNode, Type }
-import values.{ BooleanValue, Evaluator, Value }
+import values.Evaluator.Env
+import values.{ BooleanValue, Evaluator }
 
 sealed trait DisplayQuestion {
   val identifier: String
@@ -9,8 +10,8 @@ sealed trait DisplayQuestion {
   val displayCondition: Iterable[ExpressionNode]
   val `type`: Type
 
-  def show(env: Map[String, Value]): Boolean = {
-    def show(env: Map[String, Value], conditions: Iterable[ExpressionNode]): Boolean = {
+  def show(env: Env): Boolean = {
+    def show(env: Env, conditions: Iterable[ExpressionNode]): Boolean = {
       conditions match {
         case Nil => true
         case head :: tail =>

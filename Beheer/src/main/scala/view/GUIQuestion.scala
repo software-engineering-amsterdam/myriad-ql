@@ -5,11 +5,11 @@ import ast._
 import model.{ ComputedQuestion, DisplayQuestion, OpenQuestion }
 import values.{ Evaluator, Value }
 
-import scalafx.beans.binding.{ Bindings, BooleanBinding, ObjectBinding, StringBinding }
+import scala.language.implicitConversions
+import scalafx.beans.binding.{ Bindings, BooleanBinding, StringBinding }
+import scalafx.event.subscriptions.Subscription
 import scalafx.scene.layout.VBox
 import scalafx.scene.text.Text
-import scala.language.implicitConversions
-import scalafx.event.subscriptions.Subscription
 
 trait GUIQuestion {
   val question: DisplayQuestion

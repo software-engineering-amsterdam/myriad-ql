@@ -1,6 +1,6 @@
 package view.widgets
 
-import ast.{ NumericType, Type }
+import ast.NumericType
 import values.{ NumericValue, UndefinedValue, Value }
 
 import scala.util.{ Failure, Success, Try }

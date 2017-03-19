@@ -4,17 +4,18 @@ import ast._
 import org.scalacheck.Gen
 import org.scalatest.prop.PropertyChecks
 import org.scalatest.{ Matchers, PropSpec }
+import values.Evaluator.Env
 
 class EvaluatorTest extends PropSpec with Matchers with PropertyChecks with ExpressionAstGenerator {
   //So the generator knows the avaliable identifiers:
   protected val numericIdentifiers = Seq("intval", "moneyval")
   protected val boolIdentifiers = Seq("boolval")
-  private val runtimeEnv: Map[String, Value] = Map(
+  private val runtimeEnv: Env = Map(
     "intval" -> IntegerValue(BigDecimal(1)),
     "moneyval" -> MoneyValue(BigDecimal(1.22)),
     "boolval" -> BooleanValue(true)
   )
-  private val runTimeEnvEmpty: Map[String, Value] = Map.empty
+  private val runTimeEnvEmpty: Env = Map.empty
 
   property("Commutative operators can have their operands swapped without changing function value.") {
     forAll(Gen.oneOf(genNumeric, genBoolean)) {
