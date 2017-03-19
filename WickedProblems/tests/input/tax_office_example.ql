@@ -23,7 +23,7 @@ form taxOfficeExample {
 
     "Profit on sale:"
       valueOver: money =
-        (sellingPrice- boughtPrice)
+        (privateDebt+ boughtPrice)
   }
   "Is this questions being printed?"
     isPrinted: boolean
