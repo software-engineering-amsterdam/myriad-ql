@@ -280,7 +280,7 @@ class Environment(object):
 
     def is_visible(self, variable):
         condition = self.conditional_questions.get(variable)
-        
+
         if (condition):
             return condition.alg(Eval(self)).execute()
         else:
@@ -689,7 +689,7 @@ class RegisterConditions(QlAlg):
             if condition:
                 print("Register CQ...",variable.execute(), label.execute())
                 self.environment.add_conditional(variable.execute(), condition)
-     
+
         class _anon():
             execute = lambda self, condition: _register(condition)
         return _anon()
@@ -713,6 +713,11 @@ class RegisterConditions(QlAlg):
     def Substraction(self, lhs, rhs):
         class _anon():
             execute = lambda self: Substraction(lhs.execute(), rhs.execute())
+        return _anon()
+
+    def UnaryNegation(self, lhs):
+        class _anon():
+            execute = lambda self: UnaryNegation(lhs.execute())
         return _anon()
 
     def Addition(self, lhs, rhs):
