@@ -1,5 +1,6 @@
 ﻿using Questionnaires.QL.AST;
 using Questionnaires.ErrorHandling;
+using System.Collections.Generic;
 
 namespace Questionnaires.QL.SemanticAnalysis
 {
@@ -7,11 +8,17 @@ namespace Questionnaires.QL.SemanticAnalysis
     {
         private QLContext Context;
         private Result result = new Result();
+        private LabelUniqueNessChecker labelChecker = new LabelUniqueNessChecker();
+
+        private Dictionary<string, List<Question>> QuestionBodies = new Dictionary<string, List<Question>>();
 
         public Result Analyze(INode node, QLContext context)
         {
             Context = context;
             Visit((dynamic)node);
+
+            labelChecker.Check(result);
+
             return result;
         }
 
@@ -39,6 +46,8 @@ namespace Questionnaires.QL.SemanticAnalysis
 
         public void Visit(QL.AST.Question node)
         {
+            labelChecker.AddQuestion(node);
+
             if (!Context.ContainsQuestion(node.Identifier))
             {
                 Context.AddQuestion(node.Identifier, node.Type);
