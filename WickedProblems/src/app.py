@@ -21,15 +21,15 @@ parser = QL()
 # build AST
 form_ast = parser.parse(ql_string)
 
+
 environment = GetVariables([])
 create_environment = form_ast.alg(environment)
 
 app = Application()
 create_ui = BuildGui(app.root, environment.environment)
+app.environment = environment.environment
 form = form_ast.alg(create_ui).execute()
 app.add_element(form)
-def export_form():
-    print(create_ui.environment.export())
-export_button = Button(app.window, text="Export", command=export_form)
-export_button.pack()
+# def export_form():
+#     print(create_ui.environment.export())
 app.render()

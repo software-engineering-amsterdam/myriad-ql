@@ -218,7 +218,7 @@ class Environment(object):
 
     def update_var(self, var, value):
         self.variables_dict.update({var: value})
-        print(self.variables_dict)
+        #print(self.variables_dict)
 
 
     def check_type(self, variable):
@@ -302,7 +302,7 @@ class GetVariables(QlAlg):
     def RefVariable(self, name):
         def _register():
             self.environment.add_ref((name))
-            print(self.environment.is_registerd(name))
+            #print(self.environment.is_registerd(name))
 
         class _anon():
             execute = lambda self: _register()
@@ -386,7 +386,6 @@ class GetVariables(QlAlg):
 
 
 class GetVariables(QlAlg):
-
     def __init__(self, environment_vars):
         self.environment = Environment()
 
@@ -423,7 +422,7 @@ class GetVariables(QlAlg):
     def RefVariable(self, name):
         def _register():
             self.environment.add_ref((name))
-            print(self.environment.is_registerd(name))
+            #print(self.environment.is_registerd(name))
 
         class _anon():
             execute = lambda self: _register()

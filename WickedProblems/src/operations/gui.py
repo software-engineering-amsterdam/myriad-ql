@@ -46,7 +46,6 @@ class BuildGui(QlAlg):
     def RefVariable(self, name):
         def _register():
             self.environment.add_ref((name))
-            print(self.environment.is_registerd(name))
 
         class _anon():
             execute = lambda self: _register()
@@ -73,11 +72,8 @@ class BuildGui(QlAlg):
 
     def ComputedQuestion(self, variable, label, expression):
         def _register(form):
-            variable.execute()
-            label.execute()
-            # expression.execute()
             question = ComputedQuestionController(
-                None, label.execute(), ReadOnlyController(None, StringVar()))
+                None, label.execute(), ReadOnlyController(None, variable.execute()), expression.execute())
             form.add_element(question)
 
         class _anon():

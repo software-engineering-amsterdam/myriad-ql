@@ -1,4 +1,4 @@
-from tkinter import Tk,Frame,Label,Entry,Radiobutton,Spinbox
+from tkinter import Tk,Frame,Label,Entry,Radiobutton,Spinbox,Button
 '''
 
 Playground:
@@ -253,10 +253,12 @@ class ComputedQuestionController(FormElement):
     parent = None
     controller = None
 
-    def __init__(self, parent, label, controller):
+    def __init__(self, parent, label, controller, expression):
         self.controller = controller
         self.label = label
+        self.expression = expression
         controller.label = self.label
+        print(self.expression)
 
     def render(self):
         ''' Return Controller '''
@@ -272,7 +274,17 @@ class Application(object):
         self.window = Window(root)
         self.root = root
         self.root.minsize(width=670, height=670)
+        self.environment = None
         self.elements = []
+
+    def reload(self):
+        for widget in self.root.winfo_children():
+            widget.destroy()
+        self.setup_elements()
+        # self.window.pack()
+
+    def export_form(self):
+        print(self.environment.export())
 
     def add_element(self, element):
         element.parent = self.window
@@ -280,6 +292,8 @@ class Application(object):
 
     def setup_elements(self):
         [element.render() for element in self.elements]
+        export_button = Button(self.root, text="Export", command=self.export_form).pack()
+        reload_button = Button(self.root, text="Reload", command=self.reload).pack()
 
     def render(self):
         self.setup_elements()

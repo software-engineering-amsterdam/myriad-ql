@@ -6,16 +6,16 @@ from ast.field_types import *
 
 def binary_node(node):
     def makeNode(_, __, tokens):
-        print(_, __, tokens)
+        #print(_, __, tokens)
         return node(*tokens[0])
     return makeNode
 
 def if_action(string, location, tokens):
-    print(tokens)
+    #print(tokens)
     return ifThen(**tokens[0].asDict())
 
 def computed_question_action(string, location, tokens):
-    print(tokens.asDict())
+    #print(tokens.asDict())
     return ComputedQuestion(**tokens[0].asDict())
 
 
@@ -105,9 +105,6 @@ class QL:
 
     boolean_expression = operatorPrecedence(operand, boolean_precedence)
 
-    # boolean_expression.addParseAction(lambda child : \
-    # Expression(child))
-
     comparison_expression = operatorPrecedence(operand, comparison_precedence)
     arithmic_expression = operatorPrecedence(operand, arithmic_precedence)
 
@@ -121,7 +118,6 @@ class QL:
         lambda _, __, tokens: String(**tokens.asDict()))
 
     # form content
-    # question = label('value') + Group(Word(alphanums)('name') + Suppress(colon) + field_type('datatype'))('variable')
     variable = word
     init_variable = Group(variable('name') + colon +
                           field_type('datatype'))('variable')
@@ -159,30 +155,12 @@ class QL:
     conditional = Suppress(literal_if) + boolean_expression + block
     statements.addParseAction(statements_action)
 
-    # conditional.addParseAction(lambda content : Conditional(*content))
-
-    # form items
-
     form_item << statements
     # outer form
     form = Group(Suppress(form_type) + Word(alphanums)('name') +
                  Suppress(left_curly) + form_item + Suppress(right_curly))('form')
 
-
-
     form.addParseAction(form_action)
-
-
-# print(QL().expression.parseString('1+(5+3)'))
-# print(QL().question.parseString('"Have you sold a house in 2016?" hasSoldHouse: boolean'))
-# print(QL().question.parseString('"Have you sold a house in 2016?" hasSoldHouse: boolean'))
-# print(QL().statements.parseString('"Have you sold a house in 2016?" hasSoldHouse: boolean "Have you sold a house in 2016?" hasSoldHouse: boolean'))
-# print(QL().statements.parseString('"Have you sold a house in 2016?" hasSoldHouse: boolean "Have you sold a house in 2016?" hasSoldHouse: boolean'))
 
     def parse(self, _string):
         return self.form.parseString(_string)['form']
-
-
-# print QL().computed_question.parseString('form aaaooo { if (aaa >= aaa)  { "kkkaa" qkaa : boolean "kkkaa" qkaa : integer = (mm + jj) }}')
-# print QL().computed_question.parseString('"kkkaa" qkaa : integer = (mm +
-# 15)')
