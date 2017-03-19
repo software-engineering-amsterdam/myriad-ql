@@ -36,13 +36,13 @@ namespace Questionnaires.QL.AST
         public bool CheckDependencies(Result messages)
         {
             var dependencies = new Dictionary<Question, HashSet<Identifier>>();
-            foreach(var statement in Statements)
+            foreach (var statement in Statements)
             {
                 statement.GetDependencies(dependencies);
             }
 
-            DependencyChecker checker = new DependencyChecker();            
-            foreach(var kvp in dependencies)
+            var checker = new DependencyChecker();            
+            foreach (var kvp in dependencies)
             {
                 checker.AddDependencies(kvp.Key, kvp.Value);
             }
