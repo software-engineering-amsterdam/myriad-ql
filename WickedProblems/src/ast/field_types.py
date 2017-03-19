@@ -1,55 +1,60 @@
 from .base_nodes import Node
 
+class Value(Node):
+    value = None
+
 class FieldType(Node):
-    def __init__(self):
-        Node.__init__(self, "field_type")
+    pass
 
-    def eval(self):
-        return self._value
+class Boolean(Value):
+    def __init__(self, value=[False]):
+        self.value = bool(value[0])
 
-class Boolean(FieldType):
-    def __init__(self, identifier, value = [False]):
-        FieldType.__init__(self)
-        self._value = bool(value[0])
+    def alg(self, _alg):
+        return _alg.Boolean(self.value)
 
-class String(FieldType):
-    def __init__(self, identifier, value = [""]):
-        FieldType.__init__(self)
-        self._value = str(value[0])
+class String(Value):
+    def __init__(self, value=""):
+        self.value = str(value)
 
-    def __call__(self, identifier, value):
-        self._identifier = identifier
-        self.value = value
+    def alg(self, _alg):
+        return _alg.String(self.value)
 
-class Integer(FieldType):
-    def __init__(self, identifier, value = [0]):
-        FieldType.__init__(self)
-        self._value = int(value[0])
+class StringLiteral(Value):
+    def __init__(self, value=""):
+        self.value = str(value)
 
-class Date(FieldType):
-    def __init__(self, identifier, value):
-        FieldType.__init__(self)
-        # TODO
+    def alg(self, _alg):
+        return _alg.StringLiteral(self.value)
+
+class Integer(Value):
+    def __init__(self, value=0):
+        self.value = int(value)
+
+    def alg(self, _alg):
+        return _alg.Integer(self.value)
+
+
+class Date(Value):
+    def __init__(self, value):
         self._value = value[0]
 
-class Decimal(FieldType):
-    def __init__(self, identifier, value = [float(0)]):
-        FieldType.__init__(self)
+
+class Decimal(Value):
+    def __init__(self, value=[float(0)]):
         self._value = float(value[0])
 
-# TODO
-class Money(FieldType):
-    def __init__(self, identifier, value = [0]):
-        FieldType.__init__(self)
+class Money(Value):
+    def __init__(self, value=[0]):
         self._value = float(value[0])
 
-# TODO
-class Currency(FieldType):
-    def __init__(self, identifier, value = [0]):
-        FieldType.__init__(self)
-        self._value = float(value[0])
+    def alg(self, _alg):
+        return _alg.Money(self.value)
 
-class Undefined(FieldType):
+class Currency(Value):
+    def __init__(self, value=[0]):
+        self.value = float(value[0])
+
+class Undefined(Value):
     def __init__(self):
-        FieldType.__init__(self)
         self._value = False

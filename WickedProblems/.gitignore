@@ -95,3 +95,4 @@ host/**
 
 #
 .DS_Store
+backup/**
