@@ -1,7 +1,7 @@
-import Tkinter as tk
+from tkinter import Tk,Frame,Label,Entry,Radiobutton,Spinbox
 '''
 
-Playground: 
+Playground:
 
 Window
 
@@ -13,7 +13,7 @@ FormElements
 - RadioButton
 - Checkbox
 - InputBox
-- 
+-
 
 
 
@@ -32,9 +32,7 @@ FormElements
 
 '''
 
-
 class FormElement(object):
-
     def __init__(self):
         pass
 
@@ -43,13 +41,12 @@ class FormElement(object):
 
     __repr__ = __str__
 
-
 class FormController(object):
     elements = []
     def __init__(self, parent, elements=[]):
         self.parent = parent
         [self.add_element(element) for element in elements]
- 
+
     def add_element(self, element):
         element.parent = self.parent
         self.elements.append(element)
@@ -62,10 +59,8 @@ class FormController(object):
 
     __repr__ = __str__
 
-
 class SectionElement(FormElement):
     pass
-
 
 class InputElement(FormElement):
     label = "InputElement "
@@ -76,35 +71,31 @@ class InputElement(FormElement):
         self.variable = variable
 
     def pack(self):
-        label = tk.Label(master=self.parent, cnf={'text': self.label})
+        label = Label(master=self.parent, cnf={'text': self.label})
         label.pack()
-        entry = tk.Entry(self.parent, textvariable=self.variable)
+        entry = Entry(self.parent, textvariable=self.variable)
         entry.pack()
 
-
 class ScaleElement(FormElement):
-
     def __init__(self, parent):
         self.parent = parent
 
     def pack(self):
-        label = tk.Label(master=self.parent, cnf={'text': "Scale Box"})
+        label = Label(master=self.parent, cnf={'text': "Scale Box"})
         label.pack()
-        w = tk.Scale(self.parent, from_=0, to=10, orient=tk.HORIZONTAL)
+        w = Scale(self.parent, from_=0, to=10, orient=HORIZONTAL)
         w.pack()
 
-
 class NumberElement(FormElement):
-
     def __init__(self, parent, label, variable):
         self.parent = parent
         self.label = label
         self.variable = variable
 
     def pack(self):
-        label = tk.Label(master=self.parent, cnf={'text': self.label,})
+        label = Label(master=self.parent, cnf={'text': self.label,})
         label.pack()
-        w = tk.Spinbox(self.parent, from_=0, to=10, textvariable=self.variable)
+        w = Spinbox(self.parent, from_=0, to=10, textvariable=self.variable)
         w.pack()
 
 class IntegerController(FormElement):
@@ -120,50 +111,41 @@ class IntegerController(FormElement):
         self.element.label = self.label
         self.element.pack()
 
-
 class CheckboxElement(FormElement):
-
     def __init__(self, parent):
         self.parent = parent
 
     def pack(self):
-        label = tk.Label(master=self.parent, cnf={'text': "Boolean Box"})
+        label = Label(master=self.parent, cnf={'text': "Boolean Box"})
         label.pack()
-        c = tk.Checkbutton(self.parent, text="Checkbox element")
+        c = Checkbutton(self.parent, text="Checkbox element")
         c.pack()
 
-
-
 class RadioElement(FormElement):
-
     def __init__(self, parent, label, variable):
         self.label = label
         self.parent = parent
         self.variable = variable
         self.variable.set(0)
-        self.options = ["Yes", "No"]
+        self.options = ["No","Yes"]
 
     def value(self):
         return self.variable.get()
 
     def pack(self):
-        label = tk.Label(master=self.parent, cnf={'text': self.label})
+        label = Label(master=self.parent, cnf={'text': self.label})
         label.pack()
         for index, option in enumerate(self.options):
-            tk.Radiobutton(self.parent, variable=self.variable, text=option,
+            Radiobutton(self.parent, variable=self.variable, text=option,
                                value=index).pack()
 
-
-
 class ButtonElement(FormElement):
-
     def __init__(self, parent):
         self.parent = parent
 
     def pack(self):
-        b = tk.Button(self.parent, text="OK")
+        b = Button(self.parent, text="OK")
         b.pack()
-
 
 class TextController(FormElement):
     parent = None
@@ -191,7 +173,6 @@ class ReadOnlyController(FormElement):
         self.element.label = self.label
         self.element.pack()
 
-
 class BooleanController(FormElement):
     parent = None
     label = "BooleanController"
@@ -205,7 +186,6 @@ class BooleanController(FormElement):
         self.element.label = self.label
         self.element.pack()
 
-
 class ButtonController(FormElement):
     parent = None
 
@@ -216,19 +196,15 @@ class ButtonController(FormElement):
     def render(self):
         self.element.pack()
 
-
 class PageElement(FormElement):
-
     def __init__(self, parent):
         self.parent = parent
 
     def pack(self):
-        group = tk.Frame(self.parent)
+        group = Frame(self.parent)
         group.pack(padx=10, pady=10)
 
-
 class PageController(FormElement):
-
     def __init__(self, parent):
         self.parent = parent
         self.element = PageElement(parent)
@@ -241,7 +217,6 @@ class PageController(FormElement):
     def render(self):
         [element.render() for element in self.elements]
         self.element.pack()
-
 
 class QuestionController(FormElement):
     label = "This is a question"
@@ -273,53 +248,26 @@ class ComputedQuestionController(FormElement):
         ''' Return Controller '''
         self.controller.render()
 
-
-class Window(tk.Frame):
-
+class Window(Frame):
     def __init__(self, parent=None):
-        tk.Frame.__init__(self, parent)
-
-# class Config(object):
-    
+        Frame.__init__(self, parent)
 
 class Application(object):
-
     def __init__(self):
-        root = tk.Tk()
+        root = Tk()
         self.window = Window(root)
         self.root = root
         self.root.minsize(width=670, height=670)
-
         self.elements = []
-
-   
-        # page1.add_element(ButtonController(None))
-        # page1.add_element(BooleanController(None))
-        # page1.add_element(TextController(None))
-        # page1.add_element(ButtonController(None))
-        
-        # page1.add_element(QuestionController(
-        #     None, "Have you sold a house?", BooleanController(None)))
-        # page1.add_element(QuestionController(
-        #     None, "Have you bought a house?", BooleanController(None)))
-        # page1.add_element(QuestionController(
-        #     None, "Have you sold a house?", BooleanController(None)))
-        # page1.add_element(QuestionController(
-        #     None, "Have you bought a house?", BooleanController(None)))
-        
-        
 
     def add_element(self, element):
         element.parent = self.window
         self.elements.append(element)
-        
+
     def setup_elements(self):
         [element.render() for element in self.elements]
-
 
     def render(self):
         self.setup_elements()
         self.window.pack()
         self.root.mainloop()
-
-

@@ -10,11 +10,9 @@ def binary_node(node):
         return node(*tokens[0])
     return makeNode
 
-
 def if_action(string, location, tokens):
     print(tokens)
     return ifThen(**tokens[0].asDict())
-
 
 def computed_question_action(string, location, tokens):
     print(tokens.asDict())
@@ -29,7 +27,6 @@ def form_action(string, location, tokens):
     return Form(**tokens[0].asDict())
 
 class QL:
-
     # Booleans
     literal_and = Literal('&&').suppress()
 

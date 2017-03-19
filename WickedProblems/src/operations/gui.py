@@ -1,13 +1,12 @@
-import ql
-from ast import *
-from Tkinter import *
-import user_interface.ui
+from user_interface.ui import FormController,QuestionController, \
+                              ComputedQuestionController,ReadOnlyController, \
+                              BooleanController,IntegerController, \
+                              TextController
 import operations.ql
-import user_interface.ui as ui
+from .ql import QlAlg,PrettyPrint,GetVariables
+from tkinter import IntVar,StringVar
 
-
-class BuildGui(ql.QlAlg):
-
+class BuildGui(QlAlg):
     def __init__(self, parent, environment):
         self.environment = environment
         self.parent = parent
@@ -15,12 +14,11 @@ class BuildGui(ql.QlAlg):
     def Literal(self, value):
         class _anon():
             execute = None
-
         return _anon()
 
     def Form(self, name, block):
         def _register():
-            form = ui.FormController(self.parent)
+            form = FormController(self.parent)
             block.execute(form)
             return form
 
@@ -31,14 +29,14 @@ class BuildGui(ql.QlAlg):
     def Block(self, statements):
         class _anon():
             execute = lambda self, form: [statement.execute(form)
-                                          for _, statement in enumerate(statements)]
+                for _, statement in enumerate(statements)]
         return _anon()
 
     def Variable(self, name, datatype):
         def _register():
-            
+
             variable = datatype.execute( name)
-        
+
             return variable
 
         class _anon():
@@ -48,7 +46,7 @@ class BuildGui(ql.QlAlg):
     def RefVariable(self, name):
         def _register():
             self.environment.add_ref((name))
-            print self.environment.is_registerd(name)
+            print(self.environment.is_registerd(name))
 
         class _anon():
             execute = lambda self: _register()
@@ -56,9 +54,7 @@ class BuildGui(ql.QlAlg):
 
     def Question(self, variable, label):
         def _register(form):
-            # self.environment.add_question(variable.execute(),
-            # label.execute())
-            question = ui.QuestionController(
+            question = QuestionController(
                 None, label.execute(), variable.execute())
             form.add_element(question)
 
@@ -80,8 +76,8 @@ class BuildGui(ql.QlAlg):
             variable.execute()
             label.execute()
             # expression.execute()
-            question = ui.ComputedQuestionController(
-                None, label.execute(), ui.ReadOnlyController(None, StringVar()))
+            question = ComputedQuestionController(
+                None, label.execute(), ReadOnlyController(None, StringVar()))
             form.add_element(question)
 
         class _anon():
@@ -94,7 +90,7 @@ class BuildGui(ql.QlAlg):
             #get variable to store
             var = IntVar()
             self.environment.update_var(key, var)
-            controller = ui.BooleanController(None, var)
+            controller = BooleanController(None, var)
 
             return controller
 
@@ -106,7 +102,7 @@ class BuildGui(ql.QlAlg):
         def _register(key):
             var =  IntVar()
             self.environment.update_var(key, var)
-            return ui.IntegerController(None, var)
+            return IntegerController(None, var)
 
         class _anon():
             execute=lambda self, key: _register(key)
@@ -125,7 +121,7 @@ class BuildGui(ql.QlAlg):
         def _register(key):
             var = IntVar()
             self.environment.update_var(key, var)
-            return ui.IntegerController(None, var)
+            return IntegerController(None, var)
 
         class _anon():
             execute=lambda self, key: _register(key)
@@ -143,7 +139,7 @@ class BuildGui(ql.QlAlg):
         def _register(key):
             var = StringVar()
             self.environment.update_var(key, var)
-            return ui.TextController(None, var)
+            return TextController(None, var)
 
         class _anon():
             execute=lambda self, key: _register(key)

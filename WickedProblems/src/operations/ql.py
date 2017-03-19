@@ -1,6 +1,4 @@
-from ast import *
 from abc import ABCMeta, abstractmethod
-
 
 class ExpressionAlg(object):
     __metaclass__ = ABCMeta
@@ -220,8 +218,8 @@ class Environment(object):
 
     def update_var(self, var, value):
         self.variables_dict.update({var: value})
-        print self.variables_dict
-    
+        print(self.variables_dict)
+
 
     def check_type(self, variable):
         pass
@@ -304,7 +302,7 @@ class GetVariables(QlAlg):
     def RefVariable(self, name):
         def _register():
             self.environment.add_ref((name))
-            print self.environment.is_registerd(name)
+            print(self.environment.is_registerd(name))
 
         class _anon():
             execute = lambda self: _register()
@@ -401,7 +399,7 @@ class GetVariables(QlAlg):
     def Form(self, name, block):
         def _register():
             block.execute()
-            return 
+            return
 
         class _anon():
             execute = lambda self: _register()
@@ -425,7 +423,7 @@ class GetVariables(QlAlg):
     def RefVariable(self, name):
         def _register():
             self.environment.add_ref((name))
-            print self.environment.is_registerd(name)
+            print(self.environment.is_registerd(name))
 
         class _anon():
             execute = lambda self: _register()
