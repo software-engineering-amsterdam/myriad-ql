@@ -13,11 +13,11 @@ namespace Questionnaires.Utility
             if (input.First() == '"')
                 input.Remove(0);
             if (input.Last() == '"')
-                input.Remove(input.Length -1);
+                input.Remove(input.Length - 1);
         }
 
         /* Utility function to format a collection of string into a single string
-         * in the fomat <S1>, <S2>, ... and <Sx> */ 
+         * in the fomat <S1>, <S2>, ... and <Sx> */
         public static string FormatSequenceOfStrings(List<string> input)
         {
             if (input.Count == 0)

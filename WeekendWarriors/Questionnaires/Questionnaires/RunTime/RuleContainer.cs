@@ -2,7 +2,8 @@
 using System;
 using System.Collections.Generic;
 
-namespace Questionnaires.RunTime { 
+namespace Questionnaires.RunTime
+{
     using Rule = Action<ExpressionEvaluator>;
 
     class RuleContainer

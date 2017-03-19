@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace Questionnaires.RunTime.DocumentModel
 {
-    public abstract class Container 
+    public abstract class Container
     {
         protected string Name { get; set; }
         private List<Section> Sections;

@@ -1,11 +1,8 @@
 ﻿using Questionnaires.QL.AST.Types;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Questionnaires.UI.Widgets
 {
@@ -13,7 +10,15 @@ namespace Questionnaires.UI.Widgets
     {
         public DecimalBoxWidget() : base(new TextBox())
         {
-            TextBox.TextChanged += (sender, args) => OnInputChanged(new MoneyType(decimal.Parse(TextBox.Text)));
+            try
+            {
+                OnInputChanged(new MoneyType(decimal.Parse(TextBox.Text)));
+                TextBox.Background = Brushes.White;
+            }
+            catch (FormatException)
+            {
+                TextBox.Background = Brushes.Red;
+            }
         }
 
         public override void SetQuestionValue(IType value)

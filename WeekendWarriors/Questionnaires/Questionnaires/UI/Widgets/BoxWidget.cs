@@ -16,6 +16,6 @@ namespace Questionnaires.UI.Widgets
         public override void SetQuestionValue(IType value)
         {
         }
-        
+
     }
 }

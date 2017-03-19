@@ -10,7 +10,7 @@ namespace Questionnaires.UI.Widgets
         {
             Slider.TickFrequency = 1;
             Slider.IsSnapToTickEnabled = true;
-            
+
             Slider.ValueChanged += (sender, args) => OnInputChanged(new IntegerType((int)Slider.Value));
         }
 

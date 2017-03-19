@@ -22,7 +22,7 @@ namespace Questionnaires.UI
         {
             ClearMembersForProcessing();
             var result = new Result();
-            
+
             try
             {
                 return ProcessInputAndBuildUI(qlInput, qlsInput, useStyling, result);

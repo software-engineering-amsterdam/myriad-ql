@@ -15,8 +15,8 @@ namespace Questionnaires.QL.AST.Literals
         public Money(string value)
         {
             ValueAsString = value;
-        }        
-        
+        }
+
         public bool CheckSemantics(QLContext context, List<Message> messages)
         {
             try

@@ -46,7 +46,7 @@ namespace Questionnaires.QL.AST
         {
             var identifiers = new HashSet<Identifier>();
             Expression.GetIdentifiers(identifiers);
-            dependencies.Add(Question, identifiers); 
+            dependencies.Add(Question, identifiers);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Questionnaires.RunTime
         public string Identifier
         {
             get { return ASTNode.Identifier; }
-        }        
+        }
 
         public void SetWidget(Widget widget)
         {
@@ -44,7 +44,7 @@ namespace Questionnaires.RunTime
         public IType GetValue()
         {
             return Value;
-        }        
+        }
 
         private void SetWidget(QuestionWidget widget)
         {
@@ -55,7 +55,7 @@ namespace Questionnaires.RunTime
 
         public void SetValue(IType value)
         {
-            Debug.Assert(value.GetType() == ASTNode.Type.GetType()); 
+            Debug.Assert(value.GetType() == ASTNode.Type.GetType());
 
             bool valueChanged = Value.InequalTo(value).GetValue();
             Value = value;

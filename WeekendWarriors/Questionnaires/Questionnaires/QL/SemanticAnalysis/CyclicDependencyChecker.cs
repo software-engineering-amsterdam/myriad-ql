@@ -25,7 +25,7 @@ namespace Questionnaires.QL.SemanticAnalysis
             foreach (var dependecy in dependencies)
             {
                 Dependencies[dependee.Identifier].Add(dependecy.Name);
-            }            
+            }
         }
 
         public void Check(Result result)

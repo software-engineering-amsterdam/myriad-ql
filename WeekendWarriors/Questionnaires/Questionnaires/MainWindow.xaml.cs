@@ -22,7 +22,7 @@ namespace Questionnaires
         {
             bool useStyling = !string.IsNullOrEmpty(InputQLS.Text);
             ClearOutputWindow();
-            
+
             PrintMessages(new UIBuilder().CreateInterface(InputQL.Text, InputQLS.Text, useStyling));
         }
 
@@ -30,7 +30,7 @@ namespace Questionnaires
         {
             Output.Text = "";
         }
-        
+
         private void PrintMessages(Result result)
         {
             foreach (var message in result.Events)

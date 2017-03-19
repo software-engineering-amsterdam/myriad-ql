@@ -38,7 +38,7 @@ namespace Questionnaires.QL.AST
 
         public void GetDependencies(Dictionary<Question, HashSet<Identifier>> dependencies)
         {
-           // (Non-coputed) Question has no dependencies
+            // (Non-coputed) Question has no dependencies
         }
     }
 }

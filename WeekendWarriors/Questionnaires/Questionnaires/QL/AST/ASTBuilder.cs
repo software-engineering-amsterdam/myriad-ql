@@ -70,10 +70,10 @@ namespace Questionnaires.QL.AST
 
         public override INode VisitQuestion([NotNull] QLParser.QuestionContext context)
         {
-            var identifier = context.Identifier().GetText();            
+            var identifier = context.Identifier().GetText();
             var body = context.StringLiteral().GetText();
             Utility.String.TrimQuotes(body);
-            IType type = GetTypeFromString(context.Type().GetText());           
+            IType type = GetTypeFromString(context.Type().GetText());
 
             return new Question(identifier, body, type);
         }
@@ -84,7 +84,7 @@ namespace Questionnaires.QL.AST
             Debug.Assert(expression is IExpression);
 
             var thenStatements = GetStatements(context.thenBlock.statement());
-            var elseStatements = GetStatements(context.elseBlock?.statement());            
+            var elseStatements = GetStatements(context.elseBlock?.statement());
 
             return new Conditional((dynamic)expression, thenStatements, elseStatements);
         }
@@ -204,7 +204,7 @@ namespace Questionnaires.QL.AST
         public override INode VisitBool([NotNull] QLParser.BoolContext context)
         {
             Utility.Assertions.AssertInRange(context.GetText(), new[] { "true", "false" });
-            
+
             return new Literals.Boolean(context.GetText() == "true");
         }
 
@@ -246,9 +246,9 @@ namespace Questionnaires.QL.AST
                     return new StringType();
             }
 
-            throw new ArgumentException();            
+            throw new ArgumentException();
         }
 
-        
+
     }
 }

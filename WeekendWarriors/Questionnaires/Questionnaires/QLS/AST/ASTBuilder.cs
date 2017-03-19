@@ -111,12 +111,12 @@ namespace Questionnaires.QLS.AST
             Debug.Assert(widgetType == "spinbox" | widgetType == "slider" | widgetType == "text" | widgetType == "radio" | widgetType == "checkbox" | widgetType == "dropdown");
             switch (widgetType)
             {
-                case "spinbox": return new Widgets.Spinbox(); 
-                case "slider": return new Widgets.Slider(); 
-                case "text": return new Widgets.Text(); 
-                case "radio": return new Widgets.Radio(); 
-                case "checkbox": return new Widgets.CheckBox(); 
-                case "dropdown": return new Widgets.DropDown(); 
+                case "spinbox": return new Widgets.Spinbox();
+                case "slider": return new Widgets.Slider();
+                case "text": return new Widgets.Text();
+                case "radio": return new Widgets.Radio();
+                case "checkbox": return new Widgets.CheckBox();
+                case "dropdown": return new Widgets.DropDown();
             }
             throw new InvalidProgramException();
         }
@@ -127,10 +127,10 @@ namespace Questionnaires.QLS.AST
             Debug.Assert(type == "boolean" || type == "int" || type == "string" || type == "money");
             switch (type)
             {
-                case "boolean": return new BooleanType(); 
+                case "boolean": return new BooleanType();
                 case "int": return new IntegerType();
-                case "string": return new StringType(); 
-                case "money": return new MoneyType();                     
+                case "string": return new StringType();
+                case "money": return new MoneyType();
             }
             throw new InvalidProgramException();
         }

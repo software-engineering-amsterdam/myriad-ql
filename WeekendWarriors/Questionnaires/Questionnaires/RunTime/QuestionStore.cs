@@ -11,7 +11,7 @@ namespace Questionnaires.RunTime
 
         public QuestionStore(IEnumerable<Question> questions)
         {
-            foreach(var question in questions)
+            foreach (var question in questions)
             {
                 //Debug.Assert(!Questions.ContainsKey(question.Identifier));
                 if (!Questions.ContainsKey(question.Identifier))

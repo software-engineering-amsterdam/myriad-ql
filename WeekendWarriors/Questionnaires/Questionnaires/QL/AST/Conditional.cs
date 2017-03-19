@@ -81,7 +81,7 @@ namespace Questionnaires.QL.AST
         {
             foreach (var statement in ThenStatements)
             {
-                statement.GetDependencies(dependencies);                
+                statement.GetDependencies(dependencies);
             }
 
             foreach (var statement in ElseStatements)

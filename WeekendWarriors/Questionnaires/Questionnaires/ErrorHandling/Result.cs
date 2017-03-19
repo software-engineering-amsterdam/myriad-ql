@@ -10,7 +10,7 @@ namespace Questionnaires.ErrorHandling
         public Result()
         {
             Events = new List<Message>();
-        }      
+        }
 
         public void AddEvent(Message analysisEvent)
         {

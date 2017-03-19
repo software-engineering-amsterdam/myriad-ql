@@ -15,7 +15,7 @@ namespace Questionnaires.QL.AST.Literals
         {
             ValueAsString = value;
         }
-        
+
         public bool CheckSemantics(QLContext context, List<Message> messages)
         {
             try

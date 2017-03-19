@@ -25,7 +25,7 @@ namespace Questionnaires.RunTime
             var expressionEvaluator = new ExpressionEvaluator(questionStore);
             var ruleContainer = new RuleContainer(expressionEvaluator, Rules);
 
-            renderer.RenderModel(DocumentModel);         
+            renderer.RenderModel(DocumentModel);
             ConntectRunTimeObjects(questionStore, ruleContainer);
 
             // Kick off initialization
