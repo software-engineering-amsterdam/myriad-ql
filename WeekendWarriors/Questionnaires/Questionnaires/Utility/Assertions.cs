@@ -10,8 +10,8 @@ namespace Questionnaires.Utility
     class Assertions
     {
         public static void AssertInRange<T>(T item, T[] range)
-        {
-            List<T> rangeAsList = new List<T>(range);
+        {            
+            var rangeAsList = new List<T>(range);
             Debug.Assert(rangeAsList.Contains(item));
         }
     }
