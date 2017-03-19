@@ -8,7 +8,7 @@ namespace Questionnaires.QL.SemanticAnalysis
     {
         private QLContext Context;
         private Result Result = new Result();
-        private LabelUniqueNessChecker labelChecker = new LabelUniqueNessChecker();
+        private LabelUniqueNessChecker LabelChecker = new LabelUniqueNessChecker();
 
         private Dictionary<string, List<Question>> QuestionBodies = new Dictionary<string, List<Question>>();
 
@@ -22,7 +22,7 @@ namespace Questionnaires.QL.SemanticAnalysis
             Context = context;
             Visit((dynamic)node);
 
-            labelChecker.Check(Result);
+            LabelChecker.Check(Result);
         }
 
         public void Visit(Conditional node)
@@ -47,9 +47,9 @@ namespace Questionnaires.QL.SemanticAnalysis
             Visit((dynamic)node.Question);
         }
 
-        public void Visit(QL.AST.Question node)
+        public void Visit(Question node)
         {
-            labelChecker.AddQuestion(node);
+            LabelChecker.AddQuestion(node);
 
             if (!Context.ContainsQuestion(node.Identifier))
             {
