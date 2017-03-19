@@ -13,12 +13,10 @@ namespace Questionnaires.RunTime
         {
             foreach (var question in questions)
             {
-                //Debug.Assert(!Questions.ContainsKey(question.Identifier));
-                if (!Questions.ContainsKey(question.Identifier))
-                {
-                    Questions.Add(question.Identifier, question);
-                    question.ValueChanged += (sender, args) => OnVariableChanged();
-                }
+                Debug.Assert(!Questions.ContainsKey(question.Identifier));
+                
+                Questions.Add(question.Identifier, question);
+                question.ValueChanged += (sender, args) => OnVariableChanged();                
             }
         }
 
