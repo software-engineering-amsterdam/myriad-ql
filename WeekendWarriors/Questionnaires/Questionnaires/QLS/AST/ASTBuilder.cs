@@ -64,7 +64,7 @@ namespace Questionnaires.QLS.AST
 
         public override INode VisitSection([NotNull] QLSParser.SectionContext context)
         {
-            var section = new Section(context.StringLiteral().GetText());
+            var section = new Section(RemoveDoubleQuotesAtStartAndEnd(context.StringLiteral().GetText()));
             foreach (var question in context.question())
             {
                 section.AddChild((dynamic)question.Accept(this));
@@ -164,6 +164,13 @@ namespace Questionnaires.QLS.AST
                 return new Setting(key, context.ColorLiteral().GetText());
 
             throw new InvalidProgramException();
+        }
+
+        private string RemoveDoubleQuotesAtStartAndEnd(string unmodifiedString)
+        {
+            var modifiedString = unmodifiedString.Remove(0, 1);
+            modifiedString = modifiedString.Remove(modifiedString.Length - 1, 1);
+            return modifiedString;
         }
     }
 }
