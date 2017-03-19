@@ -1,4 +1,5 @@
 ﻿using Questionnaires.QL.AST.Types;
+using Questionnaires.RunTime;
 using System;
 
 namespace Tests.QL.Value
@@ -19,9 +20,9 @@ namespace Tests.QL.Value
             throw new NotSupportedException();
         }
 
-        public static Questionnaires.RunTime.Question CreateQuestion(string name, object value)
+        public static Question CreateQuestion(string name, object value)
         {
-            return new Questionnaires.RunTime.Question(new Questionnaires.QL.AST.Question(name, "", CreateValue(value)));
+            return new Question(new Questionnaires.QL.AST.Question(name, "", CreateValue(value)));
         }
     }
 }
