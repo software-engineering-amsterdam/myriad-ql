@@ -28,10 +28,10 @@ trait GUIQuestion {
   }.lastOption.map(_.toDouble)).getOrElse(100.0)
 
   protected def createValueBinding(c: ComputedQuestion)(changeHandler: Value => Unit): Subscription =
-    Bindings.createObjectBinding[Value](() => Evaluator(env.toMap, c.value), env).onChange((newValue, _, _) => changeHandler(newValue.value))
+    Bindings.createObjectBinding[Value](() => Evaluator(env.toMap).calculate(c.value), env).onChange((newValue, _, _) => changeHandler(newValue.value))
 
   protected def computeValue(question: ComputedQuestion): StringBinding =
-    Bindings.createStringBinding(() => Evaluator(env.toMap, question.value).toString, env)
+    Bindings.createStringBinding(() => Evaluator(env.toMap).calculate(question.value).toString, env)
 
   private def createLabel: Text = {
     questionStyle match {
@@ -60,5 +60,5 @@ trait GUIQuestion {
   }
 
   private def isVisible(question: DisplayQuestion): BooleanBinding =
-    Bindings.createBooleanBinding(() => question.show(env.toMap), env)
+    Bindings.createBooleanBinding(() => Evaluator(env.toMap).show(question.displayCondition), env)
 }

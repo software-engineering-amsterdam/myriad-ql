@@ -4,6 +4,19 @@ import ast._
 import values.Evaluator.Env
 
 class Evaluator(env: Env) {
+
+  def show(conditions: Seq[ExpressionNode]): Boolean = {
+    conditions match {
+      case Nil => true
+      case head :: tail =>
+        val headValue = calculate(head) match {
+          case BooleanValue(b) => b
+          case _ => false
+        }
+        headValue && show(tail)
+    }
+  }
+
   def calculate(expressionNode: ExpressionNode): Value =
     expressionNode match {
       case Identifier(value) => env.getOrElse(value, UndefinedValue)
@@ -65,5 +78,5 @@ class Evaluator(env: Env) {
 object Evaluator {
   type Env = Map[String, Value]
 
-  def apply(env: Env, expressionNode: ExpressionNode): Value = new Evaluator(env).calculate(expressionNode)
+  def apply(env: Env): Evaluator = new Evaluator(env)
 }

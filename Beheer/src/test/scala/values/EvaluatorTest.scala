@@ -19,17 +19,17 @@ class EvaluatorTest extends PropSpec with Matchers with PropertyChecks with Expr
 
   property("Commutative operators can have their operands swapped without changing function value.") {
     forAll(Gen.oneOf(genNumeric, genBoolean)) {
-      expr => Evaluator(runtimeEnv, expr) == Evaluator(runtimeEnv, swapCommutativeOps(expr))
+      expr => Evaluator(runtimeEnv).calculate(expr) == Evaluator(runtimeEnv).calculate(swapCommutativeOps(expr))
     }
   }
   property("Given empty environment, expressions referencing a variable should be UndefinedValue.") {
     forAll(Gen.oneOf(genNumeric, genBoolean) suchThat (e => containsIdentifier(e))) {
-      expr => Evaluator(runTimeEnvEmpty, expr) == UndefinedValue
+      expr => Evaluator(runTimeEnvEmpty).calculate(expr) == UndefinedValue
     }
   }
   property("Given empty environment, expressions not referencing a variable should never be UndefinedValue.") {
     forAll(Gen.oneOf(genNumeric, genBoolean) suchThat (e => !containsIdentifier(e))) {
-      expr => Evaluator(runTimeEnvEmpty, expr) != UndefinedValue
+      expr => Evaluator(runTimeEnvEmpty).calculate(expr) != UndefinedValue
     }
   }
 

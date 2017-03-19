@@ -35,7 +35,7 @@ class DateQuestion(val question: DisplayQuestion, val questionStyle: Option[Ques
     bind(env)
 
     override def computeValue: LocalDate = {
-      Evaluator(env.toMap, question.value) match {
+      Evaluator(env.toMap).calculate(question.value) match {
         case DateValue(d) => d
         case _ => LocalDate.now()
       }

@@ -42,9 +42,9 @@ case class Color(value: String) extends Style
 
 object Stylesheet {
   type Blocks = Seq[Block]
-  type Styling = Map[String, Style]
   type DefaultStyles = Seq[DefaultStyle]
   type QuestionStyles = Seq[QuestionStyle]
   type Sections = Seq[Section]
   type Pages = Seq[Page]
+  type Styling = Map[String, Style]
 }
