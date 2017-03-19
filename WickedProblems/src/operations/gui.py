@@ -1,94 +1,150 @@
 import ql
-import ast.nodes as nodes
-import ui.elements
+from ast import *
 from Tkinter import *
+import user_interface.ui
+import operations.ql
+import user_interface.ui as ui
 
 
-class QlAlgGUI(ql.QlAlg):
-    ''' TODO  Proper implementation of the Render functions '''
-    """ Return form elements """
+class BuildGui(ql.QlAlg):
 
-    def literal(self, value):
-        literal = type("Literal", (nodes.Literal,), {
-            "render": lambda self: str(self.value)})
-        return literal(value)
+    def __init__(self, parent, environment):
+        self.environment = environment
+        self.parent = parent
 
-    def boolean_type(self):
-        _node = type("BooleanType", (nodes.BooleanType,), {
-            "render": lambda self, question, pane:  Checkbutton(pane, text=question.label, variable=question.variable).pack()})
-        return _node()
+    def Literal(self, value):
+        class _anon():
+            execute = None
 
-    def string_type(self):
-        def render(self, question, pane):
-            Label(pane, text=question.label).pack()
-            Entry(pane).pack()
+        return _anon()
 
-        _node = type("StringType", (nodes.StringType,), {
-            "render": render})
-        return _node()
+    def Form(self, name, block):
+        def _register():
+            form = ui.FormController(self.parent)
+            block.execute(form)
+            return form
 
-    def integer_type(self):
-        def render(self, question, pane):
-            Label(pane, text=question.label).pack()
-            Entry(pane).pack()
-        _node = type("IntegerType", (nodes.IntegerType,), {
-            "render":render})
-        return _node()
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
 
-    def money_type(self):
-        def render(self, question, pane):
-            Label(pane, text=question.label).pack()
-            Entry(pane).pack()
-        _node = type("MoneyType", (nodes.MoneyType,), {
-            "render": render})
-        return _node()
+    def Block(self, statements):
+        class _anon():
+            execute = lambda self, form: [statement.execute(form)
+                                          for _, statement in enumerate(statements)]
+        return _anon()
 
-    def date_type(self):
-        _node = type("DateType", (nodes.DateType,), {
-            "render": lambda self: self.value})
-        return _node()
-
-    def block(self, statements):
-        def render(self, pane):
-            self.widgets = [x.render(pane) for _, x in enumerate(statements)]
-        block = type("Block", (nodes.Block,), {"render": render})
-        return block(statements)
-
-    def form(self, name, block):
-        def render(self, pane):
-            self.block.render(pane)
-
-        form = type("Form", (nodes.Form,), {"render": render})
-        return form(name, block)
-
-    def stringPrimitive(self, value):
-        string_primitive = type("StringPrimitive", (nodes.StringPrimitive,), {
-            "render": lambda self: None})
-        return string_primitive(value)
-
-    def variable(self, name, datatype):
-        def render(self, question, pane):
-            widget = self.datatype.render(question, pane)
+    def Variable(self, name, datatype):
+        def _register():
+            
+            variable = datatype.execute( name)
         
-        variable = type("Variable", (nodes.Variable,), {
-            "render": render})
-        return variable(name, datatype)
+            return variable
 
-    def label(self, label):
-        _node = type("Label", (nodes.Label,), {
-            "render": lambda self, pane:  Label(pane, text=self.label)})
-        return _node(label)
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
 
-    def question(self, variable, label):
-        def render(self, pane):
-            self.variable.render(self, pane)
+    def RefVariable(self, name):
+        def _register():
+            self.environment.add_ref((name))
+            print self.environment.is_registerd(name)
 
-            # CheckBoxQuestion should be based on the data_type
-        question = type("Question", (ui.elements.Question,), {
-                        "render": render})
-        return question(variable, label)
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
 
-    def type(self, data_type):
-        _typeClass = type("Type", (nodes.Type,), {
-            "eval": lambda self: 0})
-        return _typeClass(data_type)
+    def Question(self, variable, label):
+        def _register(form):
+            # self.environment.add_question(variable.execute(),
+            # label.execute())
+            question = ui.QuestionController(
+                None, label.execute(), variable.execute())
+            form.add_element(question)
+
+        class _anon():
+            execute = lambda self, form: _register(form)
+        return _anon()
+
+    def ifThen(self, expression, block):
+        def _register(form):
+            expression.execute()
+            block.execute(form)
+
+        class _anon():
+            execute = lambda self, form: _register(form)
+        return _anon()
+
+    def ComputedQuestion(self, variable, label, expression):
+        def _register(form):
+            variable.execute()
+            label.execute()
+            # expression.execute()
+            question = ui.ComputedQuestionController(
+                None, label.execute(), ui.ReadOnlyController(None, StringVar()))
+            form.add_element(question)
+
+        class _anon():
+            execute=lambda self, form: _register(form)
+        return _anon()
+
+
+    def Boolean(self, value=False):
+        def _register(key):
+            #get variable to store
+            var = IntVar()
+            self.environment.update_var(key, var)
+            controller = ui.BooleanController(None, var)
+
+            return controller
+
+        class _anon():
+            execute = lambda self, key : _register(key)
+        return _anon()
+
+    def Money(self, value=False):
+        def _register(key):
+            var =  IntVar()
+            self.environment.update_var(key, var)
+            return ui.IntegerController(None, var)
+
+        class _anon():
+            execute=lambda self, key: _register(key)
+        return _anon()
+
+    def Substraction(self, lhs, rhs):
+        def _register():
+            lhs.execute()
+            rhs.execute()
+
+        class _anon():
+            execute=lambda self: _register()
+        return _anon()
+
+    def Integer(self, value):
+        def _register(key):
+            var = IntVar()
+            self.environment.update_var(key, var)
+            return ui.IntegerController(None, var)
+
+        class _anon():
+            execute=lambda self, key: _register(key)
+        return _anon()
+
+    def StringLiteral(self, value):
+        def _register():
+            return value
+
+        class _anon():
+            execute=lambda self: _register()
+        return _anon()
+
+    def String(self, value):
+        def _register(key):
+            var = StringVar()
+            self.environment.update_var(key, var)
+            return ui.TextController(None, var)
+
+        class _anon():
+            execute=lambda self, key: _register(key)
+        return _anon()

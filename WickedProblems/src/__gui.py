@@ -68,13 +68,11 @@ class SectionElement(FormElement):
 
 
 class InputElement(FormElement):
-    label =  "InputElement "
+    label = "InputElement "
 
     def __init__(self, parent, label):
         self.parent = parent
         self.label = label
-
-
 
     def pack(self):
         label = tk.Label(master=self.parent, cnf={'text': self.label})
@@ -119,19 +117,26 @@ class CheckboxElement(FormElement):
         c.pack()
 
 
+
 class RadioElement(FormElement):
 
     def __init__(self, parent, label):
         self.label = label
         self.parent = parent
+        self.variable = tk.IntVar()
+        self.variable.set(0)
+        self.options = ["Yes", "No"]
+
+    def value(self):
+        return self.variable.get()
 
     def pack(self):
         label = tk.Label(master=self.parent, cnf={'text': self.label})
         label.pack()
-        tk.Radiobutton(self.parent, text="Yes",
-                       value=1).pack(anchor=tk.W)
-        tk.Radiobutton(self.parent, text="No",
-                       value=2).pack(anchor=tk.W)
+        for index, option in enumerate(self.options):
+            tk.Radiobutton(self.parent, variable=self.variable, text=option,
+                               value=index).pack()
+
 
 
 class ButtonElement(FormElement):
@@ -147,9 +152,10 @@ class ButtonElement(FormElement):
 class TextController(FormElement):
     parent = None
     label = "TextController"
+
     def __init__(self, parent):
         self.parent = parent
-        self.element = InputElement(parent, self.label) 
+        self.element = InputElement(parent, self.label)
 
     def render(self):
         self.element.label = self.label
@@ -159,6 +165,7 @@ class TextController(FormElement):
 class BooleanController(FormElement):
     parent = None
     label = "TextController"
+
     def __init__(self, parent):
         self.parent = parent
         self.element = RadioElement(parent, self.label)
@@ -226,12 +233,16 @@ class Window(tk.Frame):
     def __init__(self, parent=None):
         tk.Frame.__init__(self, parent)
 
+# class Config(object):
+    
 
 class Application(object):
 
-    def __init__(self, root):
+    def __init__(self):
+        root = tk.Tk()
         self.window = Window(root)
         self.root = root
+        self.root.minsize(width=670, height=670)
         listb = tk.Listbox(self.window)
         listb2 = tk.Listbox(self.window)
 
@@ -242,46 +253,31 @@ class Application(object):
         # widgets
 
         page1 = PageController(None)
-        page1.add_element(ButtonController(None))
-        page1.add_element(BooleanController(None))
-        page1.add_element(TextController(None))
-        page1.add_element(ButtonController(None))
-        page1.add_element(QuestionController(None, "Have you sold a house?", BooleanController(None)))
-        page1.add_element(QuestionController(None, "Have you bought a house?", BooleanController(None)))
+        # page1.add_element(ButtonController(None))
+        # page1.add_element(BooleanController(None))
+        # page1.add_element(TextController(None))
+        # page1.add_element(ButtonController(None))
+        
+        page1.add_element(QuestionController(
+            None, "Have you sold a house?", BooleanController(None)))
+        page1.add_element(QuestionController(
+            None, "Have you bought a house?", BooleanController(None)))
+        page1.add_element(QuestionController(
+            None, "Have you sold a house?", BooleanController(None)))
+        page1.add_element(QuestionController(
+            None, "Have you bought a house?", BooleanController(None)))
 
-        # page1.render()
 
         form.add_element(page1)
-
-        # form.add_element(QuestionController(None))
-        # form.add_element(QuestionController(None))
-        # form.add_element(QuestionController(None))
         form.render()
-
-        # self.elements = [ ScaleElement(self.window), NumberElement(self.window), RadioElement(self.window), RadioElement(
-        #     self.window), InputElement(self.window)]
-        # li = ['Carl', 'Partrick', 'Lindsay']
-        # li2 = ['Apples', 'Eggs', 'Bacon']
-        # for item in li:
-        #     listb.insert(0, item)
-        # for item in li2:
-        #     listb2.insert(0, item)
-
         self.setup_elements()
 
     def setup_elements(self):
         [element.render() for element in self.elements]
-
-    # def render_elements(self):
-    #     [element.render() for element in self.elements]
 
     def render(self):
 
         self.window.pack()
         self.root.mainloop()
 
-root = tk.Tk()
-application = Application(root)
 
-application.render()
-print application

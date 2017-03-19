@@ -200,18 +200,28 @@ class Environment(object):
     variables = []
     ref_variables = []
     questions = []
+    variables_dict = {}
 
     def __init__(self):
         pass
 
     def add_var(self, var):
         self.variables.append(var)
+        self.variables_dict.update(var)
 
     def add_ref(self, var):
         self.ref_variables.append(var)
 
     def add_question(self, variable, label):
         self.questions.append((variable, label))
+
+    def get_var(self, var):
+        return self.variables_dict.get(var)
+
+    def update_var(self, var, value):
+        self.variables_dict.update({var: value})
+        print self.variables_dict
+    
 
     def check_type(self, variable):
         pass
@@ -249,6 +259,9 @@ class Environment(object):
     def get_variables(self):
         return self.variables
 
+    def export(self):
+        return {key:variable.get() for key, variable in self.variables_dict.items()}
+
     def undefined_variables(self):
         return set([_var for _var in self.ref_variables if self.is_registerd(_var) == False])
 
@@ -268,6 +281,127 @@ class GetVariables(QlAlg):
     def Form(self, name, block):
         def _register():
             block.execute()
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
+    def Block(self, statements):
+        class _anon():
+            execute = lambda self: [k.execute()
+                                    for _, k in enumerate(statements)]
+        return _anon()
+
+    def Variable(self, name, datatype):
+        def _register():
+            self.environment.add_var((name, datatype.execute()))
+            return (name, datatype.execute())
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
+    def RefVariable(self, name):
+        def _register():
+            self.environment.add_ref((name))
+            print self.environment.is_registerd(name)
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
+    def Question(self, variable, label):
+        def _register():
+            self.environment.add_question(variable.execute(), label.execute())
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
+    def ifThen(self, expression, block):
+        def _register():
+            expression.execute()
+            block.execute()
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
+    def ComputedQuestion(self, variable, label, expression):
+        def _register():
+            variable.execute()
+            label.execute()
+            expression.execute()
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
+    def Boolean(self, value=False):
+        def _register(self):
+            return 'boolean'
+
+        class _anon():
+            execute = lambda self: _register(self)
+        return _anon()
+
+    def Money(self, value=False):
+        def _register():
+            return 'money'
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
+    def Substraction(self, lhs, rhs):
+        def _register():
+            lhs.execute()
+            rhs.execute()
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
+    def Integer(self, value):
+        def _register():
+            return 'integer'
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
+    def StringLiteral(self, value):
+        def _register():
+            return value
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
+    def String(self, value):
+        def _register():
+            return 'string'
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
+
+class GetVariables(QlAlg):
+
+    def __init__(self, environment_vars):
+        self.environment = Environment()
+
+    def Literal(self, value):
+        class _anon():
+            execute = None
+
+        return _anon()
+
+    def Form(self, name, block):
+        def _register():
+            block.execute()
+            return 
 
         class _anon():
             execute = lambda self: _register()
