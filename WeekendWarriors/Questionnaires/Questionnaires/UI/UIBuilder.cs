@@ -31,10 +31,6 @@ namespace Questionnaires.UI
             {
                 return result;
             }
-            catch (Exception)
-            {
-                return result;
-            }
         }
 
         private Result ProcessInputAndBuildUI(string qlInput, string qlsInput, bool useStyling, Result result)
@@ -98,7 +94,7 @@ namespace Questionnaires.UI
             semanticAnalyzer.AnalyzeForm(formAST);
 
             if (result.ContainsErrors())
-                throw new Exception();
+                throw new ParseException();
         }
 
         private void AnalyzeStylesheet(Result result, List<RunTime.Question> questions, StyleSheet stylesheetAST)
@@ -106,7 +102,7 @@ namespace Questionnaires.UI
             var semanticAnalyzerQLS = new QLS.SemanticAnalysis.Analyzer(result, questions);
             var semanticMessages = semanticAnalyzerQLS.Analyze(stylesheetAST);
             if (result.ContainsErrors())
-                throw new Exception();
+                throw new ParseException();
         }
 
         private void ClearMembersForProcessing()
