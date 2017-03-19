@@ -11,6 +11,8 @@ form taxOfficeExample {
     hasMaintLoan: boolean
 
   if (hasSoldHouse) {
+    "What was the bought price?"
+      boughtPrice: integer
     "What was the selling price?"
       sellingPrice: integer
     "Private debts for the sold house:"
@@ -19,9 +21,9 @@ form taxOfficeExample {
       valueResidue: money =
         (sellingPrice - privateDebt)
 
-    "Value my selling price:"
+    "Profit on sale:"
       valueOver: money =
-        (sellingPrice - privateDebt)
+        (sellingPrice- boughtPrice)
   }
   "Is this questions being printed?"
     isPrinted: boolean
