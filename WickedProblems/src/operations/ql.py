@@ -269,6 +269,11 @@ class Environment(object):
     def add_computed_question(self, variable, label, expression):
         self.computed_questions.append((variable, label, expression))
 
+    def update_computed_questions(self):
+        for question in self.computed_questions:
+                self.get_var(question[0].name).set(str(question[2].alg(Eval(self)).execute()))
+   
+
     def get_var(self, var):
         return self.variables_dict.get(var)
 

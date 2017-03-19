@@ -210,7 +210,7 @@ class ReadOnlyController(FormElement):
 
     def __init__(self, parent, variable):
         self.parent = parent
-        self.variable = variable
+        self.variable = variable.variable
         self.element = DisabledInputElement(parent, self.label, self.variable)
 
     def render(self):
@@ -322,8 +322,8 @@ class Application(object):
     def reload(self, event=None):
         for widget in self.root.winfo_children():
             widget.destroy()
-        for question in self.environment.computed_questions:
-            print(question[2].alg(Eval(self.environment)).execute())
+
+        self.environment.update_computed_questions()
 
         self.setup_elements()
         print(self.environment.export())
