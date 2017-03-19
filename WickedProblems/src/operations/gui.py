@@ -3,7 +3,7 @@ from user_interface.ui import FormController,QuestionController, \
                               BooleanController,IntegerController, \
                               TextController
 import operations.ql
-from .ql import QlAlg,PrettyPrint,GetVariables
+from .ql import *
 from tkinter import IntVar,StringVar
 
 class BuildGui(QlAlg):
