@@ -116,7 +116,6 @@ class ScaleElement(FormElement):
 
 
 class NumberElement(FormElement):
-
     def __init__(self, parent, label, variable):
         self.parent = parent
         self.label = label
@@ -146,7 +145,6 @@ class IntegerController(FormElement):
 
 
 class CheckboxElement(FormElement):
-
     def __init__(self, parent):
         self.parent = parent
 
@@ -158,7 +156,6 @@ class CheckboxElement(FormElement):
 
 
 class RadioElement(FormElement):
-
     def __init__(self, parent, label, variable):
         self.label = label
         self.parent = parent
@@ -170,11 +167,17 @@ class RadioElement(FormElement):
         return self.variable.get()
 
     def pack(self):
-        label = Label(master=self.parent, cnf={'text': self.label})
-        label.pack()
-        for index, option in enumerate(self.options):
-            Radiobutton(self.parent, variable=self.variable, text=option,
-                        value=index, command=self.parent.app.reload).pack()
+        ####
+        # HIER JORDAN!
+        ###
+        key = self.parent.app.environment.get_var_key(self.variable)
+        print(key)
+        if(self.parent.app.environment.is_visible(key)):
+            label = Label(master=self.parent, cnf={'text': self.label})
+            label.pack()
+            for index, option in enumerate(self.options):
+                Radiobutton(self.parent, variable=self.variable, text=option,
+                            value=index, command=self.parent.app.reload).pack()
 
 
 class ButtonElement(FormElement):

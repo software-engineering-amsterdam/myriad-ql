@@ -278,6 +278,11 @@ class Environment(object):
     def add_conditional(self, variable, condition):
         self.conditional_questions.update({variable: condition})
 
+    def get_var_key(self, variable):
+        for key,val in self.variables_dict.items():
+            if(val == variable):
+                return key
+
     def is_visible(self, variable):
         condition = self.conditional_questions.get(variable)
 
