@@ -180,7 +180,7 @@ class QL:
 # print(QL().statements.parseString('"Have you sold a house in 2016?" hasSoldHouse: boolean "Have you sold a house in 2016?" hasSoldHouse: boolean'))
 
     def parse(self, _string):
-        return QL().form.parseString(_string)['form']
+        return self.form.parseString(_string)['form']
 
 
 # print QL().computed_question.parseString('form aaaooo { if (aaa >= aaa)  { "kkkaa" qkaa : boolean "kkkaa" qkaa : integer = (mm + jj) }}')
