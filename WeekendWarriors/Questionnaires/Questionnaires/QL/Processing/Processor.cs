@@ -47,8 +47,8 @@ namespace Questionnaires.QL.Processing
                     }
                     else
                     {
-                        // TODO: we are not quite ready for this since we don't handle values that are not present in the variableStore
-                        //variableStore.RemoveValue(node.Question.Identifier);
+                        // TODO: we don't support this yet
+                        //question.SetValue(undefined)
                     }
                 });
         }

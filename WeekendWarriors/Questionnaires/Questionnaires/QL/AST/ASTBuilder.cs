@@ -49,6 +49,9 @@ namespace Questionnaires.QL.AST
 
         private List<IStatement> GetStatements(QLParser.StatementContext[] context)
         {
+            if (context == null)
+                return new List<IStatement>();
+
             var statements = new List<IStatement>();
             foreach (QLParser.StatementContext statement in context)
             {
@@ -62,37 +65,17 @@ namespace Questionnaires.QL.AST
         {
             var identifier = context.Identifier().GetText();
             var statements = GetStatements(context.statement());
-            var form = new Form(identifier, statements);
-
-            return form;
+            return new Form(identifier, statements);
         }
 
         public override INode VisitQuestion([NotNull] QLParser.QuestionContext context)
         {
-            var identifier = context.Identifier().GetText();
-            var body = RemoveDoubleQuotesAtStartAndEnd(context.StringLiteral().GetText());
-            var type = context.Type().GetText();
-            IType parsedType;
+            var identifier = context.Identifier().GetText();            
+            var body = context.StringLiteral().GetText();
+            Utility.String.TrimQuotes(body);
+            IType type = GetTypeFromString(context.Type().GetText());           
 
-            switch (type)
-            {
-                case "boolean":
-                    parsedType = new BooleanType();
-                    break;
-                case "money":
-                    parsedType = new MoneyType();
-                    break;
-                case "int":
-                    parsedType = new IntegerType();
-                    break;
-                case "string":
-                    parsedType = new StringType();
-                    break;
-                default:
-                    throw new ArgumentException();
-            }
-
-            return new Question(identifier, body, parsedType);
+            return new Question(identifier, body, type);
         }
 
         public override INode VisitConditionalBlock([NotNull] QLParser.ConditionalBlockContext context)
@@ -101,9 +84,7 @@ namespace Questionnaires.QL.AST
             Debug.Assert(expression is IExpression);
 
             var thenStatements = GetStatements(context.thenBlock.statement());
-            var elseStatements = new List<IStatement>();
-            if (context.elseBlock != null)
-                elseStatements = GetStatements(context.elseBlock.statement());            
+            var elseStatements = GetStatements(context.elseBlock?.statement());            
 
             return new Conditional((dynamic)expression, thenStatements, elseStatements);
         }
@@ -124,8 +105,14 @@ namespace Questionnaires.QL.AST
         {
             var lhs = context.left.Accept(this);
             var rhs = context.right.Accept(this);
+            return CreateBinaryOperator(context.op.Text, lhs, rhs);
+        }
 
-            switch (context.op.Text)
+        private INode CreateBinaryOperator(string op, INode lhs, INode rhs)
+        {
+            Utility.Assertions.AssertInRange(op, new[] { "+", "-", "*", "/", ">", ">=", "<", "<=", "==", "!=", "||", "&&" });
+
+            switch (op)
             {
                 case "+":
                     return new Addition((dynamic)lhs, (dynamic)rhs);
@@ -151,16 +138,22 @@ namespace Questionnaires.QL.AST
                     return new Or((dynamic)lhs, (dynamic)rhs);
                 case "&&":
                     return new And((dynamic)lhs, (dynamic)rhs);
-                default:
-                    throw new ArgumentException();
             }
+            throw new ArgumentException();
         }
 
         public override INode VisitUnaryOp([NotNull] QLParser.UnaryOpContext context)
         {
             var operand = context.expression().Accept(this);
+            var op = context.op.Text;
+            return CreateUnaryOperator(operand, op);
+        }
 
-            switch (context.op.Text)
+        private INode CreateUnaryOperator(INode operand, string op)
+        {
+            Utility.Assertions.AssertInRange(op, new[] { "+", "-", "!" });
+
+            switch (op)
             {
                 case "!":
                     return new Bang((dynamic)operand);
@@ -210,7 +203,8 @@ namespace Questionnaires.QL.AST
 
         public override INode VisitBool([NotNull] QLParser.BoolContext context)
         {
-            Debug.Assert(context.GetText() == "true" || context.GetText() == "false");
+            Utility.Assertions.AssertInRange(context.GetText(), new[] { "true", "false" });
+            
             return new Literals.Boolean(context.GetText() == "true");
         }
 
@@ -235,5 +229,26 @@ namespace Questionnaires.QL.AST
             modifiedString = modifiedString.Remove(modifiedString.Length - 1, 1);
             return modifiedString;
         }
+
+        private IType GetTypeFromString(string type)
+        {
+            Utility.Assertions.AssertInRange(type, new[] { "boolean", "money", "int", "string" });
+
+            switch (type)
+            {
+                case "boolean":
+                    return new BooleanType();
+                case "money":
+                    return new MoneyType();
+                case "int":
+                    return new IntegerType();
+                case "string":
+                    return new StringType();
+            }
+
+            throw new ArgumentException();            
+        }
+
+        
     }
 }
