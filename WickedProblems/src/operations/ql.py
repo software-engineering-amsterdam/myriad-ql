@@ -323,7 +323,7 @@ class Environment(object):
             else:
                 var_table.update({_var: _datatype})
 
-        return issues  # [v for v,d in sequence]
+        return issues
 
     def all_labels(self):
         return [y for x, y in self.questions]
@@ -384,7 +384,6 @@ class GetVariables(QlAlg):
     def RefVariable(self, name):
         def _register():
             self.environment.add_ref((name))
-            # print(self.environment.is_registerd(name))
 
         class _anon():
             execute = lambda self: _register()
