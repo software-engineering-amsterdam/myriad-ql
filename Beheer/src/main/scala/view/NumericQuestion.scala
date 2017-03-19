@@ -2,14 +2,14 @@ package view
 
 import ast._
 import model.{ ComputedQuestion, DisplayQuestion }
-import view.widgets.NumericTextWidget
+import view.widgets.{ NumericTextWidget, SliderWidget }
 
 class NumericQuestion(val question: DisplayQuestion, val questionStyle: Option[QuestionStyle] = None) extends GUIQuestion {
   private def questionType = question.`type` match {
     case n: NumericType => n
     case _ => sys.error(s"Constructing numericQuestion for non numeric question $question")
   }
-  private def defaultWidget = new NumericTextWidget(questionType)
+  private def defaultWidget = new SliderWidget(0, 1000.0, questionType)
   private val widget = questionStyle match {
     case Some(q) => q.widget match {
       case Some(w) => defaultWidget

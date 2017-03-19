@@ -1,4 +1,8 @@
 stylesheet taxOfficeExample {
+    page Foo {
+        section "Bar"
+            question enterMoney
+        }
     page Housing {
         section "Buying"
             question hasBoughtHouse {

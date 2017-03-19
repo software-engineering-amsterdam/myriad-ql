@@ -16,9 +16,9 @@ class CheckboxWidget(implicit val changeHandler: Value => Unit) extends QLWidget
   })
 
   override def setValue(newVal: Value) = newVal match {
-    case BooleanValue(b) => checkBoxValue <== BooleanProperty(b)
+    case BooleanValue(b) => checkBoxValue.value_=(b)
     // Value that we cannot handle, deselect (since it is definitely not true).
-    case _ => checkBoxValue <== BooleanProperty(false)
+    case _ => checkBoxValue.value_=(false)
   }
 
   override def getSFXNode = checkbox

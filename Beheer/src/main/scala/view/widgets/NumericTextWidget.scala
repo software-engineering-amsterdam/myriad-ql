@@ -3,7 +3,6 @@ package view.widgets
 import ast.NumericType
 import values.{ NumericValue, UndefinedValue, Value }
 
-import scala.util.{ Failure, Success, Try }
 import scalafx.Includes._
 import scalafx.scene.Node
 import scalafx.scene.control.TextField
@@ -13,12 +12,7 @@ class NumericTextWidget(numberType: NumericType)(implicit val changeHandler: Val
   private val textfield = new TextField()
 
   textfield.onAction = handle {
-    val rawValue = textfield.text.value.trim.stripPrefix("€")
-    val qlValue = Try(BigDecimal(rawValue)) match {
-      case Success(parsedValue) => NumericValue.bigDecimalToNumericValue(parsedValue, numberType)
-      case Failure(_) => UndefinedValue
-    }
-
+    val qlValue = NumericValue.stringToNumericValue(textfield.text.value, numberType)
     this.setValue(qlValue)
     changeHandler(qlValue)
   }

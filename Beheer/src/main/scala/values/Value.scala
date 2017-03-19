@@ -6,6 +6,7 @@ import java.util.Date
 import ast._
 
 import scala.math.BigDecimal.RoundingMode
+import scala.util.{ Failure, Success, Try }
 
 sealed trait Value
 
@@ -58,5 +59,20 @@ object NumericValue {
     case MoneyType => MoneyValue(value)
     case DecimalType => DecimalValue(value)
     case IntegerType => IntegerValue(value.setScale(0))
+  }
+
+  def doubleToNumericValue(value: Double, numType: NumericType): NumericValue =
+    bigDecimalToNumericValue(BigDecimal(value), numType)
+
+  def stringToNumericValue(value: String, numType: NumericType): Value = {
+    val parseResult = numType match {
+      case MoneyType => Try(BigDecimal(value.trim.stripPrefix("€")))
+      case DecimalType => Try(BigDecimal(value))
+      case IntegerType => Try(BigDecimal(value).setScale(0))
+    }
+    parseResult match {
+      case Success(decimal) => bigDecimalToNumericValue(decimal, numType)
+      case Failure(_) => UndefinedValue
+    }
   }
 }
