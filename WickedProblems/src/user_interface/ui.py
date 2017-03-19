@@ -152,7 +152,7 @@ class RadioElement(FormElement):
         label.pack()
         for index, option in enumerate(self.options):
             Radiobutton(self.parent, variable=self.variable, text=option,
-                               value=index).pack()
+                               value=index, command=self.parent.app.reload).pack()
 
 class ButtonElement(FormElement):
     def __init__(self, parent):
@@ -272,6 +272,7 @@ class Window(Frame):
 class Application(object):
     def __init__(self):
         root = Tk()
+        root.app = self
         self.window = Window(root)
         self.root = root
         self.root.minsize(width=670, height=670)
