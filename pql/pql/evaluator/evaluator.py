@@ -63,10 +63,7 @@ class Evaluator(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVis
         return node.value
 
     def or_(self, node):
-        lhs_result = node.lhs.apply(self)
-        rhs_result = node.rhs.apply(self)
-        if lhs_result is True or rhs_result is True:
-            return True
+        return self.apply_operator(node, (lambda lhs, rhs: lhs or rhs))
 
     def greater_inclusive(self, node):
         return self.apply_operator(node, operator.ge)
