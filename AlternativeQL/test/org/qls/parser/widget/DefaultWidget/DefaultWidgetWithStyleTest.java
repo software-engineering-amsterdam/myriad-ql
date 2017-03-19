@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class DefaultWidgetWithStyleTest {
-    @Test
+    /*@Test
     public void shouldContainDefaultWidgetWithStyles() {
         Parser parser = new Parser();
 
@@ -109,5 +109,5 @@ public class DefaultWidgetWithStyleTest {
 
         assertEquals(1, page.getSections().get(0).getDefaultWidgets().size());
         assertTrue((page.getSections().get(0).getDefaultWidgets().get(0)).getWidget() instanceof SpinboxWidget);
-    }
+    }*/
 }

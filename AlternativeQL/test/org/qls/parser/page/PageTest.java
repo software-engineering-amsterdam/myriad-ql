@@ -8,6 +8,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class PageTest {
+    /*
     @Test
     public void shouldContainSection() {
         Parser parser = new Parser();
@@ -51,5 +52,5 @@ public class PageTest {
         assertEquals(1, page.getSections().size());
         assertEquals("\"Buying\"", page.getSections().get(0).getName());
         assertEquals("\"Loaning\"", page.getSections().get(0).getSections().get(0).getName());
-    }
+    }*/
 }

@@ -77,26 +77,28 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
 
     @Override
     public Node visitSection(QLSParser.SectionContext ctx) {
-        List<Section> sections = getSections(ctx.section());
-        List<DefaultWidget> defaultWidgets = getDefaultWidgets(ctx.defaultWidget());
-        List<Question> questions = getQuestions(ctx.question());
+        List<SectionItem> sectionItems = new ArrayList<>();
 
-        return hydrateSourceLocation(new Section(ctx.name.getText(), questions, sections, defaultWidgets), ctx);
+        for (QLSParser.SectionItemContext sectionItemContext : ctx.sectionItem()) {
+            sectionItems.add((SectionItem) visit(sectionItemContext));
+        }
+
+        return hydrateSourceLocation(new Section(ctx.name.getText(), sectionItems), ctx);
     }
 
     @Override
     public Node visitSectionQuestion(QLSParser.SectionQuestionContext ctx) {
-        return null;
+        return visit(ctx.question());
     }
 
     @Override
     public Node visitSectionNested(QLSParser.SectionNestedContext ctx) {
-        return null;
+        return visit(ctx.section());
     }
 
     @Override
     public Node visitSectionDefaultWidget(QLSParser.SectionDefaultWidgetContext ctx) {
-        return null;
+        return visit(ctx.defaultWidget());
     }
 
     @Override

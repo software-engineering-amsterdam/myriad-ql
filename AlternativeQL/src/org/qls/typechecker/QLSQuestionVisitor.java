@@ -6,9 +6,11 @@ import org.qls.ast.StyleSheet;
 import org.qls.ast.page.Page;
 import org.qls.ast.page.Question;
 import org.qls.ast.page.Section;
+import org.qls.ast.page.SectionQuestionsVisitor;
 import org.qls.typechecker.issues.errors.DuplicateQLSQuestion;
 import org.qls.typechecker.issues.errors.UndefinedQLQuestion;
 import org.qls.typechecker.issues.errors.UnsupportedWidgetForQLQuestionType;
+
 
 public class QLSQuestionVisitor {
     private final IssuesStorage issuesStorage;
@@ -27,12 +29,13 @@ public class QLSQuestionVisitor {
     }
 
     public void visitPage(Page page) {
-        page.getSections().forEach(this::visitSection);
+        //page.getSections().forEach(this::visitSection);
     }
 
     public void visitSection(Section section) {
-        section.getQuestions().forEach(this::visitQuestion);
-        section.getSections().forEach(this::visitSection);
+        SectionQuestionsVisitor sectionQuestionVisit = new SectionQuestionsVisitor();
+        sectionQuestionVisit.getQuestionsFromSection(section).forEach(this::visitQuestion);
+        //section.getSections().forEach(this::visitSection);
     }
 
     public void visitQuestion(Question question) {
