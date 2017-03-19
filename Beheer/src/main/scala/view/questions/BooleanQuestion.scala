@@ -1,4 +1,4 @@
-package view
+package view.questions
 
 import ast.{ Checkbox, Dropdown, QuestionStyle, Radio }
 import model.{ ComputedQuestion, DisplayQuestion }

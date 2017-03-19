@@ -1,8 +1,9 @@
-package view
+package view.questions
 
 import ast.QuestionStyle
 import model.{ ComputedQuestion, DisplayQuestion, OpenQuestion }
 import values._
+import view.updateEnv
 
 import scalafx.Includes._
 import scalafx.scene.control.TextField

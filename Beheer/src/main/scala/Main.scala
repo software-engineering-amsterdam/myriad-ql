@@ -3,7 +3,7 @@ import java.io.FileReader
 import checker._
 import model.{ FormModel, StyleModel }
 import parser.{ FormParser, StylesheetParser }
-import view.GUI
+import view.{ QL, QLS }
 
 import scalafx.application.JFXApp
 
@@ -23,5 +23,6 @@ object Main extends JFXApp {
   }
 
   printIssues(issues)
-  stage = GUI(issues, formModel.displayQuestions, styleModel.blocksWithResolvedStyles)
+  stage = QL(issues, formModel.displayQuestions)
+  stage = QLS(issues, formModel.displayQuestions, styleModel.blocksWithResolvedStyles)
 }

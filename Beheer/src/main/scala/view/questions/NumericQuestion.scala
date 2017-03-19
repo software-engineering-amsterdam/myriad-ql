@@ -1,4 +1,4 @@
-package view
+package view.questions
 
 import ast._
 import model.{ ComputedQuestion, DisplayQuestion }

@@ -1,9 +1,10 @@
-package view
+package view.questions
 
 import ast.Stylesheet.Styling
 import ast._
 import model.{ ComputedQuestion, DisplayQuestion, OpenQuestion }
 import values.{ Evaluator, Value }
+import view.{ env, updateEnv }
 
 import scala.language.implicitConversions
 import scalafx.beans.binding.{ Bindings, BooleanBinding, StringBinding }

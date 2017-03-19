@@ -1,4 +1,4 @@
-package view
+package view.questions
 
 import java.time.{ Instant, LocalDate, LocalDateTime, ZoneId }
 import java.util.Date
@@ -7,6 +7,7 @@ import javafx.beans.binding.ObjectBinding
 import ast.{ DateType, QuestionStyle }
 import model.{ ComputedQuestion, DisplayQuestion, OpenQuestion }
 import values._
+import view.{ env, updateEnv }
 
 import scala.language.implicitConversions
 import scalafx.Includes._
