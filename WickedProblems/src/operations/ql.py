@@ -279,12 +279,15 @@ class Environment(object):
             var = self.get_var(question[0].name)
             evalutation = question[2].alg(Eval(self)).execute()
             var.set(evalutation)
-            
+
     def get_var(self, var):
         return self.variables_dict.get(var)
 
     def get_value(self, var):
-        return self.variables_dict.get(var).get()
+        if self.variables_dict.get(var) is not None:
+            return self.variables_dict.get(var).get()
+        else:
+            return 0
 
     def update_var(self, var, value):
         self.variables_dict.update({var: value})
