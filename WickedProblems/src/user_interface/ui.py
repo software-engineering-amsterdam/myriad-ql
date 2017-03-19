@@ -2,43 +2,8 @@ from tkinter import Tk, Frame, Label, Entry, Radiobutton, Spinbox, Button, filed
 from operations.ql import Eval
 from parser.ql import QL
 import json
-'''
-
-Playground:
-
-Window
-
-Frame
-
-
-Section
-
-FormElements
-- RadioButton
-- Checkbox
-- InputBox
--
-
-
-
-FormElements
-- EnumerateController
-    - Selectbox
-    - Checkbox
-- BooleanController
-    - RadioButton "yes" : " no"
-    - Checkbox "on" : "of"
-- InputController
-    - InputBox
-- NumericController
-    - Slider
-    - InputBox
-
-'''
-
 
 class FormElement(object):
-
     def __init__(self):
         pass
 
@@ -71,7 +36,6 @@ class FormController(object):
 class SectionElement(FormElement):
     pass
 
-
 class InputElement(FormElement):
     label = "InputElement "
 
@@ -81,11 +45,13 @@ class InputElement(FormElement):
         self.variable = variable
 
     def pack(self):
-        label = Label(master=self.parent, cnf={'text': self.label})
-        label.pack()
-        entry = Entry(self.parent, textvariable=self.variable)
-        entry.pack()
-        entry.bind('<FocusOut>', self.parent.app.reload)
+        key = self.parent.app.environment.get_var_key(self.variable)
+        if(self.parent.app.environment.is_visible(key)):
+            label = Label(master=self.parent, cnf={'text': self.label})
+            label.pack()
+            entry = Entry(self.parent, textvariable=self.variable)
+            entry.pack()
+            entry.bind('<FocusOut>', self.parent.app.reload)
 
 class DisabledInputElement(FormElement):
     label = "DisabledInputElement "
@@ -96,11 +62,13 @@ class DisabledInputElement(FormElement):
         self.variable = variable
 
     def pack(self):
-        label = Label(master=self.parent, cnf={'text': self.label})
-        label.pack()
-        entry = Entry(self.parent, textvariable=self.variable,
-                      state='readonly')
-        entry.pack()
+        key = self.parent.app.environment.get_var_key(self.variable)
+        if(self.parent.app.environment.is_visible(key)):
+            label = Label(master=self.parent, cnf={'text': self.label})
+            label.pack()
+            entry = Entry(self.parent, textvariable=self.variable,
+                          state='readonly')
+            entry.pack()
 
 
 class ScaleElement(FormElement):
@@ -109,10 +77,12 @@ class ScaleElement(FormElement):
         self.parent = parent
 
     def pack(self):
-        label = Label(master=self.parent, cnf={'text': "Scale Box"})
-        label.pack()
-        w = Scale(self.parent, from_=0, to=10, orient=HORIZONTAL)
-        w.pack()
+        key = self.parent.app.environment.get_var_key(self.variable)
+        if(self.parent.app.environment.is_visible(key)):
+            label = Label(master=self.parent, cnf={'text': "Scale Box"})
+            label.pack()
+            w = Scale(self.parent, from_=0, to=10, orient=HORIZONTAL)
+            w.pack()
 
 
 class NumberElement(FormElement):
@@ -122,12 +92,14 @@ class NumberElement(FormElement):
         self.variable = variable
 
     def pack(self):
-        label = Label(master=self.parent, cnf={'text': self.label, })
-        label.pack()
-        w = Spinbox(self.parent, from_=0, to=1000000,
-                    textvariable=self.variable, command=self.parent.app.reload)
-        w.bind('<FocusOut>', self.parent.app.reload)
-        w.pack()
+        key = self.parent.app.environment.get_var_key(self.variable)
+        if(self.parent.app.environment.is_visible(key)):
+            label = Label(master=self.parent, cnf={'text': self.label, })
+            label.pack()
+            w = Spinbox(self.parent, from_=0, to=1000000,
+                        textvariable=self.variable, command=self.parent.app.reload)
+            w.bind('<FocusOut>', self.parent.app.reload)
+            w.pack()
 
 
 class IntegerController(FormElement):
@@ -151,10 +123,12 @@ class CheckboxElement(FormElement):
         self.parent = parent
 
     def pack(self):
-        label = Label(master=self.parent, cnf={'text': "Boolean Box"})
-        label.pack()
-        Checkbutton(self.parent, text="Checkbox element",
-                    command=self.parent.app.reload).pack()
+        key = self.parent.app.environment.get_var_key(self.variable)
+        if(self.parent.app.environment.is_visible(key)):
+            label = Label(master=self.parent, cnf={'text': "Boolean Box"})
+            label.pack()
+            Checkbutton(self.parent, text="Checkbox element",
+                        command=self.parent.app.reload).pack()
 
 
 class RadioElement(FormElement):
@@ -169,12 +143,8 @@ class RadioElement(FormElement):
         return self.variable.get()
 
     def pack(self):
-        ####
-        # HIER JORDAN!
-        ###
         key = self.parent.app.environment.get_var_key(self.variable)
-        print(key)
-        if self.parent.app.environment.is_visible(key) == 1:
+        if(self.parent.app.environment.is_visible(key)):
             label = Label(master=self.parent, cnf={'text': self.label})
             label.pack()
             for index, option in enumerate(self.options):
@@ -330,9 +300,7 @@ class Application(object):
             widget.destroy()
 
         self.environment.update_computed_questions()
-
         self.setup_elements()
-        print(self.environment.export())
 
     def export_form(self):
         f = filedialog.asksaveasfile(mode='w', defaultextension=".json")
