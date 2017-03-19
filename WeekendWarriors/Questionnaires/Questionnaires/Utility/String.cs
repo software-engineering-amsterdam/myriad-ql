@@ -8,12 +8,14 @@ namespace Questionnaires.Utility
 {
     class String
     {
-        public static void TrimQuotes(string input)
+        public static string TrimQuotes(string input)
         {
             if (input.First() == '"')
-                input.Remove(0);
+                input = input.Remove(0,1);
             if (input.Last() == '"')
-                input.Remove(input.Length - 1);
+                input = input.Remove(input.Length - 1,1);
+
+            return input;
         }
 
         /* Utility function to format a collection of string into a single string

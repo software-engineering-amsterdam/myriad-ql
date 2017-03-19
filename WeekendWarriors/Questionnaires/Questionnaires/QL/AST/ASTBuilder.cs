@@ -72,7 +72,7 @@ namespace Questionnaires.QL.AST
         {
             var identifier = context.Identifier().GetText();
             var body = context.StringLiteral().GetText();
-            Utility.String.TrimQuotes(body);
+            body = Utility.String.TrimQuotes(body);
             IType type = GetTypeFromString(context.Type().GetText());
 
             return new Question(identifier, body, type);
