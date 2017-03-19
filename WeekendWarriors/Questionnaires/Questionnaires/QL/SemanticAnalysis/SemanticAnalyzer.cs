@@ -24,11 +24,10 @@ namespace Questionnaires.QL.SemanticAnalysis
             QLContext Context = new QLContext();
 
             // Get and check question declarations
-            Result.Combine(new DeclarationValidator().Analyze(node, Context));
+            new DeclarationValidator(Result).Analyze(node, Context);
             if (!Result.ContainsErrors()) // Only apply type checking if the declaration validator passed
             {
-                var TypeCheckerResult = new TypeChecker().Analyze(node, Context);
-                Result.Combine(TypeCheckerResult);
+                new TypeChecker(Result).Analyze(node, Context);
             }
         }
     }

@@ -4,22 +4,25 @@ using System.Collections.Generic;
 
 namespace Questionnaires.QL.SemanticAnalysis
 {
-    class DeclarationValidator
+    public class DeclarationValidator
     {
         private QLContext Context;
-        private Result result = new Result();
+        private Result Result = new Result();
         private LabelUniqueNessChecker labelChecker = new LabelUniqueNessChecker();
 
         private Dictionary<string, List<Question>> QuestionBodies = new Dictionary<string, List<Question>>();
 
-        public Result Analyze(INode node, QLContext context)
+        public DeclarationValidator(Result result)
+        {
+            Result = result;
+        }
+
+        public void Analyze(INode node, QLContext context)
         {
             Context = context;
             Visit((dynamic)node);
 
-            labelChecker.Check(result);
-
-            return result;
+            labelChecker.Check(Result);
         }
 
         public void Visit(Conditional node)
@@ -59,9 +62,13 @@ namespace Questionnaires.QL.SemanticAnalysis
              * If it is of another type, it is an error */
             var storedType = Context.GetQuestionType(node.Identifier);
             if (storedType.GetType() == node.Type.GetType())
-                result.AddEvent(new Error(string.Format("Redeclaration of question {0}", node.Identifier)));
+            {
+                Result.AddEvent(new Error(string.Format("Redeclaration of question {0}", node.Identifier)));
+            }
             else
-                result.AddEvent(new Error(string.Format("Redeclaration of question {0} with conflicting types {1} and {2}", node.Identifier, node.Type, storedType)));
+            {
+                Result.AddEvent(new Error(string.Format("Redeclaration of question {0} with conflicting types {1} and {2}", node.Identifier, node.Type, storedType)));
+            }
         }
 
         public void Visit(INode node)

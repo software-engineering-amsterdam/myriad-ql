@@ -24,11 +24,5 @@ namespace Questionnaires.ErrorHandling
         {
             return ContainsError;
         }
-
-        public void Combine(Result result)
-        {
-            foreach (var analysisEvent in result.Events)
-                AddEvent(analysisEvent);
-        }
     }
 }
