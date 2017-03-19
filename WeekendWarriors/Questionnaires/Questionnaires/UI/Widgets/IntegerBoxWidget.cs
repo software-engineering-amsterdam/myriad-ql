@@ -9,14 +9,10 @@ using System.Windows.Controls;
 
 namespace Questionnaires.UI.Widgets
 {
-    class IntegerBoxWidget : QuestionWidget
+    class IntegerBoxWidget : BoxWidget
     {
-        private TextBox TextBox;
-
         public IntegerBoxWidget() : base(new TextBox())
         {
-            Debug.Assert(Control.GetType() == typeof(TextBox));
-            TextBox = Control as TextBox;
             TextBox.TextChanged += (sender, args) => OnInputChanged(new IntegerType(int.Parse(TextBox.Text)));
         }
 

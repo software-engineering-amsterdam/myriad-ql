@@ -4,14 +4,10 @@ using System.Windows.Controls;
 
 namespace Questionnaires.UI.Widgets
 {
-    class TextBoxWidget : QuestionWidget
+    class TextBoxWidget : BoxWidget
     {
-        private TextBox TextBox;
-
         public TextBoxWidget() : base(new TextBox())
         {
-            Debug.Assert(Control.GetType() == typeof(TextBox));
-            TextBox = Control as TextBox;
             TextBox.TextChanged += (sender, args) => OnInputChanged(new StringType(TextBox.Text));
         }
 

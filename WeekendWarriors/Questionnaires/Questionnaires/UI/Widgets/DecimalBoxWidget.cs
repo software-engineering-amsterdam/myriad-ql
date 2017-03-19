@@ -9,14 +9,10 @@ using System.Windows.Controls;
 
 namespace Questionnaires.UI.Widgets
 {
-    class DecimalBoxWidget : QuestionWidget
+    class DecimalBoxWidget : BoxWidget
     {
-        private TextBox TextBox;
-
         public DecimalBoxWidget() : base(new TextBox())
         {
-            Debug.Assert(Control.GetType() == typeof(TextBox));
-            TextBox = Control as TextBox;
             TextBox.TextChanged += (sender, args) => OnInputChanged(new MoneyType(decimal.Parse(TextBox.Text)));
         }
 
