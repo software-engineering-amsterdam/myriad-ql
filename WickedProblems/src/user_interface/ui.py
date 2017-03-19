@@ -308,7 +308,7 @@ class Application(object):
         self.filemenu.add_command(label="Exit", command=self.root.destroy)
 
         self.helpmenu = Menu(self.menu)
-        # self.menu.add_cascade(label="Help", menu=self.helpmenu)
+        self.menu.add_cascade(label="Help", menu=self.helpmenu)
         self.helpmenu.add_command(label="About...", command=self.reload)
 
     def setup_elements(self):
