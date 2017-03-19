@@ -1,5 +1,12 @@
-/**
- * FieldFactory.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/gui/components/fields/FieldFactory.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.gui.components.fields;
@@ -23,12 +30,12 @@ import ql.gui.formenvironment.values.Value;
 
 public class FieldFactory implements FormAndStatementVisitor<Field>, TypeVisitor<Field> {
 
+    private QLWidget qlWidget;
+    private SimpleQuestion question;
+
     private final GUIInterface guiInterface;
     private final Evaluator evaluator;
     private final WidgetFactory widgetFactory;
-
-    private QLWidget qlWidget;
-    private SimpleQuestion question;
 
     public FieldFactory(GUIInterface guiInterface, Context context) {
         this.guiInterface = guiInterface;

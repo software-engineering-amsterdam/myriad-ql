@@ -1,5 +1,12 @@
-/**
- * Context.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/gui/formenvironment/Context.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.gui.formenvironment;
@@ -14,7 +21,7 @@ public class Context {
     private Map<String, Value> environment;
 
     public Context() {
-        this.environment = new HashMap<>();
+        environment = new HashMap<>();
     }
 
     public void addValue(String key, Value value) {

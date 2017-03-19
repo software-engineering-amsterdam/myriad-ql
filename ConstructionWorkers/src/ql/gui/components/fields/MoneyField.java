@@ -1,5 +1,12 @@
-/**
- * MoneyField.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/gui/components/fields/MoneyField.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.gui.components.fields;
@@ -19,7 +26,7 @@ public class MoneyField extends Field {
 
     private MoneyValue value;
 
-    public MoneyField(GUIInterface guiInterface, SimpleQuestion question, QLWidget widget) {
+    MoneyField(GUIInterface guiInterface, SimpleQuestion question, QLWidget widget) {
         super(guiInterface, question, widget);
         resetValue();
         addListenerToField();
@@ -60,8 +67,8 @@ public class MoneyField extends Field {
 
     @Override
     public void setValue(Value value) {
-        widget.setValue(value);
         this.value = (MoneyValue) value;
+        widget.setValue(value);
         getNewChanges();
     }
 

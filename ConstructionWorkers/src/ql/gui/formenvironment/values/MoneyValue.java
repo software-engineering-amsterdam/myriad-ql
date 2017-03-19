@@ -1,5 +1,12 @@
-/**
- * MoneyType.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/gui/evaluation/values/MoneyValue.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.gui.formenvironment.values;
@@ -36,6 +43,16 @@ public class MoneyValue extends Value {
     }
 
     @Override
+    public Value negative() {
+        return new MoneyValue(value.negate());
+    }
+
+    @Override
+    public Value positive() {
+        return new MoneyValue(value.abs());
+    }
+
+    @Override
     public Value eq(Value valueArgument) {
         return new BooleanValue(value.equals(valueArgument.getValue()));
     }
@@ -63,16 +80,6 @@ public class MoneyValue extends Value {
     @Override
     public Value lteq(Value valueArgument) {
         return new BooleanValue(value.compareTo((BigDecimal) valueArgument.getValue()) <= 0);
-    }
-
-    @Override
-    public Value negative() {
-        return new MoneyValue(value.negate());
-    }
-
-    @Override
-    public Value positive() {
-        return new MoneyValue(value.abs());
     }
 
     @Override

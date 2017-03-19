@@ -1,5 +1,12 @@
-/**
- * Value.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/gui/evaluation/values/Value.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.gui.formenvironment.values;
@@ -20,6 +27,14 @@ public abstract class Value {
         return new UndefinedValue();
     }
 
+    public Value division(Value value) {
+        return new UndefinedValue();
+    }
+
+    public Value multiplication(Value value) {
+        return new UndefinedValue();
+    }
+
     public Value and(Value value) {
         return new UndefinedValue();
     }
@@ -29,6 +44,14 @@ public abstract class Value {
     }
 
     public Value negation() {
+        return new UndefinedValue();
+    }
+
+    public Value negative() {
+        return new UndefinedValue();
+    }
+
+    public Value positive() {
         return new UndefinedValue();
     }
 
@@ -53,22 +76,6 @@ public abstract class Value {
     }
 
     public Value lteq(Value value) {
-        return new UndefinedValue();
-    }
-
-    public Value division(Value value) {
-        return new UndefinedValue();
-    }
-
-    public Value multiplication(Value value) {
-        return new UndefinedValue();
-    }
-
-    public Value negative() {
-        return new UndefinedValue();
-    }
-
-    public Value positive() {
         return new UndefinedValue();
     }
 }

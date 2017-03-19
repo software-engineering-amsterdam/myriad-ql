@@ -1,5 +1,12 @@
-/**
- * StringField.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/gui/components/fields/StringField.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.gui.components.fields;
@@ -17,7 +24,7 @@ public class StringField extends Field {
 
     private StringValue value;
 
-    public StringField(GUIInterface guiInterface, SimpleQuestion question, QLWidget widget) {
+    StringField(GUIInterface guiInterface, SimpleQuestion question, QLWidget widget) {
         super(guiInterface, question, widget);
         resetValue();
         addListenerToField();
@@ -48,8 +55,8 @@ public class StringField extends Field {
 
     @Override
     public void setValue(Value value) {
-        widget.setValue(value);
         this.value = (StringValue) value;
+        widget.setValue(value);
         getNewChanges();
     }
 

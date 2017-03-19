@@ -1,5 +1,12 @@
-/**
- * QuestionData.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/gui/formenvironment/QuestionData.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.gui.formenvironment;
@@ -39,7 +46,7 @@ public class QuestionData implements FormAndStatementVisitor<Void>{
         return computedQuestions;
     }
 
-    public List<IfStatement> getIfStatements(){
+    List<IfStatement> getIfStatements(){
         return ifStatements;
     }
 

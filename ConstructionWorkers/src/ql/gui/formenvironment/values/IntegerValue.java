@@ -1,5 +1,12 @@
-/**
- * IntegerValue.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/gui/evaluation/values/IntegerValue.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.gui.formenvironment.values;
@@ -33,6 +40,16 @@ public class IntegerValue extends Value {
     }
 
     @Override
+    public Value negative() {
+        return new IntegerValue(-value);
+    }
+
+    @Override
+    public Value positive() {
+        return new IntegerValue(Math.abs(value));
+    }
+
+    @Override
     public Value eq(Value valueArgument) {
         return new BooleanValue(value.equals(valueArgument.getValue()));
     }
@@ -60,16 +77,6 @@ public class IntegerValue extends Value {
     @Override
     public Value lteq(Value valueArgument) {
         return new BooleanValue(value <= (Integer) valueArgument.getValue());
-    }
-
-    @Override
-    public Value negative() {
-        return new IntegerValue(-value);
-    }
-
-    @Override
-    public Value positive() {
-        return new IntegerValue(Math.abs(value));
     }
 
     @Override

@@ -1,5 +1,12 @@
-/**
- * IntegerField.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/gui/components/fields/IntegerField.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.gui.components.fields;
@@ -18,7 +25,7 @@ public class IntegerField extends Field {
 
     private IntegerValue value;
 
-    public IntegerField(GUIInterface guiInterface, SimpleQuestion question, QLWidget widget) {
+    IntegerField(GUIInterface guiInterface, SimpleQuestion question, QLWidget widget) {
         super(guiInterface, question, widget);
         resetValue();
         addListenerToField();
@@ -51,8 +58,8 @@ public class IntegerField extends Field {
 
     @Override
     public void setValue(Value value) {
-        widget.setValue(value);
         this.value = (IntegerValue) value;
+        widget.setValue(value);
         getNewChanges();
     }
 

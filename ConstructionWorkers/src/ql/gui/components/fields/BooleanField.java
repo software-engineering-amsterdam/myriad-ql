@@ -1,5 +1,12 @@
-/**
- * BooleanField.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/gui/components/fields/BooleanField.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.gui.components.fields;
@@ -17,7 +24,7 @@ public class BooleanField extends Field {
 
     private BooleanValue value;
 
-    public BooleanField(GUIInterface guiInterface, SimpleQuestion question, QLWidget widget) {
+    BooleanField(GUIInterface guiInterface, SimpleQuestion question, QLWidget widget) {
         super(guiInterface, question, widget);
         resetValue();
         addListenerToField();
@@ -42,8 +49,8 @@ public class BooleanField extends Field {
 
     @Override
     public void setValue(Value value) {
-        widget.setValue(value);
         this.value = (BooleanValue) value;
+        widget.setValue(value);
         getNewChanges();
     }
 

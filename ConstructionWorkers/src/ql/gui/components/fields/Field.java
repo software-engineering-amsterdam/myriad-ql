@@ -1,5 +1,12 @@
-/**
- * Field.java.
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/ql/gui/components/fields/Field.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
  */
 
 package ql.gui.components.fields;
@@ -23,16 +30,16 @@ public abstract class Field  {
         this.widget = widget;
     }
 
-    protected void getNewChanges() {
+    void getNewChanges() {
         guiInterface.getGUIChanges(this);
-    }
-
-    public QLWidget getWidget() {
-        return widget;
     }
 
     public String getId() {
         return question.getIdentifier().getName();
+    }
+
+    public QLWidget getWidget() {
+        return widget;
     }
 
     public abstract Value getValue();
