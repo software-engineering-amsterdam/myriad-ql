@@ -16,10 +16,11 @@ case class BooleanValue(value: Boolean) extends Value {
 }
 
 case class DateValue(value: Date) extends Value {
-  private val config = ConfigFactory.load()
-  private val dateFormat = new SimpleDateFormat(config.getString("dateFormat"))
+  override def toString = DateValue.dateFormat.format(value)
+}
 
-  override def toString = dateFormat.format(value)
+object DateValue {
+  val dateFormat = new SimpleDateFormat(ConfigFactory.load.getString("dateFormat"))
 }
 
 sealed trait NumericValue extends Value {
@@ -35,9 +36,7 @@ case class DecimalValue(value: BigDecimal) extends NumericValue {
 }
 
 case class MoneyValue(value: BigDecimal) extends NumericValue {
-  private val config = ConfigFactory.load()
-  private val currencySymbol = config.getString("currencySymbol")
-  override def toString = currencySymbol + value.setScale(2, RoundingMode.HALF_EVEN).toString
+  override def toString = NumericValue.currencySymbol + value.setScale(2, RoundingMode.HALF_EVEN).toString
 }
 
 case class StringValue(value: String) extends Value {
@@ -49,6 +48,8 @@ case object UndefinedValue extends Value {
 }
 
 object NumericValue {
+  val currencySymbol = ConfigFactory.load.getString("currencySymbol")
+
   def upgradeNumericToType(value: NumericValue, numType: NumericType): NumericValue = (value, numType) match {
     case (MoneyValue(v), MoneyType) => MoneyValue(v)
     case (DecimalValue(v), MoneyType) => MoneyValue(v)
@@ -59,18 +60,12 @@ object NumericValue {
     case (v, t) => sys.error(s"Attempt to upgrade value $v to incompatible type $t")
   }
 
-  def bigDecimalToNumericValue(value: BigDecimal, numType: NumericType): NumericValue = numType match {
-    case MoneyType => MoneyValue(value)
-    case DecimalType => DecimalValue(value)
-    case IntegerType => IntegerValue(value.setScale(0))
-  }
-
   def doubleToNumericValue(value: Double, numType: NumericType): NumericValue =
     bigDecimalToNumericValue(BigDecimal(value), numType)
 
   def stringToNumericValue(value: String, numType: NumericType): Value = {
     val parseResult = numType match {
-      case MoneyType => Try(BigDecimal(value.trim.stripPrefix("€")))
+      case MoneyType => Try(BigDecimal(value.trim.stripPrefix(currencySymbol)))
       case DecimalType => Try(BigDecimal(value))
       case IntegerType => Try(BigDecimal(value).setScale(0))
     }
@@ -78,5 +73,11 @@ object NumericValue {
       case Success(decimal) => bigDecimalToNumericValue(decimal, numType)
       case Failure(_) => UndefinedValue
     }
+  }
+
+  def bigDecimalToNumericValue(value: BigDecimal, numType: NumericType): NumericValue = numType match {
+    case MoneyType => MoneyValue(value)
+    case DecimalType => DecimalValue(value)
+    case IntegerType => IntegerValue(value.setScale(0))
   }
 }
