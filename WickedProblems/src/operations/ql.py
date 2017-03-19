@@ -272,7 +272,7 @@ class Environment(object):
     def update_computed_questions(self):
         for question in self.computed_questions:
                 self.get_var(question[0].name).set(str(question[2].alg(Eval(self)).execute()))
-   
+
 
     def get_var(self, var):
         return self.variables_dict.get(var)
@@ -324,129 +324,6 @@ class Environment(object):
 
     def undefined_variables(self):
         return set([_var for _var in self.ref_variables if self.is_registerd(_var) == False])
-
-
-# class GetVariables(QlAlg):
-
-#     def __init__(self, environment_vars):
-#         self.environment_vars = environment_vars
-#         self.environment = Environment()
-
-#     def Literal(self, value):
-#         class _anon():
-#             execute = None
-
-#         return _anon()
-
-#     def Form(self, name, block):
-#         def _register():
-#             block.execute()
-
-#         class _anon():
-#             execute = lambda self: _register()
-#         return _anon()
-
-#     def Block(self, statements):
-#         class _anon():
-#             execute = lambda self: [k.execute()
-#                                     for _, k in enumerate(statements)]
-#         return _anon()
-
-#     def Variable(self, name, datatype):
-#         def _register():
-#             self.environment.add_var((name, datatype.execute()))
-#             return (name, datatype.execute())
-
-#         class _anon():
-#             execute = lambda self: _register()
-#         return _anon()
-
-#     def RefVariable(self, name):
-#         def _register():
-#             self.environment.add_ref((name))
-
-
-#         class _anon():
-#             execute = lambda self: _register()
-#         return _anon()
-
-#     def Question(self, variable, label):
-#         def _register():
-#             self.environment.add_question(variable.execute(), label.execute())
-
-#         class _anon():
-#             execute = lambda self: _register()
-#         return _anon()
-
-#     def ifThen(self, expression, block):
-#         def _register():
-#             expression.execute()
-#             block.execute()
-
-#         class _anon():
-#             execute = lambda self: _register()
-#         return _anon()
-
-#     def ComputedQuestion(self, variable, label, expression):
-       
-#         def _register():
-
-#             self.environment.add_computed_question(variable.execute(), label.execute(), expression.execute())
-
-#         class _anon():
-#             execute = lambda self: _register()
-#         return _anon()
-
-#     def Boolean(self, value=False):
-#         def _register(self):
-#             return 'boolean'
-
-#         class _anon():
-#             execute = lambda self: _register(self)
-#         return _anon()
-
-#     def Money(self, value=False):
-#         def _register():
-#             return 'money'
-
-#         class _anon():
-#             execute = lambda self: _register()
-#         return _anon()
-
-#     def Substraction(self, lhs, rhs):
-#         def _register():
-#             lhs.execute()
-#             rhs.execute()
-
-#         class _anon():
-#             execute = lambda self: _register()
-#         return _anon()
-
-#     def Integer(self, value):
-#         def _register():
-#             return 'integer'
-
-#         class _anon():
-#             execute = lambda self: _register()
-#         return _anon()
-
-#     def StringLiteral(self, value):
-#         def _register():
-#             return value
-
-#         class _anon():
-#             execute = lambda self: _register()
-#         return _anon()
-
-#     def String(self, value):
-#         def _register():
-#             return 'string'
-
-#         class _anon():
-#             execute = lambda self: _register()
-#         return _anon()
-
-
 
 class GetVariables(QlAlg):
 
@@ -546,6 +423,15 @@ class GetVariables(QlAlg):
             execute = lambda self: _register()
         return _anon()
 
+    def Addition(self, lhs, rhs):
+        def _register():
+            lhs.execute()
+            rhs.execute()
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
     def Integer(self, value):
         def _register():
             return 'integer'
@@ -573,7 +459,6 @@ class GetVariables(QlAlg):
 
 
 class RegisterComputedQuestions(QlAlg):
-
     def __init__(self, environment_vars):
         self.environment = Environment()
 
@@ -651,6 +536,11 @@ class RegisterComputedQuestions(QlAlg):
     def Substraction(self, lhs, rhs):
         class _anon():
             execute = lambda self: Substraction(lhs.execute(), rhs.execute())
+        return _anon()
+
+    def Addition(self, lhs, rhs):
+        class _anon():
+            execute = lambda self: Addition(lhs.execute(), rhs.execute())
         return _anon()
 
     def Integer(self, value):
