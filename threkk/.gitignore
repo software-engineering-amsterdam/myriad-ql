@@ -106,3 +106,4 @@ target/
 # PLY
 parser.out
 parsetab.py
+lextab.py
