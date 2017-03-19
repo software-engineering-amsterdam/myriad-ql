@@ -42,7 +42,7 @@ class BuildGui(QlAlg):
         return _anon()
 
     def RefVariable(self, name):
-        
+
         def _register():
             self.environment.add_ref((name))
 
@@ -70,10 +70,10 @@ class BuildGui(QlAlg):
         return _anon()
 
     def ComputedQuestion(self, variable, label, expression):
-        def _register(form): 
+        def _register(form):
             question = ComputedQuestionController(
                 self.parent, label.execute(), ReadOnlyController(self.parent, variable.execute()))
-            
+
             form.add_element(question)
 
         class _anon():
@@ -105,6 +105,15 @@ class BuildGui(QlAlg):
         return _anon()
 
     def Substraction(self, lhs, rhs):
+        def _register():
+            lhs.execute()
+            rhs.execute()
+
+        class _anon():
+            execute=lambda self: _register()
+        return _anon()
+
+    def Addition(self, lhs, rhs):
         def _register():
             lhs.execute()
             rhs.execute()
