@@ -34,9 +34,7 @@ class BuildGui(QlAlg):
 
     def Variable(self, name, datatype):
         def _register():
-
-            variable = datatype.execute( name)
-
+            variable = datatype.execute(name)
             return variable
 
         class _anon():
@@ -44,6 +42,7 @@ class BuildGui(QlAlg):
         return _anon()
 
     def RefVariable(self, name):
+        
         def _register():
             self.environment.add_ref((name))
 

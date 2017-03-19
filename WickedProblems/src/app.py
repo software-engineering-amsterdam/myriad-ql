@@ -5,6 +5,7 @@ cur_version = sys.version_info
 
 if cur_version >= req_version:
     from parser.ql import QL
+    from operations.ql import Eval
     from operations.gui import BuildGui,PrettyPrint,GetVariables
     from tkinter import Button
     from user_interface.ui import Application
@@ -23,12 +24,19 @@ form_ast = parser.parse(ql_string)
 
 
 environment = GetVariables([])
+
 create_environment = form_ast.alg(environment)
+create_environment.execute()
+
+
+
 
 app = Application()
 create_ui = BuildGui(app.root, environment.environment)
 app.environment = environment.environment
 form = form_ast.alg(create_ui).execute()
+
+
 app.add_element(form)
 # def export_form():
 #     print(create_ui.environment.export())

@@ -1,4 +1,6 @@
-from tkinter import Tk,Frame,Label,Entry,Radiobutton,Spinbox,Button,filedialog,Menu
+from tkinter import Tk, Frame, Label, Entry, Radiobutton, Spinbox, Button, filedialog, Menu
+from operations.ql import Eval
+from parser.ql import QL
 import json
 '''
 
@@ -7,6 +9,7 @@ Playground:
 Window
 
 Frame
+
 
 Section
 
@@ -281,6 +284,8 @@ class Application(object):
         self.root.minsize(width=670, height=670)
         self.environment = None
         self.elements = []
+        self.parser = QL()
+   
 
     def reload(self,event = None):
         # for widget in self.root.winfo_children():
@@ -289,10 +294,10 @@ class Application(object):
         if event is not None:
             event.widget.focus_set()
         # event.widget.focus_set()
-
+        
         # TODO: Redraw the conditionals!!!
 
-        print(self.environment.export())
+        #print(self.environment.export())
 
     def export_form(self):
         f = filedialog.asksaveasfile(mode='w', defaultextension=".json")

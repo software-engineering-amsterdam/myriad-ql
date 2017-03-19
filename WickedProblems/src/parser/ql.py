@@ -164,3 +164,6 @@ class QL:
 
     def parse(self, _string):
         return self.form.parseString(_string)['form']
+
+    def parse_expression(self, _string):
+        return self.expression.parseString(_string)[0]
