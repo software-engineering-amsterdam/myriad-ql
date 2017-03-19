@@ -1,3 +1,14 @@
+/*
+ * Software Construction - University of Amsterdam
+ *
+ * ./src/QLMain.java.
+ *
+ * Gerben van der Huizen    -   10460748
+ * Vincent Erich            -   10384081
+ *
+ * March, 2017
+ */
+
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -8,7 +19,6 @@ import ql.astnodes.Form;
 import ql.astnodes.Node;
 import ql.astnodes.types.Type;
 import ql.gui.GUI;
-import ql.gui.formenvironment.Context;
 import ql.semanticchecker.IdentifierChecker;
 import ql.semanticchecker.TypeChecker;
 import ql.semanticchecker.messagehandling.Message;
@@ -47,10 +57,10 @@ public class QLMain {
         InputStream qlInputStream = new FileInputStream(inputQL);
         Form qlAST = getASTQL(qlInputStream);
 
-        Map<String, Type> identifierMap = new HashMap<>();
+        Map<String, Type> identifierToTypeMap = new HashMap<>();
         MessageData messages = new MessageData();
 
-        Boolean semanticallyCorrectQL = checkSemanticCorrectnessQL(qlAST, messages, identifierMap);
+        Boolean semanticallyCorrectQL = checkSemanticCorrectnessQL(qlAST, messages, identifierToTypeMap);
 
         if(!semanticallyCorrectQL) {
             System.out.println("QL form is semantically incorrect!");
@@ -64,10 +74,10 @@ public class QLMain {
         InputStream qlsInputStream = new FileInputStream(inputQLS);
         StyleSheet qlsAST = getASTQLS(qlsInputStream);
 
-        Boolean semanticallyCorrectQLS = checkSemanticCorrectnessQLS(qlsAST, messages, identifierMap);
+        Boolean semanticallyCorrectQLS = checkSemanticCorrectnessQLS(qlsAST, messages, identifierToTypeMap);
 
         if(!semanticallyCorrectQLS) {
-            System.out.println("QLS form is semantically incorrect!");
+            System.out.println("QLS stylesheet is semantically incorrect!");
 
             for (Error error : messages.getErrors()) {
                 System.out.println(error.getMessage());
@@ -75,10 +85,8 @@ public class QLMain {
             System.exit(1);
         }
 
-
         System.out.println("Create GUI...");
         buildGUI(qlAST);
-
     }
 
     private boolean fileExists(String inputQL, String inputQLS) {
@@ -113,11 +121,9 @@ public class QLMain {
         return (StyleSheet) nodeAST;
     }
 
-    private boolean checkSemanticCorrectnessQL(Form qlAST, MessageData messages,
-                                               Map<String, Type> identifierMap) {
-
-        new IdentifierChecker(qlAST, identifierMap, messages);
-        new TypeChecker(qlAST, identifierMap, messages);
+    private boolean checkSemanticCorrectnessQL(Form qlAST, MessageData messages, Map<String, Type> identifierToTypeMap) {
+        new IdentifierChecker(qlAST, identifierToTypeMap, messages);
+        new TypeChecker(qlAST, identifierToTypeMap, messages);
 
         if (messages.containsNoWarnings()) {
             for (Message warning : messages.getWarnings()) {
@@ -128,11 +134,8 @@ public class QLMain {
         return messages.containsNoErrors();
     }
 
-    private boolean checkSemanticCorrectnessQLS(StyleSheet qlsAST, MessageData messages,
-                                                Map<String, Type> identifierMap) {
-
-        new QLSTypeChecker(messages, identifierMap, qlsAST);
-
+    private boolean checkSemanticCorrectnessQLS(StyleSheet qlsAST, MessageData messages, Map<String, Type> identifierToTypeMap) {
+        new QLSTypeChecker(messages, identifierToTypeMap, qlsAST);
         return messages.containsNoErrors();
     }
 
