@@ -1,6 +1,7 @@
 ﻿using Questionnaires.ErrorHandling;
 using Questionnaires.QL.AST;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Questionnaires.QL.SemanticAnalysis
 {
@@ -31,21 +32,8 @@ namespace Questionnaires.QL.SemanticAnalysis
 
         private string FormatMessage(string body, List<Question> questions)
         {
-            string message = "Questions";
-            for (var index = 0; index < questions.Count; index++)
-            {
-                string seperator = ",";
-                if (index == questions.Count - 2)
-                    seperator = " and";
-                if (index == questions.Count - 1)
-                    seperator = "";
-
-                message = string.Format("{0} {1}{2}", message, questions[index].Identifier, seperator);
-            }
-
-            message = string.Format("{0} have an idetical body: \"{1}\"", message, body);
-
-            return message;
+            List<string> questionNames = questions.Select(q => q.Identifier).ToList();
+            return string.Format("Questions {0} have an idetical body: \"{1}\"", Utility.String.FormatSequenceOfStrings(questionNames), body);
         }
     }
 

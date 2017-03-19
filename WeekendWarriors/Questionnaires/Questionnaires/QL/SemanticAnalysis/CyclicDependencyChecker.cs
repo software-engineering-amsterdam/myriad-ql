@@ -46,18 +46,7 @@ namespace Questionnaires.QL.SemanticAnalysis
 
         private static string CreateErrorMessage(List<string> dependencies)
         {
-            var message = "Cyclic dependency found between questions ";
-            for (var index = 0; index < dependencies.Count; index++)
-            {
-                var connector = ",";
-                if (index == dependencies.Count - 2)
-                    connector = "and";
-                if (index == dependencies.Count - 1)
-                    connector = "";
-
-                message = string.Format("{0} {1}{2} ", message, dependencies[index], connector);
-            }
-
+            var message = string.Format("Cyclic dependency found between questions {0}", Utility.String.FormatSequenceOfStrings(dependencies));
             return message;
         }
 
@@ -81,7 +70,7 @@ namespace Questionnaires.QL.SemanticAnalysis
             // to investigate further
             foreach (var dependency in leafDependencies)
             {
-                var copy = new List<string>(leafDependencies);
+                var copy = new List<string>(dependencyTrail);
                 copy.Add(dependency);
                 if (DependantOn(copy))
                 {
