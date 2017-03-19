@@ -13,12 +13,12 @@ namespace Tests.QL.ExpressionEvaluator
         public void TestExpression(Dictionary<string, object> context, string expression, object expectedResult)
         {
             var questions = new List<Questionnaires.RunTime.Question>();
-            foreach(var value in context)
+            foreach (var value in context)
             {
                 questions.Add(ValueCreator.CreateQuestion(value.Key, (dynamic)value.Value));
             }
 
-            var store = new QuestionStore(questions);            
+            var store = new QuestionStore(questions);
 
             var astFactory = new ASTBuilder(new Result());
             var AST = astFactory.BuildExpression(expression);
