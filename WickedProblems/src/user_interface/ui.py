@@ -1,4 +1,5 @@
-from tkinter import Tk,Frame,Label,Entry,Radiobutton,Spinbox,Button
+from tkinter import Tk,Frame,Label,Entry,Radiobutton,Spinbox,Button,filedialog
+import json
 '''
 
 Playground:
@@ -284,6 +285,11 @@ class Application(object):
         # self.window.pack()
 
     def export_form(self):
+        f = filedialog.asksaveasfile(mode='w', defaultextension=".json")
+        if f is None:
+            return
+        f.write(json.dumps(self.environment.export()))
+        f.close() # `()` was missing.
         print(self.environment.export())
 
     def add_element(self, element):
