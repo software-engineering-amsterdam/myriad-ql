@@ -8,7 +8,7 @@ import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
 import com.matthewchapman.ql.core.QLErrorLogger;
-import com.matthewchapman.ql.visitor.QLStatementVisitor;
+import com.matthewchapman.ql.validation.visitors.QLStatementVisitor;
 
 import java.util.*;
 
@@ -50,10 +50,15 @@ public class QuestionCollection implements QLStatementVisitor<Void, String> {
     // hooray for O(n) complexity!
     public boolean findDuplicates() {
         Set<String> questionIDs = new HashSet<>();
+        Set<String> questionTexts = new HashSet<>();
 
         for (Question question : questionList) {
             if (!questionIDs.add(question.getName())) {
                 logger.addError(question.getLine(), question.getColumn(), question.getName(), "Question with this ID already defined");
+            }
+
+            if(!questionTexts.add(question.getText())) {
+                logger.addWarning(question.getLine(), question.getColumn(), question.getName(), "Question with this label already defined");
             }
         }
 

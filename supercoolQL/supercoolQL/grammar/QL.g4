@@ -43,6 +43,9 @@ type
 
 //lexer
 
+TRUE: 'TRUE' ;
+FALSE: 'FALSE' ;
+
 ID:   [a-zA-Z_]+[a-zA-Z0-9_]* ;
 
 STRING: '"' .*? '"';
@@ -62,9 +65,6 @@ MULTI_LINE_COMMENT
 SINGLE_LINE_COMMENT
     : '//' ~[\r\n]* -> channel(HIDDEN)
     ;
-
-TRUE: 'TRUE' ;
-FALSE: 'FALSE' ;
 
 OPEN_BRACKET :  '{' ;
 CLOSE_BRACKET : '}' ;

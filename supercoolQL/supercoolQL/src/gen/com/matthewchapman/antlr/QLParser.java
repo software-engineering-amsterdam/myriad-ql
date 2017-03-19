@@ -6,6 +6,7 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
 import java.util.List;
+import java.util.Iterator;
 import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
@@ -18,9 +19,9 @@ public class QLParser extends Parser {
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
-		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, ID=23, STRING=24, NUMBER=25, 
-		WHITESPACE=26, MULTI_LINE_COMMENT=27, SINGLE_LINE_COMMENT=28, TRUE=29, 
-		FALSE=30, OPEN_BRACKET=31, CLOSE_BRACKET=32, OPEN_PARENTH=33, CLOSE_PARENTH=34;
+		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, TRUE=23, FALSE=24, ID=25, 
+		STRING=26, NUMBER=27, WHITESPACE=28, MULTI_LINE_COMMENT=29, SINGLE_LINE_COMMENT=30, 
+		OPEN_BRACKET=31, CLOSE_BRACKET=32, OPEN_PARENTH=33, CLOSE_PARENTH=34;
 	public static final int
 		RULE_formDeclaration = 0, RULE_statement = 1, RULE_expression = 2, RULE_calculatedValue = 3, 
 		RULE_type = 4;
@@ -31,14 +32,15 @@ public class QLParser extends Parser {
 	private static final String[] _LITERAL_NAMES = {
 		null, "'form'", "':'", "';'", "'if'", "'else'", "'!'", "'/'", "'*'", "'-'", 
 		"'+'", "'>'", "'<'", "'=='", "'!='", "'<='", "'>='", "'&&'", "'||'", "'='", 
-		"'boolean'", "'integer'", "'string'", null, null, null, null, null, null, 
-		"'TRUE'", "'FALSE'", "'{'", "'}'", "'('", "')'"
+		"'boolean'", "'integer'", "'string'", "'TRUE'", "'FALSE'", null, null, 
+		null, null, null, null, "'{'", "'}'", "'('", "')'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, null, null, null, null, null, null, null, "ID", 
-		"STRING", "NUMBER", "WHITESPACE", "MULTI_LINE_COMMENT", "SINGLE_LINE_COMMENT", 
-		"TRUE", "FALSE", "OPEN_BRACKET", "CLOSE_BRACKET", "OPEN_PARENTH", "CLOSE_PARENTH"
+		null, null, null, null, null, null, null, null, null, null, null, "TRUE", 
+		"FALSE", "ID", "STRING", "NUMBER", "WHITESPACE", "MULTI_LINE_COMMENT", 
+		"SINGLE_LINE_COMMENT", "OPEN_BRACKET", "CLOSE_BRACKET", "OPEN_PARENTH", 
+		"CLOSE_PARENTH"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -852,17 +854,17 @@ public class QLParser extends Parser {
 		"\3\3\3\5\39\n\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4F\n\4\3"+
 		"\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\7\4W\n\4\f"+
 		"\4\16\4Z\13\4\3\5\3\5\3\5\3\6\3\6\3\6\5\6b\n\6\3\6\2\3\6\7\2\4\6\b\n\2"+
-		"\6\3\2\37 \3\2\t\n\3\2\13\f\3\2\r\22o\2\f\3\2\2\2\48\3\2\2\2\6E\3\2\2"+
-		"\2\b[\3\2\2\2\na\3\2\2\2\f\r\7\3\2\2\r\16\7\31\2\2\16\22\7!\2\2\17\21"+
+		"\6\3\2\31\32\3\2\t\n\3\2\13\f\3\2\r\22o\2\f\3\2\2\2\48\3\2\2\2\6E\3\2"+
+		"\2\2\b[\3\2\2\2\na\3\2\2\2\f\r\7\3\2\2\r\16\7\33\2\2\16\22\7!\2\2\17\21"+
 		"\5\4\3\2\20\17\3\2\2\2\21\24\3\2\2\2\22\20\3\2\2\2\22\23\3\2\2\2\23\25"+
-		"\3\2\2\2\24\22\3\2\2\2\25\26\7\"\2\2\26\3\3\2\2\2\27\30\7\32\2\2\30\31"+
-		"\7\31\2\2\31\32\7\4\2\2\32\34\5\n\6\2\33\35\5\b\5\2\34\33\3\2\2\2\34\35"+
+		"\3\2\2\2\24\22\3\2\2\2\25\26\7\"\2\2\26\3\3\2\2\2\27\30\7\34\2\2\30\31"+
+		"\7\33\2\2\31\32\7\4\2\2\32\34\5\n\6\2\33\35\5\b\5\2\34\33\3\2\2\2\34\35"+
 		"\3\2\2\2\35\36\3\2\2\2\36\37\7\5\2\2\379\3\2\2\2 !\7\6\2\2!\"\7#\2\2\""+
 		"#\5\6\4\2#$\7$\2\2$&\7!\2\2%\'\5\4\3\2&%\3\2\2\2\'(\3\2\2\2(&\3\2\2\2"+
 		"()\3\2\2\2)*\3\2\2\2*+\7\"\2\2+9\3\2\2\2,-\7\6\2\2-.\7#\2\2./\5\6\4\2"+
 		"/\60\7$\2\2\60\61\7!\2\2\61\62\5\4\3\2\62\63\7\"\2\2\63\64\7\7\2\2\64"+
 		"\65\7!\2\2\65\66\5\4\3\2\66\67\7\"\2\2\679\3\2\2\28\27\3\2\2\28 \3\2\2"+
-		"\28,\3\2\2\29\5\3\2\2\2:;\b\4\1\2;F\7\32\2\2<F\7\33\2\2=F\7\31\2\2>F\t"+
+		"\28,\3\2\2\29\5\3\2\2\2:;\b\4\1\2;F\7\34\2\2<F\7\35\2\2=F\7\33\2\2>F\t"+
 		"\2\2\2?@\7#\2\2@A\5\6\4\2AB\7$\2\2BF\3\2\2\2CD\7\b\2\2DF\5\6\4\bE:\3\2"+
 		"\2\2E<\3\2\2\2E=\3\2\2\2E>\3\2\2\2E?\3\2\2\2EC\3\2\2\2FX\3\2\2\2GH\f\7"+
 		"\2\2HI\t\3\2\2IW\5\6\4\bJK\f\6\2\2KL\t\4\2\2LW\5\6\4\7MN\f\5\2\2NO\t\5"+

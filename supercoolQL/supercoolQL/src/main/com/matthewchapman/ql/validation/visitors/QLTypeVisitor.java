@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.visitor;
+package com.matthewchapman.ql.validation.visitors;
 
 import com.matthewchapman.ql.ast.atomic.type.BooleanType;
 import com.matthewchapman.ql.ast.atomic.type.IntegerType;

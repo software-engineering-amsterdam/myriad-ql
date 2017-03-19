@@ -1,7 +1,7 @@
 package com.matthewchapman.ql.ast.expression.unary;
 
 import com.matthewchapman.ql.ast.Expression;
-import com.matthewchapman.ql.visitor.QLExpressionVisitor;
+import com.matthewchapman.ql.validation.visitors.QLExpressionVisitor;
 
 /**
  * Created by matt on 24/02/2017.

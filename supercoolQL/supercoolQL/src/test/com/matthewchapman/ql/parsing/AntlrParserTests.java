@@ -41,7 +41,7 @@ public class AntlrParserTests {
     public void testQuestionRule() {
 
         final String EXPECTED_NAME = "testQuestion";
-        final String EXPECTED_TEXT = "\"Test Question\"";
+        final String EXPECTED_TEXT = "Test Question";
         final String EXPECTED_TYPE = "boolean";
 
         QLParser parser = coreParser.getQlParser("\"Test Question\" testQuestion:boolean;");
