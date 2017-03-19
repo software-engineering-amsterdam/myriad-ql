@@ -328,5 +328,30 @@ namespace Questionnaires.QL.AST.Types
         }
 
         public abstract QuestionWidget GetWidget();
+
+        public bool CanBeAssigned(IType value)
+        {
+            return CanBeAssigned((dynamic)value);
+        }
+
+        public virtual bool CanBeAssigned(BooleanType value)
+        {
+            return false;
+        }
+
+        public virtual bool CanBeAssigned(StringType value)
+        {
+            return false;
+        }
+
+        public virtual bool CanBeAssigned(IntegerType value)
+        {
+            return false;
+        }
+
+        public virtual bool CanBeAssigned(MoneyType value)
+        {
+            return false;
+        }
     }
 }

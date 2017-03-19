@@ -127,5 +127,10 @@ namespace Questionnaires.QL.AST.Types
         {
             return new IntegerPickerWidget();
         }
+
+        public override bool CanBeAssigned(IntegerType value)
+        {
+            return true;
+        }
     }
 }

@@ -127,5 +127,10 @@ namespace Questionnaires.QL.AST.Types
         {
             return new DecimalPickerWidget();
         }
+
+        public override bool CanBeAssigned(MoneyType value)
+        {
+            return true;
+        }
     }
 }

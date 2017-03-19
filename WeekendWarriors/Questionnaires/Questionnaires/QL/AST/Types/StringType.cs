@@ -28,5 +28,10 @@ namespace Questionnaires.QL.AST.Types
         {
             return new TextBoxWidget();
         }
+
+        public override bool CanBeAssigned(StringType value)
+        {
+            return true;
+        }
     }
 }

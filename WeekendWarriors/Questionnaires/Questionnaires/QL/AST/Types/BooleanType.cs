@@ -42,5 +42,10 @@ namespace Questionnaires.QL.AST.Types
         {
             return new CheckBoxWidget();
         }
+
+        public override bool CanBeAssigned(BooleanType value)
+        {
+            return true;
+        }
     }
 }

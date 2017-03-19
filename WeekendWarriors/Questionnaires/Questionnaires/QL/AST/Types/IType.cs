@@ -21,6 +21,8 @@
         BooleanType EqualTo(IType value);
         BooleanType InequalTo(IType value);
 
+        bool CanBeAssigned(IType value);
+
         Questionnaires.UI.Widgets.QuestionWidget GetWidget();
     }
 }
