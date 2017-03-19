@@ -33,7 +33,7 @@ namespace Questionnaires.QL.SemanticAnalysis
         }
 
         public void Visit(ComputedQuestion node)
-        {
+        {   
             Visit((dynamic)node.Question);
         }
 

@@ -2,6 +2,8 @@
 using Questionnaires.QL.SemanticAnalysis;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Questionnaires.QL.AST
 {
@@ -29,6 +31,25 @@ namespace Questionnaires.QL.AST
             {
                 return statement.CheckSemantics(context, messages);
             });
+        }
+
+        public bool CheckDependencies(Result messages)
+        {
+            var dependencies = new Dictionary<Question, HashSet<Identifier>>();
+            foreach(var statement in Statements)
+            {
+                statement.GetDependencies(dependencies);
+            }
+
+            DependencyChecker checker = new DependencyChecker();            
+            foreach(var kvp in dependencies)
+            {
+                checker.AddDependencies(kvp.Key, kvp.Value);
+            }
+
+            checker.Check(messages);
+
+            return true;
         }
     }
 }

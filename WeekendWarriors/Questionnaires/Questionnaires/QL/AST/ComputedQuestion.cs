@@ -1,6 +1,7 @@
 ﻿using Questionnaires.ErrorHandling;
 using Questionnaires.QL.SemanticAnalysis;
 using System.Collections.Generic;
+using System;
 
 namespace Questionnaires.QL.AST
 {
@@ -39,6 +40,13 @@ namespace Questionnaires.QL.AST
             }
 
             return true;
+        }
+
+        public void GetDependencies(Dictionary<Question, HashSet<Identifier>> dependencies)
+        {
+            var identifiers = new HashSet<Identifier>();
+            Expression.GetIdentifiers(identifiers);
+            dependencies.Add(Question, identifiers); 
         }
     }
 }

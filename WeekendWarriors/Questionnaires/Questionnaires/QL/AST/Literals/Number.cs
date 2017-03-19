@@ -38,5 +38,10 @@ namespace Questionnaires.QL.AST.Literals
         {
             return new IntegerType();
         }
+
+        public void GetIdentifiers(HashSet<Identifier> identifiers)
+        {
+            // No identifiers here
+        }
     }
 }

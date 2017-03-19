@@ -2,6 +2,7 @@
 using Questionnaires.QL.SemanticAnalysis;
 using Questionnaires.QL.AST.Types;
 using System.Collections.Generic;
+using System;
 
 namespace Questionnaires.QL.AST
 {
@@ -74,6 +75,19 @@ namespace Questionnaires.QL.AST
                 semanticsInChildNodesOk = false;
 
             return semanticsInChildNodesOk;
+        }
+
+        public void GetDependencies(Dictionary<Question, HashSet<Identifier>> dependencies)
+        {
+            foreach (var statement in ThenStatements)
+            {
+                statement.GetDependencies(dependencies);                
+            }
+
+            foreach (var statement in ElseStatements)
+            {
+                statement.GetDependencies(dependencies);
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 using Questionnaires.QL.SemanticAnalysis;
 using Questionnaires.QL.AST.Types;
 using System.Collections.Generic;
+using System;
 
 namespace Questionnaires.QL.AST.Literals
 {
@@ -21,6 +22,11 @@ namespace Questionnaires.QL.AST.Literals
         {
             // Nothing to check for bool literal
             return true;
+        }
+
+        public void GetIdentifiers(HashSet<Identifier> identifiers)
+        {
+            // No identifiers here
         }
 
         public IType GetResultType(QLContext context)

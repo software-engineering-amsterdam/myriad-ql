@@ -35,6 +35,12 @@ namespace Questionnaires.QL.AST.Operators
                 return false;
             }
         }
+
+        public void GetIdentifiers(HashSet<Identifier> identifiers)
+        {
+            Operand.GetIdentifiers(identifiers);
+        }
+
         public abstract IType GetResultType(QLContext context);
     }
 }

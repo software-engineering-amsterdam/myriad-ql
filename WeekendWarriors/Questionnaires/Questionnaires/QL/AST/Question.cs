@@ -2,6 +2,7 @@
 using Questionnaires.QL.SemanticAnalysis;
 using Questionnaires.QL.AST.Types;
 using System.Collections.Generic;
+using System;
 
 namespace Questionnaires.QL.AST
 {
@@ -33,6 +34,11 @@ namespace Questionnaires.QL.AST
         {
             // Nothing to check for a question
             return true;
+        }
+
+        public void GetDependencies(Dictionary<Question, HashSet<Identifier>> dependencies)
+        {
+           // (Non-coputed) Question has no dependencies
         }
     }
 }

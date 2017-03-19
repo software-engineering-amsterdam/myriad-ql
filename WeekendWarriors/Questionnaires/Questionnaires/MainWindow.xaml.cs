@@ -54,10 +54,6 @@ namespace Questionnaires
             {
                 PrintMessages(result);
             }
-            catch (Exception)
-            {
-                PrintMessages(result);
-            }
         }
 
         private static void AnalyzeStylesheet(Result result, List<RunTime.Question> Questions, StyleSheet stylesheetAST)
@@ -65,7 +61,7 @@ namespace Questionnaires
             var semanticAnalyzerQLS = new QLS.SemanticAnalysis.Analyzer(result, Questions);
             var semanticMessages = semanticAnalyzerQLS.Analyze(stylesheetAST);
             if (result.ContainsErrors())
-                throw new Exception();
+                throw new ParseException();
         }
 
         private StyleSheet BuildStylesheetAST(Result result)
@@ -89,7 +85,7 @@ namespace Questionnaires
             semanticAnalyzer.AnalyzeForm(FormAST);
 
             if (result.ContainsErrors())
-                throw new Exception();
+                throw new ParseException();
         }
 
         private QL.AST.Form BuildFormAST(Result result)
