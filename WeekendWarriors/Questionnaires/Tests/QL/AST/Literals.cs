@@ -66,7 +66,7 @@ namespace Tests.QL.AST
             {
                 { "123456", "Test failure: 123456 literal" },
                 { "0", "Test failure: 0 literal" },
-                { Int32.MaxValue.ToString(), "Test failure: Int32 max" }
+                { int.MaxValue.ToString(), "Test failure: Int32 max" }
             };
 
             foreach (var testCase in testCases)

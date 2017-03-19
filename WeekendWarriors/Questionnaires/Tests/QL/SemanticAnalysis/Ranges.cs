@@ -48,7 +48,7 @@ namespace Tests.QL.SemanticAnalysis
 
             var overflow = new BigInteger(decimal.MaxValue);
             overflow++;
-            var underflow = new BigInteger(Decimal.MinValue);
+            var underflow = new BigInteger(decimal.MinValue);
             underflow--;
 
             TestHarness.TestComputedQuestion(
