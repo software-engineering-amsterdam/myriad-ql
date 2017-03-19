@@ -92,7 +92,7 @@ namespace Tests.QL.AST
             {
                 Assert.AreEqual(
                     CreateASTNode<Questionnaires.QL.AST.Literals.Money>(testCase.Key).Value,
-                    Decimal.Parse(testCase.Key), testCase.Value
+                    decimal.Parse(testCase.Key), testCase.Value
                 );
             }
         }
