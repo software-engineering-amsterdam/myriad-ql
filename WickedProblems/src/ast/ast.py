@@ -99,7 +99,7 @@ class UnaryNegation(UnaryOperation):
 class RefVariable(Node):
     def __init__(self, name):
         self.name = name
-    
+
     def alg(self, _alg):
         return _alg.RefVariable(self.name)
 
@@ -110,55 +110,3 @@ class Variable(Node):
 
     def alg(self, _alg):
         return _alg.Variable(self.name, self.datatype.alg(_alg))
-
-
-class Variable1(Node):
-    def __init__(self, name):
-        Node.__init__(self, "variable")
-        self.name = name
-        self._value = Undefined()
-
-    def __str__(self):
-        return "{}".format(self._value)
-
-    def eval(self):
-        return self._value
-
-    def __add__(self, other):
-        return self.eval() + other.eval()
-
-    def __sub__(self, other):
-        return self.eval() - other.eval()
-
-    def __mul__(self, other):
-        return self.eval() * other.eval()
-
-    def __truediv__(self, other):
-        return self.eval() / other.eval()
-
-    def __or__(self, other):
-        return (self.eval() | other.eval())
-
-    def __and__(self, other):
-        return (self.eval() & other.eval())
-
-    def __invert__(self):
-        return ~self.eval()
-
-    def __lt__(self, other):
-        return self.eval() < other.eval()
-
-    def __gt__(self, other):
-        return self.eval() > other.eval()
-
-    def __ge__(self, other):
-        return self.eval() >= other.eval()
-
-    def ___le__(self, other):
-        return self.eval() <= other.eval()
-
-    def __ne__(self, other):
-        return self.eval() != other.eval()
-
-    def __eq__(self, other):
-        return self.eval() == other.eval()
