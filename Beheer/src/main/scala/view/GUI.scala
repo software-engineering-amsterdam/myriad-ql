@@ -7,14 +7,14 @@ import view.questions.{ BooleanQuestion, DateQuestion, NumericQuestion, StringQu
 
 import scalafx.application.JFXApp
 import scalafx.geometry.Insets
-import scalafx.scene.Scene
+import scalafx.scene.{ Node, Scene }
 import scalafx.scene.layout.{ HBox, TilePane, VBox }
 import scalafx.scene.text.Text
 
 trait GUI extends JFXApp.PrimaryStage {
   val issues: Issues
 
-  def displayBoxes: Seq[VBox]
+  def displayBoxes: Seq[Node]
 
   protected def renderQuestion(question: DisplayQuestion, style: Option[QuestionStyle] = None): VBox = {
     question.`type` match {
@@ -25,12 +25,7 @@ trait GUI extends JFXApp.PrimaryStage {
     }
   }.displayBox
 
-  private def issueBox = {
-    val issueMessages = issues.map(issue => new HBox(new Text(issue.message)))
-    new VBox {
-      children = issueMessages
-    }
-  }
+  private val issueBox = issues.map(issue => new HBox(new Text(issue.message)))
 
   title.value = "Beheer QL Form"
   width = 600
@@ -41,7 +36,7 @@ trait GUI extends JFXApp.PrimaryStage {
       vgap = 10
       padding = Insets(10)
       prefColumns = 1
-      children = issueBox +: displayBoxes
+      children = issueBox ++ displayBoxes
     }
   }
 }

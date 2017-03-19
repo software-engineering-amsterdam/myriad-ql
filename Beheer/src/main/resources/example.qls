@@ -17,13 +17,9 @@ stylesheet taxOfficeExample {
 
     page Selling {
         section "Selling" {
-            question hasSoldHouse {
-                widget radio("Yes", "No")
-            }
+            question hasSoldHouse
             section "You sold a house" {
-                question sellingPrice {
-                    widget spinbox
-                }
+                question sellingPrice
                 question privateDebt {
                     widget slider(1,100)
                 }

@@ -1,34 +1,31 @@
 package view
 
-import ast.Stylesheet.Blocks
-import ast.{ Block, QuestionStyle, Section }
+import ast._
 import checker.Issue.Issues
 import model.DisplayQuestion
 
-import scalafx.scene.layout.VBox
-import scalafx.scene.text.Text
+import scalafx.scene.Node
+import scalafx.scene.text.{ Font, FontWeight, Text }
 
-class QLS(val issues: Issues, val displayQuestions: Seq[DisplayQuestion], pages: Seq[Blocks]) extends GUI {
-  override def displayBoxes = renderQLS
+class QLS(val issues: Issues, val displayQuestions: Seq[DisplayQuestion], stylesheet: Stylesheet) extends GUI {
+  override def displayBoxes = stylesheet.pages.flatMap(page => renderPage(page))
 
-  private def renderSection(section: Section): Seq[VBox] = {
-    val label = new VBox {
-      children = new Text(section.label)
-    }
-    val blocks = section.blocks.flatMap(block => renderBlock(block))
-    label +: blocks
-  }
+  private def renderPage(page: Page): Seq[Node] =
+    page.sections.flatMap(section => renderBlock(section))
 
-  private def renderBlock(block: Block): Seq[VBox] = block match {
+  private def renderBlock(block: Block): Seq[Node] = block match {
     case s: Section => renderSection(s)
     case q: QuestionStyle => Seq(renderQuestion(getQuestion(q.identifier), Some(q)))
   }
 
-  private def renderPage(blocks: Blocks): Seq[VBox] = {
-    blocks.flatMap(block => renderBlock(block))
+  private def renderSection(section: Section): Seq[Node] = {
+    val label = new Text {
+      text = section.label
+      font = Font.font(null, FontWeight.Bold, 18)
+    }
+    val blocks = section.blocks.flatMap(block => renderBlock(block))
+    label +: blocks
   }
-
-  private def renderQLS = pages.flatMap(page => renderPage(page))
 
   private def getQuestion(identifier: String): DisplayQuestion = {
     displayQuestions.find(_.identifier == identifier) match {
@@ -39,6 +36,6 @@ class QLS(val issues: Issues, val displayQuestions: Seq[DisplayQuestion], pages:
 }
 
 object QLS {
-  def apply(issues: Issues, displayQuestions: Seq[DisplayQuestion], pages: Seq[Blocks]): QLS =
-    new QLS(issues, displayQuestions, pages)
+  def apply(issues: Issues, displayQuestions: Seq[DisplayQuestion], stylesheet: Stylesheet): QLS =
+    new QLS(issues, displayQuestions, stylesheet)
 }

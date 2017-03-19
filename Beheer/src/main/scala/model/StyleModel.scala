@@ -1,6 +1,6 @@
 package model
 
-import ast.Stylesheet.{ Blocks, DefaultStyles, QuestionStyles }
+import ast.Stylesheet._
 import ast._
 
 import scala.annotation.tailrec
@@ -9,27 +9,32 @@ class StyleModel(stylesheet: Stylesheet, questionWithTypes: Map[String, Type]) {
   val defaultStyles: DefaultStyles = stylesheet.pages.flatMap(extractDefaultStyles)
   val questionStyles: QuestionStyles = extractQuestionStyles(stylesheet.pages.flatMap(_.sections))
   val referencedQuestions: Seq[String] = questionStyles.map(_.identifier)
-  val blocksWithResolvedStyles: Seq[Blocks] = stylesheet.pages.map {
-    case Page(_, sections, defaults) => flattenStyles(sections, mergeDefaultStyles(defaults, Map.empty))
+  val processedStylesheet: Stylesheet = stylesheet.copy(pages = stylesheet.pages.map(p => flattenStyles(p)))
+
+  private def flattenStyles(page: Page): Page =
+    page.copy(sections = page.sections.map(s => flattenStyles(s, mergeDefaultStyles(page.defaults, Map.empty))))
+
+  private def flattenStyles(section: Section, defaultStyles: Map[Type, DefaultStyle]): Section =
+    section.copy(blocks = section.blocks.map(b => flattenStyles(b, mergeDefaultStyles(section.defaults, defaultStyles))))
+
+  private def flattenStyles(block: Block, defaultStyles: Map[Type, DefaultStyle]): Block = block match {
+    case s: Section => flattenStyles(s, defaultStyles)
+    case q: QuestionStyle => flattenStyles(q, defaultStyles)
   }
 
-  private def flattenStyles(blocks: Blocks, defaultStyles: Map[Type, DefaultStyle]): Blocks =
-    blocks.flatMap(b => flattenStyles(b, defaultStyles))
-
-  private def flattenStyles(block: Block, defaultStyles: Map[Type, DefaultStyle]): Blocks = block match {
-    case s @ Section(_, blocks, styles) => s +: flattenStyles(blocks, mergeDefaultStyles(styles, defaultStyles))
-    case QuestionStyle(identifier, styling, widget) =>
-      val questionType = questionWithTypes.get(identifier) match {
-        case Some(qt) => qt
-        case None => sys.error("Unable to determine question type for styling.")
-      }
-      defaultStyles.get(questionType) match {
-        case None =>
-          Seq(QuestionStyle(identifier, styling, widget))
-        case Some(DefaultStyle(t, defaultStyling, defaultWidget)) if t == questionType =>
-          Seq(QuestionStyle(identifier, defaultStyling ++ styling, updateWidget(widget, defaultWidget)))
-        case _ => sys.error("Type mismatch during flattening of style hierarchy")
-      }
+  private def flattenStyles(questionStyle: QuestionStyle, defaultStyles: Map[Type, DefaultStyle]): QuestionStyle = {
+    val questionType = questionWithTypes.get(questionStyle.identifier) match {
+      case Some(qt) => qt
+      case None => sys.error("Unable to determine question type for styling.")
+    }
+    defaultStyles.get(questionType) match {
+      case None => questionStyle
+      case Some(DefaultStyle(t, defaultStyling, defaultWidget)) if t == questionType =>
+        val newStyling = defaultStyling ++ questionStyle.styling
+        val newWidget = updateWidget(questionStyle.widget, defaultWidget)
+        questionStyle.copy(styling = newStyling, widget = newWidget)
+      case _ => sys.error("Type mismatch during flattening of style hierarchy")
+    }
   }
 
   @tailrec
