@@ -29,6 +29,7 @@ namespace Questionnaires
             {
                 var FormAST = BuildFormAST(result);
                 AnalyzeFormAST(result, FormAST);
+                PrintMessages(result);
 
                 /* 'Flatten' the AST*/
                 DocumentModel DocumentModel = new DocumentModel();
@@ -49,7 +50,7 @@ namespace Questionnaires
                 QuestionnaireBuilder.Build();
 
             }
-            catch (Questionnaires.ErrorHandling.ParseException)
+            catch (ParseException)
             {
                 PrintMessages(result);
             }
