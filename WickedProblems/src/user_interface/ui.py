@@ -85,10 +85,7 @@ class InputElement(FormElement):
         label.pack()
         entry = Entry(self.parent, textvariable=self.variable)
         entry.pack()
-        # entry.bind('<KeyRelease>', self.parent.app.reload)
         entry.bind('<FocusOut>', self.parent.app.reload)
-        # entry.focus_set()
-
 
 class DisabledInputElement(FormElement):
     label = "DisabledInputElement "

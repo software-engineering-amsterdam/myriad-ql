@@ -1,25 +1,19 @@
 from .base_nodes import Node
 
-
 class Value(Node):
     value = None
-
 
 class FieldType(Node):
     pass
 
-
 class Boolean(Value):
-
     def __init__(self, value=[False]):
         self.value = bool(value[0])
 
     def alg(self, _alg):
         return _alg.Boolean(self.value)
 
-
 class String(Value):
-
     def __init__(self, value=""):
         self.value = str(value)
 
@@ -34,7 +28,6 @@ class StringLiteral(Value):
         return _alg.StringLiteral(self.value)
 
 class Integer(Value):
-
     def __init__(self, value=0):
         self.value = int(value)
 
@@ -43,41 +36,25 @@ class Integer(Value):
 
 
 class Date(Value):
-
     def __init__(self, value):
-        # TODO
         self._value = value[0]
 
 
 class Decimal(Value):
-
     def __init__(self, value=[float(0)]):
-
         self._value = float(value[0])
 
-# TODO
-
-
 class Money(Value):
-
     def __init__(self, value=[0]):
-
         self._value = float(value[0])
 
     def alg(self, _alg):
         return _alg.Money(self.value)
-# TODO
-
 
 class Currency(Value):
-
     def __init__(self, value=[0]):
-
         self.value = float(value[0])
 
-
 class Undefined(Value):
-
     def __init__(self):
-
         self._value = False
