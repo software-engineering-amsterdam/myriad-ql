@@ -79,7 +79,7 @@ namespace Questionnaires.UI
             return stylesheetAST;
         }
 
-        private QL.AST.Form BuildFormAST(Result result, string qlInput)
+        private Form BuildFormAST(Result result, string qlInput)
         {
             var qlAstBuilder = new QL.AST.ASTBuilder(result);
             return qlAstBuilder.BuildForm(qlInput);
