@@ -1,4 +1,4 @@
-from tkinter import Tk,Frame,Label,Entry,Radiobutton,Spinbox,Button,filedialog
+from tkinter import Tk,Frame,Label,Entry,Radiobutton,Spinbox,Button,filedialog,Menu
 import json
 '''
 
@@ -296,10 +296,24 @@ class Application(object):
         element.parent = self.window
         self.elements.append(element)
 
+    def construct_menu(self):
+        self.menu = Menu(self.root)
+        self.root.config(menu=self.menu)
+
+        self.filemenu = Menu(self.menu)
+        self.menu.add_cascade(label="File", menu=self.filemenu)
+        self.filemenu.add_command(label="Save as...", command=self.export_form)
+        self.filemenu.add_command(label="Reload", command=self.reload)
+        self.filemenu.add_separator()
+        self.filemenu.add_command(label="Exit", command=self.root.destroy)
+
+        self.helpmenu = Menu(self.menu)
+        # self.menu.add_cascade(label="Help", menu=self.helpmenu)
+        self.helpmenu.add_command(label="About...", command=self.reload)
+
     def setup_elements(self):
+        self.construct_menu()
         [element.render() for element in self.elements]
-        export_button = Button(self.root, text="Export", command=self.export_form).pack()
-        reload_button = Button(self.root, text="Reload", command=self.reload).pack()
 
     def render(self):
         self.setup_elements()
