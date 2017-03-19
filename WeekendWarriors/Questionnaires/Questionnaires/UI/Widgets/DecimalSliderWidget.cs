@@ -4,11 +4,11 @@ using System.Windows.Controls;
 
 namespace Questionnaires.UI.Widgets
 {
-    class SliderWidget : QuestionWidget
+    class DecimalSliderWidget : QuestionWidget
     {
         private Slider Slider;
 
-        public SliderWidget() : base(new Slider())
+        public DecimalSliderWidget() : base(new Slider())
         {
             Debug.Assert(Control.GetType() == typeof(Slider));
             Slider = Control as Slider;

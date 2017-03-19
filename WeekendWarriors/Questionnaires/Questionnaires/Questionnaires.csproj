@@ -141,6 +141,9 @@
     <Compile Include="RunTime\DocumentModel\Section.cs" />
     <Compile Include="RunTime\DocumentModel\SimpleContainer.cs" />
     <Compile Include="UI\Renderer.cs" />
+    <Compile Include="UI\Widgets\DecimalBoxWidget.cs" />
+    <Compile Include="UI\Widgets\IntegerBoxWidget.cs" />
+    <Compile Include="UI\Widgets\IntegerSliderWidget.cs" />
     <Compile Include="UI\Widgets\Style\WidgetStyle.cs" />
     <Compile Include="UI\Widgets\BinaryRadioGroup.cs" />
     <Compile Include="UI\Widgets\CheckBoxWidget.cs" />
@@ -149,7 +152,7 @@
     <Compile Include="UI\Widgets\IntegerPickerWidget.cs" />
     <Compile Include="UI\Widgets\QuestionWidget.cs" />
     <Compile Include="UI\Widgets\RadioWidget.cs" />
-    <Compile Include="UI\Widgets\SliderWidget.cs" />
+    <Compile Include="UI\Widgets\DecimalSliderWidget.cs" />
     <Compile Include="UI\Widgets\TextBoxWidget.cs" />
     <Compile Include="RunTime\RuleContainer.cs" />
     <Compile Include="QL\SemanticAnalysis\QLContext.cs" />
