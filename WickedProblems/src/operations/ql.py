@@ -403,7 +403,6 @@ class GetVariables(QlAlg):
 
     def ifThen(self, expression, block):
         def _register():
-            print("LL", expression)
             expression.execute()
             block.execute()
 
@@ -671,7 +670,6 @@ class RegisterConditions(QlAlg):
     def Question(self, variable, label):
         def _register(condition):
             if condition:
-                print("register...",variable.execute(),  label.execute())
                 self.environment.add_conditional(variable.execute(), condition)
 
         class _anon():
@@ -691,7 +689,6 @@ class RegisterConditions(QlAlg):
     def ComputedQuestion(self, variable, label, expression):
         def _register(condition):
             if condition:
-                print("Register CQ...",variable.execute(), label.execute())
                 self.environment.add_conditional(variable.execute(), condition)
 
         class _anon():

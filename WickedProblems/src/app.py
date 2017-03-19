@@ -21,32 +21,15 @@ parser = QL()
 
 # build AST
 form_ast = parser.parse(ql_string)
-
-
 environment = GetVariables([])
-
-
 create_environment = form_ast.alg(environment)
 create_environment.execute()
-
-
 register_computed_questions = RegisterComputedQuestions(environment)
-
 form_ast.alg(register_computed_questions).execute()
-
 form_ast.alg(RegisterConditions(environment)).execute()
-
 app = Application()
 create_ui = BuildGui(app.root, environment.environment)
 app.environment = environment.environment
-
-
-
 form = form_ast.alg(create_ui).execute()
-
-
-
 app.add_element(form)
-# def export_form():
-#     print(create_ui.environment.export())
 app.render()

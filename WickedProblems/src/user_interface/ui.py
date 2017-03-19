@@ -70,9 +70,7 @@ class DisabledInputElement(FormElement):
                           state='readonly')
             entry.pack()
 
-
 class ScaleElement(FormElement):
-
     def __init__(self, parent):
         self.parent = parent
 
@@ -83,7 +81,6 @@ class ScaleElement(FormElement):
             label.pack()
             w = Scale(self.parent, from_=0, to=10, orient=HORIZONTAL)
             w.pack()
-
 
 class NumberElement(FormElement):
     def __init__(self, parent, label, variable):
@@ -101,7 +98,6 @@ class NumberElement(FormElement):
             w.bind('<FocusOut>', self.parent.app.reload)
             w.pack()
 
-
 class IntegerController(FormElement):
     parent = None
     label = "IntegerController"
@@ -117,7 +113,6 @@ class IntegerController(FormElement):
             self.element.label = self.label
             self.element.pack()
 
-
 class CheckboxElement(FormElement):
     def __init__(self, parent):
         self.parent = parent
@@ -129,7 +124,6 @@ class CheckboxElement(FormElement):
             label.pack()
             Checkbutton(self.parent, text="Checkbox element",
                         command=self.parent.app.reload).pack()
-
 
 class RadioElement(FormElement):
     def __init__(self, parent, label, variable):
@@ -151,16 +145,13 @@ class RadioElement(FormElement):
                 Radiobutton(self.parent, variable=self.variable, text=option,
                             value=index, command=self.parent.app.reload).pack()
 
-
 class ButtonElement(FormElement):
-
     def __init__(self, parent):
         self.parent = parent
 
     def pack(self):
         b = Button(self.parent, text="OK")
         b.pack()
-
 
 class TextController(FormElement):
     parent = None
@@ -177,7 +168,6 @@ class TextController(FormElement):
             self.element.label = self.label
             self.element.pack()
 
-
 class ReadOnlyController(FormElement):
     parent = None
     label = "ReadOnlyController"
@@ -193,7 +183,6 @@ class ReadOnlyController(FormElement):
             self.element.label = self.label
             self.element.pack()
 
-
 class BooleanController(FormElement):
     parent = None
     label = "BooleanController"
@@ -207,7 +196,6 @@ class BooleanController(FormElement):
         self.element.label = self.label
         self.element.pack()
 
-
 class ButtonController(FormElement):
     parent = None
 
@@ -218,9 +206,7 @@ class ButtonController(FormElement):
     def render(self):
         self.element.pack()
 
-
 class PageElement(FormElement):
-
     def __init__(self, parent):
         self.parent = parent
 
@@ -228,9 +214,7 @@ class PageElement(FormElement):
         group = Frame(self.parent)
         group.pack(padx=10, pady=10)
 
-
 class PageController(FormElement):
-
     def __init__(self, parent):
         self.parent = parent
         self.element = PageElement(parent)
@@ -243,7 +227,6 @@ class PageController(FormElement):
     def render(self):
         [element.render() for element in self.elements]
         self.element.pack()
-
 
 class QuestionController(FormElement):
     label = "This is a question"
@@ -260,7 +243,6 @@ class QuestionController(FormElement):
         ''' Return Controller '''
         self.controller.render()
 
-
 class ComputedQuestionController(FormElement):
     label = "This is a question"
     variable = None  # depends on type needed
@@ -276,15 +258,11 @@ class ComputedQuestionController(FormElement):
         ''' Return Controller '''
         self.controller.render()
 
-
 class Window(Frame):
-
     def __init__(self, parent=None):
         Frame.__init__(self, parent)
 
-
 class Application(object):
-
     def __init__(self):
         root = Tk()
         root.app = self
