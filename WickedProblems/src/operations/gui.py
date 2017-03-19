@@ -70,9 +70,10 @@ class BuildGui(QlAlg):
         return _anon()
 
     def ComputedQuestion(self, variable, label, expression):
-        def _register(form):
+        def _register(form): 
             question = ComputedQuestionController(
-                self.parent, label.execute(), ReadOnlyController(self.parent, variable.execute()), expression)
+                self.parent, label.execute(), ReadOnlyController(self.parent, variable.execute()))
+            
             form.add_element(question)
 
         class _anon():

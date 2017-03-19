@@ -40,12 +40,10 @@ app = Application()
 create_ui = BuildGui(app.root, environment.environment)
 app.environment = environment.environment
 
-exp = environment.environment.computed_questions[0][2]
 
 
 form = form_ast.alg(create_ui).execute()
 
-print(exp.alg(Eval(environment.environment)).execute())
 
 app.add_element(form)
 # def export_form():

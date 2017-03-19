@@ -21,7 +21,7 @@ form taxOfficeExample {
 
     "Value my selling price:"
       valueOver: money =
-        (sellingPrice - overMyValue)
+        (sellingPrice - privateDebt)
   }
   "Is this questions being printed?"
     isPrinted: boolean

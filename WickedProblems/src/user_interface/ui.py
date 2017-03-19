@@ -36,7 +36,9 @@ FormElements
 
 '''
 
+
 class FormElement(object):
+
     def __init__(self):
         pass
 
@@ -45,8 +47,10 @@ class FormElement(object):
 
     __repr__ = __str__
 
+
 class FormController(object):
     elements = []
+
     def __init__(self, parent, elements=[]):
         self.parent = parent
         [self.add_element(element) for element in elements]
@@ -63,8 +67,10 @@ class FormController(object):
 
     __repr__ = __str__
 
+
 class SectionElement(FormElement):
     pass
+
 
 class InputElement(FormElement):
     label = "InputElement "
@@ -83,6 +89,7 @@ class InputElement(FormElement):
         entry.bind('<FocusOut>', self.parent.app.reload)
         # entry.focus_set()
 
+
 class DisabledInputElement(FormElement):
     label = "DisabledInputElement "
 
@@ -94,10 +101,13 @@ class DisabledInputElement(FormElement):
     def pack(self):
         label = Label(master=self.parent, cnf={'text': self.label})
         label.pack()
-        entry = Entry(self.parent, textvariable=self.variable, state='readonly')
+        entry = Entry(self.parent, textvariable=self.variable,
+                      state='readonly')
         entry.pack()
 
+
 class ScaleElement(FormElement):
+
     def __init__(self, parent):
         self.parent = parent
 
@@ -107,25 +117,28 @@ class ScaleElement(FormElement):
         w = Scale(self.parent, from_=0, to=10, orient=HORIZONTAL)
         w.pack()
 
+
 class NumberElement(FormElement):
+
     def __init__(self, parent, label, variable):
         self.parent = parent
         self.label = label
         self.variable = variable
 
     def pack(self):
-        label = Label(master=self.parent, cnf={'text': self.label,})
+        label = Label(master=self.parent, cnf={'text': self.label, })
         label.pack()
-        w = Spinbox(self.parent, from_=0, to=1000000, textvariable=self.variable
-                    ,command=self.parent.app.reload)
+        w = Spinbox(self.parent, from_=0, to=1000000,
+                    textvariable=self.variable, command=self.parent.app.reload)
         w.bind('<FocusOut>', self.parent.app.reload)
         w.pack()
+
 
 class IntegerController(FormElement):
     parent = None
     label = "IntegerController"
 
-    def __init__(self, parent,variable):
+    def __init__(self, parent, variable):
         self.parent = parent
         self.variable = variable
         self.element = NumberElement(parent, self.label, self.variable)
@@ -134,7 +147,9 @@ class IntegerController(FormElement):
         self.element.label = self.label
         self.element.pack()
 
+
 class CheckboxElement(FormElement):
+
     def __init__(self, parent):
         self.parent = parent
 
@@ -144,13 +159,15 @@ class CheckboxElement(FormElement):
         Checkbutton(self.parent, text="Checkbox element",
                     command=self.parent.app.reload).pack()
 
+
 class RadioElement(FormElement):
+
     def __init__(self, parent, label, variable):
         self.label = label
         self.parent = parent
         self.variable = variable
         self.variable.set(0)
-        self.options = ["No","Yes"]
+        self.options = ["No", "Yes"]
 
     def value(self):
         return self.variable.get()
@@ -160,15 +177,18 @@ class RadioElement(FormElement):
         label.pack()
         for index, option in enumerate(self.options):
             Radiobutton(self.parent, variable=self.variable, text=option,
-                               value=index, command=self.parent.app.reload).pack()
+                        value=index, command=self.parent.app.reload).pack()
+
 
 class ButtonElement(FormElement):
+
     def __init__(self, parent):
         self.parent = parent
 
     def pack(self):
         b = Button(self.parent, text="OK")
         b.pack()
+
 
 class TextController(FormElement):
     parent = None
@@ -183,6 +203,7 @@ class TextController(FormElement):
         self.element.label = self.label
         self.element.pack()
 
+
 class ReadOnlyController(FormElement):
     parent = None
     label = "ReadOnlyController"
@@ -195,6 +216,7 @@ class ReadOnlyController(FormElement):
     def render(self):
         self.element.label = self.label
         self.element.pack()
+
 
 class BooleanController(FormElement):
     parent = None
@@ -209,6 +231,7 @@ class BooleanController(FormElement):
         self.element.label = self.label
         self.element.pack()
 
+
 class ButtonController(FormElement):
     parent = None
 
@@ -219,7 +242,9 @@ class ButtonController(FormElement):
     def render(self):
         self.element.pack()
 
+
 class PageElement(FormElement):
+
     def __init__(self, parent):
         self.parent = parent
 
@@ -227,7 +252,9 @@ class PageElement(FormElement):
         group = Frame(self.parent)
         group.pack(padx=10, pady=10)
 
+
 class PageController(FormElement):
+
     def __init__(self, parent):
         self.parent = parent
         self.element = PageElement(parent)
@@ -240,6 +267,7 @@ class PageController(FormElement):
     def render(self):
         [element.render() for element in self.elements]
         self.element.pack()
+
 
 class QuestionController(FormElement):
     label = "This is a question"
@@ -256,27 +284,31 @@ class QuestionController(FormElement):
         ''' Return Controller '''
         self.controller.render()
 
+
 class ComputedQuestionController(FormElement):
     label = "This is a question"
     variable = None  # depends on type needed
     parent = None
     controller = None
 
-    def __init__(self, parent, label, controller, expression):
+    def __init__(self, parent, label, controller):
         self.controller = controller
         self.label = label
-        self.expression = expression
         controller.label = self.label
 
     def render(self):
         ''' Return Controller '''
         self.controller.render()
 
+
 class Window(Frame):
+
     def __init__(self, parent=None):
         Frame.__init__(self, parent)
 
+
 class Application(object):
+
     def __init__(self):
         root = Tk()
         root.app = self
@@ -287,10 +319,12 @@ class Application(object):
         self.elements = []
         self.parser = QL()
 
-
-    def reload(self,event = None):
+    def reload(self, event=None):
         for widget in self.root.winfo_children():
             widget.destroy()
+        for question in self.environment.computed_questions:
+            print(question[2].alg(Eval(self.environment)).execute())
+
         self.setup_elements()
         print(self.environment.export())
 
