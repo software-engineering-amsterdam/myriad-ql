@@ -6,30 +6,30 @@ namespace Questionnaires.UI.Widgets
 {
     class BinaryRadioGroup : StackPanel
     {
-        private RadioButton trueButton = new RadioButton();
-        private RadioButton falseButton = new RadioButton();
+        private RadioButton TrueButton = new RadioButton();
+        private RadioButton FalseButton = new RadioButton();
 
         public BinaryRadioGroup(string trueLabel, string falseLabel)
         {
-            trueButton.Content = trueLabel;
-            falseButton.Content = falseLabel;
+            TrueButton.Content = trueLabel;
+            FalseButton.Content = falseLabel;
             Orientation = Orientation.Horizontal;
-            Children.Add(trueButton);
-            Children.Add(falseButton);
+            Children.Add(TrueButton);
+            Children.Add(FalseButton);
 
-            trueButton.Checked += Button_Checked;
-            falseButton.Checked += Button_Checked;
+            TrueButton.Checked += Button_Checked;
+            FalseButton.Checked += Button_Checked;
         }
 
         public void SetValue(bool value)
         {
-            trueButton.IsChecked = value;
-            falseButton.IsChecked = !trueButton.IsChecked;
+            TrueButton.IsChecked = value;
+            FalseButton.IsChecked = !TrueButton.IsChecked;
         }
 
         public bool GetValue()
         {
-            return trueButton.IsChecked == true;
+            return TrueButton.IsChecked == true;
         }
 
         private void Button_Checked(object sender, RoutedEventArgs e)
