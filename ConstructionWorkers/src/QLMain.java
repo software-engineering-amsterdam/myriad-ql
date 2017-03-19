@@ -77,8 +77,7 @@ public class QLMain {
 
 
         System.out.println("Create GUI...");
-        Context questionStates =  new Context();
-        buildGUI(qlAST, questionStates);
+        buildGUI(qlAST);
 
     }
 
@@ -137,8 +136,8 @@ public class QLMain {
         return messages.containsNoErrors();
     }
 
-    private void buildGUI(Form ast, Context context) {
-        GUI gui = new GUI (ast, context);
+    private void buildGUI(Form ast) {
+        GUI gui = new GUI (ast);
         gui.showGUI();
     }
 }

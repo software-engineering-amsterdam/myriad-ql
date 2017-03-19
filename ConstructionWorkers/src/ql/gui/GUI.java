@@ -38,10 +38,10 @@ public class GUI implements GUIInterface{
     private final List<ComputedQuestion> computedQuestions;
     private final Map<Field, List<IfStatement>> fieldToIfStatementsMap;
 
-    public GUI(Form form, Context context) {
+    public GUI(Form form) {
         this.form = new FormFrame(form.getIdentifierName());
 
-        this.context = context;
+        this.context = new Context();
         evaluator = new Evaluator(context);
 
         FieldFactory fieldFactory = new FieldFactory(this, context);
