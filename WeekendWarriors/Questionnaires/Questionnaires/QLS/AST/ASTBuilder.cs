@@ -64,7 +64,7 @@ namespace Questionnaires.QLS.AST
 
         public override INode VisitSection([NotNull] QLSParser.SectionContext context)
         {
-            var section = new Section(RemoveDoubleQuotesAtStartAndEnd(context.StringLiteral().GetText()));
+            var section = new Section(Utility.String.TrimQuotes(context.StringLiteral().GetText()));
             foreach (var question in context.question())
             {
                 section.AddChild((dynamic)question.Accept(this));
@@ -91,7 +91,7 @@ namespace Questionnaires.QLS.AST
 
         public override INode VisitDefaultStyle([NotNull] QLSParser.DefaultStyleContext context)
         {
-            var widget = GetWidgetFromStyleContext(context);
+            var widget = GetWidgetFromText(context.widget().Widget().GetText());
             var type = GetTypeFromStyleContext(context);
 
             var defaultStyle = new DefaultStyle(type, (dynamic)widget);
@@ -103,13 +103,38 @@ namespace Questionnaires.QLS.AST
             }
 
             return defaultStyle;
+        }       
+        
+        public override INode VisitWidget([NotNull] QLSParser.WidgetContext context)
+        {
+            return GetWidgetFromText(context.Widget().GetText());            
         }
 
-        private static Widgets.Widget GetWidgetFromStyleContext(QLSParser.DefaultStyleContext context)
+        public override INode VisitSetting([NotNull] QLSParser.SettingContext context)
         {
-            var widgetType = context.widget().Widget().GetText();
-            Debug.Assert(widgetType == "spinbox" | widgetType == "slider" | widgetType == "text" | widgetType == "radio" | widgetType == "checkbox" | widgetType == "dropdown");
-            switch (widgetType)
+            var key = context.Property().GetText();
+            if (context.StringLiteral() != null)
+                return new Setting(key, context.StringLiteral().GetText());
+            if (context.NumberLiteral() != null)
+                return new Setting(key, context.NumberLiteral().GetText());
+            if (context.ColorLiteral() != null)
+                return new Setting(key, context.ColorLiteral().GetText());
+
+            throw new InvalidProgramException();
+        }
+
+        private string RemoveDoubleQuotesAtStartAndEnd(string unmodifiedString)
+        {
+            var modifiedString = unmodifiedString.Remove(0, 1);
+            modifiedString = modifiedString.Remove(modifiedString.Length - 1, 1);
+            return modifiedString;
+        }
+
+        private static Widgets.Widget GetWidgetFromText(string text)
+        {
+            Utility.Assertions.AssertInRange(text, new[] { "spinbox", "slider", "text", "radio", "checkbox", "dropdown" });
+
+            switch (text)
             {
                 case "spinbox": return new Widgets.Spinbox();
                 case "slider": return new Widgets.Slider();
@@ -133,44 +158,6 @@ namespace Questionnaires.QLS.AST
                 case "money": return new MoneyType();
             }
             throw new InvalidProgramException();
-        }
-
-        // TODO: this is just a copy of GetWidgetFromStyleContext
-        public override INode VisitWidget([NotNull] QLSParser.WidgetContext context)
-        {
-            var widgetType = context.Widget().GetText();
-            Debug.Assert(widgetType == "spinbox" | widgetType == "slider" | widgetType == "text" | widgetType == "radio" | widgetType == "checkbox" | widgetType == "dropdown");
-            switch (widgetType)
-            {
-                case "spinbox": return new Widgets.Spinbox();
-                case "slider": return new Widgets.Slider();
-                case "text": return new Widgets.Text();
-                case "radio": return new Widgets.Radio();
-                case "checkbox": return new Widgets.CheckBox();
-                case "dropdown": return new Widgets.DropDown();
-            }
-            throw new InvalidProgramException();
-        }
-
-        public override INode VisitSetting([NotNull] QLSParser.SettingContext context)
-        {
-            // TODO: this is horrible!
-            var key = context.Property().GetText();
-            if (context.StringLiteral() != null)
-                return new Setting(key, context.StringLiteral().GetText());
-            if (context.NumberLiteral() != null)
-                return new Setting(key, context.NumberLiteral().GetText());
-            if (context.ColorLiteral() != null)
-                return new Setting(key, context.ColorLiteral().GetText());
-
-            throw new InvalidProgramException();
-        }
-
-        private string RemoveDoubleQuotesAtStartAndEnd(string unmodifiedString)
-        {
-            var modifiedString = unmodifiedString.Remove(0, 1);
-            modifiedString = modifiedString.Remove(modifiedString.Length - 1, 1);
-            return modifiedString;
         }
     }
 }
