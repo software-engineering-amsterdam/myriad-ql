@@ -1,29 +1,16 @@
 ﻿using Questionnaires.QL.AST.Types;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace Questionnaires.UI.Widgets
 {
-    class IntegerSliderWidget : QuestionWidget
+    class IntegerSliderWidget : SliderWidget
     {
-        private Slider Slider;
-
         public IntegerSliderWidget() : base(new Slider())
         {
-            Debug.Assert(Control.GetType() == typeof(Slider));
-            Slider = Control as Slider;
-
             Slider.TickFrequency = 1;
             Slider.IsSnapToTickEnabled = true;
-            Slider.Maximum = 1E6;
-            Slider.Minimum = 0;
-            Slider.Width = 100;
-
+            
             Slider.ValueChanged += (sender, args) => OnInputChanged(new IntegerType((int)Slider.Value));
         }
 

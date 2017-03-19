@@ -4,19 +4,10 @@ using System.Windows.Controls;
 
 namespace Questionnaires.UI.Widgets
 {
-    class DecimalSliderWidget : QuestionWidget
+    class DecimalSliderWidget : SliderWidget
     {
-        private Slider Slider;
-
         public DecimalSliderWidget() : base(new Slider())
         {
-            Debug.Assert(Control.GetType() == typeof(Slider));
-            Slider = Control as Slider;
-
-            Slider.Maximum = 1E6;
-            Slider.Minimum = 0;
-            Slider.Width = 100;
-
             Slider.ValueChanged += (sender, args) => OnInputChanged(new MoneyType((decimal)Slider.Value));
         }
 
