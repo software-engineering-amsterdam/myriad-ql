@@ -1,6 +1,9 @@
 package view.widgets
 
+import java.text.SimpleDateFormat
+
 import ast.NumericType
+import com.typesafe.config.ConfigFactory
 import values.{ NumericValue, UndefinedValue, Value }
 
 import scalafx.Includes._
@@ -10,6 +13,8 @@ import scalafx.scene.control.TextField
 class NumericTextWidget(numberType: NumericType)(implicit val changeHandler: Value => Unit) extends QLWidget {
 
   private val textfield = new TextField()
+  private val config = ConfigFactory.load()
+  private val currencySymbol = config.getString("currencySymbol")
 
   textfield.onAction = handle {
     val qlValue = NumericValue.stringToNumericValue(textfield.text.value, numberType)

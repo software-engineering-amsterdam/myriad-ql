@@ -3,7 +3,8 @@ package values
 import java.text.SimpleDateFormat
 import java.util.Date
 
-import ast._
+import ast.{ DecimalType, IntegerType, MoneyType, NumericType }
+import com.typesafe.config.ConfigFactory
 
 import scala.math.BigDecimal.RoundingMode
 import scala.util.{ Failure, Success, Try }
@@ -15,7 +16,8 @@ case class BooleanValue(value: Boolean) extends Value {
 }
 
 case class DateValue(value: Date) extends Value {
-  private val dateFormat = new SimpleDateFormat("yyyy-MM-dd")
+  private val config = ConfigFactory.load()
+  private val dateFormat = new SimpleDateFormat(config.getString("dateFormat"))
 
   override def toString = dateFormat.format(value)
 }
@@ -33,7 +35,9 @@ case class DecimalValue(value: BigDecimal) extends NumericValue {
 }
 
 case class MoneyValue(value: BigDecimal) extends NumericValue {
-  override def toString = value.setScale(2, RoundingMode.HALF_EVEN).toString
+  private val config = ConfigFactory.load()
+  private val currencySymbol = config.getString("currencySymbol")
+  override def toString = currencySymbol + value.setScale(2, RoundingMode.HALF_EVEN).toString
 }
 
 case class StringValue(value: String) extends Value {
