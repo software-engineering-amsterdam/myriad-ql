@@ -257,6 +257,7 @@ class Environment(object):
     questions = []
     computed_questions = []
     variables_dict = {}
+    conditional_questions = {}
 
     def __init__(self):
         pass
@@ -273,6 +274,17 @@ class Environment(object):
 
     def add_computed_question(self, variable, label, expression):
         self.computed_questions.append((variable, label, expression))
+
+    def add_conditional(self, variable, condition):
+        self.conditional_questions.update({variable: condition})
+
+    def is_visible(self, variable):
+        condition = self.conditional_questions.get(variable)
+        
+        if (condition):
+            return condition.alg(Eval(self)).execute()
+        else:
+            return True
 
     def update_computed_questions(self):
         for question in self.computed_questions:
@@ -542,6 +554,132 @@ class RegisterComputedQuestions(QlAlg):
             self.environment.add_computed_question(variable.execute(), label.execute(), expression.execute())
         class _anon():
             execute = lambda self: _register()
+        return _anon()
+
+    def Boolean(self, value=False):
+        def _register(self):
+            return 'boolean'
+
+        class _anon():
+            execute = lambda self: _register(self)
+        return _anon()
+
+    def Money(self, value=False):
+        def _register():
+            return 'money'
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
+    def Substraction(self, lhs, rhs):
+        class _anon():
+            execute = lambda self: Substraction(lhs.execute(), rhs.execute())
+        return _anon()
+
+    def Addition(self, lhs, rhs):
+        class _anon():
+            execute = lambda self: Addition(lhs.execute(), rhs.execute())
+        return _anon()
+
+    def Division(self, lhs, rhs):
+        class _anon():
+            execute = lambda self: Division(lhs.execute(), rhs.execute())
+        return _anon()
+
+    def Multiplication(self, lhs, rhs):
+        class _anon():
+            execute = lambda self: Multiplication(lhs.execute(), rhs.execute())
+        return _anon()
+
+    def Integer(self, value):
+        def _register():
+            return 'integer'
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
+    def StringLiteral(self, value):
+        def _register():
+            return value
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
+    def String(self, value):
+        def _register():
+            return 'string'
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
+
+class RegisterConditions(QlAlg):
+    def __init__(self, environment_vars):
+        self.environment = Environment()
+
+    def Literal(self, value):
+        class _anon():
+            execute = None
+
+        return _anon()
+
+    def Form(self, name, block):
+        def _register():
+            block.execute(None)
+            return
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
+    def Block(self, statements):
+        class _anon():
+            execute = lambda self, condition: [k.execute(condition)
+                                    for _, k in enumerate(statements)]
+        return _anon()
+
+    def Variable(self, name, datatype):
+        class _anon():
+            execute = lambda self: name
+        return _anon()
+
+    def RefVariable(self, name):
+        class _anon():
+            execute = lambda self: RefVariable(name)
+        return _anon()
+
+    def Question(self, variable, label):
+        def _register(condition):
+            if condition:
+                print("register...",variable.execute(),  label.execute())
+                self.environment.add_conditional(variable.execute(), condition)
+
+        class _anon():
+            execute = lambda self, condition: _register(condition)
+        return _anon()
+
+    def ifThen(self, expression, block):
+        def _register():
+
+            expression.execute()
+            block.execute(expression.execute())
+
+        class _anon():
+            execute = lambda self, expression: _register()
+        return _anon()
+
+    def ComputedQuestion(self, variable, label, expression):
+        def _register(condition):
+            if condition:
+                print("Register CQ...",variable.execute(), label.execute())
+                self.environment.add_conditional(variable.execute(), condition)
+     
+        class _anon():
+            execute = lambda self, condition: _register(condition)
         return _anon()
 
     def Boolean(self, value=False):

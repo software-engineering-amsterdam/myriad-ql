@@ -52,6 +52,7 @@ class BuildGui(QlAlg):
 
     def Question(self, variable, label):
         def _register(form):
+            
             question = QuestionController(
                 self.parent, label.execute(), variable.execute())
             form.add_element(question)
