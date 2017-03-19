@@ -79,7 +79,8 @@ class InputElement(FormElement):
         label.pack()
         entry = Entry(self.parent, textvariable=self.variable)
         entry.pack()
-        entry.bind('<KeyRelease>', self.parent.app.reload)
+        # entry.bind('<KeyRelease>', self.parent.app.reload)
+        entry.bind('<FocusOut>', self.parent.app.reload)
         # entry.focus_set()
 
 class DisabledInputElement(FormElement):
@@ -117,6 +118,7 @@ class NumberElement(FormElement):
         label.pack()
         w = Spinbox(self.parent, from_=0, to=1000000, textvariable=self.variable
                     ,command=self.parent.app.reload)
+        w.bind('<FocusOut>', self.parent.app.reload)
         w.pack()
 
 class IntegerController(FormElement):
@@ -265,7 +267,6 @@ class ComputedQuestionController(FormElement):
         self.label = label
         self.expression = expression
         controller.label = self.label
-        print(self.expression)
 
     def render(self):
         ''' Return Controller '''
@@ -285,19 +286,13 @@ class Application(object):
         self.environment = None
         self.elements = []
         self.parser = QL()
-   
+
 
     def reload(self,event = None):
-        # for widget in self.root.winfo_children():
-        #     widget.destroy()
-        # self.setup_elements()
-        if event is not None:
-            event.widget.focus_set()
-        # event.widget.focus_set()
-        
-        # TODO: Redraw the conditionals!!!
-
-        #print(self.environment.export())
+        for widget in self.root.winfo_children():
+            widget.destroy()
+        self.setup_elements()
+        print(self.environment.export())
 
     def export_form(self):
         f = filedialog.asksaveasfile(mode='w', defaultextension=".json")
