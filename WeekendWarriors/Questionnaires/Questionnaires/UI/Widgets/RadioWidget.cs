@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace Questionnaires.UI.Widgets
 {
-    class RadioWidget : QuestionWidget
+    public class RadioWidget : QuestionWidget
     {
         private BinaryRadioGroup Buttons;
 

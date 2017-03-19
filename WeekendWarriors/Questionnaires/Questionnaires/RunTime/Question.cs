@@ -36,7 +36,7 @@ namespace Questionnaires.RunTime
             target.Children.Add(Widget);
         }
 
-        public void SetStyle(WidgetStyle style) // TODO: I think this can be removed once we properly refactor the style creation in the QLS processor
+        public void SetStyle(WidgetStyle style)
         {
             Widget.SetStyle(style);
         }

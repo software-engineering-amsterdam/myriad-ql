@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Questionnaires.Utility
 {
-    class String
+    public class String
     {
         public static string TrimQuotes(string input)
         {

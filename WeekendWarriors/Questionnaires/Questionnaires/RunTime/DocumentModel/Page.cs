@@ -6,7 +6,6 @@ namespace Questionnaires.RunTime.DocumentModel
     {
         public Page(string name) : base(name)
         {
-
         }
 
         protected override TextBlock GetHeader()

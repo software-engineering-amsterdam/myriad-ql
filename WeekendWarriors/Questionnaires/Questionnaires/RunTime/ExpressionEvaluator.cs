@@ -9,9 +9,9 @@ namespace Questionnaires.RunTime
     {
         private QuestionStore QuestionStore;
 
-        public ExpressionEvaluator(QuestionStore store)
+        public ExpressionEvaluator(QuestionStore questionStore)
         {
-            QuestionStore = store;
+            QuestionStore = questionStore;
         }
 
         public IType Evaluate(IExpression expression)

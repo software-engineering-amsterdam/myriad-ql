@@ -5,10 +5,9 @@ namespace Questionnaires.QLS.SemanticAnalysis
 {
     class PlacementChecker
     {
-        //private HashSet<RunTime.Question> QuestionsInQl;
         private List<RunTime.Question> PlacedQuestions = new List<RunTime.Question>();
         private Dictionary<string, RunTime.Question> QLQuestions = new Dictionary<string, RunTime.Question>();
-        Result Result;
+        private Result Result;
 
         public PlacementChecker(Result result, IEnumerable<RunTime.Question> questionsInQL)
         {
@@ -44,11 +43,11 @@ namespace Questionnaires.QLS.SemanticAnalysis
 
         public void CheckIfAllQuestionsArePlaced()
         {
-            foreach (var QLQuestion in QLQuestions.Values)
+            foreach (var qlQuestion in QLQuestions.Values)
             {
-                if (!PlacedQuestions.Contains(QLQuestion))
+                if (!PlacedQuestions.Contains(qlQuestion))
                 {
-                    Result.AddEvent(new Error(string.Format("Question {0} in the QL file is notplaced by the QLS file", QLQuestion.Identifier)));
+                    Result.AddEvent(new Error(string.Format("Question {0} in the QL file is notplaced by the QLS file", qlQuestion.Identifier)));
                 }
             }
         }

@@ -45,7 +45,7 @@ namespace Questionnaires.QLS.Processing
             return pageContainer;
         }
 
-        private RunTime.DocumentModel.Section Visit(QLS.AST.Section section)
+        private RunTime.DocumentModel.Section Visit(AST.Section section)
         {
             /* Push the default styles of this section onto the stack
              * so child sections/questions can use them */
@@ -80,23 +80,22 @@ namespace Questionnaires.QLS.Processing
             while (stackCopy.Count > 0)
             {
                 var style = (DefaultStyle)stackCopy.Pop();
-                if (style.Type.GetType() == QLQuestion.GetValue().GetType()) // TODO: The one place where we use typeof. Can we do better?
+                if (style.Type.GetType() == QLQuestion.GetValue().GetType())
                 {
                     QLQuestion.SetWidget(style.Widget);
-                    WidgetStyle properties = new WidgetStyle();
+                    var properties = new WidgetStyle();
                     foreach (var property in style.Properties)
                     {
                         switch (property.Key)
                         {
                             case "width": properties.Width = int.Parse(property.Value); break;
-                            case "font": properties.Font = property.Value.Replace('"', ' ').Trim(); break; // TODO: OMG this is so horrible it makes my eyes bleed :'(
+                            case "font": properties.Font = property.Value.Replace('"', ' ').Trim(); break;
                             case "fontsize": properties.FontSize = int.Parse(property.Value); break;
                             case "color": properties.Color = property.Value; break;
                         }
                     }
 
                     QLQuestion.SetStyle(properties);
-
                     break;
                 }
             }

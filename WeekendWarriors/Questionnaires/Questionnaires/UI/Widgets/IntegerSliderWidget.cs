@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace Questionnaires.UI.Widgets
 {
-    class IntegerSliderWidget : SliderWidget
+    public class IntegerSliderWidget : SliderWidget
     {
         public IntegerSliderWidget() : base(new Slider())
         {

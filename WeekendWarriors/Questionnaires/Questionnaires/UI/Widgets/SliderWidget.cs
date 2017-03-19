@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace Questionnaires.UI.Widgets
 {
-    class SliderWidget : QuestionWidget
+    public class SliderWidget : QuestionWidget
     {
         protected Slider Slider;
 
@@ -17,6 +17,7 @@ namespace Questionnaires.UI.Widgets
         }
 
         public override void SetQuestionValue(IType value)
-        { }
+        {
+        }
     }
 }

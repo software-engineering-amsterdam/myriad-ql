@@ -6,7 +6,7 @@ using System.Windows.Media;
 
 namespace Questionnaires.UI.Widgets
 {
-    class IntegerBoxWidget : BoxWidget
+    public class IntegerBoxWidget : BoxWidget
     {
         public IntegerBoxWidget() : base(new TextBox())
         {

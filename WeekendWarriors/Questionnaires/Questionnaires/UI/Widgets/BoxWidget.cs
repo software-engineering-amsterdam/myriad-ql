@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace Questionnaires.UI.Widgets
 {
-    class BoxWidget : QuestionWidget
+    public class BoxWidget : QuestionWidget
     {
         protected TextBox TextBox;
 

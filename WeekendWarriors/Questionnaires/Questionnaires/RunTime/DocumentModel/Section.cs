@@ -6,7 +6,6 @@ namespace Questionnaires.RunTime.DocumentModel
     {
         public Section(string name) : base(name)
         {
-
         }
 
         protected override TextBlock GetHeader()

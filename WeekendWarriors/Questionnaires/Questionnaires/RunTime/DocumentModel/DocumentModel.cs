@@ -5,11 +5,10 @@ namespace Questionnaires.RunTime.DocumentModel
 {
     public class DocumentModel
     {
-        private List<Page> Pages;
+        private List<Page> Pages = new List<Page>();
 
         public DocumentModel()
         {
-            Pages = new List<Page>();
         }
 
         public void Clear()

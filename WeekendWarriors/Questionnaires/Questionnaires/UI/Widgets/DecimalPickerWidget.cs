@@ -4,7 +4,7 @@ using Xceed.Wpf.Toolkit;
 
 namespace Questionnaires.UI.Widgets
 {
-    class DecimalPickerWidget : QuestionWidget
+    public class DecimalPickerWidget : QuestionWidget
     {
         private DecimalUpDown SpinBox;
 

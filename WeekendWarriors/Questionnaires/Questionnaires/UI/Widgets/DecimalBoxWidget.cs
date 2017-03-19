@@ -6,7 +6,7 @@ using System.Windows.Media;
 
 namespace Questionnaires.UI.Widgets
 {
-    class DecimalBoxWidget : BoxWidget
+    public class DecimalBoxWidget : BoxWidget
     {
         public DecimalBoxWidget() : base(new TextBox())
         {

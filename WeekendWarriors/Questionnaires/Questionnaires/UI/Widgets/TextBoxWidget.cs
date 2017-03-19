@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace Questionnaires.UI.Widgets
 {
-    class TextBoxWidget : BoxWidget
+    public class TextBoxWidget : BoxWidget
     {
         public TextBoxWidget() : base(new TextBox())
         {

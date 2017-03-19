@@ -6,9 +6,6 @@ using Questionnaires.RunTime;
 using Questionnaires.RunTime.DocumentModel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Questionnaires.UI
 {

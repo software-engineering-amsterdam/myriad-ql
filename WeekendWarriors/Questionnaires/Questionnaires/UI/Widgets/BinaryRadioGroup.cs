@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace Questionnaires.UI.Widgets
 {
-    class BinaryRadioGroup : StackPanel
+    public class BinaryRadioGroup : StackPanel
     {
         private RadioButton TrueButton = new RadioButton();
         private RadioButton FalseButton = new RadioButton();

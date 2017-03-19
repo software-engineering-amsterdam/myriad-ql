@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace Questionnaires.UI.Widgets
 {
-    class CheckBoxWidget : QuestionWidget
+    public class CheckBoxWidget : QuestionWidget
     {
         private CheckBox CheckBox;
 

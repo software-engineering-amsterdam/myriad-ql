@@ -28,11 +28,11 @@ namespace Questionnaires.UI.Widgets
         {
             if (visible)
             {
-                Visibility = System.Windows.Visibility.Visible;
+                Visibility = Visibility.Visible;
             }
             else
             {
-                Visibility = System.Windows.Visibility.Hidden;
+                Visibility = Visibility.Hidden;
             }
         }
 

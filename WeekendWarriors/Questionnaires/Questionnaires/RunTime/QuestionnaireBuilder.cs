@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Questionnaires.RunTime
 {
-    class QuestionnaireBuilder
+    public class QuestionnaireBuilder
     {
         private DocumentModel.DocumentModel DocumentModel;
         private List<Question> Questions = new List<Question>();

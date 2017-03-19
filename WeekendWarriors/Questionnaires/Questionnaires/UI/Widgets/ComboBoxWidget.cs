@@ -16,7 +16,6 @@ namespace Questionnaires.UI.Widgets
             ComboBox.Items.Add("Yes");
             ComboBox.Items.Add("No");
 
-            // TODO: this should no longer be required once we support 'undefined' values. (Because all values would be initialized to 'undefined' and thus the first call to ApplyRules would lead to changes in all values and thus updates of the UI elements 
             ComboBox.SelectedValue = "No";
 
             ComboBox.SelectionChanged += (sender, args) =>

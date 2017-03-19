@@ -4,7 +4,7 @@ using Xceed.Wpf.Toolkit;
 
 namespace Questionnaires.UI.Widgets
 {
-    class IntegerPickerWidget : QuestionWidget
+    public class IntegerPickerWidget : QuestionWidget
     {
         private IntegerUpDown Spinbox;
 
