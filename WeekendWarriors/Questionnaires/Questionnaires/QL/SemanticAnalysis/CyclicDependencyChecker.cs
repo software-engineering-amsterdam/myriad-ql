@@ -22,7 +22,7 @@ namespace Questionnaires.QL.SemanticAnalysis
             if (!Dependencies.ContainsKey(dependee.Identifier))
                 Dependencies[dependee.Identifier] = new HashSet<string>();
 
-            foreach(var dependecy in dependencies)
+            foreach (var dependecy in dependencies)
             {
                 Dependencies[dependee.Identifier].Add(dependecy.Name);
             }            
@@ -33,7 +33,7 @@ namespace Questionnaires.QL.SemanticAnalysis
             var dependees = Dependencies.Keys;
             foreach (var dependee in dependees)
             {
-                List<string> dependencies = new List<string>();
+                var dependencies = new List<string>();
                 dependencies.Add(dependee);
                 if (DependantOn(dependencies))
                 {
@@ -46,10 +46,10 @@ namespace Questionnaires.QL.SemanticAnalysis
 
         private static string CreateErrorMessage(List<string> dependencies)
         {
-            string message = "Cyclic dependency found between questions ";
+            var message = "Cyclic dependency found between questions ";
             for (var index = 0; index < dependencies.Count; index++)
             {
-                string connector = ",";
+                var connector = ",";
                 if (index == dependencies.Count - 2)
                     connector = "and";
                 if (index == dependencies.Count - 1)
@@ -79,9 +79,9 @@ namespace Questionnaires.QL.SemanticAnalysis
 
             // If we get here, the last dependency of the trail has dependencies, but none of them are the root node. We need
             // to investigate further
-            foreach(var dependency in leafDependencies)
+            foreach (var dependency in leafDependencies)
             {
-                List<string> copy = new List<string>(leafDependencies);
+                var copy = new List<string>(leafDependencies);
                 copy.Add(dependency);
                 if (DependantOn(copy))
                 {
