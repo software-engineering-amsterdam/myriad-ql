@@ -276,16 +276,10 @@ class Environment(object):
 
     def update_computed_questions(self):
         for question in self.computed_questions:
-<<<<<<< HEAD
-                var = self.get_var(question[0].name)
-                evalutation = question[2].alg(Eval(self)).execute()
-                var.set(evalutation)
-   
-=======
-                self.get_var(question[0].name).set(str(question[2].alg(Eval(self)).execute()))
-
->>>>>>> fe14fe42dbcf4fa6fb53ed30d273d64d17527a16
-
+            var = self.get_var(question[0].name)
+            evalutation = question[2].alg(Eval(self)).execute()
+            var.set(evalutation)
+            
     def get_var(self, var):
         return self.variables_dict.get(var)
 
