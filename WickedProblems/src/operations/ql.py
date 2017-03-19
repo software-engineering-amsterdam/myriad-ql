@@ -285,11 +285,10 @@ class Environment(object):
 
     def is_visible(self, variable):
         condition = self.conditional_questions.get(variable)
-
         if (condition):
             return condition.alg(Eval(self)).execute()
         else:
-            return True
+            return 1
 
     def update_computed_questions(self):
         for question in self.computed_questions:

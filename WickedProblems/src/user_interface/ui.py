@@ -140,8 +140,10 @@ class IntegerController(FormElement):
         self.element = NumberElement(parent, self.label, self.variable)
 
     def render(self):
-        self.element.label = self.label
-        self.element.pack()
+        key = self.parent.app.environment.get_var_key(self.variable)
+        if self.parent.app.environment.is_visible(key) == 1:
+            self.element.label = self.label
+            self.element.pack()
 
 
 class CheckboxElement(FormElement):
@@ -172,7 +174,7 @@ class RadioElement(FormElement):
         ###
         key = self.parent.app.environment.get_var_key(self.variable)
         print(key)
-        if(self.parent.app.environment.is_visible(key)):
+        if self.parent.app.environment.is_visible(key) == 1:
             label = Label(master=self.parent, cnf={'text': self.label})
             label.pack()
             for index, option in enumerate(self.options):
@@ -200,8 +202,10 @@ class TextController(FormElement):
         self.element = InputElement(parent, self.label, self.variable)
 
     def render(self):
-        self.element.label = self.label
-        self.element.pack()
+        key = self.parent.app.environment.get_var_key(self.variable)
+        if self.parent.app.environment.is_visible(key) == 1:
+            self.element.label = self.label
+            self.element.pack()
 
 
 class ReadOnlyController(FormElement):
@@ -214,8 +218,10 @@ class ReadOnlyController(FormElement):
         self.element = DisabledInputElement(parent, self.label, self.variable)
 
     def render(self):
-        self.element.label = self.label
-        self.element.pack()
+        key = self.parent.app.environment.get_var_key(self.variable)
+        if self.parent.app.environment.is_visible(key) == 1:
+            self.element.label = self.label
+            self.element.pack()
 
 
 class BooleanController(FormElement):
