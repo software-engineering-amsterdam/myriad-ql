@@ -32,5 +32,10 @@ namespace Questionnaires.QL.AST
         {
             return context.GetQuestionType(Name);
         }
+
+        public void GetIdentifiers(HashSet<Identifier> identifiers)
+        {
+            identifiers.Add(this);
+        }
     }
 }

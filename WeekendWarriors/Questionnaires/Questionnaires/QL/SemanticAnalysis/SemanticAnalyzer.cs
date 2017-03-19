@@ -15,6 +15,8 @@ namespace Questionnaires.QL.SemanticAnalysis
         public void AnalyzeForm(Form form)
         {
             AnalyzeAstNode(form);
+            if (!Result.ContainsErrors())
+                form.CheckDependencies(Result);
         }
 
         protected void AnalyzeAstNode(INode node)
