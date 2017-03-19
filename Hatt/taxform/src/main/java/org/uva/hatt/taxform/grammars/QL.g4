@@ -37,18 +37,18 @@ expression      : BooleanLiteral                                            # bo
                 | IntegerLiteral                                            # integerLiteral
                 | Identifier                                                # identifier
                 | '(' expression ')'                                        # groupedExpression
-                | left=expression op='/'  right=expression                  # computationExpression
-                | left=expression op='*'  right=expression                  # computationExpression
-                | left=expression op='-'  right=expression                  # computationExpression
-                | left=expression op='+'  right=expression                  # computationExpression
-                | left=expression op='<'  right=expression                  # computationExpression
-                | left=expression op='<=' right=expression                  # computationExpression
-                | left=expression op='>'  right=expression                  # computationExpression
-                | left=expression op='>=' right=expression                  # computationExpression
-                | left=expression op='==' right=expression                  # booleanExpression
-                | left=expression op='!=' right=expression                  # booleanExpression
-                | left=expression op='&&' right=expression                  # booleanExpression
-                | left=expression op='||' right=expression                  # booleanExpression
+                | left=expression op='/'  right=expression                  # division
+                | left=expression op='*'  right=expression                  # multiplication
+                | left=expression op='-'  right=expression                  # subtraction
+                | left=expression op='+'  right=expression                  # addition
+                | left=expression op='<'  right=expression                  # lowerThan
+                | left=expression op='<=' right=expression                  # lowerThanOrEqual
+                | left=expression op='>'  right=expression                  # greaterThan
+                | left=expression op='>=' right=expression                  # greaterThanOrEqual
+                | left=expression op='==' right=expression                  # equal
+                | left=expression op='!=' right=expression                  # notEqual
+                | left=expression op='&&' right=expression                  # logicalAnd
+                | left=expression op='||' right=expression                  # logicalOr
                 ;
 
 // Tokens
