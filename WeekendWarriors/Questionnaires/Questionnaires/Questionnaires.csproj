@@ -141,6 +141,7 @@
     <Compile Include="RunTime\DocumentModel\Section.cs" />
     <Compile Include="RunTime\DocumentModel\SimpleContainer.cs" />
     <Compile Include="UI\Renderer.cs" />
+    <Compile Include="UI\UIBuilder.cs" />
     <Compile Include="UI\Widgets\DecimalBoxWidget.cs" />
     <Compile Include="UI\Widgets\IntegerBoxWidget.cs" />
     <Compile Include="UI\Widgets\IntegerSliderWidget.cs" />

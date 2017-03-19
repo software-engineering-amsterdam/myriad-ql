@@ -50,7 +50,7 @@ namespace Questionnaires.QL.SemanticAnalysis
              * If it is of another type, it is an error */
             var storedType = Context.GetQuestionType(node.Identifier);
             if (storedType.GetType() == node.Type.GetType())
-                result.AddEvent(new Warning(string.Format("Redeclaration of question {0}", node.Identifier)));
+                result.AddEvent(new Error(string.Format("Redeclaration of question {0}", node.Identifier)));
             else
                 result.AddEvent(new Error(string.Format("Redeclaration of question {0} with conflicting types {1} and {2}", node.Identifier, node.Type, storedType)));
         }

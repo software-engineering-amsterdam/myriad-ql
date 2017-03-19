@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Windows;
 using Questionnaires.ErrorHandling;
 using Questionnaires.QL.SemanticAnalysis;
+using Questionnaires.UI;
 
 namespace Questionnaires
 {
@@ -19,83 +20,15 @@ namespace Questionnaires
 
         private void Interpret_Click(object sender, RoutedEventArgs e)
         {
-            bool useStyling = !String.IsNullOrEmpty(InputQLS.Text);
+            bool useStyling = !string.IsNullOrEmpty(InputQLS.Text);
             ClearOutputWindow();
-
-            var result = new Result();
-
-            // TODO: the way we use exceptions for flow control here is bad.
-            try
-            {
-                var FormAST = BuildFormAST(result);
-                AnalyzeFormAST(result, FormAST);
-                PrintMessages(result);
-
-                /* 'Flatten' the AST*/
-                DocumentModel DocumentModel = new DocumentModel();
-                List<RunTime.Question> Questions = new List<RunTime.Question>();
-                List<Action<ExpressionEvaluator>> Rules = new List<Action<ExpressionEvaluator>>();
-                QL.Processing.Processor qlProcessor = new QL.Processing.Processor(Questions, Rules, DocumentModel);
-                qlProcessor.Process(FormAST);
-                StyleSheet stylesheetAST = null;
-                if (useStyling)
-                {
-                    stylesheetAST = BuildStylesheetAST(result);
-                    AnalyzeStylesheet(result, Questions, stylesheetAST);
-                    QLS.Processing.Processor qlsProcessor = new QLS.Processing.Processor(Questions, DocumentModel);
-                    qlsProcessor.Process(stylesheetAST);
-                }
-
-                var QuestionnaireBuilder = new QuestionnaireBuilder(Questions, Rules, DocumentModel);
-                QuestionnaireBuilder.Build();
-
-            }
-            catch (ParseException)
-            {
-                PrintMessages(result);
-            }
-            catch (Exception)
-            {
-                PrintMessages(result);
-            }
-        }
-
-        private static void AnalyzeStylesheet(Result result, List<RunTime.Question> Questions, StyleSheet stylesheetAST)
-        {
-            var semanticAnalyzerQLS = new QLS.SemanticAnalysis.Analyzer(result, Questions);
-            var semanticMessages = semanticAnalyzerQLS.Analyze(stylesheetAST);
-            if (result.ContainsErrors())
-                throw new Exception();
-        }
-
-        private StyleSheet BuildStylesheetAST(Result result)
-        {
-            var qlsAstBuilder = new QLS.AST.ASTBuilder(result);
-            var stylesheetAST = qlsAstBuilder.BuildStylesheet(InputQLS.Text);
-            return stylesheetAST;
+            
+            PrintMessages(new UIBuilder().CreateInterface(InputQL.Text, InputQLS.Text, useStyling));
         }
 
         private void ClearOutputWindow()
         {
             Output.Text = "";
-        }
-
-        private static void AnalyzeFormAST(Result result, Form FormAST)
-        {
-            if (result.ContainsErrors())
-                return;
-
-            var semanticAnalyzer = new SemanticAnalyzer(result);
-            semanticAnalyzer.AnalyzeForm(FormAST);
-
-            if (result.ContainsErrors())
-                throw new Exception();
-        }
-
-        private QL.AST.Form BuildFormAST(Result result)
-        {
-            var qlAstBuilder = new QL.AST.ASTBuilder(result);
-            return qlAstBuilder.BuildForm(InputQL.Text);
         }
 
         private void PrintMessages(Result result)
