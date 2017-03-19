@@ -76,6 +76,8 @@ class InputElement(FormElement):
         label.pack()
         entry = Entry(self.parent, textvariable=self.variable)
         entry.pack()
+        entry.bind('<KeyRelease>', self.parent.app.reload)
+        # entry.focus_set()
 
 class DisabledInputElement(FormElement):
     label = "DisabledInputElement "
@@ -110,7 +112,8 @@ class NumberElement(FormElement):
     def pack(self):
         label = Label(master=self.parent, cnf={'text': self.label,})
         label.pack()
-        w = Spinbox(self.parent, from_=0, to=10, textvariable=self.variable)
+        w = Spinbox(self.parent, from_=0, to=1000000, textvariable=self.variable
+                    ,command=self.parent.app.reload)
         w.pack()
 
 class IntegerController(FormElement):
@@ -133,8 +136,8 @@ class CheckboxElement(FormElement):
     def pack(self):
         label = Label(master=self.parent, cnf={'text': "Boolean Box"})
         label.pack()
-        c = Checkbutton(self.parent, text="Checkbox element")
-        c.pack()
+        Checkbutton(self.parent, text="Checkbox element",
+                    command=self.parent.app.reload).pack()
 
 class RadioElement(FormElement):
     def __init__(self, parent, label, variable):
@@ -279,19 +282,24 @@ class Application(object):
         self.environment = None
         self.elements = []
 
-    def reload(self):
-        for widget in self.root.winfo_children():
-            widget.destroy()
-        self.setup_elements()
-        # self.window.pack()
+    def reload(self,event = None):
+        # for widget in self.root.winfo_children():
+        #     widget.destroy()
+        # self.setup_elements()
+        if event is not None:
+            event.widget.focus_set()
+        # event.widget.focus_set()
+
+        # TODO: Redraw the conditionals!!!
+
+        print(self.environment.export())
 
     def export_form(self):
         f = filedialog.asksaveasfile(mode='w', defaultextension=".json")
         if f is None:
             return
         f.write(json.dumps(self.environment.export()))
-        f.close() # `()` was missing.
-        print(self.environment.export())
+        f.close()
 
     def add_element(self, element):
         element.parent = self.window

@@ -54,7 +54,7 @@ class BuildGui(QlAlg):
     def Question(self, variable, label):
         def _register(form):
             question = QuestionController(
-                None, label.execute(), variable.execute())
+                self.parent, label.execute(), variable.execute())
             form.add_element(question)
 
         class _anon():
@@ -73,7 +73,7 @@ class BuildGui(QlAlg):
     def ComputedQuestion(self, variable, label, expression):
         def _register(form):
             question = ComputedQuestionController(
-                None, label.execute(), ReadOnlyController(None, variable.execute()), expression.execute())
+                self.parent, label.execute(), ReadOnlyController(self.parent, variable.execute()), expression)
             form.add_element(question)
 
         class _anon():
@@ -86,7 +86,7 @@ class BuildGui(QlAlg):
             #get variable to store
             var = IntVar()
             self.environment.update_var(key, var)
-            controller = BooleanController(None, var)
+            controller = BooleanController(self.parent, var)
 
             return controller
 
@@ -98,7 +98,7 @@ class BuildGui(QlAlg):
         def _register(key):
             var =  IntVar()
             self.environment.update_var(key, var)
-            return IntegerController(None, var)
+            return IntegerController(self.parent, var)
 
         class _anon():
             execute=lambda self, key: _register(key)
@@ -117,7 +117,7 @@ class BuildGui(QlAlg):
         def _register(key):
             var = IntVar()
             self.environment.update_var(key, var)
-            return IntegerController(None, var)
+            return IntegerController(self.parent, var)
 
         class _anon():
             execute=lambda self, key: _register(key)
@@ -135,7 +135,7 @@ class BuildGui(QlAlg):
         def _register(key):
             var = StringVar()
             self.environment.update_var(key, var)
-            return TextController(None, var)
+            return TextController(self.parent, var)
 
         class _anon():
             execute=lambda self, key: _register(key)
