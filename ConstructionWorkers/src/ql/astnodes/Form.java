@@ -28,6 +28,10 @@ public class Form extends Node {
         this.statements = statements;
     }
 
+    public String getIdentifierName() {
+        return identifier.getName();
+    }
+
     public Identifier getIdentifier() {
         return identifier;
     }
@@ -36,7 +40,7 @@ public class Form extends Node {
         return statements;
     }
 
-    public <T> T accept(FormAndStatementVisitor<T> visitor) {
-        return visitor.visit(this);
+    public <T> void accept(FormAndStatementVisitor<T> visitor) {
+        visitor.visit(this);
     }
 }

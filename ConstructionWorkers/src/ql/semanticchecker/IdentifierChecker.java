@@ -44,11 +44,10 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier> {
     }
 
     @Override
-    public Identifier visit(Form form) {
+    public void visit(Form form) {
         for (Statement statement : form.getStatements()) {
             statement.accept(this);
         }
-        return null;
     }
 
     @Override
@@ -68,7 +67,7 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier> {
     @Override
     public Identifier visit(SimpleQuestion simpleQuestion) {
         if (!duplicateQuestionIdentifiers(simpleQuestion)) {
-            identifierToTypeMap.put(simpleQuestion.getIdentifier().getName(), simpleQuestion.getType());
+            identifierToTypeMap.put(simpleQuestion.getIdentifierName(), simpleQuestion.getType());
         }
 
         if (!duplicateQuestionLabels(simpleQuestion)) {
@@ -80,7 +79,7 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier> {
     @Override
     public Identifier visit(ComputedQuestion computedQuestion) {
         if (!duplicateQuestionIdentifiers(computedQuestion)) {
-            identifierToTypeMap.put(computedQuestion.getIdentifier().getName(), computedQuestion.getType());
+            identifierToTypeMap.put(computedQuestion.getIdentifierName(), computedQuestion.getType());
         }
 
         if (!duplicateQuestionLabels(computedQuestion)) {
@@ -90,7 +89,7 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier> {
     }
 
     private boolean duplicateQuestionIdentifiers(SimpleQuestion question) {
-        String questionIdentifierName = question.getIdentifier().getName();
+        String questionIdentifierName = question.getIdentifierName();
 
         if (identifierToTypeMap.get(questionIdentifierName) != null) {
 //            TODO: decide.

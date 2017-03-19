@@ -30,6 +30,10 @@ public class SimpleQuestion extends Statement {
         this.type = type;
     }
 
+    public String getIdentifierName() {
+        return identifier.getName();
+    }
+
     public Identifier getIdentifier() {
         return identifier;
     }

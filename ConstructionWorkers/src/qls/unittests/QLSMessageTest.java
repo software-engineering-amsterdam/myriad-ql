@@ -57,7 +57,7 @@ public class QLSMessageTest {
         new QLSTypeChecker(messages, identifierToTypeMap, testSheet);
 
         Assert.assertEquals(messages.getErrors().get(0).getMessage(),
-                "ERROR: Duplicate question placement question at line 1.");
+                "ERROR: Duplicate question placement question at line 1 in QLS stylesheet.");
     }
 
     @Test
@@ -85,7 +85,7 @@ public class QLSMessageTest {
         new QLSTypeChecker(messages, identifierToTypeMap, testSheet);
 
         Assert.assertEquals(messages.getErrors().get(0).getMessage(),
-                "ERROR: Question undefinedQuestion from QL has not been defined in the QLS stylesheet.");
+                "ERROR: Question undefinedQuestion from QL form has not been defined in the QLS stylesheet.");
     }
 
     @Test
@@ -113,7 +113,7 @@ public class QLSMessageTest {
         new QLSTypeChecker(messages, identifierToTypeMap, testSheet);
 
         Assert.assertEquals(messages.getErrors().get(0).getMessage(),
-                "ERROR: Reference to undefined question in QLS code for question at line 1.");
+                "ERROR: Reference to undefined question in QLS stylesheet for question at line 1.");
     }
 
     @Test
@@ -140,6 +140,6 @@ public class QLSMessageTest {
         new QLSTypeChecker(messages, identifierToTypeMap, testSheet);
 
         Assert.assertEquals(messages.getErrors().get(0).getMessage(),
-                "ERROR: Widget assignment of question at line 1 is not compatible with question type.");
+                "ERROR: Widget assignment of question at line 1 in QLS stylesheet is not compatible with question type.");
     }
 }

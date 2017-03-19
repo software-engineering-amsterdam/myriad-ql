@@ -14,7 +14,6 @@ package ql.gui.components;
 import ql.gui.components.fields.Field;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class FormFrame {
     private final JPanel questionPanel;
 
     private static final int DEFAULT_WIN_WIDTH = 480;
-    private static final int DEFAULT_WIN_HEIGHT = 640;
+    private static final int DEFAULT_WIN_HEIGHT = 540;
 
     public FormFrame(String formTitle) {
         fields = new ArrayList<>();
@@ -35,11 +34,10 @@ public class FormFrame {
         formFrame.setSize(DEFAULT_WIN_WIDTH, DEFAULT_WIN_HEIGHT);
         formFrame.setLocationRelativeTo(null);
         formFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        formFrame.setResizable(false);
+        formFrame.setResizable(true);
 
         questionPanel = new JPanel();
-        GridLayout questionPanelLayout = new GridLayout(0, 1);
-        questionPanel.setLayout(questionPanelLayout);
+        questionPanel.setLayout(new BoxLayout(questionPanel, BoxLayout.PAGE_AXIS));
         formFrame.add(questionPanel);
     }
 

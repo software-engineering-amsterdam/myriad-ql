@@ -38,10 +38,10 @@ public class GUI implements GUIInterface{
     private final List<ComputedQuestion> computedQuestions;
     private final Map<Field, List<IfStatement>> fieldToIfStatementsMap;
 
-    public GUI(Form form, Context context) {
-        this.form = new FormFrame(form.getIdentifier().getName());
+    public GUI(Form form) {
+        this.form = new FormFrame(form.getIdentifierName());
 
-        this.context = context;
+        this.context = new Context();
         evaluator = new Evaluator(context);
 
         FieldFactory fieldFactory = new FieldFactory(this, context);
@@ -53,7 +53,7 @@ public class GUI implements GUIInterface{
 
     @Override
     public void getGUIChanges(Field updateField) {
-        context.addValue(updateField.getId(), updateField.getValue());
+        context.addValue(updateField.getIdentifierName(), updateField.getValue());
         showGUI();
     }
 
@@ -69,7 +69,7 @@ public class GUI implements GUIInterface{
             Field questionField = null;
 
             for (Field field : fieldToIfStatementsMap.keySet()) {
-                if (computedQuestion.getIdentifier().getName().equals(field.getId())) {
+                if (computedQuestion.getIdentifierName().equals(field.getIdentifierName())) {
                     questionField = field;
                 }
             }
@@ -84,7 +84,7 @@ public class GUI implements GUIInterface{
         for (SimpleQuestion question : questionData.getAllQuestions()) {
 
             for (Field field : fieldToIfStatementsMap.keySet()) {
-                if (Objects.equals(question.getIdentifier().getName(), field.getId())) {
+                if (Objects.equals(question.getIdentifierName(), field.getIdentifierName())) {
 
                     if (checkIfConditionIsTrue(field)) {
                         form.addToFields(field);

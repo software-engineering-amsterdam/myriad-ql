@@ -38,7 +38,7 @@ public class StyleQuestion extends AbstractSection{
         return this.widget;
     }
 
-    public <T> T accept(StyleSheetVisitor<T> visitor) {
-        return visitor.visit(this);
+    public void accept(StyleSheetVisitor visitor) {
+        visitor.visit(this);
     }
 }

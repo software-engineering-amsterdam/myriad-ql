@@ -43,8 +43,8 @@ public class DefaultStyle extends AbstractSection{
         return questionType;
     }
 
-    public <T> T accept(StyleSheetVisitor<T> visitor) {
-        return visitor.visit(this);
+    public void accept(StyleSheetVisitor visitor) {
+        visitor.visit(this);
     }
 
 }

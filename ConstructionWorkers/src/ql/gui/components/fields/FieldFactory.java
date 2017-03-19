@@ -44,8 +44,8 @@ public class FieldFactory implements FormAndStatementVisitor<Field>, TypeVisitor
     }
 
     @Override
-    public Field visit(Form form) {
-        return null;
+    public void visit(Form form) {
+        throw new AssertionError();
     }
 
     @Override
@@ -70,7 +70,7 @@ public class FieldFactory implements FormAndStatementVisitor<Field>, TypeVisitor
 
     @Override
     public Field visit(IfStatement statement) {
-        return null;
+        throw new AssertionError();
     }
 
     @Override

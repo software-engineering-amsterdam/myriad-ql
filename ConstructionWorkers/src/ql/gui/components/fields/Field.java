@@ -34,7 +34,7 @@ public abstract class Field  {
         guiInterface.getGUIChanges(this);
     }
 
-    public String getId() {
+    public String getIdentifierName() {
         return question.getIdentifier().getName();
     }
 

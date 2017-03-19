@@ -27,7 +27,7 @@ import qls.astnodes.widgets.*;
 
 import java.util.*;
 
-public class QLSTypeChecker implements StyleSheetVisitor<Void> {
+public class QLSTypeChecker implements StyleSheetVisitor {
 
     private final MessageData messages;
     private final Map<String, Type> identifierMap;
@@ -97,7 +97,7 @@ public class QLSTypeChecker implements StyleSheetVisitor<Void> {
     }
 
     @Override
-    public Void visit(StyleSheet styleSheet) {
+    public void visit(StyleSheet styleSheet) {
         for (DefaultStyle style : styleSheet.getDefaultStyle()) {
             if (!style.getWidget().isUndefined()) {
                 this.currentDefaultWidget = style.getWidget();
@@ -108,11 +108,10 @@ public class QLSTypeChecker implements StyleSheetVisitor<Void> {
             section.accept(this);
         }
 
-        return null;
     }
 
     @Override
-    public Void visit(Section section) {
+    public void visit(Section section) {
         for (DefaultStyle style : section.getDefaultStyles()) {
             if (!style.getWidget().isUndefined()) {
                 this.currentDefaultWidget = style.getWidget();
@@ -127,16 +126,14 @@ public class QLSTypeChecker implements StyleSheetVisitor<Void> {
             question.accept(this);
         }
 
-        return null;
     }
 
     @Override
-    public Void visit(DefaultStyle section) {
-        return null;
+    public void visit(DefaultStyle section) {
     }
 
     @Override
-    public Void visit(StyleQuestion question) {
+    public void visit(StyleQuestion question) {
         qlsQuestions.add(question);
         if (identifierMap.get(question.getName()) == null) {
             messages.addError(new UndefinedQuestionReferenceError(question.getLineNumber(), question.getName()));
@@ -153,7 +150,6 @@ public class QLSTypeChecker implements StyleSheetVisitor<Void> {
             }
         }
 
-        return null;
     }
 
 }

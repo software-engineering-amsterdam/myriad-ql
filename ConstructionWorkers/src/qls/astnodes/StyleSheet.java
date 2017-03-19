@@ -44,7 +44,7 @@ public class StyleSheet extends Node {
         return this.defaultStyle;
     }
 
-    public <T> T accept(StyleSheetVisitor<T> visitor) {
-        return visitor.visit(this);
+    public void accept(StyleSheetVisitor visitor) {
+        visitor.visit(this);
     }
 }

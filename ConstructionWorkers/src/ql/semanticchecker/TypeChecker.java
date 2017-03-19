@@ -43,11 +43,10 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     }
 
     @Override
-    public Void visit(Form form) {
+    public void visit(Form form) {
         for (Statement statement : form.getStatements()) {
             statement.accept(this);
         }
-        return null;
     }
 
     @Override
@@ -237,7 +236,7 @@ public class TypeChecker implements FormAndStatementVisitor<Void>, ExpressionVis
     private Type getTypeEquality(Type leftExpressionType, Type rightExpressionType) {
         if (isEqual(leftExpressionType,rightExpressionType) &&
                 (new MoneyType().equals(leftExpressionType) || new IntegerType().equals(leftExpressionType) ||
-                        new StringType().equals(leftExpressionType))) {
+                        new StringType().equals(leftExpressionType) || new BooleanType().equals(leftExpressionType))) {
             return new BooleanType();
         }
         return new UndefinedType();

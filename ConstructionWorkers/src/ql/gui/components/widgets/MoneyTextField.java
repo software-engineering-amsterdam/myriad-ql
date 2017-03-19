@@ -23,7 +23,7 @@ public class MoneyTextField extends QLWidget {
 
     private JTextField input;
 
-    private static final int COLUMNS = 7;
+    private static final int COLUMNS = 6;
     
     MoneyTextField(String questionLabel) {
         input = new JTextField();

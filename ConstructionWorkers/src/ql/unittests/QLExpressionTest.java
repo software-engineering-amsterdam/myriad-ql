@@ -326,6 +326,34 @@ public class QLExpressionTest extends QLTestSetUp {
     }
 
     @Test
+    public void testTypeCheckerStringEQExpression() {
+        EQ stringEQExpression = new EQ(testString, testString, null);
+        Type stringEQExpressionType = typeChecker.visit(stringEQExpression);
+        Assert.assertEquals(stringEQExpressionType.equals(new BooleanType()), true);
+    }
+
+    @Test
+    public void testExpressionEvaluatorStringEQExpression() {
+        EQ stringEQExpression = new EQ(testString, testString, null);
+        Value stringEQExpressionValue = stringEQExpression.accept(expressionEvaluator);
+        Assert.assertEquals(stringEQExpressionValue.getValue(), true);
+    }
+
+    @Test
+    public void testTypeCheckerBooleanEQExpression() {
+        EQ booleanEQExpression = new EQ(testBoolean, testBoolean, null);
+        Type booleanEQExpressionType = typeChecker.visit(booleanEQExpression);
+        Assert.assertEquals(booleanEQExpressionType.equals(new BooleanType()), true);
+    }
+
+    @Test
+    public void testExpressionEvaluatorBooleanEQExpression() {
+        EQ booleanEQExpression = new EQ(testBoolean, testBoolean, null);
+        Value booleanEQExpressionValue = booleanEQExpression.accept(expressionEvaluator);
+        Assert.assertEquals(booleanEQExpressionValue.getValue(), true);
+    }
+
+    @Test
     public void testTypeCheckerIntegerNEQExpression() {
         NEQ integerNEQExpression = new NEQ(testInteger, testInteger, null);
         Type integerNEQExpressionType = typeChecker.visit(integerNEQExpression);
@@ -351,6 +379,34 @@ public class QLExpressionTest extends QLTestSetUp {
         NEQ moneyNEQExpression = new NEQ(testMoney, testMoney, null);
         Value moneyNEQExpressionValue = moneyNEQExpression.accept(expressionEvaluator);
         Assert.assertEquals(moneyNEQExpressionValue.getValue(), false);
+    }
+
+    @Test
+    public void testTypeCheckerStringNEQExpression() {
+        NEQ stringNEQExpression = new NEQ(testString, testString, null);
+        Type stringNEQExpressionType = typeChecker.visit(stringNEQExpression);
+        Assert.assertEquals(stringNEQExpressionType.equals(new BooleanType()), true);
+    }
+
+    @Test
+    public void testExpressionEvaluatorStringNEQExpression() {
+        NEQ stringNEQExpression = new NEQ(testString, testString, null);
+        Value stringNEQExpressionValue = stringNEQExpression.accept(expressionEvaluator);
+        Assert.assertEquals(stringNEQExpressionValue.getValue(), false);
+    }
+
+    @Test
+    public void testTypeCheckerBooleanNEQExpression() {
+        NEQ booleanNEQExpression = new NEQ(testBoolean, testBoolean, null);
+        Type booleanNEQExpressionType = typeChecker.visit(booleanNEQExpression);
+        Assert.assertEquals(booleanNEQExpressionType.equals(new BooleanType()), true);
+    }
+
+    @Test
+    public void testExpressionEvaluatorBooleanNEQExpression() {
+        NEQ booleanNEQExpression = new NEQ(testBoolean, testBoolean, null);
+        Value booleanNEQExpressionValue = booleanNEQExpression.accept(expressionEvaluator);
+        Assert.assertEquals(booleanNEQExpressionValue.getValue(), false);
     }
 
     @Test
@@ -382,6 +438,20 @@ public class QLExpressionTest extends QLTestSetUp {
     }
 
     @Test
+    public void testTypeCheckerStringGTExpression() {
+        GT stringGTExpression = new GT(testString, testString, null);
+        Type stringGTExpressionType = typeChecker.visit(stringGTExpression);
+        Assert.assertEquals(stringGTExpressionType.equals(new BooleanType()), true);
+    }
+
+    @Test
+    public void testExpressionEvaluatorStringGTExpression() {
+        GT stringGTExpression = new GT(testString, testString, null);
+        Value stringGTExpressionValue = stringGTExpression.accept(expressionEvaluator);
+        Assert.assertEquals(stringGTExpressionValue.getValue(), false);
+    }
+
+    @Test
     public void testTypeCheckerIntegerLTExpression() {
         LT integerLTExpression = new LT(testInteger, testInteger, null);
         Type integerLTExpressionType = typeChecker.visit(integerLTExpression);
@@ -407,6 +477,20 @@ public class QLExpressionTest extends QLTestSetUp {
         LT moneyLTExpression = new LT(testMoney, testMoney, null);
         Value moneyLTExpressionValue = moneyLTExpression.accept(expressionEvaluator);
         Assert.assertEquals(moneyLTExpressionValue.getValue(), false);
+    }
+
+    @Test
+    public void testTypeCheckerStringLTExpression() {
+        LT stringLTExpression = new LT(testString, testString, null);
+        Type stringLTExpressionType = typeChecker.visit(stringLTExpression);
+        Assert.assertEquals(stringLTExpressionType.equals(new BooleanType()), true);
+    }
+
+    @Test
+    public void testExpressionEvaluatorStringLTExpression() {
+        LT stringLTExpression = new LT(testString, testString, null);
+        Value stringLTExpressionValue = stringLTExpression.accept(expressionEvaluator);
+        Assert.assertEquals(stringLTExpressionValue.getValue(), false);
     }
 
     @Test
@@ -438,6 +522,20 @@ public class QLExpressionTest extends QLTestSetUp {
     }
 
     @Test
+    public void testTypeCheckerStringGTEQExpression() {
+        GTEQ stringGTEQExpression = new GTEQ(testString, testString, null);
+        Type stringGTEQExpressionType = typeChecker.visit(stringGTEQExpression);
+        Assert.assertEquals(stringGTEQExpressionType.equals(new BooleanType()), true);
+    }
+
+    @Test
+    public void testExpressionEvaluatorStringGTEQExpression() {
+        GTEQ stringGTEQExpression = new GTEQ(testString, testString, null);
+        Value stringGTEQExpressionValue = stringGTEQExpression.accept(expressionEvaluator);
+        Assert.assertEquals(stringGTEQExpressionValue.getValue(), true);
+    }
+
+    @Test
     public void testTypeCheckerIntegerLTEQExpression() {
         LTEQ integerLTEQExpression = new LTEQ(testInteger, testInteger, null);
         Type integerLTEQExpressionType = typeChecker.visit(integerLTEQExpression);
@@ -464,4 +562,19 @@ public class QLExpressionTest extends QLTestSetUp {
         Value moneyLTEQExpressionValue = moneyLTEQExpression.accept(expressionEvaluator);
         Assert.assertEquals(moneyLTEQExpressionValue.getValue(), true);
     }
+
+    @Test
+    public void testTypeCheckerStringLTEQExpression() {
+        LTEQ stringLTEQExpression = new LTEQ(testString, testString, null);
+        Type stringLTEQExpressionType = typeChecker.visit(stringLTEQExpression);
+        Assert.assertEquals(stringLTEQExpressionType.equals(new BooleanType()), true);
+    }
+
+    @Test
+    public void testExpressionEvaluatorStringLTEQExpression() {
+        LTEQ stringLTEQExpression = new LTEQ(testString, testString, null);
+        Value stringLTEQExpressionValue = stringLTEQExpression.accept(expressionEvaluator);
+        Assert.assertEquals(stringLTEQExpressionValue.getValue(), true);
+    }
+
 }

@@ -22,7 +22,7 @@ public class IntegerTextField extends QLWidget {
 
     private JTextField input;
 
-    private static final int COLUMNS = 7;
+    private static final int COLUMNS = 6;
 
     IntegerTextField(String questionLabel) {
         input = new JTextField();
