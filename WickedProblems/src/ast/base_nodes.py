@@ -11,7 +11,6 @@ class Root(Node):
     def __init__(self, identifier, children):
         pass
 
-
 class Form(Node):
     def __init__(self, name, block):
         self.name = name
@@ -23,10 +22,8 @@ class Form(Node):
 class Statement(Node):
     pass
 
-
 class Expression(Node):
     pass
-
 
 class Block(Node):
     def __init__(self, statements):
@@ -51,7 +48,6 @@ class ComputedQuestion(Statement):
 
     def alg(self, _alg):
         return _alg.ComputedQuestion(self.variable.alg(_alg), self.label.alg(_alg), self.expression.alg(_alg))
-
 
 class ifThen(Statement):
     def __init__(self, condition, block):
