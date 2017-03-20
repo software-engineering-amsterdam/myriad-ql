@@ -26,7 +26,7 @@ import java.util.List;
 
 public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLSVisitor<Node> {
     public StyleSheet buildAST(InputStream inputStream) throws IOException {
-        return (StyleSheet) visitStylesheet(createParser(inputStream).stylesheet());
+        return visitStylesheet(createParser(inputStream).stylesheet());
     }
 
     private QLSParser createParser(InputStream inputStream) throws IOException {
@@ -34,7 +34,7 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
     }
 
     @Override
-    public Node visitStylesheet(QLSParser.StylesheetContext ctx) {
+    public StyleSheet visitStylesheet(QLSParser.StylesheetContext ctx) {
         List<Page> pages = new ArrayList<>();
 
         for (QLSParser.PageContext pageContext : ctx.page()) {
@@ -45,7 +45,7 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
     }
 
     @Override
-    public Node visitPage(QLSParser.PageContext ctx) {
+    public Page visitPage(QLSParser.PageContext ctx) {
         List<Section> sections = getSections(ctx.section());
         List<DefaultWidget> defaultWidgets = getDefaultWidgets(ctx.defaultWidget());
 
@@ -53,7 +53,7 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
     }
 
     @Override
-    public Node visitSection(QLSParser.SectionContext ctx) {
+    public Section visitSection(QLSParser.SectionContext ctx) {
         List<Section> sections = getSections(ctx.section());
         List<DefaultWidget> defaultWidgets = getDefaultWidgets(ctx.defaultWidget());
         List<CustomWidgetQuestion> questions = getQuestions(ctx.question());
@@ -62,62 +62,62 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
     }
 
     @Override
-    public Node visitQuestionNoWidget(QLSParser.QuestionNoWidgetContext ctx) {
-        return hydrateSourceLocation(new CustomWidgetQuestion(visitIdentifier(ctx.identifier()), null), ctx);
+    public GenericWidgetQuestion visitQuestionNoWidget(QLSParser.QuestionNoWidgetContext ctx) {
+        return hydrateSourceLocation(new GenericWidgetQuestion(visitIdentifier(ctx.identifier())), ctx);
     }
 
     @Override
-    public Node visitQuestionWidget(QLSParser.QuestionWidgetContext ctx) {
+    public CustomWidgetQuestion visitQuestionWidget(QLSParser.QuestionWidgetContext ctx) {
         return hydrateSourceLocation(new CustomWidgetQuestion(visitIdentifier(ctx.identifier()), (Widget) visit(ctx.widget())), ctx);
     }
 
     @Override
-    public Node visitWidget(QLSParser.WidgetContext ctx) {
-        return visit(ctx.widgetType());
+    public Widget visitWidget(QLSParser.WidgetContext ctx) {
+        return (Widget) visit(ctx.widgetType());
     }
 
     @Override
-    public Node visitSpinboxWidget(QLSParser.SpinboxWidgetContext ctx) {
+    public SpinboxWidget visitSpinboxWidget(QLSParser.SpinboxWidgetContext ctx) {
         return hydrateSourceLocation(new SpinboxWidget(), ctx);
     }
 
     @Override
-    public Node visitSliderWidget(QLSParser.SliderWidgetContext ctx) {
+    public SliderWidget visitSliderWidget(QLSParser.SliderWidgetContext ctx) {
         return hydrateSourceLocation(new SliderWidget(), ctx);
     }
 
     @Override
-    public Node visitTextWidget(QLSParser.TextWidgetContext ctx) {
+    public TextWidget visitTextWidget(QLSParser.TextWidgetContext ctx) {
         return hydrateSourceLocation(new TextWidget(), ctx);
     }
 
     @Override
-    public Node visitCheckboxWidget(QLSParser.CheckboxWidgetContext ctx) {
+    public CheckboxWidget visitCheckboxWidget(QLSParser.CheckboxWidgetContext ctx) {
         return hydrateSourceLocation(new CheckboxWidget(), ctx);
     }
 
     @Override
-    public Node visitRadioWidget(QLSParser.RadioWidgetContext ctx) {
+    public RadioWidget visitRadioWidget(QLSParser.RadioWidgetContext ctx) {
         RadioWidget radioWidget = new RadioWidget(unquoteString(ctx.yes.getText()), unquoteString(ctx.no.getText()));
         return hydrateSourceLocation(radioWidget, ctx);
     }
 
     @Override
-    public Node visitDropdownWidget(QLSParser.DropdownWidgetContext ctx) {
+    public DropdownWidget visitDropdownWidget(QLSParser.DropdownWidgetContext ctx) {
         DropdownWidget dropdownWidget = new DropdownWidget(unquoteString(ctx.yes.getText()), unquoteString(ctx.no.getText()));
         return hydrateSourceLocation(dropdownWidget, ctx);
     }
 
     @Override
-    public Node visitDefaultNoStyle(QLSParser.DefaultNoStyleContext ctx) {
+    public DefaultWidgetNoStyle visitDefaultNoStyle(QLSParser.DefaultNoStyleContext ctx) {
         return hydrateSourceLocation(new DefaultWidgetNoStyle((Type) visit(ctx.type()), (Widget) visit(ctx.widget())), ctx);
     }
 
     @Override
-    public Node visitDefaultWithStyle(QLSParser.DefaultWithStyleContext ctx) {
+    public DefaultWidgetWithStyle visitDefaultWithStyle(QLSParser.DefaultWithStyleContext ctx) {
         List<StyleRule> styleRules = new ArrayList<>();
 
-        for(QLSParser.StyleRuleContext styleRuleContext : ctx.styleRule()) {
+        for (QLSParser.StyleRuleContext styleRuleContext : ctx.styleRule()) {
             styleRules.add((StyleRule) visit(styleRuleContext));
         }
 
@@ -125,17 +125,17 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
     }
 
     @Override
-    public Node visitWidthRule(QLSParser.WidthRuleContext ctx) {
+    public WidthRule visitWidthRule(QLSParser.WidthRuleContext ctx) {
         return hydrateSourceLocation(new WidthRule(Integer.parseInt(ctx.INTEGER_LITERAL().getSymbol().getText())), ctx);
     }
 
     @Override
-    public Node visitFontRule(QLSParser.FontRuleContext ctx) {
+    public FontRule visitFontRule(QLSParser.FontRuleContext ctx) {
         return hydrateSourceLocation(new FontRule(unquoteString(ctx.STRING_LITERAL().getText())), ctx);
     }
 
     @Override
-    public Node visitFontSizeRule(QLSParser.FontSizeRuleContext ctx) {
+    public FontSizeRule visitFontSizeRule(QLSParser.FontSizeRuleContext ctx) {
         return hydrateSourceLocation(new FontSizeRule(Integer.parseInt(ctx.INTEGER_LITERAL().getSymbol().getText())), ctx);
     }
 
@@ -145,27 +145,27 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
     }
 
     @Override
-    public Node visitTypeBoolean(QLSParser.TypeBooleanContext ctx) {
+    public BooleanType visitTypeBoolean(QLSParser.TypeBooleanContext ctx) {
         return hydrateSourceLocation(new BooleanType(), ctx);
     }
 
     @Override
-    public Node visitTypeFloat(QLSParser.TypeFloatContext ctx) {
+    public FloatType visitTypeFloat(QLSParser.TypeFloatContext ctx) {
         return hydrateSourceLocation(new FloatType(), ctx);
     }
 
     @Override
-    public Node visitTypeInteger(QLSParser.TypeIntegerContext ctx) {
+    public IntegerType visitTypeInteger(QLSParser.TypeIntegerContext ctx) {
         return hydrateSourceLocation(new IntegerType(), ctx);
     }
 
     @Override
-    public Node visitTypeString(QLSParser.TypeStringContext ctx) {
+    public StringType visitTypeString(QLSParser.TypeStringContext ctx) {
         return hydrateSourceLocation(new StringType(), ctx);
     }
 
     @Override
-    public Node visitTypeMoney(QLSParser.TypeMoneyContext ctx) {
+    public MoneyType visitTypeMoney(QLSParser.TypeMoneyContext ctx) {
         return hydrateSourceLocation(new MoneyType(), ctx);
     }
 
@@ -177,7 +177,7 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
     private List<DefaultWidget> getDefaultWidgets(List<QLSParser.DefaultWidgetContext> defaultWidgetContexts) {
         List<DefaultWidget> defaultWidgets = new ArrayList<>();
 
-        for(QLSParser.DefaultWidgetContext defaultWidget : defaultWidgetContexts) {
+        for (QLSParser.DefaultWidgetContext defaultWidget : defaultWidgetContexts) {
             defaultWidgets.add((DefaultWidget) visit(defaultWidget));
         }
 
@@ -187,7 +187,7 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
     private List<Section> getSections(List<QLSParser.SectionContext> sectionContexts) {
         List<Section> sections = new ArrayList<>();
 
-        for(QLSParser.SectionContext section : sectionContexts) {
+        for (QLSParser.SectionContext section : sectionContexts) {
             sections.add((Section) visit(section));
         }
 
@@ -197,7 +197,7 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
     private List<CustomWidgetQuestion> getQuestions(List<QLSParser.QuestionContext> questionContexts) {
         List<CustomWidgetQuestion> questions = new ArrayList<>();
 
-        for(QLSParser.QuestionContext question : questionContexts) {
+        for (QLSParser.QuestionContext question : questionContexts) {
             questions.add((CustomWidgetQuestion) visit(question));
         }
 
