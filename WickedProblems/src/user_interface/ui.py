@@ -271,7 +271,6 @@ class Application(object):
         self.root.minsize(width=670, height=670)
         self.environment = None
         self.elements = []
-        self.parser = QL()
 
     def reload(self, event=None):
         for widget in self.root.winfo_children():
