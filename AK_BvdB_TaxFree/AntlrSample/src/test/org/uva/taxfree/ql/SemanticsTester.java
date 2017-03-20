@@ -17,6 +17,7 @@ public abstract class SemanticsTester {
         SymbolTable symbolTable = new SymbolTable();
         ast.fillSymbolTable(symbolTable);
         ast.checkSemantics(symbolTable, semanticsMessages);
+        System.out.println(semanticsMessages);
         Assert.assertEquals(!semanticsMessages.hasMessages(), expectedValid, "Expecting errors: " + description);
         Assert.assertEquals(semanticsMessages.messageAmount(), expectedErrorAmount, "Invalid error amount");
     }

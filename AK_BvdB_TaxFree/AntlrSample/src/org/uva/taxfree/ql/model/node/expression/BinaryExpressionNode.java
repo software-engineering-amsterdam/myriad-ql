@@ -55,6 +55,13 @@ public class BinaryExpressionNode extends ExpressionNode {
         if (!mOperator.supports(mLeft.getType(), mRight.getType())) {
             semanticsMessages.addError("Unsupported operator called:" + mLeft.getType() + " " + mOperator + " " + mRight.getType());
         }
+        if (isConstant()) {
+            semanticsMessages.addWarning("Constant condition found, always evaluates to: " + this.evaluate());
+        }
+    }
+
+    protected boolean isConstant() {
+        return mLeft.isConstant() && mRight.isConstant();
     }
 
     @Override
