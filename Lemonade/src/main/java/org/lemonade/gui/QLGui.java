@@ -1,6 +1,7 @@
 package org.lemonade.gui;
 
 import java.io.File;
+import java.util.List;
 
 import org.lemonade.gui.elements.GuiElement;
 import org.lemonade.gui.elements.GuiLabelElement;
@@ -11,12 +12,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -28,6 +32,7 @@ public class QLGui {
 
     // File selection elements
     private Scene selectionScene;
+    private VBox errorBox;
     private Button submitFileButton;
 
     // Questionnaire elements
@@ -80,10 +85,20 @@ public class QLGui {
         hBox.setSpacing(10);
         hBox.getChildren().addAll(openButton, submitFileButton, fileLabel);
 
+        errorBox = new VBox();
+        errorBox.setSpacing(6);
+
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(errorBox);
+        scrollPane.setPrefViewportHeight(650);
+        scrollPane.setPrefViewportWidth(950);
+
         AnchorPane anchorPane = new AnchorPane();
         AnchorPane.setBottomAnchor(hBox, 10.0);
         AnchorPane.setLeftAnchor(hBox, 5.0);
-        anchorPane.getChildren().add(hBox);
+        AnchorPane.setTopAnchor(scrollPane, 10.0);
+        AnchorPane.setLeftAnchor(scrollPane, 5.0);
+        anchorPane.getChildren().addAll(hBox, scrollPane);
         anchorPane.setPadding(new Insets(10, 10, 10, 10));
 
         selectionScene = new Scene(anchorPane);
@@ -118,6 +133,17 @@ public class QLGui {
         questionsGridPane.getColumnConstraints().addAll(constraints);
 
         this.questionsRowCount = 0;
+    }
+
+    public void addErrors(String message, List<String> errors) {
+        errorBox.getChildren().clear();
+        errorBox.getChildren().add(new Label(message));
+
+        for (String item : errors) {
+            Label label = new Label(item);
+            label.setTextFill(Color.RED);
+            errorBox.getChildren().add(label);
+        }
     }
 
     public void addQuestion(GuiLabelElement labelElement, GuiElement element) {
