@@ -5,6 +5,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.ql.ast.Identifier;
 import org.ql.ast.Node;
+import org.ql.ast.StringUnquoter;
 import org.ql.ast.type.*;
 import org.qls.ast.page.*;
 import org.qls.ast.widget.*;
@@ -17,6 +18,7 @@ import org.qls.grammar.QLSParser;
 import org.qls.grammar.QLSVisitor;
 
 import static org.ql.ast.SourceLocationHydrator.hydrateSourceLocation;
+import static org.ql.ast.StringUnquoter.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,7 +59,7 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
         List<DefaultWidget> defaultWidgets = getDefaultWidgets(ctx.defaultWidget());
         List<Question> questions = getQuestions(ctx.question());
 
-        return hydrateSourceLocation(new Section(ctx.name.getText(), questions, sections, defaultWidgets), ctx);
+        return hydrateSourceLocation(new Section(unquoteString(ctx.name.getText()), questions, sections, defaultWidgets), ctx);
     }
 
     @Override
@@ -97,12 +99,14 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
 
     @Override
     public Node visitRadioWidget(QLSParser.RadioWidgetContext ctx) {
-        return hydrateSourceLocation(new RadioWidget(ctx.yes.getText(), ctx.no.getText()), ctx);
+        RadioWidget radioWidget = new RadioWidget(unquoteString(ctx.yes.getText()), unquoteString(ctx.no.getText()));
+        return hydrateSourceLocation(radioWidget, ctx);
     }
 
     @Override
     public Node visitDropdownWidget(QLSParser.DropdownWidgetContext ctx) {
-        return hydrateSourceLocation(new DropdownWidget(ctx.yes.getText(), ctx.no.getText()), ctx);
+        DropdownWidget dropdownWidget = new DropdownWidget(unquoteString(ctx.yes.getText()), unquoteString(ctx.no.getText()));
+        return hydrateSourceLocation(dropdownWidget, ctx);
     }
 
     @Override
@@ -128,7 +132,7 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
 
     @Override
     public Node visitFontRule(QLSParser.FontRuleContext ctx) {
-        return hydrateSourceLocation(new FontRule(ctx.STRING_LITERAL().getText()), ctx);
+        return hydrateSourceLocation(new FontRule(unquoteString(ctx.STRING_LITERAL().getText())), ctx);
     }
 
     @Override
