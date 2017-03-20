@@ -27,6 +27,7 @@ public class Computed implements FormItem {
 
     @Override
     public void idChanged(Form root, FormItem changed, String value) {
+        assert expression != null;
         if (expression.idChanged(changed.isDependencyOf(this), value)) {
             root.idChanged(this, this.expression.toString());
         }
@@ -34,6 +35,7 @@ public class Computed implements FormItem {
 
     @Override
     public void accept(Validator validator) throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException, CyclicDependencyException {
+        assert expression != null;
         validator.validateRedeclaration(this);
         validator.validateCyclicDependency(this);
         expression.accept(validator);
@@ -41,41 +43,49 @@ public class Computed implements FormItem {
 
     @Override
     public Value.Type validateIdentifierType(String identifier, Value.Type type) {
+        assert id != null && expression != null;
         return id.equals(identifier) && !expression.getValue().conformsToType(type) ? expression.getValue().getType() : null;
     }
 
     @Override
     public String validateRedeclaration(FormItem item) {
+        assert id != null;
         return item != this && item.hasId(this.id) ? this.id : null;
     }
 
     @Override
     public String validateLabel(FormItem item) {
+        assert label != null;
         return item != this && item.containsLabel(this.label) ? this.id : null;
     }
 
     @Override
     public boolean containsLabel(String label) {
+        assert label != null;
         return this.label.equals(label);
     }
 
     @Override
     public Pair<String> validateCyclicDependency(FormItem item) {
+        assert id != null;
         return new Pair<>(item.isDependentOn(this.id) ? this.id : null, item.isDependencyOf(this));
     }
 
     @Override
     public boolean isDependentOn(String id) {
+        assert expression != null;
         return expression.isDependentOn(id);
     }
 
     @Override
     public String isDependencyOf(FormItem item) {
+        assert id != null;
         return item.isDependentOn(this.id) ? this.id : null;
     }
 
     @Override
     public boolean hasId(String id) {
+        assert id != null;
         return this.id.equals(id);
     }
 
@@ -85,6 +95,7 @@ public class Computed implements FormItem {
     }
 
     public StringProperty getStringValueProperty() {
+        assert expression != null;
         return expression.getStringValueProperty();
     }
 

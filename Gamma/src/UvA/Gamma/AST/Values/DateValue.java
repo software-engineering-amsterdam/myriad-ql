@@ -33,10 +33,12 @@ public class DateValue extends Value implements ASTNode {
 
     @Override
     public void setValue(String value) {
+        if (value.isEmpty()) return; ///The date might be initialized empty
         try {
             this.value = format.parse(value);
         } catch (ParseException e) {
-        } //The date might be initialized empty
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -56,6 +58,7 @@ public class DateValue extends Value implements ASTNode {
 
     @Override
     public String toString() {
+        if (this.value == null) return ""; //Value can be empty
         return format.format(this.value);
     }
 }
