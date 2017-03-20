@@ -1,7 +1,7 @@
 # coding=utf-8
 from pql.traversal.BinaryExpressionVisitor import BinaryExpressionVisitor
 from pql.traversal.UnaryExpressionVisitor import UnaryExpressionVisitor
-from pql.typechecker.types import is_number_type
+from pql.typechecker.types import is_number_type, DataTypes
 
 
 class IntegerTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
@@ -16,7 +16,7 @@ class IntegerTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
         return None
 
     def multiplication(self, node):
-        if is_number_type(node.data_type):
+        if is_number_type(node.data_type) or node.data_type is DataTypes.string:
             return node
         return None
 
