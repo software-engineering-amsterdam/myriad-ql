@@ -1,6 +1,5 @@
-// Generated from QL.g4 by ANTLR 4.4
+// Generated from QL.g4 by ANTLR 4.5.3
 package sc.ql.antlr;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
@@ -18,194 +17,194 @@ public class QLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements QLV
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitOr(@NotNull QLParser.OrContext ctx) { return visitChildren(ctx); }
+	@Override public T visitForm(QLParser.FormContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIntegerType(@NotNull QLParser.IntegerTypeContext ctx) { return visitChildren(ctx); }
+	@Override public T visitCalculatedQuestion(QLParser.CalculatedQuestionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitMoneyType(@NotNull QLParser.MoneyTypeContext ctx) { return visitChildren(ctx); }
+	@Override public T visitQuestion(QLParser.QuestionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitGreaterThenEqual(@NotNull QLParser.GreaterThenEqualContext ctx) { return visitChildren(ctx); }
+	@Override public T visitIfThenElseStatement(QLParser.IfThenElseStatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitNotExpression(@NotNull QLParser.NotExpressionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitIfThenStatement(QLParser.IfThenStatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIdLiteral(@NotNull QLParser.IdLiteralContext ctx) { return visitChildren(ctx); }
+	@Override public T visitAdd(QLParser.AddContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIfThenStatement(@NotNull QLParser.IfThenStatementContext ctx) { return visitChildren(ctx); }
+	@Override public T visitOr(QLParser.OrContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitGreaterThen(@NotNull QLParser.GreaterThenContext ctx) { return visitChildren(ctx); }
+	@Override public T visitGreaterThenEqual(QLParser.GreaterThenEqualContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitCalculatedQuestion(@NotNull QLParser.CalculatedQuestionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitNotExpression(QLParser.NotExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitStringType(@NotNull QLParser.StringTypeContext ctx) { return visitChildren(ctx); }
+	@Override public T visitIdLiteral(QLParser.IdLiteralContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitDivide(@NotNull QLParser.DivideContext ctx) { return visitChildren(ctx); }
+	@Override public T visitParenthesis(QLParser.ParenthesisContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitLessThen(@NotNull QLParser.LessThenContext ctx) { return visitChildren(ctx); }
+	@Override public T visitMoneyLiteral(QLParser.MoneyLiteralContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitMultiply(@NotNull QLParser.MultiplyContext ctx) { return visitChildren(ctx); }
+	@Override public T visitLessThenEqual(QLParser.LessThenEqualContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitBooleanLiteral(@NotNull QLParser.BooleanLiteralContext ctx) { return visitChildren(ctx); }
+	@Override public T visitGreaterThen(QLParser.GreaterThenContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitSubstract(@NotNull QLParser.SubstractContext ctx) { return visitChildren(ctx); }
+	@Override public T visitStringLiteral(QLParser.StringLiteralContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitEqualsNot(@NotNull QLParser.EqualsNotContext ctx) { return visitChildren(ctx); }
+	@Override public T visitAnd(QLParser.AndContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitAdd(@NotNull QLParser.AddContext ctx) { return visitChildren(ctx); }
+	@Override public T visitEquals(QLParser.EqualsContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitBooleanType(@NotNull QLParser.BooleanTypeContext ctx) { return visitChildren(ctx); }
+	@Override public T visitIntegerLiteral(QLParser.IntegerLiteralContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitQuestion(@NotNull QLParser.QuestionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitDivide(QLParser.DivideContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitParenthesis(@NotNull QLParser.ParenthesisContext ctx) { return visitChildren(ctx); }
+	@Override public T visitLessThen(QLParser.LessThenContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitMoneyLiteral(@NotNull QLParser.MoneyLiteralContext ctx) { return visitChildren(ctx); }
+	@Override public T visitMultiply(QLParser.MultiplyContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitLessThenEqual(@NotNull QLParser.LessThenEqualContext ctx) { return visitChildren(ctx); }
+	@Override public T visitBooleanLiteral(QLParser.BooleanLiteralContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitForm(@NotNull QLParser.FormContext ctx) { return visitChildren(ctx); }
+	@Override public T visitSubstract(QLParser.SubstractContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitStringLiteral(@NotNull QLParser.StringLiteralContext ctx) { return visitChildren(ctx); }
+	@Override public T visitEqualsNot(QLParser.EqualsNotContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitAnd(@NotNull QLParser.AndContext ctx) { return visitChildren(ctx); }
+	@Override public T visitBooleanType(QLParser.BooleanTypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitEquals(@NotNull QLParser.EqualsContext ctx) { return visitChildren(ctx); }
+	@Override public T visitIntegerType(QLParser.IntegerTypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIntegerLiteral(@NotNull QLParser.IntegerLiteralContext ctx) { return visitChildren(ctx); }
+	@Override public T visitMoneyType(QLParser.MoneyTypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIfThenElseStatement(@NotNull QLParser.IfThenElseStatementContext ctx) { return visitChildren(ctx); }
+	@Override public T visitStringType(QLParser.StringTypeContext ctx) { return visitChildren(ctx); }
 }
