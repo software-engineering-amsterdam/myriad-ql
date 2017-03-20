@@ -3,7 +3,6 @@ package parser
 import java.io.{ Reader, StringReader }
 
 import ast._
-import model.FormModel
 
 class FormParser extends QLParser with ExpressionParser {
   def parseForm(input: Reader): Form = {
@@ -14,14 +13,15 @@ class FormParser extends QLParser with ExpressionParser {
   }
 
   private def question: Parser[Question] =
-    ident ~ ":" ~ label ~ typeName ~ opt(parentheses(expression)) ^^ {
+    ident ~ ":" ~ quotedString ~ typeName ~ opt(parentheses(expression)) ^^ {
       case identifier ~ _ ~ label ~ typeName ~ expr =>
         Question(identifier, label, typeName, expr)
     }
 
   private def conditional: Parser[Conditional] =
-    "if" ~> parentheses(expression) ~ statements ^^ {
-      case expression ~ block => Conditional(expression, block)
+    "if" ~> parentheses(expression) ~ statements ~ opt("else" ~> statements) ^^ {
+      case expression ~ ifBlock ~ None => Conditional(expression, ifBlock)
+      case expression ~ ifBlock ~ Some(elseBlock) => Conditional(expression, ifBlock, elseBlock)
     }
 
   private def statements: Parser[Seq[Statement]] = curlyBrackets(rep(conditional | question))
@@ -33,7 +33,7 @@ class FormParser extends QLParser with ExpressionParser {
 }
 
 object FormParser {
-  def apply(input: String): FormModel = apply(new StringReader(input))
+  def apply(input: String): Form = apply(new StringReader(input))
 
-  def apply(input: Reader): FormModel = new FormModel(new FormParser().parseForm(input))
+  def apply(input: Reader): Form = new FormParser().parseForm(input)
 }

@@ -1,18 +1,19 @@
-package view
+package view.questions
 
 import java.time.{ Instant, LocalDate, LocalDateTime, ZoneId }
 import java.util.Date
 import javafx.beans.binding.ObjectBinding
 
-import ast.{ DateType, ExpressionNode }
+import ast.{ DateType, QuestionStyle }
 import model.{ ComputedQuestion, DisplayQuestion, OpenQuestion }
 import values._
+import view.{ env, updateEnv }
 
 import scala.language.implicitConversions
 import scalafx.Includes._
 import scalafx.scene.control.DatePicker
 
-class DateQuestion(val question: DisplayQuestion) extends GUIQuestion {
+class DateQuestion(val question: DisplayQuestion, val questionStyle: Option[QuestionStyle] = None) extends GUIQuestion {
   val datePicker = new DatePicker()
 
   question match {
@@ -20,7 +21,7 @@ class DateQuestion(val question: DisplayQuestion) extends GUIQuestion {
     case o: OpenQuestion => datePicker.onAction = actionHandler(datePicker, o)
   }
 
-  element.children += datePicker
+  displayBox.children += datePicker
 
   private def actionHandler(datePicker: DatePicker, question: OpenQuestion) = () => {
     val value = question.`type` match {
@@ -35,7 +36,7 @@ class DateQuestion(val question: DisplayQuestion) extends GUIQuestion {
     bind(env)
 
     override def computeValue: LocalDate = {
-      Evaluator(env.toMap, question.value) match {
+      Evaluator(env.toMap).calculate(question.value) match {
         case DateValue(d) => d
         case _ => LocalDate.now()
       }

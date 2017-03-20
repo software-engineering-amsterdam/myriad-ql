@@ -3,6 +3,7 @@ package parser
 import java.text.SimpleDateFormat
 
 import ast._
+import com.typesafe.config.ConfigFactory
 
 import scala.util.matching.Regex
 
@@ -10,7 +11,9 @@ trait ExpressionParser extends QLParser {
   type InfixMatcher = (ExpressionNode, ~[String, ExpressionNode]) => ExpressionNode
 
   //We do one date: yyyy-mm-dd.
-  private val dateFormat = new SimpleDateFormat("""yyyy-mm-dd""")
+  private val config = ConfigFactory.load()
+  private val dateFormat = new SimpleDateFormat(config.getString("dateFormat"))
+  private val currencySymbol = config.getString("currencySymbol")
 
   def expression: Parser[ExpressionNode] = logic
 
@@ -62,7 +65,7 @@ trait ExpressionParser extends QLParser {
   //Note: ORDER MATTERS HERE.
   private def numeric: Parser[ExpressionNode] = money | decimal | integer
 
-  private def money: Parser[MoneyLiteral] = "€" ~> decimal ^^ (x => MoneyLiteral(x.value))
+  private def money: Parser[MoneyLiteral] = currencySymbol ~> decimal ^^ (x => MoneyLiteral(x.value))
 
   private def decimal: Parser[DecimalLiteral] = """\d*\.\d+""".r ^^ (x => DecimalLiteral(BigDecimal(x)))
 

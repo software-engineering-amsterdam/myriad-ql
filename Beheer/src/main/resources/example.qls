@@ -1,10 +1,13 @@
 stylesheet taxOfficeExample {
+    page Foo {
+        section "Bar"
+            question enterMoney
+        }
     page Housing {
-        section "Buying" {
+        section "Buying"
             question hasBoughtHouse {
                 widget checkbox
             }
-        }
         section "Loaning" {
             question hasMaintLoan {
                 widget dropdown("Yes", "No")
@@ -14,28 +17,29 @@ stylesheet taxOfficeExample {
 
     page Selling {
         section "Selling" {
-            question hasSoldHouse {
-                widget radio("Yes", "No")
-          }
-        section "You sold a house" {
-            question sellingPrice {
-                widget spinbox
+            question hasSoldHouse
+            section "You sold a house" {
+                question sellingPrice
+                question privateDebt {
+                    widget slider(1,100)
+                }
+                question valueResidue
+                default money {
+                    width: 400
+                    font: "Arial"
+                    fontsize: 14
+                    color: #999999
+                }
             }
-            question privateDebt {
-                widget slider(1,100)
-            }
-            question valueResidue
-            default money {
-                width: 400
-                font: "Arial"
-                fontsize: 14
-                color: #999999
-            }
-        }
 
-        default boolean {
-            widget checkbox
+            default boolean {
+                widget checkbox
+            }
         }
     }
+    page Else {
+        section "else" {
+            question eQuestion
+        }
     }
 }
