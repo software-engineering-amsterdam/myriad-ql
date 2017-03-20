@@ -52,7 +52,7 @@ class UIBuilder(object):
         conditions. The type and format of the questions will depend on the
         type of the variable given.
         """
-        label = ttk.Label(self.mainframe, text=text, wraplength=200)
+        label = ttk.Label(self.mainframe, text=text[1:-1], wraplength=200)
         value = variable.type.init_variable()
         field = variable.type.init_field(self, value)
 
@@ -69,7 +69,7 @@ class UIBuilder(object):
         expression and conditions. The type and format of the questions will
         depend on the type of the variable given.
         """
-        label = ttk.Label(self.mainframe, text=text, wraplength=200)
+        label = ttk.Label(self.mainframe, text=text[1:-1], wraplength=200)
         value = variable.type.init_variable()
         field = variable.type.init_field(self, value, assignation=True)
 

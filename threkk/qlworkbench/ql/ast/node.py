@@ -42,7 +42,7 @@ class Declaration(Node):
 class Assignation(Node):
     def __init__(self, text, variable, type, expression):
         super().__init__(variable, type)
-        self.text = text[1:-1]
+        self.text = text
         self.expression = expression
 
     def build_ui(self, ui):
