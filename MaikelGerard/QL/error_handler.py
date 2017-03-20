@@ -1,6 +1,6 @@
 import sys
 
-from QL.stages.print_handler import PrintHandler
+from QL.print_handler import PrintHandler
 
 
 class ErrorHandler(object):

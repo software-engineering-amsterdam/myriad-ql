@@ -1,21 +1,20 @@
 import argparse
 
+from QL.GUI.drawGUI import DrawGUI
 from QL.environment import Environment
 from QL.error_handler import ErrorHandler
-from QL.GUI.drawGUI import DrawGUI
+from QL.print_handler import PrintHandler
 from QL.stages.find_cycles import FindCycles
+from QL.stages.init_environment import InitEnvironment
 from QL.stages.parser import Parser
 from QL.stages.type_checker import TypeChecker
-from QL.stages.print_handler import PrintHandler
-from QL.stages.init_environment import InitEnvironment
-
+from QLS.GUI.drawGUI import DrawGUI as QLSDrawGUI
 from QLS.environment import Environment as QLSEnvironment
 from QLS.error_handler import ErrorHandler as QLSErrorHandler
+from QLS.print_handler import PrintHandler as QLSPrintHandler
+from QLS.stages.determine_widget_type import DetermineWidgetType
 from QLS.stages.parser import Parser as QLSParser
 from QLS.stages.type_checker import TypeChecker as QLSTypeChecker
-from QLS.stages.determine_widget_type import DetermineWidgetType
-from QLS.stages.print_handler import PrintHandler as QLSPrintHandler
-from QLS.GUI.drawGUI import DrawGUI as QLSDrawGUI
 
 
 class Questionnaire(object):

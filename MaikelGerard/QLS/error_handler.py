@@ -1,5 +1,5 @@
 from QL.error_handler import ErrorHandler as QLErrorHandler
-from QL.stages.print_handler import PrintHandler as QLPrintHandler
+from QL.print_handler import PrintHandler as QLPrintHandler
 
 
 class ErrorHandler(QLErrorHandler):
