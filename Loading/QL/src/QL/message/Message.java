@@ -12,7 +12,7 @@ public abstract class Message {
 
 	public abstract boolean isFatal();
 
-	public abstract String getMessage();
+	public abstract String getBody();
 
 	String buildMessage() {
 		return body + " on line " + line;

@@ -12,7 +12,7 @@ public class Error extends Message {
 	}
 
 	@Override
-	public String getMessage() {
+	public String getBody() {
 		return "Error: " + buildMessage();
 	}
 }

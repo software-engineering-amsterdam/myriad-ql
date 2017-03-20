@@ -18,7 +18,7 @@ public class MessageDialog {
 
 		String body = "";
 		for (Message msg : messages) {
-			body += msg.getMessage() + "\n\n";
+			body += msg.getBody() + "\n\n";
 		}
 
 		if (body.equals("")) {

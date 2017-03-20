@@ -13,7 +13,7 @@ public class Warning extends Message {
 	}
 
 	@Override
-	public String getMessage() {
+	public String getBody() {
 		return "Warning: " + buildMessage();
 	}
 	
