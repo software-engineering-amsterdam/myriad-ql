@@ -1,141 +1,157 @@
-import networkx as nx
+from collections import OrderedDict
 
 
 class FindCycles(object):
     def __init__(self, ast, error_handler):
-        # First create a directed graph from all edges, then check on cycles.
         self.ast = ast
         self.handler = error_handler
-        self.directed_graph = nx.DiGraph()
-        self.node_stack = [[]]
+        self.graph = OrderedDict()
 
     def start_traversal(self):
-        # Ensure the environment and error log are empty.
-        self.directed_graph.clear()
-        self.node_stack = [[]]
+        self.graph = OrderedDict()
+        self.ast.accept(self, [])
 
-        self.ast.accept(self)
-        cycle_list = list(nx.simple_cycles(self.directed_graph))
+        cycle_list = self.find_cycles()
         if len(cycle_list) > 0:
             self.handler.add_cycle_error(cycle_list)
 
-    def question_node(self, question_node):
-        self.node_stack[-1].append(question_node.name)
+    # Heavily referenced from:
+    # http://codereview.stackexchange.com/questions/86021
+    def find_cycles(self):
+        path = []
+        visited = []
 
-    def comp_question_node(self, comp_question_node):
-        self.node_stack[-1].append(comp_question_node.name)
+        def visit(vertex):
+            if vertex in visited:
+                return []
+            visited.append(vertex)
+            path.append(vertex)
+            for neighbour in self.graph[vertex]:
+                if neighbour in path or len(visit(neighbour)) > 0:
+                    return path
+            path.remove(vertex)
+            return []
+
+        cycle_list = []
+        for v in self.graph:
+            cycle = visit(v)
+            if len(cycle) > 0 and cycle not in cycle_list:
+                cycle_list.append(cycle)
+        return cycle_list
+
+    @staticmethod
+    def question_node(question_node, node_var_list):
+        node_var_list.append(question_node.name)
+
+    def comp_question_node(self, comp_question_node, node_var_list):
+        node_var_list.append(comp_question_node.name)
 
         # Check on circular dependency to itself.
-        to_vars = comp_question_node.expression.accept(self)
+        to_vars = []
+        comp_question_node.expression.accept(self, to_vars)
         self.add_edge_relations([comp_question_node.name], to_vars)
 
-    def if_node(self, if_node):
-        from_vars = if_node.condition.accept(self)
-        if from_vars is None:
+    def if_node(self, if_node, _):
+        from_vars = []
+        if_node.condition.accept(self, from_vars)
+        if len(from_vars) == 0:
             return
 
-        to_vars = self.traverse_branch(self, if_node.if_block)
+        to_vars = []
+        if_node.if_block.accept(self, to_vars)
         self.add_edge_relations(from_vars, to_vars)
 
-    def if_else_node(self, if_else_node):
-        from_vars = if_else_node.condition.accept(self)
-        if from_vars is None:
+    def if_else_node(self, if_else_node, _):
+        from_vars = []
+        if_else_node.condition.accept(self, from_vars)
+        if len(from_vars) == 0:
             return
 
-        to_vars = self.traverse_branch(self, if_else_node.if_block)
-        self.add_edge_relations(from_vars, to_vars)
-
-        to_vars = self.traverse_branch(self, if_else_node.else_block)
+        to_vars = []
+        if_else_node.if_block.accept(self, to_vars)
+        if_else_node.else_block.accept(self, to_vars)
         self.add_edge_relations(from_vars, to_vars)
 
     def add_edge_relations(self, from_vars, to_vars):
         for from_var in from_vars:
             for to_var in to_vars:
-                self.directed_graph.add_edge(from_var, to_var)
+                # Ensure all keys are in the graph.
+                if to_var not in self.graph:
+                    self.graph[to_var] = []
+                if from_var not in self.graph:
+                    self.graph[from_var] = []
 
-    def traverse_branch(self, node, node_branch):
-        self.node_stack.append([])
-        node_branch.accept(node)
-        return self.node_stack.pop()
+                self.graph[from_var].append(to_var)
 
-    def mon_op_node(self, node):
-        return node.expression.accept(self)
+    def neg_node(self, neg_node, from_vars):
+        neg_node.expression.accept(self, from_vars)
 
-    def neg_node(self, neg_node):
-        return self.mon_op_node(neg_node)
+    def min_node(self, min_node, from_vars):
+        min_node.expression.accept(self, from_vars)
 
-    def min_node(self, min_node):
-        return self.mon_op_node(min_node)
+    def plus_node(self, plus_node, from_vars):
+        plus_node.expression.accept(self, from_vars)
 
-    def plus_node(self, plus_node):
-        return self.mon_op_node(plus_node)
+    def add_node(self, add_node, from_vars):
+        self.search_from_vars(add_node, from_vars)
 
-    def add_node(self, add_node):
-        return self.combine_from_var_list(add_node)
+    def sub_node(self, sub_node, from_vars):
+        self.search_from_vars(sub_node, from_vars)
 
-    def sub_node(self, sub_node):
-        return self.combine_from_var_list(sub_node)
+    def mul_node(self, mul_node, from_vars):
+        self.search_from_vars(mul_node, from_vars)
 
-    def mul_node(self, mul_node):
-        return self.combine_from_var_list(mul_node)
+    def div_node(self, div_node, from_vars):
+        self.search_from_vars(div_node, from_vars)
 
-    def lt_node(self, lt_node):
-        return self.combine_from_var_list(lt_node)
+    def lt_node(self, lt_node, from_vars):
+        self.search_from_vars(lt_node, from_vars)
 
-    def lte_node(self, lte_node):
-        return self.combine_from_var_list(lte_node)
+    def lte_node(self, lte_node, from_vars):
+        self.search_from_vars(lte_node, from_vars)
 
-    def gt_node(self, gt_node):
-        return self.combine_from_var_list(gt_node)
+    def gt_node(self, gt_node, from_vars):
+        self.search_from_vars(gt_node, from_vars)
 
-    def gte_node(self, gte_node):
-        return self.combine_from_var_list(gte_node)
+    def gte_node(self, gte_node, from_vars):
+        self.search_from_vars(gte_node, from_vars)
 
-    def eq_node(self, eq_node):
-        return self.combine_from_var_list(eq_node)
+    def eq_node(self, eq_node, from_vars):
+        self.search_from_vars(eq_node, from_vars)
 
-    def neq_node(self, neq_node):
-        return self.combine_from_var_list(neq_node)
+    def neq_node(self, neq_node, from_vars):
+        self.search_from_vars(neq_node, from_vars)
 
-    def and_node(self, and_node):
-        return self.combine_from_var_list(and_node)
+    def and_node(self, and_node, from_vars):
+        self.search_from_vars(and_node, from_vars)
 
-    def or_node(self, or_node):
-        return self.combine_from_var_list(or_node)
+    def or_node(self, or_node, from_vars):
+        self.search_from_vars(or_node, from_vars)
 
-    def combine_from_var_list(self, node):
-        left = node.left.accept(self)
-        right = node.right.accept(self)
-        if left is None and right is None:
-            return None
-        elif left is not None and right is not None:
-            return left + right
-        elif left is not None:
-            return left
-        elif right is not None:
-            return right
-        assert False, "Invalid state in find cycles!"
+    def search_from_vars(self, node, from_vars):
+        node.left.accept(self, from_vars)
+        node.right.accept(self, from_vars)
 
     @staticmethod
-    def string_node(_):
-        return None
+    def string_node(_, from_vars):
+        pass
 
     @staticmethod
-    def int_node(_):
-        return None
+    def int_node(_, from_vars):
+        pass
 
     @staticmethod
-    def bool_node(_):
-        return None
+    def bool_node(_, from_vars):
+        pass
 
     @staticmethod
-    def var_node(var_node):
-        return [var_node.name]
+    def var_node(var_node, from_vars):
+        from_vars.append(var_node.name)
 
     @staticmethod
-    def decimal_node(_):
-        return None
+    def decimal_node(_, from_vars):
+        pass
 
     @staticmethod
-    def date_node(_):
-        return None
+    def date_node(_, from_vars):
+        pass

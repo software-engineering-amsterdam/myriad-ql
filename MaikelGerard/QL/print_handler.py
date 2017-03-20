@@ -24,14 +24,14 @@ class PrintHandler(object):
         if_else_node.else_block.accept(self, indent + 1)
 
     def question_node(self, question_node, indent):
-        self.output += indent * "    " + "question: {} {}: {}\n".format(
+        self.output += indent * "    " + "question: '{}' {}: {}\n".format(
             question_node.question,
             question_node.name,
             question_node.type.accept(self)
         )
 
     def comp_question_node(self, comp_question_node, indent):
-        self.output += indent * "    " + "question: {} {}: {}".format(
+        self.output += indent * "    " + "question: '{}' {}: {}".format(
             comp_question_node.question,
             comp_question_node.name,
             comp_question_node.type.accept(self)

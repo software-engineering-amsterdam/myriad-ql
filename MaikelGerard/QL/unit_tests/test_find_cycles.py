@@ -19,6 +19,7 @@ class TestCycles(unittest.TestCase):
         # Cycle : x, y, z
         form = """
             form taxOfficeExample {
+                "q?" r: boolean
                 if (x) { "Y?" y: boolean }
                 if (g) { "G?" a: integer }
                 if (y) { "Z?" z: boolean }
@@ -35,6 +36,7 @@ class TestCycles(unittest.TestCase):
             form taxOfficeExample {
                 if (x) { "Y?" y: boolean }
                 if (y) { "X?" x: boolean }
+                "q?" r: boolean
             }
         """
         parsed_form = self.parser.parse(form)
@@ -50,7 +52,9 @@ class TestCycles(unittest.TestCase):
                     if (y) {
                         "X?" x: boolean
                     }
+                    "q?" r2: boolean
                 }
+                "q?" r1: boolean
             }
         """
         parsed_form = self.parser.parse(form)
