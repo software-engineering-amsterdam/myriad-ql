@@ -12,14 +12,6 @@ module QL
         end
       end
 
-      # visit both left and right sides of binary expression and perform calculation
-      # they can be for example literal, variable or another binary expression
-      # def visit_binary_expression(left, binary_expression)
-      #   left = left.accept(self)
-      #   right = binary_expression.expression.accept(self)
-      #   binary_expression.eval(left.to_value, right.to_value)
-      # end
-
       def visit_arithmetic_expression(left, binary_expression)
         left = left.accept(self)
         right = binary_expression.expression.accept(self)
@@ -27,10 +19,26 @@ module QL
         AST::IntegerLiteral.new(eval("#{left.value} #{operator} #{right.value}"))
       end
 
-      # def visit_negation(negation)
-      #   expression = negation.expression.accept(self)
-      #   negation.eval(expression.to_value)
-      # end
+      def visit_boolean_expression(left, binary_expression)
+        left = left.accept(self)
+        right = binary_expression.expression.accept(self)
+        operator = binary_expression.operator
+        AST::BooleanLiteral.new(eval("#{left.value} #{operator} #{right.value}"))
+      end
+
+      def visit_comparison_equal_expression(left, binary_expression)
+        left = left.accept(self)
+        right = binary_expression.expression.accept(self)
+        operator = binary_expression.operator
+        AST::BooleanLiteral.new(eval("#{left.value} #{operator} #{right.value}"))
+      end
+
+      def visit_comparison_order_expression(left, binary_expression)
+        left = left.accept(self)
+        right = binary_expression.expression.accept(self)
+        operator = binary_expression.operator
+        AST::BooleanLiteral.new(eval("#{left.value} #{operator} #{right.value}"))
+      end
 
       def visit_integer_negation(integer_negation)
         operator = integer_negation.operator
@@ -61,9 +69,4 @@ module QL
       end
     end
   end
-end
-
-def to_boolean(value)
-  return true if value == 'true'
-  return false if value == 'false'
 end
