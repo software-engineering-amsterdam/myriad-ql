@@ -111,7 +111,7 @@ public class Questionnaire extends Application implements Notifier {
     	actiontarget.setFill(Color.GREEN);
         actiontarget.setText("Thank you for filling in the questionnaire");
 
-        exportQuestionnaire(activeQuestions);
+        export(activeQuestions);
     	
     }
     
@@ -166,7 +166,7 @@ public class Questionnaire extends Application implements Notifier {
 		}
 	}
 
-	private void exportQuestionnaire(List<Row> activeQuestions) {
+	private void export(List<Row> activeQuestions) {
         FileChooser fileChooser = new FileChooser();
 
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
