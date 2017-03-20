@@ -1,27 +1,28 @@
 # coding=utf-8
 from collections import defaultdict
 
-from pql.messages.error import Error
+from pql.messages.alert import Alert
 from pql.traversal.FormVisitor import FormVisitor
 
 
-class IdentifierChecker(FormVisitor):
+class LabelChecker(FormVisitor):
     def __init__(self, ast):
         self.__symbol_table = defaultdict(list)
         self.ast = ast
 
     def visit(self):
-        def build_error_list(identifiers):
-            errors = list()
-            for key, value in identifiers.items():
-                if len(value) > 1:
-                    errors.append(Error("Key: {} contained multiple entries, at the following locations: {}"
-                                  .format(key, [v.location for v in value]), value[0].location))
-            return errors
+        def build_alert_list(identifiers):
+            alerts = list()
+            for key, nodes in identifiers.items():
+                if len(nodes) > 1:
+                    alerts.append(
+                        Alert("Form contained multiple declarations of the same label: {}, at the following locations: {}"
+                                  .format(key, [v.location for v in nodes]), nodes[0].location))
+            return alerts
 
         self.__symbol_table.clear()
         self.ast.apply(self)
-        return build_error_list(self.__symbol_table)
+        return build_alert_list(self.__symbol_table)
 
     def form(self, node, args=None):
         for statement in node.statements:
@@ -37,7 +38,7 @@ class IdentifierChecker(FormVisitor):
             statement.apply(self)
 
     def field(self, node, args=None):
-        self.__symbol_table[node.name.name].append(node.name)
+        self.__symbol_table[node.title].append(node.name)
 
     def assignment(self, node, args=None):
         self.field(node)

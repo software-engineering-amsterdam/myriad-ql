@@ -13,7 +13,6 @@ if __name__ == '__main__':
     exit(app.exec_())
 
 # TODO: Error messages aan parser toevoegen
-# TODO: duplicate labels (warning)
 # TODO: QLS
 # NICE TO HAVES ---------------------------------
 # TODO: Environment een class maken en een update value methode geven $$

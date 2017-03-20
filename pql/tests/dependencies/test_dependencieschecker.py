@@ -13,7 +13,7 @@ class TestDependenciesChecker(Shared):
         """
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
-        self.assertEqual(len(errors), 0, "There should be no error")
+        self.assertEqual(len(errors), 0, "There should be no messages")
 
     def test_simple_non_circular(self):
         input_string = """
@@ -26,7 +26,7 @@ class TestDependenciesChecker(Shared):
         """
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
-        self.assertEqual(len(errors), 0, "There should be no error")
+        self.assertEqual(len(errors), 0, "There should be no messages")
 
     def test_boolean_circular_and(self):
         input_string = """
@@ -38,7 +38,7 @@ class TestDependenciesChecker(Shared):
         """
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
-        self.assertEqual(len(errors), 0, "There should be no error")
+        self.assertEqual(len(errors), 0, "There should be no messages")
 
     def test_integer_circular_plus(self):
         input_string = """
@@ -50,7 +50,7 @@ class TestDependenciesChecker(Shared):
         """
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
-        self.assertEqual(len(errors), 0, "There should be no error")
+        self.assertEqual(len(errors), 0, "There should be no messages")
 
     def test_integer_circular_subtraction(self):
         input_string = """
@@ -62,7 +62,7 @@ class TestDependenciesChecker(Shared):
         """
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
-        self.assertEqual(len(errors), 0, "There should be no error")
+        self.assertEqual(len(errors), 0, "There should be no messages")
 
     def test_integer_circular_division(self):
         input_string = """
@@ -74,7 +74,7 @@ class TestDependenciesChecker(Shared):
         """
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
-        self.assertEqual(len(errors), 0, "There should be no error")
+        self.assertEqual(len(errors), 0, "There should be no messages")
 
     def test_integer_circular_multiplication(self):
         input_string = """
@@ -86,7 +86,7 @@ class TestDependenciesChecker(Shared):
         """
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
-        self.assertEqual(len(errors), 0, "There should be no error")
+        self.assertEqual(len(errors), 0, "There should be no messages")
 
     def test_integer_circular_equality(self):
         input_string = """
@@ -98,7 +98,7 @@ class TestDependenciesChecker(Shared):
         """
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
-        self.assertEqual(len(errors), 0, "There should be no error")
+        self.assertEqual(len(errors), 0, "There should be no messages")
 
     def test_integer_circular_inequality(self):
         input_string = """
@@ -110,7 +110,7 @@ class TestDependenciesChecker(Shared):
         """
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
-        self.assertEqual(len(errors), 0, "There should be no error")
+        self.assertEqual(len(errors), 0, "There should be no messages")
 
     def test_integer_circular_greater_equal(self):
         input_string = """
@@ -122,7 +122,7 @@ class TestDependenciesChecker(Shared):
         """
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
-        self.assertEqual(len(errors), 0, "There should be no error")
+        self.assertEqual(len(errors), 0, "There should be no messages")
 
     def test_integer_circular_greater(self):
         input_string = """
@@ -134,7 +134,7 @@ class TestDependenciesChecker(Shared):
         """
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
-        self.assertEqual(len(errors), 0, "There should be no error")
+        self.assertEqual(len(errors), 0, "There should be no messages")
 
     def test_integer_circular_smaller(self):
         input_string = """
@@ -146,7 +146,7 @@ class TestDependenciesChecker(Shared):
         """
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
-        self.assertEqual(len(errors), 0, "There should be no error")
+        self.assertEqual(len(errors), 0, "There should be no messages")
 
     def test_integer_circular_smaller_equal(self):
         input_string = """
@@ -158,7 +158,7 @@ class TestDependenciesChecker(Shared):
         """
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
-        self.assertEqual(len(errors), 0, "There should be no error")
+        self.assertEqual(len(errors), 0, "There should be no messages")
 
     def test_circular_multiple(self):
         input_string = """
@@ -172,7 +172,7 @@ class TestDependenciesChecker(Shared):
         """
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
-        self.assertEqual(len(errors), 1, "There should be exactly 1 error")
+        self.assertEqual(len(errors), 1, "There should be exactly 1 messages")
 
     def test_circular_inside_if(self):
         input_string = """
@@ -187,7 +187,7 @@ class TestDependenciesChecker(Shared):
         """
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
-        self.assertEqual(len(errors), 1, "There should be exactly 1 error")
+        self.assertEqual(len(errors), 1, "There should be exactly 1 messages")
 
     def test_circular_inside_if_else(self):
         input_string = """
@@ -223,7 +223,7 @@ class TestDependenciesChecker(Shared):
         """
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_circular_references(form_node)
-        self.assertEqual(len(errors), 1, "There should be exactly 1 error")
+        self.assertEqual(len(errors), 1, "There should be exactly 1 messages")
 
     def test_circular_inside_nested_if_2(self):
         input_string = """

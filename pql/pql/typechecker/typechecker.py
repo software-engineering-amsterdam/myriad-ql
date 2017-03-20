@@ -1,6 +1,6 @@
 # coding=utf-8
 from pql.ast.ast import Boolean
-from pql.error.error import Error
+from pql.messages.error import Error
 from pql.traversal.BinaryExpressionVisitor import BinaryExpressionVisitor
 from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.IdentifierVisitor import IdentifierVisitor

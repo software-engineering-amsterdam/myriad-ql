@@ -5,6 +5,7 @@ from pql.dependencies.dependencieschecker import DependenciesChecker
 from pql.environment.environmentcreator import EnvironmentCreator
 from pql.evaluator.evaluator import Evaluator
 from pql.identifierchecker.identifierchecker import IdentifierChecker
+from pql.labelchecker.labelchecker import LabelChecker
 from pql.parser.parser import parse
 from pql.typechecker.type_environment import TypeEnvironment
 from pql.typechecker.typechecker import TypeChecker
@@ -22,6 +23,9 @@ class Shared(TestCase):
 
     def evaluate(self, ast):
         return Evaluator(EnvironmentCreator, ast).visit()
+
+    def check_labels(self, ast):
+        return LabelChecker(ast).visit()
 
     def acquire_types(self, ast):
         return TypeEnvironment(ast).visit()

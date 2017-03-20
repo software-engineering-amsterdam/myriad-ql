@@ -19,6 +19,7 @@ from pql.dependencies.dependencieschecker import DependenciesChecker
 from pql.gui.Questionnaire import Questionnaire
 from pql.gui.widgets import ErrorWidget
 from pql.identifierchecker.identifierchecker import IdentifierChecker
+from pql.labelchecker.labelchecker import LabelChecker
 from pql.parser.parser import parse
 from pql.typechecker.type_environment import TypeEnvironment
 from pql.typechecker.typechecker import TypeChecker
@@ -41,9 +42,9 @@ class Editor(QMainWindow, QWidget):
         status_bar = self.init_status_bar()
         cursor_position = self.add_cursor_position(status_bar)
         self.init_text_editor(cursor_position)
-        self.list_errors = QListWidget()
+        self.message_list = QListWidget()
         self.setCentralWidget(self.text_editor)
-        self.set_error_list(self.list_errors)
+        self.set_error_list(self.message_list)
         if len(argv) > 1:
             self.load_file(argv[1])
 
@@ -104,25 +105,28 @@ class Editor(QMainWindow, QWidget):
         return run_action
 
     def evaluate(self):
-        self.list_errors.clear()
+        self.message_list.clear()
         contents = self.text_editor.toPlainText()
         self.write_contents_to_file(contents, self.file_path)
         ast = self.create_ast(contents)
         if ast is not None:
             identifier_errors = self.check_ids(ast)
             if identifier_errors:
-                self.add_errors(identifier_errors)
+                self.add_messages(identifier_errors)
             else:
+                label_warnings = self.check_labels(ast)
+                if label_warnings:
+                    self.add_messages(label_warnings)
                 dependencies_errors = self.check_dependencies(ast)
                 if not dependencies_errors:
                     type_errors = self.check_type(ast)
                     if type_errors:
-                        self.add_errors(type_errors)
+                        self.add_messages(type_errors)
                     else:
                         form = Questionnaire(ast).visit()
                         form.show()
                 else:
-                    self.add_errors(dependencies_errors)
+                    self.add_messages(dependencies_errors)
 
     def write_contents_to_file(self, contents, file_path):
         if file_path is not None:
@@ -153,7 +157,7 @@ class Editor(QMainWindow, QWidget):
         self.move(frame_geometry.topLeft())
 
     def load_file(self, file_path):
-        self.list_errors.clear()
+        self.message_list.clear()
         self.file_path = file_path
         file_contents = self.open_file(file_path)
         if file_contents is not None:
@@ -168,29 +172,32 @@ class Editor(QMainWindow, QWidget):
     def check_dependencies(self, ast):
         return DependenciesChecker(ast).visit()
 
+    def check_labels(self, ast):
+        return LabelChecker(ast).visit()
+
     def open_file(self, file_path):
         try:
             with open(file_path, 'r') as open_file:
                 return open_file.read()
         except FileNotFoundError as fnfe:
-            self.add_error("Given file could not be found:\n    {}".format(fnfe))
+            self.add_message("Given file could not be found:\n    {}".format(fnfe))
         except Exception as e:
-            self.add_error("Opening:\n    {}".format(e))
+            self.add_message("Opening:\n    {}".format(e))
 
     def create_ast(self, ql_str):
         try:
             return parse(ql_str)
         except Exception as e:
-            self.add_error("Parsing:\n    {}".format(e))
+            self.add_message("Parsing:\n    {}".format(e))
 
-    def add_error(self, string, location=None):
+    def add_message(self, string, location=None):
         widget = ErrorWidget(location)
         widget.setText(string)
-        self.list_errors.addItem(widget)
+        self.message_list.addItem(widget)
 
-    def add_errors(self, error_list):
-        for error in error_list:
-            self.add_error(error.text, error.location)
+    def add_messages(self, message_list):
+        for message in message_list:
+            self.add_message(message.text, message.location)
 
     def highlight_line(self, item):
         old_line = self.text_editor.textCursor().blockNumber()
