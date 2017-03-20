@@ -11,7 +11,6 @@ public class Analyzer {
 
 	public Analyzer() {
 		this.environment = new Environment();
-
 	}
 
     public ReferenceTable analyze(Form form) {
