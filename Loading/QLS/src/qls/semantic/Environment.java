@@ -13,16 +13,16 @@ import QL.message.Error;
 class Environment {
 	
 	private final Map<String, Boolean> variableCovered;
-	
+	private final ReferenceTable referenceTable;
 	private final List<Message> messages;
 	
-	public Environment(Map<String, Type> variableTypes) {
+	public Environment(ReferenceTable referenceTable) {
 		
 		this.variableCovered = new HashMap<>();	
-		
-		for (String variable : variableTypes.keySet()) {
-			variableCovered.put(variable, false);
-		}
+		this.referenceTable = referenceTable;
+//		for (String variable : referenceTable.keySet()) {
+//			variableCovered.put(variable, false);
+//		}
 		this.messages = new ArrayList<>(); // TODO move to analyzing part
 	}
 	

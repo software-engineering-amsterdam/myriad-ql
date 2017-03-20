@@ -41,8 +41,8 @@ public class Main {
 		
 		// TODO faults from ql?
 		// TODO change to QL
-		Map<String, Type> referenceTable = new HashMap<String, Type>();
-		qls.semantic.Analyzer analyzer = new qls.semantic.Analyzer(referenceTable);
+	
+		qls.semantic.Analyzer analyzer = new qls.semantic.Analyzer(ql());
 		
 		// Faults faults = analyzer.analyze(stylesheet);
 //		

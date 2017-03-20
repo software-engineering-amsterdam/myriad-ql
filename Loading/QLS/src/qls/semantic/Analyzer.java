@@ -10,7 +10,7 @@ public class Analyzer {
 	
 	private final Environment environment;
 	
-	public Analyzer(Map<String, Type> referenceTable) {
+	public Analyzer(ReferenceTable referenceTable) {
 		this.environment = new Environment(referenceTable);
 	}
 	
