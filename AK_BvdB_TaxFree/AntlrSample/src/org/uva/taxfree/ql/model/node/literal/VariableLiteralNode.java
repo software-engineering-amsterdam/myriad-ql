@@ -60,10 +60,5 @@ public class VariableLiteralNode extends LiteralNode {
             semanticsMessages.addError("Variable name not declared: " + mId);
         }
     }
-
-    @Override
-    protected boolean isConstant() {
-        return false;
-    }
 }
 

@@ -1,8 +1,0 @@
-form ConstantConditionForm {
-    if (true || false) {
-        "Did you know my condition does not make sense?" -> nonsenseCondition : boolean
-    }
-    if (5 < 3) {
-        "My visibility will always be false" -> invisibleQuestion : boolean
-    }
-}

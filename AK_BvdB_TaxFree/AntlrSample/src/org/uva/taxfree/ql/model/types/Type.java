@@ -1,9 +1,9 @@
 package org.uva.taxfree.ql.model.types;
 
 import org.uva.taxfree.ql.gui.QuestionForm;
-import org.uva.taxfree.ql.model.operators.BooleanOperator;
-import org.uva.taxfree.ql.model.operators.CompareOperator;
-import org.uva.taxfree.ql.model.operators.NumericOperator;
+import org.uva.taxfree.ql.model.node.operators.BooleanOperator;
+import org.uva.taxfree.ql.model.node.operators.CompareOperator;
+import org.uva.taxfree.ql.model.node.operators.NumericOperator;
 
 public abstract class Type {
     public boolean equals(Type other) {

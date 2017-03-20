@@ -1,4 +1,4 @@
-package org.uva.taxfree.ql.model.operators;
+package org.uva.taxfree.ql.model.node.operators;
 
 import org.uva.taxfree.ql.model.types.BooleanType;
 import org.uva.taxfree.ql.model.types.Type;

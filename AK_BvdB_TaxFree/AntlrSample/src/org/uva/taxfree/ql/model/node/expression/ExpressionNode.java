@@ -36,6 +36,4 @@ public abstract class ExpressionNode extends Node {
     public abstract int asInteger();
 
     public abstract String asString();
-
-    protected abstract boolean isConstant();
 }

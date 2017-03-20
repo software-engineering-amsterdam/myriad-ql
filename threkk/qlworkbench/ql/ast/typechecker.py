@@ -1,41 +1,25 @@
 # -*- coding: utf-8 -*-
-"""
-This module contains the typechecker. The typechecker is in charge of making
-sure that the AST returned by the parser is valid and does not contains errors
-that would make the program to crash.
-"""
 from .type import Boolean
 from .type import Undefined
 
 
 class TypeCheckerMessage(object):
-    """
-    Parent abstract class which holds the information necessary by the
-    typechecker to display a message.
-    """
     def __init__(self, node, message):
         self.node = node
         self.message = message
 
 
 class Error(TypeCheckerMessage):
-    """Class which holds a typechecker error."""
     def __str__(self):
         return 'ERROR: {} at: {}'.format(self.message, self.node)
 
 
 class Warning(TypeCheckerMessage):
-    """Class which holds a typechecker warning."""
     def __str__(self):
         return 'WARNING: {} at: {}'.format(self.message, self.node)
 
 
 class TypeChecker(object):
-    """
-    This class contains the logic of the typechecker. It has a list of the
-    errors and warnings detected in the AST, and also a list of types and
-    dependencies of the variables found in the AST.
-    """
     def __init__(self, ast):
         self.ast = ast
         self.dependencies = {}
@@ -44,24 +28,14 @@ class TypeChecker(object):
         self.warns = []
 
     def add_error(self, node, message):
-        """Adds a new error to the error list."""
         error = Error(node, message)
         self.errors.append(error)
 
     def add_warning(self, node, message):
-        """Adds a new warning to the warning list."""
         warn = Warning(node, message)
         self.warns.append(warn)
 
     def update(self, node):
-        """
-        Updates the typechecker with a new node. During this process, first the
-        node type is stored, and after the inmediate dependencies of the node
-        are calulated.
-
-        This function is usually called during the AST construction as a
-        "visitor" pattern which is executed at the same time as it is built.
-        """
         self.types[node.variable.name] = node.variable.type
 
         dependencies = []
@@ -80,7 +54,6 @@ class TypeChecker(object):
         self.dependencies[node.variable.name] = dependencies
 
     def get_type(self, key):
-        """Returns the type of a node."""
         try:
             return self.types[key]
         except KeyError:
@@ -90,28 +63,11 @@ class TypeChecker(object):
             return Undefined()
 
     def check(self):
-        """
-        This function iterates through all the declared nodes in the AST and
-        checks for possible errors in them. In case any error is found, it is
-        reported to the checker.
-        """
         for key in self.ast.build_order:
             self.__check_dependencies(key)
             self.__check_expressions(key)
 
     def __check_expressions(self, key):
-        """
-        This function checks for errors in the expressions. Concretely, it
-        checks for:
-
-            - Invalid conditionals: expressions used in conditionals that do
-            not return a boolean.
-            - Missmatching types: expressions used in assignations that return
-            a diffrent type than the expected by the variable.
-            - Operations with invalid operands: Operations with operands that
-            are not supported, like adding strings.
-
-        """
         node = self.ast.register[key]
 
         # Looks for invalid conditionals.
@@ -122,7 +78,7 @@ class TypeChecker(object):
                        'boolean')
                 self.add_error(node, msg.format(condition))
 
-        # Looks for assignations with missmatching types.
+        # Looks for assignations with missmatecing types.
         expressions = []
         try:
             expr_type = node.expression.get_type(key)
@@ -161,16 +117,9 @@ class TypeChecker(object):
 
     def __check_dependencies(self, key):
         """
-        Detects the errors in the dependencies of a node. Concretely, it checks
-        for:
-
-            - Undefined dependencies: Variables referenced in a expressions
-            which are not defined by any node.
-            - Cyclic dependencies: Nodes which dependencies depend on them. For
-            this, we calcualte the extended dependencies of a node to not only
-            check the dependencies of the node but also the dependencies of the
-            dependencies.
-
+        Detects the errors in dependencies:
+            - Undefined dependencies.
+            - Cyclic dependencies. I
         """
         for dependency in self.dependencies[key]:
             if dependency not in self.dependencies:

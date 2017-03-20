@@ -13,6 +13,7 @@ public class Analyzer {
 		this.environment = new Environment();
 	}
 
+
     public ReferenceTable analyze(Form form) {
         VerifyQuestions verifyQuestions = new VerifyQuestions(environment);
         verifyQuestions.visit(form);

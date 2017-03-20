@@ -39,12 +39,4 @@ public abstract class LiteralNode extends ExpressionNode {
     public void generateVisibleIds(List<String> visibleIds) {
         // intentionally left blank
     }
-
-    // This can be done in this superclass,
-    // since adding a new type where the 'isConstant' is forgotten
-    // trigger a warning in the dialog.
-    @Override
-    protected boolean isConstant() {
-        return true;
-    }
 }

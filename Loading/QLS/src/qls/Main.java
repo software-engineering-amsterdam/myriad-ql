@@ -1,5 +1,6 @@
 package qls;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -39,14 +40,16 @@ public class Main {
 		System.out.println(stylesheet);
 		
 		// TODO faults from ql?
-		qls.semantic.Analyzer analyzer = new qls.semantic.Analyzer(ql());
+		// TODO change to QL
+		Map<String, Type> referenceTable = new HashMap<String, Type>();
+		qls.semantic.Analyzer analyzer = new qls.semantic.Analyzer(referenceTable);
 		
-		Faults faults = analyzer.analyze(stylesheet);
-		
-		Environment env = new Environment(ql());
-		
-		Questionnaire questionnaire = new Questionnaire();
-		questionnaire.main(createForm(), env, faults);
+		// Faults faults = analyzer.analyze(stylesheet);
+//		
+//		Environment env = new Environment(ql());
+//		
+//		Questionnaire questionnaire = new Questionnaire();
+//		questionnaire.main(createForm(), env, faults);
 
 	}
 	

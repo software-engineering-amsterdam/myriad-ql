@@ -2,26 +2,26 @@ package qls.semantic;
 
 import java.util.Map;
 
-import QL.Faults;
 import QL.ReferenceTable;
 import QL.ast.type.Type;
-import QL.semantic.Environment;
 import qls.ast.Stylesheet;
 
 public class Analyzer {
 	
-	private final ReferenceTable variables;
+	private final Environment environment;
 	
-	public Analyzer(ReferenceTable variables) {
-		this.variables = variables;
+	public Analyzer(Map<String, Type> referenceTable) {
+		this.environment = new Environment(referenceTable);
 	}
 	
-	public Faults analyze(Stylesheet stylesheet) {
+	public void analyze(Stylesheet stylesheet) {
 		
 		VerifyQuestions verifyQuestions = new VerifyQuestions(environment);
 		verifyQuestions.visit(stylesheet);
 		
-		return environment.getFaults();
+		// return environment.getFaults();
 	}
+	
+	
 
 }
