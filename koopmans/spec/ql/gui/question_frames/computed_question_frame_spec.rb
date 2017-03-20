@@ -24,12 +24,12 @@ module QL
 
       context 'computed questions that is dependent on other question' do
         it 'changes' do
-          question_frames = [integer_question_frame, computed_question_frame_with_dependency]
-          question_frames.map(&:render)
-          integer_question_frame.widget.callback(2)
-          question_frames.map(&:reload)
+          integer_question_frame.render
+          computed_question_frame_with_dependency.render
+          integer_question_frame.widget.callback(99)
+          computed_question_frame_with_dependency.reload
           stored = VariableTable.find(computed_question_frame_with_dependency.name)
-          expect(stored.value).to be(2)
+          expect(stored.value).to be(99)
         end
       end
     end
