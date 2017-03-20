@@ -23,6 +23,6 @@ object Main extends JFXApp {
   }
 
   printIssues(issues)
-  stage = QL(issues, formModel.displayQuestions)
+  stage = QL(formIssues, formModel.displayQuestions)
   stage = QLS(issues, formModel.displayQuestions, styleModel.processedStylesheet)
 }

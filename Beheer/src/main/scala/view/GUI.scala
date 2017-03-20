@@ -2,14 +2,16 @@ package view
 
 import ast._
 import checker.Issue.Issues
+import checker.{Error, Warning}
 import model.DisplayQuestion
-import view.questions.{ BooleanQuestion, DateQuestion, NumericQuestion, StringQuestion }
+import view.questions.{BooleanQuestion, DateQuestion, NumericQuestion, StringQuestion}
 
 import scalafx.application.JFXApp
 import scalafx.geometry.Insets
-import scalafx.scene.{ Node, Scene }
-import scalafx.scene.layout.{ HBox, TilePane, VBox }
+import scalafx.scene.layout.{TilePane, VBox}
+import scalafx.scene.paint.Color
 import scalafx.scene.text.Text
+import scalafx.scene.{Node, Scene}
 
 trait GUI extends JFXApp.PrimaryStage {
   val issues: Issues
@@ -25,7 +27,18 @@ trait GUI extends JFXApp.PrimaryStage {
     }
   }.displayBox
 
-  private val issueBox = issues.map(issue => new HBox(new Text(issue.message)))
+  private def issueBox = issues.map {
+    case Error(message) =>
+      new Text {
+        text = message
+        fill = Color.Red
+      }
+    case Warning(message) =>
+      new Text {
+        text = message
+        fill = Color.Yellow
+      }
+  }
 
   title.value = "Beheer QL Form"
   width = 600

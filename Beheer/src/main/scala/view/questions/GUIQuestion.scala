@@ -10,7 +10,7 @@ import scala.language.implicitConversions
 import scalafx.beans.binding.{ Bindings, BooleanBinding, StringBinding }
 import scalafx.event.subscriptions.Subscription
 import scalafx.scene.layout.VBox
-import scalafx.scene.text.Text
+import scalafx.scene.text.{ Font, Text }
 
 trait GUIQuestion {
   val question: DisplayQuestion
@@ -37,23 +37,29 @@ trait GUIQuestion {
   private def createLabel: Text = {
     questionStyle match {
       case Some(d) =>
-        val s = toCSS(d.styling)
-        new Text {
-          text = question.label
-          style = s
-        }
-      case None =>
-        new Text {
-          text = question.label
-        }
+        val text = new Text(question.label)
+        text.font_=(getFont(d.styling))
+        text.fill_=(getFill(d.styling))
+        text
+      case None => new Text(question.label)
     }
   }
 
-  private def toCSS(styling: Styling): String = styling.values.collect {
-    case Color(value) => s"-fx-fill : $value"
-    case Font(value) => s"-fx-font : $value"
-    case FontSize(value) => s"-fx-font-size : $value"
-  }.mkString("\n")
+  private def getFill(styling: Styling) = styling.values.collectFirst {
+    case Color(value) => scalafx.scene.paint.Color.web(value)
+  }.getOrElse(scalafx.scene.paint.Color.Black)
+
+  private def getFont(styling: Styling): Font = {
+    val font = styling.values.collectFirst { case ast.Font(f) => f }
+    val size = styling.values.collectFirst { case FontSize(s) => s }
+
+    (font, size) match {
+      case (Some(f), Some(s)) => Font.font(f, s.toDouble)
+      case (Some(f), None) => Font.font(f)
+      case (None, Some(s)) => Font.font(s.toDouble)
+      case (None, None) => Font.font(null)
+    }
+  }
 
   private def isDisabled(question: DisplayQuestion): Boolean = question match {
     case _: OpenQuestion => false
