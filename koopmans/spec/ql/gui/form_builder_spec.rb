@@ -10,7 +10,7 @@ module QL
     describe FormBuilder do
       let(:form_builder) { FormBuilder.new }
       let(:question) { Question.new(StringLiteral.new('Did you sell a house in 2010?'), Variable.new('hasSoldHouse'), BooleanType.new) }
-      let(:computed_question) { ComputedQuestion.new(StringLiteral.new('Did you sell a house in 2010?'), Variable.new('hasSoldHouse'), MoneyType, IntegerLiteral.new(1))}
+      let(:computed_question) { ComputedQuestion.new(StringLiteral.new('Did you sell a house in 2010?'), Variable.new('hasSoldHouse'), MoneyType.new, IntegerLiteral.new(1))}
       let(:condition) { BooleanLiteral.new(true) }
       let(:if_statement) { IfStatement.new(condition, [question])}
       let(:if_else_statement) { IfElseStatement.new(condition, [question], [question])}
@@ -44,8 +44,8 @@ module QL
           form = Form.new('_', [outer_if_statement])
 
           # true && true
-          expect(form.accept(form_builder).first.condition.expression[0]).to be_a(BooleanLiteral)
-          expect(form.accept(form_builder).last.condition.expression[0]).to be_a(BooleanLiteral)
+          expect(form.accept(form_builder).first.condition.expressions[0]).to be_a(BooleanLiteral)
+          expect(form.accept(form_builder).last.condition.expressions[0]).to be_a(BooleanLiteral)
         end
       end
 
@@ -65,20 +65,20 @@ module QL
           form = Form.new('_', [outer_if_else_statement])
 
           # true && true
-          expect(form.accept(form_builder)[0].condition.expression[0]).to be_a(BooleanLiteral)
-          expect(form.accept(form_builder)[0].condition.expression[1].expression).to be_a(BooleanLiteral)
+          expect(form.accept(form_builder)[0].condition.expressions[0]).to be_a(BooleanLiteral)
+          expect(form.accept(form_builder)[0].condition.expressions[1].expression).to be_a(BooleanLiteral)
 
           # true && false
-          expect(form.accept(form_builder)[1].condition.expression[0]).to be_a(BooleanLiteral)
-          expect(form.accept(form_builder)[1].condition.expression[1].expression).to be_a(BooleanNegation)
+          expect(form.accept(form_builder)[1].condition.expressions[0]).to be_a(BooleanLiteral)
+          expect(form.accept(form_builder)[1].condition.expressions[1].expression).to be_a(BooleanNegation)
 
           # false && true
-          expect(form.accept(form_builder)[2].condition.expression[0]).to be_a(BooleanNegation)
-          expect(form.accept(form_builder)[2].condition.expression[1].expression).to be_a(BooleanLiteral)
+          expect(form.accept(form_builder)[2].condition.expressions[0]).to be_a(BooleanNegation)
+          expect(form.accept(form_builder)[2].condition.expressions[1].expression).to be_a(BooleanLiteral)
 
           # false && false
-          expect(form.accept(form_builder)[3].condition.expression[0]).to be_a(BooleanNegation)
-          expect(form.accept(form_builder)[3].condition.expression[1].expression).to be_a(BooleanNegation)
+          expect(form.accept(form_builder)[3].condition.expressions[0]).to be_a(BooleanNegation)
+          expect(form.accept(form_builder)[3].condition.expressions[1].expression).to be_a(BooleanNegation)
         end
       end
     end

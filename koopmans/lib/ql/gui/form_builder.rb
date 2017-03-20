@@ -18,20 +18,6 @@ module QL
         [if_body_questions, else_body_questions]
       end
 
-      # negate for condition for else body of if else statement
-      def negate(condition)
-        AST::BooleanNegation.new('!', condition)
-      end
-
-      # stack conditions if possible for nested if (else) statements
-      def stack_conditions(condition_1, condition_2)
-        if condition_1 && condition_2
-          AST::ExpressionSequence.new([condition_1, AST::ArithmeticExpression.new('&&', condition_2)])
-        else
-          condition_1 || condition_2
-        end
-      end
-
       def visit_question(question, condition=nil)
         name = question.variable.name
         label = question.label.value
@@ -47,6 +33,14 @@ module QL
         assignment = question.assignment
         ComputedQuestionFrame.new(name, label, type, widget_type, condition, assignment)
       end
+
+      # all widgets:
+      # TextWidget
+      # SpinboxWidget
+      # SliderWidget
+      # RadioWidget
+      # CheckboxWidget
+      # DropdownWidget
 
       def visit_boolean_type(_)
         return AST::BooleanLiteral, RadioWidget
@@ -72,13 +66,19 @@ module QL
         return AST::StringLiteral, TextWidget
       end
 
-      # all widgets
-      # TextWidget
-      # SpinboxWidget
-      # SliderWidget
-      # RadioWidget
-      # CheckboxWidget
-      # DropdownWidget
+      # negate for condition for else body of if else statement
+      def negate(condition)
+        AST::BooleanNegation.new('!', condition)
+      end
+
+      # stack conditions if possible for nested if (else) statements
+      def stack_conditions(condition_1, condition_2)
+        if condition_1 && condition_2
+          AST::ExpressionSequence.new([condition_1, AST::ArithmeticExpression.new('&&', condition_2)])
+        else
+          condition_1 || condition_2
+        end
+      end
     end
   end
 end
