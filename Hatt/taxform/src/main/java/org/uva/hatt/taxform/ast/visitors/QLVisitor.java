@@ -1,18 +1,18 @@
 package org.uva.hatt.taxform.ast.visitors;
 
-import org.uva.hatt.taxform.ast.nodes.*;
-import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
-import org.uva.hatt.taxform.ast.nodes.expressions.ComputationExpression;
+import org.uva.hatt.taxform.ast.nodes.ASTNode;
+import org.uva.hatt.taxform.ast.nodes.Form;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
-import org.uva.hatt.taxform.ast.nodes.items.*;
+import org.uva.hatt.taxform.ast.nodes.expressions.binary.*;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.Identifier;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.IntegerLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.StringerLiteral;
-import org.uva.hatt.taxform.ast.nodes.types.*;
+import org.uva.hatt.taxform.ast.nodes.items.*;
 import org.uva.hatt.taxform.ast.nodes.types.Boolean;
 import org.uva.hatt.taxform.ast.nodes.types.Integer;
+import org.uva.hatt.taxform.ast.nodes.types.*;
 import org.uva.hatt.taxform.ast.nodes.types.String;
 import org.uva.hatt.taxform.grammars.QLBaseVisitor;
 import org.uva.hatt.taxform.grammars.QLParser;
@@ -81,23 +81,63 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
     }
 
     @Override
-    public ASTNode visitComputationExpression(QLParser.ComputationExpressionContext ctx) {
-        ComputationExpression computationExpression = new ComputationExpression(ctx.start.getLine());
-        computationExpression.setLeft((Expression) visit(ctx.left));
-        computationExpression.setRight((Expression) visit(ctx.right));
-        computationExpression.setOperator(ctx.op.getText());
-
-        return computationExpression;
+    public ASTNode visitSubtraction(QLParser.SubtractionContext ctx) {
+        return new Subtraction(ctx.start.getLine(), (Expression) visit(ctx.left), (Expression) visit(ctx.right));
     }
 
     @Override
-    public ASTNode visitBooleanExpression(QLParser.BooleanExpressionContext ctx) {
-        BooleanExpression booleanExpression = new BooleanExpression(ctx.start.getLine(), lhs, rhs);
-        booleanExpression.setLeft((Expression) visit(ctx.left));
-        booleanExpression.setRight((Expression) visit(ctx.right));
-        booleanExpression.setOperator(ctx.op.getText());
+    public ASTNode visitNotEqual(QLParser.NotEqualContext ctx) {
+        return new NotEqual(ctx.start.getLine(), (Expression) visit(ctx.left), (Expression) visit(ctx.right));
+    }
 
-        return booleanExpression;
+    @Override
+    public ASTNode visitLogicalAnd(QLParser.LogicalAndContext ctx) {
+        return new LogicalAnd(ctx.start.getLine(), (Expression) visit(ctx.left), (Expression) visit(ctx.right));
+    }
+
+    @Override
+    public ASTNode visitGreaterThanOrEqual(QLParser.GreaterThanOrEqualContext ctx) {
+        return new GreaterThanOrEqual(ctx.start.getLine(), (Expression) visit(ctx.left), (Expression) visit(ctx.right));
+    }
+
+    @Override
+    public ASTNode visitDivision(QLParser.DivisionContext ctx) {
+        return new Division(ctx.start.getLine(), (Expression) visit(ctx.left), (Expression) visit(ctx.right));
+    }
+
+    @Override
+    public ASTNode visitEqual(QLParser.EqualContext ctx) {
+        return new Equal(ctx.start.getLine(), (Expression) visit(ctx.left), (Expression) visit(ctx.right));
+    }
+
+    @Override
+    public ASTNode visitLessThan(QLParser.LessThanContext ctx) {
+        return new LessThan(ctx.start.getLine(), (Expression) visit(ctx.left), (Expression) visit(ctx.right));
+    }
+
+    @Override
+    public ASTNode visitLessThanOrEqual(QLParser.LessThanOrEqualContext ctx) {
+        return new LessThanOrEqual(ctx.start.getLine(), (Expression) visit(ctx.left), (Expression) visit(ctx.right));
+    }
+
+    @Override
+    public ASTNode visitMultiplication(QLParser.MultiplicationContext ctx) {
+        return new Multiplication(ctx.start.getLine(), (Expression) visit(ctx.left), (Expression) visit(ctx.right));
+    }
+
+    @Override
+    public ASTNode visitLogicalOr(QLParser.LogicalOrContext ctx) {
+        return new LogicalOr(ctx.start.getLine(), (Expression) visit(ctx.left), (Expression) visit(ctx.right));
+    }
+
+    @Override
+    public ASTNode visitAddition(QLParser.AdditionContext ctx) {
+        return new Addition(ctx.start.getLine(), (Expression) visit(ctx.left), (Expression) visit(ctx.right));
+    }
+
+    @Override
+    public ASTNode visitGreaterThan(QLParser.GreaterThanContext ctx) {
+        return new GreaterThan(ctx.start.getLine(), (Expression) visit(ctx.left), (Expression) visit(ctx.right));
     }
 
     @Override
