@@ -79,6 +79,9 @@ public class QuestionFormTest {
         add(intCalc);
 
         Assert.assertEquals(expCalc.evaluate(), "0", "Nodes should be able to calculate the result");
+        mSymbolTable.updateValue("soldHouseValue", "-50000");
+        mSymbolTable.updateValue("boughtHouseValue", "50000");
+        Assert.assertEquals(intCalc.resolveValue(), "100000", "Calculation should use new values");
     }
 
     @Test
