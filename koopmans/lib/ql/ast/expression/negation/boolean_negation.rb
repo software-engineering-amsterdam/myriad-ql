@@ -1,9 +1,13 @@
 module QL
   module AST
     class BooleanNegation < Negation
-      def eval(expression)
-        BooleanLiteral.new(!expression)
+      def accept(visitor)
+        visitor.visit_boolean_negation(self)
       end
+
+      # def eval(expression)
+      #   BooleanLiteral.new(!expression)
+      # end
 
       def is_compatible_with
         [BooleanType.new]
