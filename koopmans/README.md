@@ -1,7 +1,84 @@
-# Team Koopmans
-Members:
-* Jetse Koopmans
-* Arend Koopmans
+### Team Koopmans:
+* Jetse Koopmans (10292829)
+* Arend Koopmans (10275673)
+
+### Getting started
+QL is tested on ruby '2.3.0'. Please run `bundle install` before you continue.
+
+### How do I run QL?
+```ruby
+$ bundle exec ruby main.rb
+```
+
+### How do I run QLS?
+Not yet...
+
+### How do I run the test suite?
+```ruby
+$ bundle exec rspec
+```
+### Which style is used?
+Rubocop, see https://github.com/bbatsov/rubocop
+
+### How are errors handled?
+Via the Constructivist style, see pp. 155-159 of Exercises in programming style by Cristina Videira Lopes.
+ 
+### Example QL
+```
+form taxOfficeExample { 
+  "Did you sell a house in 2010?"
+    hasSoldHouse: boolean
+  "Did you buy a house in 2010?"
+    hasBoughtHouse: boolean
+  "Did you enter a loan?"
+    hasMaintLoan: boolean
+    
+  if (hasSoldHouse) {
+    "What was the selling price?"
+      sellingPrice: money
+    "Private debts for the sold house:"
+      privateDebt: money
+    "Value residue:"
+      valueResidue: money = 
+        (sellingPrice - privateDebt)
+  }
+ 
+}
+```
+
+### Example QLS
+```
+stylesheet taxOfficeExample 
+  page Housing {
+    section "Buying"
+      question hasBoughtHouse  
+        widget checkbox 
+    section "Loaning"  
+      question hasMaintLoan
+  }
+
+  page Selling { 
+    section "Selling" {
+      question hasSoldHouse
+        widget radio("Yes", "No") 
+      section "You sold a house" {
+        question sellingPrice
+          widget spinbox
+        question privateDebt
+          widget spinbox 
+        question valueResidue
+        default money {
+          width: 400
+          font: "Arial" 
+          fontsize: 14
+          color: #999999
+          widget spinbox
+        }        
+      }
+    }
+    default boolean widget radio("Yes", "No")
+  }
+```
 
 precedence eval van expressions
 
