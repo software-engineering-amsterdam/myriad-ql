@@ -1,61 +1,57 @@
 # coding=utf-8
 from pql.traversal.BinaryExpressionVisitor import BinaryExpressionVisitor
 from pql.traversal.UnaryExpressionVisitor import UnaryExpressionVisitor
-from pql.typechecker.types import DataTypes
+from pql.typechecker.types import is_number_type
 
 
 class IntegerTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
     def subtraction(self, node):
-        if self.is_number_type(node.data_type):
+        if is_number_type(node.data_type):
             return node
         return None
 
     def division(self, node):
-        if self.is_number_type(node.data_type):
+        if is_number_type(node.data_type):
             return node
         return None
 
     def multiplication(self, node):
-        if self.is_number_type(node.data_type):
+        if is_number_type(node.data_type):
             return node
         return None
 
-    @staticmethod
-    def is_number_type(node_data_type):
-        return node_data_type is DataTypes.money or node_data_type is DataTypes.integer
-
     def addition(self, node):
-        if self.is_number_type(node.data_type):
+        if is_number_type(node.data_type):
             return node
         return None
 
     def greater_exclusive(self, node):
-        if self.is_number_type(node.data_type):
+        if is_number_type(node.data_type):
             return True
         return None
 
     def greater_inclusive(self, node):
-        if self.is_number_type(node.data_type):
+        if is_number_type(node.data_type):
             return True
         return None
 
     def lower_inclusive(self, node):
-        if self.is_number_type(node.data_type):
+        if is_number_type(node.data_type):
             return True
         return None
 
     def lower_exclusive(self, node):
-        if self.is_number_type(node.data_type):
+        if is_number_type(node.data_type):
             return True
         return None
 
     def equality(self, node):
-        if self.is_number_type(node.data_type):
+        if is_number_type(node.data_type):
             return True
         return None
 
     def inequality(self, node):
-        if self.is_number_type(node.data_type):
+        if is_number_type(node.data_type):
             return True
         return None
 
@@ -75,6 +71,6 @@ class IntegerTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
         return node.operand
 
     def assignment(self, node):
-        if node is not None and self.is_number_type(node.data_type):
+        if node is not None and is_number_type(node.data_type):
             return node
         return None
