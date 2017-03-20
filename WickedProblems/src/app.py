@@ -5,8 +5,13 @@ cur_version = sys.version_info
 
 if cur_version >= req_version:
     from parser.ql import QL
-    from operations.ql import Eval, RegisterComputedQuestions, RegisterConditions
-    from operations.gui import BuildGui,PrettyPrint,GetVariables
+    # from operations.gui import *
+    from operations.variables import GetVariables
+    from operations.register_questions import RegisterComputedQuestions
+    from operations.register_conditions import RegisterConditions
+    from operations.gui import BuildGui
+    # from operations.qui import *
+    # from operations.gui import BuildGui,PrettyPrint,GetVariables
     from tkinter import Button
     from user_interface.ui import Application
 else:

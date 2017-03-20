@@ -1,26 +1,20 @@
-from user_interface.ui import FormController,QuestionController, \
-                              ComputedQuestionController,ReadOnlyController, \
-                              BooleanController,IntegerController, \
-                              TextController
-import operations.ql
-from .ql import *
-from tkinter import IntVar,StringVar
+from .ql import QlAlg
+from .environment import Environment
 
-class BuildGui(QlAlg):
-    def __init__(self, parent, environment):
-        self.environment = environment
-        self.parent = parent
+class GetVariables(QlAlg):
+    def __init__(self, environment_vars):
+        self.environment = Environment()
 
     def Literal(self, value):
         class _anon():
             execute = None
+
         return _anon()
 
     def Form(self, name, block):
         def _register():
-            form = FormController(self.parent)
-            block.execute(form)
-            return form
+            block.execute()
+            return
 
         class _anon():
             execute = lambda self: _register()
@@ -28,14 +22,14 @@ class BuildGui(QlAlg):
 
     def Block(self, statements):
         class _anon():
-            execute = lambda self, form: [statement.execute(form)
-                for _, statement in enumerate(statements)]
+            execute = lambda self: [k.execute()
+                                    for _, k in enumerate(statements)]
         return _anon()
 
     def Variable(self, name, datatype):
         def _register():
-            variable = datatype.execute(name)
-            return variable
+            self.environment.add_var((name, datatype.execute()))
+            return (name, datatype.execute())
 
         class _anon():
             execute = lambda self: _register()
@@ -50,55 +44,55 @@ class BuildGui(QlAlg):
         return _anon()
 
     def Question(self, variable, label):
-        def _register(form):
-            question = QuestionController(
-                self.parent, label.execute(), variable.execute())
-            form.add_element(question)
+        def _register():
+            self.environment.add_question(variable.execute(), label.execute())
 
         class _anon():
-            execute = lambda self, form: _register(form)
+            execute = lambda self: _register()
         return _anon()
 
     def ifThen(self, expression, block):
-        def _register(form):
+        def _register():
             expression.execute()
-            block.execute(form)
+            block.execute()
 
         class _anon():
-            execute = lambda self, form: _register(form)
+            execute = lambda self: _register()
         return _anon()
 
     def ComputedQuestion(self, variable, label, expression):
-        def _register(form):
-            question = ComputedQuestionController(
-                self.parent, label.execute(), ReadOnlyController(self.parent, variable.execute()))
+        def _register():
 
-            form.add_element(question)
+            variable.execute()
+            label.execute()
+            expression.execute()
 
         class _anon():
-            execute=lambda self, form: _register(form)
+            execute = lambda self: _register()
         return _anon()
 
     def Boolean(self, value=False):
-        def _register(key):
-            var = IntVar()
-            self.environment.update_var(key, var)
-            controller = BooleanController(self.parent, var)
-
-            return controller
+        def _register(self):
+            return 'boolean'
 
         class _anon():
-            execute = lambda self, key : _register(key)
+            execute = lambda self: _register(self)
+        return _anon()
+
+    def UnaryNegation(self, value=False):
+        def _register(self):
+            return 'negation'
+
+        class _anon():
+            execute = lambda self: _register(self)
         return _anon()
 
     def Money(self, value=False):
-        def _register(key):
-            var =  IntVar()
-            self.environment.update_var(key, var)
-            return IntegerController(self.parent, var)
+        def _register():
+            return 'money'
 
         class _anon():
-            execute=lambda self, key: _register(key)
+            execute = lambda self: _register()
         return _anon()
 
     def Substraction(self, lhs, rhs):
@@ -107,15 +101,7 @@ class BuildGui(QlAlg):
             rhs.execute()
 
         class _anon():
-            execute=lambda self: _register()
-        return _anon()
-
-    def UnaryNegation(self, lhs):
-        def _register():
-            lhs.execute()
-
-        class _anon():
-            execute=lambda self: _register()
+            execute = lambda self: _register()
         return _anon()
 
     def Addition(self, lhs, rhs):
@@ -124,7 +110,7 @@ class BuildGui(QlAlg):
             rhs.execute()
 
         class _anon():
-            execute=lambda self: _register()
+            execute = lambda self: _register()
         return _anon()
 
     def GreaterThan(self, lhs, rhs):
@@ -133,7 +119,7 @@ class BuildGui(QlAlg):
             rhs.execute()
 
         class _anon():
-            execute=lambda self: _register()
+            execute = lambda self: _register()
         return _anon()
 
     def GreaterThanEquals(self, lhs, rhs):
@@ -142,7 +128,7 @@ class BuildGui(QlAlg):
             rhs.execute()
 
         class _anon():
-            execute=lambda self: _register()
+            execute = lambda self: _register()
         return _anon()
 
     def LessThan(self, lhs, rhs):
@@ -151,7 +137,7 @@ class BuildGui(QlAlg):
             rhs.execute()
 
         class _anon():
-            execute=lambda self: _register()
+            execute = lambda self: _register()
         return _anon()
 
     def LessThanEquals(self, lhs, rhs):
@@ -160,7 +146,7 @@ class BuildGui(QlAlg):
             rhs.execute()
 
         class _anon():
-            execute=lambda self: _register()
+            execute = lambda self: _register()
         return _anon()
 
     def Equality(self, lhs, rhs):
@@ -169,7 +155,7 @@ class BuildGui(QlAlg):
             rhs.execute()
 
         class _anon():
-            execute=lambda self: _register()
+            execute = lambda self: _register()
         return _anon()
 
     def Inequality(self, lhs, rhs):
@@ -178,34 +164,7 @@ class BuildGui(QlAlg):
             rhs.execute()
 
         class _anon():
-            execute=lambda self: _register()
-        return _anon()
-
-    def Multiplication(self, lhs, rhs):
-        def _register():
-            lhs.execute()
-            rhs.execute()
-
-        class _anon():
-            execute=lambda self: _register()
-        return _anon()
-
-    def LogicalAnd(self, lhs, rhs):
-        def _register():
-            lhs.execute()
-            rhs.execute()
-
-        class _anon():
-            execute=lambda self: _register()
-        return _anon()
-
-    def LogicalOr(self, lhs, rhs):
-        def _register():
-            lhs.execute()
-            rhs.execute()
-
-        class _anon():
-            execute=lambda self: _register()
+            execute = lambda self: _register()
         return _anon()
 
     def Division(self, lhs, rhs):
@@ -214,17 +173,42 @@ class BuildGui(QlAlg):
             rhs.execute()
 
         class _anon():
-            execute=lambda self: _register()
+            execute = lambda self: _register()
+        return _anon()
+
+    def Multiplication(self, lhs, rhs):
+        def _register():
+            lhs.execute()
+            rhs.execute()
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
+    def LogicalAnd(self, lhs, rhs):
+        def _register():
+            lhs.execute()
+            rhs.execute()
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
+    def LogicalOr(self, lhs, rhs):
+        def _register():
+            lhs.execute()
+            rhs.execute()
+
+        class _anon():
+            execute = lambda self: _register()
         return _anon()
 
     def Integer(self, value):
-        def _register(key):
-            var = IntVar()
-            self.environment.update_var(key, var)
-            return IntegerController(self.parent, var)
+        def _register():
+            return 'integer'
 
         class _anon():
-            execute=lambda self, key: _register(key)
+            execute = lambda self: _register()
         return _anon()
 
     def StringLiteral(self, value):
@@ -232,15 +216,13 @@ class BuildGui(QlAlg):
             return value
 
         class _anon():
-            execute=lambda self: _register()
+            execute = lambda self: _register()
         return _anon()
 
     def String(self, value):
-        def _register(key):
-            var = StringVar()
-            self.environment.update_var(key, var)
-            return TextController(self.parent, var)
+        def _register():
+            return 'string'
 
         class _anon():
-            execute=lambda self, key: _register(key)
+            execute = lambda self: _register()
         return _anon()

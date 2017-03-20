@@ -35,6 +35,36 @@ class Addition(BinaryOperation):
         return _alg.Addition(self.left_operand.alg(_alg),
                              self.right_operand.alg(_alg))
 
+class GreaterThan(BinaryOperation):
+    def alg(self, _alg):
+        return _alg.Addition(self.left_operand.alg(_alg),
+                             self.right_operand.alg(_alg))
+
+class GreaterThanEquals(BinaryOperation):
+    def alg(self, _alg):
+        return _alg.Addition(self.left_operand.alg(_alg),
+                             self.right_operand.alg(_alg))
+
+class LessThan(BinaryOperation):
+    def alg(self, _alg):
+        return _alg.Addition(self.left_operand.alg(_alg),
+                             self.right_operand.alg(_alg))
+
+class LessThanEquals(BinaryOperation):
+    def alg(self, _alg):
+        return _alg.Addition(self.left_operand.alg(_alg),
+                             self.right_operand.alg(_alg))
+
+class Equality(BinaryOperation):
+    def alg(self, _alg):
+        return _alg.Addition(self.left_operand.alg(_alg),
+                             self.right_operand.alg(_alg))
+
+class Inequality(BinaryOperation):
+    def alg(self, _alg):
+        return _alg.Addition(self.left_operand.alg(_alg),
+                             self.right_operand.alg(_alg))
+
 class Substraction(BinaryOperation):
     def alg(self, _alg):
         return _alg.Substraction(self.left_operand.alg(_alg),

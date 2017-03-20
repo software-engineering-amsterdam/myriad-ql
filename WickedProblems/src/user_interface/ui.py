@@ -1,5 +1,5 @@
 from tkinter import Tk, Frame, Label, Entry, Radiobutton, Spinbox, Button, filedialog, Menu
-from operations.ql import Eval
+from operations.eval import Eval
 from parser.ql import QL
 import json
 

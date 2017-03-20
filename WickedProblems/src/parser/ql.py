@@ -34,7 +34,7 @@ class QL:
     literal_less_than = Literal('<').suppress()
     literal_greater_than_equal = Literal('>=').suppress()
     literal_less_than_equal = Literal('<=').suppress()
-    literal_equal = Literal('=').suppress()
+    literal_equal = Literal('==').suppress()
     literall_not_equal = Literal('!=').suppress()
     literal_addition = Literal('+').suppress()
     literal_substraction = Literal('-').suppress()
@@ -79,7 +79,7 @@ class QL:
                              (literal_equal, 2, opAssoc.LEFT,
                               binary_node(Equality)),
                              (literall_not_equal, 2, opAssoc.LEFT,
-                              binary_node(Equality))]
+                              binary_node(Inequality))]
 
     arithmic_precedence = [(literal_addition, 2, opAssoc.LEFT,
                             binary_node(Addition)),
@@ -94,8 +94,8 @@ class QL:
     comparison_expression = operatorPrecedence(operand, comparison_precedence)
     arithmic_expression = operatorPrecedence(operand, arithmic_precedence)
 
-    expression = Or(comparison_expression | arithmic_expression |
-                    boolean_expression | reference_variable)
+    expression = Or(boolean_expression | arithmic_expression |
+                    comparison_expression)
 
     string = QuotedString('"')
     string.addParseAction(lambda _, __, tokens: StringLiteral(*tokens))
@@ -120,7 +120,7 @@ class QL:
     question.addParseAction(
         lambda _, __, tokens: Question(**tokens[0].asDict()))
     computed_question = Group(string('label') + \
-        init_variable('variable') + literal_equal + \
+        init_variable('variable') + Literal('=').suppress() + \
         expression('expression'))('computed_question')
 
     computed_question.addParseAction(computed_question_action)
