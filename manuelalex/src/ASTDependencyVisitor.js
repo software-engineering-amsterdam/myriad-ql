@@ -46,6 +46,11 @@ export class ASTDependencyVisitor {
         ifstatement.condition.accept(this);
     }
 
+    visitIfElseStatement(ifelsestatement) {
+        this.depth++;
+        ifelsestatement.condition.accept(this);
+    }
+
 
     visitPrefixExpression(condition){
         condition.expression.accept(this);
