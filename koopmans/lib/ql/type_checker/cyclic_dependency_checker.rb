@@ -41,10 +41,6 @@ module QL
         negation.expression.accept(self)
       end
 
-      # def visit_binary_expression(left, binary_expression)
-      #   left.accept(self)
-      #   binary_expression.expression.accept(self)
-      # end
 
       def visit_arithmetic_expression(left, binary_expression)
         left.accept(self)
@@ -81,30 +77,42 @@ module QL
 
       def visit_variable(variable)
         cyclic_dependency_check(variable)
-        # return variable for the sake of .accept
         variable
       end
 
-      # check if the visited variable is in the dependency hash
-      # for each of the dependencies, check their dependencies
-      # check if the variable from the dependency is in the dependency hash
-      # add new dependency to original dependency hash, don't add duplicates
-      # check for cyclic dependency if there is a dependency on itself, else visit the next variable
       def cyclic_dependency_check(variable)
-        dependent_variables = @variable_dependencies[variable.name]
+        dependent_variables = get_dependencies(variable)
         if dependent_variables
           dependent_variables.each do |dependent_variable|
-            next_dependent_variables = @variable_dependencies[dependent_variable.name]
-            if next_dependent_variables
-              @variable_dependencies[variable.name] = dependent_variables | next_dependent_variables
-              if @variable_dependencies[variable.name].map(&:name).include?(variable.name)
-                NotificationTable.store(Notification::Error.new("question '#{variable.name}' has a cyclic dependency"))
-              else
-                visit_variable(dependent_variable)
-              end
-            end
+            check_dependent_variables(variable, dependent_variable)
           end
         end
+      end
+
+      # add new dependency to original dependency hash if they exist, don't add duplicates
+      def check_dependent_variables(variable, dependent_variable)
+        next_dependent_variables = get_dependencies(dependent_variable)
+        if next_dependent_variables
+          add_dependencies(variable, next_dependent_variables)
+          is_cyclic_dependency?(variable, dependent_variable)
+        end
+      end
+
+      # check for cyclic dependency if there is a dependency on itself, else visit the next variable
+      def is_cyclic_dependency?(variable, dependent_variable)
+        if @variable_dependencies[variable.name].map(&:name).include?(variable.name)
+          NotificationTable.store(Notification::Error.new("question '#{variable.name}' has a cyclic dependency"))
+        else
+          visit_variable(dependent_variable)
+        end
+      end
+
+      def get_dependencies(variable)
+        @variable_dependencies[variable.name]
+      end
+
+      def add_dependencies(variable, dependencies)
+        @variable_dependencies[variable.name] = get_dependencies(variable) | dependencies
       end
     end
   end
