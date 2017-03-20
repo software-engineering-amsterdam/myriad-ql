@@ -4,7 +4,6 @@ import ast.NumericType
 import values.{ NumericValue, UndefinedValue, Value }
 
 import scalafx.beans.property.DoubleProperty
-import scalafx.scene.Node
 import scalafx.scene.control.Slider
 
 class SliderWidget(min: BigDecimal, max: BigDecimal, numericType: NumericType, changeHandler: Option[Value => Unit]) extends QLWidget(changeHandler) {
@@ -17,10 +16,11 @@ class SliderWidget(min: BigDecimal, max: BigDecimal, numericType: NumericType, c
   }
 
   override val displayNode: Slider = new Slider {
-    min = min.doubleValue
-    max = max.doubleValue
     value <==> selectedValue
   }
+
+  displayNode.min_=(min.doubleValue())
+  displayNode.max_=(max.doubleValue())
 
   override def setValue(newVal: Value): Unit = newVal match {
     case n: NumericValue =>
