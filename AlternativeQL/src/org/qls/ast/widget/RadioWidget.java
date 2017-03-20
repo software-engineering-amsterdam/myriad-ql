@@ -19,8 +19,7 @@ public class RadioWidget extends Widget {
         return noText;
     }
 
-    @Override
-    public void initializeSupportedTypes() {
-        getSupportedTypes().add(new BooleanType());
+    public boolean isCompatibleWith(BooleanType type) {
+        return true;
     }
 }
