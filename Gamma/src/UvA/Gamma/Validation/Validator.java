@@ -17,11 +17,20 @@ public class Validator {
 
     public void visit() {
         for (FormItem item : form) {
+
+            /* Terminating errors */
             try {
                 item.accept(this);
             } catch (IdNotFoundException | IdRedeclaredException | IncompatibleTypesException | CyclicDependencyException ex) {
                 System.err.println(ex.getMessage());
                 System.exit(1);
+            }
+
+            /* Warnings */
+            try {
+                validateDuplicateLabels(item);
+            } catch (DuplicateLabelException ex) {
+                System.err.println("WARNING: " + ex.getMessage());
             }
         }
     }
@@ -64,4 +73,15 @@ public class Validator {
             throw new IdNotFoundException("The id " + id + " is referenced but not present in the form");
         }
     }
+
+    private void validateDuplicateLabels(FormItem formItem) throws DuplicateLabelException {
+        for (FormItem item : form) {
+            String offendingLabelId = formItem.validateLabel(item);
+            if (offendingLabelId != null) {
+                throw new DuplicateLabelException("The item with id " + offendingLabelId + " has a label which is " +
+                        "already present in the form");
+            }
+        }
+    }
+
 }

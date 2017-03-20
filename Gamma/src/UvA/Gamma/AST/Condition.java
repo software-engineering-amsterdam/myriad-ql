@@ -88,9 +88,24 @@ public class Condition implements FormItem {
     }
 
     @Override
+    public String validateLabel(FormItem item) {
+        if (this == item) return null;
+        Optional<FormItem> optionalResult = thenBlockItems.stream().filter(formItem -> formItem.validateLabel(item) != null).findFirst();
+        Optional<FormItem> optionalElseResult = elseBlockItems.stream().filter(formItem -> formItem.validateLabel(item) != null).findFirst();
+        if (optionalResult.isPresent()) {
+            return optionalResult.get().validateLabel(item);
+        } else if (optionalElseResult.isPresent()) {
+            return optionalResult.get().validateLabel(item);
+        }
+        return null;
+    }
+
+    @Override
     public Pair<String> validateCyclicDependency(FormItem item) {
-        Optional<FormItem> optionalResult = thenBlockItems.stream().filter(formItem -> validateCyclicDependencyForChild(formItem, item)).findFirst();
-        Optional<FormItem> optionalElseResult = elseBlockItems.stream().filter(formItem -> validateCyclicDependencyForChild(formItem, item)).findFirst();
+        Optional<FormItem> optionalResult = thenBlockItems.stream().filter(
+                formItem -> validateCyclicDependencyForChild(formItem, item)).findFirst();
+        Optional<FormItem> optionalElseResult = elseBlockItems.stream().filter(
+                formItem -> validateCyclicDependencyForChild(formItem, item)).findFirst();
         if (optionalResult.isPresent()) {
             return optionalResult.get().validateCyclicDependency(item);
         } else if (optionalElseResult.isPresent()) {
@@ -123,15 +138,22 @@ public class Condition implements FormItem {
 
     @Override
     public boolean containsId(String id) {
-        return childHasId(thenBlockItems, id) || childHasId(elseBlockItems, id);
+        return thenBlockItems.stream().anyMatch(formItem -> formItem.containsId(id)) ||
+                elseBlockItems.stream().anyMatch(formItem -> formItem.containsId(id));
     }
 
-    private boolean childHasId(List<FormItem> items, String id) {
-        boolean hasId = false;
-        for (FormItem item : items) {
-            hasId = hasId || item.containsId(id);
-        }
-        return hasId;
+//    private boolean childHasId(List<FormItem> items, String id) {
+//        boolean hasId = false;
+//        for (FormItem item : items) {
+//            hasId = hasId || item.containsId(id);
+//        }
+//        return hasId;
+//    }
+
+    @Override
+    public boolean containsLabel(String label) {
+        return thenBlockItems.stream().anyMatch(formItem -> formItem.containsLabel(label)) ||
+                elseBlockItems.stream().anyMatch(formItem -> formItem.containsLabel(label));
     }
 
     @Override

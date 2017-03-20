@@ -50,6 +50,16 @@ public class Question implements FormItem {
     }
 
     @Override
+    public String validateLabel(FormItem item) {
+        return item != this && item.containsLabel(this.question) ? this.id : null;
+    }
+
+    @Override
+    public boolean containsLabel(String label) {
+        return this.question.equals(label);
+    }
+
+    @Override
     public boolean isDependentOn(String id) {
         return false; // A question is never dependent on another item
     }

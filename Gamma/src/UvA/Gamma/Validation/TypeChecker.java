@@ -38,7 +38,7 @@ public class TypeChecker {
     }
 
     public boolean checkMoney(String value) {
-        return value.matches("^€\\d+((\\.\\d*)|(\\.-))?$");
+        return value.matches("^\\d+((\\.\\d{2})|(\\.-))?$");
     }
 
 }
