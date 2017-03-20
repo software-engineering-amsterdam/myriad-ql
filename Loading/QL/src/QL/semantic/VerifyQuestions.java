@@ -87,6 +87,6 @@ public class VerifyQuestions implements FormVisitor {
 			environment.addMessage(new Error("The variable " + variable + " cannot be added, because it is "
 					+ "already defined", line));
 		}
-		environment.getReferenceTable().addVariableType(variable, type);
+		environment.getReferenceTable().addReference(variable, type);
 	}
 }

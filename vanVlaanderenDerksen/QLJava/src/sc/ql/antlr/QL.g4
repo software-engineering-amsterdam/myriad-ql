@@ -3,7 +3,7 @@ grammar QL;
 @header {package sc.ql.antlr;}
 
 form
-	: 'form' formElement+ 'endform' EOF
+	: 'form' formlabel=ID_LITERAL formElement+ 'endform' EOF
 	;
 
 formElement																			

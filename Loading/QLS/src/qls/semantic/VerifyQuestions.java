@@ -45,13 +45,13 @@ public class VerifyQuestions implements StylesheetVisitor {
 	public void visit(Question question) {
 		
 		if (!environment.presentInQL(question.getName())) {
-			environment.getFaults().add(new Error("The variable " + question.getName() + 
+			environment.getMessages().add(new Error("The variable " + question.getName() + 
 					" appears in the QLS, but does not exist in QL", question.getLine()));
 		}
 		
 		if (environment.isCovered(question.getName())) {
-			environment.getFaults().add(new Error("The variable " + question.getName() + 
-			" is already defined int the QLS", question.getLine()));
+			environment.getMessages().add(new Error("The variable " + question.getName() + 
+			" is already defined in the QLS", question.getLine()));
 		}
 		
 		environment.setCovered(question.getName());

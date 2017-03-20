@@ -6,27 +6,26 @@ import java.util.List;
 import java.util.Map;
 
 import QL.ReferenceTable;
-import QL.ast.type.Type;
-import QL.message.Message;
 import QL.message.Error;
+import QL.message.Message;
 
 class Environment {
 	
 	private final Map<String, Boolean> variableCovered;
-	
+	private final ReferenceTable referenceTable;
 	private final List<Message> messages;
 	
-	public Environment(Map<String, Type> variableTypes) {
+	public Environment(ReferenceTable referenceTable) {
 		
 		this.variableCovered = new HashMap<>();	
-		
-		for (String variable : variableTypes.keySet()) {
-			variableCovered.put(variable, false);
+		this.referenceTable = referenceTable;
+		for (String name : referenceTable) {
+			variableCovered.put(name, false);
 		}
 		this.messages = new ArrayList<>(); // TODO move to analyzing part
 	}
 	
-	public List<Message> getFaults() {
+	public List<Message> getMessages() {
 		return messages;
 	}
 	
