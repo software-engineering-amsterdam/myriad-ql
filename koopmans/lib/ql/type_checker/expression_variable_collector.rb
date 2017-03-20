@@ -28,13 +28,14 @@ module QL
 
       # visit operation in expression
       def visit_expression(expression)
-        if expression.expression.respond_to? :reduce
-          expression.expression.reduce do |left, operation|
-            operation.accept(left, self)
-          end
-        else
-          expression.expression.accept(self)
-        end
+        try_reduce(expression.expression)
+        # if expression.expression.respond_to? :reduce
+        #   expression.expression.reduce do |left, operation|
+        #     operation.accept(left, self)
+        #   end
+        # else
+        #   expression.expression.accept(self)
+        # end
       end
 
       # def visit_binary_expression(left, binary_expression)
@@ -51,10 +52,27 @@ module QL
       # end
 
       def visit_arithmetic_expression(left, binary_expression)
-        pp left
-        left = left.accept(self)
-        right = binary_expression.expression.accept(self)
+        left = try_accept(left)
+        right = try_accept(binary_expression.expression)
         [left ,right]
+      end
+
+      def try_accept(node)
+        if node.respond_to?(:accept)
+          node.accept(self)
+        else
+          node
+        end
+      end
+
+      def try_reduce(node)
+        if node.respond_to?(:reduce)
+          node.reduce do |left, operation|
+            operation.accept(left, self)
+          end
+        else
+          node.accept(self)
+        end
       end
 
       def visit_boolean_expression(left, binary_expression)
