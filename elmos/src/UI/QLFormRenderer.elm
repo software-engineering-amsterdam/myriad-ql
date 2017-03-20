@@ -27,7 +27,7 @@ type Msg
 init : Form -> Model
 init form =
     { form = form
-    , env = Env.empty
+    , env = FormUpdater.updateComputedFields form Env.empty
     }
 
 
@@ -84,6 +84,7 @@ visibleFieldWidgetConfig env field =
             , env = env
             , onChange = OnFieldChange identifier
             , editable = True
+            , style = []
             }
 
         Computed label identifier _ _ ->
@@ -92,4 +93,5 @@ visibleFieldWidgetConfig env field =
             , env = env
             , onChange = OnFieldChange identifier
             , editable = False
+            , style = []
             }
