@@ -22,20 +22,19 @@ public class QLSInterpreter {
         Form form = qlAstBuilder.buildAST(qlFileLocation.openStream());
         StyleSheet styleSheet = qlsAstBuilder.buildAST(qlsFileLocation.openStream());
 
-        IssuesStorage issues  = qlsTypeChecker.checkStyleSheet(form, styleSheet);
-        displayErrors(issues);
+        reportIssues(qlsTypeChecker.checkStyleSheet(form, styleSheet));
+
+        QLApplication.run(form);
+    }
+
+    private void reportIssues(IssuesStorage issues) {
+        issues.getErrors().forEach(this::printIssue);
 
         if (issues.hasErrors()) {
             System.exit(1);
         }
 
         issues.getWarnings().forEach(this::printIssue);
-
-        QLApplication.run(form);
-    }
-
-    private void displayErrors(IssuesStorage issues) {
-        issues.getErrors().forEach(this::printIssue);
     }
 
     private void printIssue(Issue issue) {

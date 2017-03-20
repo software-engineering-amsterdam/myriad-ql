@@ -8,7 +8,6 @@ import org.qls.ast.StyleSheet;
 
 public class QLSTypeChecker {
     private final QLTypeChecker qlTypeChecker;
-    private QLSQuestionVisitor qlsQuestionReferenceVisitor;
 
     public QLSTypeChecker() {
         qlTypeChecker = new QLTypeChecker();
@@ -19,7 +18,7 @@ public class QLSTypeChecker {
         SymbolTable symbolTable = new SymbolTable();
         IssuesStorage issuesStorage = qlTypeChecker.checkForm(formAST, symbolTable);
 
-        qlsQuestionReferenceVisitor = new QLSQuestionVisitor(issuesStorage, styleSheet, symbolTable);
+        QLSQuestionVisitor qlsQuestionReferenceVisitor = new QLSQuestionVisitor(issuesStorage, styleSheet, symbolTable);
 
         return issuesStorage;
     }
