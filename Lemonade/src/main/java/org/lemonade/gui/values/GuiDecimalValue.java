@@ -24,7 +24,6 @@ public class GuiDecimalValue extends GuiNumericalValue<Double> implements Compar
         return visitor.visit(this);
     }
 
-    @Override
     public GuiNumericalValue<?> plus(GuiNumericalValue<?> that) {
         return that.add(this);
     }

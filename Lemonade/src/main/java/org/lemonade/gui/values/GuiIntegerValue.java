@@ -25,19 +25,19 @@ public class GuiIntegerValue extends GuiNumericalValue<Integer> implements Compa
         return visitor.visit(this);
     }
 
-    public GuiNumericalValue<?> plus(GuiNumericalValue<?> that) {
+    public GuiValue<?> plus(GuiNumericalValue<?> that) {
         return that.add(this);
     }
 
-    public GuiNumericalValue<?> minus(GuiNumericalValue<?> that) {
+    public GuiValue<?> minus(GuiValue<?> that) {
         return that.min(this);
     }
 
-    public GuiNumericalValue<?> product(GuiNumericalValue<?> that) {
+    public GuiValue<?> product(GuiValue<?> that) {
         return that.prod(this);
     }
 
-    public GuiNumericalValue<?> divide(GuiNumericalValue<?> that) {
+    public GuiValue<?> divide(GuiValue<?> that) {
         return that.div(this);
     }
 

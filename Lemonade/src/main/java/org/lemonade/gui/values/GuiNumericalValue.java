@@ -8,14 +8,6 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  */
 public abstract class GuiNumericalValue<T> extends GuiComparableValue<T> {
 
-    public abstract GuiNumericalValue<?> plus(GuiNumericalValue<?> that);
-
-    public abstract GuiNumericalValue<?> minus(GuiNumericalValue<?> that);
-
-    public abstract GuiNumericalValue<?> product(GuiNumericalValue<?> that);
-
-    public abstract GuiNumericalValue<?> divide(GuiNumericalValue<?> that);
-
     public abstract GuiNumericalValue<?> add(GuiIntegerValue that);
 
     public abstract GuiNumericalValue<?> add(GuiDecimalValue that);

@@ -57,10 +57,10 @@ public class EvaluateTest {
         GuiBooleanValue boolFalse = new GuiBooleanValue(false);
 
         assertThat(boolTrue.getValue()).isInstanceOf(Boolean.class);
-        assertThat(boolTrue.or(boolFalse).getValue()).isTrue();
-        assertThat(boolTrue.or(boolTrue).getValue()).isTrue();
-        assertThat(boolTrue.and(boolFalse).getValue()).isFalse();
-        assertThat(boolTrue.and(boolTrue).getValue()).isTrue();
+        assertThat((Boolean) boolTrue.or(boolFalse).getValue()).isTrue();
+        assertThat((Boolean) boolTrue.or(boolTrue).getValue()).isTrue();
+        assertThat((Boolean) boolTrue.and(boolFalse).getValue()).isFalse();
+        assertThat((Boolean) boolTrue.and(boolTrue).getValue()).isTrue();
     }
 
     @Test
@@ -70,10 +70,10 @@ public class EvaluateTest {
 
     @Test
     public void testNumericPlus() {
-        GuiNumericalValue<?> onePlusTwo = one.plus(two);
-        GuiNumericalValue<?> onePlusOnePointFive = one.plus(onePointFive);
-        GuiNumericalValue<?> onePlusOneFifty = one.plus(oneFifty);
-        GuiNumericalValue<?> onePlusOnePointTwo =  one.plus(onePointTwo);
+        GuiValue<?> onePlusTwo = one.plus(two);
+        GuiValue<?> onePlusOnePointFive = one.plus(onePointFive);
+        GuiValue<?> onePlusOneFifty = one.plus(oneFifty);
+        GuiValue<?> onePlusOnePointTwo =  one.plus(onePointTwo);
 
         assertThat(onePlusTwo.getValue()).isEqualTo(3);
         assertThat(onePlusTwo).isInstanceOf(GuiIntegerValue.class);
@@ -90,10 +90,10 @@ public class EvaluateTest {
 
     @Test
     public void testNumericMinus() {
-        GuiNumericalValue<?> twoMinusOne = two.minus(one);
-        GuiNumericalValue<?> twoMinusOnePointFive = two.minus(onePointFive);
-        GuiNumericalValue<?> twoMinusOneFifty = two.minus(oneFifty);
-        GuiNumericalValue<?> twoMinusOnePointTwo = (GuiNumericalValue<?>) two.minus(onePointTwo);
+        GuiValue<?> twoMinusOne = two.minus(one);
+        GuiValue<?> twoMinusOnePointFive = two.minus(onePointFive);
+        GuiValue<?> twoMinusOneFifty = two.minus(oneFifty);
+        GuiValue<?> twoMinusOnePointTwo = (GuiNumericalValue<?>) two.minus(onePointTwo);
 
         assertThat(twoMinusOne.getValue()).isEqualTo(1);
         assertThat(twoMinusOne).isInstanceOf(GuiIntegerValue.class);
@@ -110,7 +110,7 @@ public class EvaluateTest {
 
     @Test
     public void testNumericProduct() {
-        GuiNumericalValue<?> result = two.product(onePointTwo);
+        GuiValue<?> result = two.product(onePointTwo);
         assertThat(result).isInstanceOf(GuiDecimalValue.class);
 
         GuiNumericalValue<?> result2 = null;

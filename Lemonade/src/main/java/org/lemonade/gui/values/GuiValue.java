@@ -17,6 +17,22 @@ public abstract class GuiValue<T> implements GuiExpression {
 
     public abstract <T> T accept(GuiExpressionVisitor<T> visitor);
 
+    public GuiValue<?> and(GuiValue<?> that) {
+        throw new NotSupportedException();
+    }
+
+    public GuiValue<?> doAnd(GuiBooleanValue that) {
+        throw new NotSupportedException();
+    }
+
+    public GuiValue<?> or(GuiValue<?> that) {
+        throw new NotSupportedException();
+    }
+
+    public GuiValue<?> doOr(GuiBooleanValue that) {
+        throw new NotSupportedException();
+    }
+
     public GuiValue<Boolean> eq(GuiValue<?> that) {
         return new GuiBooleanValue(that.equals(this));
     }
@@ -26,6 +42,22 @@ public abstract class GuiValue<T> implements GuiExpression {
     }
 
     public GuiValue<?> plus(GuiValue<?> that) {
+        throw new NotSupportedException();
+    }
+
+    public GuiValue<?> min(GuiValue<?> that) {
+        throw new NotSupportedException();
+    }
+
+    public GuiValue<?> prod(GuiValue<?> that) {
+        throw new NotSupportedException();
+    }
+
+    public GuiValue<?> div(GuiValue<?> that) {
+        throw new NotSupportedException();
+    }
+
+    public GuiValue<?> add(GuiValue<?> that) {
         throw new NotSupportedException();
     }
 
@@ -41,19 +73,19 @@ public abstract class GuiValue<T> implements GuiExpression {
         throw new NotSupportedException();
     }
 
-    public GuiValue<?> add(GuiValue<?> that ) {
+    public GuiValue<?> lT(GuiValue<?> that ) {
         throw new NotSupportedException();
     }
 
-    public GuiValue<?> prod(GuiValue<?> that ) {
+    public GuiValue<?> gT(GuiValue<?> that ) {
         throw new NotSupportedException();
     }
 
-    public GuiValue<?> min(GuiValue<?> that ) {
+    public GuiValue<?> lTE(GuiValue<?> that ) {
         throw new NotSupportedException();
     }
 
-    public GuiValue<?> div(GuiValue<?> that ) {
+    public GuiValue<?> gTE(GuiValue<?> that ) {
         throw new NotSupportedException();
     }
 }

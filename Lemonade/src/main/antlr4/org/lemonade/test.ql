@@ -1,7 +1,8 @@
 form Blader {
-    test : "10?" integer
-    test2 : "20?" integer
-    if ((test * 2) == test2) {
+    test1 : "5" integer
+    test3 : "5" integer
+    test4: "10" integer
+    if ((test4 == (test1 + test3))) {
         testNest : "Blijkbaar?" boolean
     }
     testUnnest : "Unnest?" boolean
