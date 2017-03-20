@@ -4,8 +4,8 @@ import org.junit.Test;
 import org.uva.hatt.taxform.ast.ASTGenerator;
 import org.uva.hatt.taxform.ast.nodes.Form;
 import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
-import org.uva.hatt.taxform.ast.nodes.expressions.ComputationExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
+import org.uva.hatt.taxform.ast.nodes.expressions.binary.Addition;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.Identifier;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.IntegerLiteral;
@@ -64,7 +64,7 @@ public class ComputedQuestionTest {
         ComputedQuestion question = (ComputedQuestion) questions.get(0);
 
         assertThat(question.getType(), instanceOf(Integer.class));
-        assertThat(question.getComputedValue(), instanceOf(ComputationExpression.class));
+        assertThat(question.getComputedValue(), instanceOf(Addition.class));
     }
 
     @Test

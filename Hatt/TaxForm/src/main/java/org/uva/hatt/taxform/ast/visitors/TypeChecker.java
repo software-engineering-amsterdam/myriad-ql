@@ -3,7 +3,6 @@ package org.uva.hatt.taxform.ast.visitors;
 
 import org.uva.hatt.taxform.ast.nodes.Form;
 import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
-import org.uva.hatt.taxform.ast.nodes.expressions.ComputationExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
@@ -108,11 +107,6 @@ public class TypeChecker implements Visitor{
 
     @Override
     public BooleanExpression visit(BooleanExpression node) {
-        return null;
-    }
-
-    @Override
-    public ComputationExpression visit(ComputationExpression node) {
         return null;
     }
 

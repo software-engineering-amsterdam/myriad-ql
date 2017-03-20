@@ -6,7 +6,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.uva.hatt.taxform.ast.nodes.Form;
 import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
-import org.uva.hatt.taxform.ast.nodes.expressions.ComputationExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
@@ -24,7 +23,6 @@ import org.uva.hatt.taxform.ast.visitors.EnvironmentsTable;
 import org.uva.hatt.taxform.ast.visitors.Visitor;
 import org.uva.hatt.taxform.gui.fields.*;
 
-import javax.script.ScriptException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -143,11 +141,6 @@ public class UIVisitor implements Visitor<Pane> {
 
     @Override
     public Pane visit(BooleanExpression node) {
-        return null;
-    }
-
-    @Override
-    public Pane visit(ComputationExpression node) {
         return null;
     }
 

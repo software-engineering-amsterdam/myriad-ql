@@ -2,7 +2,6 @@ package org.uva.hatt.taxform.ast.visitors;
 
 import org.uva.hatt.taxform.ast.nodes.*;
 import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
-import org.uva.hatt.taxform.ast.nodes.expressions.ComputationExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
 import org.uva.hatt.taxform.ast.nodes.items.*;
@@ -27,7 +26,6 @@ public interface Visitor<T> {
     T visit(String node);
     T visit(ValueType node);
     T visit(BooleanExpression node);
-    T visit(ComputationExpression node);
     T visit(GroupedExpression node);
     T visit(Identifier identifier);
     T visit(StringerLiteral stringerLiteral);
