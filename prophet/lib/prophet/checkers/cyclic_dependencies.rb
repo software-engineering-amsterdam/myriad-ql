@@ -17,9 +17,9 @@ module Prophet
 
       def dependency_hash
         @dependency_hash ||= DependencyHash[
-          ast.visit(Collectors::QuestionsWithValue.new).compact.map do |question|
+          ast.select_by_type(:question_with_value).map do |question|
             [question.identifier.name.to_s,
-             question.visit(Collectors::ExpressionIdentifiers.new).flatten.compact.map { |i| i.name.to_s }]
+             question.select_by_type(:identifier).map(&:name).map(&:to_s)]
           end
         ]
       end

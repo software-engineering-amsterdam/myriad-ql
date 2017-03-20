@@ -2,11 +2,12 @@ module Prophet
   module Checkers
     class UndefinedIdentifiers < Base
       def check
-        defined_identifier_names = ast.visit(Collectors::DefinedIdentifiers.new).map(&:name).map(&:to_s)
-        used_identifier_names = ast.visit(Collectors::UsedIdentifiers.new).flatten.compact.map(&:name)
+        defined_names = ast.select_by_type(:form, :question, :question_with_value).map do |node|
+          node.identifier.name
+        end
 
-        used_identifier_names.reject do |name|
-          defined_identifier_names.include? name
+        ast.select_by_type(:identifier).map(&:name).reject do |name|
+          defined_names.include? name
         end.each do |name|
           puts error_formatter(name)
         end

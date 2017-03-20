@@ -2,9 +2,11 @@ module Prophet
   module Checkers
     class DuplicateIdentifiers < Base
       def check
-        identifiers = ast.visit(Collectors::DefinedIdentifiers.new)
+        names = ast.select_by_type(:question, :question_with_value).map do |question|
+          question.identifier.name
+        end
 
-        identifiers.map(&:name).group_by(&:to_s).values.reject(&:one?).collect do |names|
+        names.group_by(&:to_s).values.reject(&:one?).collect do |names|
           puts error_formatter(names)
         end
       end
