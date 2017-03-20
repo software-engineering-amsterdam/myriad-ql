@@ -40,9 +40,6 @@ abstract class GUIQuestion(question: DisplayQuestion, displayStyle: DisplayStyle
     visible <== isVisible(question)
   }
 
-  private def extractStyle[T](styling: Styling, pf: PartialFunction[Style, T]): Option[T] =
-    styling.values.collect(pf).lastOption
-
   private def isDisabled(question: DisplayQuestion): Boolean = question match {
     case _: OpenQuestion => false
     case _: ComputedQuestion => true

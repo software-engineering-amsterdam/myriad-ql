@@ -2,18 +2,19 @@ package view.widgets
 
 import values.{ BooleanValue, UndefinedValue, Value }
 
+import scalafx.Includes._
 import scalafx.beans.property.BooleanProperty
 import scalafx.scene.control.CheckBox
 
 class CheckboxWidget(changeHandler: Option[Value => Unit]) extends QLWidget(changeHandler) {
   private val checkBoxValue = BooleanProperty(false)
 
-  checkBoxValue.onChange {
-    super.handleUpdate(BooleanValue(checkBoxValue.value))
-  }
-
   override val displayNode: CheckBox = new CheckBox {
     selected <==> checkBoxValue
+  }
+
+  displayNode.onAction = handle {
+    super.handleUpdate(BooleanValue(checkBoxValue.value))
   }
 
   override def setValue(newVal: Value): Unit = newVal match {
