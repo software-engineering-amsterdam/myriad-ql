@@ -1,6 +1,7 @@
 package qls;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -12,6 +13,7 @@ import QL.QLParser;
 import QL.ReferenceTable;
 import QL.ast.Form;
 import QL.ast.type.Type;
+import QL.message.Message;
 import QL.ui.Environment;
 import QL.ui.Questionnaire;
 import qls.ast.Stylesheet;
@@ -39,31 +41,25 @@ public class Main {
 		Stylesheet stylesheet = parser.stylesheet().result;
 		System.out.println(stylesheet);
 		
-		// TODO faults from ql?
-		// TODO change to QL
-	
-		qls.semantic.Analyzer analyzer = new qls.semantic.Analyzer(ql());
-		
-		// Faults faults = analyzer.analyze(stylesheet);
-//		
-//		Environment env = new Environment(ql());
-//		
-//		Questionnaire questionnaire = new Questionnaire();
-//		questionnaire.main(createForm(), env, faults);
-
-	}
-	
-	public static ReferenceTable ql() {
-		
 		Form form = createForm();
 
-		QL.semantic.Analyzer analyzer = new QL.semantic.Analyzer();
+		QL.semantic.Analyzer qlAnalyzer = new QL.semantic.Analyzer();		
+		ReferenceTable referenceTable = qlAnalyzer.analyze(form);
 		
-		// TODO pass faults QL QLS
-		ReferenceTable variables = analyzer.analyze(form);
+		List<Message> messages = qlAnalyzer.getMessages();
+	
+		qls.semantic.Analyzer analyzer = new qls.semantic.Analyzer(referenceTable);
+		
+		analyzer.analyze(stylesheet);
+		
+		messages.addAll(analyzer.getMessages());
+		
+		Questionnaire questionnaire = new Questionnaire();
+		questionnaire.main(form, referenceTable, messages);
 
-		return variables;
 	}
+	
+
 	
 	public static Form createForm() {
 		String tmp = "form Testing { "

@@ -20,13 +20,13 @@ class Environment {
 		
 		this.variableCovered = new HashMap<>();	
 		this.referenceTable = referenceTable;
-//		for (String variable : referenceTable.keySet()) {
-//			variableCovered.put(variable, false);
-//		}
+		for (String name : referenceTable) {
+			variableCovered.put(name, false);
+		}
 		this.messages = new ArrayList<>(); // TODO move to analyzing part
 	}
 	
-	public List<Message> getFaults() {
+	public List<Message> getMessages() {
 		return messages;
 	}
 	
@@ -36,7 +36,7 @@ class Environment {
 	}
 	
 	public boolean isCovered(String name) {
-		return variableCovered.get(name);
+		return variableCovered.containsKey(name);
 	}
 	
 	public void setCovered(String name) {
