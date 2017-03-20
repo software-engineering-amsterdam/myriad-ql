@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 This module is used to launch the QL Workbench. It is a CLI application which
 reads a path from the command line. If the file contains errors, they will be
