@@ -2,16 +2,16 @@ package view
 
 import ast._
 import checker.Issue.Issues
-import checker.{Error, Warning}
+import checker.{ Error, Warning }
 import model.DisplayQuestion
-import view.questions.{BooleanQuestion, DateQuestion, NumericQuestion, StringQuestion}
+import view.questions.{ BooleanQuestion, DateQuestion, NumericQuestion, StringQuestion }
 
 import scalafx.application.JFXApp
 import scalafx.geometry.Insets
-import scalafx.scene.layout.{TilePane, VBox}
+import scalafx.scene.layout.{ TilePane, VBox }
 import scalafx.scene.paint.Color
 import scalafx.scene.text.Text
-import scalafx.scene.{Node, Scene}
+import scalafx.scene.{ Node, Scene }
 
 trait GUI extends JFXApp.PrimaryStage {
   val issues: Issues
@@ -30,12 +30,12 @@ trait GUI extends JFXApp.PrimaryStage {
   private def issueBox = issues.map {
     case Error(message) =>
       new Text {
-        text = message
+        text = s"[Error] $message"
         fill = Color.Red
       }
     case Warning(message) =>
       new Text {
-        text = message
+        text = s"[Warning] $message"
         fill = Color.Yellow
       }
   }

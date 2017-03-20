@@ -11,9 +11,7 @@ class CheckboxWidget(implicit val changeHandler: Value => Unit) extends QLWidget
     selected <==> checkBoxValue
   }
 
-  checkBoxValue.onChange({
-    changeHandler(BooleanValue(checkBoxValue.value))
-  })
+  checkBoxValue.onChange(changeHandler(BooleanValue(checkBoxValue.value)))
 
   override def setValue(newVal: Value) = newVal match {
     case BooleanValue(b) => checkBoxValue.value_=(b)

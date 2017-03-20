@@ -1,7 +1,7 @@
 package view.questions
 
 import ast._
-import model.{ ComputedQuestion, DisplayQuestion }
+import model.{ ComputedQuestion, DisplayQuestion, OpenQuestion }
 import view.widgets.{ NumericTextWidget, SliderWidget, SpinboxWidget }
 
 class NumericQuestion(val question: DisplayQuestion, val questionStyle: Option[QuestionStyle] = None) extends GUIQuestion {
@@ -26,7 +26,7 @@ class NumericQuestion(val question: DisplayQuestion, val questionStyle: Option[Q
 
   question match {
     case c: ComputedQuestion => createValueBinding(c) { newVal => widget.setValue(newVal) }
-    case _ => Unit
+    case _: OpenQuestion => Unit
   }
 
   displayBox.children add widget.getSFXNode

@@ -24,12 +24,13 @@ trait GUIQuestion {
     visible <== isVisible(question)
   }
 
-  protected val width: Double = questionStyle.flatMap(_.styling.values.collect {
-    case Width(value) => value
-  }.lastOption.map(_.toDouble)).getOrElse(100.0)
+  protected val width: Double = questionStyle.flatMap {
+    q => extractStyle(q.styling, { case Width(w) => w.toDouble })
+  }.getOrElse(100.0)
 
   protected def createValueBinding(c: ComputedQuestion)(changeHandler: Value => Unit): Subscription =
-    Bindings.createObjectBinding[Value](() => Evaluator(env.toMap).calculate(c.value), env).onChange((newValue, _, _) => changeHandler(newValue.value))
+    Bindings.createObjectBinding[Value](() => Evaluator(env.toMap).calculate(c.value), env)
+      .onChange((newValue, _, _) => changeHandler(newValue.value))
 
   protected def computeValue(question: ComputedQuestion): StringBinding =
     Bindings.createStringBinding(() => Evaluator(env.toMap).calculate(question.value).toString, env)
@@ -45,19 +46,23 @@ trait GUIQuestion {
     }
   }
 
-  private def getFill(styling: Styling) = styling.values.collectFirst {
-    case Color(value) => scalafx.scene.paint.Color.web(value)
-  }.getOrElse(scalafx.scene.paint.Color.Black)
+  private def getFill(styling: Styling) =
+    extractStyle(styling, { case Color(c) => c })
+      .map(color => scalafx.scene.paint.Color.web(color))
+      .getOrElse(scalafx.scene.paint.Color.Black)
+
+  private def extractStyle[T](styling: Styling, pf: PartialFunction[Style, T]): Option[T] =
+    styling.values.collect(pf).lastOption
 
   private def getFont(styling: Styling): Font = {
-    val font = styling.values.collectFirst { case ast.Font(f) => f }
-    val size = styling.values.collectFirst { case FontSize(s) => s }
+    val font = extractStyle(styling, { case ast.Font(f) => f })
+    val size = extractStyle(styling, { case FontSize(s) => s })
 
     (font, size) match {
       case (Some(f), Some(s)) => Font.font(f, s.toDouble)
       case (Some(f), None) => Font.font(f)
       case (None, Some(s)) => Font.font(s.toDouble)
-      case (None, None) => Font.font(null)
+      case (None, None) => new Font(Font.default)
     }
   }
 

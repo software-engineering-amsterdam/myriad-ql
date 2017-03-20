@@ -5,10 +5,11 @@ import values.{ BooleanValue, UndefinedValue, Value }
 import scalafx.collections.ObservableBuffer
 import scalafx.scene.control.ChoiceBox
 
-class DropDownWidget(trueText: String, falseText: String)(implicit val changeHandler: Value => Unit) extends QLWidget {
+class DropDownWidget(trueText: String, falseText: String, width: Double)(implicit val changeHandler: Value => Unit) extends QLWidget {
 
   private val options = ObservableBuffer(trueText, falseText)
   private val dropDownBox = new ChoiceBox(options)
+  dropDownBox.setPrefWidth(width)
 
   dropDownBox.value.onChange {
     val newVal = dropDownBox.value.value
