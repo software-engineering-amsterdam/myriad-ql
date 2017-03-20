@@ -16,6 +16,11 @@ public class GuiUndefinedValue extends GuiValue<Void> {
     }
 
     @Override
+    public GuiValue<?> plus(GuiValue<?> that) {
+        return this;
+    }
+
+    @Override
     public boolean isDefined() {
         return false;
     }
@@ -25,4 +30,26 @@ public class GuiUndefinedValue extends GuiValue<Void> {
         return visitor.visit(this);
     }
 
+    @Override
+    public GuiValue<?> divide(GuiValue<?> that) {
+        return this;
+    }
+
+    @Override
+    public GuiValue<?> product(GuiValue<?> that) {
+        return this;
+    }
+
+    @Override
+    public GuiValue<?> minus(GuiValue<?> that) {
+        return this;
+    }
+
+    public GuiValue<?> doAnd(GuiValue<?> that){
+        return this;
+    }
+
+    public GuiValue<?> doOr(GuiValue<?> that){
+        return this;
+    }
 }
