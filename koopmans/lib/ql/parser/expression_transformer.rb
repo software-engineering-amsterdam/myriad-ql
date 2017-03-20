@@ -6,8 +6,8 @@ module QL
       include AST
 
       # negation: ! -
-      rule([operator: '-', single: simple(:single)]) { IntegerNegation.new('-', single) }
-      rule([operator: '!', single: simple(:single)]) { BooleanNegation.new('!', single) }
+      rule([negation_operator: '-', single: simple(:single)]) { IntegerNegation.new('-', single) }
+      rule([negation_operator: '!', single: simple(:single)]) { BooleanNegation.new('!', single) }
 
       # arithmetic: + - / *
       rule(arithmetic_operator: simple(:operator), right: simple(:right)) { ArithmeticExpression.new(operator, right) }
@@ -16,16 +16,19 @@ module QL
       # rule(operator: '-', right: simple(:right)) { Subtract.new(right) }
 
       # comparison: == != < > <= >=
-      rule(operator: '==', right: simple(:right)) { Equal.new(right) }
-      rule(operator: '!=', right: simple(:right)) { NotEqual.new(right) }
-      rule(operator: '<', right: simple(:right)) { Less.new(right) }
-      rule(operator: '>', right: simple(:right)) { Greater.new(right) }
-      rule(operator: '<=', right: simple(:right)) { LessEqual.new(right) }
-      rule(operator: '>=', right: simple(:right)) { GreaterEqual.new(right) }
+      rule(comparison_operator: simple(:operator), right: simple(:right)) { ComparisonExpression.new(operator, right) }
+      # rule(operator: '==', right: simple(:right)) { Equal.new(right) }
+      # rule(operator: '!=', right: simple(:right)) { NotEqual.new(right) }
+      # rule(operator: '<', right: simple(:right)) { Less.new(right) }
+      # rule(operator: '>', right: simple(:right)) { Greater.new(right) }
+      # rule(operator: '<=', right: simple(:right)) { LessEqual.new(right) }
+      # rule(operator: '>=', right: simple(:right)) { GreaterEqual.new(right) }
 
       # boolean: && ||
-      rule(operator: '&&', right: simple(:right)) { And.new(right) }
-      rule(operator: '||', right: simple(:right)) { Or.new(right) }
+      rule(boolean_operator: simple(:operator), right: simple(:right)) { BooleanExpression.new(operator, right) }
+      # rule(operator: '&&', right: simple(:right)) { And.new(right) }
+      # rule(operator: '||', right: simple(:right)) { Or.new(right) }
+
       rule(left: simple(:integer_literal)) { integer_literal }
 
       rule(sequence(:expression)) { Expression.new(expression) }
