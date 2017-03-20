@@ -62,6 +62,16 @@ class Eval(ExpressionAlg):
             execute = lambda self: 1 if lhs.execute() <= rhs.execute() else 0
         return _anon()
 
+    def Equality(self, lhs, rhs):
+        class _anon():
+            execute = lambda self: 1 if lhs.execute() == rhs.execute() else 0
+        return _anon()
+
+    def Inequality(self, lhs, rhs):
+        class _anon():
+            execute = lambda self: 1 if lhs.execute() != rhs.execute() else 0
+        return _anon()
+
     def Division(self, lhs, rhs):
         class _anon():
             execute = lambda self: lhs.execute() / rhs.execute() if (lhs.execute() != 0 and rhs.execute() != 0) else 0

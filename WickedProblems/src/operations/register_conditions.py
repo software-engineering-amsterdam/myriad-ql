@@ -113,9 +113,14 @@ class RegisterConditions(QlAlg):
             execute = lambda self: LessThan(lhs.execute(), rhs.execute())
         return _anon()
 
-    def LessThanEquals(self, lhs, rhs):
+    def Equality(self, lhs, rhs):
         class _anon():
-            execute = lambda self: LessThanEquals(lhs.execute(), rhs.execute())
+            execute = lambda self: Equality(lhs.execute(), rhs.execute())
+        return _anon()
+
+    def Inequality(self, lhs, rhs):
+        class _anon():
+            execute = lambda self: Inequality(lhs.execute(), rhs.execute())
         return _anon()
 
     def Division(self, lhs, rhs):

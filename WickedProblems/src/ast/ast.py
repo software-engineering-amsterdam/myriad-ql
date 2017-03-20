@@ -55,6 +55,16 @@ class LessThanEquals(BinaryOperation):
         return _alg.Addition(self.left_operand.alg(_alg),
                              self.right_operand.alg(_alg))
 
+class Equality(BinaryOperation):
+    def alg(self, _alg):
+        return _alg.Addition(self.left_operand.alg(_alg),
+                             self.right_operand.alg(_alg))
+
+class Inequality(BinaryOperation):
+    def alg(self, _alg):
+        return _alg.Addition(self.left_operand.alg(_alg),
+                             self.right_operand.alg(_alg))
+
 class Substraction(BinaryOperation):
     def alg(self, _alg):
         return _alg.Substraction(self.left_operand.alg(_alg),

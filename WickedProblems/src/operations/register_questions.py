@@ -114,6 +114,16 @@ class RegisterComputedQuestions(QlAlg):
             execute = lambda self: LessThanEquals(lhs.execute(), rhs.execute())
         return _anon()
 
+    def Equality(self, lhs, rhs):
+        class _anon():
+            execute = lambda self: Equality(lhs.execute(), rhs.execute())
+        return _anon()
+
+    def Inequality(self, lhs, rhs):
+        class _anon():
+            execute = lambda self: Equality(lhs.execute(), rhs.execute())
+        return _anon()
+
     def Division(self, lhs, rhs):
         class _anon():
             execute = lambda self: Division(lhs.execute(), rhs.execute())
