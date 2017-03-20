@@ -3,13 +3,9 @@ import networkx as nx
 
 class FindCycles(object):
     def __init__(self, ast, error_handler):
-        """ First create a directed graph from all edges, then check on cycles.
-            :type ast: AST.FormNode
-            :type error_handler: ErrorHandler.ErrorHandler
-        """
+        # First create a directed graph from all edges, then check on cycles.
         self.ast = ast
         self.handler = error_handler
-        self.context = "FindCycles"
         self.directed_graph = nx.DiGraph()
         self.node_stack = [[]]
 
@@ -29,8 +25,28 @@ class FindCycles(object):
     def comp_question_node(self, comp_question_node):
         self.node_stack[-1].append(comp_question_node.name)
 
+        # Check on circular dependency to itself.
         to_vars = comp_question_node.expression.accept(self)
         self.add_edge_relations([comp_question_node.name], to_vars)
+
+    def if_node(self, if_node):
+        from_vars = if_node.condition.accept(self)
+        if from_vars is None:
+            return
+
+        to_vars = self.traverse_branch(self, if_node.if_block)
+        self.add_edge_relations(from_vars, to_vars)
+
+    def if_else_node(self, if_else_node):
+        from_vars = if_else_node.condition.accept(self)
+        if from_vars is None:
+            return
+
+        to_vars = self.traverse_branch(self, if_else_node.if_block)
+        self.add_edge_relations(from_vars, to_vars)
+
+        to_vars = self.traverse_branch(self, if_else_node.else_block)
+        self.add_edge_relations(from_vars, to_vars)
 
     def add_edge_relations(self, from_vars, to_vars):
         for from_var in from_vars:
@@ -41,27 +57,6 @@ class FindCycles(object):
         self.node_stack.append([])
         node_branch.accept(node)
         return self.node_stack.pop()
-
-    def if_node(self, if_node):
-        """ :type if_node: AST.IfNode """
-        from_vars = if_node.condition.accept(self)
-        if from_vars is None:
-            return
-
-        to_vars = self.traverse_branch(self, if_node.if_block)
-        self.add_edge_relations(from_vars, to_vars)
-
-    def if_else_node(self, if_else_node):
-        """ :type if_else_node: AST.IfElseNode """
-        from_vars = if_else_node.condition.accept(self)
-        if from_vars is None:
-            return
-
-        to_vars = self.traverse_branch(self, if_else_node.if_block)
-        self.add_edge_relations(from_vars, to_vars)
-
-        to_vars = self.traverse_branch(self, if_else_node.else_block)
-        self.add_edge_relations(from_vars, to_vars)
 
     def mon_op_node(self, node):
         return node.expression.accept(self)
@@ -74,19 +69,6 @@ class FindCycles(object):
 
     def plus_node(self, plus_node):
         return self.mon_op_node(plus_node)
-
-    def combine_from_var_list(self, node):
-        left = node.left.accept(self)
-        right = node.right.accept(self)
-        if left is None and right is None:
-            return None
-        elif left is not None and right is not None:
-            return left + right
-        elif left is not None:
-            return left
-        elif right is not None:
-            return right
-        assert False, "Invalid state in find cycles!"
 
     def add_node(self, add_node):
         return self.combine_from_var_list(add_node)
@@ -120,6 +102,19 @@ class FindCycles(object):
 
     def or_node(self, or_node):
         return self.combine_from_var_list(or_node)
+
+    def combine_from_var_list(self, node):
+        left = node.left.accept(self)
+        right = node.right.accept(self)
+        if left is None and right is None:
+            return None
+        elif left is not None and right is not None:
+            return left + right
+        elif left is not None:
+            return left
+        elif right is not None:
+            return right
+        assert False, "Invalid state in find cycles!"
 
     @staticmethod
     def string_node(_):

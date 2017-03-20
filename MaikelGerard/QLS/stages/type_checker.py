@@ -49,7 +49,7 @@ class TypeChecker(object):
             self.handler.add_question_not_in_ql_error(question_node)
             return
 
-        ql_node = self.ql_env.get_node(question_node.name)
+        ql_node = self.ql_env.get_question_node(question_node.name)
         is_computed = ql_node.accept(self.is_computed_visitor)
         self.env.add_var(question_node, is_computed)
 

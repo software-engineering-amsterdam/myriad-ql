@@ -57,9 +57,5 @@ class SaveQuestionaire(object):
         return float(value)
 
     @staticmethod
-    def money_type_node(_, value):
-        return float(value)
-
-    @staticmethod
     def bool_type_node(_, value):
         return value

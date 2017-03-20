@@ -1,5 +1,5 @@
+from QL.GUI.expression_evaluator import ExpressionEvaluator
 from QL.undefined import Undefined
-from QL.stages.expression_evaluator import ExpressionEvaluator
 
 
 class EvaluateDrawState(object):

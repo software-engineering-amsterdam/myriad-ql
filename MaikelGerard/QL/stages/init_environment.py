@@ -15,9 +15,7 @@ class InitEnvironment(object):
 
         self.ast.accept(self)
 
-        # Check if all variables found in the if statements are defined as
-        # question, if not, report the first occurrence of the undeclared
-        # variable in the program to the error handler.
+        # Check if all variable names used in expressions are defined.
         for identifier in self.conditional_vars:
             if identifier not in self.env.variables:
                 var_node = self.conditional_vars[identifier]

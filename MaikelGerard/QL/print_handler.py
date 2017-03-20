@@ -108,10 +108,6 @@ class PrintHandler(object):
         return "integer"
 
     @staticmethod
-    def money_type_node(_):
-        return "money"
-
-    @staticmethod
     def decimal_type_node(_):
         return "decimal"
 

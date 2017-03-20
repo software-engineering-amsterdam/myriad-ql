@@ -69,7 +69,7 @@ class DrawGUI(QLDrawGUI):
         self.main.startFrame("@frame_" + question_node.name)
 
         # Retrieve QL question, determine if there is default styling.
-        ql_node = self.env.get_node(question_node.name)
+        ql_node = self.env.get_question_node(question_node.name)
         identifier = ql_node.name
         question = ql_node.question
 
@@ -85,7 +85,7 @@ class DrawGUI(QLDrawGUI):
         self.main.startFrame("@frame_" + question_node.name)
 
         # Retrieve QL question, determine if there is default styling.
-        ql_node = self.env.get_node(question_node.name)
+        ql_node = self.env.get_question_node(question_node.name)
         identifier = ql_node.name
         question = ql_node.question
 
