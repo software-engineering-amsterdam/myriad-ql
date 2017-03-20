@@ -206,7 +206,6 @@ asRenderable widget valueType =
 
         Text ->
             textWidgetRendererForValueType valueType
-                |> Maybe.withDefault StringWidget.view
 
         Slider args ->
             SliderWidget.view (sliderArgsAsProperties args)
@@ -235,7 +234,11 @@ radioWidgetRendererForValueType valueType labels =
             flip BooleanRadioWidget.view labels
 
         _ ->
-            Debug.crash "It is not possible to render a radio widget"
+            Debug.crash
+                ("It should not be possible to render a Radio widget for "
+                    ++ (toString valueType)
+                    ++ ", the typechecker should have prevented this from happening."
+                )
 
 
 dropdownWidgetRendererForValueType : ValueType -> List String -> WidgetContext Msg -> Html Msg
@@ -248,23 +251,27 @@ dropdownWidgetRendererForValueType valueType labels =
             flip BooleanDropdownWidget.view labels
 
         _ ->
-            Debug.crash "It is not possible to render a radio widget"
+            Debug.crash
+                ("It should not be possible to render a DropDown widget for "
+                    ++ (toString valueType)
+                    ++ ", the typechecker should have prevented this from happening."
+                )
 
 
-textWidgetRendererForValueType : ValueType -> Maybe (WidgetContext Msg -> Html Msg)
+textWidgetRendererForValueType : ValueType -> WidgetContext Msg -> Html Msg
 textWidgetRendererForValueType valueType =
     case valueType of
         StringType ->
-            Just StringWidget.view
+            StringWidget.view
 
         BooleanType ->
-            Nothing
+            Debug.crash "It should not be possible to render a textWidget for a boolean type, the typechecker should have prevented this from happening."
 
         IntegerType ->
-            Just IntegerWidget.view
+            IntegerWidget.view
 
         MoneyType ->
-            Just FloatWidget.view
+            FloatWidget.view
 
 
 visibleFieldWidgetConfig : Environment -> List Style -> Field -> WidgetContext Msg
