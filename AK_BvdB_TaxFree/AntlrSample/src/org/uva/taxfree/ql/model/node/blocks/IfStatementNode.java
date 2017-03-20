@@ -5,6 +5,7 @@ import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.Node;
 import org.uva.taxfree.ql.model.node.expression.ExpressionNode;
+import org.uva.taxfree.ql.model.types.BooleanType;
 
 import java.util.List;
 
@@ -20,6 +21,9 @@ public class IfStatementNode extends BlockNode {
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
         super.checkSemantics(symbolTable, semanticsMessages);
         mExpression.checkSemantics(symbolTable, semanticsMessages);
+        if (!mExpression.getType().equals(new BooleanType())) {
+            semanticsMessages.addError("Condition must be of boolean type!");
+        }
     }
 
     @Override
@@ -32,6 +36,4 @@ public class IfStatementNode extends BlockNode {
     public boolean conditionTrue() {
         return mExpression.evaluate().equals("true");
     }
-
-
 }

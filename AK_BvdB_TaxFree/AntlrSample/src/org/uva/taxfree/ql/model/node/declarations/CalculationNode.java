@@ -43,10 +43,6 @@ public class CalculationNode extends DeclarationNode {
             }
         }
         mExpression.checkSemantics(symbolTable, semanticsMessages);
-        if ((symbolTable.containsAll(getUsedVariables()))
-                && (!getType().equals(mExpression.getType()))) {
-            semanticsMessages.addError("Type of calculation and expression do not match: " + getType() + " " + mExpression.getType());
-        }
     }
 
 

@@ -5,6 +5,7 @@ import org.uva.taxfree.ql.model.node.blocks.BlockNode;
 import org.uva.taxfree.ql.model.node.declarations.CalculationNode;
 import org.uva.taxfree.ql.model.node.declarations.DeclarationNode;
 import org.uva.taxfree.ql.model.types.Type;
+import org.uva.taxfree.ql.model.types.UnknownType;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -61,17 +62,15 @@ public class SymbolTable {
         throw new RuntimeException("Unknown variable queried in SymbolTable");
     }
 
-    public boolean containsAll(Set<String> variableIds) {
-        for (String variableId : variableIds) {
-            if (!contains(variableId)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public boolean contains(String variableId) {
         return findDeclarations(variableId).size() > 0;
+    }
+
+    public Type resolveType(String variableId) {
+        if (true == contains(variableId)) {
+            return findDeclaration(variableId).getType();
+        }
+        return new UnknownType();
     }
 
     private Declaration findDeclaration(String variableId) {
@@ -87,10 +86,6 @@ public class SymbolTable {
             }
         }
         return declarations;
-    }
-
-    public Type resolveType(String variableId) {
-        return findDeclaration(variableId).getType();
     }
 
     public void checkDuplicateLabels(MessageList messageList) {
