@@ -18,7 +18,7 @@ public class QLSTypeChecker {
         SymbolTable symbolTable = new SymbolTable();
         IssuesStorage issuesStorage = qlTypeChecker.checkForm(formAST, symbolTable);
 
-        QLSQuestionVisitor qlsQuestionReferenceVisitor = new QLSQuestionVisitor(issuesStorage, symbolTable);
+        QLSQuestionVisitor qlsQuestionReferenceVisitor = new QLSQuestionVisitor(issuesStorage);
 
         return issuesStorage;
     }

@@ -56,7 +56,7 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
     public Section visitSection(QLSParser.SectionContext ctx) {
         List<Section> sections = getSections(ctx.section());
         List<DefaultWidget> defaultWidgets = getDefaultWidgets(ctx.defaultWidget());
-        List<CustomWidgetQuestion> questions = getQuestions(ctx.question());
+        List<WidgetQuestion> questions = getQuestions(ctx.question());
 
         return hydrateSourceLocation(new Section(unquoteString(ctx.name.getText()), questions, sections, defaultWidgets), ctx);
     }
@@ -194,11 +194,11 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
         return sections;
     }
 
-    private List<CustomWidgetQuestion> getQuestions(List<QLSParser.QuestionContext> questionContexts) {
-        List<CustomWidgetQuestion> questions = new ArrayList<>();
+    private List<WidgetQuestion> getQuestions(List<QLSParser.QuestionContext> questionContexts) {
+        List<WidgetQuestion> questions = new ArrayList<>();
 
         for (QLSParser.QuestionContext question : questionContexts) {
-            questions.add((CustomWidgetQuestion) visit(question));
+            questions.add((WidgetQuestion) visit(question));
         }
 
         return questions;

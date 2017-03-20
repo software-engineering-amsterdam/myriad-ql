@@ -70,7 +70,7 @@ public class DefaultWidgetWithStyleTest {
         assertEquals(1, page.getSections().get(0).getDefaultWidgets().size());
         assertTrue(((DefaultWidgetWithStyle) page.getSections().get(0).getDefaultWidgets().get(0)).getStyleRules().get(0) instanceof FontRule);
         FontRule widthRule = (FontRule) ((DefaultWidgetWithStyle) page.getSections().get(0).getDefaultWidgets().get(0)).getStyleRules().get(0);
-        assertEquals("\"Arial\"", widthRule.getFont());
+        assertEquals("Arial", widthRule.getFont());
     }
 
     @Test

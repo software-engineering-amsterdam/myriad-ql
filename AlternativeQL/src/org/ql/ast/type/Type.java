@@ -1,8 +1,6 @@
 package org.ql.ast.type;
 
-import org.ql.ast.Node;
-
-public abstract class Type extends Node implements TypeCompatibility {
+public abstract class Type extends TypeCompatibility {
 
     public boolean isBoolean() {
         return false;
@@ -17,30 +15,6 @@ public abstract class Type extends Node implements TypeCompatibility {
     }
 
     public boolean isDate() {
-        return false;
-    }
-
-    public boolean isCompatibleWith(BooleanType type) {
-        return false;
-    }
-
-    public boolean isCompatibleWith(DateType type) {
-        return false;
-    }
-
-    public boolean isCompatibleWith(FloatType type) {
-        return false;
-    }
-
-    public boolean isCompatibleWith(IntegerType type) {
-        return false;
-    }
-
-    public boolean isCompatibleWith(MoneyType type) {
-        return false;
-    }
-
-    public boolean isCompatibleWith(StringType type) {
         return false;
     }
 
