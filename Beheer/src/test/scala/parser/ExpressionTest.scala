@@ -16,9 +16,8 @@ class ExpressionParserTest extends PropSpec with Inside with Matchers with Prope
     forAll(integer) {
       num =>
         inside(parser.parseExpression(num)) {
-          case IntegerLiteral(decimal) => {
+          case IntegerLiteral(decimal) =>
             decimal.scale should be(0)
-          }
         }
     }
   }
@@ -194,7 +193,7 @@ class ExpressionParserTest extends PropSpec with Inside with Matchers with Prope
 object ConcreteExpressionParser extends ExpressionParser {
   def parseExpression(expr: String): ExpressionNode = {
     parseAll(expression, expr) match {
-      case Success(expr, _) => expr
+      case Success(e, _) => e
       case failure: NoSuccess => sys.error(s"invalid expression passed to parser; $failure")
     }
   }

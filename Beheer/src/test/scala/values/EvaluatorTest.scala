@@ -7,7 +7,7 @@ import org.scalatest.{ Matchers, PropSpec }
 import values.Evaluator.Env
 
 class EvaluatorTest extends PropSpec with Matchers with PropertyChecks with ExpressionAstGenerator {
-  //So the generator knows the avaliable identifiers:
+  //So the generator knows the available identifiers:
   protected val numericIdentifiers = Seq("intval", "moneyval")
   protected val boolIdentifiers = Seq("boolval")
   private val runtimeEnv: Env = Map(
