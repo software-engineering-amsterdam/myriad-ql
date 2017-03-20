@@ -60,8 +60,8 @@ module QL
       end
 
       # TODO Open/closed principle formatting (https://subvisual.co/blog/posts/19-solid-principles-in-ruby)
-      def to_json
-        { label => @value }
+      def print
+        "#{@label} #{@value}"
       end
     end
   end
