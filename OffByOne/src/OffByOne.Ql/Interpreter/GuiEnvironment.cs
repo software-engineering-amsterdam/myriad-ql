@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.Windows.Controls;
 
-    using OffByOne.Ql.Common;
     using OffByOne.Ql.Common.Observers.Conracts;
     using OffByOne.Ql.Common.Visitors.Contracts;
     using OffByOne.Ql.Evaluator;

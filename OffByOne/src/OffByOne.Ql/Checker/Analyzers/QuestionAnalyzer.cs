@@ -41,9 +41,6 @@
 
         public override object Visit(QuestionStatement statement, IQuestionEnvironment environment)
         {
-            // TODO: change string primitives to StringValue?
-            // [...].Value.Value is ugly. Since StringValues replace string primitives,
-            // maybe we should replace them in the code too?
             if (environment.IsIdentifierDuplicate(statement.Identifier))
             {
                 this.Report.Add(new DuplicateQuestionIdentifierMessage(statement));
