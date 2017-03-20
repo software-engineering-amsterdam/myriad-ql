@@ -1,5 +1,6 @@
 form houseForm {
-    if (5 > true) {
+    if (10 > hasSoldHouse) {
 
     }
+    "I am hasSoldHouse" -> hasSoldHouse : boolean
 }
