@@ -94,8 +94,8 @@ class QL:
     comparison_expression = operatorPrecedence(operand, comparison_precedence)
     arithmic_expression = operatorPrecedence(operand, arithmic_precedence)
 
-    expression = Or(comparison_expression | arithmic_expression |
-                    boolean_expression | reference_variable)
+    expression = Or(boolean_expression | arithmic_expression |
+                    comparison_expression | reference_variable)
 
     string = QuotedString('"')
     string.addParseAction(lambda _, __, tokens: StringLiteral(*tokens))

@@ -104,6 +104,11 @@ class RegisterComputedQuestions(QlAlg):
             execute = lambda self: Multiplication(lhs.execute(), rhs.execute())
         return _anon()
 
+    def LogicalAnd(self, lhs, rhs):
+        class _anon():
+            execute = lambda self: LogicalAnd(lhs.execute(), rhs.execute())
+        return _anon()
+
     def Integer(self, value):
         def _register():
             return 'integer'
