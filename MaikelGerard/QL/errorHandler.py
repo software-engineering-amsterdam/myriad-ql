@@ -24,10 +24,6 @@ class ErrorHandler(object):
             message += " at line {}, column {}".format(node.line, node.col)
         self.error_list.append(message)
 
-    def add_zero_division_warning(self, node):
-        message = "Division by zero found"
-        self.add_warning(node, message)
-
     def add_dup_label_warning(self, question_node):
         message = "Duplicate label '{}' found".format(question_node.question)
         self.add_warning(question_node, message)
@@ -66,7 +62,7 @@ class ErrorHandler(object):
                         .format(node.name)
         self.add_error(node, error_message)
 
-    def check_and_print_errors(self):
+    def print_errors(self):
         for error in self.error_list:
             print(error)
 

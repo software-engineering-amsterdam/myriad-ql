@@ -32,13 +32,12 @@ class Questionnaire(object):
     def validate(self):
         InitEnvironment(self.ql_ast, self.ql_env, self.handler)\
             .start_traversal()
-        self.handler.check_and_print_errors()
+        self.handler.print_errors()
         self.handler.clear_errors()
 
         TypeChecker(self.ql_ast, self.ql_env, self.handler).start_traversal()
         FindCycles(self.ql_ast, self.handler).start_traversal()
-        self.handler.check_and_print_errors()
-        print "QL validated"
+        self.handler.print_errors()
 
     def draw(self):
         DrawGUI(self.ql_ast, self.ql_env).start_traversal()
@@ -64,7 +63,7 @@ class QLSQuestionnaire(Questionnaire):
     def validate_stylesheet(self):
         QLSTypeChecker(self.qls_ast, self.qls_env, self.ql_env, self.handler)\
             .start_traversal()
-        self.handler.check_and_print_errors()
+        self.handler.print_errors()
 
     def draw(self):
         QLSDrawGUI(self.qls_ast, self.qls_env, self.ql_ast, self.ql_env)\
