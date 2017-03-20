@@ -42,8 +42,8 @@ class TestParser(unittest.TestCase):
         self.validate_node(self.q_parser, q_str, test_node)
 
         question = "Did you sell a house in 2010?"
-        q_type = AST.MoneyTypeNode()
-        q_str = format_question(question, name, "money")
+        q_type = AST.IntTypeNode()
+        q_str = format_question(question, name, "integer")
         test_node = AST.QuestionNode(question, name, q_type)
         self.validate_node(self.q_parser, q_str, test_node)
 
@@ -232,14 +232,14 @@ class TestParser(unittest.TestCase):
     def test_parse_form(self):
         form1 = """
                 form TestForm {
-                    "question1?" var1 : money
+                    "question1?" var1 : integer
                     if (var1 > 200) {
                         "question2?" var2 : string
                     }
                 }
                 """
 
-        q1 = AST.QuestionNode("question1?", "var1", AST.MoneyTypeNode())
+        q1 = AST.QuestionNode("question1?", "var1", AST.IntTypeNode())
         q2 = AST.QuestionNode("question2?", "var2", AST.StringTypeNode())
         expr = AST.GTNode(AST.VarNode("var1"), AST.IntNode(int("200")))
         if_block = AST.IfNode(expr, AST.BlockNode([q2]))
@@ -249,12 +249,12 @@ class TestParser(unittest.TestCase):
 
         form2 = """
                 form TestForm {
-                    "question1?" var1 : money
+                    "question1?" var1 : integer
                     if (var1 > 200) {
                         "question2?" var2 : string
                     }
                     else {
-                        "question1?" var1 : money
+                        "question1?" var1 : integer
                     }
                     "question2?" var2 : string
                 }

@@ -1,5 +1,5 @@
 from QL.undefined import Undefined
-from QL.stages.expressionEvaluator import ExpressionEvaluator
+from QL.stages.expression_evaluator import ExpressionEvaluator
 
 
 class EvaluateDrawState(object):
@@ -11,6 +11,7 @@ class EvaluateDrawState(object):
 
     def start_traversal(self):
         self.ast.accept(self, True)
+        print self.widgets
 
     def if_node(self, if_node, widget_visible):
         condition = if_node.condition.accept(self.evaluator)

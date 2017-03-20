@@ -1,4 +1,4 @@
-from QL.stages.printHandler import PrintHandler as qlPrintHandler
+from QL.stages.print_handler import PrintHandler as qlPrintHandler
 
 
 class PrintHandler(qlPrintHandler):

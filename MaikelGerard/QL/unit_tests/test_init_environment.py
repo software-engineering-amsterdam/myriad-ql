@@ -1,7 +1,7 @@
 from QL.stages.parser import Parser as Parser
-from QL.stages.initEnvironment import InitEnvironment
+from QL.stages.init_environment import InitEnvironment
 from QL.environment import Environment
-from QL.errorHandler import ErrorHandler
+from QL.error_handler import ErrorHandler
 
 import QL.AST as AST
 import unittest
