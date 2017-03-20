@@ -17,7 +17,7 @@ import sc.ql.model.types.*;
 public class AstVisitor extends QLBaseVisitor<Node> {
 	@Override 
 	public Form visitForm(QLParser.FormContext ctx) {
-		Form form = new Form(getFormElements(ctx.formElement()));
+		Form form = new Form(ctx.formlabel.getText(), getFormElements(ctx.formElement()));
 		form.setPosition(ctx.getStart().getLine(), ctx.getStart().getCharPositionInLine());
 
 		return form;
