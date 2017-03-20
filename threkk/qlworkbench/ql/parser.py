@@ -81,20 +81,22 @@ from .ast.type import String
 class QLParser(object):
     """Encapsulates the logic of the PLY parser."""
     def __init__(self, tokens):
+        self.ast = QLAST()
         self.tokens = tokens
         self.start = 'start'
-        self.parser = yacc.yacc(module=self)
+        self.parser = yacc.yacc(module=self, debug=0, write_tables=0)
 
-    def parse(self, input):
-        self.parser.parse(input, debug=True)
+    def parse(self, input, lexer):
+        self.parser.parse(input, lexer)
+        return self.ast
 
     def p_start(self, p):
         """
         start : FORM ID LBRACK statements RBRACK
         """
-        p[0] = QLAST(p[2])
+        self.ast.set_title(p[2])
         for statement in p[4]:
-            p[0].register_node(statement)
+            self.ast.register_node(statement)
 
     def p_statements(self, p):
         """
@@ -147,7 +149,7 @@ class QLParser(object):
         elif p[1] == 'string':
             p[0] = String()
         else:
-            print(p)
+            self.ast.register_error(p[1], 'Invalid type given.')
 
     def p_condition(self, p):
         """
@@ -180,7 +182,8 @@ class QLParser(object):
             elif p[2] == '||':
                 p[0] = OrExpression(p[1], p[3])
             else:
-                print(p[1])
+                self.ast.register_error(p[2],
+                                        'Invalid condition operator given.')
         else:
             p[0] = p[1]
 
@@ -208,7 +211,8 @@ class QLParser(object):
             elif p[2] == '==':
                 p[0] = EQExpression(p[1], p[3])
             else:
-                print(p[1], p[2], p[3])
+                self.ast.register_error(p[2],
+                                        'Invalid comparison operator given.')
         else:
             p[0] = p[1]
 
@@ -224,7 +228,8 @@ class QLParser(object):
             elif p[2] == '-':
                 p[0] = MinusExpression(p[1], p[3])
             else:
-                print(p[1])
+                self.ast.register_error(p[2],
+                                        'Invalid expression operator given.')
         else:
             p[0] = p[1]
 
@@ -240,7 +245,8 @@ class QLParser(object):
             elif p[2] == '/':
                 p[0] = DivExpression(p[1], p[3])
             else:
-                print(p[1])
+                self.ast.register_error(p[2], 'Invalid term operator given.')
+
         else:
             p[0] = p[1]
 
@@ -274,4 +280,4 @@ class QLParser(object):
         p[0] = []
 
     def p_error(self, p):
-        print(p)
+        self.ast.register_error(p, 'Critical grammar error: {}'.format(p))
