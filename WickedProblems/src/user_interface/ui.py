@@ -263,9 +263,10 @@ class Window(Frame):
         Frame.__init__(self, parent)
 
 class Application(object):
-    def __init__(self):
+    def __init__(self, name = "My Program"):
         root = Tk()
         root.app = self
+        root.title(name)
         self.window = Window(root)
         self.root = root
         self.root.minsize(width=670, height=670)

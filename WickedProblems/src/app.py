@@ -34,7 +34,7 @@ create_environment.execute()
 register_computed_questions = RegisterComputedQuestions(environment)
 form_ast.alg(register_computed_questions).execute()
 form_ast.alg(RegisterConditions(environment)).execute()
-app = Application()
+app = Application(form_ast.name)
 create_ui = BuildGui(app.root, environment)
 app.environment = environment
 form = form_ast.alg(create_ui).execute()
