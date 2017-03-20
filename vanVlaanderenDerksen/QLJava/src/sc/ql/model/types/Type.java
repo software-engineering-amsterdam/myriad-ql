@@ -2,7 +2,7 @@ package sc.ql.model.types;
 
 import sc.ql.model.Node;
 
-public abstract class Type extends Node {
+public class Type extends Node {
 	
 	public String toString() {
 		return "undefined type";
@@ -20,7 +20,9 @@ public abstract class Type extends Node {
 		return false;
 	}
 	
-	public abstract Boolean isCompatibleWith(Type type);
+	public Boolean isCompatibleWith(Type type) {
+		return false;
+	};
 	
 	public Boolean isCompatibleWith(BooleanType type) {
 		return false;

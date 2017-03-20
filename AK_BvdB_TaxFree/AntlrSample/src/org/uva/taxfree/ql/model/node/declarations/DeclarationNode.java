@@ -42,7 +42,7 @@ public class DeclarationNode extends Node {
         return mLabel;
     }
 
-    public String defaultValue(){
+    public String defaultValue() {
         return mType.defaultValue();
     }
 
@@ -57,4 +57,5 @@ public class DeclarationNode extends Node {
     public void generateVisibleIds(List<String> visibleIds) {
         visibleIds.add(mId);
     }
+
 }

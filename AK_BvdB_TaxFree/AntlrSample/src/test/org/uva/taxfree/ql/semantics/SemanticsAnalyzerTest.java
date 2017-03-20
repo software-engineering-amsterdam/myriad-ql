@@ -51,6 +51,27 @@ public class SemanticsAnalyzerTest extends SemanticsTester {
         assertSemantics("cyclicDependencyCalculations.txt", 2, "Cyclic dependency in calculation");
     }
 
+    @Test
+    void testConstantCondition() throws Exception {
+        assertSemantics("constantCondition.txt", 1, "A constant condition should display a warning");
+    }
+
+    @Test
+    void testConstantConditions() throws Exception {
+        assertSemantics("constantConditions.txt", 2, "Multiple constant conditions should display multiple warning");
+    }
+
+    @Test
+    void testConstantCalculation() throws Exception {
+        assertSemantics("constantCalculation.txt", 1, "A constant calculation should display a warning");
+    }
+
+    @Test
+    void testConstandCalculations() throws Exception {
+        assertSemantics("constantCalculations.txt", 2, "Mutltiple constant calculation should display multiple warning");
+    }
+
+
     @Override
     protected File testFile(String fileName) {
         return new File("src\\test\\org\\uva\\taxfree\\ql\\testFiles\\semanticErrors\\" + fileName);

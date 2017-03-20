@@ -1,63 +1,27 @@
-# -*- coding: utf-8 -*-
-"""
-This module holds the definition of the expressions that can be found in the
-AST tree. The expressions are not nodes by themselves but they are part of the
-nodes. The express the conditions of the conditionals or the evaluation of the
-values in the assignation nodes. They are not visually represented in the UI
-but hold most of the logic behind it.
-"""
 from .type import Boolean
 from .type import Decimal
 from .type import String
 
 
 class Expression(object):
-    """
-    Abstract parent class. It defines the shared fields and functions that
-    all the nodes have. This is very important as during the recurision, the
-    visitor will rely on them.
-    """
     def __init__(self, type):
         self.type = type
 
     def read(self, context):
-        """
-        Retrieves the value of the expression node depending on the context.
-        Usually this value is recursive and depends on the value of the
-        children of the expression node.
-        """
         pass
 
     def depends_on(self):
-        """
-        Gets the list of the variables that the expression depends on. This
-        means that if any children or children of them of the expression
-        contains the identifier of a variable, this one will be returned by
-        this function as a list. In case it does not has any dependency, this
-        list will be empty.
-        """
         pass
 
     def get_children(self):
-        """
-        Returns a list of the children of the node. In case it is a LeafNode,
-        the list will be empty.
-        """
         return []
 
     def get_type(self, context):
-        """
-        Returns the type of the expression. In most of the cases it depends on
-        the operation but in case it is an identifier it depends on the context
-        it is analysed as we do not have the declaration of the identifier in
-        the expression.
-        """
         return self.type
 
 
 # BINARY EXPRESSIONS
 class BinaryExpression(Expression):
-    """Parent abstract class for binary expressions."""
     def __init__(self, type, operation, lnode, rnode):
         super().__init__(type)
         self.operation = operation
@@ -76,7 +40,6 @@ class BinaryExpression(Expression):
 
 
 class AndExpression(BinaryExpression):
-    """Logic AND expression. It takes two Boolean and returns a Boolean."""
     def __init__(self, lnode, rnode):
         super().__init__(Boolean(), '&&', lnode, rnode)
 
@@ -85,7 +48,6 @@ class AndExpression(BinaryExpression):
 
 
 class OrExpression(BinaryExpression):
-    """Logic OR expression. It takes two Boolean and returns a Boolean."""
     def __init__(self, lnode, rnode):
         super().__init__(Boolean(), '||', lnode, rnode)
 
@@ -94,10 +56,6 @@ class OrExpression(BinaryExpression):
 
 
 class LTExpression(BinaryExpression):
-    """
-    Mathematical LESS THAN expression. It takes two Decimal and returns a
-    Boolean.
-    """
     def __init__(self, lnode, rnode):
         super().__init__(Boolean(), '<', lnode, rnode)
 
@@ -106,10 +64,6 @@ class LTExpression(BinaryExpression):
 
 
 class LETExpression(BinaryExpression):
-    """
-    Mathematical LESS OR EQUAL THAN expression. It takes two Decimal and
-    returns a Boolean.
-    """
     def __init__(self, lnode, rnode):
         super().__init__(Boolean(), '<=', lnode, rnode)
 
@@ -118,10 +72,6 @@ class LETExpression(BinaryExpression):
 
 
 class GTExpression(BinaryExpression):
-    """
-    Mathematical GREATER THAN expression. It takes two Decimal and returns a
-    Boolean.
-    """
     def __init__(self, lnode, rnode):
         super().__init__(Boolean(), '>', lnode, rnode)
 
@@ -130,10 +80,6 @@ class GTExpression(BinaryExpression):
 
 
 class GETExpression(BinaryExpression):
-    """
-    Mathematical GREATER OR EQUAL THAN expression. It takes two Decimal and
-    returns a Boolean.
-    """
     def __init__(self, lnode, rnode):
         super().__init__(Boolean(), '>=', lnode, rnode)
 
@@ -142,10 +88,6 @@ class GETExpression(BinaryExpression):
 
 
 class NEQExpression(BinaryExpression):
-    """
-    Logic NOT EQUAL expression. It takes two variables of the same any type and
-    returns a Boolean.
-    """
     def __init__(self, lnode, rnode):
         super().__init__(Boolean(), '!=', lnode, rnode)
 
@@ -154,10 +96,6 @@ class NEQExpression(BinaryExpression):
 
 
 class EQExpression(BinaryExpression):
-    """
-    Logic EQUAL expression. It takes two variables of the same any type and
-    returns a Boolean.
-    """
     def __init__(self, lnode, rnode):
         super().__init__(Boolean(), '==', lnode, rnode)
 
@@ -166,9 +104,6 @@ class EQExpression(BinaryExpression):
 
 
 class PlusExpression(BinaryExpression):
-    """
-    Mathematical PLUS expression. It takes two Decimal and returns a Decimal.
-    """
     def __init__(self, lnode, rnode):
         super().__init__(Decimal(), '+', lnode, rnode)
 
@@ -177,9 +112,6 @@ class PlusExpression(BinaryExpression):
 
 
 class MinusExpression(BinaryExpression):
-    """
-    Mathematical MINUS expression. It takes two Decimal and returns a Decimal.
-    """
     def __init__(self, lnode, rnode):
         super().__init__(Decimal(), '-', lnode, rnode)
 
@@ -188,10 +120,6 @@ class MinusExpression(BinaryExpression):
 
 
 class MultExpression(BinaryExpression):
-    """
-    Mathematical MULTIPLY BY expression. It takes two Decimal and returns a
-    Decimal.
-    """
     def __init__(self, lnode, rnode):
         super().__init__(Decimal(), '*', lnode, rnode)
 
@@ -200,10 +128,6 @@ class MultExpression(BinaryExpression):
 
 
 class DivExpression(BinaryExpression):
-    """
-    Mathematical DIVIDE BY expression. It takes two Decimal and returns a
-    Decimal.
-    """
     def __init__(self, lnode, rnode):
         super().__init__(Decimal(), '/', lnode, rnode)
 
@@ -216,7 +140,6 @@ class DivExpression(BinaryExpression):
 
 # UNARY EXPRESSIONS
 class UnaryExpression(Expression):
-    """Abstract parent class for unary expressions."""
     def __init__(self, type, operation, node):
         super().__init__(type)
         self.node = node
@@ -233,9 +156,6 @@ class UnaryExpression(Expression):
 
 
 class NotExpression(UnaryExpression):
-    """
-    Logical NOT operation. It takes a Boolean and returns a Boolean.
-    """
     def __init__(self, node):
         super().__init__(Boolean(), '!', node)
 
@@ -245,7 +165,6 @@ class NotExpression(UnaryExpression):
 
 # LEAF EXPRESSIONS
 class LeafExpression(Expression):
-    """Abstract parent class for leaf expressions."""
     def __init__(self, type):
         super().__init__(type)
 
@@ -257,7 +176,6 @@ class LeafExpression(Expression):
 
 
 class TrueExpression(LeafExpression):
-    """Leaf expression which holds the Boolean value True."""
     def __init__(self):
         super().__init__(Boolean())
 
@@ -269,7 +187,6 @@ class TrueExpression(LeafExpression):
 
 
 class FalseExpression(LeafExpression):
-    """Leaf expression which holds the Boolean value False."""
     def __init__(self):
         super().__init__(Boolean())
 
@@ -281,7 +198,6 @@ class FalseExpression(LeafExpression):
 
 
 class DecimalExpression(LeafExpression):
-    """Leaf expression which holds a Decimal value."""
     def __init__(self, decimal):
         super().__init__(Decimal())
         self.decimal = decimal
@@ -294,7 +210,6 @@ class DecimalExpression(LeafExpression):
 
 
 class StringExpression(LeafExpression):
-    """Leaf expression which holds a String value."""
     def __init__(self, string):
         super().__init__(String())
         self.string = string
@@ -306,13 +221,8 @@ class StringExpression(LeafExpression):
         return self.string
 
 
+# A leaf expression which is quite unique.
 class IdExpression(LeafExpression):
-    """
-    ID expressions are a leaf expression which are quite different from the
-    others, although it holds many of the same properties and principles. The
-    most important one is that its type and value depends strictly on the
-    context given. Without a valid context, the IdExpressions will fail.
-    """
     def __init__(self, id):
         super().__init__(None)
         self.id = id

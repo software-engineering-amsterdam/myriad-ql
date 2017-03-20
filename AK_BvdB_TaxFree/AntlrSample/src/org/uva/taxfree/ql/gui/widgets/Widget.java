@@ -5,7 +5,6 @@ import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.qls.QlsStyle;
 
 import javax.swing.*;
-import java.util.List;
 
 public abstract class Widget {
     private final JPanel mPanel;
@@ -37,12 +36,11 @@ public abstract class Widget {
 
     public abstract void callOnUpdate(FormListener listener);
 
-    public abstract void updateValues(SymbolTable symbolTable);
-
-    public void updateVisibility(List<String> visibleIds) {
-        mPanel.setVisible(visibleIds.contains(mId));
+    public void updateVisibility(SymbolTable symbolTable) {
+        mPanel.setVisible(symbolTable.isVisible(mId));
     }
 
+    public abstract void updateValues(SymbolTable symbolTable);
 
     protected void writeToTable(SymbolTable symbolTable) {
         symbolTable.updateValue(mId, resolveValue());

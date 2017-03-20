@@ -1,11 +1,12 @@
 package QL;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import QL.ast.type.Type;
 
-public class ReferenceTable {
+public class ReferenceTable implements Iterable<String> {
 
 	private final Map<String, Type> variableType;
 	
@@ -13,13 +14,11 @@ public class ReferenceTable {
 		variableType = new HashMap<>();
 	}
 
-	public void addVariableType(String variable, Type type) {
+	public void addReference(String variable, Type type) {
 		variableType.put(variable, type);
 	}
-	
-	
+
 	public Type getType(String variable) {
-		
 		return variableType.get(variable);
 	}
 	
@@ -27,7 +26,8 @@ public class ReferenceTable {
 		return variableType.containsKey(variable);
 	}
 	
-	public Map<String, Type> getVariableTypes() {
-		return variableType;
+	public Iterator<String> iterator() {		
+		return variableType.keySet().iterator();
+        
 	}
 }

@@ -1,56 +1,55 @@
 package qls.semantic;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import QL.Faults;
-import QL.ast.type.Type;
-import QL.errorhandling.Error;
+import QL.ReferenceTable;
+import QL.message.Error;
+import QL.message.Message;
 
 class Environment {
 	
-	private final Map<String, Type> variableTypes;
 	private final Map<String, Boolean> variableCovered;
-	private final Faults faults;
+	private final ReferenceTable referenceTable;
+	private final List<Message> messages;
 	
-	public Environment(Map<String, Type> variableTypes) {
-		this.variableTypes = variableTypes;
-		this.variableCovered = new HashMap<>();
-		for (String variable : variableTypes.keySet()) {
-			variableCovered.put(variable, false);
-		}
-		this.faults = new Faults(); // TODO move to analyzing part
-	}
-	
-	public Faults getFaults() {
-		return faults;
-	}
-	
-	public void isCovered(String name, int line) {
+	public Environment(ReferenceTable referenceTable) {
 		
-		// TODO move to separate functions
-		if (!variableCovered.containsKey(name)) {
-			faults.add(new Error("The variable " + name + 
-					" appears in the QLS, but does not exist in QL", line));
+		this.variableCovered = new HashMap<>();	
+		this.referenceTable = referenceTable;
+		for (String name : referenceTable) {
+			variableCovered.put(name, false);
 		}
-		else if (variableCovered.get(name)) {
-			faults.add(new Error("The variable " + name + 
-					" is already defined int the QLS", line));
-		}
-		else {
-			variableCovered.replace(name, true);	
-		}
+		this.messages = new ArrayList<>(); // TODO move to analyzing part
+	}
+	
+	public List<Message> getMessages() {
+		return messages;
+	}
+	
+	public boolean presentInQL(String name) {
+		
+		return variableCovered.containsKey(name);
+	}
+	
+	public boolean isCovered(String name) {
+		return variableCovered.get(name);
+	}
+	
+	public void setCovered(String name) {
+		variableCovered.replace(name, true);
 	}
 	
 	// TODO fault without line number
 	public void checkCoverage() {
-		for (String name : variableTypes.keySet()) {
+		for (String name : variableCovered.keySet()) {
 			if (!variableCovered.get(name)) {
-				faults.add(new Error("The variable " + name + " is not defined in QLS", 0));
+				messages.add(new Error("The variable " + name + 
+						" is not defined in QLS", 0));
 			}
 		}
 	}
-
-	
 	
 }

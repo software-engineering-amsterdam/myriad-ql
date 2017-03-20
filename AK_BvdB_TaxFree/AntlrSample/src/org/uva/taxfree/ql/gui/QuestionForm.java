@@ -65,9 +65,12 @@ public class QuestionForm implements FormListener {
     }
 
     public void updateForm() {
-        for (Widget w : mWidgets) {
-            w.updateValues(mSymbolTable);
-            w.updateVisibility(mSymbolTable.visibleIds());
+        for (Widget widget : mWidgets) {
+            widget.updateValues(mSymbolTable);
+        }
+
+        for( Widget widget : mWidgets){
+            widget.updateVisibility(mSymbolTable);
         }
     }
 

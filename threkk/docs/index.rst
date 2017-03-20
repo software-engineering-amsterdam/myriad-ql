@@ -11,26 +11,11 @@ Welcome to QL Workbench's documentation!
    :caption: Contents:
 
 Indices and tables
-------------------
+==================
 
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-::
-
-    Usage: main.py [OPTIONS] <file>
-
-    This program generates a formulary based on QL files. It parses the
-    given <file> and generates a graphical interface based on the content.
-    In case it contains errors, they will be displayed in the screen.
-
-    Options:
-        --help  Show this message and exit.
-
-
-QL
-==
 
 QL Lexer
 --------
@@ -40,35 +25,4 @@ QL Lexer
 QL Parser
 ---------
 .. automodule:: qlworkbench.ql.parser
-    :members:
-
-Type checker
-------------
-.. automodule:: qlworkbench.ql.ast.typechecker
-    :members:
-
-AST
----
-.. automodule:: qlworkbench.ql.ast.type
-    :members:
-
-.. automodule:: qlworkbench.ql.ast.root
-    :members:
-
-.. automodule:: qlworkbench.ql.ast.node
-    :members:
-
-.. automodule:: qlworkbench.ql.ast.expression
-    :members:
-
-GUI
-===
-Builder
--------
-.. automodule:: qlworkbench.ui.builder
-    :members:
-
-Context
--------
-.. automodule:: qlworkbench.ui.context
     :members:

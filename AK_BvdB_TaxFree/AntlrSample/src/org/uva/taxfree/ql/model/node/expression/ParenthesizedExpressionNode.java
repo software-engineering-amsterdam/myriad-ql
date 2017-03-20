@@ -55,4 +55,9 @@ public class ParenthesizedExpressionNode extends ExpressionNode {
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
         mExpression.checkSemantics(symbolTable, semanticsMessages);
     }
+
+    @Override
+    protected boolean isConstant() {
+        return mExpression.isConstant();
+    }
 }

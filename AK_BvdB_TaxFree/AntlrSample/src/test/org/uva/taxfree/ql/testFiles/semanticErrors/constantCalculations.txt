@@ -1,0 +1,4 @@
+form ConstantConditionForm {
+    "My value will never change" -> constantValue : integer = 10+3
+    "Neither will mine" -> constantBoolean : boolean = true && false
+  }
