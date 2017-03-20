@@ -27,4 +27,6 @@ public class TypeTable {
     public boolean containsEntry(String name) {
         return this.table.containsKey(name);
     }
+
+    public int size() { return this.table.size(); }
 }
