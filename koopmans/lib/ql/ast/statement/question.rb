@@ -10,11 +10,7 @@ module QL
       end
 
       def accept(visitor, condition=nil)
-        if condition
-          visitor.visit_question(self, condition)
-        else
-          visitor.visit_question(self)
-        end
+        visitor.visit_question(self, condition)
       end
     end
   end

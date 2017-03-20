@@ -1,28 +1,28 @@
 module QL
   module TypeChecker
     class OperandsTypeEvaluator
-      def visit_form(form, collected_data=nil)
+      def visit_form(form, collected_data)
         @variable_type = collected_data
         form.statements.map { |statement| statement.accept(self) }
       end
 
-      def visit_if_statement(if_statement)
+      def visit_if_statement(if_statement, _)
         condition_type = if_statement.condition.accept(self)
         check_if_condition(if_statement, condition_type)
         if_statement.body.map { |statement| statement.accept(self) }
       end
 
-      def visit_if_else_statement(if_else_statement)
+      def visit_if_else_statement(if_else_statement, _)
         condition_type = if_else_statement.condition.accept(self)
         check_if_condition(if_else_statement, condition_type)
         if_else_statement.if_body.map { |statement| statement.accept(self) }
         if_else_statement.else_body.map { |statement| statement.accept(self) }
       end
 
-      def visit_question(_)
+      def visit_question(_, _)
       end
 
-      def visit_computed_question(computed_question)
+      def visit_computed_question(computed_question, _)
         computed_question.assignment.accept(self)
       end
 

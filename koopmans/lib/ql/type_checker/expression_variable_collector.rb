@@ -1,27 +1,27 @@
 module QL
   module TypeChecker
     class ExpressionVariableCollector
-      def visit_form(form, collected_data=nil)
+      def visit_form(form, _)
         form.statements.map { |statement| statement.accept(self) }
       end
 
-      def visit_if_statement(if_statement)
+      def visit_if_statement(if_statement, _)
         if_condition_variables = if_statement.condition.accept(self)
         if_body_variables = if_statement.body.map { |statement| statement.accept(self) }
         [if_condition_variables, if_body_variables]
       end
 
-      def visit_if_else_statement(if_else_statement)
+      def visit_if_else_statement(if_else_statement, _)
         if_condition_variables = if_else_statement.condition.accept(self)
         if_body_variables = if_else_statement.if_body.map { |statement| statement.accept(self) }
         else_body_variables = if_else_statement.else_body.map { |statement| statement.accept(self) }
         [if_condition_variables, if_body_variables, else_body_variables]
       end
 
-      def visit_question(_)
+      def visit_question(_, _)
       end
 
-      def visit_computed_question(computed_question)
+      def visit_computed_question(computed_question, _)
         computed_question.assignment.accept(self)
       end
 
