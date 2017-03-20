@@ -28,8 +28,8 @@ public class QLTypeCheckerTest {
     @Test
     public void shouldAddErrorWhenDuplicateLabelsAndTypeForQuestion() {
         String questionLabel = "example";
-        String expectedError = "Question '" + questionLabel + "' has duplicate(s)";
-        String expectedWarning = "Question '" + questionLabel + "' label has duplicate(s)";
+        String expectedError = "CustomWidgetQuestion '" + questionLabel + "' has duplicate(s)";
+        String expectedWarning = "CustomWidgetQuestion '" + questionLabel + "' label has duplicate(s)";
 
         QLTypeChecker typeChecker = new QLTypeChecker();
 
@@ -68,7 +68,7 @@ public class QLTypeCheckerTest {
 
         List<Issue> errors = issues.getErrors();
 
-        assertEquals("Question 'example' has duplicate(s)", errors.get(0).getMessage());
+        assertEquals("CustomWidgetQuestion 'example' has duplicate(s)", errors.get(0).getMessage());
         assertEquals("Type mismatch: expected boolean, but got integer", errors.get(1).getMessage());
         assertEquals("Expected number type, got boolean", errors.get(2).getMessage());
         assertEquals("Type mismatch: expected integer, but got UnknownType", errors.get(3).getMessage());
@@ -80,6 +80,6 @@ public class QLTypeCheckerTest {
 
         List<Issue> warnings = issues.getWarnings();
 
-        assertEquals("Question 'example' label has duplicate(s)", warnings.get(0).getMessage());
+        assertEquals("CustomWidgetQuestion 'example' label has duplicate(s)", warnings.get(0).getMessage());
     }
 }

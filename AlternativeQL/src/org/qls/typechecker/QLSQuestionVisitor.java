@@ -3,8 +3,8 @@ package org.qls.typechecker;
 import org.ql.typechecker.SymbolTable;
 import org.ql.typechecker.issues.IssuesStorage;
 import org.qls.ast.StyleSheet;
+import org.qls.ast.page.CustomWidgetQuestion;
 import org.qls.ast.page.Page;
-import org.qls.ast.page.Question;
 import org.qls.ast.page.Section;
 import org.qls.typechecker.issues.errors.DuplicateQLSQuestion;
 import org.qls.typechecker.issues.errors.UndefinedQLQuestion;
@@ -37,19 +37,19 @@ public class QLSQuestionVisitor {
         section.getSections().forEach(this::visitSection);
     }
 
-    public void visitQuestion(Question question) {
+    public void visitQuestion(CustomWidgetQuestion question) {
         checkDuplicateQLSQuestions(question);
         checkUndefinedQLQuestions(question);
         checkWidgetTypeForQLQuestion(question);
     }
 
-    private void checkWidgetTypeForQLQuestion(Question question) {
+    private void checkWidgetTypeForQLQuestion(CustomWidgetQuestion question) {
         if (!isWidgetTypeSupportedForQuestion(question)) {
             issuesStorage.addError(new UnsupportedWidgetForQLQuestionType(question));
         }
     }
 
-    private boolean isWidgetTypeSupportedForQuestion(Question question) {
+    private boolean isWidgetTypeSupportedForQuestion(CustomWidgetQuestion question) {
         if (question.getWidget() == null) {
             return true;
         }
@@ -57,7 +57,7 @@ public class QLSQuestionVisitor {
         return question.getWidget().getSupportedTypes().contains(symbolTable.lookup(question.getIdentifier()));
     }
 
-    private void checkDuplicateQLSQuestions(Question question) {
+    private void checkDuplicateQLSQuestions(CustomWidgetQuestion question) {
         if (definedQLSQuestionsSet.isDeclared(question.getIdentifier())) {
             issuesStorage.addError(new DuplicateQLSQuestion(question));
         } else {
@@ -65,7 +65,7 @@ public class QLSQuestionVisitor {
         }
     }
 
-    private void checkUndefinedQLQuestions(Question question) {
+    private void checkUndefinedQLQuestions(CustomWidgetQuestion question) {
         if (!symbolTable.isDeclared(question.getIdentifier())) {
             issuesStorage.addError(new UndefinedQLQuestion(question));
         }

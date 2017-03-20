@@ -4,17 +4,12 @@ import org.ql.ast.Identifier;
 import org.ql.ast.Node;
 import org.qls.ast.widget.Widget;
 
-public class Question extends Node {
-    private final Identifier identifier;
+public class CustomWidgetQuestion extends GenericWidgetQuestion {
     private final Widget widget;
 
-    public Question(Identifier identifier, Widget widget) {
-        this.identifier = identifier;
+    public CustomWidgetQuestion(Identifier identifier, Widget widget) {
+        super(identifier);
         this.widget = widget;
-    }
-
-    public Identifier getIdentifier() {
-        return identifier;
     }
 
     public Widget getWidget() {

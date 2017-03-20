@@ -2,13 +2,13 @@ package org.qls.typechecker.issues.errors;
 
 import org.ql.ast.Node;
 import org.ql.typechecker.issues.Issue;
-import org.qls.ast.page.Question;
+import org.qls.ast.page.CustomWidgetQuestion;
 
 public class UnsupportedWidgetForQLQuestionType extends Issue {
 
-    private final Question question;
+    private final CustomWidgetQuestion question;
 
-    public UnsupportedWidgetForQLQuestionType(Question question) {
+    public UnsupportedWidgetForQLQuestionType(CustomWidgetQuestion question) {
         this.question = question;
     }
 

@@ -5,7 +5,6 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.ql.ast.Identifier;
 import org.ql.ast.Node;
-import org.ql.ast.StringUnquoter;
 import org.ql.ast.type.*;
 import org.qls.ast.page.*;
 import org.qls.ast.widget.*;
@@ -57,19 +56,19 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
     public Node visitSection(QLSParser.SectionContext ctx) {
         List<Section> sections = getSections(ctx.section());
         List<DefaultWidget> defaultWidgets = getDefaultWidgets(ctx.defaultWidget());
-        List<Question> questions = getQuestions(ctx.question());
+        List<CustomWidgetQuestion> questions = getQuestions(ctx.question());
 
         return hydrateSourceLocation(new Section(unquoteString(ctx.name.getText()), questions, sections, defaultWidgets), ctx);
     }
 
     @Override
     public Node visitQuestionNoWidget(QLSParser.QuestionNoWidgetContext ctx) {
-        return hydrateSourceLocation(new Question(visitIdentifier(ctx.identifier()), null), ctx);
+        return hydrateSourceLocation(new CustomWidgetQuestion(visitIdentifier(ctx.identifier()), null), ctx);
     }
 
     @Override
     public Node visitQuestionWidget(QLSParser.QuestionWidgetContext ctx) {
-        return hydrateSourceLocation(new Question(visitIdentifier(ctx.identifier()), (Widget) visit(ctx.widget())), ctx);
+        return hydrateSourceLocation(new CustomWidgetQuestion(visitIdentifier(ctx.identifier()), (Widget) visit(ctx.widget())), ctx);
     }
 
     @Override
@@ -195,11 +194,11 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
         return sections;
     }
 
-    private List<Question> getQuestions(List<QLSParser.QuestionContext> questionContexts) {
-        List<Question> questions = new ArrayList<>();
+    private List<CustomWidgetQuestion> getQuestions(List<QLSParser.QuestionContext> questionContexts) {
+        List<CustomWidgetQuestion> questions = new ArrayList<>();
 
         for(QLSParser.QuestionContext question : questionContexts) {
-            questions.add((Question) visit(question));
+            questions.add((CustomWidgetQuestion) visit(question));
         }
 
         return questions;

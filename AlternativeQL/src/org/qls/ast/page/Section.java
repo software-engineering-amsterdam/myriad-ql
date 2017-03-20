@@ -7,11 +7,11 @@ import java.util.List;
 
 public class Section extends Node {
     private final String name;
-    private final List<Question> questions;
+    private final List<CustomWidgetQuestion> questions;
     private final List<Section> sections;
     private final List<DefaultWidget> defaultWidgets;
 
-    public Section(String name, List<Question> questions,
+    public Section(String name, List<CustomWidgetQuestion> questions,
                    List<Section> sections,
                    List<DefaultWidget> defaultWidgets) {
         this.name = name;
@@ -24,7 +24,7 @@ public class Section extends Node {
         return name;
     }
 
-    public List<Question> getQuestions() {
+    public List<CustomWidgetQuestion> getQuestions() {
         return questions;
     }
 
