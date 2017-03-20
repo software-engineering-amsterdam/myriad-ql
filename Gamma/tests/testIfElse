@@ -19,6 +19,6 @@ form ifelse{
     }
 
     if(block2 > 10){
-        "max depth of block 2" max2: boolean = (block2/2 > 10 && block1_1_1)
+        "max depth of block 2" max2: boolean = (block2/2 > 20)
     }
 }

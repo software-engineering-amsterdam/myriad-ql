@@ -1,0 +1,7 @@
+form duplicates{
+    "First question!" first: boolean
+    "First question!" first2: integer = (1+1) // warning: duplicate label
+    if(first){
+        "second question!" first2: boolean // error: redeclaration
+    }
+}

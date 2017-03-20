@@ -22,8 +22,6 @@ expression: BOOL '=' '('boolExpr')'       # booleanExpression
           | MONEY '=' '('numExpr')'       # moneyExpression
           ;
 
-
-
 boolExpr: boolExpr op=('&&' | '||' | '==' | '!=') boolExpr
         | numExpr op=('<' | '>' | '<=' | '>=' | '!=' | '==') numExpr
         | '('numExpr')'
@@ -50,6 +48,7 @@ MONEY:  'money';
 NUMBER: ('0'..'9')+('.'('0'..'9')+)?;
 
 STRING_LITERAL: '"'(~'"')+'"' ;
+
 ID: [a-zA-Z][a-zA-Z0-9_]*;
 
 //Skipping and hiding

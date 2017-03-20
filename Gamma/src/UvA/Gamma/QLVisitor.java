@@ -37,7 +37,7 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public Question visitQuestion(QLParser.QuestionContext ctx) {
-        String questionString = ctx.STRING_LITERAL().getText();
+        String questionString = ctx.STRING_LITERAL().getText().replaceAll("\"", "");
         String id = ctx.ID().getText();
         Value value = (Value) visit(ctx.type());
         return new Question(questionString, id, value);
@@ -45,7 +45,7 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public Computed visitComputed(QLParser.ComputedContext ctx) {
-        String label = ctx.STRING_LITERAL().getText();
+        String label = ctx.STRING_LITERAL().getText().replaceAll("\"", "");
         String id = ctx.ID().getText();
         Expression expression = (Expression) visit(ctx.expression());
         return new Computed(label, id, expression);
