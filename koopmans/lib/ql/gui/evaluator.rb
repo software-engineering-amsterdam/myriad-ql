@@ -23,25 +23,12 @@ module QL
         AST::BooleanLiteral.new(evaluate_binary_expression(left, binary_expression))
       end
 
-      def evaluate_binary_expression(left, binary_expression)
-        left = left.accept(self)
-        right = binary_expression.expression.accept(self)
-        operator = binary_expression.operator
-        eval("#{left.value} #{operator} #{right.value}")
-      end
-
       def visit_integer_negation(integer_negation)
         AST::IntegerLiteral.new(evaluate_negation(integer_negation))
       end
 
       def visit_boolean_negation(boolean_negation)
         AST::BooleanLiteral.new(evaluate_negation(boolean_negation))
-      end
-
-      def evaluate_negation(negation)
-        operator = negation.operator
-        expression = negation.expression.accept(self)
-        eval("#{operator} #{expression.value}")
       end
 
       def visit_integer_literal(integer_literal)
@@ -58,6 +45,19 @@ module QL
 
       def visit_variable(variable)
         VariableTable.find(variable.name)
+      end
+
+      def evaluate_binary_expression(left, binary_expression)
+        left = left.accept(self)
+        right = binary_expression.expression.accept(self)
+        operator = binary_expression.operator
+        eval("#{left.value} #{operator} #{right.value}")
+      end
+
+      def evaluate_negation(negation)
+        operator = negation.operator
+        expression = negation.expression.accept(self)
+        eval("#{operator} #{expression.value}")
       end
     end
   end
