@@ -1,4 +1,4 @@
-package ql.gui.fields;
+package ql.gui.elements.fields;
 
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
@@ -6,13 +6,11 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
-import ql.gui.GUIEvaluator;
-import ql.values.IntValue;
-import ql.visistor.environment.Env;
+import ql.gui.evaluator.GUIEvaluator;
 import ql.values.BooleanValue;
 import ql.values.UndefinedValue;
 import ql.values.Value;
-import ql.gui.GUIChangeListener;
+import ql.gui.elements.GUIChangeListener;
 
 /**
  * Created by Erik on 28-2-2017.

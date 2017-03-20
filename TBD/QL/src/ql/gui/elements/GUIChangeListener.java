@@ -1,9 +1,7 @@
-package ql.gui;
+package ql.gui.elements;
 
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import ql.visistor.environment.Env;
-import ql.values.*;
+import ql.gui.evaluator.GUIEvaluator;
 
 /**
  * Created by rico on 27-2-17.

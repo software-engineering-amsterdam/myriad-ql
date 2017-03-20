@@ -1,4 +1,6 @@
-package ql.gui;
+package ql.gui.evaluator;
+
+import ql.gui.elements.*;
 
 /**
  * Created by Erik on 20-3-2017.

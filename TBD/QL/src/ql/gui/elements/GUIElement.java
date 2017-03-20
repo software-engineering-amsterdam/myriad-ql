@@ -1,6 +1,7 @@
-package ql.gui;
+package ql.gui.elements;
 
 import javafx.scene.layout.VBox;
+import ql.gui.evaluator.BaseEvaluator;
 
 /**
  * Created by Erik on 20-3-2017.

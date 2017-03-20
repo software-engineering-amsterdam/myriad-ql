@@ -53,14 +53,9 @@ public class Main extends Application {
             TypeASTVisitor typeVisitor = new TypeASTVisitor(env);
             typeVisitor.startVisitor(errorHandler, parser.getResult());
 
-            ViewASTVisitor viewASTVisitor = new ViewASTVisitor(env);
+            ViewASTVisitor viewASTVisitor = new ViewASTVisitor(primaryStage);
             primaryStage.setScene(viewASTVisitor.startVisitor(parser.getResult()));
             primaryStage.show();
-
-            /* On update resize form. */
-            env.addEventListener(primaryStage::sizeToScene);
-
-
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

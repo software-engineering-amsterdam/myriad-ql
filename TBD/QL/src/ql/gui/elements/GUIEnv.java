@@ -1,4 +1,4 @@
-package ql.gui;
+package ql.gui.elements;
 
 import ql.values.UndefinedValue;
 import ql.values.Value;

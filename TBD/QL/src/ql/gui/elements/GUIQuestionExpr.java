@@ -1,8 +1,9 @@
-package ql.gui;
+package ql.gui.elements;
 
 import javafx.scene.text.Text;
 import ql.ast.Expr;
-import ql.gui.fields.QLField;
+import ql.gui.evaluator.BaseEvaluator;
+import ql.gui.elements.fields.QLField;
 import ql.values.Value;
 
 /**

@@ -1,13 +1,9 @@
-package ql.gui;
+package ql.gui.elements;
 
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import ql.ast.Expr;
-import ql.values.StringValue;
+import ql.gui.elements.fields.QLField;
+import ql.gui.evaluator.BaseEvaluator;
 import ql.values.Value;
-import ql.visistor.environment.Env;
-import ql.ast.types.*;
-import ql.gui.fields.*;
 
 /**
  * Created by Erik on 28-2-2017.

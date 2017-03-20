@@ -1,16 +1,13 @@
-package ql.gui.fields;
+package ql.gui.elements.fields;
 
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Toggle;
-import ql.gui.GUIEvaluator;
+import ql.gui.evaluator.GUIEvaluator;
 import ql.values.FloatValue;
-import ql.values.IntValue;
 import ql.values.UndefinedValue;
-import ql.visistor.environment.Env;
 import ql.values.Value;
-import ql.gui.GUIChangeListener;
+import ql.gui.elements.GUIChangeListener;
 
 /**
  * Created by Erik on 28-2-2017.

@@ -1,10 +1,12 @@
-package ql.gui;
+package ql.gui.evaluator;
 
+import javafx.stage.Stage;
 import ql.ast.expressions.binop.*;
 import ql.ast.expressions.monop.Neg;
 import ql.ast.expressions.monop.Not;
 import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
+import ql.gui.elements.*;
 import ql.values.Value;
 import ql.visistor.interfaces.ExpressionVisitor;
 
@@ -14,6 +16,11 @@ import ql.visistor.interfaces.ExpressionVisitor;
 public class GUIEvaluator implements BaseEvaluator<Void>, ExpressionVisitor<Value<?>>{
     private GUIForm form;
     private final GUIEnv guiEnv = new GUIEnv();
+    private final Stage primaryStage;
+
+    public GUIEvaluator(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
 
     public void setGUIForm(GUIForm form){
         this.form = form;
@@ -21,6 +28,7 @@ public class GUIEvaluator implements BaseEvaluator<Void>, ExpressionVisitor<Valu
 
     public void evaluate() {
         visit(form);
+        primaryStage.sizeToScene();
     }
 
     public Void visit(GUIForm node) {

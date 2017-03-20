@@ -1,10 +1,10 @@
-package ql.gui;
+package ql.gui.elements;
 
 import javafx.geometry.Insets;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import ql.gui.evaluator.BaseEvaluator;
 
 /**
  * Created by Erik on 28-2-2017.

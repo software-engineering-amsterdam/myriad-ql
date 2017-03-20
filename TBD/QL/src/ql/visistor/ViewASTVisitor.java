@@ -1,12 +1,13 @@
 package ql.visistor;
 
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 import ql.ast.*;
 import ql.ast.types.*;
-import ql.gui.fields.*;
-import ql.visistor.environment.Env;
+import ql.gui.elements.*;
+import ql.gui.evaluator.GUIEvaluator;
+import ql.gui.elements.fields.*;
 import ql.visistor.interfaces.BaseVisitor;
-import ql.gui.*;
 import ql.visistor.interfaces.TypeVisitor;
 
 import java.util.ArrayList;
@@ -16,15 +17,13 @@ import java.util.List;
  * Created by Erik on 28-2-2017.
  */
 public class ViewASTVisitor implements BaseVisitor<GUIElement>, TypeVisitor<QLField> {
-    private final Env env;
-    private GUIEvaluator evaluator;
+    private final GUIEvaluator evaluator;
 
-    public ViewASTVisitor(Env env) {
-        this.env = env;
+    public ViewASTVisitor(Stage primaryStage) {
+        this.evaluator = new GUIEvaluator(primaryStage);
     }
 
     public Scene startVisitor(Form node) {
-        evaluator = new GUIEvaluator();
         return new Scene(node.accept(this));
     }
 
