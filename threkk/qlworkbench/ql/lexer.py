@@ -114,4 +114,4 @@ class QLLexer(object):
 
     def __init__(self, **kwargs):
         """Initialises the lexer. It complies with PLY requirements."""
-        self.lexer = lex.lex(module=self, debug=0, optimize=1, **kwargs)
+        self.lexer = lex.lex(module=self, debug=0, **kwargs)

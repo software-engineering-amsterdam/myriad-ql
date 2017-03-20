@@ -1,55 +1,16 @@
 # -*- coding: utf-8 -*-
 """
 This module defines the grammar of the QL language. Given the tokens described
-in qlworkbench.ql.parser, the grammar formaly expressed is the following:
-::
-
-    S -> FORM ID LBRACK statements RBRACK
-
-    statements -> statement*
-
-    statement -> declaration
-               | assignation
-               | condition
-
-    declaration -> STR ID COLON type
-
-    assgination -> STR ID COLON type ASSIGN expression
-
-    condition -> IF LPAREN cond RPARENT LBRACK statements RBRACK
-
-    type -> BOOLEAN | DECIMAL | STRING
-
-    cond -> cond AND comparison
-          | cond OR comparison
-          | comparison
-
-    comparison -> comparison LT expression
-                | comparison LET expression
-                | comparison GT expression
-                | comparison GET expression
-                | comparison NEQ expression
-                | comparison EQ expression
-                | expression
-
-    expression -> expression PLUS term
-               | expression MINUS term
-               | term
-
-    term -> term MULT factor
-          | term DIV factor
-          | factor
-
-    factor -> ID
-            | LPAREN cond RPAREN
-
+in `qlworkbench.ql.parser`.
 
 The output of the parser is an AST tree. The AST tree has been processed to
 simplify the raw output of the grammar and some reduntant or innecesary nodes
-and tokens haven been merged. The resultant AST tree is sucession of nested
-tuples which each one represents one node of the three. The first element of
-the tuple is the type of the tuple, and the upcoming elements are properties,
-which can be also other tuples or arrays of tuples.
+and tokens haven been merged. The resultant AST tree is sucession of nodes
+which each one represents one statement of the file and one field of the form.
+
+The statement can be declarations of questions or assginations of values. They
+have three possible types: boolean, string and decimal. These statement can be
+conditional.
 """
 from ply import yacc
 from .ast.expression import AndExpression
@@ -160,12 +121,13 @@ class QLParser(object):
         for statement in p[6]:
             statement.add_condition(p[3])
 
-        # Add the negative of the condition to those if p[10]:
+        # Add the negative of the condition to those in the else clause:
         if len(p) == 12:
             for statement in p[10]:
                 statement.add_condition(NotExpression(p[3]))
 
-            # We add the if-statements and the else-statements to the list.
+            # We add the if-statements and the else-statements to the list of
+            # statements to analyse.
             p[0] = p[6] + p[10]
         else:
             p[0] = p[6]
