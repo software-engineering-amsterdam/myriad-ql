@@ -49,13 +49,13 @@ class FindCycles(object):
         # Check on circular dependency to itself.
         to_vars = []
         comp_question_node.expression.accept(self, to_vars)
-        self.add_edge_relations([comp_question_node.name], to_vars)
+        from_var = comp_question_node.name
+        if from_var in to_vars:
+            self.handler.add_cycle_error([[from_var, from_var]])
 
     def if_node(self, if_node, _):
         from_vars = []
         if_node.condition.accept(self, from_vars)
-        if len(from_vars) == 0:
-            return
 
         to_vars = []
         if_node.if_block.accept(self, to_vars)
@@ -64,8 +64,6 @@ class FindCycles(object):
     def if_else_node(self, if_else_node, _):
         from_vars = []
         if_else_node.condition.accept(self, from_vars)
-        if len(from_vars) == 0:
-            return
 
         to_vars = []
         if_else_node.if_block.accept(self, to_vars)
