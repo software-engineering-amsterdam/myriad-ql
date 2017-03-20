@@ -1,16 +1,19 @@
 package QL.semantic;
-import java.util.Map;
-
+import QL.semantic.Environment;
 import QL.Faults;
+import QL.ReferenceTable;
 import QL.ast.Form;
-import QL.ast.type.Type;
 
 public class Analyzer {
-	
+		
 	private Environment environment;
+	
+	public Analyzer() {
+		this.environment = new Environment();
+		
+	}
 
-    public Faults analyze(Form form) {
-        this.environment = new Environment();
+    public ReferenceTable analyze(Form form) {
         VerifyQuestions verifyQuestions = new VerifyQuestions(environment);
         verifyQuestions.visit(form);
 
@@ -19,13 +22,12 @@ public class Analyzer {
 
         CheckCyclicDependencies cyclicVisitor = new CheckCyclicDependencies(environment);
         cyclicVisitor.visit(form);
-
-        return environment.getFaults();
-
+        
+        return environment.getReferenceTable();
     }
+
     
-    public Map<String, Type> getVariableTypes() {
-    	return environment.getVariableTypes();
+    public Faults getFaults() {
+    	return environment.getFaults();
     }
-
 }

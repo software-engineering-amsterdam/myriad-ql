@@ -13,7 +13,7 @@ public class Main {
 				 + "Name0: \"Question0\" integer "
 				 + "Name1: \"Question1\" boolean "
 				 + "if (Name0 < 5) {"
-				 + "if (Name99 == 4) {"
+				 + "if (Name0 == 4) {"
  		 		 + "Name2: \"Question2\" boolean"
 				 + "} else { "
 				 + "Name9: \"Question9\" boolean } } "
@@ -49,13 +49,10 @@ public class Main {
 		Form form = parser.form().result;
 
 		Analyzer analyzer = new Analyzer();
-
-		Faults faults = analyzer.analyze(form);
-
-		Environment env = new Environment(analyzer.getVariableTypes());
+		ReferenceTable variables = analyzer.analyze(form);
 		
 		Questionnaire questionnaire = new Questionnaire();
-		questionnaire.main(form, env, faults);
+		questionnaire.main(form, variables, analyzer.getFaults());
 	}
 	
 }

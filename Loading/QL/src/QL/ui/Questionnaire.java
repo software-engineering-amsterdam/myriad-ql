@@ -10,8 +10,8 @@ import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonWriter;
 
-import QL.Environment;
 import QL.Faults;
+import QL.ReferenceTable;
 import QL.ast.Form;
 import QL.value.Value;
 import javafx.application.Application;
@@ -39,9 +39,9 @@ public class Questionnaire extends Application implements Notifier {
 	private static GridPane grid;
 	private static Faults faults;
 	
-    public void main(Form f, Environment env, Faults flts) {
+    public void main(Form f, ReferenceTable variables, Faults flts) {
     	form = f;
-    	environment = env;
+    	environment = new Environment(variables);
     	faults = flts;
  
         launch();
@@ -156,9 +156,9 @@ public class Questionnaire extends Application implements Notifier {
     }
     
 	public void updateQuestionnaire(String name, Value newValue) {
-    	Value oldAnswer = environment.getAnswer(name);
-		if (!environment.isAnswered(name) || !(oldAnswer.equals(newValue))) {
 
+		if (!environment.isAnswered(name) || !(environment.getAnswer(name).equals(newValue))) {
+	    	
 			environment.addAnswer(name, newValue);
 	    	grid.getChildren().clear();
 	        renderQuestionnaire();

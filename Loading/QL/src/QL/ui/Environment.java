@@ -1,5 +1,6 @@
-package QL;
+package QL.ui;
 
+import QL.ReferenceTable;
 import QL.ast.type.Type;
 import QL.value.Value;
 
@@ -9,9 +10,9 @@ import java.util.Map;
 public class Environment {
 
 	private final Map<String, Value> variableAnswer;
-	private final Map<String, Type> variableType;
+	private final ReferenceTable variableType;
 	
-	public Environment(Map<String, Type> variableType) {
+	public Environment(ReferenceTable variableType) {
 		this.variableAnswer = new HashMap<>(); 
 		this.variableType = variableType;
 	}
@@ -21,6 +22,7 @@ public class Environment {
 	}
 
 	public Value getAnswer(String variable) {
+		
 		if (!variableAnswer.containsKey(variable)) {
 			throw new AssertionError("The answer of variable " + variable + " is requested, " +
 					"but is not answered");
@@ -34,11 +36,13 @@ public class Environment {
 	}
 	
 	public Type getType(String variable) {
-		if (!variableType.containsKey(variable)) {
+		
+		if (!variableType.variableExists(variable)) {
 			throw new AssertionError("The variable " + variable + " is evaluated, " +
 					"but not checked by the typechecker");
 		}
-		return variableType.get(variable);
+		// TODO int line 0 does not make sense
+		return variableType.getType(variable, 0);
 		
 	}
 }
