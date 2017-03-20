@@ -36,7 +36,7 @@ class ErrorHandler(object):
         for cycle in cycles:
             message = "Found circular dependency cycle between vars '{}'"\
                 .format(cycle)
-            error = "[{}] {}: {}".format("ERROR", message)
+            error = "[ERROR] {}".format(message)
             self.error_list.append(error)
             self.error_count += 1
 
