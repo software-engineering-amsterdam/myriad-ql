@@ -81,7 +81,7 @@ class TestTypeChecker(unittest.TestCase):
         self.check_bad_expression("+\"example\"", 0, 1)
         self.check_bad_expression("!\"example\"", 0, 1)
 
-    def test_arithmetic_expr(self):
+    def test_calculation_expr(self):
         self.check_good_expression("10 * 20", AST.IntTypeNode())
         self.check_good_expression("10.0 * 20", AST.DecimalTypeNode())
         self.check_good_expression("10 + 20", AST.IntTypeNode())
