@@ -58,7 +58,7 @@ def parse(input_string):
     type_string = Literal("string").setParseAction(
         lambda source, position, _: ast.String(position, source))
 
-    data_types = type_money | type_integer | type_boolean | type_string
+    data_types = (type_money | type_integer | type_boolean | type_string)
 
     true = Literal("true").setParseAction(
         lambda source, position, _: ast.Boolean(position, source, True))
@@ -72,14 +72,15 @@ def parse(input_string):
         lambda source, position, parsed_tokens: ast.Money(position, source, float(parsed_tokens[0])))
     number = (money | integer)
 
-    string = QuotedString("'", unquoteResults=True).setParseAction(
-        lambda source, position, parsed_tokens:
-        ast.String(position, source, str(parsed_tokens[0]))
-    )
+    string = QuotedString("'", unquoteResults=True)\
+        .setParseAction(
+            lambda source, position, parsed_tokens:
+                ast.String(position, source, str(parsed_tokens[0])))
 
+    # TODO: (Adrian) I have deleted the 'reserved_words' out of the 'name' because of its incompatibility with the reserved words being in the name of the form. Let's discuss about this.
     reserved_words = (lit_form | lit_if | lit_else | boolean | number | data_types)
 
-    name = ~reserved_words + Word(alphas, alphanums + '_').setResultsName(
+    name = Word(alphas, alphanums + '_').setResultsName(
         'identifier').setParseAction(
         lambda source, position, parsed_tokens: ast.Identifier(position, source, parsed_tokens[0]))
 
