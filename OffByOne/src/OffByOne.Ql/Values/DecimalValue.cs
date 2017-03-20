@@ -14,7 +14,7 @@
         {
         }
 
-        public DecimalValue(double value)
+        public DecimalValue(double value = 0)
         {
             this.Value = value;
         }

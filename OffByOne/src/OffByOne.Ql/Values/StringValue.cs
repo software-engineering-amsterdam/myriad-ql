@@ -10,7 +10,7 @@
 
     public class StringValue : BaseValue
     {
-        public StringValue(string value)
+        public StringValue(string value = "")
         {
             if (value == null)
             {

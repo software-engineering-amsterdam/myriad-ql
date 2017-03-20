@@ -14,7 +14,7 @@
         {
         }
 
-        public MoneyValue(decimal value)
+        public MoneyValue(decimal value = 0)
         {
             this.Value = value;
         }

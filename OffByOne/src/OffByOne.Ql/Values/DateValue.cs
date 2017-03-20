@@ -20,6 +20,11 @@
             this.Value = value;
         }
 
+        public DateValue()
+        {
+            this.Value = DateTime.Now;
+        }
+
         public DateTime Value { get; }
 
         public override IValue Parse(string value)

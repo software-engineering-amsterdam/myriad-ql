@@ -14,7 +14,7 @@
         {
         }
 
-        public IntegerValue(int value)
+        public IntegerValue(int value = 0)
         {
             this.Value = value;
         }

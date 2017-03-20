@@ -66,22 +66,22 @@
             switch (statement.Type)
             {
                 case BooleanValueType _:
-                    questionWidget = new CheckBoxWidget(new BooleanValue(false), statement, environment, style);
+                    questionWidget = new CheckBoxWidget(new BooleanValue(), statement, environment, style);
                     break;
                 case DateValueType _:
-                    questionWidget = new DatePickerWidget(new DateValue(DateTime.Now), statement, environment, style);
+                    questionWidget = new DatePickerWidget(new DateValue(), statement, environment, style);
                     break;
                 case StringValueType _:
-                    questionWidget = new TextFieldWidget(new StringValue(string.Empty), statement, environment, style);
+                    questionWidget = new TextFieldWidget(new StringValue(), statement, environment, style);
                     break;
                 case DecimalValueType _:
-                    questionWidget = new ValidatedTextFieldWidget(new DecimalValue(0), new DecimalValidator(), statement, environment, style);
+                    questionWidget = new ValidatedTextFieldWidget(new DecimalValue(), new DecimalValidator(), statement, environment, style);
                     break;
                 case IntegerValueType _:
-                    questionWidget = new ValidatedTextFieldWidget(new IntegerValue(0), new IntegerValidator(), statement, environment, style);
+                    questionWidget = new ValidatedTextFieldWidget(new IntegerValue(), new IntegerValidator(), statement, environment, style);
                     break;
                 case MoneyValueType _:
-                    questionWidget = new ValidatedTextFieldWidget(new MoneyValue(0), new MoneyValidator(), statement, environment, style);
+                    questionWidget = new ValidatedTextFieldWidget(new MoneyValue(), new MoneyValidator(), statement, environment, style);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(statement.Type));
