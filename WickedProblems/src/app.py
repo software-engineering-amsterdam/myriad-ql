@@ -24,15 +24,11 @@ parser = QL()
 # build AST
 form_ast = parser.parse(ql_string)
 
-
 type_checker = TypeChecker()
 type_checker.add_checker(DuplicateLabelsChecker)
 type_checker.add_checker(UndefinedVariableChecker)
 type_checker.add_checker(QuestionTypeChecker)
 type_checker.add_checker(InvalidOperandChecker)
-
-print(form_ast.alg(PrettyPrint(4))())
-
 
 if type_checker.is_valid(form_ast):
     app = Application(form_ast, form_ast.name)
