@@ -32,12 +32,7 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
         [statement.apply(self) for statement in node.statements]
 
     def conditional_if_else(self, node, args=None):
-        condition_result = node.condition.apply(self)
-        if condition_result is None or condition_result.data_type is not DataTypes.boolean:
-            self.errors.append(
-                "Invalid expression in a conditional statement, it expected a [DataTypes.boolean] expression but "
-                "received [{}], at location {}".format(condition_result, node.condition.location))
-        [statement.apply(self) for statement in node.statements]
+        self.conditional_if(node, args)
         [statement.apply(self) for statement in node.else_statement_list]
 
     def field(self, node, args=None):

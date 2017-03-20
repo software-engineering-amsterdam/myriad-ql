@@ -12,12 +12,10 @@ if __name__ == '__main__':
     file_window.show()
     exit(app.exec_())
 
-# TODO: Environment een class maken en een update value methode geven
 # TODO: Error messages aan parser toevoegen
 # TODO: duplicate labels (warning)
+# TODO: Environment een class maken en een update value methode geven $$
 # NICE TO HAVES ---------------------------------
-# TODO: LOW PRIO: Eventueel If / IfElse logic combineren in typechecker
-# TODO: LOWEST PRIO : ast.apply(typevisitor) ipv Typenvironment
 # TODO: NICE TO HAVE Dynamic types in operators ipv python operators
 # TODO: Export of values ?
 # TODO: Make all fields mandatory
