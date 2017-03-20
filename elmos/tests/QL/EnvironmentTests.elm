@@ -10,9 +10,9 @@ import Fuzz exposing (string, bool, int)
 startingEnvironment : Environment
 startingEnvironment =
     Env.empty
-        |> Env.withFormValue "foo" (Values.int 1)
-        |> Env.withFormValue "bar" (Values.string "Hello")
-        |> Env.withFormValue "baz" (Values.bool True)
+        |> Env.withFormValue "foo" (Values.Integer 1)
+        |> Env.withFormValue "bar" (Values.Str "Hello")
+        |> Env.withFormValue "baz" (Values.Boolean True)
 
 
 all : Test
@@ -21,7 +21,7 @@ all =
         [ test "removeFields" <|
             \() ->
                 Env.removeKeys [ "foo", "baz" ] startingEnvironment
-                    |> Expect.equal (Env.empty |> Env.withFormValue "bar" (Values.string "Hello"))
+                    |> Expect.equal (Env.empty |> Env.withFormValue "bar" (Values.Str "Hello"))
         , test "getBoolean for existing value" <|
             \() ->
                 startingEnvironment
@@ -43,7 +43,7 @@ all =
         , fuzz2 string bool "withString should always allow to lookup the value with a getString" <|
             \k v ->
                 startingEnvironment
-                    |> Env.withFormValue k (Values.bool v)
+                    |> Env.withFormValue k (Values.Boolean v)
                     |> Env.getFormValue k
                     |> Maybe.andThen Values.asBool
                     |> Expect.equal (Just v)
@@ -68,7 +68,7 @@ all =
         , fuzz2 string string "withString should always allow to lookup the value with a getString" <|
             \k v ->
                 startingEnvironment
-                    |> Env.withFormValue k (Values.string v)
+                    |> Env.withFormValue k (Values.Str v)
                     |> Env.getFormValue k
                     |> Maybe.andThen Values.asString
                     |> Expect.equal (Just v)
@@ -93,7 +93,7 @@ all =
         , fuzz2 string int "withInteger should always allow to lookup the value with a getInteger" <|
             \k v ->
                 startingEnvironment
-                    |> Env.withFormValue k (Values.int v)
+                    |> Env.withFormValue k (Values.Integer v)
                     |> Env.getFormValue k
                     |> Maybe.andThen Values.asInt
                     |> Expect.equal (Just v)

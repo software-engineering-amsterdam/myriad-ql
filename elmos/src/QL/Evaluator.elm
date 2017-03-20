@@ -11,19 +11,19 @@ evaluate env expression =
     case expression of
         Var ( x, _ ) ->
             Environment.getFormValue x env
-                |> Maybe.withDefault Values.undefined
+                |> Maybe.withDefault Values.Undefined
 
         AST.Str _ str ->
-            Values.string str
+            Values.Str str
 
         AST.Integer _ integer ->
-            Values.int integer
+            Values.Integer integer
 
         AST.Decimal _ float ->
-            Values.float float
+            Values.Decimal float
 
         AST.Boolean _ boolean ->
-            Values.bool boolean
+            Values.Boolean boolean
 
         ParensExpression _ inner ->
             evaluate env inner
@@ -41,32 +41,32 @@ evaluateBinaryExpression op leftValue rightValue =
                     Maybe.map2 (,) (Values.asInt leftValue) (Values.asInt rightValue)
                         |> Maybe.map (\( l, r ) -> binaryForIntArithmitic arithmetic l r)
                         |> Maybe.filter Values.isValidInt
-                        |> Maybe.map Values.int
+                        |> Maybe.map Values.Integer
 
                 maybeFloat =
                     Maybe.map2 (,) (Values.asFloat leftValue) (Values.asFloat rightValue)
                         |> Maybe.map (\( l, r ) -> binaryForFloatArithmitic arithmetic l r)
                         |> Maybe.filter Values.isValidFloat
-                        |> Maybe.map Values.float
+                        |> Maybe.map Values.Decimal
             in
                 Maybe.or maybeInteger maybeFloat
-                    |> Maybe.withDefault Values.undefined
+                    |> Maybe.withDefault Values.Undefined
 
         Relation rel ->
             Maybe.map2 (,) (Values.asFloat leftValue) (Values.asFloat rightValue)
-                |> Maybe.map (\( l, r ) -> Values.bool (applicativeForRelation rel l r))
-                |> Maybe.withDefault Values.undefined
+                |> Maybe.map (\( l, r ) -> Values.Boolean (applicativeForRelation rel l r))
+                |> Maybe.withDefault Values.Undefined
 
         Logic logic ->
             Maybe.map2 (,) (Values.asBool leftValue) (Values.asBool rightValue)
-                |> Maybe.map (\( l, r ) -> Values.bool (applicativeForLogic logic l r))
-                |> Maybe.withDefault Values.undefined
+                |> Maybe.map (\( l, r ) -> Values.Boolean (applicativeForLogic logic l r))
+                |> Maybe.withDefault Values.Undefined
 
         Comparison comparison ->
             if Values.isUndefined leftValue || Values.isUndefined rightValue then
-                Values.undefined
+                Values.Undefined
             else
-                Values.bool (applicativeForComparison comparison leftValue rightValue)
+                Values.Boolean (applicativeForComparison comparison leftValue rightValue)
 
 
 binaryForIntArithmitic : ArithmeticOperator -> Int -> Int -> Int

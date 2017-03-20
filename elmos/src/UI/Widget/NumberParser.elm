@@ -9,8 +9,8 @@ parseIntegerInput =
     String.toInt
         >> Result.toMaybe
         >> Maybe.filter isValidInt
-        >> Maybe.map Values.int
-        >> Maybe.withDefault Values.undefined
+        >> Maybe.map Values.Integer
+        >> Maybe.withDefault Values.Undefined
 
 
 parseFloatInput : String -> Value
@@ -18,5 +18,5 @@ parseFloatInput =
     String.toFloat
         >> Result.toMaybe
         >> Maybe.filter isValidFloat
-        >> Maybe.map Values.float
-        >> Maybe.withDefault Values.undefined
+        >> Maybe.map Values.Decimal
+        >> Maybe.withDefault Values.Undefined

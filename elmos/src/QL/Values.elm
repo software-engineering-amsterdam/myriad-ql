@@ -1,19 +1,4 @@
-module QL.Values
-    exposing
-        ( Value
-        , string
-        , bool
-        , int
-        , float
-        , undefined
-        , asString
-        , asBool
-        , asInt
-        , asFloat
-        , isUndefined
-        , isValidInt
-        , isValidFloat
-        )
+module QL.Values exposing (Value(Str, Boolean, Integer, Decimal, Undefined), asString, asBool, asInt, asFloat, isUndefined, isValidInt, isValidFloat)
 
 
 type Value
@@ -22,31 +7,6 @@ type Value
     | Integer Int
     | Decimal Float
     | Undefined
-
-
-string : String -> Value
-string =
-    Str
-
-
-bool : Bool -> Value
-bool =
-    Boolean
-
-
-int : Int -> Value
-int x =
-    Integer x
-
-
-float : Float -> Value
-float f =
-    Decimal f
-
-
-undefined : Value
-undefined =
-    Undefined
 
 
 isUndefined : Value -> Bool

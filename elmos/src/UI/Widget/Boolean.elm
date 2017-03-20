@@ -22,7 +22,7 @@ view { identifier, env, onChange, editable } =
                     [ type_ "checkbox"
                     , id identifier
                     , checked isChecked
-                    , onCheck (Values.bool >> onChange)
+                    , onCheck (Values.Boolean >> onChange)
                     , disabled (not editable)
                     ]
                     []

@@ -45,7 +45,7 @@ all =
                 let
                     env =
                         Env.empty
-                            |> Env.withFormValue "name" (Values.string "John")
+                            |> Env.withFormValue "name" (Values.Str "John")
                 in
                     Field.activeFields env exampleForm
                         |> Expect.equal
@@ -59,8 +59,8 @@ all =
                 let
                     env =
                         Env.empty
-                            |> Env.withFormValue "name" (Values.string "John")
-                            |> Env.withFormValue "hasHouse" (Values.bool True)
+                            |> Env.withFormValue "name" (Values.Str "John")
+                            |> Env.withFormValue "hasHouse" (Values.Boolean True)
                 in
                     Field.activeFields env exampleForm
                         |> Expect.equal
