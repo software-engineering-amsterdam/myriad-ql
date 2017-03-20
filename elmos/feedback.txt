@@ -1,6 +1,4 @@
 Feedback Tijs:
-semantics in Expression -> BinaryExpression
--> ff testen hoe dat gaat
 
 constructors voor values wel exposen.
 -> Eens
