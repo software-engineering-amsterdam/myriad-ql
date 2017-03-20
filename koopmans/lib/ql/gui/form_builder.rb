@@ -21,7 +21,7 @@ module QL
       def visit_question(question, condition=nil)
         name = question.variable.name
         label = question.label.value
-        type, widget_type = question.type.accept(self)
+        literal_type, widget_type = question.type.accept(self)
         QuestionFrame.new(name: name, label: label, literal_type: literal_type, widget_type: widget_type, condition: condition)
       end
 
