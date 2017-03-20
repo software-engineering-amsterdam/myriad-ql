@@ -340,28 +340,10 @@ class TestTypeChecker(Shared):
         type_checker_result = self.apply_type_checking(input_string)
         self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
 
-    def test_typecheck_fail_eq_2(self):
-        input_string = """
-        form taxOfficeExample {
-            "q1" v1: boolean = (false == 2)
-        }
-        """
-        type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
-
     def test_typecheck_fail_neq_1(self):
         input_string = """
         form taxOfficeExample {
             "q1" v1: boolean = (2 != false)
-        }
-        """
-        type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail.")
-
-    def test_typecheck_fail_neq_2(self):
-        input_string = """
-        form taxOfficeExample {
-            "q1" v1: boolean = (false != 2)
         }
         """
         type_checker_result = self.apply_type_checking(input_string)

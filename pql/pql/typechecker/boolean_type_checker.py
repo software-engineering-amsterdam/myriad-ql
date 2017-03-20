@@ -30,14 +30,10 @@ class BooleanTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
         return None
 
     def equality(self, node):
-        if node.data_type is DataTypes.boolean:
-            return node
-        return None
+        return True
 
     def inequality(self, node):
-        if node.data_type is DataTypes.boolean:
-            return node
-        return None
+        return True
 
     def and_(self, node):
         if node.data_type is DataTypes.boolean:
