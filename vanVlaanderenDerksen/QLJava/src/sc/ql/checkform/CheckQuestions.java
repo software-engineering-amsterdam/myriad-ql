@@ -12,7 +12,7 @@ import sc.ql.model.form_elements.Question;
 import sc.ql.model.visitors.FormVisitor;
 import sc.ql.model.visitors.FormElementVisitor;
 
-public class CheckLabels implements FormVisitor<List<Message>>, FormElementVisitor<List<Message>> {
+public class CheckQuestions implements FormVisitor<List<Message>>, FormElementVisitor<List<Message>> {
 	private List<String> labels = new ArrayList<String>();
 	private List<String> identifiers = new ArrayList<String>();
 	private List<Message> messages = new ArrayList<Message>();
