@@ -9,12 +9,11 @@ form taxOfficeExample {
     hasBoughtHouse: boolean
   "Did you enter a loan?"
     hasMaintLoan: boolean
-
-  if (!hasSoldHouse) {
-    "What was the bought price?"
-      boughtPrice: integer
-    "What was the selling price?"
-      sellingPrice: integer
+  "What was the bought price?"
+    boughtPrice: integer
+  "What was the selling price?"
+    sellingPrice: integer
+  if (boughtPrice > sellingPrice) {
     "Private debts for the sold house:"
       privateDebt: integer
     "Value residue:"

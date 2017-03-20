@@ -113,6 +113,15 @@ class GetVariables(QlAlg):
             execute = lambda self: _register()
         return _anon()
 
+    def GreaterThan(self, lhs, rhs):
+        def _register():
+            lhs.execute()
+            rhs.execute()
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
     def Division(self, lhs, rhs):
         def _register():
             lhs.execute()

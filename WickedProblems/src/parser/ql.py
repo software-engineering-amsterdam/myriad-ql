@@ -95,7 +95,7 @@ class QL:
     arithmic_expression = operatorPrecedence(operand, arithmic_precedence)
 
     expression = Or(boolean_expression | arithmic_expression |
-                    comparison_expression | reference_variable)
+                    comparison_expression)
 
     string = QuotedString('"')
     string.addParseAction(lambda _, __, tokens: StringLiteral(*tokens))
