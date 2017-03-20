@@ -11,7 +11,7 @@ if cur_version >= req_version:
     from operations.register_conditions import RegisterConditions
     from operations.gui import BuildGui
     from operations.environment import Environment
-    from operations.type_checker import TypeChecker, DuplicateLabelsChecker, UndefinedVariableChecker, QuestionTypeChecker
+    from operations.type_checker import TypeChecker, DuplicateLabelsChecker, UndefinedVariableChecker, QuestionTypeChecker, InvalidOperandChecker
     # from operations.qui import *
     # from operations.gui import BuildGui,PrettyPrint,GetVariables
     from tkinter import Button
@@ -35,8 +35,9 @@ type_checker = TypeChecker()
 type_checker.add_checker(DuplicateLabelsChecker)
 type_checker.add_checker(UndefinedVariableChecker)
 type_checker.add_checker(QuestionTypeChecker)
+type_checker.add_checker(InvalidOperandChecker)
 
-type_checker.is_valid(form_ast)
+
 
 
 create_environment = form_ast.alg(GetVariables(environment))
