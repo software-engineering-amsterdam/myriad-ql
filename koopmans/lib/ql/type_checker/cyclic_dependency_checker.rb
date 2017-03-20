@@ -98,6 +98,14 @@ module QL
         end
       end
 
+      def get_dependencies(variable)
+        @variable_dependencies[variable.name]
+      end
+
+      def add_dependencies(variable, dependencies)
+        @variable_dependencies[variable.name] = get_dependencies(variable) | dependencies
+      end
+
       # check for cyclic dependency if there is a dependency on itself, else visit the next variable
       def is_cyclic_dependency?(variable, dependent_variable)
         if @variable_dependencies[variable.name].map(&:name).include?(variable.name)
@@ -105,14 +113,6 @@ module QL
         else
           visit_variable(dependent_variable)
         end
-      end
-
-      def get_dependencies(variable)
-        @variable_dependencies[variable.name]
-      end
-
-      def add_dependencies(variable, dependencies)
-        @variable_dependencies[variable.name] = get_dependencies(variable) | dependencies
       end
     end
   end
