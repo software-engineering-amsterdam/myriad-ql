@@ -113,7 +113,7 @@ class PlusExpression(BinaryExpression):
 
 class MinusExpression(BinaryExpression):
     def __init__(self, lnode, rnode):
-        super().__init__('decima', '-', lnode, rnode)
+        super().__init__(Decimal(), '-', lnode, rnode)
 
     def read(self, context):
         return self.lnode.read(context) - self.rnode.read(context)
@@ -121,7 +121,7 @@ class MinusExpression(BinaryExpression):
 
 class MultExpression(BinaryExpression):
     def __init__(self, lnode, rnode):
-        super().__init__('decial', '*', lnode, rnode)
+        super().__init__(Decimal(), '*', lnode, rnode)
 
     def read(self, context):
         return self.lnode.read(context) * self.rnode.read(context)
