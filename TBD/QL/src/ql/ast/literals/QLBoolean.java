@@ -1,6 +1,6 @@
 package ql.ast.literals;
 
-import ql.ast.values.BooleanValue;
+import ql.values.BooleanValue;
 import ql.visistor.interfaces.ExpressionVisitor;
 
 /**

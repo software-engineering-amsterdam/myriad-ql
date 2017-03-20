@@ -1,7 +1,7 @@
 package ql.ast.literals;
 
-import ql.ast.values.UndefinedValue;
-import ql.ast.values.Value;
+import ql.values.UndefinedValue;
+import ql.values.Value;
 import ql.visistor.interfaces.ExpressionVisitor;
 
 /**

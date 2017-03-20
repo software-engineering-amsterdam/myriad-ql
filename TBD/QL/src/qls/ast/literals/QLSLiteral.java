@@ -1,6 +1,5 @@
 package qls.ast.literals;
 
-import ql.ast.Expr;
 import qls.ast.ASTNode;
 
 /**

@@ -2,8 +2,8 @@ package ql.visistor.environment;
 
 import ql.ast.Expr;
 import ql.ast.types.Type;
-import ql.ast.values.UndefinedValue;
-import ql.ast.values.Value;
+import ql.values.UndefinedValue;
+import ql.values.Value;
 
 /**
  * Created by Erik on 14-3-2017.

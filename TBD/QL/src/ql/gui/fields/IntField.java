@@ -5,7 +5,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import ql.visistor.environment.Env;
-import ql.ast.values.Value;
+import ql.values.Value;
 import ql.gui.GUIChangeListener;
 
 /**

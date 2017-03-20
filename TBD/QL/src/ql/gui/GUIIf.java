@@ -3,9 +3,9 @@ package ql.gui;
 import javafx.scene.layout.VBox;
 import ql.ast.Expr;
 import ql.visistor.environment.Env;
-import ql.ast.values.BooleanValue;
-import ql.ast.values.UndefinedValue;
-import ql.ast.values.Value;
+import ql.values.BooleanValue;
+import ql.values.UndefinedValue;
+import ql.values.Value;
 
 
 /**
@@ -13,13 +13,12 @@ import ql.ast.values.Value;
  */
 public class GUIIf extends VBox {
     private final VBox ifStatements;
+    private final GUIExpr condition;
 
-    public GUIIf(Env env, Expr condition, VBox ifStatements) {
+    public GUIIf(Env env, GUIExpr condition, VBox ifStatements) {
+        this.condition = condition;
         this.ifStatements = ifStatements;
 
-        env.addEventListener(() -> {
-            update(env.evalExpr(condition));
-        });
     }
 
     private void update (Value value) {

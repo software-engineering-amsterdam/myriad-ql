@@ -3,9 +3,9 @@ package ql.gui;
 import javafx.scene.layout.VBox;
 import ql.ast.Expr;
 import ql.visistor.environment.Env;
-import ql.ast.values.BooleanValue;
-import ql.ast.values.UndefinedValue;
-import ql.ast.values.Value;
+import ql.values.BooleanValue;
+import ql.values.UndefinedValue;
+import ql.values.Value;
 
 /**
  * Created by Erik on 28-2-2017.
@@ -14,14 +14,12 @@ public class GUIIfElse extends VBox {
     private final VBox ifStatements;
     private final VBox elseStatements;
     private Boolean current = null;
+    private final GUIExpr condition;
 
-    public GUIIfElse(Env env, Expr condition, VBox ifStatements, VBox elseStatements) {
+    public GUIIfElse(Env env, GUIExpr condition, VBox ifStatements, VBox elseStatements) {
+        this.condition = condition;
         this.ifStatements = ifStatements;
         this.elseStatements = elseStatements;
-
-        env.addEventListener(() -> {
-            update(env.evalExpr(condition));
-        });
     }
 
     private void update (Value value) {

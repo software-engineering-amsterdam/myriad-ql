@@ -5,7 +5,7 @@ import ql.ast.Expr;
 import ql.ast.Question;
 import ql.ast.QuestionExpr;
 import ql.ast.types.Type;
-import ql.ast.values.Value;
+import ql.values.Value;
 import ql.visistor.EvalASTVisitor;
 
 import java.util.ArrayList;

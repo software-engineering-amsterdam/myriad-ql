@@ -1,7 +1,7 @@
 package qls.ast.literals;
 
-import ql.ast.values.UndefinedValue;
-import ql.ast.values.Value;
+import ql.values.UndefinedValue;
+import ql.values.Value;
 /**
  * Created by rico on 7-3-17.
  */

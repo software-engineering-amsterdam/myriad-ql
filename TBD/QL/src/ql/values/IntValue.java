@@ -1,19 +1,18 @@
-package ql.ast.values;
+package ql.values;
 
 /**
  * Created by Erik on 21-2-2017.
  */
-public class FloatValue extends Value<Float>{
-    private final float value;
+public class IntValue extends Value<Integer> {
+    private final int value;
 
-    public FloatValue(Float value) {
+    public IntValue(int value){
         this.value = value;
     }
 
-    public Float getValue() {
+    public Integer getValue() {
         return value;
     }
-
 
     @Override
     public String toString() {
@@ -26,12 +25,12 @@ public class FloatValue extends Value<Float>{
     }
 
     @Override
-    protected Value addEval(FloatValue other) {
-        return new FloatValue(this.getValue() + other.getValue());
+    protected Value addEval(IntValue other) {
+        return new IntValue(this.getValue() + other.getValue());
     }
 
     @Override
-    protected Value addEval(IntValue other) {
+    protected Value addEval(FloatValue other) {
         return new FloatValue(this.getValue() + other.getValue());
     }
 
@@ -41,34 +40,19 @@ public class FloatValue extends Value<Float>{
     }
 
     @Override
-    protected Value divEval(FloatValue other) {
-        if(this.getValue() == 0f){
-            return new UndefinedValue();
-        }
-        return new FloatValue(other.getValue() / this.getValue());
-    }
-
-    @Override
     protected Value divEval(IntValue other) {
-        if(this.getValue() == 0f){
+        if(this.getValue() == 0){
+            return new UndefinedValue();
+        }
+        return new IntValue(other.getValue() / this.getValue());
+    }
+
+    @Override
+    protected Value divEval(FloatValue other) {
+        if(this.getValue() == 0){
             return new UndefinedValue();
         }
         return new FloatValue(other.getValue() / this.getValue());
-    }
-
-    @Override
-    public Value mul(Value other) {
-        return other.mulEval(this);
-    }
-
-    @Override
-    protected Value mulEval(FloatValue other) {
-        return new FloatValue(this.getValue() * other.getValue());
-    }
-
-    @Override
-    protected Value mulEval(IntValue other) {
-        return new FloatValue(this.getValue() * other.getValue());
     }
 
     @Override
@@ -82,12 +66,12 @@ public class FloatValue extends Value<Float>{
     }
 
     @Override
-    protected Value gTEval(FloatValue other) {
+    protected Value gTEval(IntValue other) {
         return new BooleanValue(this.getValue() > other.getValue());
     }
 
     @Override
-    protected Value gTEval(IntValue other) {
+    protected Value gTEval(FloatValue other) {
         return new BooleanValue(this.getValue() > other.getValue());
     }
 
@@ -102,8 +86,18 @@ public class FloatValue extends Value<Float>{
     }
 
     @Override
-    public Value nEq(Value other) {
-        return new BooleanValue(!other.equals(this));
+    public Value mul(Value other) {
+        return other.mulEval(this);
+    }
+
+    @Override
+    protected Value mulEval(IntValue other) {
+        return new IntValue(this.getValue() * other.getValue());
+    }
+
+    @Override
+    protected Value mulEval(FloatValue other) {
+        return new FloatValue(this.getValue() * other.getValue());
     }
 
     @Override
@@ -113,12 +107,12 @@ public class FloatValue extends Value<Float>{
 
     @Override
     public Value neg() {
-        return new FloatValue(-getValue());
+        return new IntValue(-getValue());
     }
 
     @Override
     public Value pos() {
-        return new FloatValue(-getValue());
+        return new IntValue(-getValue());
     }
 
     @Override
@@ -126,8 +120,8 @@ public class FloatValue extends Value<Float>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        FloatValue that = (FloatValue) o;
+        IntValue intValue = (IntValue) o;
 
-        return Float.compare(that.value, value) == 0;
+        return value == intValue.value;
     }
 }

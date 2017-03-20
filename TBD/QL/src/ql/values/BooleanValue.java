@@ -1,4 +1,4 @@
-package ql.ast.values;
+package ql.values;
 
 
 /**

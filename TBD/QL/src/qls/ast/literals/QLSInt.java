@@ -1,6 +1,6 @@
 package qls.ast.literals;
 
-import ql.ast.values.IntValue;
+import ql.values.IntValue;
 
 /**
  * Created by rico on 7-3-17.

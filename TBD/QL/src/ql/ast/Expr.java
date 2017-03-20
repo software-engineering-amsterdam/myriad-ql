@@ -1,5 +1,6 @@
 package ql.ast;
 
+import ql.ast.ASTNode;
 import ql.visistor.interfaces.ExpressionVisitor;
 
 /**

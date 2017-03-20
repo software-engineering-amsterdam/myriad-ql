@@ -7,7 +7,7 @@ import ql.ast.expressions.monop.Neg;
 import ql.ast.expressions.monop.Not;
 import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
-import ql.ast.values.Value;
+import ql.values.Value;
 import ql.visistor.interfaces.ExpressionVisitor;
 
 /**

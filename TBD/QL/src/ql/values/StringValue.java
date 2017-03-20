@@ -1,4 +1,4 @@
-package ql.ast.values;
+package ql.values;
 
 /**
  * Created by Erik on 21-2-2017.

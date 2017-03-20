@@ -4,7 +4,6 @@ package ql.parser;
 
 import ql.ast.*;
 import ql.ast.literals.*;
-import ql.ast.expressions.*;
 import ql.ast.expressions.binop.*;
 import ql.ast.expressions.monop.*;
 import ql.ast.types.*;

@@ -3,6 +3,7 @@ package ql.visistor;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import ql.ast.*;
+import ql.ast.Expr;
 import ql.visistor.environment.Env;
 import ql.visistor.interfaces.BaseVisitor;
 import ql.gui.*;

@@ -7,9 +7,9 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import ql.visistor.environment.Env;
-import ql.ast.values.BooleanValue;
-import ql.ast.values.UndefinedValue;
-import ql.ast.values.Value;
+import ql.values.BooleanValue;
+import ql.values.UndefinedValue;
+import ql.values.Value;
 import ql.gui.GUIChangeListener;
 
 /**
