@@ -3,6 +3,8 @@
 # TODO if-else-then?
 # TODO create Undefined class
 # TODO gui tests
+# TODO don't abbreviate: eval_type wordt evaluate_type
+# TODO constructivist style for errors? see page 155 of coding styles book
 
 require 'require_all'
 require 'pp'
