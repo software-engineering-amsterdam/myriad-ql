@@ -12,12 +12,8 @@ import org.qls.typechecker.issues.errors.UnsupportedWidgetForQLQuestionType;
 
 
 public class QLSQuestionVisitor implements WidgetQuestionVisitor<Void, SymbolTable> {
-    private final IdentifierSet definedQuestions;
+    private final IdentifierSet definedQuestions = new IdentifierSet();
     private IssuesStorage issuesStorage;
-
-    public QLSQuestionVisitor() {
-        definedQuestions = new IdentifierSet();
-    }
 
     public void visitStyleSheet(StyleSheet styleSheet, IssuesStorage issuesStorage, SymbolTable symbolTable) {
         this.issuesStorage = issuesStorage;

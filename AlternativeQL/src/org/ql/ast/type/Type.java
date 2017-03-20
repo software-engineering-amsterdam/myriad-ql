@@ -1,6 +1,8 @@
 package org.ql.ast.type;
 
-public abstract class Type extends TypeCompatibility {
+import org.ql.ast.Node;
+
+public abstract class Type extends Node implements TypeCompatibility {
 
     public boolean isBoolean() {
         return false;

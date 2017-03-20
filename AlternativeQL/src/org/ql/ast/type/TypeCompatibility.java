@@ -1,35 +1,33 @@
 package org.ql.ast.type;
 
-import org.ql.ast.Node;
+public interface TypeCompatibility {
+    boolean isCompatibleWith(TypeCompatibility type);
 
-public abstract class TypeCompatibility extends Node {
-    public abstract boolean isCompatibleWith(TypeCompatibility type);
-
-    public boolean isCompatibleWith(BooleanType type) {
+    default boolean isCompatibleWith(BooleanType type) {
         return false;
     }
 
-    public boolean isCompatibleWith(DateType type) {
+    default boolean isCompatibleWith(DateType type) {
         return false;
     }
 
-    public boolean isCompatibleWith(FloatType type) {
+    default boolean isCompatibleWith(FloatType type) {
         return false;
     }
 
-    public boolean isCompatibleWith(IntegerType type) {
+    default boolean isCompatibleWith(IntegerType type) {
         return false;
     }
 
-    public boolean isCompatibleWith(MoneyType type) {
+    default boolean isCompatibleWith(MoneyType type) {
         return false;
     }
 
-    public boolean isCompatibleWith(StringType type) {
+    default boolean isCompatibleWith(StringType type) {
         return false;
     }
 
-    public boolean isCompatibleWith(UnknownType type) {
+    default boolean isCompatibleWith(UnknownType type) {
         return false;
     }
 }
