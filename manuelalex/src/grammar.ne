@@ -42,4 +42,8 @@ propertyType -> "boolean"        {% ASTBuilder.boolean %}
             | "money"            {% ASTBuilder.money %}
 
 sentence -> [ A-Za-z0-9!@#$%^&*()_+\-\=}{\[\]":;?/>.<,i]:+   {% function(d) { return d[0].join("") } %}
+<<<<<<< HEAD
 word -> [A-Za-z0-9]:+    {% function(d) { return d[0].join("") } %}
+=======
+word -> [A-Za-z0-9]:+    {% function(d) { return d[0].join("") } %}
+>>>>>>> 08c6803974902c48af12606a547d14005e0af211

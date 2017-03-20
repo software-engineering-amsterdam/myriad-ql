@@ -18,7 +18,7 @@ import {Label} from '../Label.js';
 
 export class ASTBuilder {
 
-    form(data, location, reject) {
+    form(data, location) {
         return new Form(data[2][0], _.flattenDeep(data[6]), location);
     }
 
@@ -35,7 +35,6 @@ export class ASTBuilder {
         return new IfElseStatement(ifStatement.getCondition(), ifStatement.getIfBody(), _.flattenDeep(data[1][1][3]), location);
     }
 
-    // We may have to retrieve the allocation by retrieving the type 'Allocation' from the array
     answer(data, location) {
         return new Answer(data[3].trim(), data[6], location);
     }
@@ -44,12 +43,11 @@ export class ASTBuilder {
         return new Allocation(data[0], data[3], _.flattenDeep(data[7])[0], location);
     }
 
-    expression(data, location, reject) {
+    expression(data, location) {
         return new Expression(_.flattenDeep(data[0])[0], data[2], _.flattenDeep(data[4])[0], location);
     }
 
-    /* needs to be adjusted */
-    prefixExpression(data, location, reject) {
+    prefixExpression(data, location) {
         return new PrefixExpression(data[0], _.flattenDeep(data[1])[0], location);
     }
 
