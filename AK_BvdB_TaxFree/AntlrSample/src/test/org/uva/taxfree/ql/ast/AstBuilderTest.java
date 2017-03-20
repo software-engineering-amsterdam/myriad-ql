@@ -1,11 +1,12 @@
 package test.org.uva.taxfree.ql.ast;
 
-import org.testng.Assert;
 import org.testng.TestException;
 import org.testng.annotations.Test;
 import org.uva.taxfree.ql.ast.AstBuilder;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AstBuilderTest {
     @Test
@@ -36,21 +37,23 @@ public class AstBuilderTest {
         File validFilesDir = new File("src\\test\\org\\uva\\taxfree\\ql\\testFiles\\invalidForms");
 
         System.out.println("  Testing invalid forms at path: " + validFilesDir.getAbsolutePath());
-        boolean createdAst = false;
+        List<String> parseErrors = new ArrayList<>();
         for (File file : validFilesDir.listFiles()) {
             System.out.println("    - Input file: " + file.getName());
             try {
                 AstBuilder builder = new AstBuilder(file);
                 builder.generateTree();
-                createdAst = true;
+                parseErrors.add("Invalid file should not not be parsed: " + file.getName());
             } catch (UnsupportedOperationException e) {
-                Assert.assertFalse(true, "Invalid forms parsed!");
+                // Invalid form successfully caught
             }
+
         }
-        if (createdAst) {
-            throw new TestException("  Failed! Some invalid forms were parsed!");
+        if (!parseErrors.isEmpty()) {
+            System.out.println(parseErrors);
+            throw new TestException("  Failed! Some invalid forms were parsed!:");
         } else {
-            System.out.println("  Success! All invalid forms could not be parsed!");
+            System.out.println("  Success! No invalid forms were silently parsed!");
         }
     }
 }
