@@ -12,8 +12,8 @@ import java.math.BigDecimal;
 
 public class DecimalSpinnerWidget extends SpinnerWidget<Double> {
 
-    public DecimalSpinnerWidget(ValueReviser mediator, Question question) {
-        super(mediator, question, new SpinnerValueFactory.DoubleSpinnerValueFactory(
+    public DecimalSpinnerWidget(ValueReviser valueReviser, Question question) {
+        super(valueReviser, question, new SpinnerValueFactory.DoubleSpinnerValueFactory(
             Double.MIN_VALUE, Double.MAX_VALUE, 0, 0.01
         ));
     }

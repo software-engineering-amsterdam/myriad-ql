@@ -10,8 +10,8 @@ import org.ql.gui.ValueReviser;
 
 public class IntegerInputWidget extends InputWidget {
 
-    public IntegerInputWidget(ValueReviser mediator, Question question) {
-        super(mediator, question, createTextFormatter());
+    public IntegerInputWidget(ValueReviser valueReviser, Question question) {
+        super(valueReviser, question, createTextFormatter());
     }
 
     @Override

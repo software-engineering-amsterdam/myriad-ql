@@ -5,8 +5,8 @@ import org.ql.ast.type.Type;
 import org.qls.ast.widget.Widget;
 
 public class DefaultWidget extends Node {
-    private Type type;
-    private Widget widget;
+    private final Type type;
+    private final Widget widget;
 
     public DefaultWidget(Type type, Widget widget) {
         this.type = type;
@@ -17,15 +17,7 @@ public class DefaultWidget extends Node {
         return type;
     }
 
-    public void setType(Type type) {
-        this.type = type;
-    }
-
     public Widget getWidget() {
         return widget;
-    }
-
-    public void setWidget(Widget widget) {
-        this.widget = widget;
     }
 }

@@ -4,13 +4,11 @@ import org.ql.ast.QLASTBuilder;
 import org.ql.ast.Form;
 import org.ql.gui.QLApplication;
 import org.ql.io.QLFile;
-import org.ql.typechecker.SymbolTable;
-import org.ql.typechecker.QLTypeChecker;
 import org.ql.typechecker.issues.Issue;
 import org.ql.typechecker.issues.IssuesStorage;
 import org.qls.ast.StyleSheet;
 import org.qls.io.QLSFile;
-import org.qls.parser.QLSASTBuilder;
+import org.qls.ast.QLSASTBuilder;
 import org.qls.typechecker.QLSTypeChecker;
 
 import java.io.IOException;

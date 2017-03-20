@@ -10,8 +10,8 @@ import org.ql.gui.ValueReviser;
 
 public class IntegerSpinnerWidget extends SpinnerWidget<Integer> {
 
-    public IntegerSpinnerWidget(ValueReviser mediator, Question question) {
-        super(mediator, question, new IntegerSpinnerValueFactory(
+    public IntegerSpinnerWidget(ValueReviser valueReviser, Question question) {
+        super(valueReviser, question, new IntegerSpinnerValueFactory(
             Integer.MIN_VALUE, Integer.MAX_VALUE, 0, 1
         ));
     }

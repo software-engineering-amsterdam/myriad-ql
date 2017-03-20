@@ -9,8 +9,8 @@ import org.ql.gui.ValueReviser;
 
 public class TextInputWidget extends InputWidget {
 
-    public TextInputWidget(ValueReviser mediator, Question question) {
-        super(mediator, question);
+    public TextInputWidget(ValueReviser valueReviser, Question question) {
+        super(valueReviser, question);
     }
 
     @Override

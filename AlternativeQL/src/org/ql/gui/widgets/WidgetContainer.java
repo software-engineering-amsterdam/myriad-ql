@@ -11,11 +11,11 @@ import java.util.Map;
 
 public class WidgetContainer implements TypeVisitor<Widget, Question> {
 
-    private final ValueReviser mediator;
+    private final ValueReviser valueReviser;
     private final Map<Identifier, Widget> widgets;
 
-    public WidgetContainer(ValueReviser mediator) {
-        this.mediator = mediator;
+    public WidgetContainer(ValueReviser valueReviser) {
+        this.valueReviser = valueReviser;
         widgets = new HashMap<>();
     }
 
@@ -33,7 +33,7 @@ public class WidgetContainer implements TypeVisitor<Widget, Question> {
 
     @Override
     public Widget visitBooleanType(BooleanType booleanType, Question question) {
-        return new CheckBoxWidget(mediator, question);
+        return new CheckBoxWidget(valueReviser, question);
     }
 
     @Override
@@ -43,22 +43,22 @@ public class WidgetContainer implements TypeVisitor<Widget, Question> {
 
     @Override
     public DecimalSpinnerWidget visitFloatType(FloatType floatType, Question question) {
-        return new DecimalSpinnerWidget(mediator, question);
+        return new DecimalSpinnerWidget(valueReviser, question);
     }
 
     @Override
     public IntegerSpinnerWidget visitIntegerType(IntegerType integerType, Question question) {
-        return new IntegerSpinnerWidget(mediator, question);
+        return new IntegerSpinnerWidget(valueReviser, question);
     }
 
     @Override
     public DecimalSpinnerWidget visitMoneyType(MoneyType moneyType, Question question) {
-        return new DecimalSpinnerWidget(mediator, question);
+        return new DecimalSpinnerWidget(valueReviser, question);
     }
 
     @Override
     public Widget visitStringType(StringType stringType, Question question) {
-        return new TextInputWidget(mediator, question);
+        return new TextInputWidget(valueReviser, question);
     }
 
     @Override

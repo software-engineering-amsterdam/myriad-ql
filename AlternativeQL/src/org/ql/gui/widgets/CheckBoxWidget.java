@@ -12,9 +12,9 @@ import org.ql.gui.ValueReviser;
 public class CheckBoxWidget extends Widget {
     private final CheckBox checkBox;
 
-    public CheckBoxWidget(ValueReviser mediator, Question question) {
+    public CheckBoxWidget(ValueReviser valueReviser, Question question) {
         checkBox = new CheckBox(question.getLabel().toString());
-        checkBox.setOnAction(event -> mediator.reviseValue(question.getId(), value()));
+        checkBox.setOnAction(event -> valueReviser.reviseValue(question.getId(), value()));
     }
 
     private BooleanValue value() {

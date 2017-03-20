@@ -2,7 +2,6 @@ package org.ql.ast;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.arithmetic.*;
@@ -22,6 +21,7 @@ import org.ql.grammar.QLParser;
 import org.ql.grammar.QLVisitor;
 
 import static org.util.ast.SourceLocationHydrator.*;
+import static org.util.ast.StringDequoter.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -106,11 +106,7 @@ public class QLASTBuilder extends AbstractParseTreeVisitor<Node> implements QLVi
 
     @Override
     public QuestionLabel visitQuestionLabel(QLParser.QuestionLabelContext ctx) {
-        return hydrateSourceLocation(new QuestionLabel(removeQuotes(ctx.getText())), ctx);
-    }
-
-    private String removeQuotes(String text) {
-        return text.substring(1, text.length() - 1);
+        return hydrateSourceLocation(new QuestionLabel(dequoteString(ctx.getText())), ctx);
     }
 
     @Override
@@ -195,7 +191,7 @@ public class QLASTBuilder extends AbstractParseTreeVisitor<Node> implements QLVi
 
     @Override
     public StringLiteral visitStringLiteral(QLParser.StringLiteralContext ctx) {
-        return hydrateSourceLocation(new StringLiteral(removeQuotes(ctx.STRING_LITERAL().getText())), ctx);
+        return hydrateSourceLocation(new StringLiteral(dequoteString(ctx.STRING_LITERAL().getText())), ctx);
     }
 
     @Override

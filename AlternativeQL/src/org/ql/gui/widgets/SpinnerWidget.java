@@ -14,16 +14,16 @@ abstract class SpinnerWidget<V> extends Widget {
     private final Spinner<V> spinner;
     private final Label label;
 
-    public SpinnerWidget(ValueReviser mediator, Question question, SpinnerValueFactory<V> valueFactory) {
+    public SpinnerWidget(ValueReviser valueReviser, Question question, SpinnerValueFactory<V> valueFactory) {
         label = new Label(question.getLabel().toString());
         spinner = new Spinner<>();
         spinner.setValueFactory(valueFactory);
-        spinner.setOnMouseClicked(event -> reviseValue(mediator, question));
-        spinner.setOnKeyReleased(event -> reviseValue(mediator, question));
+        spinner.setOnMouseClicked(event -> reviseValue(valueReviser, question));
+        spinner.setOnKeyReleased(event -> reviseValue(valueReviser, question));
     }
 
-    private void reviseValue(ValueReviser mediator, Question question) {
-        mediator.reviseValue(question.getId(), createValue(spinner));
+    private void reviseValue(ValueReviser valueReviser, Question question) {
+        valueReviser.reviseValue(question.getId(), createValue(spinner));
     }
 
     @Override

@@ -15,14 +15,14 @@ abstract class InputWidget extends Widget {
     private final TextField textField;
 
 
-    InputWidget(ValueReviser mediator, Question question) {
+    InputWidget(ValueReviser valueReviser, Question question) {
         label = new Label(question.getLabel().toString());
         textField = new TextField();
-        textField.setOnKeyReleased(event -> mediator.reviseValue(question.getId(), value(textField.getText())));
+        textField.setOnKeyReleased(event -> valueReviser.reviseValue(question.getId(), value(textField.getText())));
     }
 
-    InputWidget(ValueReviser mediator, Question question, TextFormatter textFormatter) {
-        this(mediator, question);
+    InputWidget(ValueReviser valueReviser, Question question, TextFormatter textFormatter) {
+        this(valueReviser, question);
         textField.setTextFormatter(textFormatter);
     }
 
