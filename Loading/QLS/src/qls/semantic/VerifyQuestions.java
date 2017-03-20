@@ -1,5 +1,7 @@
 package qls.semantic;
 
+import java.util.Map;
+
 import qls.ast.Page;
 import qls.ast.Question;
 import qls.ast.Section;
@@ -31,14 +33,6 @@ public class VerifyQuestions implements StylesheetVisitor {
 		}
 		
 	}
-	
-//	// TODO is this necessary?
-//	@Override
-//	public void visit(PageWithDefault pageWithDefault) {
-//		for (Section section : pageWithDefault.getSections()) {
-//			visit(section);
-//		}	
-//	}
 
 	@Override
 	public void visit(Section section) {
@@ -46,27 +40,17 @@ public class VerifyQuestions implements StylesheetVisitor {
 			visit(question);
 		}		
 	}
-	
-//	// TODO is this necessary?
-//	@Override
-//	public void visit(SectionWithDefault sectionWithDefault) {
-//		for (Question question : sectionWithDefault.getQuestions()) {
-//			visit(question);
-//		}	
-//		
-//	}
 
 	@Override
 	// TODO check the logic here instead of in the environment
 	public void visit(Question question) {
-		environment.isCovered(question.getName(), question.getLine());
+		
+		if (!environment.presentInQL(question.getName())) {
+			environment.getFaults().add("The variable " + question.getName() + 
+					" appears in the QLS, but does not exist in QL", question.getLine());
+		}
+		
+		environment.isCovered(question.getName());
 	}
-	
-//	// TODO is this necessary?
-//	@Override
-//	public void visit(QuestionWithWidget questionWithDefault) {
-//		// TODO Auto-generated method stub
-//		
-//	}
 
 }

@@ -18,7 +18,7 @@ public class Analyzer {
 	
 	public Faults analyze(Stylesheet stylesheet) {
 		
-		VerifyQuestions verifyQuestions = new VerifyQuestions(environment);
+		VerifyQuestions verifyQuestions = new VerifyQuestions(variables);
 		verifyQuestions.visit(stylesheet);
 		
 		return environment.getFaults();

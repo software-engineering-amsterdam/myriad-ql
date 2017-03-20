@@ -9,13 +9,12 @@ import QL.errorhandling.Error;
 
 class Environment {
 	
-	private final Map<String, Type> variableTypes;
 	private final Map<String, Boolean> variableCovered;
 	private final Faults faults;
 	
 	public Environment(Map<String, Type> variableTypes) {
-		this.variableTypes = variableTypes;
-		this.variableCovered = new HashMap<>();
+		
+		this.variableCovered = new HashMap<>();		
 		for (String variable : variableTypes.keySet()) {
 			variableCovered.put(variable, false);
 		}
@@ -26,31 +25,47 @@ class Environment {
 		return faults;
 	}
 	
-	public void isCovered(String name, int line) {
+//	public void isCovered(String name, int line) {
+//		
+//		// TODO move to separate functions
+//
+//		else if (variableCovered.get(name)) {
+//			faults.add(new Error("The variable " + name + 
+//					" is already defined int the QLS", line));
+//		}
+//		else {
+//			variableCovered.replace(name, true);	
+//		}
+//	}
+	
+	public boolean presentInQL(String name) {
 		
-		// TODO move to separate functions
-		if (!variableCovered.containsKey(name)) {
-			faults.add(new Error("The variable " + name + 
-					" appears in the QLS, but does not exist in QL", line));
-		}
-		else if (variableCovered.get(name)) {
-			faults.add(new Error("The variable " + name + 
-					" is already defined int the QLS", line));
-		}
-		else {
-			variableCovered.replace(name, true);	
-		}
+		return variableCovered.containsKey(name);
+		
+//		if (!variableCovered.containsKey(name)) {
+//			faults.add(new Error("The variable " + name + 
+//					" appears in the QLS, but does not exist in QL", line));
+//			return false;
+//		}
+//		return true;
+	}
+	
+	public boolean isCovered(String name) {
+		return variableCovered.get(name);
+	}
+	
+	public void setCovered(String name) {
+		variableCovered.replace(name, true);
 	}
 	
 	// TODO fault without line number
 	public void checkCoverage() {
-		for (String name : variableTypes.keySet()) {
+		for (String name : variableCovered.keySet()) {
 			if (!variableCovered.get(name)) {
-				faults.add(new Error("The variable " + name + " is not defined in QLS", 0));
+				faults.add(new Error("The variable " + name + 
+						" is not defined in QLS", 0));
 			}
 		}
 	}
-
-	
 	
 }

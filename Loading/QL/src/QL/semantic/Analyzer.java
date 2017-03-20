@@ -9,8 +9,7 @@ public class Analyzer {
 	private Environment environment;
 	
 	public Analyzer() {
-		this.environment = new Environment();
-		
+		this.environment = new Environment();		
 	}
 
     public ReferenceTable analyze(Form form) {
