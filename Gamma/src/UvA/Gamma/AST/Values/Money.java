@@ -47,6 +47,6 @@ public class Money extends Number {
         if (this.isInteger())
             return "€" + value.intValue() + ",-";
         else
-            return "€" + value.setScale(2, RoundingMode.CEILING);
+            return "€" + value.setScale(2, RoundingMode.HALF_UP);
     }
 }

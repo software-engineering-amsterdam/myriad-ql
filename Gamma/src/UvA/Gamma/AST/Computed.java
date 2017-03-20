@@ -50,6 +50,16 @@ public class Computed implements FormItem {
     }
 
     @Override
+    public String validateLabel(FormItem item) {
+        return item != this && item.containsLabel(this.label) ? this.id : null;
+    }
+
+    @Override
+    public boolean containsLabel(String label) {
+        return this.label.equals(label);
+    }
+
+    @Override
     public Pair<String> validateCyclicDependency(FormItem item) {
         return new Pair<>(item.isDependentOn(this.id) ? this.id : null, item.isDependencyOf(this));
     }

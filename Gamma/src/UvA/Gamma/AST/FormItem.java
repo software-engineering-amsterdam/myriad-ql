@@ -12,7 +12,8 @@ public interface FormItem extends ASTNode {
 
     void idChanged(Form root, FormItem changed, String value);
 
-    void accept(Validator validator) throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException, CyclicDependencyException;
+    void accept(Validator validator) throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException,
+            CyclicDependencyException;
 
     /* Returns the invalid type, or null if the the type is valid */
     Value.Type validateIdentifierType(String identifier, Value.Type type);
@@ -23,9 +24,14 @@ public interface FormItem extends ASTNode {
     /* Returns the two identifiers which cause the cyclic dependency, if present. Else the Pair contains one or two null values */
     Pair<String> validateCyclicDependency(FormItem item);
 
+    /* Returns the identifier of the item which has the duplicate label */
+    String validateLabel(FormItem item);
+
     boolean hasId(String id);
 
     boolean containsId(String id);
+
+    boolean containsLabel(String label);
 
     boolean isDependentOn(String id);
 
