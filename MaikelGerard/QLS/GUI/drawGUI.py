@@ -23,7 +23,6 @@ class DrawGUI(QLDrawGUI):
 
     def start_traversal(self):
         self.qls_ast.accept(self)
-
         self.show()
 
     def style_sheet_node(self, style_sheet_node):

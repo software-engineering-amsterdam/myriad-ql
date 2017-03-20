@@ -1,4 +1,5 @@
 from QL.stages.parser import Parser as QLParser
+from QL import AST as QLAST
 from QLS import AST
 
 import pyparsing as pp
@@ -41,8 +42,8 @@ class Parser(QLParser):
         self.parse_widget_type_nodes()
 
         self.TYPE_NAMES = (self.BOOLEAN_TYPE ^ self.INTEGER_TYPE ^
-                           self.MONEY_TYPE ^ self.DECIMAL_TYPE ^
-                           self.STRING_TYPE ^ self.DATE_TYPE)
+                           self.DECIMAL_TYPE ^ self.STRING_TYPE ^
+                           self.DATE_TYPE)
         self.TYPES = (self.BOOLEAN ^ self.INTEGER ^ self.DECIMAL ^ self.DATE ^
                       self.STRING ^ self.VARIABLE ^ self.COLOR_VALUE)
         self.WIDGET_TYPES = (self.SLIDER ^ self.SPINBOX ^ self.TEXT ^
@@ -94,7 +95,7 @@ class Parser(QLParser):
         header = self.DEFAULT + self.TYPE_NAMES
         props = pp.Group(
             pp.OneOrMore(self.property_type)
-        ).setParseAction(self.create_node(AST.BlockNode))
+        ).setParseAction(self.create_node(QLAST.BlockNode))
 
         with_props = (header + self.curly_embrace(props + self.widget_type))\
             .setParseAction(self.create_node(AST.DefaultWithPropsNode))
@@ -105,7 +106,7 @@ class Parser(QLParser):
 
     def define_question(self):
         def create_question():
-            return self.QUESTION + self.VARIABLE
+            return self.QUESTION + self.NAME
         widget_question = (create_question() + self.widget_type).setParseAction(
             self.create_node(AST.WidgetQuestionNode)
         )
@@ -118,13 +119,13 @@ class Parser(QLParser):
         with_defaults = pp.Forward()
         without_defaults = pp.Forward()
 
-        header = self.SECTION + self.STRING
+        header = self.SECTION + self.QUESTION_STRING
         body = pp.Group(
             pp.OneOrMore(self.question ^ with_defaults ^ without_defaults)
-        ).setParseAction(self.create_node(AST.BlockNode))
+        ).setParseAction(self.create_node(QLAST.BlockNode))
         defaults = pp.Group(
             pp.OneOrMore(self.default)
-        ).setParseAction(self.create_node(AST.BlockNode))
+        ).setParseAction(self.create_node(QLAST.BlockNode))
 
         with_defaults << (header + self.curly_embrace(body + defaults))\
             .addParseAction(self.create_node(AST.SectionWithDefaultsNode))
@@ -134,13 +135,13 @@ class Parser(QLParser):
         return with_defaults ^ without_defaults
 
     def define_page(self):
-        header = self.PAGE + self.VARIABLE
+        header = self.PAGE + self.NAME
         sections = pp.Group(
             pp.OneOrMore(self.section)
-        ).setParseAction(self.create_node(AST.BlockNode))
+        ).setParseAction(self.create_node(QLAST.BlockNode))
         defaults = pp.Group(
             pp.OneOrMore(self.default)
-        ).setParseAction(self.create_node(AST.BlockNode))
+        ).setParseAction(self.create_node(QLAST.BlockNode))
 
         with_defaults = (header + self.curly_embrace(sections + defaults))\
             .setParseAction(self.create_node(AST.PageWithDefaultsNode))
@@ -150,10 +151,10 @@ class Parser(QLParser):
         return with_defaults ^ without_defaults
 
     def define_grammar(self):
-        header = self.STYLESHEET + self.VARIABLE
+        header = self.STYLESHEET + self.NAME
         body = pp.Group(
             pp.OneOrMore(self.page)
-        ).setParseAction(self.create_node(AST.BlockNode))
+        ).setParseAction(self.create_node(QLAST.BlockNode))
 
         stylesheet = header + self.curly_embrace(body)
         return stylesheet.setParseAction(self.create_node(AST.StylesheetNode))

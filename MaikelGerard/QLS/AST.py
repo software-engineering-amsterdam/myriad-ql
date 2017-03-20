@@ -1,13 +1,5 @@
-# TODO: Decide to just import all nodes?
-# from QL.AST import *
-from QL.AST import Node, BlockNode, ExpressionNode, TypeNode
-from QL.AST import BoolTypeNode, IntTypeNode, MoneyTypeNode, DecimalTypeNode
-from QL.AST import StringTypeNode, DateTypeNode
-from QL.AST import VarNode, LiteralNode
-from QL.AST import BoolNode, IntNode, MoneyNode, DecimalNode, StringNode
-from QL.AST import DateNode
-
-# TODO: Make PageNode, SectionNode and DefaultNode decendants of StylesheetNode?
+from QL.AST import Node
+from QL.AST import BoolTypeNode, IntTypeNode, DecimalTypeNode, StringTypeNode
 
 
 class StylesheetNode(Node):
@@ -123,8 +115,7 @@ class NumericNode(WidgetNode):
 
     @staticmethod
     def is_compatible_type(literal_type):
-        return literal_type in [IntTypeNode(), MoneyTypeNode(),
-                                DecimalTypeNode()]
+        return literal_type in [IntTypeNode(), DecimalTypeNode()]
 
     def accept(self, visitor, *args):
         return visitor.numeric_node(self, *args)
