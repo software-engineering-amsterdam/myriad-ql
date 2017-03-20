@@ -2,6 +2,7 @@ package org.ql.gui;
 
 import org.ql.ast.Form;
 import org.ql.ast.Identifier;
+import org.ql.ast.QuestionSet;
 import org.ql.ast.statement.ComputableQuestion;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.ValueTable;
@@ -22,7 +23,7 @@ public class GUIFormBuilder implements ValueReviser {
     private final ConditionEvaluator conditionEvaluator;
     private final QuestionEvaluator questionEvaluator;
     private final ValueTable valueTable;
-    private final Set<Identifier> modifiedQuestions;
+    private final QuestionSet modifiedQuestions;
     private final WidgetContainer widgetContainer;
 
     public GUIFormBuilder(Window window, Form form) {
@@ -30,7 +31,7 @@ public class GUIFormBuilder implements ValueReviser {
         this.window = window;
 
         valueTable = new ValueTable();
-        modifiedQuestions = new HashSet<>();
+        modifiedQuestions = new QuestionSet();
         conditionEvaluator = new ConditionEvaluator();
         questionEvaluator = new QuestionEvaluator(modifiedQuestions);
         widgetContainer = new WidgetContainer(this);
@@ -50,7 +51,7 @@ public class GUIFormBuilder implements ValueReviser {
 
 
     private void declareQuestionValue(Identifier identifier, Value newValue) {
-        modifiedQuestions.add(identifier);
+        modifiedQuestions.declare(identifier);
         valueTable.declare(identifier, newValue);
     }
 
@@ -58,7 +59,7 @@ public class GUIFormBuilder implements ValueReviser {
         Widget widget = widgetContainer.retrieveWidget(question);
         Value value = valueTable.lookup(question.getId());
 
-        if (value.isKnown() && !modifiedQuestions.contains(question.getId())) {
+        if (value.isKnown() && !modifiedQuestions.isDeclared(question.getId())) {
             widget.updateWidgetValue(value);
         }
 

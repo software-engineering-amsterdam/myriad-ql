@@ -3,6 +3,7 @@ package org.ql.evaluator;
 import org.junit.Test;
 import org.ql.ast.Form;
 import org.ql.ast.Identifier;
+import org.ql.ast.QuestionSet;
 import org.ql.ast.Statement;
 import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.arithmetic.Addition;
@@ -29,7 +30,7 @@ public class QuestionEvaluatorTest {
         expectedValueTable.declare(new Identifier("first"), new IntegerValue(12));
         expectedValueTable.declare(new Identifier("second"), new IntegerValue(15));
 
-        QuestionEvaluator visitor = new QuestionEvaluator(new HashSet<>());
+        QuestionEvaluator visitor = new QuestionEvaluator(new QuestionSet());
         ValueTable actualValueTable = new ValueTable();
         visitor.updateValueTable(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
             add(new ComputableQuestion(new Identifier("first"), new QuestionLabel("ComputableQuestion"), new IntegerType(), new IntegerLiteral(12)));
@@ -45,7 +46,7 @@ public class QuestionEvaluatorTest {
         expectedValueTable.declare(new Identifier("first"), new IntegerValue(12));
         expectedValueTable.declare(new Identifier("second"), new UnknownValue());
 
-        QuestionEvaluator visitor = new QuestionEvaluator(new HashSet<>());
+        QuestionEvaluator visitor = new QuestionEvaluator(new QuestionSet());
         ValueTable actualValueTable = new ValueTable();
         visitor.updateValueTable(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
             add(new ComputableQuestion(new Identifier("first"), new QuestionLabel("ComputableQuestion"), new IntegerType(), new IntegerLiteral(12)));
@@ -62,7 +63,7 @@ public class QuestionEvaluatorTest {
         expectedValueTable.declare(new Identifier("second"), new IntegerValue(48));
         expectedValueTable.declare(new Identifier("third"), new IntegerValue(48));
 
-        QuestionEvaluator visitor = new QuestionEvaluator(new HashSet<>());
+        QuestionEvaluator visitor = new QuestionEvaluator(new QuestionSet());
         ValueTable actualValueTable = new ValueTable();
         visitor.updateValueTable(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
             add(new ComputableQuestion(new Identifier("first"), new QuestionLabel("ComputableQuestion"), new IntegerType(), new IntegerLiteral(12)));
@@ -82,7 +83,7 @@ public class QuestionEvaluatorTest {
         expectedValueTable.declare(new Identifier("second"), new IntegerValue(48));
         expectedValueTable.declare(new Identifier("third"), new IntegerValue(48));
 
-        QuestionEvaluator visitor = new QuestionEvaluator(new HashSet<>());
+        QuestionEvaluator visitor = new QuestionEvaluator(new QuestionSet());
         ValueTable actualValueTable = new ValueTable();
         visitor.updateValueTable(new Form(new Identifier("Example"), new ArrayList<Statement>() {{
             add(new IfThenElse(new BooleanLiteral(true), new ArrayList<Statement>() {{

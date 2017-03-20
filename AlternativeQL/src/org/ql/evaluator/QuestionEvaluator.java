@@ -2,6 +2,7 @@ package org.ql.evaluator;
 
 import org.ql.ast.Form;
 import org.ql.ast.Identifier;
+import org.ql.ast.QuestionSet;
 import org.ql.ast.Statement;
 import org.ql.ast.form.FormVisitor;
 import org.ql.ast.statement.*;
@@ -12,9 +13,9 @@ import java.util.Set;
 
 public class QuestionEvaluator implements FormVisitor<Void, ValueTable>, StatementVisitor<Void, ValueTable> {
     private final ExpressionEvaluator expressionEvaluator;
-    private final Set<Identifier> modifiedQuestions;
+    private final QuestionSet modifiedQuestions;
 
-    public QuestionEvaluator(Set<Identifier> modifiedQuestions) {
+    public QuestionEvaluator(QuestionSet modifiedQuestions) {
         this.modifiedQuestions = modifiedQuestions;
         expressionEvaluator = new ExpressionEvaluator();
     }
@@ -58,7 +59,7 @@ public class QuestionEvaluator implements FormVisitor<Void, ValueTable>, Stateme
 
     @Override
     public Void visitQuestion(Question question, ValueTable valueTable) {
-        if (!modifiedQuestions.contains(question.getId())) {
+        if (!modifiedQuestions.isDeclared(question.getId())) {
             valueTable.declare(question.getId(), new UnknownValue());
         }
 
@@ -67,7 +68,7 @@ public class QuestionEvaluator implements FormVisitor<Void, ValueTable>, Stateme
 
     @Override
     public Void visitComputableQuestion(ComputableQuestion question, ValueTable valueTable) {
-        if (!modifiedQuestions.contains(question.getId())) {
+        if (!modifiedQuestions.isDeclared(question.getId())) {
             Value value = expressionEvaluator.evaluate(question.getComputableValue(), valueTable);
             valueTable.declare(question.getId(), value);
         }

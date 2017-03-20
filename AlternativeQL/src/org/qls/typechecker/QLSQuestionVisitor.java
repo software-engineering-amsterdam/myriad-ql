@@ -1,5 +1,6 @@
 package org.qls.typechecker;
 
+import org.ql.ast.QuestionSet;
 import org.ql.ast.type.Type;
 import org.ql.typechecker.SymbolTable;
 import org.ql.typechecker.issues.IssuesStorage;
@@ -11,11 +12,11 @@ import org.qls.typechecker.issues.errors.UnsupportedWidgetForQLQuestionType;
 
 
 public class QLSQuestionVisitor implements WidgetQuestionVisitor<Void, SymbolTable> {
-    private final DefinedQLSQuestionSet definedQLSQuestionsSet;
+    private final QuestionSet definedQuestions;
     private IssuesStorage issuesStorage;
 
     public QLSQuestionVisitor() {
-        definedQLSQuestionsSet = new DefinedQLSQuestionSet();
+        definedQuestions = new QuestionSet();
     }
 
     public void visitStyleSheet(StyleSheet styleSheet, IssuesStorage issuesStorage, SymbolTable symbolTable) {
@@ -59,10 +60,10 @@ public class QLSQuestionVisitor implements WidgetQuestionVisitor<Void, SymbolTab
     }
 
     private void checkDuplicateQLSQuestions(WidgetQuestion question) {
-        if (definedQLSQuestionsSet.isDeclared(question.getIdentifier())) {
+        if (definedQuestions.isDeclared(question.getIdentifier())) {
             issuesStorage.addError(new DuplicateQLSQuestion(question));
         } else {
-            definedQLSQuestionsSet.declare(question.getIdentifier());
+            definedQuestions.declare(question.getIdentifier());
         }
     }
 
