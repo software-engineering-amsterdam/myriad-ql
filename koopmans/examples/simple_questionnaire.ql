@@ -8,7 +8,7 @@ form taxOfficeExample {
         xx: money = hasBoughtHouse - 2 * 2
     } else {
         "Did you buy a house in 2015?"
-        aa: money = hasBoughtHouse
+        aa: money = hasBoughtHouse + aap - schaap
     }
 "Did you buy222 a house in 2010?"
     ssss: money

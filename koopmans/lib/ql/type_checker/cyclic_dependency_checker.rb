@@ -21,9 +21,8 @@ module QL
       end
 
       def visit_if_else_statement(if_else_statement)
-        if_body_variables = if_else_statement.if_body.map { |statement| statement.accept(self) }
-        else_body_variables = if_else_statement.else_body.map { |statement| statement.accept(self) }
-        [if_body_variables, else_body_variables]
+        if_else_statement.if_body.map { |statement| statement.accept(self) }
+        if_else_statement.else_body.map { |statement| statement.accept(self) }
       end
 
       # visit operation in expression

@@ -51,6 +51,7 @@ module QL
       # end
 
       def visit_arithmetic_expression(left, binary_expression)
+        pp left
         left = left.accept(self)
         right = binary_expression.expression.accept(self)
         [left ,right]
@@ -83,20 +84,21 @@ module QL
       end
 
       def visit_integer_literal(_)
-        []
+
       end
 
       def visit_boolean_literal(_)
-        []
+
       end
 
       def visit_string_literal(_)
-        []
+
       end
 
       def visit_variable(variable)
         # @variables << variable
         [variable]
+        # AST::Expression.new(variable)
       end
     end
   end

@@ -7,8 +7,8 @@ module QL
         duplicate_label_checker(questions)
         duplicate_variable_checker(questions)
         undefined_variable_checker(questions, ast)
-        operands_type_checker(questions, ast)
-        cyclic_checker(questions, ast)
+        # operands_type_checker(questions, ast)
+        # cyclic_checker(questions, ast)
       end
 
       # checkers
