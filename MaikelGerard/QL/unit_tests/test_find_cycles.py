@@ -57,6 +57,18 @@ class TestCycles(unittest.TestCase):
         FindCycles(parsed_form, self.handler).start_traversal()
         self.assertEqual(self.handler.error_count, 1)
 
+    def test_find_computed_cycle(self):
+        form = """
+            form taxOfficeExample {
+                if (x) {
+                    "Q" q : boolean = (q)
+                }
+            }
+        """
+        parsed_form = self.parser.parse(form)
+        FindCycles(parsed_form, self.handler).start_traversal()
+        self.assertEqual(self.handler.error_count, 1)
+
     def test_no_cycles(self):
         form = """
             form taxOfficeExample {

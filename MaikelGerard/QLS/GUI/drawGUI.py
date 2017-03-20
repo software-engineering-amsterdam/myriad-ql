@@ -64,7 +64,7 @@ class DrawGUI(QLDrawGUI):
         if styling != Undefined:
             styling.accept(self, self.widgets[identifier])
 
-    def question_node(self, question_node, is_visited=False):
+    def question_node(self, question_node):
         # Create a frame around the question to improve interface.
         self.main.startFrame("@frame_" + question_node.name)
 

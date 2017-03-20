@@ -29,6 +29,9 @@ class FindCycles(object):
     def comp_question_node(self, comp_question_node):
         self.node_stack[-1].append(comp_question_node.name)
 
+        to_vars = comp_question_node.expression.accept(self)
+        self.add_edge_relations([comp_question_node.name], to_vars)
+
     def add_edge_relations(self, from_vars, to_vars):
         for from_var in from_vars:
             for to_var in to_vars:
