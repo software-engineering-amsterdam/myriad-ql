@@ -37,7 +37,7 @@ class Application(object):
         f = filedialog.asksaveasfile(mode='w', defaultextension=".json")
         if f is None:
             return
-        f.write(json.dumps(self.environment.export()))
+        f.write(json.dumps(self.environment.export(), indent=4))
         f.close()
 
     def show_error(self, message):

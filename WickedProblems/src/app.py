@@ -8,11 +8,10 @@ if cur_version >= req_version:
     from operations.gui import BuildGui
     from operations.environment import Environment
     from operations.type_checker import TypeChecker, DuplicateLabelsChecker, UndefinedVariableChecker, QuestionTypeChecker, InvalidOperandChecker
-    from tkinter import Button
     from user_interface.application import Application
     from operations.ql import VoidAlg
 else:
-    exit("FOEI JORDAN! Python3 gebruiken!")
+    exit("Use Python 3")
 
 # Read QL file to string
 with open('tests/input/tax_office_example.ql', 'r') as ql_file:
