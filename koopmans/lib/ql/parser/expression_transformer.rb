@@ -6,14 +6,14 @@ module QL
       include AST
 
       # negation: ! -
-      rule([operator: '-', single: simple(:single)]) { IntegerNegation.new(single) }
-      rule([operator: '!', single: simple(:single)]) { BooleanNegation.new(single) }
+      rule([operator: '-', single: simple(:single)]) { IntegerNegation.new('-', single) }
+      rule([operator: '!', single: simple(:single)]) { BooleanNegation.new('!', single) }
 
       # arithmetic: + - / *
-      rule(operator: '*', right: simple(:right)) { Multiply.new(right) }
-      rule(operator: '/', right: simple(:right)) { Divide.new(right) }
-      rule(operator: '+', right: simple(:right)) { Add.new(right) }
-      rule(operator: '-', right: simple(:right)) { Subtract.new(right) }
+      rule(arithmetic_operator: simple(:operator), right: simple(:right)) { ArithmeticExpression.new(operator, right) }
+      # rule(operator: '/', right: simple(:right)) { Divide.new(right) }
+      # rule(operator: '+', right: simple(:right)) { Add.new(right) }
+      # rule(operator: '-', right: simple(:right)) { Subtract.new(right) }
 
       # comparison: == != < > <= >=
       rule(operator: '==', right: simple(:right)) { Equal.new(right) }

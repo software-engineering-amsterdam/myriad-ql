@@ -3,9 +3,9 @@ module QL
     class Literal
       attr_reader :value
 
-      def initialize(value)
-        @value = value.to_s
-      end
+      # def initialize(value)
+      #   @value = value.to_s
+      # end
 
       def accept(visitor)
         visitor.visit_literal(self)

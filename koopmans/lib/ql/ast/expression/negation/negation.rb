@@ -1,8 +1,11 @@
 module QL
   module AST
-    class Negation < Expression
-      def accept(visitor)
-        visitor.visit_negation(self)
+    class Negation
+      attr_accessor :operator, :expression
+
+      def initialize(operator, expression)
+        @operator = operator
+        @expression = expression
       end
 
       def eval_type(expression)

@@ -5,10 +5,6 @@ module QL
         visitor.visit_boolean_negation(self)
       end
 
-      # def eval(expression)
-      #   BooleanLiteral.new(!expression)
-      # end
-
       def is_compatible_with
         [BooleanType.new]
       end

@@ -52,7 +52,7 @@ module QL
       end
 
       def check_condition
-        @condition.accept(Evaluator.new).to_value ? enable : disable
+        @condition.accept(Evaluator.new).value ? enable : disable
       end
 
       def enable

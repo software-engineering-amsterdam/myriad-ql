@@ -20,7 +20,7 @@ module QL
 
       # negate for condition for else body of if else statement
       def negate(condition)
-        AST::BooleanNegation.new(condition)
+        AST::BooleanNegation.new('!', condition)
       end
 
       # stack conditions if possible for nested if (else) statements

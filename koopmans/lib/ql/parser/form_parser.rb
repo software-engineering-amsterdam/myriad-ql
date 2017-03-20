@@ -22,8 +22,8 @@ module QL
       rule(:type) { (str('boolean') | str('integer') | str('integer') | str('decimal') | str('date') | str('money')).as(:type) >> _ }
 
       # operators
-      rule(:multiplication_operator) { (str('*') | str('/')).as(:operator) >> _ }
-      rule(:addition_operator) { (str('+') | str('-')).as(:operator) >> _ }
+      rule(:multiplication_operator) { (str('*') | str('/')).as(:arithmetic_operator) >> _ }
+      rule(:addition_operator) { (str('+') | str('-')).as(:arithmetic_operator) >> _ }
       rule(:comparison_equals_operator) { (str('==') | str('!=')).as(:operator) >> _ }
       rule(:comparison_order_operator) { (str('<=') | str('>=') | str('<') | str('>')).as(:operator) >> _ }
       rule(:boolean_operator) { (str('&&') | str('||')).as(:operator) >> _ }
