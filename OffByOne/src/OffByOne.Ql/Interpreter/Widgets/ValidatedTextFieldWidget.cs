@@ -21,12 +21,12 @@
             this.validator = validator;
         }
 
-        protected override void UpdateValue(object target, object eventArgs)
+        protected override void UpdateValue()
         {
             if (this.validator.IsValid(this.Input.Text))
             {
                 this.Input.BorderBrush = new SolidColorBrush(Colors.DarkGreen);
-                base.UpdateValue(target, eventArgs);
+                base.UpdateValue();
             }
             else
             {
