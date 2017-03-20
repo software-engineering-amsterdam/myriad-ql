@@ -136,6 +136,15 @@ class BuildGui(QlAlg):
             execute=lambda self: _register()
         return _anon()
 
+    def LessThan(self, lhs, rhs):
+        def _register():
+            lhs.execute()
+            rhs.execute()
+
+        class _anon():
+            execute=lambda self: _register()
+        return _anon()
+
     def Multiplication(self, lhs, rhs):
         def _register():
             lhs.execute()

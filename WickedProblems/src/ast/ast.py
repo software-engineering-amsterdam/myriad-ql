@@ -40,6 +40,11 @@ class GreaterThan(BinaryOperation):
         return _alg.Addition(self.left_operand.alg(_alg),
                              self.right_operand.alg(_alg))
 
+class LessThan(BinaryOperation):
+    def alg(self, _alg):
+        return _alg.Addition(self.left_operand.alg(_alg),
+                             self.right_operand.alg(_alg))
+
 class Substraction(BinaryOperation):
     def alg(self, _alg):
         return _alg.Substraction(self.left_operand.alg(_alg),
