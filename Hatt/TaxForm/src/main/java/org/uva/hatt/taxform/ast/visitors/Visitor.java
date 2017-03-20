@@ -4,6 +4,7 @@ import org.uva.hatt.taxform.ast.nodes.*;
 import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
+import org.uva.hatt.taxform.ast.nodes.expressions.binary.*;
 import org.uva.hatt.taxform.ast.nodes.items.*;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.Identifier;
@@ -32,4 +33,16 @@ public interface Visitor<T> {
     T visit(IntegerLiteral integerLiteral);
     T visit(BooleanLiteral booleanLiteral);
     T visit(Expression expression);
+    T visit(Addition addition);
+    T visit(Division division);
+    T visit(Equal equal);
+    T visit(GreaterThan greaterThan);
+    T visit(GreaterThanOrEqual greaterThanOrEqual);
+    T visit(LessThan lessThan);
+    T visit(LessThanOrEqual lessThanOrEqual);
+//    T visit(LogicalAnd logicalAnd);
+//    T visit(LogicalOr logicalOr);
+    T visit(Multiplication multiplication);
+    T visit(NotEqual notEqual);
+    T visit(Subtraction subtraction);
 }

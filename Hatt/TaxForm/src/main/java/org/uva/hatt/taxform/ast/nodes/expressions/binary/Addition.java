@@ -2,7 +2,7 @@ package org.uva.hatt.taxform.ast.nodes.expressions.binary;
 
 import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
-//import org.uva.hatt.taxform.ast.visitors.ExpressionVisitor;
+import org.uva.hatt.taxform.ast.visitors.Visitor;
 
 public class Addition extends BooleanExpression {
 
@@ -10,8 +10,8 @@ public class Addition extends BooleanExpression {
         super(lineNumber, lhs, rhs);
     }
 
-    //@Override
-//    public <T> T accept(ExpressionVisitor<T> expressionVisitor){
-//        return expressionVisitor.visit(this);
-//    }
+    @Override
+    public <T> T accept(Visitor<T> visitor){
+        return visitor.visit(this);
+    }
 }
