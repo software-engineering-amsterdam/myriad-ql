@@ -42,31 +42,13 @@ class TypeChecker(CheckerVisitor):
         for element in node.elsebody:
             self.visit(element)
 
-    def visit_plusop(self, node):
+    def visit_sign_unop(self, node, op):
         right_type = self.visit(node.right)
         if right_type is None:
             return None
         if right_type in self.computable_datatypes:
             return right_type
-        self.error("unary + operator has incompatible datatype")
-        return None
-
-    def visit_minop(self, node):
-        right_type = self.visit(node.right)
-        if right_type is None:
-            return None
-        if right_type in self.computable_datatypes:
-            return right_type
-        self.error("unary - operator has incompatible datatype")
-        return None
-
-    def visit_notop(self, node):
-        right_type = self.visit(node.right)
-        if right_type is None:
-            return None
-        if right_type == BooleanDatatype():
-            return BooleanDatatype()
-        self.error("! operator has incompatible datatype")
+        self.error("unary {} operator has incompatible datatype".format(op))
         return None
 
     def visit_computation_binop(self, node, op):
@@ -109,6 +91,21 @@ class TypeChecker(CheckerVisitor):
         if left_type == right_type == BooleanDatatype():
             return BooleanDatatype()
         self.error("{} operator has incompatible datatypes".format(op))
+        return None
+
+    def visit_plusop(self, node):
+        return self.visit_sign_unop(node, "+")
+
+    def visit_minop(self, node):
+        return self.visit_sign_unop(node, "-")
+
+    def visit_notop(self, node):
+        right_type = self.visit(node.right)
+        if right_type is None:
+            return None
+        if right_type == BooleanDatatype():
+            return BooleanDatatype()
+        self.error("! operator has incompatible datatype")
         return None
 
     def visit_mulop(self, node):

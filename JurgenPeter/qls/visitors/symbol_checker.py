@@ -3,10 +3,9 @@ from misc.visitor import CheckerVisitor
 
 class SymbolChecker(CheckerVisitor):
 
-    def __init__(self, ql_symboltable, errors=[]):
-        self.ql_symbols = set(ql_symboltable.keys())
+    def __init__(self, symboltable, errors=[]):
+        self.ql_symbols = set(symbol for symbol in symboltable)
         self.qls_symbols = set()
-        self.labels = []
         self.errors = errors
 
     def check(self, node):

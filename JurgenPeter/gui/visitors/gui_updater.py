@@ -4,8 +4,8 @@ from ql.visitors.evaluator import Evaluator
 
 class GuiUpdater(Visitor):
 
-    def __init__(self, form_app, environment):
-        self.form_app = form_app
+    def __init__(self, app, environment):
+        self.app = app
         self.environment = environment
         self.evaluator = Evaluator(environment)
 
@@ -30,10 +30,10 @@ class GuiUpdater(Visitor):
 
     def visit_question(self, node, visible):
         if visible:
-            self.form_app.show_widget(node.name)
+            self.app.show_widget(node.name)
         else:
-            self.form_app.hide_widget(node.name)
+            self.app.hide_widget(node.name)
 
     def visit_computed_question(self, node, visible):
         self.visit_question(node, visible)
-        self.form_app.set_widget(node.name, self.environment[node.name])
+        self.app.set_widget(node.name, self.environment[node.name])
