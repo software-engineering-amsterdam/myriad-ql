@@ -2,12 +2,11 @@
  * Created by Manuel on 25/02/2017.
  */
 
-import {Router}         from 'arva-js/core/Router.js';
-import {Injection}      from 'arva-js/utils/Injection.js';
-import {Program}        from './Program.js';
-import {RenderVisitor}  from './RenderVisitor.js';
-
-import './famous.css!';
+import {Router} from 'arva-js/core/Router.js';
+import {Injection} from 'arva-js/utils/Injection.js';
+import {Program} from './Program.js';
+import {RenderVisitor} from './RenderVisitor.js';
+import {EvaluationVisitor} from './EvaluationVisitor.js';
 
 export class GUI {
 
@@ -32,8 +31,9 @@ export class GUI {
         const view = program.createView();
         program.setViewForControllerMethod('QL', 'Index', view);
 
-        const visitor = new RenderVisitor(memoryState);
-        visitor.visitProgram(ast.getProgram(), view);
+        const evaluationVisitor = new EvaluationVisitor();
+        const renderVisitor = new RenderVisitor(memoryState, evaluationVisitor);
+        renderVisitor.visitProgram(ast.getProgram(), view);
 
         const router = Injection.get(Router);
         router.go('QL', 'Index');

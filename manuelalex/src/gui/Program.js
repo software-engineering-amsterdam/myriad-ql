@@ -10,6 +10,8 @@ import {Router}         from 'arva-js/core/Router.js';
 
 import {QLController}   from './controllers/QLController.js';
 
+import './famous.css!';
+
 export class Program {
     constructor() {
 
@@ -17,7 +19,6 @@ export class Program {
         this.application = ArvaApp;
         window.cordova = {};
     }
-
 
     createView() {
         return new (class QLView extends View {});

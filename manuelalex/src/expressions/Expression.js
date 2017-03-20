@@ -31,15 +31,8 @@ export class Expression {
         visitor.visitExpression(this);
     }
 
-    evaluate(memoryState){
-
-        const leftValue = this.leftHand.evaluate(memoryState);
-        const rightValue = this.rightHand.evaluate(memoryState);
-
-        const leftHandValue = leftValue || undefined;
-        const rightHandValue = rightValue || undefined;
-
-        return eval(`${leftHandValue} ${this.operator} ${rightHandValue}`);
+    evaluate(visitor, memoryState){
+        return visitor.evaluateExpression(this, memoryState);
     }
 
 
@@ -68,12 +61,8 @@ export class PrefixExpression {
         visitor.visitPreExpression(this);
     }
 
-    evaluate(memoryState){
-        const value = this.expression.evaluate(memoryState);
-        return eval(`${this.prefix} ${value}`);
+    evaluate(visitor, memoryState){
+        return visitor.evaluatePrefixExpression(this, memoryState);
     }
 
-    _throwError(errorText = ''){
-        throw new Error(`Error at ${this.location}: ${errorText.toString()}`);
-    }
 }

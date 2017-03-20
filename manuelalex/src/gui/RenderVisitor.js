@@ -14,12 +14,12 @@ export class RenderVisitor {
     _viewCount = 0;
     memoryState;
 
-    constructor(memoryState) {
+    constructor(memoryState, evaluationVisitor) {
         this.memoryState = memoryState;
+        this.evaluationVisitor = evaluationVisitor;
     }
 
     visitProgram(program, view) {
-        view = this._addMarginsToView(view);
         program.renderTitle(this, view);
         this.visitStatements(program.getStatements(), view);
     }
@@ -67,7 +67,7 @@ export class RenderVisitor {
         const expression = allocation.getExpression();
         const type = allocation.getType();
 
-        const evaluation = expression.evaluate(this.memoryState);
+        const evaluation = expression.evaluate(this.evaluationVisitor, this.memoryState);
 
         /* TODO: Add a better condition so that 0 values are not ignored */
         if (evaluation) {
@@ -87,7 +87,6 @@ export class RenderVisitor {
 
     }
 
-
     renderLabel(label) {
         return new Surface({
             content: label.getValue()
@@ -97,7 +96,7 @@ export class RenderVisitor {
     renderIfStatement(ifStatement, view) {
         const condition = ifStatement.getCondition();
         const ifBody = ifStatement.getIfBody();
-        if (condition.evaluate(this.memoryState)) {
+        if (condition.evaluate(this.evaluationVisitor, this.memoryState)) {
             this.visitStatements(ifBody, view);
         }
     }
@@ -107,7 +106,7 @@ export class RenderVisitor {
         const ifBody = ifElseStatement.getIfBody();
         const elseBody = ifElseStatement.getElseBody();
 
-        if (condition.evaluate(this.memoryState)) {
+        if (condition.evaluate(this.evaluationVisitor, this.memoryState)) {
             this.visitStatements(ifBody, view);
         } else {
             this.visitStatements(elseBody, view);
@@ -183,16 +182,7 @@ export class RenderVisitor {
         return renderable;
     }
 
-    renderMoneyValue(qlMoney) {
+    renderMoneyValue() {
         return new Surface();
-    }
-
-    /* TODO, optional */
-    _addMarginsToView(view) {
-        return view;
-    }
-
-    _showError(error) {
-        console.error(error.toString());
     }
 }
