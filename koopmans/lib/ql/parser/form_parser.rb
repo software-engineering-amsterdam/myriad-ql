@@ -29,7 +29,8 @@ module QL
       rule(:boolean_operator) { (str('&&') | str('||')).as(:boolean_operator) >> _ }
       rule(:negation_operator) { (str('!') | str('-')).as(:negation_operator) >> _ }
 
-      # expression (order: booolean, order, equals, addition, multiplication, negation, literal )
+      # expression (order: boolean, order, equals, addition, multiplication, negation, literal )
+      #TODO clean
       rule(:expression) { boolean_expression.as(:expression) }
       rule(:expression_with_parenthesis) { str('(') >> _ >> expression >> str(')') }
       rule(:boolean_expression) { comparison_order_expression.as(:left) >> (boolean_operator >> comparison_order_expression.as(:right)).repeat(1) | comparison_order_expression }
