@@ -11,30 +11,40 @@ import org.qls.typechecker.issues.errors.UnsupportedWidgetForQLQuestionType;
 
 
 public class QLSQuestionVisitor implements WidgetQuestionVisitor<Void, SymbolTable> {
-    private final IssuesStorage issuesStorage;
     private final DefinedQLSQuestionSet definedQLSQuestionsSet;
+    private IssuesStorage issuesStorage;
 
-    public QLSQuestionVisitor(IssuesStorage issuesStorage) {
-        this.issuesStorage = issuesStorage;
+    public QLSQuestionVisitor() {
         definedQLSQuestionsSet = new DefinedQLSQuestionSet();
     }
 
-    public void visitStyleSheet(StyleSheet styleSheet, SymbolTable symbolTable) {
-        for (Page page : styleSheet.getPages()) {
-            visitPage(page, symbolTable);
-        }
+    public void visitStyleSheet(StyleSheet styleSheet, IssuesStorage issuesStorage, SymbolTable symbolTable) {
+        this.issuesStorage = issuesStorage;
+        styleSheet.getPages().forEach(page -> visitPage(page, symbolTable));
     }
 
     public void visitPage(Page page, SymbolTable symbolTable) {
-        for (Section section : page.getSections()) {
-            visitSection(section, symbolTable);
-        }
+        page.getSections().forEach(section -> visitSection(section, symbolTable));
     }
 
     public void visitSection(Section section, SymbolTable symbolTable) {
-        section.getQuestions().forEach((question) -> question.accept(this, symbolTable));
+        section.getQuestions().forEach(question -> question.accept(this, symbolTable));
+        section.getSections().forEach(subSection -> visitSection(subSection, symbolTable));
+    }
 
-        section.getSections().forEach((currentSection) -> visitSection(currentSection, symbolTable));
+    @Override
+    public Void visitCustomWidgetQuestion(CustomWidgetQuestion question, SymbolTable symbolTable) {
+        checkDuplicateQLSQuestions(question);
+        checkUndefinedQLQuestions(question, symbolTable);
+        checkWidgetTypeForQLQuestion(question, symbolTable);
+        return null;
+    }
+
+    @Override
+    public Void visitGenericWidgetQuestion(WidgetQuestion question, SymbolTable symbolTable) {
+        checkDuplicateQLSQuestions(question);
+        checkUndefinedQLQuestions(question, symbolTable);
+        return null;
     }
 
     private void checkWidgetTypeForQLQuestion(CustomWidgetQuestion question, SymbolTable symbolTable) {
@@ -60,20 +70,5 @@ public class QLSQuestionVisitor implements WidgetQuestionVisitor<Void, SymbolTab
         if (!symbolTable.isDeclared(question.getIdentifier())) {
             issuesStorage.addError(new UndefinedQLQuestion(question));
         }
-    }
-
-    @Override
-    public Void visitCustomWidgetQuestion(CustomWidgetQuestion question, SymbolTable symbolTable) {
-        checkDuplicateQLSQuestions(question);
-        checkUndefinedQLQuestions(question, symbolTable);
-        checkWidgetTypeForQLQuestion(question, symbolTable);
-        return null;
-    }
-
-    @Override
-    public Void visitGenericWidgetQuestion(WidgetQuestion question, SymbolTable symbolTable) {
-        checkDuplicateQLSQuestions(question);
-        checkUndefinedQLQuestions(question, symbolTable);
-        return null;
     }
 }

@@ -8,17 +8,18 @@ import org.qls.ast.StyleSheet;
 
 public class QLSTypeChecker {
     private final QLTypeChecker qlTypeChecker;
+    private final QLSQuestionVisitor qlsQuestionVisitor;
 
     public QLSTypeChecker() {
         qlTypeChecker = new QLTypeChecker();
+        qlsQuestionVisitor = new QLSQuestionVisitor();
     }
 
     public IssuesStorage checkStyleSheet(Form formAST, StyleSheet styleSheet) {
-
         SymbolTable symbolTable = new SymbolTable();
         IssuesStorage issuesStorage = qlTypeChecker.checkForm(formAST, symbolTable);
 
-        QLSQuestionVisitor qlsQuestionReferenceVisitor = new QLSQuestionVisitor(issuesStorage);
+        qlsQuestionVisitor.visitStyleSheet(styleSheet, issuesStorage, symbolTable);
 
         return issuesStorage;
     }

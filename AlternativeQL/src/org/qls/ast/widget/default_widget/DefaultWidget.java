@@ -1,4 +1,4 @@
-package org.qls.ast.widget.defaultWidget;
+package org.qls.ast.widget.default_widget;
 
 import org.ql.ast.Node;
 import org.ql.ast.type.Type;

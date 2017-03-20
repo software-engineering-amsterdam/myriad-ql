@@ -3,10 +3,10 @@ package org.qls.parser.widget.DefaultWidget;
 import org.junit.Test;
 import org.qls.ast.page.Page;
 import org.qls.ast.widget.SpinboxWidget;
-import org.qls.ast.widget.defaultWidget.DefaultWidgetWithStyle;
-import org.qls.ast.widget.defaultWidget.style.FontRule;
-import org.qls.ast.widget.defaultWidget.style.FontSizeRule;
-import org.qls.ast.widget.defaultWidget.style.WidthRule;
+import org.qls.ast.widget.default_widget.DefaultWidgetWithStyle;
+import org.qls.ast.widget.default_widget.style.FontRule;
+import org.qls.ast.widget.default_widget.style.FontSizeRule;
+import org.qls.ast.widget.default_widget.style.WidthRule;
 import org.qls.parser.Parser;
 
 import static org.junit.Assert.assertEquals;

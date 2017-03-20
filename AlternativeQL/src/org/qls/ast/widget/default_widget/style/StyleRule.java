@@ -1,4 +1,4 @@
-package org.qls.ast.widget.defaultWidget.style;
+package org.qls.ast.widget.default_widget.style;
 
 import org.ql.ast.Node;
 

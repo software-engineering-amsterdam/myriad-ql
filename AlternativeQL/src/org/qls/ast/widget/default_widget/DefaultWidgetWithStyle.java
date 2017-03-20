@@ -1,8 +1,8 @@
-package org.qls.ast.widget.defaultWidget;
+package org.qls.ast.widget.default_widget;
 
 import org.ql.ast.type.Type;
 import org.qls.ast.widget.Widget;
-import org.qls.ast.widget.defaultWidget.style.StyleRule;
+import org.qls.ast.widget.default_widget.style.StyleRule;
 
 import java.util.List;
 

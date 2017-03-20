@@ -1,4 +1,4 @@
-package org.qls.ast.widget.defaultWidget.style;
+package org.qls.ast.widget.default_widget.style;
 
 public class FontRule extends StyleRule {
     private final String font;

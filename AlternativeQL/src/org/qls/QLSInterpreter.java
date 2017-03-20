@@ -29,12 +29,11 @@ public class QLSInterpreter {
 
     private void reportIssues(IssuesStorage issues) {
         issues.getErrors().forEach(this::printIssue);
+        issues.getWarnings().forEach(this::printIssue);
 
         if (issues.hasErrors()) {
             System.exit(1);
         }
-
-        issues.getWarnings().forEach(this::printIssue);
     }
 
     private void printIssue(Issue issue) {

@@ -1,4 +1,4 @@
-package org.qls.ast.widget.defaultWidget.style;
+package org.qls.ast.widget.default_widget.style;
 
 public class ColorRule extends StyleRule {
     private final String hexCode;
