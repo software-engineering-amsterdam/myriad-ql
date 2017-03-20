@@ -1,14 +1,8 @@
 module QL
   module AST
     class BooleanType < Type
-      def literal_type
-        BooleanLiteral
-      end
-
-      def widget
-        # QL::GUI::RadioWidget
-        QL::GUI::CheckboxWidget
-        # QL::GUI::DropdownWidget
+      def accept(visitor)
+        visitor.visit_boolean_type(self)
       end
     end
   end

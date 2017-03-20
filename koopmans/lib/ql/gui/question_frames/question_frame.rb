@@ -4,21 +4,19 @@ module QL
       include Callback
       attr_reader :enabled, :condition, :widget
 
-      def initialize(ast_question, condition=nil)
-        @ast_question = ast_question
+      def initialize(name, label, type, widget_type, condition=nil, assignment=nil)
+        @name = name
+        @label = label
+        @type = type
+        @widget_type = widget_type
         @condition = condition
         @enabled = true
       end
 
-      def create_corresponding_widget
-        @widget = widget_type.new(@tk_frame)
-      end
-
-      # TODO split into render and run
       def render
         @tk_frame = TkFrame.new.grid
-        Label.new(@tk_frame, label)
-        create_corresponding_widget
+        Label.new(@tk_frame, @label)
+        @widget = @widget_type.new(@tk_frame)
 
         store_default_value
         listen_to_widget
@@ -42,7 +40,7 @@ module QL
       end
 
       def store_value
-        VariableTable.store(variable_name, literal_type.new(@value))
+        VariableTable.store(@name, @type.new(@value))
       end
 
       def reload
@@ -68,28 +66,6 @@ module QL
       # TODO Open/closed principle formatting (https://subvisual.co/blog/posts/19-solid-principles-in-ruby)
       def to_json
         { label => @value }
-      end
-
-      # TODO move to ast/question OR remove
-      # init question frame with variable name, label, literal_type, widget_type and a default value
-      def variable_name
-        @ast_question.variable.name
-      end
-
-      def label
-        @ast_question.label.value
-      end
-
-      def literal_type
-        @ast_question.type.literal_type
-      end
-
-      def widget_type
-        @ast_question.type.widget
-      end
-
-      def default_value
-        @ast_question.type.default_value
       end
     end
   end

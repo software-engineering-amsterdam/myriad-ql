@@ -1,12 +1,8 @@
 module QL
   module AST
     class DateType < Type
-      def literal_type
-        IntegerLiteral
-      end
-
-      def widget
-        QL::GUI::SpinboxWidget
+      def accept(visitor)
+        visitor.visit_date_type(self)
       end
     end
   end

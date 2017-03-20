@@ -14,9 +14,8 @@ module QL
         render_questions
         listen_to_questions
 
-        @submit_button = SubmitButton.new
+        render_submit_buttom
         listen_to_submit_button
-
         Tk.mainloop
       end
 
@@ -33,6 +32,10 @@ module QL
             reload_questions
           end
         end
+      end
+
+      def render_submit_buttom
+        @submit_button = SubmitButton.new
       end
 
       def listen_to_submit_button

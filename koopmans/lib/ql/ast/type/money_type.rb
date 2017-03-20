@@ -1,14 +1,8 @@
 module QL
   module AST
     class MoneyType < Type
-      def literal_type
-        IntegerLiteral
-      end
-
-      def widget
-        # QL::GUI::TextWidget
-        QL::GUI::SpinboxWidget
-        # QL::GUI::SliderWidget
+      def accept(visitor)
+        visitor.visit_money_type(self)
       end
     end
   end

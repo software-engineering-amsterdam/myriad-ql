@@ -1,12 +1,8 @@
 module QL
   module AST
     class StringType < Type
-      def literal_type
-        StringLiteral
-      end
-
-      def widget
-        QL::GUI::TextWidget
+      def accept(visitor)
+        visitor.visit_string_type(self)
       end
     end
   end

@@ -33,12 +33,52 @@ module QL
       end
 
       def visit_question(question, condition=nil)
-        QuestionFrame.new(question, condition)
+        name = question.variable.name
+        label = question.label.value
+        type, widget_type = question.type.accept(self)
+        QuestionFrame.new(name, label, type, widget_type, condition)
       end
 
       def visit_computed_question(question, condition=nil)
-        ComputedQuestionFrame.new(question, condition)
+        name = question.variable.name
+        label = question.label.value
+        type, _ = question.type.accept(self)
+        widget_type = ComputedWidget
+        assignment = question.assignment
+        ComputedQuestionFrame.new(name, label, type, widget_type, condition, assignment)
       end
+
+      def visit_boolean_type(_)
+        return AST::BooleanLiteral, RadioWidget
+      end
+
+      def visit_date_type(_)
+        return AST::IntegerLiteral, TextWidget
+      end
+
+      def visit_decimal_type(_)
+        return AST::IntegerLiteral, TextWidget
+      end
+
+      def visit_integer_type(_)
+        return AST::IntegerLiteral, SpinboxWidget
+      end
+
+      def visit_money_type(_)
+        return AST::IntegerLiteral, SpinboxWidget
+      end
+
+      def visit_string_type(_)
+        return AST::StringLiteral, TextWidget
+      end
+
+      # all widgets
+      # TextWidget
+      # SpinboxWidget
+      # SliderWidget
+      # RadioWidget
+      # CheckboxWidget
+      # DropdownWidget
     end
   end
 end
