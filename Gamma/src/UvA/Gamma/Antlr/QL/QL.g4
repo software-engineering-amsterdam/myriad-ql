@@ -11,7 +11,7 @@ question: STRING_LITERAL ID':' type;
 
 computed: STRING_LITERAL ID':' expression;
 
-type: BOOL | STRING | INT | DATE | DEC | MONEY;
+type: BOOL #booleanType | STRING #stringType | INT #intType | DATE #dateType | DEC  #decimalType| MONEY #moneyType;
 
 condition: 'if' '('boolExpr')' '{' (formItem)* '}' (elseblock)?;
 

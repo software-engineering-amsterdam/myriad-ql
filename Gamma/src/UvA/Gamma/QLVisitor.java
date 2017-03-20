@@ -85,24 +85,33 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
     }
 
     @Override
-    public Value visitType(QLParser.TypeContext ctx) {
-        switch (ctx.getText()) {
-            case "boolean":
-                return new Boolean(false);
-            case "integer":
-                return new Number(0);
-            case "decimal":
-                return new Number(0);
-            case "money":
-                return new Money(0);
-            case "string":
-                return new StringValue();
-            case "date":
-                return new DateValue("");
-            default:
-                System.err.println("The type " + ctx.getText() + " is not a valid type in QL");
-                System.exit(1);
-                return null;
-        }
+    public Boolean visitBooleanType(QLParser.BooleanTypeContext ctx) {
+        return new Boolean(false);
     }
+
+    @Override
+    public Number visitIntType(QLParser.IntTypeContext ctx) {
+        return new Number(0);
+    }
+
+    @Override
+    public Number visitDecimalType(QLParser.DecimalTypeContext ctx) {
+        return new Number(0);
+    }
+
+    @Override
+    public Money visitMoneyType(QLParser.MoneyTypeContext ctx) {
+        return new Money(0);
+    }
+
+    @Override
+    public StringValue visitStringType(QLParser.StringTypeContext ctx) {
+        return new StringValue();
+    }
+
+    @Override
+    public ASTNode visitDateType(QLParser.DateTypeContext ctx) {
+        return new DateValue("");
+    }
+
 }

@@ -34,11 +34,47 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitComputed(QLParser.ComputedContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link QLParser#type}.
+	 * Visit a parse tree produced by the {@code booleanType}
+	 * labeled alternative in {@link QLParser#type}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitType(QLParser.TypeContext ctx);
+	T visitBooleanType(QLParser.BooleanTypeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code stringType}
+	 * labeled alternative in {@link QLParser#type}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStringType(QLParser.StringTypeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code intType}
+	 * labeled alternative in {@link QLParser#type}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntType(QLParser.IntTypeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code dateType}
+	 * labeled alternative in {@link QLParser#type}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDateType(QLParser.DateTypeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code decimalType}
+	 * labeled alternative in {@link QLParser#type}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDecimalType(QLParser.DecimalTypeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code moneyType}
+	 * labeled alternative in {@link QLParser#type}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMoneyType(QLParser.MoneyTypeContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link QLParser#condition}.
 	 * @param ctx the parse tree
