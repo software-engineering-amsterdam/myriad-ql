@@ -356,7 +356,7 @@ class TestStringTypeChecker(Shared):
     def test_string_equality_string_and_string(self):
         input_string = """
         form taxOfficeExample {
-            "Value residue:" valueResidue: boolean = 'abcd' == 'abc'
+            "Value residue:" valueResidue: string = 'abcd' == 'abc'
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
@@ -396,7 +396,7 @@ class TestStringTypeChecker(Shared):
     def test_string_inequality_string_and_string(self):
         input_string = """
         form taxOfficeExample {
-            "Value residue:" valueResidue: boolean = 'abcd' != 'abc'
+            "Value residue:" valueResidue: string = 'abcd' != 'abc'
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
@@ -436,7 +436,7 @@ class TestStringTypeChecker(Shared):
     def test_string_greater_inclusive_string_and_string(self):
         input_string = """
         form taxOfficeExample {
-            "Value residue:" valueResidue: boolean = 'abcd' >= 'abc'
+            "Value residue:" valueResidue: string = 'abcd' >= 'abc'
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
@@ -476,7 +476,7 @@ class TestStringTypeChecker(Shared):
     def test_string_greater_exclusive_string_and_string(self):
         input_string = """
         form taxOfficeExample {
-            "Value residue:" valueResidue: boolean = 'abcd' > 'abc'
+            "Value residue:" valueResidue: string = 'abcd' > 'abc'
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
@@ -516,7 +516,7 @@ class TestStringTypeChecker(Shared):
     def test_string_smaller_inclusive_string_and_string(self):
         input_string = """
         form taxOfficeExample {
-            "Value residue:" valueResidue: boolean = 'abcd' <= 'abc'
+            "Value residue:" valueResidue: string = 'abcd' <= 'abc'
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
@@ -556,7 +556,7 @@ class TestStringTypeChecker(Shared):
     def test_string_smaller_exclusive_string_and_string(self):
         input_string = """
         form taxOfficeExample {
-            "Value residue:" valueResidue: boolean = 'abcd' < 'abc'
+            "Value residue:" valueResidue: string = 'abcd' < 'abc'
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
