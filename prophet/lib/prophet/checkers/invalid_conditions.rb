@@ -29,7 +29,7 @@ module Prophet
 
       def type_mapping
         @type_mapping ||= ast.select_by_type(:question, :question_with_value).map do |question|
-          [question.identifier.name.to_s, question.type.name.to_s]
+          [question.identifier.name.to_s, question.type]
         end.to_h
       end
     end
