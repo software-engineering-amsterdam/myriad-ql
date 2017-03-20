@@ -8,7 +8,7 @@ import com.matthewchapman.ql.ast.statement.Question;
 /**
  * Created by matt on 18/03/2017.
  */
-public interface QLStatementVisitor<T, C> {
+public interface StatementVisitor<T, C> {
 
     //Statement
     T visit(Question question, C context);

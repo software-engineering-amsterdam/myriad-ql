@@ -2,7 +2,7 @@ package com.matthewchapman.ql.ast.statement;
 
 import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Statement;
-import com.matthewchapman.ql.validation.visitors.QLStatementVisitor;
+import com.matthewchapman.ql.validation.visitors.StatementVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ public class IfStatement extends Statement {
     }
 
     @Override
-    public <T, C> T accept(QLStatementVisitor<T, C> visitor, C context) {
+    public <T, C> T accept(StatementVisitor<T, C> visitor, C context) {
         return visitor.visit(this, context);
     }
 

@@ -5,14 +5,14 @@ import java.util.Objects;
 /**
  * Created by matt on 13/03/2017.
  */
-public class QLError implements Comparable<QLError> {
+public class Error implements Comparable<Error> {
 
     private final String message;
     private final int line;
     private final int column;
     private final String id;
 
-    public QLError(int line, int column, String id, String message) {
+    public Error(int line, int column, String id, String message) {
         this.message = message;
         this.line = line;
         this.column = column;
@@ -30,7 +30,7 @@ public class QLError implements Comparable<QLError> {
     }
 
     @Override
-    public int compareTo(QLError o) {
+    public int compareTo(Error o) {
         return this.line - o.line;
     }
 
@@ -40,11 +40,11 @@ public class QLError implements Comparable<QLError> {
             return true;
         }
 
-        if (!(obj instanceof QLError)) {
+        if (!(obj instanceof Error)) {
             return false;
         }
 
-        QLError input = (QLError) obj;
+        Error input = (Error) obj;
 
         return Objects.equals(this.line, input.line) &&
                 Objects.equals(this.column, input.column) &&

@@ -1,46 +1,46 @@
 package com.matthewchapman.ql.validation;
 
 import com.matthewchapman.ql.ast.Form;
-import com.matthewchapman.ql.core.QLErrorLogger;
+import com.matthewchapman.ql.core.ErrorLogger;
 import com.matthewchapman.ql.gui.errors.ErrorDialogGenerator;
-import com.matthewchapman.ql.validation.structure.QLExpressionChecker;
+import com.matthewchapman.ql.validation.structure.ExpressionChecker;
 import com.matthewchapman.ql.validation.structure.QuestionCollection;
-import com.matthewchapman.ql.validation.structure.cyclic.QLDependencyChecker;
-import com.matthewchapman.ql.validation.type.QLTypeChecker;
+import com.matthewchapman.ql.validation.structure.cyclic.DependencyChecker;
+import com.matthewchapman.ql.validation.type.TypeChecker;
 
 /**
  * Created by matt on 27/02/2017.
  * <p>
  * Type checker for the QL AST.
  */
-public class QLValidator {
+public class Validator {
 
     private static final String INTERPRETER_ERROR_TITLE = "Interpreter Errors Found";
     private static final String INTERPRETER_ERROR_BODY = "QL encountered an interpreter error";
     private static final String INTERPRETER_WARNING_TITLE = "Interpreter Warnings Found";
     private static final String INTERPRETER_WARNING_BODY = "QL encountered an interpreter warning";
     private final QuestionCollection questionCollection;
-    private final QLTypeChecker qlTypeChecker;
-    private final QLDependencyChecker qlDependencyChecker;
+    private final TypeChecker typeChecker;
+    private final DependencyChecker dependencyChecker;
     private final ErrorDialogGenerator dialogGenerator;
-    private final QLExpressionChecker qlExpressionChecker;
+    private final ExpressionChecker expressionChecker;
 
-    public QLValidator() {
+    public Validator() {
         this.dialogGenerator = new ErrorDialogGenerator();
         this.questionCollection = new QuestionCollection();
-        this.qlTypeChecker = new QLTypeChecker();
-        this.qlDependencyChecker = new QLDependencyChecker();
-        this.qlExpressionChecker = new QLExpressionChecker();
+        this.typeChecker = new TypeChecker();
+        this.dependencyChecker = new DependencyChecker();
+        this.expressionChecker = new ExpressionChecker();
     }
 
     public QuestionCollection getQuestionCollection() { return this.questionCollection; }
 
     public boolean runChecks(Form astRoot) {
 
-        QLErrorLogger mainLogger = new QLErrorLogger();
+        ErrorLogger mainLogger = new ErrorLogger();
 
         //duplicate questions are ok at this point, continue to check the QL
-        QLErrorLogger duplicateLog = questionCollection.gatherQuestions(astRoot);
+        ErrorLogger duplicateLog = questionCollection.gatherQuestions(astRoot);
         mainLogger.addMultipleErrors(duplicateLog);
         mainLogger.addMultipleWarnings(duplicateLog);
 
@@ -50,7 +50,7 @@ public class QLValidator {
         }
 
         //missing parameters are bad
-        QLErrorLogger parameterLog = qlExpressionChecker.checkExpressions(astRoot, questionCollection.getTypeTable());
+        ErrorLogger parameterLog = expressionChecker.checkExpressions(astRoot, questionCollection.getTypeTable());
         mainLogger.addMultipleErrors(parameterLog);
 
         //if we have any errors at all at this point, halt.
@@ -60,7 +60,7 @@ public class QLValidator {
         }
 
         //circular dependencies are bad
-        QLErrorLogger dependencyLog = qlDependencyChecker.checkForCircularDependencies(qlExpressionChecker.getExpressionMap());
+        ErrorLogger dependencyLog = dependencyChecker.checkForCircularDependencies(expressionChecker.getExpressionMap());
         if (dependencyLog.getErrorNumber() > 0) {
             mainLogger.addMultipleErrors(dependencyLog);
             dialogGenerator.generateErrorListBox(mainLogger.getErrorsAsString(), INTERPRETER_ERROR_TITLE, INTERPRETER_ERROR_BODY);
@@ -68,7 +68,7 @@ public class QLValidator {
         }
 
         //incorrect types are also bad
-        QLErrorLogger typeLog = qlTypeChecker.checkExpressionTypes(astRoot, questionCollection.getTypeTable());
+        ErrorLogger typeLog = typeChecker.checkExpressionTypes(astRoot, questionCollection.getTypeTable());
         if (typeLog.getErrorNumber() > 0) {
             dialogGenerator.generateErrorListBox(typeLog.getErrorsAsString(), INTERPRETER_ERROR_TITLE, INTERPRETER_ERROR_BODY);
             return false;

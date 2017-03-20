@@ -10,25 +10,25 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by matt on 17/03/2017.
  */
-public class QLDependencyCheckerTest {
+public class DependencyCheckerTest {
 
     @Test
     public void testDependencyChecker() {
 
-        QLDependencyChecker checker = new QLDependencyChecker();
+        DependencyChecker checker = new DependencyChecker();
 
         int EXPECTED_PAIRS = 6;
         int EXPECTED_REFLEXIVE_PAIRS = 3;
-        QLDependencyPair pair1 = new QLDependencyPair("test1", "test2");
-        QLDependencyPair pair2 = new QLDependencyPair("test2", "test3");
-        QLDependencyPair pair3 = new QLDependencyPair("test3", "test1");
+        DependencyPair pair1 = new DependencyPair("test1", "test2");
+        DependencyPair pair2 = new DependencyPair("test2", "test3");
+        DependencyPair pair3 = new DependencyPair("test3", "test1");
 
-        Set<QLDependencyPair> dependencySet = new HashSet<QLDependencyPair>(){{add(pair1); add(pair2); add(pair3);}};
+        Set<DependencyPair> dependencySet = new HashSet<DependencyPair>(){{add(pair1); add(pair2); add(pair3);}};
 
-        Set<QLDependencyPair> closure = checker.makeClosure(dependencySet);
+        Set<DependencyPair> closure = checker.makeClosure(dependencySet);
         int reflexiveCount = 0;
 
-        for (QLDependencyPair pair : closure) {
+        for (DependencyPair pair : closure) {
             if (pair.isReflexive()) {
                 reflexiveCount++;
             }

@@ -4,7 +4,7 @@ import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.atomic.type.BooleanType;
 import com.matthewchapman.ql.ast.atomic.Type;
 import com.matthewchapman.ql.core.CoreParser;
-import com.matthewchapman.ql.core.QLErrorLogger;
+import com.matthewchapman.ql.core.ErrorLogger;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -15,19 +15,19 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by matt on 17/03/2017.
  */
-public class QLExpressionCheckerTest {
+public class ExpressionCheckerTest {
 
 
     @Test
     public void checkExpressions() {
         int EXPECTED_ERRORS = 1;
 
-        QLExpressionChecker checker = new QLExpressionChecker();
+        ExpressionChecker checker = new ExpressionChecker();
         CoreParser parser = new CoreParser();
         Form form = parser.getForm(parser.getQlParser("form test { if (parameter1) { \"Test\" testquestion:boolean; } if (testquestion2) { \"anothertest\" anothertest:boolean; } }"));
         Map<String, Type> typeTable = new HashMap<String, Type>(){{ put("testquestion2", new BooleanType()); }};
 
-        QLErrorLogger logger = checker.checkExpressions(form, typeTable);
+        ErrorLogger logger = checker.checkExpressions(form, typeTable);
 
         assertEquals(EXPECTED_ERRORS, logger.getErrorNumber());
     }

@@ -11,7 +11,7 @@ import com.matthewchapman.ql.ast.expression.unary.Negation;
 /**
  * Created by matt on 18/03/2017.
  */
-public interface QLExpressionVisitor<T, C> {
+public interface ExpressionVisitor<T, C> {
 
     T visit(Addition addition, C context);
 
