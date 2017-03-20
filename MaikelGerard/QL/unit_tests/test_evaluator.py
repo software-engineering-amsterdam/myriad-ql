@@ -1,7 +1,7 @@
 from QL.stages.parser import Parser as Parser
-from QL.stages.expressionEvaluator import ExpressionEvaluator
+from QL.stages.expression_evaluator import ExpressionEvaluator
 from QL.environment import Environment
-from QL.errorHandler import ErrorHandler
+from QL.error_handler import ErrorHandler
 from QL.undefined import Undefined
 import QL.AST as AST
 

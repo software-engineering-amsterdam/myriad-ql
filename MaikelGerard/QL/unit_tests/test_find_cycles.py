@@ -1,6 +1,6 @@
 from QL.stages.parser import Parser as Parser
-from QL.errorHandler import ErrorHandler
-from QL.stages.findCycles import FindCycles
+from QL.error_handler import ErrorHandler
+from QL.stages.find_cycles import FindCycles
 
 import unittest
 
@@ -20,7 +20,7 @@ class TestCycles(unittest.TestCase):
         form = """
             form taxOfficeExample {
                 if (x) { "Y?" y: boolean }
-                if (g) { "G?" a: money }
+                if (g) { "G?" a: integer }
                 if (y) { "Z?" z: boolean }
                 if (z) { "X?" x: boolean }
             }

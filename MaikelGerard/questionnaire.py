@@ -1,20 +1,20 @@
 import argparse
 
 from QL.environment import Environment
-from QL.errorHandler import ErrorHandler
+from QL.error_handler import ErrorHandler
 from QL.GUI.drawGUI import DrawGUI
-from QL.stages.findCycles import FindCycles
+from QL.stages.find_cycles import FindCycles
 from QL.stages.parser import Parser
-from QL.stages.typeChecker import TypeChecker
-from QL.stages.printHandler import PrintHandler
-from QL.stages.initEnvironment import InitEnvironment
+from QL.stages.type_checker import TypeChecker
+from QL.stages.print_handler import PrintHandler
+from QL.stages.init_environment import InitEnvironment
 
 from QLS.environment import Environment as QLSEnvironment
-from QLS.errorHandler import ErrorHandler as QLSErrorHandler
-from QLS.Stages.parser import Parser as QLSParser
-from QLS.Stages.typeChecker import TypeChecker as QLSTypeChecker
-from QLS.Stages.determineWidgetType import DetermineWidgetType
-from QLS.Stages.printHandler import PrintHandler as QLSPrintHandler
+from QLS.error_handler import ErrorHandler as QLSErrorHandler
+from QLS.stages.parser import Parser as QLSParser
+from QLS.stages.type_checker import TypeChecker as QLSTypeChecker
+from QLS.stages.determine_widget_type import DetermineWidgetType
+from QLS.stages.print_handler import PrintHandler as QLSPrintHandler
 from QLS.GUI.drawGUI import DrawGUI as QLSDrawGUI
 
 

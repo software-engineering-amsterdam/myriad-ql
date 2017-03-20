@@ -3,9 +3,9 @@ from appJar import gui
 from collections import OrderedDict
 
 from QL.undefined import Undefined
-from QL.GUI.evaluateDrawState import EvaluateDrawState
-from QL.GUI.saveQuestionaire import SaveQuestionaire
-from QL.stages.updateComputedVars import UpdateComputedVars
+from QL.GUI.evaluate_draw_state import EvaluateDrawState
+from QL.GUI.save_questionaire import SaveQuestionaire
+from QL.stages.update_computed_vars import UpdateComputedVars
 import QL.GUI.widgets as Widgets
 
 

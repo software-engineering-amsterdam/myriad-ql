@@ -1,4 +1,4 @@
-from QLS.Stages.determineIsComputed import DetermineIsComputed
+from QLS.stages.determine_is_computed import DetermineIsComputed
 
 
 class TypeChecker(object):
