@@ -47,6 +47,11 @@ class Eval(ExpressionAlg):
             execute = lambda self: 1 if lhs.execute() > rhs.execute() else 0
         return _anon()
 
+    def GreaterThanEquals(self, lhs, rhs):
+        class _anon():
+            execute = lambda self: 1 if lhs.execute() >= rhs.execute() else 0
+        return _anon()
+
     def LessThan(self, lhs, rhs):
         class _anon():
             execute = lambda self: 1 if lhs.execute() < rhs.execute() else 0

@@ -103,6 +103,11 @@ class RegisterConditions(QlAlg):
             execute = lambda self: GreaterThan(lhs.execute(), rhs.execute())
         return _anon()
 
+    def GreaterThanEquals(self, lhs, rhs):
+        class _anon():
+            execute = lambda self: GreaterThanEquals(lhs.execute(), rhs.execute())
+        return _anon()
+
     def LessThan(self, lhs, rhs):
         class _anon():
             execute = lambda self: LessThan(lhs.execute(), rhs.execute())
