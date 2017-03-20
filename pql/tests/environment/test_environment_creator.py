@@ -1,5 +1,4 @@
 # coding=utf-8
-from pql.parser.parser import parse
 from tests.shared import Shared
 
 

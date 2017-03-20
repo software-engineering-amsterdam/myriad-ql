@@ -323,7 +323,6 @@ class TestParser(TestCase):
             parse(input_string)
             self.fail('form is reserved')
 
-
     def test_parse_form_name_reserved_4(self):
         input_string = """
         form else {

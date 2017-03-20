@@ -1,7 +1,7 @@
 # coding=utf-8
 from pql.traversal.BinaryExpressionVisitor import BinaryExpressionVisitor
 from pql.traversal.UnaryExpressionVisitor import UnaryExpressionVisitor
-from pql.typechecker.types import is_number_type, DataTypes
+from pql.typechecker.types import is_number_type
 
 
 class IntegerTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):

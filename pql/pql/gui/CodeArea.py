@@ -1,3 +1,4 @@
+# coding=utf-8
 from PyQt5.QtCore import QRect
 from PyQt5.QtCore import QSize
 from PyQt5.QtCore import Qt

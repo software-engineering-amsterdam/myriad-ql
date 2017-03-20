@@ -177,7 +177,7 @@ class Editor(QMainWindow, QWidget):
 
     def open_file(self, file_path):
         try:
-            with open(file_path, 'r') as open_file:
+            with open(file_path) as open_file:
                 return open_file.read()
         except FileNotFoundError as fnfe:
             self.add_message("Given file could not be found:\n    {}".format(fnfe))

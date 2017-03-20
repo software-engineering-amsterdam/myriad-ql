@@ -5,7 +5,6 @@ from tests.shared import Shared
 
 
 class TestEvaluator(Shared):
-
     def test_eval_arithmetic_integer_positive(self):
         input_string = """
         form taxOfficeExample {

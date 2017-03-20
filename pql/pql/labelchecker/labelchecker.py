@@ -16,7 +16,8 @@ class LabelChecker(FormVisitor):
             for key, nodes in identifiers.items():
                 if len(nodes) > 1:
                     alerts.append(
-                        Alert("Form contained multiple declarations of the same label: {}, at the following locations: {}"
+                        Alert("Form contained multiple declarations of the same label: {}, "
+                                "at the following locations: {}"
                                   .format(key, [v.location for v in nodes]), nodes[0].location))
             return alerts
 
