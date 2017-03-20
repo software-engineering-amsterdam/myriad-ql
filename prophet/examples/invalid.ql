@@ -14,6 +14,11 @@ form invalidQL
   "Invalid operands, part two"
     number invalidTwo => (1 + "invalid" * 100)
 
+  if true + 1
+    "Invalid operands, part three"
+      number invalidThree => 1
+  end
+
   "Direct cyclic dependency"
     number directCycle => directCycle
 
