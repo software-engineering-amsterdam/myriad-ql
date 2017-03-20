@@ -9,5 +9,7 @@ form Box1HouseOwning {
         if (sellingPrice > privateDebt) {
             valueResidue: "Value residue:" money(sellingPrice - privateDebt)
         }
+    } else {
+        eQuestion: "No house sold, boring, please explain yourself:" string
     }
 }
