@@ -30,6 +30,10 @@ class DrawGUI(object):
         self.add_buttons()
         self.main.go()
 
+    def start_traversal(self):
+        self.ast.accept(self)
+        self.show()
+
     def redraw(self, _):
         self.update_variables()
         self.ast.accept(self.update_computed_variables)
@@ -64,9 +68,6 @@ class DrawGUI(object):
         save_obj = SaveQuestionaire(self.ast, self.widgets)
         save_obj.start_traversal()
 
-    def build_gui(self):
-        self.ast.accept(self)
-
     def if_node(self, if_node):
         if_node.if_block.accept(self)
 
@@ -95,20 +96,22 @@ class DrawGUI(object):
         widget_class = Widgets.ComputedLabelWidget
         self.add_widget(widget_class, identifier, question_str)
 
-    def bool_type_node(self, _):
+    @staticmethod
+    def bool_type_node(_):
         return Widgets.CheckBoxWidget
 
-    def int_type_node(self, _):
+    @staticmethod
+    def int_type_node(_):
         return Widgets.SpinBoxWidget
 
-    def money_type_node(self, _):
+    @staticmethod
+    def decimal_type_node(_):
         return Widgets.NumericWidget
 
-    def decimal_type_node(self, _):
-        return Widgets.NumericWidget
-
-    def string_type_node(self, _):
+    @staticmethod
+    def string_type_node(_):
         return Widgets.EntryWidget
 
-    def date_type_node(self, _):
+    @staticmethod
+    def date_type_node(_):
         return Widgets.DateWidget
