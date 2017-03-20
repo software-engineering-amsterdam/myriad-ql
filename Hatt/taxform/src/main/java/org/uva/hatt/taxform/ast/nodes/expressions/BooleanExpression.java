@@ -2,10 +2,23 @@ package org.uva.hatt.taxform.ast.nodes.expressions;
 
 import org.uva.hatt.taxform.ast.visitors.Visitor;
 
-public class BooleanExpression extends Expression{
+public abstract class BooleanExpression extends Expression{
 
-    public BooleanExpression(int lineNumber) {
+    private Expression lhs;
+    private Expression rhs;
+
+    public BooleanExpression(int lineNumber, Expression lhs, Expression rhs) {
         super(lineNumber);
+        this.lhs = lhs;
+        this.rhs = rhs;
+    }
+
+    public Expression getLhs() {
+        return lhs;
+    }
+
+    public Expression getRhs() {
+        return rhs;
     }
 
     @Override

@@ -6,15 +6,13 @@ import org.uva.hatt.taxform.ast.visitors.EnvironmentsTable;
 
 import javax.script.ScriptException;
 
-import static org.junit.Assert.*;
-
 public class BooleanExpressionTest {
 
     @Test
     public void testEqualBooleanExpressionEqual() throws ScriptException {
         EnvironmentsTable environmentsTable = new EnvironmentsTable();
 
-        BooleanExpression booleanExpression = new BooleanExpression(1);
+        BooleanExpression booleanExpression = new BooleanExpression(1, lhs, rhs);
 
         BooleanLiteral booleanTrue = new BooleanLiteral(1, "true");
         BooleanLiteral booleanFalse = new BooleanLiteral(1, "true");
@@ -30,7 +28,7 @@ public class BooleanExpressionTest {
     public void testEqualBooleanExpressionNotEqual() throws ScriptException {
         EnvironmentsTable environmentsTable = new EnvironmentsTable();
 
-        BooleanExpression booleanExpression = new BooleanExpression(1);
+        BooleanExpression booleanExpression = new BooleanExpression(1, lhs, rhs);
 
         BooleanLiteral booleanTrue = new BooleanLiteral(1, "true");
         BooleanLiteral booleanFalse = new BooleanLiteral(1, "false");
@@ -46,7 +44,7 @@ public class BooleanExpressionTest {
     public void testNotEqualBooleanExpressionEqual() throws ScriptException {
         EnvironmentsTable environmentsTable = new EnvironmentsTable();
 
-        BooleanExpression booleanExpression = new BooleanExpression(1);
+        BooleanExpression booleanExpression = new BooleanExpression(1, lhs, rhs);
 
         BooleanLiteral booleanTrue = new BooleanLiteral(1, "true");
         BooleanLiteral booleanFalse = new BooleanLiteral(1, "false");
@@ -62,7 +60,7 @@ public class BooleanExpressionTest {
     public void testNotEqualBooleanExpressionNotEqual() throws ScriptException {
         EnvironmentsTable environmentsTable = new EnvironmentsTable();
 
-        BooleanExpression booleanExpression = new BooleanExpression(1);
+        BooleanExpression booleanExpression = new BooleanExpression(1, lhs, rhs);
 
         BooleanLiteral booleanTrue = new BooleanLiteral(1, "true");
         BooleanLiteral booleanFalse = new BooleanLiteral(1, "true");
@@ -78,7 +76,7 @@ public class BooleanExpressionTest {
     public void testAndBooleanExpressionEqual() throws ScriptException {
         EnvironmentsTable environmentsTable = new EnvironmentsTable();
 
-        BooleanExpression booleanExpression = new BooleanExpression(1);
+        BooleanExpression booleanExpression = new BooleanExpression(1, lhs, rhs);
 
         BooleanLiteral booleanTrue = new BooleanLiteral(1, "true");
         BooleanLiteral booleanFalse = new BooleanLiteral(1, "true");
@@ -94,7 +92,7 @@ public class BooleanExpressionTest {
     public void testAndBooleanExpressionNotEqual() throws ScriptException {
         EnvironmentsTable environmentsTable = new EnvironmentsTable();
 
-        BooleanExpression booleanExpression = new BooleanExpression(1);
+        BooleanExpression booleanExpression = new BooleanExpression(1, lhs, rhs);
 
         BooleanLiteral booleanTrue = new BooleanLiteral(1, "true");
         BooleanLiteral booleanFalse = new BooleanLiteral(1, "false");
@@ -110,7 +108,7 @@ public class BooleanExpressionTest {
     public void testOrBooleanExpressionEqual() throws ScriptException {
         EnvironmentsTable environmentsTable = new EnvironmentsTable();
 
-        BooleanExpression booleanExpression = new BooleanExpression(1);
+        BooleanExpression booleanExpression = new BooleanExpression(1, lhs, rhs);
 
         BooleanLiteral booleanTrue = new BooleanLiteral(1, "true");
         BooleanLiteral booleanFalse = new BooleanLiteral(1, "true");
@@ -126,7 +124,7 @@ public class BooleanExpressionTest {
     public void testOrBooleanExpressionEqualLeft() throws ScriptException {
         EnvironmentsTable environmentsTable = new EnvironmentsTable();
 
-        BooleanExpression booleanExpression = new BooleanExpression(1);
+        BooleanExpression booleanExpression = new BooleanExpression(1, lhs, rhs);
 
         BooleanLiteral booleanTrue = new BooleanLiteral(1, "true");
         BooleanLiteral booleanFalse = new BooleanLiteral(1, "false");
@@ -142,7 +140,7 @@ public class BooleanExpressionTest {
     public void testOrBooleanExpressionEqualRight() throws ScriptException {
         EnvironmentsTable environmentsTable = new EnvironmentsTable();
 
-        BooleanExpression booleanExpression = new BooleanExpression(1);
+        BooleanExpression booleanExpression = new BooleanExpression(1, lhs, rhs);
 
         BooleanLiteral booleanTrue = new BooleanLiteral(1, "false");
         BooleanLiteral booleanFalse = new BooleanLiteral(1, "true");
@@ -158,7 +156,7 @@ public class BooleanExpressionTest {
     public void testOrBooleanExpressionNotEqual() throws ScriptException {
         EnvironmentsTable environmentsTable = new EnvironmentsTable();
 
-        BooleanExpression booleanExpression = new BooleanExpression(1);
+        BooleanExpression booleanExpression = new BooleanExpression(1, lhs, rhs);
 
         BooleanLiteral booleanTrue = new BooleanLiteral(1, "false");
         BooleanLiteral booleanFalse = new BooleanLiteral(1, "false");

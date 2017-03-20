@@ -1,9 +1,10 @@
 package org.uva.hatt.taxform.ast.nodes.expressions.binary;
 
+import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
 //import org.uva.hatt.taxform.ast.visitors.ExpressionVisitor;
 
-public class NotEqual extends Binary{
+public class NotEqual extends BooleanExpression {
 
     public NotEqual(int lineNumber, Expression lhs, Expression rhs){
         super(lineNumber, lhs, rhs);

@@ -92,7 +92,7 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitBooleanExpression(QLParser.BooleanExpressionContext ctx) {
-        BooleanExpression booleanExpression = new BooleanExpression(ctx.start.getLine());
+        BooleanExpression booleanExpression = new BooleanExpression(ctx.start.getLine(), lhs, rhs);
         booleanExpression.setLeft((Expression) visit(ctx.left));
         booleanExpression.setRight((Expression) visit(ctx.right));
         booleanExpression.setOperator(ctx.op.getText());
