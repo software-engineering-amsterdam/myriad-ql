@@ -56,3 +56,8 @@ class Eval(ExpressionAlg):
         class _anon():
             execute = lambda self: lhs.execute() and rhs.execute()
         return _anon()
+
+    def LogicalOr(self, lhs, rhs):
+        class _anon():
+            execute = lambda self: lhs.execute() or rhs.execute()
+        return _anon()

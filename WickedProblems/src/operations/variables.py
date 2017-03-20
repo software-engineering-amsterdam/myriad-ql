@@ -140,6 +140,15 @@ class GetVariables(QlAlg):
             execute = lambda self: _register()
         return _anon()
 
+    def LogicalOr(self, lhs, rhs):
+        def _register():
+            lhs.execute()
+            rhs.execute()
+
+        class _anon():
+            execute = lambda self: _register()
+        return _anon()
+
     def Integer(self, value):
         def _register():
             return 'integer'
