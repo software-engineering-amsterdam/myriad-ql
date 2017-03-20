@@ -1,6 +1,7 @@
 from .eval import Eval
-class Environment(object):
 
+
+class Environment(object):
 
     def __init__(self):
         self.variables = []
@@ -12,7 +13,7 @@ class Environment(object):
 
     def add_var(self, var):
         self.variables.append(var)
-        self.variables_dict.update({var[0]:var[1]})
+        self.variables_dict.update({var[0]: var[1]})
 
     def add_ref(self, var):
         self.ref_variables.append(var)
@@ -27,7 +28,7 @@ class Environment(object):
         self.conditional_questions.update({variable: condition})
 
     def get_var_key(self, variable):
-        for key,val in self.variables_dict.items():
+        for key, val in self.variables_dict.items():
             if(val == variable):
                 return key
 
@@ -56,30 +57,6 @@ class Environment(object):
     def update_var(self, var, value):
         self.variables_dict.update({var: value})
 
-    def check_types(self):
-        sequence = [(_var, _datatype) for _var, _datatype in self.variables]
-        var_table = {}
-        issues = []
-        for _var, _datatype in sequence:
-            if var_table.has_key(_var):
-                existing_var = var_table.get(_var)
-                if existing_var != _datatype:
-                    issues.append('{} is already defined with {}, it can\'t be redeclared with {}'.format(
-                        _var, existing_var, _datatype))
-            else:
-                var_table.update({_var: _datatype})
-
-        return issues
-
-    def all_labels(self):
-        return [y for x, y in self.questions]
-
-    def duplicate_labels(self):
-        labels = self.all_labels()
-        frequency = {_label: labels.count(_label)
-                     for _var, _label in self.questions}
-        return {label for label, x in frequency.items() if x > 1}
-
     def is_registerd(self, var):
         return var in set([_var for _var, _type in self.variables])
 
@@ -88,6 +65,3 @@ class Environment(object):
 
     def export(self):
         return {key: variable.get() for key, variable in self.variables_dict.items()}
-
-    def undefined_variables(self):
-        return set([_var for _var in self.ref_variables if self.is_registerd(_var) == False])

@@ -11,6 +11,9 @@ class Eval(ExpressionAlg):
 
     def Literal(self):
         pass
+        
+    def Variable(self):
+        pass
 
     def String(self, value):
         class _anon():
