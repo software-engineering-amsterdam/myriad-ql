@@ -13,14 +13,11 @@ module QL
         @enabled = true
       end
 
-      def draw
+      def render
         @tk_frame = TkFrame.new.grid
         Label.new(@tk_frame, @label)
         @widget = @widget_type.new(@tk_frame)
-      end
 
-      def render
-        draw
         store_default_value
         listen_to_widget
       end

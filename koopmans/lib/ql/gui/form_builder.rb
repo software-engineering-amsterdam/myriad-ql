@@ -66,7 +66,6 @@ module QL
 
       def visit_money_type(_)
         return AST::IntegerLiteral, SpinboxWidget
-        # or
       end
 
       def visit_string_type(_)
