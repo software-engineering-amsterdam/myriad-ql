@@ -5,9 +5,9 @@ import javafx.scene.layout.VBox;
 /**
  * Created by Erik on 28-2-2017.
  */
-public class QUIStatements extends VBox {
+public class GUIStatements extends VBox {
 
-    public QUIStatements(VBox[] statements) {
+    public GUIStatements(VBox[] statements) {
         this.getChildren().addAll(statements);
     }
 }

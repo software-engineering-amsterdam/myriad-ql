@@ -33,4 +33,8 @@ public class GUIIf extends VBox {
         }
     }
 
+    public GUIExpr getCondition() {
+        return condition;
+    }
+
 }

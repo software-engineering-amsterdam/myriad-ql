@@ -6,6 +6,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
+import ql.gui.GUIEvaluator;
+import ql.values.IntValue;
 import ql.visistor.environment.Env;
 import ql.values.BooleanValue;
 import ql.values.UndefinedValue;
@@ -19,31 +21,16 @@ public class BooleanField extends ToggleGroup implements QLField{
     final RadioButton rbYes = new RadioButton("Yes");
     final RadioButton rbNo = new RadioButton("No");
 
-    public BooleanField(Env env, String variableName) {
+    public BooleanField(GUIEvaluator evaluator) {
         rbYes.setToggleGroup(this);
         rbNo.setToggleGroup(this);
 
-        this.selectedToggleProperty().addListener(new GUIChangeListener<Toggle>(env, variableName) {
+        this.selectedToggleProperty().addListener(new GUIChangeListener<Toggle>(evaluator) {
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-                if (newValue == null) {
-                    this.setValueUndefined();
-                    return;
-                }
-
-                if (newValue.equals(rbYes)) {
-                    this.setValue(true);
-                }else if (newValue.equals(rbNo)) {
-                    this.setValue(false);
-                }else {
-                    this.setValueUndefined();
-                }
+              this.evaluate();
             }
         });
-
-        if (env.hasQuestionExpr(variableName)) {
-            env.addEventListener(() -> update(env.getQuestionValue(variableName)));
-        }
     }
 
     private void update(Value value) {
@@ -65,6 +52,16 @@ public class BooleanField extends ToggleGroup implements QLField{
 
     public Node getNode(){
         return new HBox(rbYes, rbNo);
+    }
+
+    @Override
+    public Value getValue() {
+        if (rbYes.selectedProperty().getValue()) {
+            return new BooleanValue(true);
+        }else if(!rbNo.selectedProperty().getValue()) {
+            return new BooleanValue(false);
+        }
+        return new UndefinedValue();
     }
 
 }

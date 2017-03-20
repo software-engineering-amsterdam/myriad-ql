@@ -6,7 +6,7 @@ import ql.ast.expressions.RelationalOp;
 /**
  * Created by Erik on 21-2-2017.
  */
-public class NumType extends Type {
+public abstract class NumType extends Type {
 
     @Override
     protected Type checkTypesEval(ArithmeticOp op, IntType other) {

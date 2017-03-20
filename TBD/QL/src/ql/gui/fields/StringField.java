@@ -3,6 +3,9 @@ package ql.gui.fields;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
+import ql.gui.GUIEvaluator;
+import ql.values.IntValue;
+import ql.values.StringValue;
 import ql.visistor.environment.Env;
 import ql.values.Value;
 import ql.gui.GUIChangeListener;
@@ -12,19 +15,13 @@ import ql.gui.GUIChangeListener;
  */
 public class StringField extends TextField implements QLField{
 
-    public StringField(Env env, String variableName) {
-        this.textProperty().addListener(new GUIChangeListener<String>(env, variableName) {
+    public StringField(GUIEvaluator evaluator) {
+        this.textProperty().addListener(new GUIChangeListener<String>(evaluator) {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                this.setValue(newValue);
+                this.evaluate();
             }
         });
-
-        if (env.hasQuestionExpr(variableName)) {
-            env.addEventListener(() -> {
-                update(env.getQuestionValue(variableName));
-            });
-        }
     }
 
     private void update(Value value) {
@@ -33,6 +30,11 @@ public class StringField extends TextField implements QLField{
 
     public Node getNode(){
         return this;
+    }
+
+    @Override
+    public Value getValue() {
+        return new StringValue(this.textProperty().getValue());
     }
 
 }

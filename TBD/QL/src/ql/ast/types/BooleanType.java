@@ -2,6 +2,7 @@ package ql.ast.types;
 
 import ql.ast.expressions.EqualityOp;
 import ql.ast.expressions.LogicalOp;
+import ql.visistor.interfaces.TypeVisitor;
 
 
 /**
@@ -32,6 +33,11 @@ public class BooleanType extends Type {
     @Override
     protected Type checkTypesEval(EqualityOp op, BooleanType other) {
         return new BooleanType();
+    }
+
+    @Override
+    public <T> T accept(TypeVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 
     @Override

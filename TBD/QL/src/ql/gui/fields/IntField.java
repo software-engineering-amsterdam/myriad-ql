@@ -4,36 +4,27 @@ package ql.gui.fields;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
-import ql.visistor.environment.Env;
-import ql.values.Value;
 import ql.gui.GUIChangeListener;
+import ql.gui.GUIEvaluator;
+import ql.values.IntValue;
+import ql.values.Value;
 
 /**
  * Created by Erik on 28-2-2017.
  */
 public class IntField extends TextField implements QLField{
 
-    public IntField(Env env, String variableName) {
-        this.textProperty().addListener(new GUIChangeListener<String>(env, variableName) {
+    public IntField(GUIEvaluator evaluator) {
+        this.textProperty().addListener(new GUIChangeListener<String>(evaluator) {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("[-+]?[0-9]*")) {
+                if (!newValue.matches("[-+]?[0-9]*"))  {
                     setText(oldValue);
                     return;
                 }
-                try {
-                    this.setValue(Integer.valueOf(newValue));
-                }catch (NumberFormatException e){
-                    this.setValueUndefined();
-                }
+                this.evaluate();
             }
         });
-
-        if (env.hasQuestionExpr(variableName)) {
-            env.addEventListener(() -> {
-                update(env.getQuestionValue(variableName));
-            });
-        }
     }
 
     private void update(Value value) {
@@ -42,6 +33,11 @@ public class IntField extends TextField implements QLField{
 
     public Node getNode(){
         return this;
+    }
+
+    @Override
+    public Value getValue() {
+        return new IntValue(Integer.valueOf(this.textProperty().getValue()));
     }
 
 }

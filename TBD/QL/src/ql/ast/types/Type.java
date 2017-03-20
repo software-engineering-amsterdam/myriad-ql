@@ -5,11 +5,13 @@ import ql.ast.expressions.ArithmeticOp;
 import ql.ast.expressions.EqualityOp;
 import ql.ast.expressions.LogicalOp;
 import ql.ast.expressions.RelationalOp;
+import ql.visistor.interfaces.ExpressionVisitor;
+import ql.visistor.interfaces.TypeVisitor;
 
 /**
  * Created by Erik on 21-2-2017.
  */
-public class Type {
+public abstract class Type {
 
     @Override
     public boolean equals(Object obj) {
@@ -84,4 +86,6 @@ public class Type {
         return new ErrorType();
     }
 
+
+    public abstract <T> T accept(TypeVisitor<T> visitor);
 }

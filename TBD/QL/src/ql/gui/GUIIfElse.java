@@ -16,7 +16,7 @@ public class GUIIfElse extends VBox {
     private Boolean current = null;
     private final GUIExpr condition;
 
-    public GUIIfElse(Env env, GUIExpr condition, VBox ifStatements, VBox elseStatements) {
+    public GUIIfElse(GUIExpr condition, VBox ifStatements, VBox elseStatements) {
         this.condition = condition;
         this.ifStatements = ifStatements;
         this.elseStatements = elseStatements;
@@ -47,7 +47,10 @@ public class GUIIfElse extends VBox {
             this.getChildren().add(elseStatements);
             this.getChildren().remove(ifStatements);
         }
-
         current = aBoolean;
+    }
+
+    public GUIExpr getCondition() {
+        return condition;
     }
 }
