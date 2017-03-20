@@ -9,4 +9,5 @@ import ql.values.Value;
 public interface QLField {
     Node getNode();
     Value getValue();
+    void update(Value<?> value);
 }

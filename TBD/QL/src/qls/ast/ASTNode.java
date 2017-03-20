@@ -1,7 +1,5 @@
 package qls.ast;
 
-import ql.visistor.ASTVisitor;
-
 /**
  * Created by rico on 7-3-17.
  */

@@ -9,15 +9,25 @@ import javafx.scene.text.Text;
 /**
  * Created by Erik on 28-2-2017.
  */
-public class GUIForm extends VBox {
+public class GUIForm extends GUIElement {
+    private final GUIElement statements;
 
-    public GUIForm(String name, VBox statementsBox) {
+    public GUIForm(String name, GUIElement statements) {
+        this.statements = statements;
         this.setPadding(new Insets(10));
         this.setSpacing(8);
 
         Text textTitle = new Text(name);
         textTitle.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         this.getChildren().add(textTitle);
-        this.getChildren().add(statementsBox);
+        this.getChildren().add(statements);
+    }
+
+    public GUIElement getStatements() {
+        return statements;
+    }
+
+    public <T> T accept(BaseEvaluator<T> visitor) {
+        return visitor.visit(this);
     }
 }

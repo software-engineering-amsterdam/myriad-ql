@@ -11,17 +11,17 @@ import ql.values.Value;
 /**
  * Created by Erik on 28-2-2017.
  */
-public class GUIIf extends VBox {
-    private final VBox ifStatements;
-    private final GUIExpr condition;
+public class GUIIf extends GUIElement {
+    private final GUIElement ifStatements;
+    private final Expr condition;
 
-    public GUIIf(Env env, GUIExpr condition, VBox ifStatements) {
+    public GUIIf(Expr condition, GUIElement ifStatements) {
         this.condition = condition;
         this.ifStatements = ifStatements;
 
     }
 
-    private void update (Value value) {
+    public void update (Value value) {
         if (value instanceof UndefinedValue) {
             this.getChildren().remove(ifStatements);
         }
@@ -33,8 +33,16 @@ public class GUIIf extends VBox {
         }
     }
 
-    public GUIExpr getCondition() {
+    public GUIElement getIfStatements() {
+        return ifStatements;
+    }
+
+    public Expr getCondition() {
         return condition;
     }
 
+
+    public <T> T accept(BaseEvaluator<T> visitor) {
+        return visitor.visit(this);
+    }
 }

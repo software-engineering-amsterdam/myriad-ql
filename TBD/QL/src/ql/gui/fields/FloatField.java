@@ -7,6 +7,7 @@ import javafx.scene.control.Toggle;
 import ql.gui.GUIEvaluator;
 import ql.values.FloatValue;
 import ql.values.IntValue;
+import ql.values.UndefinedValue;
 import ql.visistor.environment.Env;
 import ql.values.Value;
 import ql.gui.GUIChangeListener;
@@ -29,7 +30,7 @@ public class FloatField extends TextField implements QLField{
         });
     }
 
-    private void update(Value value) {
+    public void update(Value value) {
         this.textProperty().setValue(String.valueOf(value.getValue()));
     }
 
@@ -39,6 +40,11 @@ public class FloatField extends TextField implements QLField{
 
     @Override
     public Value getValue() {
-        return new FloatValue(Float.valueOf(this.textProperty().getValue()));
+        try{
+            return new FloatValue(Float.valueOf(this.textProperty().getValue()));
+        }catch (NumberFormatException ignore){
+
+        }
+        return new UndefinedValue();
     }
 }

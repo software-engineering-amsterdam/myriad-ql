@@ -33,7 +33,7 @@ public class BooleanField extends ToggleGroup implements QLField{
         });
     }
 
-    private void update(Value value) {
+    public void update(Value value) {
         if (value instanceof UndefinedValue) {
             rbYes.selectedProperty().setValue(false);
             rbNo.selectedProperty().setValue(false);
@@ -58,7 +58,7 @@ public class BooleanField extends ToggleGroup implements QLField{
     public Value getValue() {
         if (rbYes.selectedProperty().getValue()) {
             return new BooleanValue(true);
-        }else if(!rbNo.selectedProperty().getValue()) {
+        }else if(rbNo.selectedProperty().getValue()) {
             return new BooleanValue(false);
         }
         return new UndefinedValue();

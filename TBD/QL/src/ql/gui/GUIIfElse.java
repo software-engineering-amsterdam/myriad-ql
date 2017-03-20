@@ -10,19 +10,19 @@ import ql.values.Value;
 /**
  * Created by Erik on 28-2-2017.
  */
-public class GUIIfElse extends VBox {
-    private final VBox ifStatements;
-    private final VBox elseStatements;
+public class GUIIfElse extends GUIElement {
+    private final GUIElement ifStatements;
+    private final GUIElement elseStatements;
     private Boolean current = null;
-    private final GUIExpr condition;
+    private final Expr condition;
 
-    public GUIIfElse(GUIExpr condition, VBox ifStatements, VBox elseStatements) {
+    public GUIIfElse(Expr condition, GUIElement ifStatements, GUIElement elseStatements) {
         this.condition = condition;
         this.ifStatements = ifStatements;
         this.elseStatements = elseStatements;
     }
 
-    private void update (Value value) {
+    public void update (Value value) {
         if (value instanceof UndefinedValue) {
             if (current == null) {
                 return;
@@ -50,7 +50,19 @@ public class GUIIfElse extends VBox {
         current = aBoolean;
     }
 
-    public GUIExpr getCondition() {
+    public GUIElement getIfStatements() {
+        return ifStatements;
+    }
+
+    public GUIElement getElseStatements() {
+        return elseStatements;
+    }
+
+    public Expr getCondition() {
         return condition;
+    }
+
+    public <T> T accept(BaseEvaluator<T> visitor) {
+        return visitor.visit(this);
     }
 }
