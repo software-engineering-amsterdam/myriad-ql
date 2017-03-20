@@ -47,7 +47,7 @@ export class ASTDependencyVisitor {
     }
 
 
-    visitPreExpression(condition){
+    visitPrefixExpression(condition){
         condition.expression.accept(this);
     }
 

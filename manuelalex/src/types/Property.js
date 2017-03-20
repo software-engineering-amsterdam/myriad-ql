@@ -22,6 +22,6 @@ export class Property {
     }
 
     accept(visitor) {
-        visitor.visitProperty(this);
+        return visitor.visitProperty(this);
     }
 }
