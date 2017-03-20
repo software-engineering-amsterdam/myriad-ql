@@ -1,4 +1,5 @@
 from misc.visitor import CheckerVisitor
+from qls.visitors.styling_widget_type_getter import StylingWidgetTypeGetter
 
 
 class TypeChecker(CheckerVisitor):
@@ -33,9 +34,11 @@ class TypeChecker(CheckerVisitor):
     def visit_question_anchor(self, node, stylings):
         widget_type = self.symboltable[node.name]
 
+        styling_getter = StylingWidgetTypeGetter(self.symboltable[node.name])
+
         for styling in stylings:
-            if styling.widget_type(self.symboltable[node.name]):
-                widget_type = styling.widget_type(self.symboltable[node.name])
+            if styling_getter.get(styling):
+                widget_type = styling_getter.get(styling)
 
         if widget_type != self.symboltable[node.name]:
             self.error("widget datatype {} for question anchor "

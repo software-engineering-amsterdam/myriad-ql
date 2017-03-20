@@ -9,8 +9,7 @@ class GuiBuilder(Visitor):
         self.on_exit = on_exit
         self.widgets = widgets
 
-    def build(self, node):
-        self.visit(node)
+
 
     def create_exit_button(self):
         self.app.addButton("exit_button", self.on_exit)

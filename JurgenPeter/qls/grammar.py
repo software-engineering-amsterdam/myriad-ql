@@ -129,7 +129,7 @@ styled_section = (Suppress("section") + QuotedString("\"") + Suppress("{") +
 
 section = unstyled_section ^ styled_section
 
-sectionbody <<= ZeroOrMore(section ^ question).setParseAction(
+sectionbody <<= OneOrMore(section ^ question).setParseAction(
     lambda tokens: [tokens.asList()])
 
 pagebody = sectionbody

@@ -1,6 +1,7 @@
-from ql.visitors.question_finder import QuestionFinder
-from gui.visitors.widget_creator import WidgetCreator
+from gui.visitors.default_widget_getter import DefaultWidgetGetter
 from gui.visitors.gui_builder import GuiBuilder
+from ql.visitors.question_finder import QuestionFinder
+from qls.visitors.styling_widget_getter import StylingWidgetGetter
 
 
 class QlsGuiBuilder(GuiBuilder):
@@ -49,13 +50,19 @@ class QlsGuiBuilder(GuiBuilder):
         self.visit_question_anchor(node, stylings + [node.styling])
 
     def visit_question(self, node, stylings):
-        widget_constructor = WidgetCreator().create(node.datatype)
+        constructor = None
+
+        styling_getter = StylingWidgetGetter(node.datatype)
+        default_getter = DefaultWidgetGetter()
 
         for styling in stylings:
-            if styling.widget_constructor(node.datatype):
-                widget_constructor = styling.widget_constructor(node.datatype)
+            if styling_getter.get(styling):
+                constructor = styling_getter.get(styling)
 
-        widget = widget_constructor(self.app, node)
+        if constructor is None:
+            constructor = default_getter.get(node.datatype)
+
+        widget = constructor(self.app, node)
         widget.set_listener(self.listener)
 
         for styling in stylings:

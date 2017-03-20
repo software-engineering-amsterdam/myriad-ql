@@ -14,6 +14,3 @@ class CheckerVisitor(Visitor):
 
     def warn(self, message):
         self.errors.append(WarningMessage(message))
-
-    def check(self, node):
-        self.visit(node)

@@ -2,9 +2,9 @@ from gui.widgets import *
 from misc.visitor import Visitor
 
 
-class WidgetCreator(Visitor):
+class DefaultWidgetGetter(Visitor):
 
-    def create(self, node):
+    def get(self, node):
         return self.visit(node)
 
     def visit_integer_datatype(self, node):
