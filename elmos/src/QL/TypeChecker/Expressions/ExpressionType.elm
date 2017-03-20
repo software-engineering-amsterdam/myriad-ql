@@ -1,9 +1,9 @@
 module QL.TypeChecker.Expressions.ExpressionType exposing (getType)
 
 import Dict exposing (Dict)
-import QL.AST exposing (Form, FormItem(..), Expression(..), Id, ValueType(IntegerType, BooleanType, StringType, MoneyType), Location)
+import QL.AST exposing (..)
 import QL.AST.Collectors exposing (QuestionTypes)
-import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(ArithmeticExpressionTypeMismatch, RelationExpressionTypeMismatch, LogicExpressionTypeMismatch, ComparisonExpressionTypeMismatch))
+import QL.TypeChecker.Messages exposing (..)
 
 
 getType : QuestionTypes -> Expression -> Result (List Message) ValueType
@@ -29,67 +29,69 @@ getType variableTypes expression =
         ParensExpression _ inner ->
             getType variableTypes inner
 
-        ArithmeticExpression op loc left right ->
+        BinaryExpression op loc left right ->
             let
-                handleSideTypes ( leftType, rightType ) =
-                    case ( leftType, rightType ) of
-                        ( IntegerType, IntegerType ) ->
-                            Ok IntegerType
+                leftType =
+                    getType variableTypes left
 
-                        ( MoneyType, IntegerType ) ->
-                            Ok MoneyType
-
-                        ( IntegerType, MoneyType ) ->
-                            Ok MoneyType
-
-                        ( MoneyType, MoneyType ) ->
-                            Ok MoneyType
-
-                        ( l, r ) ->
-                            Err [ Error <| ArithmeticExpressionTypeMismatch op loc l r ]
+                rightType =
+                    getType variableTypes right
             in
-                combineResult (++) handleSideTypes (getType variableTypes left) (getType variableTypes right)
-
-        RelationExpression op loc left right ->
-            let
-                handleSideTypes ( leftType, rightType ) =
-                    case ( leftType, rightType ) of
-                        ( IntegerType, IntegerType ) ->
-                            Ok BooleanType
-
-                        ( l, r ) ->
-                            Err [ Error <| RelationExpressionTypeMismatch op loc l r ]
-            in
-                combineResult (++) handleSideTypes (getType variableTypes left) (getType variableTypes right)
-
-        LogicExpression op loc left right ->
-            let
-                handleSideTypes ( leftType, rightType ) =
-                    case ( leftType, rightType ) of
-                        ( BooleanType, BooleanType ) ->
-                            Ok BooleanType
-
-                        ( l, r ) ->
-                            Err [ Error <| LogicExpressionTypeMismatch op loc l r ]
-            in
-                combineResult (++) handleSideTypes (getType variableTypes left) (getType variableTypes right)
-
-        ComparisonExpression op loc left right ->
-            let
-                handleSideTypes ( leftType, rightType ) =
-                    if leftType == rightType then
-                        Ok BooleanType
-                    else
-                        Err [ Error <| ComparisonExpressionTypeMismatch op loc leftType rightType ]
-            in
-                combineResult (++) handleSideTypes (getType variableTypes left) (getType variableTypes right)
+                checkExpressionOnValidValueTypes leftType rightType (getTypeForBinaryExpression op loc)
 
 
-combineResult : (e -> e -> e) -> (( a, a ) -> Result e a) -> Result e a -> Result e a -> Result e a
-combineResult err succ left right =
+getTypeForBinaryExpression : Operator -> Location -> ( ValueType, ValueType ) -> Result (List Message) ValueType
+getTypeForBinaryExpression op loc ( leftType, rightType ) =
+    case op of
+        Arithmetic arithmetic ->
+            case ( leftType, rightType ) of
+                ( IntegerType, IntegerType ) ->
+                    Ok IntegerType
+
+                ( MoneyType, IntegerType ) ->
+                    Ok MoneyType
+
+                ( IntegerType, MoneyType ) ->
+                    Ok MoneyType
+
+                ( MoneyType, MoneyType ) ->
+                    Ok MoneyType
+
+                ( l, r ) ->
+                    Err [ Error <| ArithmeticExpressionTypeMismatch arithmetic loc l r ]
+
+        Relation relation ->
+            case ( leftType, rightType ) of
+                ( IntegerType, IntegerType ) ->
+                    Ok BooleanType
+
+                ( l, r ) ->
+                    Err [ Error <| RelationExpressionTypeMismatch relation loc l r ]
+
+        Logic logic ->
+            case ( leftType, rightType ) of
+                ( BooleanType, BooleanType ) ->
+                    Ok BooleanType
+
+                ( l, r ) ->
+                    Err [ Error <| LogicExpressionTypeMismatch logic loc l r ]
+
+        Comparison comparison ->
+            if leftType == rightType then
+                Ok BooleanType
+            else
+                Err [ Error <| ComparisonExpressionTypeMismatch comparison loc leftType rightType ]
+
+
+checkExpressionOnValidValueTypes :
+    Result (List Message) ValueType
+    -> Result (List Message) ValueType
+    -> (( ValueType, ValueType ) -> Result (List Message) ValueType)
+    -> Result (List Message) ValueType
+checkExpressionOnValidValueTypes left right succ =
     case ( left, right ) of
         ( Err l, Err r ) ->
-            Err (err l r)
+            Err (l ++ r)
 
         _ ->
             Result.andThen succ (Result.map2 (,) left right)

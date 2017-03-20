@@ -1,13 +1,6 @@
 module QL.Evaluator exposing (evaluate)
 
-import QL.AST as AST
-    exposing
-        ( Expression(..)
-        , Operator(Plus, Minus, Divide, Multiply)
-        , Relation(LessThan, LessThanOrEqual, GreaterThan, GreaterThanOrEqual)
-        , Logic(And, Or)
-        , Comparison(Equal, NotEqual)
-        )
+import QL.AST as AST exposing (..)
 import QL.Environment as Environment exposing (Environment)
 import QL.Values as Values exposing (Value)
 import Maybe.Extra as Maybe
@@ -18,81 +11,65 @@ evaluate env expression =
     case expression of
         Var ( x, _ ) ->
             Environment.getFormValue x env
-                |> Maybe.withDefault Values.undefined
+                |> Maybe.withDefault Values.Undefined
 
         AST.Str _ str ->
-            Values.string str
+            Values.Str str
 
         AST.Integer _ integer ->
-            Values.int integer
+            Values.Integer integer
 
         AST.Decimal _ float ->
-            Values.float float
+            Values.Decimal float
 
         AST.Boolean _ boolean ->
-            Values.bool boolean
+            Values.Boolean boolean
 
         ParensExpression _ inner ->
             evaluate env inner
 
-        ArithmeticExpression op _ left right ->
+        BinaryExpression op _ left right ->
+            evaluateBinaryExpression op (evaluate env left) (evaluate env right)
+
+
+evaluateBinaryExpression : Operator -> Value -> Value -> Value
+evaluateBinaryExpression op leftValue rightValue =
+    case op of
+        Arithmetic arithmetic ->
             let
-                leftValue =
-                    evaluate env left
-
-                rightValue =
-                    evaluate env right
-
                 maybeInteger =
                     Maybe.map2 (,) (Values.asInt leftValue) (Values.asInt rightValue)
-                        |> Maybe.map (\( l, r ) -> Values.int (binaryForIntArithmitic op l r))
+                        |> Maybe.map (\( l, r ) -> binaryForIntArithmitic arithmetic l r)
+                        |> Maybe.filter Values.isValidInt
+                        |> Maybe.map Values.Integer
 
                 maybeFloat =
                     Maybe.map2 (,) (Values.asFloat leftValue) (Values.asFloat rightValue)
-                        |> Maybe.map (\( l, r ) -> Values.float (binaryForFloatArithmitic op l r))
+                        |> Maybe.map (\( l, r ) -> binaryForFloatArithmitic arithmetic l r)
+                        |> Maybe.filter Values.isValidFloat
+                        |> Maybe.map Values.Decimal
             in
                 Maybe.or maybeInteger maybeFloat
-                    |> Maybe.withDefault Values.undefined
+                    |> Maybe.withDefault Values.Undefined
 
-        RelationExpression op _ left right ->
-            let
-                leftValue =
-                    evaluate env left
+        Relation rel ->
+            Maybe.map2 (,) (Values.asFloat leftValue) (Values.asFloat rightValue)
+                |> Maybe.map (\( l, r ) -> Values.Boolean (applicativeForRelation rel l r))
+                |> Maybe.withDefault Values.Undefined
 
-                rightValue =
-                    evaluate env right
-            in
-                Maybe.map2 (,) (Values.asFloat leftValue) (Values.asFloat rightValue)
-                    |> Maybe.map (\( l, r ) -> Values.bool (applicativeForRelation op l r))
-                    |> Maybe.withDefault Values.undefined
+        Logic logic ->
+            Maybe.map2 (,) (Values.asBool leftValue) (Values.asBool rightValue)
+                |> Maybe.map (\( l, r ) -> Values.Boolean (applicativeForLogic logic l r))
+                |> Maybe.withDefault Values.Undefined
 
-        LogicExpression op _ left right ->
-            let
-                leftValue =
-                    evaluate env left
-
-                rightValue =
-                    evaluate env right
-            in
-                Maybe.map2 (,) (Values.asBool leftValue) (Values.asBool rightValue)
-                    |> Maybe.map (\( l, r ) -> Values.bool (applicativeForLogic op l r))
-                    |> Maybe.withDefault Values.undefined
-
-        ComparisonExpression op _ left right ->
-            let
-                leftValue =
-                    evaluate env left
-
-                rightValue =
-                    evaluate env right
-            in
-                if Values.isUndefined leftValue || Values.isUndefined rightValue then
-                    Values.undefined
-                else
-                    Values.bool (applicativeForComparison op leftValue rightValue)
+        Comparison comparison ->
+            if Values.isUndefined leftValue || Values.isUndefined rightValue then
+                Values.Undefined
+            else
+                Values.Boolean (applicativeForComparison comparison leftValue rightValue)
 
 
-binaryForIntArithmitic : Operator -> Int -> Int -> Int
+binaryForIntArithmitic : ArithmeticOperator -> Int -> Int -> Int
 binaryForIntArithmitic op =
     case op of
         Plus ->
@@ -108,7 +85,7 @@ binaryForIntArithmitic op =
             (*)
 
 
-binaryForFloatArithmitic : Operator -> Float -> Float -> Float
+binaryForFloatArithmitic : ArithmeticOperator -> Float -> Float -> Float
 binaryForFloatArithmitic op =
     case op of
         Plus ->
@@ -124,7 +101,7 @@ binaryForFloatArithmitic op =
             (*)
 
 
-applicativeForRelation : Relation -> comparable -> comparable -> Bool
+applicativeForRelation : RelationOperator -> comparable -> comparable -> Bool
 applicativeForRelation relation =
     case relation of
         LessThan ->
@@ -140,7 +117,7 @@ applicativeForRelation relation =
             (>=)
 
 
-applicativeForLogic : Logic -> Bool -> Bool -> Bool
+applicativeForLogic : LogicOperator -> Bool -> Bool -> Bool
 applicativeForLogic logic =
     case logic of
         And ->
@@ -150,7 +127,7 @@ applicativeForLogic logic =
             (||)
 
 
-applicativeForComparison : Comparison -> a -> a -> Bool
+applicativeForComparison : ComparisonOperator -> a -> a -> Bool
 applicativeForComparison comparison =
     case comparison of
         NotEqual ->

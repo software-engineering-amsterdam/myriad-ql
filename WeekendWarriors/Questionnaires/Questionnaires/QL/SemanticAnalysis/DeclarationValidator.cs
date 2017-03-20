@@ -20,34 +20,34 @@ namespace Questionnaires.QL.SemanticAnalysis
         public void Analyze(INode node, QLContext context)
         {
             Context = context;
-            Visit((dynamic)node);
+            Analyze((dynamic)node);
 
             LabelChecker.Check(Result);
         }
 
-        public void Visit(Conditional node)
+        private void Analyze(Conditional node)
         {
             // We are only intereted in questions, so there is no need to visit the condition
             foreach (var statement in node.ThenStatements)
-                Visit((dynamic)statement);
+                Analyze((dynamic)statement);
             foreach (var statement in node.ElseStatements)
-                Visit((dynamic)statement);
+                Analyze((dynamic)statement);
         }
 
-        public void Visit(Form node)
+        private void Analyze(Form node)
         {
             foreach (var statement in node.Statements)
             {
-                Visit((dynamic)statement);
+                Analyze((dynamic)statement);
             }
         }
 
-        public void Visit(ComputedQuestion node)
+        private void Analyze(ComputedQuestion node)
         {
-            Visit((dynamic)node.Question);
+            Analyze((dynamic)node.Question);
         }
 
-        public void Visit(Question node)
+        private void Analyze(Question node)
         {
             LabelChecker.AddQuestion(node);
 
@@ -57,9 +57,7 @@ namespace Questionnaires.QL.SemanticAnalysis
                 return;
             }
 
-            /* We already have a question with this name
-             * If this question is of the same type as the previous one this is a warning
-             * If it is of another type, it is an error */
+            /* We already have a question with this name */
             var storedType = Context.GetQuestionType(node.Identifier);
             if (storedType.GetType() == node.Type.GetType())
             {
@@ -71,7 +69,7 @@ namespace Questionnaires.QL.SemanticAnalysis
             }
         }
 
-        public void Visit(INode node)
+        private void Analyze(INode node)
         {
 
         }

@@ -31,7 +31,7 @@ namespace Questionnaires.QL.AST.Operators
             }
             catch (NotSupportedException)
             {
-                messages.Add(new Error(string.Format("Cannot apply {0} operator on type {0}", this, Operand.GetResultType(context))));
+                messages.Add(new Error(string.Format("Cannot apply {0} operator on type {1}", this, Operand.GetResultType(context))));
                 return false;
             }
         }

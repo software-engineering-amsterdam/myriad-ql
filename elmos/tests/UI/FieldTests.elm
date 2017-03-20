@@ -17,7 +17,7 @@ exampleForm =
         , Field "Has house" ( "hasHouse", Location 0 0 ) BooleanType
         , IfThen (Var ( "hasHouse", Location 0 0 ))
             [ Field "Price" ( "price", Location 0 0 ) IntegerType ]
-        , IfThenElse (ComparisonExpression Equal (Location 0 0) (Var ( "name", Location 0 0 )) (Str (Location 0 0) "John"))
+        , IfThenElse (BinaryExpression (Comparison Equal) (Location 0 0) (Var ( "name", Location 0 0 )) (Str (Location 0 0) "John"))
             [ Field "Is your name john?" ( "isJohn", Location 0 0 ) BooleanType ]
             [ Field "Are you sure your name is not john?" ( "sure", Location 0 0 ) BooleanType ]
         ]
@@ -45,7 +45,7 @@ all =
                 let
                     env =
                         Env.empty
-                            |> Env.withFormValue "name" (Values.string "John")
+                            |> Env.withFormValue "name" (Values.Str "John")
                 in
                     Field.activeFields env exampleForm
                         |> Expect.equal
@@ -59,8 +59,8 @@ all =
                 let
                     env =
                         Env.empty
-                            |> Env.withFormValue "name" (Values.string "John")
-                            |> Env.withFormValue "hasHouse" (Values.bool True)
+                            |> Env.withFormValue "name" (Values.Str "John")
+                            |> Env.withFormValue "hasHouse" (Values.Boolean True)
                 in
                     Field.activeFields env exampleForm
                         |> Expect.equal

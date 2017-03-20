@@ -50,14 +50,5 @@ locationOf expression =
         ParensExpression location _ ->
             location
 
-        ArithmeticExpression _ location _ _ ->
-            location
-
-        RelationExpression _ location _ _ ->
-            location
-
-        LogicExpression _ location _ _ ->
-            location
-
-        ComparisonExpression _ location _ _ ->
+        BinaryExpression _ location _ _ ->
             location

@@ -37,30 +37,34 @@ type Expression
     | Integer Location Int
     | Boolean Location Bool
     | ParensExpression Location Expression
-    | ArithmeticExpression Operator Location Expression Expression
-    | RelationExpression Relation Location Expression Expression
-    | LogicExpression Logic Location Expression Expression
-    | ComparisonExpression Comparison Location Expression Expression
+    | BinaryExpression Operator Location Expression Expression
 
 
 type Operator
+    = Arithmetic ArithmeticOperator
+    | Relation RelationOperator
+    | Logic LogicOperator
+    | Comparison ComparisonOperator
+
+
+type ArithmeticOperator
     = Plus
     | Minus
     | Divide
     | Multiply
 
 
-type Logic
+type LogicOperator
     = And
     | Or
 
 
-type Comparison
+type ComparisonOperator
     = Equal
     | NotEqual
 
 
-type Relation
+type RelationOperator
     = LessThan
     | LessThanOrEqual
     | GreaterThan
