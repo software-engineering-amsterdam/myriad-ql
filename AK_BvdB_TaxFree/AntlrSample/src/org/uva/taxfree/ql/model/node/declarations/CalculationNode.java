@@ -3,6 +3,7 @@ package org.uva.taxfree.ql.model.node.declarations;
 import org.uva.taxfree.ql.gui.MessageList;
 import org.uva.taxfree.ql.gui.QuestionForm;
 import org.uva.taxfree.ql.gui.widgets.CalculationWidget;
+import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.expression.ExpressionNode;
 import org.uva.taxfree.ql.model.types.Type;
@@ -13,8 +14,8 @@ import java.util.Set;
 public class CalculationNode extends DeclarationNode {
     private final ExpressionNode mExpression;
 
-    public CalculationNode(String label, String id, Type type, ExpressionNode expression) {
-        super(label, id, type);
+    public CalculationNode(String label, String id, Type type, ExpressionNode expression, SourceInfo sourceInfo) {
+        super(label, id, type, sourceInfo);
         mExpression = expression;
     }
 
@@ -23,10 +24,6 @@ public class CalculationNode extends DeclarationNode {
         super.fillSymbolTable(symbolTable);
         symbolTable.addCalculation(this);
         mExpression.fillSymbolTable(symbolTable);
-    }
-
-    public String toString() {
-        return mExpression.toString();
     }
 
     public String resolveValue() {

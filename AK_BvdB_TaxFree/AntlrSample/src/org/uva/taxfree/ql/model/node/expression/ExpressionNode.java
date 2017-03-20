@@ -1,6 +1,7 @@
 package org.uva.taxfree.ql.model.node.expression;
 
 import org.uva.taxfree.ql.gui.QuestionForm;
+import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.node.Node;
 import org.uva.taxfree.ql.model.types.Type;
 
@@ -8,6 +9,11 @@ import java.util.List;
 import java.util.Set;
 
 public abstract class ExpressionNode extends Node {
+
+    // Private because this class is abstract and may not be initialized
+    protected ExpressionNode(SourceInfo sourceInfo) {
+        super(sourceInfo);
+    }
 
     public boolean isSameType(ExpressionNode other) {
         Type thisType = getType();

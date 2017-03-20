@@ -2,6 +2,7 @@ package org.uva.taxfree.ql.model.node.declarations;
 
 import org.uva.taxfree.ql.gui.MessageList;
 import org.uva.taxfree.ql.gui.QuestionForm;
+import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.Node;
 import org.uva.taxfree.ql.model.types.Type;
@@ -13,8 +14,8 @@ public class DeclarationNode extends Node {
     private final String mLabel;
     private final Type mType;
 
-    public DeclarationNode(String label, String id, Type type) {
-        super();
+    public DeclarationNode(String label, String id, Type type, SourceInfo sourceInfo) {
+        super(sourceInfo);
         mLabel = label;
         mId = id;
         mType = type;

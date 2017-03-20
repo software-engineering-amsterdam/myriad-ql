@@ -3,6 +3,7 @@ package test.org.uva.taxfree.ql;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.declarations.DeclarationNode;
 import org.uva.taxfree.ql.model.types.BooleanType;
@@ -11,7 +12,8 @@ import org.uva.taxfree.ql.model.types.IntegerType;
 import java.io.File;
 
 public class SymbolTableTest extends SemanticsTester {
-    SymbolTable mSymbolTable;
+    private final SourceInfo mEmptySourceInfo = new SourceInfo(0, 0, 0, 0);
+    private SymbolTable mSymbolTable;
 
     @BeforeMethod
     public void setUp() {
@@ -20,7 +22,7 @@ public class SymbolTableTest extends SemanticsTester {
 
     @Test
     public void testEvaluate() throws Exception {
-        DeclarationNode boolQuestion = new DeclarationNode("did you sell a house?", "hasSoldHouse", new BooleanType());
+        DeclarationNode boolQuestion = new DeclarationNode("did you sell a house?", "hasSoldHouse", new BooleanType(), mEmptySourceInfo);
         mSymbolTable.addDeclaration(boolQuestion);
         Assert.assertEquals("false", mSymbolTable.resolveValue("hasSoldHouse"));
     }
@@ -44,7 +46,7 @@ public class SymbolTableTest extends SemanticsTester {
     public void testWritingAndReading() throws Exception {
         String variableId = "intDeclaration";
         Assert.assertFalse(mSymbolTable.contains(variableId), "empty table should not contain anything");
-        mSymbolTable.addDeclaration(new DeclarationNode("newDeclaration", variableId, new IntegerType()));
+        mSymbolTable.addDeclaration(new DeclarationNode("newDeclaration", variableId, new IntegerType(), mEmptySourceInfo));
         Assert.assertTrue(mSymbolTable.contains(variableId), "newly added declaration should be present");
         Assert.assertEquals(mSymbolTable.resolveValue(variableId), "0", "Expect default value");
         mSymbolTable.updateValue(variableId, "30");
