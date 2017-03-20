@@ -13,3 +13,5 @@ Collectors, zouden we die moeten samenvoegen? meegeven aan typecheckers.
 
 expressions.elm moet beter
 -> o.a. renamen van functies
+
+Hoe om te gaan met crashes? -> Debug.Crash ? Tantric/Constucrtism
