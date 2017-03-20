@@ -41,8 +41,8 @@ expression      : BooleanLiteral                                            # bo
                 | left=expression op='*'  right=expression                  # multiplication
                 | left=expression op='-'  right=expression                  # subtraction
                 | left=expression op='+'  right=expression                  # addition
-                | left=expression op='<'  right=expression                  # lowerThan
-                | left=expression op='<=' right=expression                  # lowerThanOrEqual
+                | left=expression op='<'  right=expression                  # lessThan
+                | left=expression op='<=' right=expression                  # lessThanOrEqual
                 | left=expression op='>'  right=expression                  # greaterThan
                 | left=expression op='>=' right=expression                  # greaterThanOrEqual
                 | left=expression op='==' right=expression                  # equal
