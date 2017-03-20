@@ -49,6 +49,7 @@ module QL
         @variable_dependencies_map = {}
         build_variable_dependencies_map(computed_questions)
 
+
         @variable_dependencies_map.each do |variable_name, dependencies|
           if dependencies
             dependencies.each do |dependency|
@@ -70,12 +71,12 @@ module QL
         next_dependencies = @variable_dependencies_map[dependency.name]
         if next_dependencies
           @variable_dependencies_map[variable_name] |= next_dependencies
-          is_cyclic_dependency?(variable_name)
+          is_cyclic_dependency?(variable_name, dependency)
         end
       end
 
       # check for cyclic dependency if there is a dependency on itself, else visit the next variable
-      def is_cyclic_dependency?(variable_name)
+      def is_cyclic_dependency?(variable_name, dependency)
         if @variable_dependencies_map[variable_name].map(&:name).include?(variable_name)
           NotificationTable.store(Notification::Error.new("question '#{variable_name}' has a cyclic dependency"))
         end

@@ -49,13 +49,11 @@ module QL
       end
 
       def visit_boolean_negation(integer_negation)
-        expression_type = integer_negation.expression.accept(self)
-        evaluate_type(expression_type, [AST::BooleanType])
+        evaluate_type(integer_negation, [AST::BooleanType])
       end
 
       def visit_integer_negation(boolean_negation)
-        expression_type = boolean_negation.expression.accept(self)
-        evaluate_type(expression_type, [AST::IntegerType, AST::MoneyType])
+        evaluate_type(boolean_negation, [AST::IntegerType, AST::MoneyType])
       end
 
       def visit_boolean_type(boolean_type)
@@ -114,18 +112,17 @@ module QL
         if check_compatibility(left_type, compatible_types) and check_compatibility(right_type, compatible_types)
           return_type
         else
-          #TODO fix error msg
-          NotificationTable.store(Notification::Error.new("1incompatible types at #{self}"))
+          NotificationTable.store(Notification::Error.new("incompatible types at #{binary_expression.operator} operator"))
           AST::ErrorType.new
         end
       end
 
-      def evaluate_type(expression_type, compatible_types)
+      def evaluate_type(negation, compatible_types)
+        expression_type = negation.expression.accept(self)
         if check_compatibility(expression_type, compatible_types)
           expression_type
         else
-          #TODO fix error msg
-          NotificationTable.store(Notification::Error.new("2incompatible types at #{self}"))
+          NotificationTable.store(Notification::Error.new("incompatible types at #{negation.operator} negation"))
           AST::ErrorType.new
         end
       end
