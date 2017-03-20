@@ -3,31 +3,41 @@ package view
 import ast._
 import checker.Issue.Issues
 import checker.{ Error, Warning }
-import model.{ FormModel, StyleModel }
+import model.DisplayQuestion
+import view.questions.{ BooleanQuestion, DateQuestion, NumericQuestion, StringQuestion }
 
 import scalafx.application.JFXApp
 import scalafx.geometry.Insets
-import scalafx.scene.Scene
-import scalafx.scene.layout.{ HBox, TilePane, VBox }
+import scalafx.scene.layout.{ TilePane, VBox }
+import scalafx.scene.paint.Color
 import scalafx.scene.text.Text
+import scalafx.scene.{ Node, Scene }
 
-class GUI(issues: Issues, formModel: FormModel, styleModel: StyleModel) extends JFXApp.PrimaryStage {
-  private val displayBoxes = formModel.displayQuestions.map { question =>
+trait GUI extends JFXApp.PrimaryStage {
+  val issues: Issues
+
+  def displayBoxes: Seq[Node]
+
+  protected def renderQuestion(question: DisplayQuestion, style: Option[QuestionStyle] = None): VBox = {
     question.`type` match {
-      case BooleanType => new BooleanQuestion(question).element
-      case DateType => new DateQuestion(question).element
-      case StringType => new StringQuestion(question).element
-      case _: NumericType => new NumericQuestion(question).element
+      case BooleanType => new BooleanQuestion(question, style)
+      case DateType => new DateQuestion(question, style)
+      case StringType => new StringQuestion(question, style)
+      case _: NumericType => new NumericQuestion(question, style)
     }
-  }
-  private val issueBox = {
-    val issueMessages = issues.map {
-      case Warning(message) => new HBox(new Text(message))
-      case Error(message) => new HBox(new Text(message))
-    }
-    new VBox {
-      children = issueMessages
-    }
+  }.displayBox
+
+  private def issueBox = issues.map {
+    case Error(message) =>
+      new Text {
+        text = s"[Error] $message"
+        fill = Color.Red
+      }
+    case Warning(message) =>
+      new Text {
+        text = s"[Warning] $message"
+        fill = Color.Yellow
+      }
   }
 
   title.value = "Beheer QL Form"
@@ -39,11 +49,7 @@ class GUI(issues: Issues, formModel: FormModel, styleModel: StyleModel) extends 
       vgap = 10
       padding = Insets(10)
       prefColumns = 1
-      children = issueBox +: displayBoxes
+      children = issueBox ++ displayBoxes
     }
   }
-}
-
-object GUI extends JFXApp {
-  def apply(issues: Issues, formModel: FormModel, styleModel: StyleModel) = new GUI(issues, formModel, styleModel)
 }

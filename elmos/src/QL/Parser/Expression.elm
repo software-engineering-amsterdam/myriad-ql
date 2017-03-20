@@ -1,6 +1,6 @@
 module QL.Parser.Expression exposing (expression)
 
-import Combine exposing (Parser, chainl, choice, lazy, parens, succeed, (<$), (<$>), (*>), (<*), (<*>), (<|>))
+import Combine exposing (Parser, chainl, choice, lazy, parens, succeed, (<$>), (<*>), (<|>))
 import Combine.Num exposing (int, float)
 import Combine.Extra exposing (trimmed, stringAs)
 import List exposing (foldr)
@@ -14,15 +14,13 @@ import QL.AST
             , Var
             , Str
             , Boolean
-            , LogicExpression
-            , ComparisonExpression
-            , RelationExpression
-            , ArithmeticExpression
+            , BinaryExpression
             )
-        , Logic(And, Or)
-        , Comparison(Equal, NotEqual)
-        , Relation(GreaterThanOrEqual, LessThanOrEqual, LessThan, GreaterThan)
-        , Operator(Plus, Minus, Multiply, Divide)
+        , LogicOperator(And, Or)
+        , ComparisonOperator(Equal, NotEqual)
+        , RelationOperator(GreaterThanOrEqual, LessThanOrEqual, LessThan, GreaterThan)
+        , Operator(..)
+        , ArithmeticOperator(Plus, Minus, Multiply, Divide)
         )
 import QL.Parser.Token exposing (identifier, quotedString, withLocation, parseLocation)
 
@@ -50,50 +48,50 @@ precedenceOrderedOperators =
 
 orOp : Parser s BinaryOperator
 orOp =
-    defineBinary "||" LogicExpression Or
+    defineBinary "||" (BinaryExpression (Logic Or))
 
 
 andOp : Parser s BinaryOperator
 andOp =
-    defineBinary "&&" LogicExpression And
+    defineBinary "&&" (BinaryExpression (Logic And))
 
 
-defineBinary : String -> (a -> Location -> BinaryOperator) -> a -> Parser s BinaryOperator
-defineBinary token expr operand =
-    trimmed (withLocation (stringAs token (expr operand)))
+defineBinary : String -> (Location -> BinaryOperator) -> Parser s BinaryOperator
+defineBinary token expr =
+    trimmed (withLocation (stringAs token expr))
 
 
 comparisonOp : Parser s BinaryOperator
 comparisonOp =
     choice
-        [ defineBinary "==" ComparisonExpression Equal
-        , defineBinary "!=" ComparisonExpression NotEqual
+        [ defineBinary "==" (BinaryExpression (Comparison Equal))
+        , defineBinary "!=" (BinaryExpression (Comparison NotEqual))
         ]
 
 
 relationalOp : Parser s BinaryOperator
 relationalOp =
     choice
-        [ defineBinary ">=" RelationExpression GreaterThanOrEqual
-        , defineBinary "<=" RelationExpression LessThanOrEqual
-        , defineBinary ">" RelationExpression GreaterThan
-        , defineBinary "<" RelationExpression LessThan
+        [ defineBinary ">=" (BinaryExpression (Relation GreaterThanOrEqual))
+        , defineBinary "<=" (BinaryExpression (Relation LessThanOrEqual))
+        , defineBinary ">" (BinaryExpression (Relation GreaterThan))
+        , defineBinary "<" (BinaryExpression (Relation LessThan))
         ]
 
 
 addOrMinOp : Parser s BinaryOperator
 addOrMinOp =
     choice
-        [ defineBinary "+" ArithmeticExpression Plus
-        , defineBinary "-" ArithmeticExpression Minus
+        [ defineBinary "+" (BinaryExpression (Arithmetic Plus))
+        , defineBinary "-" (BinaryExpression (Arithmetic Minus))
         ]
 
 
 multiplyOrDivideOp : Parser s BinaryOperator
 multiplyOrDivideOp =
     choice
-        [ defineBinary "*" ArithmeticExpression Multiply
-        , defineBinary "/" ArithmeticExpression Divide
+        [ defineBinary "*" (BinaryExpression (Arithmetic Multiply))
+        , defineBinary "/" (BinaryExpression (Arithmetic Divide))
         ]
 
 

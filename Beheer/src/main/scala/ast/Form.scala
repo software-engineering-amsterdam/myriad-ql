@@ -4,7 +4,7 @@ case class Form(identifier: String, statements: Seq[Statement])
 
 sealed trait Statement
 
-case class Conditional(condition: ExpressionNode, statements: Seq[Statement]) extends Statement
+case class Conditional(condition: ExpressionNode, ifStatements: Seq[Statement], elseStatements: Seq[Statement] = Nil) extends Statement
 
 case class Question(identifier: String, label: String, `type`: Type, expressionNode: Option[ExpressionNode]) extends Statement
 

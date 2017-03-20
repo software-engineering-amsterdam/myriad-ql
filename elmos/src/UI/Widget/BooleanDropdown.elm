@@ -34,10 +34,10 @@ indexToBoolValue : Maybe Int -> Value
 indexToBoolValue maybeIndex =
     case maybeIndex of
         Just index ->
-            Values.bool (index == 1)
+            Values.Boolean (index == 1)
 
         Nothing ->
-            Values.undefined
+            Values.Undefined
 
 
 indexFromValue : Maybe Bool -> Int

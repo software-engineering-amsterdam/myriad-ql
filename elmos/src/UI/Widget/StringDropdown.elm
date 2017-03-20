@@ -34,5 +34,5 @@ indexToValue : List String -> Maybe Int -> Value
 indexToValue values selectedIndex =
     selectedIndex
         |> Maybe.andThen (\index -> List.getAt (index - 1) values)
-        |> Maybe.map Values.string
-        |> Maybe.withDefault Values.undefined
+        |> Maybe.map Values.Str
+        |> Maybe.withDefault Values.Undefined

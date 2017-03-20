@@ -2,8 +2,6 @@ package ast
 
 import java.util.Date
 
-import scala.language.postfixOps
-
 sealed trait ExpressionNode
 
 sealed trait InfixNode extends ExpressionNode {

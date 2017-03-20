@@ -44,7 +44,7 @@ init form styleSheet =
     { form = form
     , styleSheet = styleSheet
     , pagination = Pagination.init styleSheet.pages
-    , env = Env.empty
+    , env = FormUpdater.updateComputedFields form Env.empty
     }
 
 

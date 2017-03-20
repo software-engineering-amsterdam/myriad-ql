@@ -27,15 +27,15 @@ namespace Questionnaires.QL.Processing
             foreach (var statement in form.Statements)
             {
                 // Visit all of the child nodes. Pass a dummy function that always returns true as the visibility function
-                Visit((dynamic)statement, defaultVisibilityFunction);
+                Process((dynamic)statement, defaultVisibilityFunction);
             }
 
             CreateDocumentModel(form);
         }
 
-        private void Visit(ComputedQuestion node, Func<ExpressionEvaluator, bool> visibilityCondition)
+        private void Process(ComputedQuestion node, Func<ExpressionEvaluator, bool> visibilityCondition)
         {
-            Visit(node.Question, visibilityCondition);
+            Process(node.Question, visibilityCondition);
             var question = Questions.Find((q) => q.Identifier == node.Question.Identifier);
 
             Rules.Add(
@@ -48,7 +48,7 @@ namespace Questionnaires.QL.Processing
                 });
         }
 
-        private void Visit(AST.Question node, Func<ExpressionEvaluator, bool> visibilityCondition)
+        private void Process(AST.Question node, Func<ExpressionEvaluator, bool> visibilityCondition)
         {
             var runTimeQuestion = new RunTime.Question(node);
             // Add a rule to the rule container that sets the visibility for this question
@@ -62,7 +62,7 @@ namespace Questionnaires.QL.Processing
             Questions.Add(runTimeQuestion);
         }
 
-        private void Visit(Conditional node, Func<ExpressionEvaluator, bool> visibilityCondition)
+        private void Process(Conditional node, Func<ExpressionEvaluator, bool> visibilityCondition)
         {
             /* The conditional node. This is where we need to do some real work. We need to make function objects
              * That evaluate the condition and based on the outcome set the visibility of questions */
@@ -73,10 +73,10 @@ namespace Questionnaires.QL.Processing
             Func<ExpressionEvaluator, bool> conditionFunctionElse = (evaluator) => { return !conditionFunctionThen(evaluator); };
 
             foreach (var thenStatement in node.ThenStatements)
-                Visit((dynamic)thenStatement, conditionFunctionThen);
+                Process((dynamic)thenStatement, conditionFunctionThen);
 
             foreach (var elseStatement in node.ElseStatements)
-                Visit((dynamic)elseStatement, conditionFunctionElse);
+                Process((dynamic)elseStatement, conditionFunctionElse);
         }
 
         private void CreateDocumentModel(Form form)

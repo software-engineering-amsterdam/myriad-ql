@@ -23,11 +23,11 @@ namespace Questionnaires.QLS.Processing
         {
             foreach (var page in styleSheet.Pages)
             {
-                DocumentModel.AddPage(Visit((dynamic)page));
+                DocumentModel.AddPage(Process((dynamic)page));
             }
         }
 
-        private RunTime.DocumentModel.Page Visit(QLS.AST.Page page)
+        private RunTime.DocumentModel.Page Process(QLS.AST.Page page)
         {
             /* Push the default style of this page into the stack
             so child sections can use them */
@@ -36,7 +36,7 @@ namespace Questionnaires.QLS.Processing
             var pageContainer = new RunTime.DocumentModel.Page(page.Name);
             foreach (var section in page.Sections)
             {
-                pageContainer.AddSection(Visit((dynamic)section));
+                pageContainer.AddSection(Process((dynamic)section));
             }
 
             /* Pop the styles specific from this page from the stack */
@@ -45,7 +45,7 @@ namespace Questionnaires.QLS.Processing
             return pageContainer;
         }
 
-        private RunTime.DocumentModel.Section Visit(AST.Section section)
+        private RunTime.DocumentModel.Section Process(AST.Section section)
         {
             /* Push the default styles of this section onto the stack
              * so child sections/questions can use them */
@@ -54,25 +54,25 @@ namespace Questionnaires.QLS.Processing
             var sectionContainer = new RunTime.DocumentModel.Section(section.Name);
             foreach (var question in section.Questions)
             {
-                sectionContainer.AddQuestion(Visit((dynamic)question));
+                sectionContainer.AddQuestion(Process((dynamic)question));
             }
 
             foreach (var sec in section.Sections)
             {
-                sectionContainer.AddQuestion(Visit((dynamic)sec));
+                sectionContainer.AddQuestion(Process((dynamic)sec));
             }
 
             RemoveStylesFromStack(section.Styles);
             return sectionContainer;
         }
 
-        private RunTime.Question Visit(QuestionWithWidget question)
+        private RunTime.Question Process(QuestionWithWidget question)
         {
             Questions[question.Name].SetWidget(question.Widget);
             return Questions[question.Name];
         }
 
-        private RunTime.Question Visit(Question question)
+        private RunTime.Question Process(Question question)
         {
             var QLQuestion = Questions[question.Name];
             var stackCopy = (Stack)Styles.Clone();

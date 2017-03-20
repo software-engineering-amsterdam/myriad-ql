@@ -39,7 +39,7 @@ all =
                         [ ComputedField "label"
                             ( "x", emptyLoc )
                             StringType
-                            (ComparisonExpression Equal
+                            (BinaryExpression (Comparison Equal)
                                 emptyLoc
                                 (Var ( "y", emptyLoc ))
                                 (Var ( "p", emptyLoc ))
@@ -47,7 +47,7 @@ all =
                         , ComputedField "label"
                             ( "y", emptyLoc )
                             StringType
-                            (ComparisonExpression Equal
+                            (BinaryExpression (Comparison Equal)
                                 emptyLoc
                                 (Var ( "z", emptyLoc ))
                                 (Var ( "a", emptyLoc ))
@@ -70,7 +70,7 @@ all =
                         , ComputedField "label"
                             ( "a", emptyLoc )
                             StringType
-                            (ComparisonExpression Equal
+                            (BinaryExpression (Comparison Equal)
                                 emptyLoc
                                 (Var ( "x", emptyLoc ))
                                 (Var ( "y", emptyLoc ))

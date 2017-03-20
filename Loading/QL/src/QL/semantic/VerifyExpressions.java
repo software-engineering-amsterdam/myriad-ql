@@ -1,6 +1,7 @@
 package QL.semantic;
 
 
+import QL.semantic.Environment;
 import QL.ast.*;
 import QL.ast.atom.BoolAtom;
 import QL.ast.atom.IntegerAtom;
@@ -154,8 +155,15 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 
     @Override
 	public Type visit(IdExpr id) {
-
-        return environment.getType(id.getName(), id.getLine());
+    	
+    	Type type = environment.getReferenceTable().getType(id.getName(), id.getLine());
+    	
+    	if (type.equals(new UnknownType(id.getLine()))) {
+	        environment.getFaults().add(new Error("The variable: " + id.getName() + 
+	        		" is not defined", id.getLine()));
+    	}
+    	
+        return environment.getReferenceTable().getType(id.getName(), id.getLine());
 	}
 
 	@Override
@@ -268,8 +276,9 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 
     private void check(Type expected, Type current) {
     	if (!expected.equals(current)) {
-        	environment.getFaults().add(new Error("The type " + current.getKeyWord() + " is not of the expected type: "
-    			+ expected.getKeyWord(), current.getLine()));
+        	environment.getFaults().add(new Error("The type " + current.getKeyWord() 
+        	+ " is not of the expected type: "
+    		+ expected.getKeyWord(), current.getLine()));
         }
     }
 
