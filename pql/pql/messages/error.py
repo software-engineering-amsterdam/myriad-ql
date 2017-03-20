@@ -6,3 +6,6 @@ class Error(object):
 
     def __str__(self):
         return "{} : {}".format(self.text, self.location)
+
+    def __repr__(self):
+        return str(self)
