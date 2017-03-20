@@ -4,6 +4,7 @@ module QL
   module Parser
     module ExpressionParser
       include Parslet
+
       # operators
       rule(:multiplication_operator)    { (str('*') | str('/')).as(:arithmetic_operator) >> _ }
       rule(:addition_operator)          { (str('+') | str('-')).as(:arithmetic_operator) >> _ }
