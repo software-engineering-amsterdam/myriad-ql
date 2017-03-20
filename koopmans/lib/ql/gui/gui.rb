@@ -48,8 +48,13 @@ module QL
         end
       end
 
+      # TODO Open/closed principle formatting (https://subvisual.co/blog/posts/19-solid-principles-in-ruby)
       def print_form
-        pp enabled_questions.map(&:to_json)
+        write_to_file(enabled_questions.map(&:print).join("\n"))
+      end
+
+      def write_to_file(body)
+        File.open('results.txt', 'w') { |file| file.write(body) }
       end
 
       def enabled_questions
@@ -58,27 +63,3 @@ module QL
     end
   end
 end
-
-
-# return if check(type_checker) == 'quit'
-
-# TODO hier wat aan doen
-# def check(type_checker)
-#   if !type_checker[:errors].empty?
-#     Tk.messageBox(
-#       type:    'ok',
-#       icon:    'error',
-#       title:   'Errors found!',
-#       message: type_checker[:errors].map(&:message).join('\n')
-#     )
-#     return 'quit'
-#   elsif !type_checker[:warnings].empty?
-#     Tk.messageBox(
-#       type:    'ok',
-#       icon:    'warning',
-#       title:   'Warnings found!',
-#       message: type_checker[:warnings].map(&:message).join('\n')
-#     )
-#     return 'continue'
-#   end
-# end
