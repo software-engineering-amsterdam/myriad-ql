@@ -1,7 +1,7 @@
 package org.ql.typechecker.visitor;
 
-import org.ql.ast.Form;
-import org.ql.ast.Statement;
+import org.ql.ast.form.Form;
+import org.ql.ast.statement.Statement;
 import org.ql.ast.form.FormVisitor;
 import org.ql.ast.statement.*;
 import org.ql.ast.statement.question.QuestionLabel;

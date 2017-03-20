@@ -1,6 +1,6 @@
 package org.qls.typechecker;
 
-import org.ql.ast.QuestionSet;
+import org.ql.ast.identifier.IdentifierSet;
 import org.ql.ast.type.Type;
 import org.ql.typechecker.SymbolTable;
 import org.ql.typechecker.issues.IssuesStorage;
@@ -12,11 +12,11 @@ import org.qls.typechecker.issues.errors.UnsupportedWidgetForQLQuestionType;
 
 
 public class QLSQuestionVisitor implements WidgetQuestionVisitor<Void, SymbolTable> {
-    private final QuestionSet definedQuestions;
+    private final IdentifierSet definedQuestions;
     private IssuesStorage issuesStorage;
 
     public QLSQuestionVisitor() {
-        definedQuestions = new QuestionSet();
+        definedQuestions = new IdentifierSet();
     }
 
     public void visitStyleSheet(StyleSheet styleSheet, IssuesStorage issuesStorage, SymbolTable symbolTable) {

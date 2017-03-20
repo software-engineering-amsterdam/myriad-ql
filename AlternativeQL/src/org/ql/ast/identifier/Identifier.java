@@ -1,4 +1,6 @@
-package org.ql.ast;
+package org.ql.ast.identifier;
+
+import org.ql.ast.Node;
 
 public class Identifier extends Node {
     private final String id;

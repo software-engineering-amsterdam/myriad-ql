@@ -1,6 +1,6 @@
 package org.ql.evaluator;
 
-import org.ql.ast.Expression;
+import org.ql.ast.expression.Expression;
 import org.ql.ast.expression.ExpressionVisitor;
 import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.arithmetic.*;

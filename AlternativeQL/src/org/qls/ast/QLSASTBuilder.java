@@ -3,7 +3,7 @@ package org.qls.ast;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
-import org.ql.ast.Identifier;
+import org.ql.ast.identifier.Identifier;
 import org.ql.ast.Node;
 import org.ql.ast.type.*;
 import org.qls.ast.page.*;

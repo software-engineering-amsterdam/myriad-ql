@@ -1,7 +1,6 @@
 package org.ql.gui.widgets;
 
-import org.ql.ast.Identifier;
-import org.ql.ast.statement.ComputableQuestion;
+import org.ql.ast.identifier.Identifier;
 import org.ql.ast.statement.Question;
 import org.ql.ast.type.*;
 import org.ql.gui.ValueReviser;

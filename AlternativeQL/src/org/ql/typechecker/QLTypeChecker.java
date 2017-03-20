@@ -1,6 +1,6 @@
 package org.ql.typechecker;
 
-import org.ql.ast.Form;
+import org.ql.ast.form.Form;
 import org.ql.typechecker.issues.*;
 import org.ql.typechecker.visitor.CircularDependencyVisitor;
 import org.ql.typechecker.visitor.QuestionsVisitor;

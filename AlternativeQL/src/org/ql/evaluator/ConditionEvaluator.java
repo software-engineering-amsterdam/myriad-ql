@@ -1,12 +1,10 @@
 package org.ql.evaluator;
 
-import org.ql.ast.Expression;
-import org.ql.ast.Form;
-import org.ql.ast.Statement;
+import org.ql.ast.expression.Expression;
+import org.ql.ast.form.Form;
+import org.ql.ast.statement.Statement;
 import org.ql.ast.form.FormVisitor;
 import org.ql.ast.statement.*;
-import org.ql.evaluator.value.UnknownValue;
-import org.ql.evaluator.value.Value;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package org.ql.typechecker;
 
-import org.ql.ast.Identifier;
+import org.ql.ast.identifier.Identifier;
 import org.ql.ast.type.Type;
 
 import java.util.HashMap;

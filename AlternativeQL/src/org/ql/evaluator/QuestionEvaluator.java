@@ -1,21 +1,18 @@
 package org.ql.evaluator;
 
-import org.ql.ast.Form;
-import org.ql.ast.Identifier;
-import org.ql.ast.QuestionSet;
-import org.ql.ast.Statement;
+import org.ql.ast.form.Form;
+import org.ql.ast.identifier.IdentifierSet;
+import org.ql.ast.statement.Statement;
 import org.ql.ast.form.FormVisitor;
 import org.ql.ast.statement.*;
 import org.ql.evaluator.value.UnknownValue;
 import org.ql.evaluator.value.Value;
 
-import java.util.Set;
-
 public class QuestionEvaluator implements FormVisitor<Void, ValueTable>, StatementVisitor<Void, ValueTable> {
     private final ExpressionEvaluator expressionEvaluator;
-    private final QuestionSet modifiedQuestions;
+    private final IdentifierSet modifiedQuestions;
 
-    public QuestionEvaluator(QuestionSet modifiedQuestions) {
+    public QuestionEvaluator(IdentifierSet modifiedQuestions) {
         this.modifiedQuestions = modifiedQuestions;
         expressionEvaluator = new ExpressionEvaluator();
     }

@@ -1,8 +1,8 @@
 package org.ql.typechecker.visitor;
 
 import org.ql.ast.ASTVisitor;
-import org.ql.ast.Expression;
-import org.ql.ast.Statement;
+import org.ql.ast.expression.Expression;
+import org.ql.ast.statement.Statement;
 
 import java.util.List;
 

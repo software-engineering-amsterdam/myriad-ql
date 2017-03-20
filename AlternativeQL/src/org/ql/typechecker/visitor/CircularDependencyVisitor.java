@@ -1,7 +1,7 @@
 package org.ql.typechecker.visitor;
 
-import org.ql.ast.Form;
-import org.ql.ast.Identifier;
+import org.ql.ast.form.Form;
+import org.ql.ast.identifier.Identifier;
 import org.ql.ast.expression.BinaryExpression;
 import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.arithmetic.*;

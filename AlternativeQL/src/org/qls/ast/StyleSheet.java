@@ -1,6 +1,6 @@
 package org.qls.ast;
 
-import org.ql.ast.Identifier;
+import org.ql.ast.identifier.Identifier;
 import org.ql.ast.Node;
 import org.qls.ast.page.Page;
 

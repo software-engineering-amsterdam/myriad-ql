@@ -1,6 +1,6 @@
 package org.qls.typechecker;
 
-import org.ql.ast.Form;
+import org.ql.ast.form.Form;
 import org.ql.typechecker.QLTypeChecker;
 import org.ql.typechecker.SymbolTable;
 import org.ql.typechecker.issues.IssuesStorage;

@@ -2,9 +2,7 @@ package org.ql.gui;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.ql.ast.Form;
-import org.ql.gui.GUIFormBuilder;
-import org.ql.gui.Window;
+import org.ql.ast.form.Form;
 
 public class QLApplication extends Application {
 

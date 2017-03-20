@@ -1,6 +1,6 @@
 package org.ql;
 
-import org.ql.ast.Form;
+import org.ql.ast.form.Form;
 import org.ql.gui.QLApplication;
 import org.ql.io.QLFile;
 import org.ql.ast.QLASTBuilder;

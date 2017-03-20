@@ -1,6 +1,6 @@
 package org.qls.ast.page;
 
-import org.ql.ast.Identifier;
+import org.ql.ast.identifier.Identifier;
 import org.ql.ast.Node;
 
 public class WidgetQuestion extends Node {

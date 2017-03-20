@@ -1,9 +1,8 @@
 package org.ql.gui;
 
-import org.ql.ast.Form;
-import org.ql.ast.Identifier;
-import org.ql.ast.QuestionSet;
-import org.ql.ast.statement.ComputableQuestion;
+import org.ql.ast.form.Form;
+import org.ql.ast.identifier.Identifier;
+import org.ql.ast.identifier.IdentifierSet;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.ValueTable;
 import org.ql.evaluator.value.Value;
@@ -11,9 +10,6 @@ import org.ql.gui.widgets.Widget;
 import org.ql.gui.widgets.WidgetContainer;
 import org.ql.evaluator.QuestionEvaluator;
 import org.ql.evaluator.ConditionEvaluator;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class GUIFormBuilder implements ValueReviser {
 
@@ -23,7 +19,7 @@ public class GUIFormBuilder implements ValueReviser {
     private final ConditionEvaluator conditionEvaluator;
     private final QuestionEvaluator questionEvaluator;
     private final ValueTable valueTable;
-    private final QuestionSet modifiedQuestions;
+    private final IdentifierSet modifiedQuestions;
     private final WidgetContainer widgetContainer;
 
     public GUIFormBuilder(Window window, Form form) {
@@ -31,7 +27,7 @@ public class GUIFormBuilder implements ValueReviser {
         this.window = window;
 
         valueTable = new ValueTable();
-        modifiedQuestions = new QuestionSet();
+        modifiedQuestions = new IdentifierSet();
         conditionEvaluator = new ConditionEvaluator();
         questionEvaluator = new QuestionEvaluator(modifiedQuestions);
         widgetContainer = new WidgetContainer(this);

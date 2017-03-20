@@ -1,9 +1,9 @@
 package org.ql.typechecker;
 
 import org.junit.Test;
-import org.ql.ast.Form;
-import org.ql.ast.Identifier;
-import org.ql.ast.Statement;
+import org.ql.ast.form.Form;
+import org.ql.ast.identifier.Identifier;
+import org.ql.ast.statement.Statement;
 import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.arithmetic.Decrement;
 import org.ql.ast.expression.arithmetic.Increment;

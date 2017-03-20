@@ -1,9 +1,9 @@
-package org.ql.ast;
+package org.ql.ast.identifier;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class QuestionSet {
+public class IdentifierSet {
     private final Set<Identifier> identifierSet = new HashSet<>();
 
     public boolean declare(Identifier id) {

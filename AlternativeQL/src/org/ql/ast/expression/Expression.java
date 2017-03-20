@@ -1,5 +1,6 @@
-package org.ql.ast;
+package org.ql.ast.expression;
 
+import org.ql.ast.Node;
 import org.ql.ast.expression.ExpressionVisitor;
 
 public abstract class Expression extends Node {

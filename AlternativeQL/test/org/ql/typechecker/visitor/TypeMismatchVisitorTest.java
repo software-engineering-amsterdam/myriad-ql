@@ -1,7 +1,7 @@
 package org.ql.typechecker.visitor;
 
 import org.junit.Test;
-import org.ql.ast.Identifier;
+import org.ql.ast.identifier.Identifier;
 import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.arithmetic.*;
 import org.ql.ast.expression.literal.BooleanLiteral;
