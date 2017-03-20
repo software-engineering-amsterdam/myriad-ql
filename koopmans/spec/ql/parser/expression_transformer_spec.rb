@@ -12,29 +12,39 @@ module QL
 
       context 'arithmetic' do
         it 'parses Add' do
-          expression = { operator: '+', right: IntegerLiteral.new('10') }
-          expect(expression_transformer.apply(expression)).to be_a(Add)
+          expression = { arithmetic_operator: '+', right: IntegerLiteral.new('10') }
+          expect(expression_transformer.apply(expression)).to be_a(ArithmeticExpression)
         end
       end
 
       context 'boolean' do
         it 'parses And' do
-          expression = { operator: '&&', right: BooleanLiteral.new('true') }
-          expect(expression_transformer.apply(expression)).to be_a(And)
+          expression = { boolean_operator: '&&', right: BooleanLiteral.new('true') }
+          expect(expression_transformer.apply(expression)).to be_a(BooleanExpression)
         end
       end
 
       context 'comparison' do
         it 'parses Equality' do
-          expression = { operator: '==', right: IntegerLiteral.new('10') }
-          expect(expression_transformer.apply(expression)).to be_a(Equal)
+          expression = { comparison_equal_operator: '==', right: IntegerLiteral.new('10') }
+          expect(expression_transformer.apply(expression)).to be_a(ComparisonEqualExpression)
+        end
+
+        it 'parses Greater' do
+          expression = { comparison_order_operator: '>', right: IntegerLiteral.new('10') }
+          expect(expression_transformer.apply(expression)).to be_a(ComparisonOrderExpression)
         end
       end
 
       context 'negation' do
         it 'parses boolean' do
-          expression = [operator: '!', single: BooleanLiteral.new('true')]
+          expression = [negation_operator: '!', single: BooleanLiteral.new('true')]
           expect(expression_transformer.apply(expression)).to be_a(BooleanNegation)
+        end
+
+        it 'parses integer' do
+          expression = [negation_operator: '-', single: IntegerLiteral.new('10')]
+          expect(expression_transformer.apply(expression)).to be_a(IntegerNegation)
         end
       end
 
@@ -47,7 +57,7 @@ module QL
 
       context 'expression' do
         it 'parses' do
-          expression = [IntegerLiteral.new('5'), { operator: '+', right: IntegerLiteral.new('10') }]
+          expression = [IntegerLiteral.new('5'), { arithmetic_operator: '+', right: IntegerLiteral.new('10') }]
           expect(expression_transformer.apply(expression)).to be_a(Expression)
         end
       end
