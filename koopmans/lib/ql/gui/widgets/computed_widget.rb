@@ -1,7 +1,7 @@
 module QL
   module GUI
     class ComputedWidget < Widget
-      def initialize(tk_frame, options=nil)
+      def initialize(tk_frame, _options = nil)
         @variable = TkVariable.new
 
         entry = TkEntry.new(tk_frame).pack
@@ -9,7 +9,7 @@ module QL
         entry.state = 'disabled'
       end
 
-      def set_value(value)
+      def value=(value)
         @variable.value = value
       end
     end

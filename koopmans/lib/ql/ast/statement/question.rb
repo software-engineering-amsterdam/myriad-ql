@@ -9,7 +9,7 @@ module QL
         @type = type
       end
 
-      def accept(visitor, condition=nil)
+      def accept(visitor, condition = nil)
         visitor.visit_question(self, condition)
       end
     end

@@ -40,9 +40,8 @@ module QL
       end
 
       def reload
-        if @condition
-          check_condition
-        end
+        return unless @condition
+        check_condition
       end
 
       def check_condition
@@ -59,7 +58,6 @@ module QL
         @enabled = false
       end
 
-      # TODO Open/closed principle formatting (https://subvisual.co/blog/posts/19-solid-principles-in-ruby)
       def print
         "#{@label} #{@value}"
       end

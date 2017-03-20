@@ -14,4 +14,3 @@ module QLS
     end
   end
 end
-

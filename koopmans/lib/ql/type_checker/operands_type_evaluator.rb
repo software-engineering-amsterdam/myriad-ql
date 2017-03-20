@@ -19,8 +19,7 @@ module QL
         if_else_statement.else_body.map { |statement| statement.accept(self) }
       end
 
-      def visit_question(_, _)
-      end
+      def visit_question(_, _) end
 
       def visit_computed_question(computed_question, _)
         computed_question.assignment.accept(self)
@@ -111,15 +110,14 @@ module QL
       end
 
       def check_if_condition(if_statement, condition_type)
-        unless condition_type.is_a?(AST::BooleanType)
-          NotificationTable.store(Notification::Error.new("#{if_statement.condition} is not of the type boolean"))
-        end
+        return if condition_type.is_a?(AST::BooleanType)
+        NotificationTable.store(Notification::Error.new("#{if_statement.condition} is not of the type boolean"))
       end
 
       def evaluate_types(left, binary_expression, compatible_types, return_type)
         left_type = left.accept(self)
         right_type = binary_expression.expression.accept(self)
-        if check_compatibility(left_type, compatible_types) and check_compatibility(right_type, compatible_types)
+        if check_compatibility(left_type, compatible_types) && check_compatibility(right_type, compatible_types)
           return_type
         else
           NotificationTable.store(Notification::Error.new("incompatible types at #{binary_expression.operator} operator"))

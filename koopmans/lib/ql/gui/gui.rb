@@ -5,7 +5,7 @@ module QL
     class GUI
       attr_writer :question_frames
 
-      def initialize(question_frames=nil)
+      def initialize(question_frames = nil)
         @question_frames = question_frames
       end
 
@@ -19,9 +19,7 @@ module QL
       end
 
       def render_questions
-        @question_frames.each do |question_frame|
-          question_frame.render
-        end
+        @question_frames.each(&:render)
         reload_questions
       end
 
@@ -47,7 +45,6 @@ module QL
         end
       end
 
-      # TODO Open/closed principle formatting (https://subvisual.co/blog/posts/19-solid-principles-in-ruby)
       def print_form
         write_to_file(enabled_questions.map(&:print).join("\n"))
       end

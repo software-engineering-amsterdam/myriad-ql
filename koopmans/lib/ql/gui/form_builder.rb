@@ -1,16 +1,16 @@
 module QL
   module GUI
     class FormBuilder
-      def visit_form(form, collected_data=nil)
+      def visit_form(form, _)
         form.statements.map { |statement| statement.accept(self) }.flatten
       end
 
-      def visit_if_statement(if_statement, condition=nil)
+      def visit_if_statement(if_statement, condition)
         condition = stack_conditions(condition, if_statement.condition)
         if_statement.body.map { |statement| statement.accept(self, condition) }
       end
 
-      def visit_if_else_statement(if_else_statement, condition=nil)
+      def visit_if_else_statement(if_else_statement, condition)
         if_condition = stack_conditions(condition, if_else_statement.condition)
         else_condition = stack_conditions(condition, negate(if_else_statement.condition))
         if_body_questions = if_else_statement.if_body.map { |statement| statement.accept(self, if_condition) }
@@ -18,17 +18,17 @@ module QL
         [if_body_questions, else_body_questions]
       end
 
-      def visit_question(question, condition=nil)
+      def visit_question(question, condition)
         name = question.variable.name
         label = question.label.value
         literal_type, widget_type = question.type.accept(self)
         QuestionFrame.new(name: name, label: label, literal_type: literal_type, widget_type: widget_type, condition: condition)
       end
 
-      def visit_computed_question(question, condition=nil)
+      def visit_computed_question(question, condition)
         name = question.variable.name
         label = question.label.value
-        literal_type, _ = question.type.accept(self)
+        literal_type, = question.type.accept(self)
         widget_type = ComputedWidget
         assignment = question.assignment
         ComputedQuestionFrame.new(name: name, label: label, literal_type: literal_type, widget_type: widget_type, condition: condition, assignment: assignment)
@@ -43,27 +43,27 @@ module QL
       # DropdownWidget
 
       def visit_boolean_type(_)
-        return AST::BooleanLiteral, RadioWidget
+        [AST::BooleanLiteral, RadioWidget]
       end
 
       def visit_date_type(_)
-        return AST::IntegerLiteral, TextWidget
+        [AST::IntegerLiteral, TextWidget]
       end
 
       def visit_decimal_type(_)
-        return AST::IntegerLiteral, TextWidget
+        [AST::IntegerLiteral, TextWidget]
       end
 
       def visit_integer_type(_)
-        return AST::IntegerLiteral, SpinboxWidget
+        [AST::IntegerLiteral, SpinboxWidget]
       end
 
       def visit_money_type(_)
-        return AST::IntegerLiteral, SpinboxWidget
+        [AST::IntegerLiteral, SpinboxWidget]
       end
 
       def visit_string_type(_)
-        return AST::StringLiteral, TextWidget
+        [AST::StringLiteral, TextWidget]
       end
 
       # negate for condition for else body of if else statement

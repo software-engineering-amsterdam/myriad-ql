@@ -18,8 +18,7 @@ module QL
         [if_condition_variables, if_body_variables, else_body_variables]
       end
 
-      def visit_question(_, _)
-      end
+      def visit_question(_, _) end
 
       def visit_computed_question(computed_question, _)
         computed_question.assignment.accept(self)

@@ -5,11 +5,11 @@ module QL
       attr_reader :statements
 
       def initialize(variable, statements)
-        @variable   = variable
+        @variable = variable
         @statements = statements
       end
 
-      def accept(visitor, collected_data=nil)
+      def accept(visitor, collected_data = nil)
         visitor.visit_form(self, collected_data)
       end
     end

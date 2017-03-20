@@ -1,7 +1,7 @@
 module QL
   module GUI
     class SpinboxWidget < Widget
-      def initialize(tk_frame, options=nil)
+      def initialize(tk_frame, options = nil)
         @default_value = 0
 
         @minimum = 0
@@ -21,7 +21,3 @@ module QL
     end
   end
 end
-
-# spinbox.increment  = 0.1
-# spinbox.format     = "%.2f"
-# spinbox.textvariable = variable

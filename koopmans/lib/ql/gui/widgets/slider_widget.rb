@@ -1,7 +1,7 @@
 module QL
   module GUI
     class SliderWidget < Widget
-      def initialize(tk_frame, options=nil)
+      def initialize(tk_frame, options = nil)
         @default_value = 0
 
         @minimum = 0

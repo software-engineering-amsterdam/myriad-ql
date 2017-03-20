@@ -30,7 +30,6 @@ module QL
         end
       end
 
-
       describe 'variables' do
         context 'variable' do
           it 'parses' do
@@ -127,7 +126,6 @@ module QL
           end
         end
       end
-
 
       describe 'form' do
         it 'parses' do

@@ -9,7 +9,7 @@ module QL
       end
 
       # TODO
-      def accept(visitor, condition=nil)
+      def accept(visitor, condition = nil)
         visitor.visit_computed_question(self, condition)
       end
     end

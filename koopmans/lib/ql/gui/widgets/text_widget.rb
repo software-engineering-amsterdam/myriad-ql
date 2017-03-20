@@ -1,7 +1,7 @@
 module QL
   module GUI
     class TextWidget < Widget
-      def initialize(tk_frame, options=nil)
+      def initialize(tk_frame, _options = nil)
         @default_value = ''
 
         entry = TkEntry.new(tk_frame).pack

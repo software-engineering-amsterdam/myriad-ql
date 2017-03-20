@@ -14,3 +14,24 @@ Documentation:
 
 Style/IfUnlessModifier:
   Enabled: false
+
+Security/Eval:
+  Enabled: false
+
+Style/VariableNumber:
+  EnforcedStyle: snake_case
+
+Metrics/MethodLength:
+  Max: 30
+
+Metrics/AbcSize:
+  Max: 30
+
+Metrics/ClassLength:
+  CountComments: false  # count full line comments?
+  Max: 150
+
+Metrics/BlockLength:
+  CountComments: false  # count full line comments?
+  Max: 150
+  ExcludedMethods: []
