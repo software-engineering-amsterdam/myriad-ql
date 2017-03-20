@@ -99,35 +99,46 @@ class PrintHandler(object):
         left, right = or_node.left.accept(self), or_node.right.accept(self)
         return "({} || {})".format(left, right)
 
-    def bool_type_node(self, _):
+    @staticmethod
+    def bool_type_node(_):
         return "boolean"
 
-    def int_type_node(self, _):
+    @staticmethod
+    def int_type_node(_):
         return "integer"
 
-    def money_type_node(self, _):
+    @staticmethod
+    def money_type_node(_):
         return "money"
 
-    def decimal_type_node(self, _):
+    @staticmethod
+    def decimal_type_node(_):
         return "decimal"
 
-    def string_type_node(self, _):
+    @staticmethod
+    def string_type_node(_):
         return "string"
 
-    def date_type_node(self, _):
+    @staticmethod
+    def date_type_node(_):
         return "date"
 
-    def var_node(self, var_node):
+    @staticmethod
+    def var_node(var_node):
         return str(var_node.name)
 
-    def int_node(self, int_node):
+    @staticmethod
+    def int_node(int_node):
         return str(int_node.val)
 
-    def decimal_node(self, decimal_node):
+    @staticmethod
+    def decimal_node(decimal_node):
         return str(decimal_node.val)
 
-    def string_node(self, string_node):
+    @staticmethod
+    def string_node(string_node):
         return "'{}'".format(string_node.val)
 
-    def date_node(self, date_node):
+    @staticmethod
+    def date_node(date_node):
         return date_node.val.strftime("%d-%m-%Y")

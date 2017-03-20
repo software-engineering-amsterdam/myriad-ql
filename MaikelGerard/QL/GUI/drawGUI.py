@@ -6,7 +6,7 @@ from QL.undefined import Undefined
 from QL.GUI.evaluate_draw_state import EvaluateDrawState
 from QL.GUI.save_questionaire import SaveQuestionaire
 from QL.stages.update_computed_vars import UpdateComputedVars
-import QL.GUI.widgets as Widgets
+import QL.GUI.widgets as widgets
 
 
 class DrawGUI(object):
@@ -93,25 +93,25 @@ class DrawGUI(object):
         question_str = comp_question.question
 
         # Draw the value of the computed question within a label.
-        widget_class = Widgets.ComputedLabelWidget
+        widget_class = widgets.ComputedLabelWidget
         self.add_widget(widget_class, identifier, question_str)
 
     @staticmethod
     def bool_type_node(_):
-        return Widgets.CheckBoxWidget
+        return widgets.CheckBoxWidget
 
     @staticmethod
     def int_type_node(_):
-        return Widgets.SpinBoxWidget
+        return widgets.SpinBoxWidget
 
     @staticmethod
     def decimal_type_node(_):
-        return Widgets.NumericWidget
+        return widgets.NumericWidget
 
     @staticmethod
     def string_type_node(_):
-        return Widgets.EntryWidget
+        return widgets.EntryWidget
 
     @staticmethod
     def date_type_node(_):
-        return Widgets.DateWidget
+        return widgets.DateWidget

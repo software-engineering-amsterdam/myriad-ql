@@ -40,20 +40,26 @@ class SaveQuestionaire(object):
     def comp_question_node(self, comp_question_node):
         self.store_question_val(comp_question_node)
 
-    def string_type_node(self, _, value):
+    @staticmethod
+    def string_type_node(_, value):
         return value
 
-    def date_type_node(self, _, date_value):
+    @staticmethod
+    def date_type_node(_, date_value):
         return date_value.strftime("%d-%m-%Y")
 
-    def int_type_node(self, _, value):
+    @staticmethod
+    def int_type_node(_, value):
         return int(value)
 
-    def decimal_type_node(self, _, value):
+    @staticmethod
+    def decimal_type_node(_, value):
         return float(value)
 
-    def money_type_node(self, _, value):
+    @staticmethod
+    def money_type_node(_, value):
         return float(value)
 
-    def bool_type_node(self, _, value):
+    @staticmethod
+    def bool_type_node(_, value):
         return value
