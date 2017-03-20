@@ -1,6 +1,6 @@
 module QL.Parser.Expression exposing (expression)
 
-import Combine exposing (Parser, chainl, choice, lazy, parens, succeed, (<$), (<$>), (*>), (<*), (<*>), (<|>))
+import Combine exposing (Parser, chainl, choice, lazy, parens, succeed, (<$>), (<*>), (<|>))
 import Combine.Num exposing (int, float)
 import Combine.Extra exposing (trimmed, stringAs)
 import List exposing (foldr)
