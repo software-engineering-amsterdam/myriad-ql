@@ -35,14 +35,14 @@ class Environment(object):
     def is_visible(self, variable):
         condition = self.conditional_questions.get(variable)
         if (condition):
-            return condition.alg(Eval(self)).execute()
+            return condition.alg(Eval(self))()
         else:
             return 1
 
     def update_computed_questions(self):
         for question in self.computed_questions:
             var = self.get_var(question[0].name)
-            evalutation = question[2].alg(Eval(self)).execute()
+            evalutation = question[2].alg(Eval(self))()
             var.set(evalutation)
 
     def get_var(self, var):

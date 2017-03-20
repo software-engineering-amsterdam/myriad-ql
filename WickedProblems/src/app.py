@@ -7,6 +7,7 @@ if cur_version >= req_version:
     from parser.ql import QL
     from operations.gui import BuildGui
     from operations.environment import Environment
+    from operations.pretty_print import PrettyPrint
     from operations.type_checker import TypeChecker, DuplicateLabelsChecker, UndefinedVariableChecker, QuestionTypeChecker, InvalidOperandChecker
     from user_interface.application import Application
     from operations.ql import VoidAlg
@@ -29,6 +30,9 @@ type_checker.add_checker(DuplicateLabelsChecker)
 type_checker.add_checker(UndefinedVariableChecker)
 type_checker.add_checker(QuestionTypeChecker)
 type_checker.add_checker(InvalidOperandChecker)
+
+print(form_ast.alg(PrettyPrint(4))())
+
 
 if type_checker.is_valid(form_ast):
     app = Application(form_ast, form_ast.name)

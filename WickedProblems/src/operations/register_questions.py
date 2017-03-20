@@ -1,169 +1,93 @@
-from .ql import QlAlg,RefVariable,Variable
+from .ql import QlAlg, RefVariable, Variable
 from .environment import Environment
 from ast.ast import *
 from ast.base_nodes import *
 from ast.field_types import *
 
+
 class RegisterComputedQuestions(QlAlg):
+
     def __init__(self, environment):
         self.environment = environment
 
     def Literal(self, value):
-        class _anon():
-            execute = None
-
-        return _anon()
+        return lambda: value
 
     def Form(self, name, block):
-        def _register():
-            block.execute()
-            return
-
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return block
 
     def Block(self, statements):
-        class _anon():
-            execute = lambda self: [k.execute()
-                                    for _, k in enumerate(statements)]
-        return _anon()
+        return lambda: [k() for _, k in enumerate(statements)]
 
     def Variable(self, name, datatype):
-        class _anon():
-            execute = lambda self: Variable(name, datatype)
-        return _anon()
+        return lambda: Variable(name, datatype)
 
     def RefVariable(self, name):
-        class _anon():
-            execute = lambda self: RefVariable(name)
-        return _anon()
+        return lambda: RefVariable(name)
 
     def Question(self, variable, label):
-        def _register():
-            pass
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return lambda: None
 
     def ifThen(self, expression, block):
-        def _register():
+        def _statements():
+            expression()
+            block()
 
-            expression.execute()
-            block.execute()
-
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def ComputedQuestion(self, variable, label, expression):
-        def _register():
-            self.environment.add_computed_question(variable.execute(), label.execute(), expression.execute())
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return lambda: self.environment.add_computed_question(variable(), label(), expression())
 
     def Boolean(self, value=False):
-        def _register(self):
-            return 'boolean'
-
-        class _anon():
-            execute = lambda self: _register(self)
-        return _anon()
+        return lambda: 'boolean'
 
     def UnaryNegation(self, lhs):
-        class _anon():
-            execute = lambda self: UnaryNegation(lhs.execute())
-        return _anon()
+        return lambda: UnaryNegation(lhs())
 
     def Money(self, value=False):
-        def _register():
-            return 'money'
-
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return lambda: 'money'
 
     def Substraction(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: Substraction(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: Substraction(lhs(), rhs())
 
     def Addition(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: Addition(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: Addition(lhs(), rhs())
 
     def GreaterThan(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: GreaterThan(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: GreaterThan(lhs(), rhs())
 
     def GreaterThanEquals(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: GreaterThanEquals(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: GreaterThanEquals(lhs(), rhs())
 
     def LessThan(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: LessThan(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: LessThan(lhs(), rhs())
 
     def LessThanEquals(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: LessThanEquals(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: LessThanEquals(lhs(), rhs())
 
     def Equality(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: Equality(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: Equality(lhs(), rhs())
 
     def Inequality(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: Inequality(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: Inequality(lhs(), rhs())
 
     def Division(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: Division(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: Division(lhs(), rhs())
 
     def Multiplication(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: Multiplication(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: Multiplication(lhs(), rhs())
 
     def LogicalAnd(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: LogicalAnd(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: LogicalAnd(lhs(), rhs())
 
     def LogicalOr(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: LogicalOr(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: LogicalOr(lhs(), rhs())
 
     def Integer(self, value):
-        def _register():
-            return 'integer'
-
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return lambda: 'integer'
 
     def StringLiteral(self, value):
-        def _register():
-            return value
-
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return lambda: value
 
     def String(self, value):
-        def _register():
-            return 'string'
-
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return lambda: 'integer'

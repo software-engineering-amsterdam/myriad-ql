@@ -209,7 +209,7 @@ class BooleanController(FormElement):
     def __init__(self, parent, variable):
         self.parent = parent
         self.variable = variable
-        self.label = "BooleanControlelr"
+        self.label = "BooleanController"
         self.element = RadioElement(parent, self.label, self.variable)
 
     def render(self):

@@ -20,10 +20,10 @@ class Application(object):
         self.environment = None 
         self.elements = []
         self.environment = Environment()
-        ast.alg(GetVariables(self.environment)).execute()
-        ast.alg(RegisterComputedQuestions(self.environment)).execute()
-        ast.alg(RegisterConditions(self.environment)).execute()
-        form = ast.alg(BuildGui(self.root, self.environment)).execute()
+        ast.alg(GetVariables(self.environment))()
+        ast.alg(RegisterComputedQuestions(self.environment))()
+        ast.alg(RegisterConditions(self.environment))()
+        form = ast.alg(BuildGui(self.root, self.environment))()
         self.add_element(form)
 
     def reload(self, event=None):

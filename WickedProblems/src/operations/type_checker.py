@@ -30,15 +30,13 @@ class DuplicateLabelsChecker(VoidAlg):
         self.message_container = message_container
 
     def StringLiteral(self, value):
-        def _register():
+        def _statements():
             if (value in self.labels):
                 self.message_container.add_warning("Duplicate label: " + value)
             else:
                 self.labels.append(value)
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
 
 class UndefinedVariableChecker(VoidAlg):
@@ -48,22 +46,18 @@ class UndefinedVariableChecker(VoidAlg):
         self.message_container = message_container
 
     def Variable(self, name, datatype):
-        def _register():
+        def _statements():
             if name not in self.variables:
                 self.variables.append(name)
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def RefVariable(self, name):
-        def _register():
+        def _statements():
             if (name not in self.variables):
                 self.message_container.add_error("Undefined variable: " + name)
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
 
 class QuestionTypeChecker(VoidAlg):
@@ -73,40 +67,29 @@ class QuestionTypeChecker(VoidAlg):
         self.message_container = message_container
 
     def Variable(self, name, datatype):
-        def _register():
-            _datatype = datatype.execute()
+        def _statements():
+            _datatype = datatype()
             if name not in self.variables:
-                self.variables.update({name: datatype.execute()})
+                self.variables.update({name: datatype()})
             else:
                 current_datatype = self.variables.get(name)
-                if current_datatype != datatype.execute():
+                if current_datatype != datatype():
                     self.message_container.add_error(
                         "Incompatible types: {} is defined with {}. Cannot be redefined with {}".format(name, current_datatype, _datatype))
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def String(self, value):
-        class _anon():
-            execute = lambda self: 'string'
-        return _anon()
+        return lambda: 'string'
 
     def Boolean(self, value):
-        class _anon():
-            execute = lambda self: 'boolean'
-        return _anon()
+        return lambda: 'boolean'
 
     def Money(self, value):
-        class _anon():
-            execute = lambda self: 'money'
-        return _anon()
+        return lambda: 'money'
 
     def Integer(self, value):
-        class _anon():
-            execute = lambda self: 'integer'
-        return _anon()
-
+        return lambda: 'integer'
 
 class InvalidOperandChecker(VoidAlg):
 
@@ -115,168 +98,136 @@ class InvalidOperandChecker(VoidAlg):
         self.message_container = message_container
 
     def Variable(self, name, datatype):
-        def _register():
-            _datatype = datatype.execute()
+        def _statements():
+            _datatype = datatype()
             if name not in self.variables:
-                self.variables.update({name: datatype.execute()})
+                self.variables.update({name: datatype()})
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def RefVariable(self, name):
-        def _register():
+        def _statements():
             return self.variables.get(name)
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def GreaterThan(self, lhs, rhs):
-        def _register():
-            valid_types = [self.Integer().execute()]
-            if (lhs.execute() not in valid_types or rhs.execute() not in valid_types):
+        def _statements():
+            valid_types = [self.Integer()()]
+            if (lhs() not in valid_types or rhs() not in valid_types):
                 self.message_container.add_error(
-                    "Invalid operand types: {} > {}".format(lhs.execute(), rhs.execute()))
-            return lhs.execute()
+                    "Invalid operand types: {} > {}".format(lhs(), rhs()))
+            return lhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def GreaterThanEquals(self, lhs, rhs):
-        def _register():
-            valid_types = [self.Integer().execute()]
-            if (lhs.execute() not in valid_types or rhs.execute() not in valid_types):
+        def _statements():
+            valid_types = [self.Integer()()]
+            if (lhs() not in valid_types or rhs() not in valid_types):
                 self.message_container.add_error(
-                    "Invalid operand types: {} >= {}".format(lhs.execute(), rhs.execute()))
-            return lhs.execute()
+                    "Invalid operand types: {} >= {}".format(lhs(), rhs()))
+            return lhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def LessThan(self, lhs, rhs):
-        def _register():
-            valid_types = [self.Integer().execute()]
-            if (lhs.execute() not in valid_types or rhs.execute() not in valid_types):
+        def _statements():
+            valid_types = [self.Integer()()]
+            if (lhs() not in valid_types or rhs() not in valid_types):
                 self.message_container.add_error(
-                    "Invalid operand types: {} < {}".format(lhs.execute(), rhs.execute()))
-            return lhs.execute()
+                    "Invalid operand types: {} < {}".format(lhs(), rhs()))
+            return lhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def LessThanEquals(self, lhs, rhs):
-        def _register():
-            valid_types = [self.Integer().execute()]
-            if (lhs.execute() not in valid_types or rhs.execute() not in valid_types):
+        def _statements():
+            valid_types = [self.Integer()()]
+            if (lhs() not in valid_types or rhs() not in valid_types):
                 self.message_container.add_error(
-                    "Invalid operand types: {} <= {}".format(lhs.execute(), rhs.execute()))
-            return lhs.execute()
+                    "Invalid operand types: {} <= {}".format(lhs(), rhs()))
+            return lhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def Substraction(self, lhs, rhs):
-        def _register():
-            valid_types = [self.Integer().execute()]
-            if (lhs.execute() not in valid_types or rhs.execute() not in valid_types):
+        def _statements():
+            valid_types = [self.Integer()()]
+            if (lhs() not in valid_types or rhs() not in valid_types):
                 self.message_container.add_error(
-                    "Invalid operand types: {} - {}".format(lhs.execute(), rhs.execute()))
+                    "Invalid operand types: {} - {}".format(lhs(), rhs()))
 
-            return lhs.execute()
+            return lhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def Addition(self, lhs, rhs):
-        def _register():
-            valid_types = [self.Integer().execute()]
-            if (lhs.execute() not in valid_types or rhs.execute() not in valid_types):
+        def _statements():
+            valid_types = [self.Integer()()]
+            if (lhs() not in valid_types or rhs() not in valid_types):
                 self.message_container.add_error(
-                    "Invalid operand types: {} + {}".format(lhs.execute(), rhs.execute()))
+                    "Invalid operand types: {} + {}".format(lhs(), rhs()))
 
-            return lhs.execute()
+            return lhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def Multiplication(self, lhs, rhs):
-        def _register():
-            valid_types = [self.Integer().execute()]
-            if (lhs.execute() not in valid_types or rhs.execute() not in valid_types):
+        def _statements():
+            valid_types = [self.Integer()()]
+            if (lhs() not in valid_types or rhs() not in valid_types):
                 self.message_container.add_error(
-                    "Invalid operand types: {} * {}".format(lhs.execute(), rhs.execute()))
+                    "Invalid operand types: {} * {}".format(lhs(), rhs()))
 
-            return lhs.execute()
+            return lhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def Division(self, lhs, rhs):
-        def _register():
-            valid_types = [self.Integer().execute()]
-            if (lhs.execute() not in valid_types or rhs.execute() not in valid_types):
+        def _statements():
+            valid_types = [self.Integer()()]
+            if (lhs() not in valid_types or rhs() not in valid_types):
                 self.message_container.add_error(
-                    "Invalid operand types: {} / {}".format(lhs.execute(), rhs.execute()))
+                    "Invalid operand types: {} / {}".format(lhs(), rhs()))
 
-            return lhs.execute()
+            return lhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def LogicalAnd(self, lhs, rhs):
-        def _register():
-            valid_types = [self.Boolean().execute()]
-            if (lhs.execute() not in valid_types or rhs.execute() not in valid_types):
+        def _statements():
+            valid_types = [self.Boolean()()]
+            if (lhs() not in valid_types or rhs() not in valid_types):
                 self.message_container.add_error(
-                    "Invalid operand types: {} && {}".format(lhs.execute(), rhs.execute()))
+                    "Invalid operand types: {} && {}".format(lhs(), rhs()))
 
-            return lhs.execute()
+            return lhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def LogicalOr(self, lhs, rhs):
-        def _register():
-            valid_types = [self.Boolean().execute()]
-            if (lhs.execute() not in valid_types or rhs.execute() not in valid_types):
+        def _statements():
+            valid_types = [self.Boolean()()]
+            if (lhs() not in valid_types or rhs() not in valid_types):
                 self.message_container.add_error(
-                    "Invalid operand types: {} || {}".format(lhs.execute(), rhs.execute()))
+                    "Invalid operand types: {} || {}".format(lhs(), rhs()))
 
-            return lhs.execute()
+            return lhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def String(self, value=None):
-        class _anon():
-            execute = lambda self: 'string'
-        return _anon()
+        return lambda: 'string'
 
     def Boolean(self, value=None):
-        class _anon():
-            execute = lambda self: 'boolean'
-        return _anon()
+        return lambda: 'boolean'
 
     def Money(self, value=None):
-        class _anon():
-            execute = lambda self: 'money'
-        return _anon()
+        return lambda: 'money'
 
     def Integer(self, value=None):
-        class _anon():
-            execute = lambda self: 'integer'
-        return _anon()
+        return lambda: 'integer'
 
 
 class TypeChecker(object):
@@ -299,9 +250,9 @@ class TypeChecker(object):
             print("Error: " + message)
         for message in message_container.get_warnings():
             print("Warning: " + message)
-            
+
         return not message_container.has_errors()
 
     def _validate(self, ast, message_container):
-        [ast.alg(checker(message_container)).execute()
+        [ast.alg(checker(message_container))()
          for checker in self.checkers]

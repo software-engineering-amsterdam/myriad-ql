@@ -1,101 +1,68 @@
 from .ql import ExpressionAlg
 
+
 class Eval(ExpressionAlg):
+
     def __init__(self, environment):
         self.environment = environment
 
     def RefVariable(self, name):
-        class _anon():
-            execute = lambda _ : self.environment.get_value(name)
-        return _anon()
+        return lambda : self.environment.get_value(name)
 
     def Literal(self):
         pass
-        
+
     def Variable(self):
         pass
 
     def String(self, value):
-        class _anon():
-            execute = lambda self: str(value)
-        return _anon()
+        return lambda : str(value)
 
     def Integer(self, value):
-        class _anon():
-            execute = lambda self: int(value)
-        return _anon()
+        return lambda : int(value)
 
     def Money(self, value):
-        class _anon():
-            execute = lambda self: value
-        return _anon()
+        return lambda : value
 
     def Boolean(self, value):
-        class _anon():
-            execute = lambda self: value
-        return _anon()
+        return lambda : value
 
     def Substraction(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: lhs.execute() - rhs.execute()
-        return _anon()
+        return lambda : lhs() - rhs()
 
     def Addition(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: lhs.execute() + rhs.execute()
-        return _anon()
+
+        return lambda : lhs() + rhs()
 
     def GreaterThan(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: 1 if lhs.execute() > rhs.execute() else 0
-        return _anon()
+        return lambda : 1 if lhs() > rhs() else 0
 
     def GreaterThanEquals(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: 1 if lhs.execute() >= rhs.execute() else 0
-        return _anon()
+        return lambda : 1 if lhs() >= rhs() else 0
 
     def LessThan(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: 1 if lhs.execute() < rhs.execute() else 0
-        return _anon()
+        return lambda : 1 if lhs() < rhs() else 0
 
     def LessThanEquals(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: 1 if lhs.execute() <= rhs.execute() else 0
-        return _anon()
+        return lambda : 1 if lhs() <= rhs() else 0
 
     def Equality(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: 1 if lhs.execute() == rhs.execute() else 0
-        return _anon()
+        return lambda : 1 if lhs() == rhs() else 0
 
     def Inequality(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: 1 if lhs.execute() != rhs.execute() else 0
-        return _anon()
+        return lambda : 1 if lhs() != rhs() else 0
 
     def Division(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: lhs.execute() / rhs.execute() if (lhs.execute() != 0 and rhs.execute() != 0) else 0
-        return _anon()
+        return lambda : lhs() / rhs() if (lhs() != 0 and rhs() != 0) else 0
 
     def Multiplication(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: lhs.execute() * rhs.execute() if (lhs.execute() != 0 and rhs.execute() != 0) else 0
-        return _anon()
+        return lambda : lhs() * rhs() if (lhs() != 0 and rhs() != 0) else 0
 
     def LogicalAnd(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: lhs.execute() and rhs.execute()
-        return _anon()
+        return lambda : lhs() and rhs()
 
     def LogicalOr(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: lhs.execute() or rhs.execute()
-        return _anon()
+        return lambda : lhs() or rhs()
 
     def UnaryNegation(self, lhs):
-        class _anon():
-            execute = lambda self: True if lhs.execute() == 0 else False
-        return _anon()
+        return lambda : True if lhs() == 0 else False

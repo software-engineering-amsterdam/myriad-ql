@@ -9,160 +9,93 @@ class RegisterConditions(QlAlg):
         self.environment = environment
 
     def Literal(self, value):
-        class _anon():
-            execute = None
+        return lambda: None
 
-        return _anon()
-
-    def Form(self, name, block):
-        def _register():
-            block.execute(None)
-            return
-
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+    def Form(self, name, block):    
+        return lambda: block(None)
 
     def Block(self, statements):
-        class _anon():
-            execute = lambda self, condition: [k.execute(condition)
+        return lambda condition: [k(condition)
                                     for _, k in enumerate(statements)]
-        return _anon()
 
     def Variable(self, name, datatype):
-        class _anon():
-            execute = lambda self: name
-        return _anon()
+        return lambda: name
 
     def RefVariable(self, name):
-        class _anon():
-            execute = lambda self: RefVariable(name)
-        return _anon()
+        return lambda: RefVariable(name)
+
 
     def Question(self, variable, label):
-        def _register(condition):
+        def _statements(condition):
             if condition:
-                self.environment.add_conditional(variable.execute(), condition)
+                self.environment.add_conditional(variable(), condition)
 
-        class _anon():
-            execute = lambda self, condition: _register(condition)
-        return _anon()
+        return _statements
 
     def ifThen(self, expression, block):
-        def _register():
+        def _statements(condition):
+            expression()
+            block(expression())
 
-            expression.execute()
-            block.execute(expression.execute())
-
-        class _anon():
-            execute = lambda self, expression: _register()
-        return _anon()
+        return _statements
 
     def ComputedQuestion(self, variable, label, expression):
-        def _register(condition):
+        def _statements(condition):
             if condition:
-                self.environment.add_conditional(variable.execute(), condition)
+                self.environment.add_conditional(variable(), condition)
 
-        class _anon():
-            execute = lambda self, condition: _register(condition)
-        return _anon()
+        return _statements
 
     def Boolean(self, value=False):
-        def _register(self):
-            return 'boolean'
-
-        class _anon():
-            execute = lambda self: _register(self)
-        return _anon()
+        return lambda: 'boolean'
 
     def Money(self, value=False):
-        def _register():
-            return 'money'
-
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return lambda: 'Money'
 
     def Substraction(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: Substraction(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: Substraction(lhs(), rhs())
 
     def UnaryNegation(self, lhs):
-        class _anon():
-            execute = lambda self: UnaryNegation(lhs.execute())
-        return _anon()
+        return lambda: UnaryNegation(lhs())
 
     def Addition(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: Addition(lhs.execute(), rhs.execute())
-        return _anon()
+        return  lambda: Addition(lhs(), rhs())
+
 
     def GreaterThan(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: GreaterThan(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: GreaterThan(lhs(), rhs())
+
 
     def GreaterThanEquals(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: GreaterThanEquals(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: GreaterThanEquals(lhs(), rhs())
 
     def LessThan(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: LessThan(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: LessThan(lhs(), rhs())
 
     def Equality(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: Equality(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: Equality(lhs(), rhs())
 
     def Inequality(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: Inequality(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: Inequality(lhs(), rhs())
+
 
     def Division(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: Division(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: Division(lhs(), rhs())
 
     def Multiplication(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: Multiplication(lhs.execute(), rhs.execute())
-        return _anon()
-
+        return lambda: Multiplication(lhs(), rhs())
+    
     def LogicalAnd(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: LogicalAnd(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: LogicalAnd(lhs(), rhs())
 
     def LogicalOr(self, lhs, rhs):
-        class _anon():
-            execute = lambda self: LogicalOr(lhs.execute(), rhs.execute())
-        return _anon()
+        return lambda: LogicalOr(lhs(), rhs())
 
     def Integer(self, value):
-        def _register():
-            return 'integer'
-
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
-
+        return lambda: 'integer'
+    
     def StringLiteral(self, value):
-        def _register():
-            return value
-
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return lambda: value
 
     def String(self, value):
-        def _register():
-            return 'string'
-
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return lambda:"string"
