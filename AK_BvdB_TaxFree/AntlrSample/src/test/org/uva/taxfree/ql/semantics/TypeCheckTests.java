@@ -36,7 +36,7 @@ public class TypeCheckTests {
                         new AddOperator(),
                         new IntegerLiteralNode(6, mEmptySourceInfo),
                         mEmptySourceInfo),
-                0);
+                1);
 
     }
 
@@ -49,7 +49,7 @@ public class TypeCheckTests {
                                 new IntegerLiteralNode(5, mEmptySourceInfo),
                                 mEmptySourceInfo),
                         mEmptySourceInfo),
-                0);
+                1);
 
     }
 
@@ -59,7 +59,7 @@ public class TypeCheckTests {
                         new EqualsOperator(),
                         new BooleanLiteralNode(false, mEmptySourceInfo),
                         mEmptySourceInfo),
-                1);
+                2);
     }
 
     @Test
@@ -68,14 +68,15 @@ public class TypeCheckTests {
                         new MultiplyOperator(),
                         new BooleanLiteralNode(true, mEmptySourceInfo),
                         mEmptySourceInfo),
-                2
+                3
         );
     }
 
-    public void assertTypes(Node node, int expectedErrorAmount) {
+    public void assertTypes(Node node, int expectedMessageAmount) {
         node.fillSymbolTable(mSymbolTable);
         node.checkSemantics(mSymbolTable, mMessageList);
-        Assert.assertEquals(mMessageList.messageAmount(), expectedErrorAmount, "Invalid amount of messaged received");
+        System.out.println(mMessageList);
+        Assert.assertEquals(mMessageList.messageAmount(), expectedMessageAmount, "Invalid amount of messages received");
     }
 
     @Test
