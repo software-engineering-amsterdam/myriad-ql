@@ -1,5 +1,5 @@
 from QL.error_handler import ErrorHandler as QLErrorHandler
-from QL.stages.print_handler import PrintHandler as QLPrintHandler
+from QL.print_handler import PrintHandler as QLPrintHandler
 
 
 class ErrorHandler(QLErrorHandler):
@@ -7,7 +7,6 @@ class ErrorHandler(QLErrorHandler):
         super(ErrorHandler, self).__init__()
 
     def add_question_not_in_ql_error(self, question_node):
-        print question_node
         message = "Question '{}' defined in QLS and not in QL"
         message = message.format(question_node.name)
         self.add_error(question_node, message)
