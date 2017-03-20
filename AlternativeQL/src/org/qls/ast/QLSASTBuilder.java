@@ -14,10 +14,7 @@ import org.qls.ast.widget.*;
 import org.qls.ast.widget.defaultWidget.DefaultWidget;
 import org.qls.ast.widget.defaultWidget.DefaultWidgetNoStyle;
 import org.qls.ast.widget.defaultWidget.DefaultWidgetWithStyle;
-import org.qls.ast.widget.defaultWidget.style.FontRule;
-import org.qls.ast.widget.defaultWidget.style.FontSizeRule;
-import org.qls.ast.widget.defaultWidget.style.StyleRule;
-import org.qls.ast.widget.defaultWidget.style.WidthRule;
+import org.qls.ast.widget.defaultWidget.style.*;
 import org.qls.grammar.QLSLexer;
 import org.qls.grammar.QLSParser;
 import org.qls.grammar.QLSVisitor;
@@ -46,7 +43,7 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
             pages.add((Page) visit(pageContext));
         }
 
-        return new StyleSheet((Identifier) visit(ctx.identifier()), pages);
+        return new StyleSheet(visitIdentifier(ctx.identifier()), pages);
     }
 
     @Override
@@ -54,7 +51,7 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
         List<Section> sections = getSections(ctx.section());
         List<DefaultWidget> defaultWidgets = getDefaultWidgets(ctx.defaultWidget());
 
-        return new Page((Identifier) visit(ctx.identifier()), sections, defaultWidgets);
+        return new Page(visitIdentifier(ctx.identifier()), sections, defaultWidgets);
     }
 
     @Override
@@ -68,12 +65,12 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
 
     @Override
     public Node visitQuestionNoWidget(QLSParser.QuestionNoWidgetContext ctx) {
-        return new Question((Identifier) visit(ctx.identifier()), null);
+        return new Question(visitIdentifier(ctx.identifier()), null);
     }
 
     @Override
     public Node visitQuestionWidget(QLSParser.QuestionWidgetContext ctx) {
-        return new Question((Identifier) visit(ctx.identifier()), (Widget) visit(ctx.widget()));
+        return new Question(visitIdentifier(ctx.identifier()), (Widget) visit(ctx.widget()));
     }
 
     @Override
@@ -143,6 +140,11 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
     }
 
     @Override
+    public ColorRule visitColorRule(QLSParser.ColorRuleContext ctx) {
+        return new ColorRule(ctx.COLOR_LITERAL().getText());
+    }
+
+    @Override
     public Node visitTypeBoolean(QLSParser.TypeBooleanContext ctx) {
         BooleanType booleanType = new BooleanType();
         booleanType.setSourceLocation(extractSourceLocation(ctx));
@@ -183,7 +185,7 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
     }
 
     @Override
-    public Node visitIdentifier(QLSParser.IdentifierContext ctx) {
+    public Identifier visitIdentifier(QLSParser.IdentifierContext ctx) {
         Identifier identifier = new Identifier(ctx.ID().getText());
         identifier.setSourceLocation(extractSourceLocation(ctx));
 
