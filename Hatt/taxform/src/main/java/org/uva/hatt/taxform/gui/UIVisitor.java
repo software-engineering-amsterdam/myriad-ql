@@ -8,6 +8,7 @@ import org.uva.hatt.taxform.ast.nodes.Form;
 import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
+import org.uva.hatt.taxform.ast.nodes.expressions.binary.*;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.Identifier;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.IntegerLiteral;
@@ -174,5 +175,63 @@ public class UIVisitor implements Visitor<Pane> {
         return null;
     }
 
+    @Override
+    public Pane visit(Addition addition){
+        return null;
+    }
 
+    @Override
+    public Pane visit(Division division){
+        return null;
+    }
+
+    @Override
+    public Pane visit(Equal equal){
+        return null;
+    }
+
+    @Override
+    public Pane visit(GreaterThan greaterThan){
+        return null;
+    }
+
+    @Override
+    public Pane visit(GreaterThanOrEqual greaterThanOrEqual){
+        return null;
+    }
+
+    @Override
+    public Pane visit(LessThan lessThan){
+        return null;
+    }
+
+    @Override
+    public Pane visit(LessThanOrEqual lessThanOrEqual){
+        return null;
+    }
+
+//    @Override
+//    public Pane visit(LogicalAnd logicalAnd){
+//        return null;
+//    }
+//
+//    @Override
+//    public Pane visit(LogicalOr){
+//        return null;
+//    }
+
+    @Override
+    public Pane visit(Multiplication multiplication){
+        return null;
+    }
+
+    @Override
+    public Pane visit(NotEqual notEqual){
+        return null;
+    }
+
+    @Override
+    public Pane visit(Subtraction subtraction){
+        return null;
+    }
 }

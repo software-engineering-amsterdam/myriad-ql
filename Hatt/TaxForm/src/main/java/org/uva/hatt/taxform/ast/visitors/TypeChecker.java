@@ -5,6 +5,7 @@ import org.uva.hatt.taxform.ast.nodes.Form;
 import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
+import org.uva.hatt.taxform.ast.nodes.expressions.binary.*;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.Identifier;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.IntegerLiteral;
@@ -19,10 +20,7 @@ import org.uva.hatt.taxform.ast.visitors.exceptionHandler.ExceptionHandler;
 import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.UndefinedReference;
 import org.uva.hatt.taxform.ast.visitors.exceptionHandler.warning.DuplicateLabel;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class TypeChecker implements Visitor{
@@ -30,6 +28,7 @@ public class TypeChecker implements Visitor{
     private ExceptionHandler exceptionHandler;
     private List<java.lang.String> questions = new LinkedList<>();
     private Map<java.lang.String, ValueType> declarations = new HashMap<>();
+    private Set<java.lang.String> dependencies = new HashSet<>();
 
     public TypeChecker(ExceptionHandler exceptionHandler)
     {
@@ -142,4 +141,70 @@ public class TypeChecker implements Visitor{
 
     @Override
     public Expression visit(Expression expression) { return null; }
+
+    @Override
+    public Set<java.lang.String> visit(Addition addition){
+        return visitBinaryExpression(addition);
+    }
+
+    @Override
+    public Set<java.lang.String> visit(Division division){
+        return visitBinaryExpression(division);
+    }
+
+    @Override
+    public Set<java.lang.String> visit(Equal equal){
+        return visitBinaryExpression(equal);
+    }
+
+    @Override
+    public Set<java.lang.String> visit(GreaterThan greaterThan){
+        return visitBinaryExpression(greaterThan);
+    }
+
+    @Override
+    public Set<java.lang.String> visit(GreaterThanOrEqual greaterThanOrEqual){
+        return visitBinaryExpression(greaterThanOrEqual);
+    }
+
+    @Override
+    public Set<java.lang.String> visit(LessThan lessThan){
+        return visitBinaryExpression(lessThan);
+    }
+
+    @Override
+    public Set<java.lang.String> visit(LessThanOrEqual lessThanOrEqual){
+        return visitBinaryExpression(lessThanOrEqual);
+    }
+
+//    @Override
+//    public Set<java.lang.String> visit(LogicalAnd logicalAnd){
+//
+//    }
+
+//    @Override
+//    public Set<java.lang.String> visit(LogicalOr){
+//
+//    }
+
+    @Override
+    public Set<java.lang.String> visit(Multiplication multiplication){
+        return visitBinaryExpression(multiplication);
+    }
+
+    @Override
+    public Set<java.lang.String> visit(NotEqual notEqual){
+        return visitBinaryExpression(notEqual);
+    }
+
+    @Override
+    public Set<java.lang.String> visit(Subtraction subtraction){
+        return visitBinaryExpression(subtraction);
+    }
+
+    private Set<java.lang.String> visitBinaryExpression(BooleanExpression expression){
+        expression.getLhs().accept(this);
+        expression.getRhs().accept(this);
+        return dependencies;
+    }
 }
