@@ -36,10 +36,11 @@ defaultWidget
     | 'default' type '{' styleRule+ widget '}'  #defaultWithStyle
     ;
 
-styleRule // TODO: Color - Hexadecimal
-    : 'width' ':'  INTEGER_LITERAL      #widthRule
+styleRule
+    : 'width' ':' INTEGER_LITERAL       #widthRule
     | 'font' ':' STRING_LITERAL         #fontRule
     | 'fontsize' ':' INTEGER_LITERAL    #fontSizeRule
+    | 'color' ':' COLOR_LITERAL         #colorRule
     ;
 
 // TODO: duplicates with QL grammar: extract in separate file?
@@ -61,6 +62,7 @@ LINE_COMMENT : '//' ~[\r\n]* -> channel(HIDDEN);
 // literal
 STRING_LITERAL : '"' (ESCAPE_QUOTE | ~ ["\\])* '"';
 INTEGER_LITERAL : [0-9]+;
+COLOR_LITERAL : '#' HEX HEX HEX HEX HEX HEX ;
 
 // names
 ID : [a-zA-Z][a-zA-Z0-9_]+;

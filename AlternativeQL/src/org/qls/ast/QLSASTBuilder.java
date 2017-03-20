@@ -11,15 +11,12 @@ import org.qls.ast.widget.*;
 import org.qls.ast.widget.defaultWidget.DefaultWidget;
 import org.qls.ast.widget.defaultWidget.DefaultWidgetNoStyle;
 import org.qls.ast.widget.defaultWidget.DefaultWidgetWithStyle;
-import org.qls.ast.widget.defaultWidget.style.FontRule;
-import org.qls.ast.widget.defaultWidget.style.FontSizeRule;
-import org.qls.ast.widget.defaultWidget.style.StyleRule;
-import org.qls.ast.widget.defaultWidget.style.WidthRule;
+import org.qls.ast.widget.defaultWidget.style.*;
 import org.qls.grammar.QLSLexer;
 import org.qls.grammar.QLSParser;
 import org.qls.grammar.QLSVisitor;
 
-import static org.util.ast.SourceLocationHydrator.*;
+import static org.ql.ast.SourceLocationHydrator.hydrateSourceLocation;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,7 +40,7 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
             pages.add((Page) visit(pageContext));
         }
 
-        return hydrateSourceLocation(new StyleSheet((Identifier) visit(ctx.identifier()), pages), ctx);
+        return hydrateSourceLocation(new StyleSheet(visitIdentifier(ctx.identifier()), pages), ctx);
     }
 
     @Override
@@ -51,7 +48,7 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
         List<Section> sections = getSections(ctx.section());
         List<DefaultWidget> defaultWidgets = getDefaultWidgets(ctx.defaultWidget());
 
-        return new Page((Identifier) visit(ctx.identifier()), sections, defaultWidgets);
+        return hydrateSourceLocation(new Page(visitIdentifier(ctx.identifier()), sections, defaultWidgets), ctx);
     }
 
     @Override
@@ -65,12 +62,12 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
 
     @Override
     public Node visitQuestionNoWidget(QLSParser.QuestionNoWidgetContext ctx) {
-        return hydrateSourceLocation(new Question((Identifier) visit(ctx.identifier()), null), ctx);
+        return hydrateSourceLocation(new Question(visitIdentifier(ctx.identifier()), null), ctx);
     }
 
     @Override
     public Node visitQuestionWidget(QLSParser.QuestionWidgetContext ctx) {
-        return hydrateSourceLocation(new Question((Identifier) visit(ctx.identifier()), (Widget) visit(ctx.widget())), ctx);
+        return hydrateSourceLocation(new Question(visitIdentifier(ctx.identifier()), (Widget) visit(ctx.widget())), ctx);
     }
 
     @Override
@@ -140,6 +137,11 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
     }
 
     @Override
+    public ColorRule visitColorRule(QLSParser.ColorRuleContext ctx) {
+        return new ColorRule(ctx.COLOR_LITERAL().getText());
+    }
+
+    @Override
     public Node visitTypeBoolean(QLSParser.TypeBooleanContext ctx) {
         return hydrateSourceLocation(new BooleanType(), ctx);
     }
@@ -165,7 +167,7 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
     }
 
     @Override
-    public Node visitIdentifier(QLSParser.IdentifierContext ctx) {
+    public Identifier visitIdentifier(QLSParser.IdentifierContext ctx) {
         return hydrateSourceLocation(new Identifier(ctx.ID().getText()), ctx);
     }
 

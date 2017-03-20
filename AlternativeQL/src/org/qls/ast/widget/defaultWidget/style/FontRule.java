@@ -1,7 +1,7 @@
 package org.qls.ast.widget.defaultWidget.style;
 
 public class FontRule extends StyleRule {
-    private String font;
+    private final String font;
 
     public FontRule(String font) {
         this.font = font;
@@ -9,9 +9,5 @@ public class FontRule extends StyleRule {
 
     public String getFont() {
         return font;
-    }
-
-    public void setFont(String font) {
-        this.font = font;
     }
 }

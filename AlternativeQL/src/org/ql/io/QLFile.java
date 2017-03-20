@@ -1,7 +1,5 @@
 package org.ql.io;
 
-import org.io.SourceFile;
-
 import java.io.IOException;
 
 public class QLFile extends SourceFile {

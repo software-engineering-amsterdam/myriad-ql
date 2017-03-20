@@ -6,7 +6,7 @@ import org.qls.ast.page.Question;
 
 public class UnsupportedWidgetForQLQuestionType extends Issue {
 
-    private Question question;
+    private final Question question;
 
     public UnsupportedWidgetForQLQuestionType(Question question) {
         this.question = question;
@@ -14,7 +14,7 @@ public class UnsupportedWidgetForQLQuestionType extends Issue {
 
     @Override
     public String getMessage() {
-        return "Widget for QLS ComputableQuestion " + question.getIdentifier() + " doesn't support QL question type.";
+        return "Widget for QLS question " + question.getIdentifier() + " doesn't support QL question type.";
     }
 
     @Override

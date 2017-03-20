@@ -6,7 +6,7 @@ import org.qls.ast.page.Question;
 
 public class DuplicateQLSQuestion extends Issue {
 
-    private Question question;
+    private final Question question;
 
     public DuplicateQLSQuestion(Question question) {
         this.question = question;

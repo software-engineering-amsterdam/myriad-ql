@@ -1,4 +1,4 @@
-package org.io;
+package org.ql.io;
 
 import java.io.FileInputStream;
 import java.io.IOException;
