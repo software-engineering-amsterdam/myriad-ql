@@ -2,9 +2,6 @@ package parser
 
 import org.scalacheck.Gen
 
-/**
- * Created by jasper on 13/02/17.
- */
 trait ExpressionStringGenerator extends ValueStringGenerator {
   def genExpression: Gen[String] = Gen.sized(size => sizedExpression(size)) suchThat (_.nonEmpty)
 

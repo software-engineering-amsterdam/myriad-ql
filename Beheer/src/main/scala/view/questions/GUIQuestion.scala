@@ -51,9 +51,6 @@ trait GUIQuestion {
       .map(color => scalafx.scene.paint.Color.web(color))
       .getOrElse(scalafx.scene.paint.Color.Black)
 
-  private def extractStyle[T](styling: Styling, pf: PartialFunction[Style, T]): Option[T] =
-    styling.values.collect(pf).lastOption
-
   private def getFont(styling: Styling): Font = {
     val font = extractStyle(styling, { case ast.Font(f) => f })
     val size = extractStyle(styling, { case FontSize(s) => s })
@@ -65,6 +62,9 @@ trait GUIQuestion {
       case (None, None) => new Font(Font.default)
     }
   }
+
+  private def extractStyle[T](styling: Styling, pf: PartialFunction[Style, T]): Option[T] =
+    styling.values.collect(pf).lastOption
 
   private def isDisabled(question: DisplayQuestion): Boolean = question match {
     case _: OpenQuestion => false
