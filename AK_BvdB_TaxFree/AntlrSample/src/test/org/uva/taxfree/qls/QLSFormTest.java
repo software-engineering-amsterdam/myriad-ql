@@ -1,11 +1,11 @@
-package test;
+package test.org.uva.taxfree.qls;
 
 import org.uva.taxfree.ql.ast.AstBuilder;
 import org.uva.taxfree.ql.gui.QuestionForm;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.blocks.FormNode;
 import org.uva.taxfree.qls.QlsStyleBuilder;
-import test.org.uva.taxfree.ast.SemanticsTester;
+import test.org.uva.taxfree.ql.SemanticsTester;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,6 +38,6 @@ public class QLSFormTest extends SemanticsTester {
 
     @Override
     protected File testFile(String fileName) {
-        return new File("src\\test\\org\\uva\\taxfree\\ast\\qlsTestForms\\" + fileName);
+        return new File("src\\test\\org\\uva\\taxfree\\qls\\testFiles\\qlsTestForms\\" + fileName);
     }
 }

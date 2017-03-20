@@ -1,6 +1,7 @@
-package test.org.uva.taxfree.ast;
+package test.org.uva.taxfree.ql.semantics;
 
 import org.testng.annotations.Test;
+import test.org.uva.taxfree.ql.SemanticsTester;
 
 import java.io.File;
 
@@ -52,7 +53,7 @@ public class SemanticsAnalyzerTest extends SemanticsTester {
 
     @Override
     protected File testFile(String fileName) {
-        return new File("src\\test\\org\\uva\\taxfree\\ast\\semanticErrors\\" + fileName);
+        return new File("src\\test\\org\\uva\\taxfree\\ql\\ast\\semanticErrors\\" + fileName);
     }
 
 }

@@ -1,4 +1,4 @@
-package test.org.uva.taxfree.ast;
+package test.org.uva.taxfree.ql.ui;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

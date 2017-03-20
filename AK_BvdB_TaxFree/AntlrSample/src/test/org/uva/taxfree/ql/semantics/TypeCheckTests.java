@@ -1,4 +1,4 @@
-package test;
+package test.org.uva.taxfree.ql.semantics;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;

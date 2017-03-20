@@ -1,4 +1,4 @@
-package test.org.uva.taxfree.ast;
+package test.org.uva.taxfree.ql.ui;
 
 import org.testng.annotations.Test;
 import org.uva.taxfree.ql.gui.MessageList;

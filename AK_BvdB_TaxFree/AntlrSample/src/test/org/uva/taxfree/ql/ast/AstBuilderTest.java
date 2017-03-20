@@ -1,4 +1,4 @@
-package test.org.uva.taxfree.ast;
+package test.org.uva.taxfree.ql.ast;
 
 import org.testng.Assert;
 import org.testng.TestException;
@@ -10,7 +10,7 @@ import java.io.File;
 public class AstBuilderTest {
     @Test
     public void testValidForms() throws Exception {
-        File validFilesDir = new File("src\\test\\org\\uva\\taxfree\\ast\\validForms");
+        File validFilesDir = new File("src\\test\\org\\uva\\taxfree\\ql\\testFiles\\validForms");
 
         System.out.println("  Testing valid forms at path: " + validFilesDir.getAbsolutePath());
         boolean passedAllTests = true;
@@ -33,7 +33,7 @@ public class AstBuilderTest {
 
     @Test
     public void testInvalidForms() throws Exception {
-        File validFilesDir = new File("src\\test\\org\\uva\\taxfree\\ast\\invalidForms");
+        File validFilesDir = new File("src\\test\\org\\uva\\taxfree\\ql\\testFiles\\invalidForms");
 
         System.out.println("  Testing invalid forms at path: " + validFilesDir.getAbsolutePath());
         boolean createdAst = false;
