@@ -17,7 +17,7 @@ import org.uva.taxfree.ql.model.node.literal.BooleanLiteralNode;
 import org.uva.taxfree.ql.model.node.literal.IntegerLiteralNode;
 import org.uva.taxfree.ql.model.node.literal.StringLiteralNode;
 import org.uva.taxfree.ql.model.node.literal.VariableLiteralNode;
-import org.uva.taxfree.ql.model.node.operators.*;
+import org.uva.taxfree.ql.model.operators.*;
 import org.uva.taxfree.ql.model.types.BooleanType;
 import org.uva.taxfree.ql.model.types.IntegerType;
 import org.uva.taxfree.ql.model.types.StringType;

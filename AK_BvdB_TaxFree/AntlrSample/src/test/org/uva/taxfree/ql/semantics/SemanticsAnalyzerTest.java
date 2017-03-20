@@ -38,7 +38,7 @@ public class SemanticsAnalyzerTest extends SemanticsTester {
 
     @Test
     public void testUndefinedDeclarationMultiple() throws Exception {
-        assertSemantics("undefinedDeclarationMultiple.txt", 1, "Multiple conditions with same variable trigger 1 error");
+        assertSemantics("undefinedDeclarationMultiple.txt", 2, "Multiple conditions with same variable trigger multiple errors");
     }
 
     @Test
@@ -51,9 +51,30 @@ public class SemanticsAnalyzerTest extends SemanticsTester {
         assertSemantics("cyclicDependencyCalculations.txt", 2, "Cyclic dependency in calculation");
     }
 
+    @Test
+    void testConstantCondition() throws Exception {
+        assertSemantics("constantCondition.txt", 1, "A constant condition should display a warning");
+    }
+
+    @Test
+    void testConstantConditions() throws Exception {
+        assertSemantics("constantConditions.txt", 2, "Multiple constant conditions should display multiple warning");
+    }
+
+    @Test
+    void testConstantCalculation() throws Exception {
+        assertSemantics("constantCalculation.txt", 1, "A constant calculation should display a warning");
+    }
+
+    @Test
+    void testConstandCalculations() throws Exception {
+        assertSemantics("constantCalculations.txt", 2, "Mutltiple constant calculation should display multiple warning");
+    }
+
+
     @Override
     protected File testFile(String fileName) {
-        return new File("src\\test\\org\\uva\\taxfree\\ql\\ast\\semanticErrors\\" + fileName);
+        return new File("src\\test\\org\\uva\\taxfree\\ql\\testFiles\\semanticErrors\\" + fileName);
     }
 
 }
