@@ -1,9 +1,7 @@
 ﻿namespace OffByOne.Ql.Values.Contracts
 {
-    using OffByOne.Ql.Values.Base;
-
-    public interface IValueOperations<T>
-        where T : class
+    public interface IValueOperations<in T>
+        where T : IValue
     {
         IValue Add(T other);
 
