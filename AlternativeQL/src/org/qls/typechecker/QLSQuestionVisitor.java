@@ -23,14 +23,14 @@ public class QLSQuestionVisitor implements WidgetQuestionVisitor<Void, SymbolTab
         this.issuesStorage = issuesStorage;
 
         visitPages(styleSheet.getPages(), symbolTable);
-        checkUnusedQuestions(symbolTable);
+        checkForUnusedQuestions(symbolTable);
     }
 
     private void visitPages(List<Page> pages, SymbolTable symbolTable) {
         pages.forEach(page -> visitPage(page, symbolTable));
     }
 
-    private void checkUnusedQuestions(SymbolTable symbolTable) {
+    private void checkForUnusedQuestions(SymbolTable symbolTable) {
         for (Identifier identifier : symbolTable.identifiers()) {
             if (!definedQuestions.isDeclared(identifier)) {
                 issuesStorage.addError(new UnusedQuestion(identifier));
@@ -49,20 +49,20 @@ public class QLSQuestionVisitor implements WidgetQuestionVisitor<Void, SymbolTab
 
     @Override
     public Void visitCustomWidgetQuestion(CustomWidgetQuestion question, SymbolTable symbolTable) {
-        checkDuplicateQLSQuestions(question);
-        checkUndefinedQLQuestions(question, symbolTable);
-        checkWidgetTypeForQLQuestion(question, symbolTable);
+        checkForDuplicatedQuestions(question);
+        checkForUndefinedQLQuestions(question, symbolTable);
+        checkForQuestionWidgetTypeInconsistency(question, symbolTable);
         return null;
     }
 
     @Override
     public Void visitGenericWidgetQuestion(WidgetQuestion question, SymbolTable symbolTable) {
-        checkDuplicateQLSQuestions(question);
-        checkUndefinedQLQuestions(question, symbolTable);
+        checkForDuplicatedQuestions(question);
+        checkForUndefinedQLQuestions(question, symbolTable);
         return null;
     }
 
-    private void checkWidgetTypeForQLQuestion(CustomWidgetQuestion question, SymbolTable symbolTable) {
+    private void checkForQuestionWidgetTypeInconsistency(CustomWidgetQuestion question, SymbolTable symbolTable) {
         if (!isWidgetTypeSupportedForQuestion(question, symbolTable)) {
             issuesStorage.addError(new UnsupportedWidgetForQLQuestionType(question));
         }
@@ -73,7 +73,7 @@ public class QLSQuestionVisitor implements WidgetQuestionVisitor<Void, SymbolTab
         return questionType.isCompatibleWith(question.getWidget());
     }
 
-    private void checkDuplicateQLSQuestions(WidgetQuestion question) {
+    private void checkForDuplicatedQuestions(WidgetQuestion question) {
         if (definedQuestions.isDeclared(question.getIdentifier())) {
             issuesStorage.addError(new DuplicateQuestion(question));
         } else {
@@ -81,7 +81,7 @@ public class QLSQuestionVisitor implements WidgetQuestionVisitor<Void, SymbolTab
         }
     }
 
-    private void checkUndefinedQLQuestions(WidgetQuestion question, SymbolTable symbolTable) {
+    private void checkForUndefinedQLQuestions(WidgetQuestion question, SymbolTable symbolTable) {
         if (!symbolTable.isDeclared(question.getIdentifier())) {
             issuesStorage.addError(new UndefinedQuestion(question));
         }
