@@ -26,7 +26,7 @@ module QL
       # stack conditions if possible for nested if (else) statements
       def stack_conditions(condition_1, condition_2)
         if condition_1 && condition_2
-          AST::Expression.new([condition_1, AST::ArithmeticExpression.new('&&', condition_2)])
+          AST::ExpressionSequence.new([condition_1, AST::ArithmeticExpression.new('&&', condition_2)])
         else
           condition_1 || condition_2
         end

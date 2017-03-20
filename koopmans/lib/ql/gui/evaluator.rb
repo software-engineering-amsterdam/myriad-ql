@@ -1,14 +1,9 @@
 module QL
   module GUI
     class Evaluator
-      # visit operation in expression
-      def visit_expression(expression)
-        if expression.expression.respond_to? :reduce
-          expression.expression.reduce do |left, operation|
-            operation.accept(left, self)
-          end
-        else
-          expression.expression.accept(self)
+      def visit_expression_sequence(expression_sequence)
+        expression_sequence.expressions.reduce do |left, operation|
+          operation.accept(left, self)
         end
       end
 

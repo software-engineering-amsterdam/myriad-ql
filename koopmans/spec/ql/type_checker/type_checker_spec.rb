@@ -65,7 +65,7 @@ module QL
         # create cyclic dependency
         cyclic_question_variable    = Variable.new('privateDebt')
         cyclic_question_variable2   = Variable.new('sellingPrice')
-        cyclic_question             = ComputedQuestion.new(StringLiteral.new('Private debts for the sold house:'), cyclic_question_variable, IntegerType.new, Expression.new([IntegerLiteral.new('5'), BooleanExpression.new('&&', cyclic_question_variable)]))
+        cyclic_question             = ComputedQuestion.new(StringLiteral.new('Private debts for the sold house:'), cyclic_question_variable, IntegerType.new, ExpressionSequence.new([IntegerLiteral.new('5'), BooleanExpression.new('&&', cyclic_question_variable)]))
         cyclic_question2            = ComputedQuestion.new(StringLiteral.new('What was the selling price?'), cyclic_question_variable2, IntegerType.new, cyclic_question_variable2)
 
         # create if statement with a non boolean condition

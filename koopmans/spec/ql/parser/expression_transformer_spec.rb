@@ -58,7 +58,7 @@ module QL
       context 'expression' do
         it 'parses' do
           expression = [IntegerLiteral.new('5'), { arithmetic_operator: '+', right: IntegerLiteral.new('10') }]
-          expect(expression_transformer.apply(expression)).to be_a(Expression)
+          expect(expression_transformer.apply(expression)).to be_a(ExpressionSequence)
         end
       end
     end
