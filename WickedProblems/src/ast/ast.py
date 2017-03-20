@@ -14,12 +14,6 @@ class UnaryOperation(Node):
     def __init__(self, operand):
         self.operand = operand
 
-# Binary Operations
-class Inequality(BinaryOperation):
-    def alg(self, _alg):
-        return _alg.Inequality(self.left_operand.alg(_alg),
-                               self.right_operand.alg(_alg))
-
 class LogicalAnd(BinaryOperation):
     def alg(self, _alg):
         return _alg.LogicalAnd(self.left_operand.alg(_alg),
@@ -37,32 +31,22 @@ class Addition(BinaryOperation):
 
 class GreaterThan(BinaryOperation):
     def alg(self, _alg):
-        return _alg.Addition(self.left_operand.alg(_alg),
+        return _alg.GreaterThan(self.left_operand.alg(_alg),
                              self.right_operand.alg(_alg))
 
 class GreaterThanEquals(BinaryOperation):
     def alg(self, _alg):
-        return _alg.Addition(self.left_operand.alg(_alg),
-                             self.right_operand.alg(_alg))
-
-class LessThan(BinaryOperation):
-    def alg(self, _alg):
-        return _alg.Addition(self.left_operand.alg(_alg),
-                             self.right_operand.alg(_alg))
-
-class LessThanEquals(BinaryOperation):
-    def alg(self, _alg):
-        return _alg.Addition(self.left_operand.alg(_alg),
+        return _alg.GreaterThanEquals(self.left_operand.alg(_alg),
                              self.right_operand.alg(_alg))
 
 class Equality(BinaryOperation):
     def alg(self, _alg):
-        return _alg.Addition(self.left_operand.alg(_alg),
+        return _alg.Equality(self.left_operand.alg(_alg),
                              self.right_operand.alg(_alg))
 
 class Inequality(BinaryOperation):
     def alg(self, _alg):
-        return _alg.Addition(self.left_operand.alg(_alg),
+        return _alg.Inequality(self.left_operand.alg(_alg),
                              self.right_operand.alg(_alg))
 
 class Substraction(BinaryOperation):
@@ -89,21 +73,6 @@ class Assignment(BinaryOperation):
     def alg(self, _alg):
         return _alg.Assignment(self.left_operand.alg(_alg),
                                self.right_operand.alg(_alg))
-
-class Equality(BinaryOperation):
-    def alg(self, _alg):
-        return _alg.Equality(self.left_operand.alg(_alg),
-                             self.right_operand.alg(_alg))
-
-class GreaterThan(BinaryOperation):
-    def alg(self, _alg):
-        return _alg.GreaterThan(self.left_operand.alg(_alg),
-                                self.right_operand.alg(_alg))
-
-class GreaterThanEquals(BinaryOperation):
-    def alg(self, _alg):
-        return _alg.GreaterThanEquals(self.left_operand.alg(_alg),
-                                      self.right_operand.alg(_alg))
 
 class LogicalOr(BinaryOperation):
     def alg(self, _alg):
