@@ -1,4 +1,5 @@
 # coding=utf-8
+from pql.error.error import Error
 from pql.traversal.BinaryExpressionVisitor import BinaryExpressionVisitor
 from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.IdentifierVisitor import IdentifierVisitor
@@ -60,9 +61,10 @@ class DependenciesChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisito
             if child.name not in scope_properties:
                 bad_reference.append(child)
         if len(bad_reference) > 0:
-            self.errors.append("Field at {} had the following references that were not resolvable: {} "
+            self.errors.append(Error("Field at {} had the following references that were not resolvable: {} "
                                .format(node.location,
-                                       ["{}: {}".format(ref.name, ref.location) for ref in bad_reference]))
+                                       ["{}: {}".format(ref.name, ref.location) for ref in bad_reference]),
+                                     bad_reference[0].location))
         return node.name.name, node.name
 
     def identifier(self, node):

@@ -23,7 +23,8 @@ class MoneyTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
             return self.node
         return None
 
-    def is_number_type(self, node_data_type):
+    @staticmethod
+    def is_number_type(node_data_type):
         return node_data_type is DataTypes.money or node_data_type is DataTypes.integer
 
     def addition(self, node):

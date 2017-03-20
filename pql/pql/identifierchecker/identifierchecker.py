@@ -1,6 +1,7 @@
 # coding=utf-8
 from collections import defaultdict
 
+from pql.error.error import Error
 from pql.traversal.FormVisitor import FormVisitor
 
 
@@ -14,8 +15,8 @@ class IdentifierChecker(FormVisitor):
             errors = list()
             for key, value in identifiers.items():
                 if len(value) > 1:
-                    errors.append("Key: {} contained multiple entries, at the following locations: {}"
-                                  .format(key, [v.location for v in value]))
+                    errors.append(Error("Key: {} contained multiple entries, at the following locations: {}"
+                                  .format(key, [v.location for v in value]), value[0].location))
             return errors
 
         self.__symbol_table.clear()

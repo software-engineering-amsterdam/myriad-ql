@@ -2,6 +2,7 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QFontMetrics
+from PyQt5.QtGui import QTextCursor
 from PyQt5.QtWidgets import QAction
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QDockWidget
@@ -16,6 +17,7 @@ from PyQt5.QtWidgets import QWidget
 from pql.gui.CodeArea import CodeArea
 from pql.dependencies.dependencieschecker import DependenciesChecker
 from pql.gui.Questionnaire import Questionnaire
+from pql.gui.widgets import ErrorWidget
 from pql.identifierchecker.identifierchecker import IdentifierChecker
 from pql.parser.parser import parse
 from pql.typechecker.type_environment import TypeEnvironment
@@ -50,6 +52,7 @@ class Editor(QMainWindow, QWidget):
         list_errors.setStyleSheet("QListWidget {color:red;}")
         items.setWidget(list_errors)
         self.addDockWidget(Qt.BottomDockWidgetArea, items)
+        list_errors.itemClicked.connect(self.highlight_line)
 
     def init_text_editor(self, cursor_position_widget):
         font = QFont()
@@ -60,7 +63,7 @@ class Editor(QMainWindow, QWidget):
         metrics = QFontMetrics(font)
         self.text_editor.setFont(font)
         self.text_editor.setTabStopWidth(4 * metrics.width(' '))
-        self.text_editor.cursorPositionChanged.\
+        self.text_editor.cursorPositionChanged. \
             connect(lambda: self.update_cursor_position(cursor_position_widget, self.current_cursor_position()))
         self.text_editor.textChanged.connect(self.on_text_changed)
         self.on_text_changed()
@@ -108,18 +111,18 @@ class Editor(QMainWindow, QWidget):
         if ast is not None:
             identifier_errors = self.check_ids(ast)
             if identifier_errors:
-                self.list_errors.addItems(identifier_errors)
+                self.add_errors(identifier_errors)
             else:
                 dependencies_errors = self.check_dependencies(ast)
                 if not dependencies_errors:
                     type_errors = self.check_type(ast)
                     if type_errors:
-                        self.list_errors.addItems(type_errors)
+                        self.add_errors(type_errors)
                     else:
                         form = Questionnaire(ast).visit()
                         form.show()
                 else:
-                    self.list_errors.addItems(dependencies_errors)
+                    self.add_errors(dependencies_errors)
 
     def write_contents_to_file(self, contents, file_path):
         if file_path is not None:
@@ -157,35 +160,42 @@ class Editor(QMainWindow, QWidget):
             self.text_editor.setPlainText(file_contents)
 
     def check_ids(self, ast):
-        try:
-            return IdentifierChecker(ast).visit()
-        except Exception as e:
-            self.list_errors.addItem("Checking ids:\n    {}".format(e))
+        return IdentifierChecker(ast).visit()
 
     def check_type(self, ast):
-        try:
-            return TypeChecker(ast, TypeEnvironment).visit()
-        except Exception as e:
-            self.list_errors.addItem("Checking types:\n    {}".format(e))
+        return TypeChecker(ast, TypeEnvironment).visit()
 
     def check_dependencies(self, ast):
-        try:
-            return DependenciesChecker(ast).visit()
-        except Exception as e:
-            self.list_errors.addItem("Checking dependencies:\n    {}".format(e))
+        return DependenciesChecker(ast).visit()
 
     def open_file(self, file_path):
         try:
             with open(file_path, 'r') as open_file:
                 return open_file.read()
         except FileNotFoundError as fnfe:
-            # self.list_errors.addItem("Given file could not be found:\n    {}".format(fnfe))
-            print("Given file could not be found:\n    {}".format(fnfe))
+            self.add_error("Given file could not be found:\n    {}".format(fnfe))
         except Exception as e:
-            self.list_errors.addItem("Opening:\n    {}".format(e))
+            self.add_error("Opening:\n    {}".format(e))
 
     def create_ast(self, ql_str):
         try:
             return parse(ql_str)
         except Exception as e:
-            self.list_errors.addItem("Parsing:\n    {}".format(e))
+            self.add_error("Parsing:\n    {}".format(e))
+
+    def add_error(self, string, location=None):
+        widget = ErrorWidget(location)
+        widget.setText(string)
+        self.list_errors.addItem(widget)
+
+    def add_errors(self, error_list):
+        for error in error_list:
+            self.add_error(error.text, error.location)
+
+    def highlight_line(self, item):
+        old_line = self.text_editor.textCursor().blockNumber()
+        line_number = item.location.line_number
+        line_difference = (line_number - old_line) - 1
+        move = QTextCursor.Down if line_difference >= 0 else QTextCursor.Up
+        for _ in range(abs(line_difference)):
+            self.text_editor.moveCursor(move, QTextCursor.MoveAnchor)

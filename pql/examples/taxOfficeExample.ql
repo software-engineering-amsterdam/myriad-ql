@@ -1,17 +1,12 @@
-form taxOfficeExample {
-	"Did you sell a house in 2010?"
-		hasSoldHouse: boolean
-	"Did you buy a house in 2010?"
-		hasBoughtHouse: boolean 
-    "Did you buy or sell a house in 2010?"
-		hasDoneEither: boolean = hasSoldHouse || hasBoughtHouse
+        form taxOfficeExample {
+            "Did you buy a house in 2010?" hasBought: boolean
+            if(hasBought){
+                "Did you buy a house in 2010?" hasCar: boolean
+            }
+            else {
+                "Did you buy a house in 2010?" hasBike: boolean
+            }
+            "Has house" hasHouse: boolean = hasCar
+            "Has second house" hasHouse2: boolean = hasBike
 
-	if (hasSoldHouse) {
-		"If block statement price" sellingPrice: money
-        if (hasBoughtHouse) {
-            "Value residue:" valueResidue: money = (sellingPrice * 3)
         }
-	} else {
-        "Else block statement price?"	blockState: money
-	}		
-}

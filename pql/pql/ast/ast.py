@@ -233,7 +233,8 @@ class Integer(Value):
     def apply(self, visitor):
         return visitor.integer(self)
 
-    def checker(self):
+    @staticmethod
+    def checker():
         return IntegerTypeChecker()
 
 
@@ -244,7 +245,8 @@ class Boolean(Value):
     def apply(self, visitor):
         return visitor.boolean(self)
 
-    def checker(self):
+    @staticmethod
+    def checker():
         return BooleanTypeChecker()
 
 
@@ -266,7 +268,8 @@ class String(Value):
     def apply(self, visitor):
         return visitor.string(self)
 
-    def checker(self):
+    @staticmethod
+    def checker():
         return StringTypeChecker()
 
 

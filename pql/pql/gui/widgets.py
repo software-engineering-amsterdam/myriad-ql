@@ -2,6 +2,7 @@
 from PyQt5.QtWidgets import QCheckBox
 from PyQt5.QtWidgets import QDoubleSpinBox
 from PyQt5.QtWidgets import QLineEdit
+from PyQt5.QtWidgets import QListWidgetItem
 from PyQt5.QtWidgets import QSpinBox
 
 
@@ -30,3 +31,9 @@ class MoneyInput(QDoubleSpinBox):
 class IntegerInput(QSpinBox):
     def set_value(self, value):
         self.setValue(value)
+
+
+class ErrorWidget(QListWidgetItem):
+    def __init__(self, location):
+        super(ErrorWidget, self).__init__()
+        self.location = location

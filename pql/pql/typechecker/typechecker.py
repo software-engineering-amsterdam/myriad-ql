@@ -1,5 +1,6 @@
 # coding=utf-8
 from pql.ast.ast import Boolean
+from pql.error.error import Error
 from pql.traversal.BinaryExpressionVisitor import BinaryExpressionVisitor
 from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.IdentifierVisitor import IdentifierVisitor
@@ -27,8 +28,9 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
         condition_result = node.condition.apply(self)
         if condition_result is None or condition_result.data_type is not DataTypes.boolean:
             self.errors.append(
-                "Invalid expression in a conditional statement, it expected a [DataTypes.boolean] expression but "
-                "received [{}], at location {}".format(condition_result, node.condition.location))
+                Error("Invalid expression in a conditional statement, it expected a [DataTypes.boolean] "
+                      "expression but received [{}], at location {}"
+                      .format(condition_result, node.condition.location), node.condition.location))
         [statement.apply(self) for statement in node.statements]
 
     def conditional_if_else(self, node, args=None):
@@ -44,8 +46,9 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
         result = lhs.assignment(expression_type)
 
         if result is None:
-            self.errors.append("Expression of field [{}] did not match declared type [{}], at location: {}"
-                               .format(result, node.data_type.data_type, node.expression.location))
+            self.errors.append(
+                Error("Expression of field [{}] did not match declared type [{}], at location: {}"
+                         .format(result, node.data_type.data_type, node.expression.location), node.expression.location))
 
     def subtraction(self, node):
         lhs_type = node.lhs.apply(self)

@@ -78,7 +78,7 @@ class Evaluator(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVis
         return self.apply_operator(node, operator.gt)
 
     def division(self, node):
-        return self.apply_operator(node, lambda lhs, rhs:  0.00 if (rhs == 0.00) else operator.truediv(lhs,rhs))
+        return self.apply_operator(node, lambda lhs, rhs:  0.00 if (rhs == 0.00) else operator.truediv(lhs, rhs))
 
     def subtraction(self, node):
         return self.apply_operator(node, operator.sub)
