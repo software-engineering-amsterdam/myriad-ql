@@ -5,7 +5,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.uva.hatt.taxform.ast.nodes.Form;
-import org.uva.hatt.taxform.ast.nodes.FormId;
 import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.ComputationExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
@@ -55,11 +54,6 @@ public class UIVisitor implements Visitor<Pane> {
         stage.setScene(scene);
         stage.sizeToScene();
 
-        return null;
-    }
-
-    @Override
-    public Pane visit(FormId node) {
         return null;
     }
 
