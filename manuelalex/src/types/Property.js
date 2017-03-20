@@ -23,6 +23,6 @@ export class Property {
     }
 
     accept(visitor) {
-        visitor.visitProperty(new Property(this.name.name.join(""), this.location));
+        visitor.visitProperty(this);
     }
 }

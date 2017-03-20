@@ -23,7 +23,7 @@ if (errors.length) {
 let ast = new AST(result[0]);
 let dependencyVisitor = new ASTDependencyVisitor();
 dependencyVisitor.visitAST(ast);
-console.log(dependencyVisitor.graph);
+console.log("dependency visitor graph:" + dependencyVisitor.graph);
 
 let visitor = new ASTValidationVisitor();
 visitor.visitAST(ast);

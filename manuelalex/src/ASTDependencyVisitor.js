@@ -16,15 +16,15 @@ export class ASTDependencyVisitor {
 
 
     visitAST(ast){
-        this.visitForm(ast.getProgram());
+   //     this.visitForm(ast.getProgram());
         this.visitStatements(ast.getStatements());
 
     }
 
-    /* TODO, and fix visitor pattern */
-    visitForm(form) {
 
-    }
+    // visitForm(form) {
+    //
+    // }
 
     visitStatements(statements) {
         for (const statement of statements) {
@@ -73,7 +73,7 @@ export class ASTDependencyVisitor {
     }
 
     visitProperty(property){
-        this.graph.push(property.name);
+        this.graph.push(property.getName());
     }
 
     hasDetectedErrors(){

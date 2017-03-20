@@ -32,7 +32,7 @@ comparison                  -> plus_minus_expression | comparison _ ("<" | ">" |
 plus_minus_expression       -> multiply_divide_expression | plus_minus_expression _ ("-" | "+") _ plus_minus_expression     {% ASTBuilder.deepExpression %}
 multiply_divide_expression  -> factor | multiply_divide_expression _ ("/" | "*") _ multiply_divide_expression               {% ASTBuilder.deepExpression %}
 factor                      -> digits
-                            | propertyName                                                                                  {% ASTBuilder.property %}
+                            | propertyName
                             | "(" expression ")"                                                                            {% (data)=> data[1] %}
 digits                      -> [0-9]:+                                                                                      {% (data)=> Number(data[0]) %}
 
