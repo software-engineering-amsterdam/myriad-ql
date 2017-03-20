@@ -108,6 +108,9 @@ class UIContext(object):
 
 
 class _UIRegister(object):
+    """
+    UIRegister is a private class which stores the information of a register.
+    """
     def __init__(self, variable, value, ui, conditions, expression=None):
         self.variable = variable
         self.conditions = conditions
