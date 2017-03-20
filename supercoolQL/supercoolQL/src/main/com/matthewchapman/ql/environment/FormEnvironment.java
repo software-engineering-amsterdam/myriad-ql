@@ -2,6 +2,10 @@ package com.matthewchapman.ql.environment;
 
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
+import com.matthewchapman.ql.ast.atomic.type.BooleanType;
+import com.matthewchapman.ql.ast.atomic.type.ErrorType;
+import com.matthewchapman.ql.ast.atomic.type.IntegerType;
+import com.matthewchapman.ql.ast.atomic.type.StringType;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
@@ -16,22 +20,30 @@ import com.matthewchapman.ql.ast.statement.Question;
 import com.matthewchapman.ql.environment.datastores.ConditionTable;
 import com.matthewchapman.ql.environment.datastores.ExpressionTable;
 import com.matthewchapman.ql.environment.datastores.QuestionTable;
+import com.matthewchapman.ql.environment.datastores.ValueTable;
+import com.matthewchapman.ql.gui.values.BooleanValue;
+import com.matthewchapman.ql.gui.values.IntegerValue;
+import com.matthewchapman.ql.gui.values.NullValue;
+import com.matthewchapman.ql.gui.values.StringValue;
 import com.matthewchapman.ql.validation.visitors.ExpressionVisitor;
 import com.matthewchapman.ql.validation.visitors.StatementVisitor;
+import com.matthewchapman.ql.validation.visitors.TypeVisitor;
 
 /**
  * Created by matt on 20/03/2017.
  */
-public class FormEnvironment implements StatementVisitor<Void, String>, ExpressionVisitor<Void, String> {
+public class FormEnvironment implements StatementVisitor<Void, String>, ExpressionVisitor<Void, String>, TypeVisitor<Void, String> {
 
     private final ExpressionTable expressions;
     private final ConditionTable conditions;
     private final QuestionTable questions;
+    private final ValueTable values;
 
     public FormEnvironment(Form ast) {
         expressions = new ExpressionTable();
         conditions = new ConditionTable();
         questions = new QuestionTable();
+        values = new ValueTable();
 
         for(Statement statement : ast.getStatements()) {
             statement.accept(this, ast.getName());
@@ -40,16 +52,26 @@ public class FormEnvironment implements StatementVisitor<Void, String>, Expressi
 
     @Override
     public Void visit(Question question, String context) {
+        questions.addQuestion(question.getName(), question);
+        question.getType().accept(this, question.getName());
         return null;
     }
 
     @Override
     public Void visit(CalculatedQuestion calculatedQuestion, String context) {
+        questions.addQuestion(calculatedQuestion.getName(), calculatedQuestion);
+        expressions.addExpression(calculatedQuestion.getName(), calculatedQuestion.getCalculation());
+        calculatedQuestion.getType().accept(this, context);
+        calculatedQuestion.getCalculation().accept(this, context);
+
         return null;
     }
 
     @Override
     public Void visit(IfStatement ifStatement, String context) {
+        for (Statement statement : ifStatement.getIfCaseStatements()) {
+
+        }
         return null;
     }
 
@@ -145,6 +167,30 @@ public class FormEnvironment implements StatementVisitor<Void, String>, Expressi
 
     @Override
     public Void visit(BooleanLiteral booleanLiteral, String context) {
+        return null;
+    }
+
+    @Override
+    public Void visit(BooleanType booleanType, String context) {
+        values.addValue(context, new BooleanValue(false));
+        return null;
+    }
+
+    @Override
+    public Void visit(IntegerType integerType, String context) {
+        values.addValue(context, new IntegerValue(0));
+        return null;
+    }
+
+    @Override
+    public Void visit(StringType stringType, String context) {
+        values.addValue(context, new StringValue(""));
+        return null;
+    }
+
+    @Override
+    public Void visit(ErrorType errorType, String context) {
+        values.addValue(context, new NullValue());
         return null;
     }
 }

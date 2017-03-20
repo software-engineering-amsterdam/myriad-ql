@@ -1,6 +1,6 @@
 package com.matthewchapman.ql.environment.datastores;
 
-import com.matthewchapman.ql.ast.Expression;
+import com.matthewchapman.ql.gui.values.Value;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,17 +11,17 @@ import java.util.Observable;
  */
 public class ValueTable extends Observable {
 
-    private final Map<String, Expression> values;
+    private final Map<String, Value> values;
 
     public ValueTable() {
         values = new HashMap<>();
     }
 
-    public void addValue(String name, Expression expression) {
-        values.put(name, expression);
+    public void addValue(String name, Value value) {
+        values.put(name, value);
     }
 
-    public Expression getValueByID(String name) {
+    public Value getValueByID(String name) {
         return values.get(name);
     }
 

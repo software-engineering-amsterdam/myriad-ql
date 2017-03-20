@@ -1,6 +1,6 @@
 package com.matthewchapman.ql.environment.datastores;
 
-import com.matthewchapman.ql.ast.Expression;
+import com.matthewchapman.ql.ast.statement.Question;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,17 +10,17 @@ import java.util.Map;
  */
 public class QuestionTable {
 
-    private final Map<String, Expression> questions;
+    private final Map<String, Question> questions;
 
     public QuestionTable() {
         questions = new HashMap<>();
     }
 
-    public void addQuestion(String name, Expression expression) {
-        questions.put(name, expression);
+    public void addQuestion(String name, Question question) {
+        questions.put(name, question);
     }
 
-    public Expression getQuestionByID(String name) {
+    public Question getQuestionByID(String name) {
         return questions.get(name);
     }
 }

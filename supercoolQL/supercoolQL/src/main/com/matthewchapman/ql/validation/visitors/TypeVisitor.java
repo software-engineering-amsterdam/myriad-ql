@@ -1,6 +1,7 @@
 package com.matthewchapman.ql.validation.visitors;
 
 import com.matthewchapman.ql.ast.atomic.type.BooleanType;
+import com.matthewchapman.ql.ast.atomic.type.ErrorType;
 import com.matthewchapman.ql.ast.atomic.type.IntegerType;
 import com.matthewchapman.ql.ast.atomic.type.StringType;
 
@@ -15,5 +16,7 @@ public interface TypeVisitor<T, C> {
     T visit(IntegerType integerType, C context);
 
     T visit(StringType stringType, C context);
+
+    T visit(ErrorType errorType, C context);
 
 }
