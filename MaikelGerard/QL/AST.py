@@ -367,14 +367,6 @@ class BoolNode(LiteralNode):
         return visitor.bool_node(self, *args)
 
 
-class MoneyNode(LiteralNode):
-    def __init__(self, value, line=0, col=0):
-        super(MoneyNode, self).__init__(value, line, col)
-
-    def accept(self, visitor, *args):
-        return visitor.decimal_node(self, *args)
-
-
 class DecimalNode(LiteralNode):
     def __init__(self, value, line=0, col=0):
         super(DecimalNode, self).__init__(value, line, col)

@@ -1,12 +1,12 @@
-from QL.stages.parser import Parser as Parser
-from QL.stages.expression_evaluator import ExpressionEvaluator
+import decimal
+import unittest
+
+import QL.AST as AST
+from QL.GUI.expression_evaluator import ExpressionEvaluator
 from QL.environment import Environment
 from QL.error_handler import ErrorHandler
+from QL.stages.parser import Parser as Parser
 from QL.undefined import Undefined
-import QL.AST as AST
-
-import unittest
-import decimal
 
 
 class TestEvaluator(unittest.TestCase):
@@ -20,24 +20,23 @@ class TestEvaluator(unittest.TestCase):
         self.env = Environment(self.handler)
         self.evaluator = ExpressionEvaluator(self.env)
 
-    def tearDown(self):
-        pass
-
     def eval_binop_expr(self, expression, expected_res):
         expr = self.exp_parser.parseString(expression, parseAll=True)[0]
         result = expr.accept(self.evaluator)
         self.assertEqual(result, expected_res)
 
-    def testArthemeticEvaluator(self):
+    def testCalculationEvaluator(self):
         left = decimal.Decimal("5.0")
         right = decimal.Decimal("2")
+        str_a = "abc"
+        str_b = "def"
 
         self.eval_binop_expr("5.0 + 2", left + right)
         self.eval_binop_expr("5.0 - 2", left - right)
         self.eval_binop_expr("5.0 * 2", left * right)
         self.eval_binop_expr("5.0 / 2", left / right)
 
-        # Div through 0
+        self.eval_binop_expr('"abc" + "def"', str_a + str_b)
         self.eval_binop_expr("5.0 / 0.0", Undefined)
 
     def testComparisonEvalutor(self):
@@ -72,7 +71,7 @@ class TestEvaluator(unittest.TestCase):
 
     def testUndefinedExpr(self):
         expr = "var * 10"
-        self.env.add_var(AST.QuestionNode("q", "var", "money"))
+        self.env.add_var(AST.QuestionNode("q", "var", AST.IntTypeNode()))
         parse_res = self.exp_parser.parseString(expr, parseAll=True)[0]
         self.assertEqual(parse_res.accept(self.evaluator), Undefined)
 

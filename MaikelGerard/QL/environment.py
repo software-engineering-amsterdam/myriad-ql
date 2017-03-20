@@ -7,15 +7,6 @@ class Environment(object):
         self.variables = OrderedDict()
         self.error_handler = error_handler
 
-    def clear_env(self):
-        self.variables = OrderedDict()
-
-    def exists(self, name):
-        return name in self.variables
-
-    def get_vars(self):
-        return self.variables.keys()
-
     def add_var(self, question_node):
         var_name = question_node.name
 
@@ -25,8 +16,11 @@ class Environment(object):
         self.variables[var_name] = {"node": question_node, "value": Undefined}
         return True
 
-    def get_node(self, identifier):
-        return self.variables[identifier]["node"]
+    def exists(self, name):
+        return name in self.variables
+
+    def get_question_node(self, var_name):
+        return self.variables[var_name]["node"]
 
     def get_var_type(self, var_name):
         return self.variables[var_name]["node"].type
@@ -40,3 +34,9 @@ class Environment(object):
         assert var_name in self.variables, \
             "Var name '{}' not in the environment!".format(var_name)
         self.variables[var_name]["value"] = value
+
+    def get_vars(self):
+        return self.variables.keys()
+
+    def clear_env(self):
+        self.variables = OrderedDict()

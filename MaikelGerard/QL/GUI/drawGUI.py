@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-from appJar import gui
 from collections import OrderedDict
 
-from QL.undefined import Undefined
+from appJar import gui
+
+import QL.GUI.widgets as widgets
 from QL.GUI.evaluate_draw_state import EvaluateDrawState
 from QL.GUI.save_questionaire import SaveQuestionaire
-from QL.stages.update_computed_vars import UpdateComputedVars
-import QL.GUI.widgets as widgets
+from QL.GUI.update_computed_vars import UpdateComputedVars
+from QL.undefined import Undefined
 
 
 class DrawGUI(object):

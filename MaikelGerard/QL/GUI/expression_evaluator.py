@@ -5,12 +5,6 @@ class ExpressionEvaluator(object):
     def __init__(self, env):
         self.env = env
 
-    @staticmethod
-    def eval_monop(result, lambda_expr):
-        if result == Undefined:
-            return Undefined
-        return lambda_expr(result)
-
     def neg_node(self, neg_node):
         result = neg_node.expression.accept(self)
         return self.eval_monop(result, lambda x: not x)
@@ -24,10 +18,10 @@ class ExpressionEvaluator(object):
         return self.eval_monop(result, lambda x: +x)
 
     @staticmethod
-    def eval_binop(left, right, lambda_expr):
-        if left == Undefined or right == Undefined:
+    def eval_monop(result, lambda_expr):
+        if result == Undefined:
             return Undefined
-        return lambda_expr(left, right)
+        return lambda_expr(result)
 
     def mul_node(self, mul_node):
         left, right = mul_node.left.accept(self), mul_node.right.accept(self)
@@ -80,6 +74,12 @@ class ExpressionEvaluator(object):
     def or_node(self, or_node):
         left, right = or_node.left.accept(self), or_node.right.accept(self)
         return self.eval_binop(left, right, lambda x, y: x or y)
+
+    @staticmethod
+    def eval_binop(left, right, lambda_expr):
+        if left == Undefined or right == Undefined:
+            return Undefined
+        return lambda_expr(left, right)
 
     @staticmethod
     def string_node(string_node):

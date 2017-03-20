@@ -48,7 +48,7 @@ class TestParser(unittest.TestCase):
         self.validate_node(self.q_parser, q_str, test_node)
 
         question = "question?"
-        name = "moneyVar"
+        name = "decimalVar"
         q_type = AST.DecimalTypeNode()
         q_str = format_question(question, name, "decimal")
         test_node = AST.QuestionNode(question, name, q_type)

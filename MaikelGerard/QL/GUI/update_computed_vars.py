@@ -1,12 +1,8 @@
-from QL.stages.expression_evaluator import ExpressionEvaluator
+from QL.GUI.expression_evaluator import ExpressionEvaluator
 
 
 class UpdateComputedVars(object):
     def __init__(self, ast, env):
-        """
-        :type ast: AST.FormNode
-        :type env: Environment.Environment
-        """
         self.ast = ast
         self.env = env
 
