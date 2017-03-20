@@ -17,7 +17,7 @@ namespace Questionnaires.QL.SemanticAnalysis
         public void Analyze(INode node, QLContext context)
         {
             Context = context;
-            List<Message> messages = new List<Message>();
+            var messages = new List<Message>();
             node.CheckSemantics(context, messages);
 
             foreach (var message in messages)

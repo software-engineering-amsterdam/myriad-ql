@@ -7,17 +7,29 @@ public class Declaration {
     private String mValue;
     private DeclarationNode mNode;
 
-    public Declaration(DeclarationNode node) {
+    protected Declaration(DeclarationNode node) {
         mValue = "";
         mNode = node;
     }
 
-    public String getValue() {
+    protected String getValue() {
         return mValue.isEmpty() ? mNode.defaultValue() : mValue;
     }
 
-    public void setValue(String value) {
+    protected void setValue(String value) {
         mValue = value;
+    }
+
+    protected String getId() {
+        return mNode.getId();
+    }
+
+    protected String getLabel() {
+        return mNode.getLabel();
+    }
+
+    protected Type getType() {
+        return mNode.getType();
     }
 
     @Override
@@ -28,18 +40,6 @@ public class Declaration {
     @Override
     public String toString() {
         return getId();
-    }
-
-    public String getId() {
-        return mNode.getId();
-    }
-
-    public String getLabel() {
-        return mNode.getLabel();
-    }
-
-    public Type getType() {
-        return mNode.getType();
     }
 
 }

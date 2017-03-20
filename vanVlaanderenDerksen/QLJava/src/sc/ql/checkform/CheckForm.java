@@ -1,19 +1,28 @@
 package sc.ql.checkform;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import sc.ql.model.Form;
+import sc.ql.model.types.Type;
 
 public class CheckForm {
 	private final List<Message> messages;
 	
 	
 	public CheckForm(Form form) {
-		List<Message> messages = new ArrayList<Message>();
+		Map<String, Type> stringTypes = new HashMap<String, Type>(); 
+		QuestionTypeMap questionTypeMap = new QuestionTypeMap();
+		stringTypes.putAll(form.accept(questionTypeMap));
 		
-		CheckLabels checkLabels = new CheckLabels();
-		messages.addAll(form.accept(checkLabels));
+		List<Message> messages = new ArrayList<Message>();
+		CheckQuestions checkQuestions = new CheckQuestions();
+		messages.addAll(form.accept(checkQuestions));
+		
+		CheckConditions checkConditions = new CheckConditions(stringTypes);
+		messages.addAll(form.accept(checkConditions));
 		
 		this.messages = messages;
 

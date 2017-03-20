@@ -112,7 +112,7 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 	
 	@Override 
 	public NotExpression visitNotExpression(QLParser.NotExpressionContext ctx) {
-		NotExpression expression = new NotExpression(visit(ctx.expression()));
+		NotExpression expression = new NotExpression((Expression) visit(ctx.expression()));
 		expression.setPosition(ctx.getStart().getLine(), ctx.getStart().getCharPositionInLine());		
 
 		return expression;

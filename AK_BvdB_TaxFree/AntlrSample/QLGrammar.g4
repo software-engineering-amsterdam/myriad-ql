@@ -1,7 +1,7 @@
 grammar QLGrammar;
 
 @header {
-package org.uva.taxfree.gen;
+package org.uva.taxfree.ql.gen;
 }
 
 form : 'form ' formId=VARIABLE_LITERAL '{' statement* '}';

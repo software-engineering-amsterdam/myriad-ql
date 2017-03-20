@@ -1,18 +1,19 @@
 import java.io.FileReader
 
 import checker._
+import model.{ FormModel, StyleModel }
 import parser.{ FormParser, StylesheetParser }
-import view.GUI
+import view.{ QL, QLS }
 
 import scalafx.application.JFXApp
 
 object Main extends JFXApp {
   private val formFile = "src/main/resources/example.ql"
-  private val formModel = FormParser(new FileReader(formFile))
+  private val formModel = new FormModel(FormParser(new FileReader(formFile)))
   private val formIssues = FormChecker(formModel)
 
   private val styleFile = "src/main/resources/example.qls"
-  private val styleModel = StylesheetParser(new FileReader(styleFile))
+  private val styleModel = new StyleModel(StylesheetParser(new FileReader(styleFile)), formModel.identifiersWithType.toMap)
   private val styleIssues = StyleChecker(styleModel, formModel.identifiersWithType.toMap)
   private val issues = formIssues ++ styleIssues
 
@@ -22,5 +23,6 @@ object Main extends JFXApp {
   }
 
   printIssues(issues)
-  stage = GUI(issues, formModel, styleModel)
+  stage = QL(formIssues, formModel.displayQuestions)
+  stage = QLS(issues, formModel.displayQuestions, styleModel.processedStylesheet)
 }

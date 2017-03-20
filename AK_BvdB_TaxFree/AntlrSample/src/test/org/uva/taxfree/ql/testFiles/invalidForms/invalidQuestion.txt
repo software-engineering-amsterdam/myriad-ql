@@ -1,4 +1,3 @@
-form houseForm {
-    "Did you sell a house??" ->
-        hasSoldHouse  : boolean
+form IhaveAnInvalidQuestion {
+    "Do you see the error" -> hasMisspelledInteger : ingeter
 }

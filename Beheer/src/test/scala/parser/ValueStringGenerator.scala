@@ -2,7 +2,7 @@ package parser
 
 import org.scalacheck.Gen
 
-trait ValueGenerator {
+trait ValueStringGenerator {
   def identifier: Gen[String] = Gen.alphaNumStr suchThat (s => s.nonEmpty && s.matches("^[a-zA-Z].*"))
 
   def money: Gen[String] = for {

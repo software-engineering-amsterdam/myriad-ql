@@ -6,6 +6,7 @@ import sc.ql.model.visitors.ExpressionVisitor;
 public class IdLiteral extends Expression {
 	private final String value;
 	
+	
 	public IdLiteral(String value) {
 		this.value = value;
 	}

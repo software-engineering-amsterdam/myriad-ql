@@ -32,7 +32,7 @@ public class Main {
     		System.out.println(message.toString());
     	}
         
-        SwingUtilities.invokeLater(new Runnable() {
+        /*SwingUtilities.invokeLater(new Runnable() {
         	public void run() {
         		GUI gui = new GUI(form);
             	
@@ -44,7 +44,7 @@ public class Main {
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
             }
-        });
+        });*/
     }
 	
 }
