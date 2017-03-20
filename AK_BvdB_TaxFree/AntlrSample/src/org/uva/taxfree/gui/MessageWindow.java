@@ -10,9 +10,15 @@ public class MessageWindow {
         return (JOptionPane.YES_OPTION == choice);
     }
 
+    public static void showMessage(String message) {
+        MessageList messageList = new MessageList();
+        messageList.addError(message);
+        showMessages(messageList);
+    }
+
     public static void showMessages(MessageList messageList) {
         JOptionPane.showMessageDialog(null,
-                messageList.toString(), "Semantic analyzer report", messageType(messageList));
+                messageList.toString(), "Messages", messageType(messageList));
     }
 
     private static String generateMessage(List<Message> messages) {

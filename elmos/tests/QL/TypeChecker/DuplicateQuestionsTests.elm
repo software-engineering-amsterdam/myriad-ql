@@ -5,7 +5,7 @@ import QL.ASTTestUtil exposing (emptyLoc, loc)
 import Expect
 import Test exposing (Test, describe, test)
 import QL.TypeChecker.DuplicateQuestions exposing (duplicateQuestions)
-import QL.TypeChecker.Messages as Messages exposing (..)
+import QL.TypeChecker.Messages exposing (..)
 
 
 all : Test
@@ -41,7 +41,7 @@ all =
                         , IfThen (Boolean emptyLoc True) [ Field "QuestionB" ( "x", loc 4 4 ) StringType ]
                         ]
                     )
-                    |> Expect.equal [ Error (DuplicateQuestionDefinition "x" ([ loc 3 3, loc 4 4 ])) ]
+                    |> Expect.equal [ Error (DuplicateQuestionDefinition "x" [ loc 3 3, loc 4 4 ]) ]
         , test "find duplicate in ifThenElse block and merge into a single message" <|
             \() ->
                 duplicateQuestions
@@ -53,5 +53,5 @@ all =
                         , Field "QuestionA" ( "x", loc 7 7 ) StringType
                         ]
                     )
-                    |> Expect.equal [ Error (DuplicateQuestionDefinition "x" ([ loc 3 3, loc 4 4, loc 7 7 ])) ]
+                    |> Expect.equal [ Error (DuplicateQuestionDefinition "x" [ loc 3 3, loc 4 4, loc 7 7 ]) ]
         ]

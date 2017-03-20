@@ -41,6 +41,10 @@ public class DeclarationNode extends Node {
         return mLabel;
     }
 
+    public String defaultValue(){
+        return mType.defaultValue();
+    }
+
     @Override
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
         if (!symbolTable.contains(mId)) {

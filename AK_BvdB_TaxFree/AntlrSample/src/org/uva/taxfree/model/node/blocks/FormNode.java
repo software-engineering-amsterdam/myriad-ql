@@ -22,8 +22,8 @@ public class FormNode extends BlockNode {
 
     @Override
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
-        symbolTable.getDuplicateDeclarationErrors(semanticsMessages);
-        symbolTable.getDuplicateLabelErrors(semanticsMessages);
+        symbolTable.checkDuplicateDeclarations(semanticsMessages);
+        symbolTable.checkDuplicateLabels(semanticsMessages);
         super.checkSemantics(symbolTable, semanticsMessages);
     }
 

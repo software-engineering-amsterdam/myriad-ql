@@ -17,4 +17,6 @@ public abstract class Type {
     public abstract boolean supports(NumericOperator numericOperator);
 
     public abstract void generateWidget(String label, String id, QuestionForm frame);
+
+    public abstract String defaultValue();
 }

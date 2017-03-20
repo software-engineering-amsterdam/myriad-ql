@@ -20,14 +20,23 @@ public class BinaryExpressionNode extends ExpressionNode {
     }
 
     @Override
-    public String resolveValue() {
-        String leftHand = mLeft.resolveValue();
-        String rightHand = mRight.resolveValue();
-        String operator = mOperator.resolveValue();
-        if (!leftHand.isEmpty() && !rightHand.isEmpty()) {
-            return "(" + leftHand + operator + rightHand + ")";
-        }
-        return "";
+    public String asString() {
+        return evaluate();
+    }
+
+    @Override
+    public String evaluate() {
+        return mOperator.evaluate(mLeft, mRight);
+    }
+
+    @Override
+    public boolean asBoolean() {
+        return Boolean.valueOf(evaluate());
+    }
+
+    @Override
+    public int asInteger() {
+        return Integer.valueOf(evaluate());
     }
 
     @Override
@@ -61,6 +70,6 @@ public class BinaryExpressionNode extends ExpressionNode {
 
     @Override
     public Type getType() {
-        return mLeft.getType();
+        return mOperator.getType();
     }
 }

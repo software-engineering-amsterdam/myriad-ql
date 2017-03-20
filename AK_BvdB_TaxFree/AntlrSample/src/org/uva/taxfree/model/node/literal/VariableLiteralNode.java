@@ -8,9 +8,10 @@ import java.util.Set;
 
 public class VariableLiteralNode extends LiteralNode {
     private SymbolTable mSymbolTable;
+    private final String mId;
 
     public VariableLiteralNode(String id) {
-        super(id);
+        mId = id;
     }
 
     @Override
@@ -21,12 +22,12 @@ public class VariableLiteralNode extends LiteralNode {
 
     public String resolveValue() {
         assert symbolTableValid();
-        return mSymbolTable.resolveValue(super.resolveValue());
+        return mSymbolTable.resolveValue(mId);
     }
 
     public Type getType() {
         assert symbolTableValid();
-        return mSymbolTable.resolveType(super.resolveValue());
+        return mSymbolTable.resolveType(mId);
     }
 
     private boolean symbolTableValid() {
@@ -34,14 +35,29 @@ public class VariableLiteralNode extends LiteralNode {
     }
 
     @Override
+    public boolean asBoolean() {
+        return Boolean.valueOf(resolveValue());
+    }
+
+    @Override
+    public int asInteger() {
+        return Integer.valueOf(resolveValue());
+    }
+
+    @Override
+    public String asString() {
+        return resolveValue();
+    }
+
+    @Override
     public void getDependencies(Set<String> dependencies) {
-        dependencies.add(super.resolveValue());
+        dependencies.add(mId);
     }
 
     @Override
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
-        if (!symbolTable.contains(super.resolveValue())) {
-            semanticsMessages.addError("Variable name not declared: " + super.resolveValue());
+        if (!symbolTable.contains(mId)) {
+            semanticsMessages.addError("Variable name not declared: " + mId);
         }
     }
 }

@@ -6,6 +6,8 @@ import org.uva.taxfree.model.node.declarations.CalculationNode;
 import org.uva.taxfree.model.node.declarations.DeclarationNode;
 import org.uva.taxfree.model.types.Type;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class SymbolTable {
@@ -82,7 +84,7 @@ public class SymbolTable {
         return findDeclaration(variableId).getType();
     }
 
-    public void getDuplicateLabelErrors(MessageList messageList) {
+    public void checkDuplicateLabels(MessageList messageList) {
         Set<String> processedLabels = new LinkedHashSet<>();
         for (Declaration declaration : mDeclarations) {
             String label = declaration.getLabel();
@@ -92,7 +94,7 @@ public class SymbolTable {
         }
     }
 
-    public void getDuplicateDeclarationErrors(MessageList messageList) {
+    public void checkDuplicateDeclarations(MessageList messageList) {
         Set<String> processedDeclarations = new LinkedHashSet<>();
         for (Declaration declaration : mDeclarations) {
             String id = declaration.getId();
@@ -130,4 +132,11 @@ public class SymbolTable {
         return visibleDeclarations;
     }
 
+    public void export(String fileName) throws IOException {
+        FileWriter results = new FileWriter(fileName);
+        for (Declaration declaration : mDeclarations) {
+            results.write(declaration.getId() + ":" + declaration.getValue() + "\r\n");
+        }
+        results.close();
+    }
 }

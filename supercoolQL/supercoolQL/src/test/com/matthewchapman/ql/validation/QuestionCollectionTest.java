@@ -3,6 +3,7 @@ package com.matthewchapman.ql.validation;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.core.CoreParser;
 import com.matthewchapman.ql.core.FileReader;
+import com.matthewchapman.ql.validation.structure.QuestionCollection;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,13 +30,13 @@ public class QuestionCollectionTest {
 
     @Test
     public void testForDuplicateIDs() throws Exception {
-        //questionCollection.
+        assertEquals(false, questionCollection.findDuplicates());
     }
 
     @Test
     public void testGatherQuestions() throws Exception {
-        final int EXPECTED_QUESTIONS = 11;
-        final int EXPECTED_PARAMETERS = 12;
+        final int EXPECTED_QUESTIONS = 13;
+        final int EXPECTED_PARAMETERS = 14;
         questionCollection.gatherQuestions(form);
 
         assertEquals(EXPECTED_PARAMETERS, questionCollection.getQuestionList().size());

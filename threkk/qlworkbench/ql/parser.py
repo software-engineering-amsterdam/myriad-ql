@@ -1,123 +1,136 @@
 # -*- coding: utf-8 -*-
 """
 This module defines the grammar of the QL language. Given the tokens described
-in qlworkbench.ql.parser, the grammar formaly expressed is the following:
-::
-
-    S -> FORM ID LBRACK statements RBRACK
-
-    statements -> statement*
-
-    statement -> declaration
-               | assignation
-               | condition
-
-    declaration -> LABEL ID COLON type
-
-    assgination -> LABEL ID COLON type ASSIGN expresion
-
-    condition -> IF LPAREN cond RPARENT LBRACK statements RBRACK
-
-    type -> BOOLEAN | DATE | DECIMAL | INTEGER | MONEY | STRING
-
-    cond -> cond AND comparison
-          | cond OR comparison
-          | comparison
-
-    comparison -> comparison LT ID
-                | comparison LET ID
-                | comparison GT ID
-                | comparison GET ID
-                | comparison NEQ ID
-                | comparison EQ ID
-                | ID
-
-    expresion -> expresion PLUS term
-               | expresion MINUS term
-               | term
-
-    term -> term MULT factor
-          | term DIV factor
-          | factor
-
-    factor -> ID
-            | LPAREN expresion RPAREN
+in `qlworkbench.ql.parser`.
 
 The output of the parser is an AST tree. The AST tree has been processed to
 simplify the raw output of the grammar and some reduntant or innecesary nodes
-and tokens haven been merged. The resultant AST tree is sucession of nested
-tuples which each one represents one node of the three. The first element of
-the tuple is the type of the tuple, and the upcoming elements are properties,
-which can be also other tuples or arrays of tuples.
+and tokens haven been merged. The resultant AST tree is sucession of nodes
+which each one represents one statement of the file and one field of the form.
+
+The statement can be declarations of questions or assginations of values. They
+have three possible types: boolean, string and decimal. These statement can be
+conditional.
 """
-# TODO: Add more information about the different types of nodes.
-from lexer import QLLexer
 from ply import yacc
+from .ast.expression import AndExpression
+from .ast.expression import OrExpression
+from .ast.expression import LTExpression
+from .ast.expression import LETExpression
+from .ast.expression import GTExpression
+from .ast.expression import GETExpression
+from .ast.expression import NEQExpression
+from .ast.expression import EQExpression
+from .ast.expression import PlusExpression
+from .ast.expression import MinusExpression
+from .ast.expression import MultExpression
+from .ast.expression import DivExpression
+from .ast.expression import NotExpression
+from .ast.expression import TrueExpression
+from .ast.expression import FalseExpression
+from .ast.expression import StringExpression
+from .ast.expression import DecimalExpression
+from .ast.expression import IdExpression
+from .ast.node import Assignation
+from .ast.node import Declaration
+from .ast.root import QLAST
+from .ast.type import Boolean
+from .ast.type import Decimal
+from .ast.type import String
 
 
 class QLParser(object):
     """Encapsulates the logic of the PLY parser."""
     def __init__(self, tokens):
+        self.ast = QLAST()
         self.tokens = tokens
         self.start = 'start'
-        self.parser = yacc.yacc(module=self)
+        self.parser = yacc.yacc(module=self, debug=0, write_tables=0)
 
-    def parse(self, input):
-        self.parser.parse(input, debug=True)
+    def parse(self, input, lexer):
+        self.parser.parse(input, lexer)
+        return self.ast
 
     def p_start(self, p):
         """
         start : FORM ID LBRACK statements RBRACK
         """
-        p[0] = (p[2], [] + p[4])
+        self.ast.set_title(p[2])
+        for statement in p[4]:
+            self.ast.register_node(statement)
 
     def p_statements(self, p):
         """
-        statements : statement statements
-                   | statement
+        statements : assignation statements
+                   | declaration statements
+                   | condition statements
+                   | empty statements
+                   | assignation
+                   | declaration
+                   | condition
                    | empty
-        """
-        if (len(p) == 3):
-            p[0] = [p[1]] + p[2]
-        else:
-            p[0] = [p[1]]
 
-    def p_statement(self, p):
         """
-        statement : declaration
-                  | assignation
-                  | condition
-        """
-        p[0] = p[1]
+        # This looks ugly, but it is necessary to fix the different length
+        # rules. This is a limitation of the patter matching of PLY, which
+        # leaves much of this at developer's will.
+        if (len(p) == 3):
+            if type(p[1]) is list:
+                p[0] = p[1] + p[2]
+            else:
+                p[0] = [p[1]] + p[2]
+        else:
+            if type(p[1]) is list:
+                p[0] = p[1]
+            else:
+                p[0] = [p[1]]
 
     def p_declaration(self, p):
         """
-        declaration : LABEL ID COLON type
+        declaration : STR ID COLON type
         """
-        p[0] = ('declaration', p[1], p[2], p[4])
+        p[0] = Declaration(p[1], p[2], p[4])
 
     def p_assignation(self, p):
         """
-        assignation : LABEL ID COLON type ASSIGN expresion
+        assignation : STR ID COLON type ASSIGN expression
         """
-        p[0] = ('assignation', p[1], p[2], p[4], p[6])
-
-    def p_condition(self, p):
-        """
-        condition : IF LPAREN cond RPAREN LBRACK statements RBRACK
-        """
-        p[0] = ('condition', p[3], p[6])
+        p[0] = Assignation(p[1], p[2], p[4], p[6])
 
     def p_type(self, p):
         """
         type : BOOLEAN
-             | DATE
              | DECIMAL
-             | INTEGER
-             | MONEY
              | STRING
         """
-        p[0] = p[1]
+        if p[1] == 'boolean':
+            p[0] = Boolean()
+        elif p[1] == 'decimal':
+            p[0] = Decimal()
+        elif p[1] == 'string':
+            p[0] = String()
+        else:
+            self.ast.register_error(p[1], 'Invalid type given.')
+
+    def p_condition(self, p):
+        """
+        condition : IF LPAREN cond RPAREN LBRACK statements RBRACK
+                  | IF LPAREN cond RPAREN LBRACK statements RBRACK ELSE LBRACK statements RBRACK
+        """  # noqa
+        # Add the condition to the statements and keep iterating.
+        for statement in p[6]:
+            statement.add_condition(p[3])
+
+        # Add the negative of the condition to those in the else clause:
+        if len(p) == 12:
+            for statement in p[10]:
+                statement.add_condition(NotExpression(p[3]))
+
+            # We add the if-statements and the else-statements to the list of
+            # statements to analyse.
+            p[0] = p[6] + p[10]
+        else:
+            p[0] = p[6]
 
     def p_cond(self, p):
         """
@@ -126,33 +139,59 @@ class QLParser(object):
              | comparison
         """
         if len(p) == 4:
-            p[0] = (p[2], p[1], p[3])
+            if p[2] == '&&':
+                p[0] = AndExpression(p[1], p[3])
+            elif p[2] == '||':
+                p[0] = OrExpression(p[1], p[3])
+            else:
+                self.ast.register_error(p[2],
+                                        'Invalid condition operator given.')
         else:
             p[0] = p[1]
 
     def p_comparison(self, p):
         """
-        comparison : comparison LT ID
-                   | comparison LET ID
-                   | comparison GT ID
-                   | comparison GET ID
-                   | comparison NEQ ID
-                   | comparison EQ ID
-                   | ID
+        comparison : comparison LT expression
+                   | comparison LET expression
+                   | comparison GT expression
+                   | comparison GET expression
+                   | comparison NEQ expression
+                   | comparison EQ expression
+                   | expression
         """
         if len(p) == 4:
-            p[0] = (p[2], p[3], p[1])
+            if p[2] == '<':
+                p[0] = LTExpression(p[1], p[3])
+            elif p[2] == '<=':
+                p[0] = LETExpression(p[1], p[3])
+            elif p[2] == '>':
+                p[0] = GTExpression(p[1], p[3])
+            elif [2] == '>=':
+                p[0] = GETExpression(p[1], p[3])
+            elif p[2] == '!=':
+                p[0] = NEQExpression(p[1], p[3])
+            elif p[2] == '==':
+                p[0] = EQExpression(p[1], p[3])
+            else:
+                self.ast.register_error(p[2],
+                                        'Invalid comparison operator given.')
         else:
-            p[0] = ('id', p[1])
+            p[0] = p[1]
 
     def p_expression(self, p):
         """
-        expresion : expresion PLUS term
-                  | expresion MINUS term
-                  | term
+        expression : expression PLUS term
+                   | expression MINUS term
+                   | term
         """
         if len(p) == 4:
-            p[0] = (p[2], p[1], p[3])
+            if p[2] == '+':
+                p[0] = PlusExpression(p[1], p[3])
+            elif p[2] == '-':
+                p[0] = MinusExpression(p[1], p[3])
+            else:
+                self.ast.register_error(p[2],
+                                        'Invalid expression operator given.')
         else:
             p[0] = p[1]
 
@@ -163,50 +202,44 @@ class QLParser(object):
              | factor
         """
         if len(p) == 4:
-            p[0] = (p[2], p[1], p[2])
+            if p[2] == '*':
+                p[0] = MultExpression(p[1], p[3])
+            elif p[2] == '/':
+                p[0] = DivExpression(p[1], p[3])
+            else:
+                self.ast.register_error(p[2], 'Invalid term operator given.')
+
         else:
             p[0] = p[1]
 
     def p_factor(self, p):
         """
-        factor : LPAREN expresion RPAREN
+        factor : LPAREN cond RPAREN
+               | NOT factor
+               | TRUE
+               | FALSE
+               | DECIMAL
+               | STR
                | ID
         """
         if len(p) == 4:
             p[0] = p[2]
+        elif len(p) == 3:
+            p[0] = NotExpression(p[2])
+        elif p[1] == 'true':
+            p[0] = TrueExpression()
+        elif p[1] == 'false':
+            p[0] = FalseExpression()
+        elif type(p[1]) == float:
+            p[0] = DecimalExpression(p[1])
+        elif p[1][0] == '"' and p[1][-1] == '"':
+            p[0] = StringExpression(p[1])
         else:
-            p[0] = p[1]
+            p[0] = IdExpression(p[1])
 
     def p_empty(self, p):
         'empty :'
-        # p[0] = 'empty'
         p[0] = []
 
     def p_error(self, p):
-        print('Error?')
-
-
-if __name__ == '__main__':
-    data = """form taxOfficeExample {
-                "Did you sell a house in 2010?"
-                    hasSoldHouse: boolean
-                "Did you buy a house in 2010?"
-                    hasBoughtHouse: boolean
-                "Did you enter a loan?"
-                    hasMaintLoan: boolean
-
-                if (hasSoldHouse) {
-                    "What was the selling price?"
-                        sellingPrice: money
-                    "Private debts for the sold house:"
-                        privateDebt: money
-                    "Value residue:"
-                        valueResidue: money =
-                            (sellingPrice - privateDebt)
-                }
-
-            }"""
-    lex = QLLexer()
-    par = QLParser(lex.tokens)
-    result = par.parser.parse(data, lexer=lex.lexer)
-    print(result)
+        self.ast.register_error(p, 'Critical grammar error: {}'.format(p))

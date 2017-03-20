@@ -1,14 +1,14 @@
-module UI.QLSInput exposing (Model, Msg, init, asStylesheet, setForm, update, view)
+module UI.QLSInput exposing (Model, Msg, init, asStyleSheet, setForm, update, view)
 
-import Html exposing (Html, textarea, div, pre, text)
+import Html exposing (Html, textarea, div, text)
 import Html.Keyed exposing (node)
-import Html.Attributes exposing (class, defaultValue, rows, cols, class, style, id)
+import Html.Attributes exposing (class, defaultValue, rows, cols, class, style)
 import Html.Events exposing (onInput)
 import QLS.AST exposing (StyleSheet)
 import QL.AST exposing (Form)
 import QLS.Parser as Parser
 import QLS.TypeChecker as TypeChecker
-import QLS.TypeChecker.Messages exposing (Message(UndefinedQuestionReference, UnplacedQuestion, DuplicatePlacedQuestion))
+import QLS.TypeChecker.Messages exposing (Message(UndefinedQuestionReference, UnplacedQuestion, DuplicatePlacedQuestion, WidgetConfigMismatch, WidgetDefaultConfigMismatch))
 import UI.Messages
 
 
@@ -62,10 +62,29 @@ updateMessages model =
 exampleDsl : String
 exampleDsl =
     """stylesheet taxOfficeExample
+
+  page General {
+    section "General" {
+      question gender
+        widget radio("Male","Female","_")
+      question rating
+        widget slider(-1,11)
+      question marritalStatus
+        widget radio("Yes", "No", "Maybe", "I don't know", "Can you repeat the question?")
+      question age {
+          width: 100
+          widget spinbox
+      }
+      question birthYear
+      question uselessStatement
+    }
+
+  }
+
   page Housing {
     section "Buying"
       question hasBoughtHouse
-        widget checkbox
+        widget dropdown("Yes", "No")
     section "Loaning"
       question hasMaintLoan
   }
@@ -73,31 +92,26 @@ exampleDsl =
   page Selling {
     section "Selling" {
       question hasSoldHouse
-        widget radio("Yes", "No")
+        widget dropdown("Yes", "No")
       section "You sold a house" {
         question sellingPrice
-          widget spinbox
         question privateDebt
-          widget spinbox
         question valueResidue
-        default money {
-          width: 400
-          font: "Arial"
-          fontsize: 14
-          color: #999999
-          widget spinbox
-        }
       }
     }
-    default boolean widget radio("Yes", "No")
-  }
+
+    default boolean
+      widget radio("Yes", "No")
+    default money {
+      width: 400
+      font: "Arial"
+      fontsize: 20
+      color: red
+    }
+}
+
 
 """
-
-
-asStylesheet : Model -> Maybe StyleSheet
-asStylesheet { parsedStyleSheet } =
-    parsedStyleSheet
 
 
 update : Msg -> Model -> Model
@@ -137,6 +151,10 @@ view { input, parsedStyleSheet, parsedForm, messages } =
                                 [ UI.Messages.error
                                     [ text "Could not parse the stylesheet" ]
                                 ]
+                            else if List.isEmpty messages then
+                                [ UI.Messages.success
+                                    [ text "Everything seems OK!" ]
+                                ]
                             else
                                 List.map (UI.Messages.error << renderMessage) messages
                         ]
@@ -168,4 +186,26 @@ renderMessage message =
             , text " at the following locations: [ "
             , UI.Messages.renderLocations locations
             , text "]"
+            ]
+
+        WidgetConfigMismatch name loc valueType widget ->
+            [ text "Question "
+            , UI.Messages.renderVarName name
+            , text " at "
+            , UI.Messages.renderLocation loc
+            , text " has type "
+            , UI.Messages.renderVarName (toString valueType)
+            , text " but is assigned an invalid widget "
+            , UI.Messages.renderVarName (toString widget)
+            , text "."
+            ]
+
+        WidgetDefaultConfigMismatch loc valueType widget ->
+            [ text "Default configuration for value type "
+            , UI.Messages.renderVarName (toString valueType)
+            , text " at "
+            , UI.Messages.renderLocation loc
+            , text " has invalid widget configuration: "
+            , UI.Messages.renderVarName (toString widget)
+            , text "."
             ]

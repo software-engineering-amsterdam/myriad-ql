@@ -9,13 +9,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class Main {
-
-    {
-//        QuestionForm taxForm = new QuestionForm(ast);
-//        taxForm.show();
-    }
-//        if(semanticsAnalyzer.validSemantics())
-
     public static void main(String[] args) throws IOException {
         File inputFile = FileSelector.select();
         if (!inputFile.exists()) {
@@ -24,14 +17,6 @@ public class Main {
             }
             return;
         }
-        // parse
-        // AST =
-        // Symboltable = new symboltable
-        // checker
-        // errors = new errors
-        // checker check(symbolTable, errorList)
-        // if isEmpty () {
-        // etc.
 
         AstBuilder builder = new AstBuilder(inputFile);
         FormNode ast = builder.generateTree();
@@ -49,14 +34,7 @@ public class Main {
             ast.fillQuestionForm(taxForm);
             taxForm.show();
         }
-
-//        Environment environment = AstBuilder.generate(inputFile); // , symboltable); // in main
-//        SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(environment); // , symboltable);
-        // sematicsAnalyzer.check();
-//        if (semanticsAnalyzer.hasMessages()) {
-//        MessageWindow.showMessages(semanticsAnalyzer.getSemanticErrors());
     }
-
 }
 
 

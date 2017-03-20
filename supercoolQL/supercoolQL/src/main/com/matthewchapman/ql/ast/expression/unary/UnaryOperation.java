@@ -5,6 +5,6 @@ import com.matthewchapman.ql.ast.Expression;
 /**
  * Created by matt on 24/02/2017.
  */
-public abstract class UnaryOperation extends Expression {
+abstract class UnaryOperation extends Expression {
 
 }

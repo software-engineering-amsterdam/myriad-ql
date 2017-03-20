@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import org.uva.taxfree.model.node.declarations.CalculationNode;
 import org.uva.taxfree.model.node.expression.BinaryExpressionNode;
 import org.uva.taxfree.model.node.literal.VariableLiteralNode;
+import org.uva.taxfree.model.node.operators.AddOperator;
 import org.uva.taxfree.model.node.operators.NumericOperator;
 import org.uva.taxfree.model.types.IntegerType;
 
@@ -17,7 +18,7 @@ public class QuestionChecks {
         CalculationNode calc = new CalculationNode("This is myCalc:", "myCalc",
                 new IntegerType(),
                 new BinaryExpressionNode(new VariableLiteralNode("myCalcA"),
-                        new NumericOperator("+"),
+                        new AddOperator(),
                         new VariableLiteralNode("myCalcB")));
 
         Set<String> usedVariables = calc.getUsedVariables();

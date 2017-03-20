@@ -6,13 +6,15 @@ import Html.Events exposing (onInput)
 import UI.Widget.Base exposing (WidgetContext)
 import QL.Environment as Environment
 import QL.Values as Values exposing (Value)
+import UI.Widget.Values as Values
 
 
 view : WidgetContext msg -> Html msg
 view { identifier, env, onChange, editable } =
     let
         textValue =
-            Environment.getInteger identifier env
+            Environment.getFormValue identifier env
+                |> Maybe.andThen Values.asInt
                 |> Maybe.map toString
                 |> Maybe.withDefault ""
     in
@@ -22,13 +24,6 @@ view { identifier, env, onChange, editable } =
             , defaultValue textValue
             , id identifier
             , disabled (not editable)
-            , onInput (parseIntegerInput >> onChange)
+            , onInput (Values.parseIntegerInput >> onChange)
             ]
             []
-
-
-parseIntegerInput : String -> Value
-parseIntegerInput =
-    String.toInt
-        >> Result.map Values.int
-        >> Result.withDefault Values.undefined

@@ -1,50 +1,35 @@
 package sc.ql.model.form_elements;
 
-import sc.ql.model.Node;
-import sc.ql.model.NodeVisitor;
-import sc.ql.model.atoms.AtomId;
+import sc.ql.model.FormElement;
+import sc.ql.model.expressions.literals.IdLiteral;
+import sc.ql.model.types.Type;
+import sc.ql.model.visitors.FormElementVisitor;
 
-public class Question implements Node {
-	private final String question; 
-	private final AtomId id;
+public class Question extends FormElement {
+	private final String label; 
+	private final IdLiteral id;
 	private final Type type;
-	private final Node expression;
-	private final Integer line_number;
 	
-	public enum Type {
-		BOOLEAN, INTEGER, MONEY, STRING;
-	}
-	
-	public Question(String question, AtomId id, Type type, Node expression, Integer line_number) {
-		this.question = question;
+	public Question(String label, IdLiteral id, Type type) {
+		this.label = label;
 		this.id = id;
 		this.type = type;
-		this.expression = expression;
-		this.line_number = line_number;
 	}
 	
-	public String getQuestion() {
-		return this.question;
+	public String getLabel() {
+		return this.label;
 	}
 	
-	public AtomId getId() {
-		return this.id;
+	public String getId() {
+		return this.id.getValue();
 	}
 	
 	public Type getType() {
 		return this.type;
 	}
-	
-	public Node getExpression() {
-		return this.expression;
-	}
-	
-	public Integer getLineNumber() {
-		return this.line_number;
-	}
-	
+
 	@Override
-	public <T> T accept(NodeVisitor<T> visitor) throws Exception {
+	public <T> T accept(FormElementVisitor<T> visitor) {
 		return visitor.visit(this);
 	}
 }

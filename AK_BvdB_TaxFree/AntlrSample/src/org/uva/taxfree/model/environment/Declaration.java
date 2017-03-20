@@ -13,7 +13,7 @@ public class Declaration {
     }
 
     public String getValue() {
-        return mValue;
+        return mValue.isEmpty() ? mNode.defaultValue() : mValue;
     }
 
     public void setValue(String value) {
@@ -41,4 +41,5 @@ public class Declaration {
     public Type getType() {
         return mNode.getType();
     }
+
 }

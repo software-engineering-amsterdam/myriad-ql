@@ -23,8 +23,8 @@ install_virtualenv:
 	$(HOST_OUT_INSTALL)/usr/bin/pip install pyparsing
 	$(HOST_OUT_INSTALL)/usr/bin/pip install argparse
 
-run: install_virtualenv
-	$(HOST_OUT_INSTALL)/usr/bin/python src/start.py -f wicked.ql
+run: 
+	$(HOST_OUT_INSTALL)/usr/bin/python src/app.py
 
 clean: FORCE
 	rm -Rf $(HOST_OUT_INSTALL)

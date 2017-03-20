@@ -8,3 +8,4 @@ pytest = "*"
 
 [packages]
 ply = "*"
+click = "*"

@@ -176,11 +176,10 @@ public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value>, 
 	public Value visit(StringType type) {
 		return new StringValue();
 	}
-	
-	// TODO does this not throw a nullpointer exception?
+
 	@Override
 	public Value visit(UnknownType unknownType) {
-		return null;
+        throw new RuntimeException("Should never visit an unknown type during evaluation");
 	}
 }
 

@@ -1,5 +1,15 @@
 package sc.ql.model;
 
-public interface Node {
-	public <T> T accept(NodeVisitor<T> visitor) throws Exception;
+public abstract class Node {
+	private Integer lineNumber;
+	private Integer charPosition;
+	
+	public void setPosition(Integer lineNumber, Integer charPosition) {
+		this.lineNumber = lineNumber;
+		this.charPosition = charPosition;
+	}
+	
+	public String getPosition() {
+		return lineNumber.toString()+":"+charPosition.toString();
+	}
 }
