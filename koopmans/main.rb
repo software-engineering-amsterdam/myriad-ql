@@ -79,20 +79,45 @@ def render_warnings
   )
 end
 
-ql_contents = read_file('examples/simple_questionnaire.ql')
-ql_parse_tree = form_parser(ql_contents)
-ql_ast = form_transformer(ql_parse_tree)
-type_checker(ql_ast)
-question_frames = question_frame_builder(ql_ast)
+# ql_contents = read_file('examples/simple_questionnaire.ql')
+# ql_parse_tree = form_parser(ql_contents)
+# ql_ast = form_transformer(ql_parse_tree)
+# type_checker(ql_ast)
+# question_frames = question_frame_builder(ql_ast)
+#
+# if NotificationTable.errors.empty?
+#   unless NotificationTable.warnings.empty?
+#     render_warnings
+#   end
+#   run_gui(question_frames)
+# else
+#   render_errors
+# end
 
-if NotificationTable.errors.empty?
-  unless NotificationTable.warnings.empty?
-    render_warnings
-  end
-  run_gui(question_frames)
-else
-  render_errors
-end
+
+gui = QL::GUI::GUI.new
+
+# parse content
+ql_contents = File.read('examples/simple_questionnaire.ql')
+# pp ql_contents
+ql_parse_tree = QL::Parser::FormParser.new.parse(ql_contents)
+pp ql_parse_tree
+ql_ast = QL::Parser::FormTransformer.new.apply(ql_parse_tree)
+
+QL::TypeChecker::TypeChecker.new.check(ql_ast)# pp ql_ast
+pp ql_ast
+question_frames = ql_ast.accept(QL::GUI::FormBuilder.new)
+gui.question_frames = question_frames
+gui.render
+
+# pp NotificationTable.index
+ql_notifications = nil
+
+
+
+
+
+
 
 
 # pp NotificationTable.index
