@@ -22,20 +22,4 @@ public class DropdownWidget extends Widget {
     public boolean isCompatibleWith(BooleanType booleanType) {
         return true;
     }
-
-    public boolean isCompatibleWith(FloatType floatType) {
-        return true;
-    }
-
-    public boolean isCompatibleWith(IntegerType integerType) {
-        return true;
-    }
-
-    public boolean isCompatibleWith(MoneyType moneyType) {
-        return true;
-    }
-
-    public boolean isCompatibleWith(StringType stringType) {
-        return true;
-    }
 }
