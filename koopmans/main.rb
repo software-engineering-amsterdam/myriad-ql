@@ -1,7 +1,4 @@
 # TODO rubocop, cmd+alt+l
-# TODO catch errors
-# TODO gui tests
-# TODO constructivist style for errors? see page 155 of coding styles book
 
 require 'require_all'
 require 'pp'
@@ -106,7 +103,7 @@ end
 # pp qls_contents
 # qls_parsed = QLS::Parser::Parser.new.parse(qls_contents)
 # pp qls_parsed
-# qls_ast = QLS::Parser::Transformer.new.apply(qls_parsed)
+# qls_ast = QLS::Parsexr::Transformer.new.apply(qls_parsed)
 # pp qls_ast
 # qls_notifications = QLS::TypeChecker::TypeChecker.check(qls_ast, ql_ast)
 # pp qls_notifications
