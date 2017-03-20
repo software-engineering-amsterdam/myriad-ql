@@ -17,9 +17,8 @@ export class Property {
         return this.location;
     }
 
-    evaluate(memoryState = {}) {
-        const value = memoryState.getValue(this.getName()) || undefined;
-        return eval(value);
+    evaluate(visitor, memoryState = {}) {
+        return visitor.evaluateProperty(this, memoryState);
     }
 
     accept(visitor) {
