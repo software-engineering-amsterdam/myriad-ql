@@ -1,12 +1,11 @@
-import datetime
 import decimal
+import datetime
 import pyparsing as pp
 
 from QL import AST
 
 
 class Parser(object):
-    # Define the tokens used for parsing the input.
     IS = pp.Literal("=").suppress()
     COLON = pp.Literal(":").suppress()
     L_CURLY = pp.Literal("{").suppress()
@@ -20,18 +19,21 @@ class Parser(object):
 
     BOOLEAN_TYPE = pp.Keyword("boolean").suppress()
     INTEGER_TYPE = pp.Keyword("integer").suppress()
-    MONEY_TYPE = pp.Keyword("money").suppress()
     DECIMAL_TYPE = pp.Keyword("decimal").suppress()
     STRING_TYPE = pp.Keyword("string").suppress()
     DATE_TYPE = pp.Keyword("date").suppress()
 
-    BOOLEAN = (pp.Keyword("true").setParseAction(lambda _: True) |
+    BOOLEAN = (pp.Keyword("true").setParseAction(lambda _: True) ^
                pp.Keyword("false").setParseAction(lambda _: False))
     INTEGER = pp.Word(pp.nums)
     VARIABLE = pp.Word(pp.alphas, pp.alphanums + "_")
     DECIMAL = pp.Regex("(\d+\.\d*)|(\d*\.\d+)")
-    STRING = pp.quotedString
+    STRING = pp.QuotedString('"')
     DATE = pp.Regex("([0][1-9])|([1-3][0-9])-[0-9]{2}-[0-9]{4}")
+
+    # Special literal types that are not parsed into AST nodes.
+    NAME = pp.Word(pp.alphas, pp.alphanums + "_")
+    QUESTION_STRING = pp.QuotedString('"')
 
     def __init__(self):
         # Enable caching of parsing logic.
@@ -41,8 +43,8 @@ class Parser(object):
         self.parse_literal_type_nodes()
         self.parse_literal_nodes()
         self.TYPE_NAMES = (self.BOOLEAN_TYPE ^ self.INTEGER_TYPE ^
-                           self.MONEY_TYPE ^ self.DECIMAL_TYPE ^
-                           self.STRING_TYPE ^ self.DATE_TYPE)
+                           self.DECIMAL_TYPE ^ self.STRING_TYPE ^
+                           self.DATE_TYPE)
         self.TYPES = (self.BOOLEAN ^ self.INTEGER ^ self.DECIMAL ^
                       self.STRING ^ self.DATE ^ self.VARIABLE)
 
@@ -53,6 +55,24 @@ class Parser(object):
         self.conditional = self.define_conditional()
 
         self.grammar = self.define_grammar()
+
+    def parse_literal_type_nodes(self):
+        self.BOOLEAN_TYPE.setParseAction(self.create_node(AST.BoolTypeNode))
+        self.INTEGER_TYPE.setParseAction(self.create_node(AST.IntTypeNode))
+        self.DECIMAL_TYPE.setParseAction(self.create_node(AST.DecimalTypeNode))
+        self.STRING_TYPE.setParseAction(self.create_node(AST.StringTypeNode))
+        self.DATE_TYPE.setParseAction(self.create_node(AST.DateTypeNode))
+
+    def parse_literal_nodes(self):
+        self.BOOLEAN.setParseAction(self.create_node(AST.BoolNode))
+        self.INTEGER.setParseAction(
+            self.create_int, self.create_node(AST.IntNode))
+        self.VARIABLE.setParseAction(self.create_node(AST.VarNode))
+        self.DECIMAL.setParseAction(
+            self.create_decimal, self.create_node(AST.DecimalNode))
+        self.STRING.setParseAction(self.create_node(AST.StringNode))
+        self.DATE.setParseAction(
+            self.create_date, self.create_node(AST.DateNode))
 
     @staticmethod
     def create_int(src, loc, tokens):
@@ -66,34 +86,14 @@ class Parser(object):
     def create_date(src, loc, tokens):
         return datetime.datetime.strptime(tokens[0], "%d-%m-%Y").date()
 
-    def parse_literal_type_nodes(self):
-        self.BOOLEAN_TYPE.setParseAction(self.create_node(AST.BoolTypeNode))
-        self.INTEGER_TYPE.setParseAction(self.create_node(AST.IntTypeNode))
-        self.MONEY_TYPE.setParseAction(self.create_node(AST.MoneyTypeNode))
-        self.DECIMAL_TYPE.setParseAction(self.create_node(AST.DecimalTypeNode))
-        self.STRING_TYPE.setParseAction(self.create_node(AST.StringTypeNode))
-        self.DATE_TYPE.setParseAction(self.create_node(AST.DateTypeNode))
-
-    def parse_literal_nodes(self):
-        self.BOOLEAN.setParseAction(self.create_node(AST.BoolNode))
-        self.INTEGER.setParseAction(
-            self.create_int, self.create_node(AST.IntNode))
-        self.VARIABLE.setParseAction(self.create_node(AST.VarNode))
-        self.DECIMAL.setParseAction(
-            self.create_decimal, self.create_node(AST.DecimalNode))
-        self.STRING.setParseAction(
-            pp.removeQuotes, self.create_node(AST.StringNode))
-        self.DATE.setParseAction(
-            self.create_date, self.create_node(AST.DateNode))
-
     def create_node(self, ast_class):
         """
         Create a certain AST node. The tokens that are passed by the
         PyParsing library and the location information are used as arguments.
         """
-        def create_args(src, loc, token):
+        def create_args(src, loc, tokens):
             line, col = self.get_line_loc_info(src, loc)
-            args = token.asList()
+            args = tokens.asList()
             kwargs = {"line": line, "col": col}
             return ast_class(*args, **kwargs)
         return create_args
@@ -103,12 +103,6 @@ class Parser(object):
         col = pp.col(loc, src)
         line = pp.lineno(loc, src)
         return line, col
-
-    def round_embrace(self, arg):
-        return self.L_BRACE + arg + self.R_BRACE
-
-    def curly_embrace(self, arg):
-        return self.L_CURLY + arg + self.R_CURLY
 
     def define_expression(self):
         def create_operators(opp_list):
@@ -150,36 +144,23 @@ class Parser(object):
 
     def define_question(self):
         def create_question_grammar():
-            """
-            Use this function to prevent double parseActions, as the question
-            grammar is re-used in the comp_question grammar definition.
-            """
-            return self.STRING + self.VARIABLE + self.COLON + self.TYPE_NAMES
-
-        def create_question_node(question_class):
-            def parse_question(src, loc, token):
-                line, col = self.get_line_loc_info(src, loc)
-                args = token.asList() + [line, col]
-                # Make from the question and identifier nodes strings as
-                # expected elsewhere in the program.
-                args[0] = args[0].val
-                args[1] = args[1].name
-                return question_class(*args)
-            return parse_question
+            # Use this function to prevent double parseActions, as the question
+            # grammar is re-used in the comp_question grammar definition.
+            return self.QUESTION_STRING + self.NAME +\
+                   self.COLON + self.TYPE_NAMES
 
         question = create_question_grammar()
-        question.setParseAction(create_question_node(AST.QuestionNode))
+        question.setParseAction(self.create_node(AST.QuestionNode))
 
         comp_question = create_question_grammar() + self.IS + \
             self.round_embrace(self.expression)
-        comp_question.setParseAction(
-            create_question_node(AST.ComputedQuestionNode))
+        comp_question.setParseAction(self.create_node(AST.ComputedQuestionNode))
 
-        return comp_question | question
+        return comp_question ^ question
 
     def define_conditional(self):
         def create_if_grammar():
-            """ Again used to prevent double parseActions. """
+            # Again used to prevent double parseActions.
             return self.IF + self.round_embrace(self.expression) + \
                 self.curly_embrace(self.block)
 
@@ -190,17 +171,21 @@ class Parser(object):
             self.curly_embrace(self.block)
         if_else_cond.setParseAction(self.create_node(AST.IfElseNode))
 
-        return if_else_cond | if_cond
+        return if_else_cond ^ if_cond
 
     def define_grammar(self):
         self.block << pp.Group(
-            pp.OneOrMore(self.question | self.conditional)
+            pp.OneOrMore(self.question ^ self.conditional)
         ).setParseAction(self.create_node(AST.BlockNode))
 
-        normal_var = pp.Word(pp.alphas, pp.alphanums + "_")
-        form = self.FORM + normal_var + \
-            self.curly_embrace(self.block)
+        form = self.FORM + self.NAME + self.curly_embrace(self.block)
         return form.addParseAction(self.create_node(AST.FormNode))
+
+    def round_embrace(self, arg):
+        return self.L_BRACE + arg + self.R_BRACE
+
+    def curly_embrace(self, arg):
+        return self.L_CURLY + arg + self.R_CURLY
 
     def create_monop_node(self, src, loc, token):
         monop = token[0]

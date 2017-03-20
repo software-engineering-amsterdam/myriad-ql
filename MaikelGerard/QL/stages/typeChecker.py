@@ -3,11 +3,6 @@ from QL import AST
 
 class TypeChecker(object):
     def __init__(self, ast, env, error_handler):
-        """
-        :type ast: AST.FormNode
-        :type env: Environment.Environment
-        :type error_handler: ErrorHandler.ErrorHandler
-        """
         self.ast = ast
         self.env = env
         self.labels = []
@@ -19,11 +14,8 @@ class TypeChecker(object):
 
     @staticmethod
     def highest_number_type(left, right):
-        """ :type left: AST.TypeNode """
         if left == AST.DecimalTypeNode() or right == AST.DecimalTypeNode():
             return AST.DecimalTypeNode()
-        elif left == AST.MoneyTypeNode() or right == AST.MoneyTypeNode():
-            return AST.MoneyTypeNode()
         elif left == AST.IntTypeNode() and right == AST.IntTypeNode():
             return AST.IntTypeNode()
         else:
@@ -36,15 +28,12 @@ class TypeChecker(object):
         return node.left.accept(self), node.right.accept(self)
 
     def question_node(self, question_node):
-        """ :type question_node: AST.QuestionNode """
         pass
 
     def comp_question_node(self, comp_question_node):
-        """ :type comp_question_node: AST.CompQuestionNode """
         comp_question_node.expression.accept(self)
 
     def if_node(self, if_node):
-        """ :type if_node: AST.IfNode """
         expr_type = if_node.condition.accept(self)
 
         if not expr_type == AST.BoolTypeNode():
@@ -52,7 +41,6 @@ class TypeChecker(object):
         if_node.if_block.accept(self)
 
     def if_else_node(self, if_else_node):
-        """ :type if_else_node: AST.IfElseNode """
         expr_type = if_else_node.condition.accept(self)
 
         if not expr_type == AST.BoolTypeNode():
@@ -61,7 +49,6 @@ class TypeChecker(object):
         if_else_node.else_block.accept(self)
 
     def mon_op_node(self, mon_op_node):
-        """ Default behavior for monOps. """
         var_type = self.get_monop_type(mon_op_node)
         if not var_type.is_numeric():
             self.handler.add_monop_error(mon_op_node, var_type)
@@ -69,7 +56,7 @@ class TypeChecker(object):
         return var_type
 
     def neg_node(self, neg_node):
-        """ '!' has different behavior than the other monOps."""
+        # '!' has different behavior than the other monOps.
         var_type = self.get_monop_type(neg_node)
         if not var_type == AST.BoolTypeNode():
             self.handler.add_monop_error(neg_node, var_type)
@@ -81,8 +68,7 @@ class TypeChecker(object):
     def plus_node(self, plus_node):
         return self.mon_op_node(plus_node)
 
-    def arithmetic_expr_node(self, expr_node):
-        """ Default behavior for arithmetic binOps. """
+    def calculation_expr_node(self, expr_node):
         left, right = self.get_binop_types(expr_node)
         if not (left.is_numeric() and right.is_numeric()):
             self.handler.add_binop_error(expr_node, left, right)
@@ -90,7 +76,7 @@ class TypeChecker(object):
         return self.highest_number_type(left, right)
 
     def add_node(self, add_node):
-        """ '+' has different behavior than the other arithmetic binOps. """
+        # '+' has different behavior than the other calculation binOps.
         left, right = self.get_binop_types(add_node)
         valid_types = left.is_alphanumeric() and right.is_alphanumeric()
         different_types = left.is_numeric() ^ right.is_numeric()
@@ -103,16 +89,15 @@ class TypeChecker(object):
         return left
 
     def sub_node(self, sub_node):
-        return self.arithmetic_expr_node(sub_node)
+        return self.calculation_expr_node(sub_node)
 
     def mul_node(self, mul_node):
-        return self.arithmetic_expr_node(mul_node)
+        return self.calculation_expr_node(mul_node)
 
     def div_node(self, div_node):
-        return self.arithmetic_expr_node(div_node)
+        return self.calculation_expr_node(div_node)
 
     def comparison_expr_node(self, expr_node):
-        """ Default behavior for comparison binOps. """
         left, right = self.get_binop_types(expr_node)
         valid_types = not (left == AST.BoolTypeNode() or
                            right == AST.BoolTypeNode())

@@ -14,6 +14,7 @@ class Node(object):
         if type(self) != type(other):
             return False
 
+        # Compare the object's contents except location information.
         for key in self.__dict__:
             if key in ['line', 'col']:
                 continue
@@ -63,8 +64,7 @@ class QuestionNode(Node):
 class ComputedQuestionNode(QuestionNode):
     def __init__(self, question, name, var_type, expression, line=0, col=0):
         super(ComputedQuestionNode, self).__init__(
-            question, name, var_type, line, col
-        )
+            question, name, var_type, line, col)
         self.expression = expression
 
     def accept(self, visitor, *args):
@@ -129,15 +129,15 @@ class PlusNode(MonOpNode):
         return visitor.plus_node(self, *args)
 
 
-class ArithmeticExprNode(ExpressionNode):
+class CalculationExprNode(ExpressionNode):
     def __init__(self, operator, left, right, line=0, col=0):
-        super(ArithmeticExprNode, self).__init__(line, col)
+        super(CalculationExprNode, self).__init__(line, col)
         self.left = left
         self.operator = operator
         self.right = right
 
 
-class AddNode(ArithmeticExprNode):
+class AddNode(CalculationExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(AddNode, self).__init__("+", left, right, line, col)
 
@@ -145,7 +145,7 @@ class AddNode(ArithmeticExprNode):
         return visitor.add_node(self, *args)
 
 
-class SubNode(ArithmeticExprNode):
+class SubNode(CalculationExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(SubNode, self).__init__("-", left, right, line, col)
 
@@ -153,7 +153,7 @@ class SubNode(ArithmeticExprNode):
         return visitor.sub_node(self, *args)
 
 
-class MulNode(ArithmeticExprNode):
+class MulNode(CalculationExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(MulNode, self).__init__("*", left, right, line, col)
 
@@ -161,7 +161,7 @@ class MulNode(ArithmeticExprNode):
         return visitor.mul_node(self, *args)
 
 
-class DivNode(ArithmeticExprNode):
+class DivNode(CalculationExprNode):
     def __init__(self, left, right, line=0, col=0):
         super(DivNode, self).__init__("/", left, right, line, col)
 
@@ -254,11 +254,10 @@ class TypeNode(Node):
         super(TypeNode, self).__init__(line, col)
 
     def is_numeric(self):
-        return self in [IntTypeNode(), MoneyTypeNode(), DecimalTypeNode()]
+        return self in [IntTypeNode(), DecimalTypeNode()]
 
     def is_alphanumeric(self):
-        return self in [IntTypeNode(), MoneyTypeNode(),
-                        DecimalTypeNode(), StringTypeNode()]
+        return self in [IntTypeNode(), DecimalTypeNode(), StringTypeNode()]
 
 
 class BoolTypeNode(TypeNode):
@@ -268,7 +267,7 @@ class BoolTypeNode(TypeNode):
 
     @staticmethod
     def parse_value(value):
-        return value
+        return bool(value)
 
     def accept(self, visitor, *args):
         return visitor.bool_type_node(self, *args)
@@ -277,27 +276,14 @@ class BoolTypeNode(TypeNode):
 class IntTypeNode(TypeNode):
     def __init__(self, line=0, col=0):
         super(IntTypeNode, self).__init__(line, col)
-        self.default = Decimal("0")
+        self.default = 0
 
     @staticmethod
     def parse_value(value):
-        return Decimal(value)
+        return int(value)
 
     def accept(self, visitor, *args):
         return visitor.int_type_node(self, *args)
-
-
-class MoneyTypeNode(TypeNode):
-    def __init__(self, line=0, col=0):
-        super(MoneyTypeNode, self).__init__(line, col)
-        self.default = Decimal("0.00")
-
-    @staticmethod
-    def parse_value(value):
-        return Decimal(value)
-
-    def accept(self, visitor, *args):
-        return visitor.money_type_node(self, *args)
 
 
 class DecimalTypeNode(TypeNode):
