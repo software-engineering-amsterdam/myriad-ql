@@ -36,8 +36,12 @@ module QL
         end
       end
 
-      def visit_negation(negation)
-        negation.expression.accept(self)
+      def visit_boolean_negation(integer_negation)
+        integer_negation.expression.accept(self)
+      end
+
+      def visit_integer_negation(boolean_negation)
+        boolean_negation.expression.accept(self)
       end
 
 
