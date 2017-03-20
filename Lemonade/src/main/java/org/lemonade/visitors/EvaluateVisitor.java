@@ -23,7 +23,6 @@ import org.lemonade.gui.expressions.binary.GuiProductBinary;
 import org.lemonade.gui.expressions.unary.GuiBangUnary;
 import org.lemonade.gui.expressions.unary.GuiNegUnary;
 import org.lemonade.gui.values.GuiBooleanValue;
-import org.lemonade.gui.values.GuiComparableValue;
 import org.lemonade.gui.values.GuiDateValue;
 import org.lemonade.gui.values.GuiDecimalValue;
 import org.lemonade.gui.values.GuiIdentifierValue;
@@ -97,29 +96,29 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public GuiExpression visit(final GuiGTBinary guiGtBinary) {
-        GuiComparableValue<?> left = (GuiComparableValue<?>) guiGtBinary.getLeft().accept(this);
-        GuiComparableValue<?> right = (GuiComparableValue<?>) guiGtBinary.getRight().accept(this);
+        GuiValue<?> left = (GuiValue<?>) guiGtBinary.getLeft().accept(this);
+        GuiValue<?> right = (GuiValue<?>) guiGtBinary.getRight().accept(this);
         return left.gT(right);
     }
 
     @Override
     public GuiExpression visit(final GuiGTEBinary guiGteBinary) {
-        GuiComparableValue<?> left = (GuiComparableValue<?>) guiGteBinary.getLeft().accept(this);
-        GuiComparableValue<?> right = (GuiComparableValue<?>) guiGteBinary.getRight().accept(this);
+        GuiValue<?> left = (GuiValue<?>) guiGteBinary.getLeft().accept(this);
+        GuiValue<?> right = (GuiValue<?>) guiGteBinary.getRight().accept(this);
         return left.gTEq(right);
     }
 
     @Override
     public GuiExpression visit(final GuiLTBinary guiLtBinary) {
-        GuiComparableValue<?> left = (GuiComparableValue<?>) guiLtBinary.getLeft().accept(this);
-        GuiComparableValue<?> right = (GuiComparableValue<?>) guiLtBinary.getRight().accept(this);
+        GuiValue<?> left = (GuiValue<?>) guiLtBinary.getLeft().accept(this);
+        GuiValue<?> right = (GuiValue<?>) guiLtBinary.getRight().accept(this);
         return left.lT(right);
     }
 
     @Override
     public GuiExpression visit(final GuiLTEBinary guiLteBinary) {
-        GuiComparableValue<?> left = (GuiComparableValue<?>) guiLteBinary.getLeft().accept(this);
-        GuiComparableValue<?> right = (GuiComparableValue<?>) guiLteBinary.getRight().accept(this);
+        GuiValue<?> left = (GuiValue<?>) guiLteBinary.getLeft().accept(this);
+        GuiValue<?> right = (GuiValue<?>) guiLteBinary.getRight().accept(this);
         return left.lTEq(right);
     }
 

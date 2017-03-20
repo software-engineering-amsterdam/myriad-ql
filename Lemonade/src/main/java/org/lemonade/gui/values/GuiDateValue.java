@@ -5,7 +5,7 @@ import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class GuiDateValue extends GuiComparableValue<LocalDate> implements Comparable<GuiDateValue>{
+public class GuiDateValue extends GuiValue<LocalDate> implements Comparable<GuiDateValue>{
 
     private LocalDate value;
 
@@ -34,22 +34,42 @@ public class GuiDateValue extends GuiComparableValue<LocalDate> implements Compa
     }
 
     @Override
-    public GuiBooleanValue gT(final GuiComparableValue<?> that) {
-        return new GuiBooleanValue(this.compareTo((GuiDateValue) that) >= 1);
+    public GuiValue<?> lT(GuiValue<?> that) {
+        return that.doLt(this);
     }
 
     @Override
-    public GuiBooleanValue gTEq(final GuiComparableValue<?> that) {
-        return new GuiBooleanValue(this.compareTo((GuiDateValue) that) >= 0);
+    public GuiValue<?> gT(GuiValue<?> that) {
+        return that.doGt(this);
     }
 
     @Override
-    public GuiBooleanValue lT(final GuiComparableValue<?> that) {
-        return new GuiBooleanValue(this.compareTo((GuiDateValue) that) <= -1);
+    public GuiValue<?> lTEq(GuiValue<?> that) {
+        return that.doLtE(this);
     }
 
     @Override
-    public GuiBooleanValue lTEq(final GuiComparableValue<?> that) {
-        return new GuiBooleanValue(this.compareTo((GuiDateValue) that) <= 0);
+    public GuiValue<?> gTEq(GuiValue<?> that) {
+        return that.doGtE(this);
+    }
+
+    @Override
+    public GuiValue<?> doGt(GuiDateValue that) {
+        return new GuiBooleanValue(that.compareTo(this) >= 1);
+    }
+
+    @Override
+    public GuiValue<?> doLt(GuiDateValue that) {
+        return new GuiBooleanValue(that.compareTo(this) <= -1);
+    }
+
+    @Override
+    public GuiValue<?> doGtE(GuiDateValue that) {
+        return new GuiBooleanValue(that.compareTo(this) >= 0);
+    }
+
+    @Override
+    public GuiValue<?> doLtE(GuiDateValue that) {
+        return new GuiBooleanValue(that.compareTo(this) <= 0);
     }
 }
