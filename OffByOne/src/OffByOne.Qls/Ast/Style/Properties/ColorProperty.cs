@@ -19,7 +19,7 @@
             this.Value = value;
         }
 
-        public HexLiteral Value { get; set; }
+        public HexLiteral Value { get; }
 
         public override TResult Accept<TResult, TContext>(
             IPropertyVisitor<TResult, TContext> visitor,

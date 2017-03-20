@@ -20,10 +20,7 @@
 
         public void Apply(Control control)
         {
-            if (this.FontStyle == null)
-            {
-                control.FontStyle = this.FontStyle;
-            }
+            control.FontStyle = this.FontStyle;
 
             if (this.FontFamily != null)
             {
@@ -45,10 +42,7 @@
                 control.FontSize = this.FontSize;
             }
 
-            if (this.Color != null)
-            {
-                control.Foreground = new SolidColorBrush(this.Color);
-            }
+            control.Foreground = new SolidColorBrush(this.Color);
         }
     }
 }

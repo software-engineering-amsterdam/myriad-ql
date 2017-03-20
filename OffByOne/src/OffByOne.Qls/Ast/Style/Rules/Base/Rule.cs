@@ -19,9 +19,9 @@
             this.Properties = properties;
         }
 
-        public Widget Widget { get; private set; }
+        public Widget Widget { get; }
 
-        public IEnumerable<Property> Properties { get; private set; }
+        public IEnumerable<Property> Properties { get; }
 
         public abstract TResult Accept<TResult, TContext>(IRuleVisitor<TResult, TContext> visitor, TContext environment)
             where TContext : IEnvironment;

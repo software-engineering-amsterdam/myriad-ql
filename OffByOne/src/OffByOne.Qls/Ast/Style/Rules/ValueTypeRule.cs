@@ -26,7 +26,7 @@
             this.ValueType = valueType;
         }
 
-        public ValueType ValueType { get; private set; }
+        public ValueType ValueType { get; }
 
         public override TResult Accept<TResult, TContext>(
             IRuleVisitor<TResult, TContext> visitor,

@@ -19,7 +19,7 @@
             this.Value = value;
         }
 
-        public StringLiteral Value { get; set; }
+        public StringLiteral Value { get; }
 
         public override TResult Accept<TResult, TContext>(
             IPropertyVisitor<TResult, TContext> visitor,

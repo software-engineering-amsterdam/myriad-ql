@@ -9,6 +9,7 @@
     using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Values.Contracts;
 
+    // TODO: add input checks and tests
     public class GuiEnvironment : IEnvironment, IObservable<AnswerInput>
     {
         private readonly List<IObserver<AnswerInput>> observers;
