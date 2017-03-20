@@ -91,16 +91,7 @@ collectQuestionReferences expression =
         ParensExpression _ expr ->
             collectQuestionReferences expr
 
-        ArithmeticExpression _ _ exprLeft exprRight ->
-            collectQuestionReferences exprLeft ++ collectQuestionReferences exprRight
-
-        RelationExpression _ _ exprLeft exprRight ->
-            collectQuestionReferences exprLeft ++ collectQuestionReferences exprRight
-
-        LogicExpression _ _ exprLeft exprRight ->
-            collectQuestionReferences exprLeft ++ collectQuestionReferences exprRight
-
-        ComparisonExpression _ _ exprLeft exprRight ->
+        BinaryExpression _ _ exprLeft exprRight ->
             collectQuestionReferences exprLeft ++ collectQuestionReferences exprRight
 
 
