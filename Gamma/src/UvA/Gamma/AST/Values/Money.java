@@ -1,5 +1,7 @@
 package UvA.Gamma.AST.Values;
 
+import UvA.Gamma.AST.Question;
+import UvA.Gamma.GUI.FXMLController;
 import UvA.Gamma.Validation.TypeChecker;
 
 import java.math.RoundingMode;
@@ -40,6 +42,11 @@ public class Money extends Number {
     @Override
     public String computableString() {
         return super.toString();
+    }
+
+    @Override
+    public void showQuestion(FXMLController screen, Question question) {
+        screen.showMoney(question);
     }
 
     @Override

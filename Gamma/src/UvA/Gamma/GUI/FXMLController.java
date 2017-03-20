@@ -4,9 +4,11 @@ import UvA.Gamma.AST.Computed;
 import UvA.Gamma.AST.Form;
 import UvA.Gamma.AST.FormItem;
 import UvA.Gamma.AST.Question;
+import UvA.Gamma.AST.Values.Money;
 import UvA.Gamma.Validation.TypeChecker;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
@@ -53,9 +55,8 @@ public class FXMLController {
     public void showQuestion(Question question) {
         assert rootGrid != null;
         Text questionLabel = new Text(question.getQuestion());
-
-        Text euroLabel = new Text("€");
         TextField input = new TextField();
+
         input.textProperty().addListener((observable, oldValue, newValue) -> {
             if (question.check(checker, newValue)) {
                 input.setStyle("-fx-text-fill: green");
@@ -64,11 +65,7 @@ public class FXMLController {
                 input.setStyle("-fx-text-fill: red");
             }
         });
-
-        HBox box = new HBox();
-        box.getChildren().addAll(euroLabel, input);
-
-        rootGrid.addRow(getRowCount(rootGrid) + 1, questionLabel, box);
+        rootGrid.addRow(getRowCount(rootGrid) + 1, questionLabel, input);
     }
 
     @FXML
@@ -106,6 +103,28 @@ public class FXMLController {
         result.textProperty().bind(computed.getStringValueProperty());
 
         rootGrid.addRow(getRowCount(rootGrid) + 1, label, result);
+    }
+
+    public void showMoney(Question question){
+        assert rootGrid != null;
+        Text questionLabel = new Text(question.getQuestion());
+
+        Text euroLabel = new Text("€");
+        TextField input = new TextField();
+        input.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (question.check(checker, newValue)) {
+                input.setStyle("-fx-text-fill: green");
+                form.stream().forEach(item -> item.idChanged(form, question, newValue));
+            } else {
+                input.setStyle("-fx-text-fill: red");
+            }
+        });
+
+        HBox box = new HBox();
+        box.getChildren().addAll(euroLabel, input);
+        box.setAlignment(Pos.CENTER_RIGHT);
+
+        rootGrid.addRow(getRowCount(rootGrid) + 1, questionLabel, box);
     }
 
     public GridPane startRenderCondition() {

@@ -35,8 +35,8 @@ public class Main extends Application {
                 parser.addErrorListener(new QLParseErrorListener());
                 ParseTree parseTree = parser.form();
                 QLVisitor visitor = new QLVisitor();
-                visitor.visit(parseTree);
-                Form form = visitor.getForm();
+                Form form = (Form)visitor.visit(parseTree);
+//                Form form = visitor.getForm();
 
                 Validator checker = new Validator(form);
                 checker.visit();

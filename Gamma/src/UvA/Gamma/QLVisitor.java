@@ -17,18 +17,11 @@ import UvA.Gamma.Antlr.QL.QLParser;
  */
 
 public class QLVisitor extends QLBaseVisitor<ASTNode> {
-    private Form form;
-
-    QLVisitor() {
-        form = new Form();
-    }
-
-    public Form getForm() {
-        return this.form;
-    }
 
     @Override
     public Form visitForm(QLParser.FormContext ctx) {
+        String id = ctx.ID().getText();
+        Form form = new Form(id);
         for (QLParser.FormItemContext formItemContext : ctx.formItem()) {
             form.addFormItem((FormItem) visit(formItemContext));
         }

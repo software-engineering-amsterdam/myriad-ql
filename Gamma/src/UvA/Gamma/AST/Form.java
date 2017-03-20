@@ -11,9 +11,15 @@ import java.util.stream.StreamSupport;
  */
 public class Form implements ASTNode, Iterable<FormItem> {
     private List<FormItem> formItems;
+    private String id;
 
-    public Form() {
+    public Form(String id) {
         formItems = new ArrayList<>();
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public void addFormItem(FormItem item) {
