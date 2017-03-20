@@ -12,7 +12,7 @@ public class DuplicatedQuestionLabels extends Issue {
 
     @Override
     public String getMessage() {
-        return "CustomWidgetQuestion '" + question.getId() + "' label has duplicate(s)";
+        return "Question '" + question.getId() + "' label has duplicate(s)";
     }
 
     @Override

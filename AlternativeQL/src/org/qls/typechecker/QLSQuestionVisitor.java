@@ -12,6 +12,8 @@ import org.qls.typechecker.issues.errors.DuplicateQuestion;
 import org.qls.typechecker.issues.errors.UndefinedQuestion;
 import org.qls.typechecker.issues.errors.UnsupportedWidgetForQLQuestionType;
 
+import java.util.List;
+
 
 public class QLSQuestionVisitor implements WidgetQuestionVisitor<Void, SymbolTable> {
     private final IdentifierSet definedQuestions = new IdentifierSet();
@@ -19,8 +21,13 @@ public class QLSQuestionVisitor implements WidgetQuestionVisitor<Void, SymbolTab
 
     public void visitStyleSheet(StyleSheet styleSheet, IssuesStorage issuesStorage, SymbolTable symbolTable) {
         this.issuesStorage = issuesStorage;
-        styleSheet.getPages().forEach(page -> visitPage(page, symbolTable));
+
+        visitPages(styleSheet.getPages(), symbolTable);
         checkUnusedQuestions(symbolTable);
+    }
+
+    private void visitPages(List<Page> pages, SymbolTable symbolTable) {
+        pages.forEach(page -> visitPage(page, symbolTable));
     }
 
     private void checkUnusedQuestions(SymbolTable symbolTable) {
