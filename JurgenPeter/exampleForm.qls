@@ -1,29 +1,55 @@
 stylesheet taxOfficeExample {
-  page Housing {
-    section "Selling B" {
+  page Boolean {
 
-      question sellingPrice { weight: bold size :20 family: "Times New Roman" width: 50}
-      question sellingPriceB widget spinbox
-
-    }
     section "Selling A" {
 
       section "YOLO" {
-          question hasBoughtHouse { color: #ff3333 }
+          question compBool
           question y
+
+          section "Last" {
+            question z
+            default boolean widget radio
+          }
+
           default boolean widget radio
       }
-      question x
-      question hasSoldHouse { color: #228822 }
-      question privateDebt widget spinbox(0, 10)
+      section "Int on next page <5" {
+        question x
+        question condBool widget dropdown
+      }
+      question dropdown widget dropdown("ja", "nee")
 
-      default boolean { color: #000088 }
     }
   }
 
-  page Testing {
-    section "Test" {
-        question valueResidue widget slider(5, 20)
+  page Integer {
+    section "Selling B" {
+
+      question genericInt
+      question compInt widget spinbox
+
     }
+
+    section "Other input types" {
+        question condIntB widget slider(5, 20)
+        question integerspinbox widget spinbox(5, 10)
+    }
+  }
+
+  page Decimal {
+    section "Dividing Decimals" {
+        question decimalA
+        question decimalB
+        question decimalQ
+    }
+  }
+
+  page Styling {
+        question defaultText
+        question greenText {color: #55ff55}
+        question otherFont {family: "Times New Roman"}
+        question bigBoldFont {weight: bold size: 20}
+        default integer {color: #0000ff}
   }
 }

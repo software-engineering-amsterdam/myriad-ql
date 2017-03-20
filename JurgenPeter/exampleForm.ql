@@ -1,18 +1,32 @@
 form BoxHouseOwning {
-    hasSoldHouse: "Did you sell a house in 2010?" boolean
-    hasBoughtHouse: "Did you by a house in 2010?" boolean = hasSoldHouse
-    sellingPrice: "How much did you sell the house for?" integer
+    dropdown: "Dropdown Boolean Question" boolean
+    compBool: "Computed Boolean Question" boolean = dropdown
+    genericInt: "Make this integer >= 5?" integer
 
-    if sellingPriceB >= 10 {
-        privateDebt: "Private debts for the sold house:" integer
-        valueResidue: "Value residue:" integer
+    if compInt >= 10 {
+        condBool: "Bool Question in conditional:" boolean
+        condIntB: "This integer question Should be slider:" integer
     }
     else {
-        x: "in de else?" boolean
+        x: "Conditional Boolean" boolean
         if x {
-            y: "geneste if?" boolean
+            y: "Last Nesting Level?" boolean
+            if !y {
+                z: "Then this is the last boolean" boolean
+            }
         }
     }
 
-    sellingPriceB: "How much did you sell the house for? (B)" integer = 2 * sellingPrice
+    integerspinbox: "This input should be spinbox (5, 10)" integer
+
+    compInt: "This integer doubles the other integer" integer = 2 * genericInt
+    decimalA: "This is a decimal input field" decimal
+    decimalB: "This is another decimal input field" decimal
+    decimalQ: "This divides one decimal by another" decimal = decimalA / decimalB
+
+    defaultText: "The Default is blue" integer
+    greenText: "Here the default is overwritten" integer
+    otherFont: "Times New Roman Font" integer
+    bigBoldFont: "This text is big and bold" integer
+
 }
