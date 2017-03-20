@@ -6,7 +6,7 @@ import org.qls.ast.page.Question;
 
 public class UnsupportedWidgetForQLQuestionType extends Issue {
 
-    private Question question;
+    private final Question question;
 
     public UnsupportedWidgetForQLQuestionType(Question question) {
         this.question = question;

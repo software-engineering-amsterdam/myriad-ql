@@ -5,8 +5,8 @@ import org.ql.ast.Node;
 import org.qls.ast.widget.Widget;
 
 public class Question extends Node {
-    private Identifier identifier;
-    private Widget widget;
+    private final Identifier identifier;
+    private final Widget widget;
 
     public Question(Identifier identifier, Widget widget) {
         this.identifier = identifier;
@@ -17,15 +17,7 @@ public class Question extends Node {
         return identifier;
     }
 
-    public void setIdentifier(Identifier identifier) {
-        this.identifier = identifier;
-    }
-
     public Widget getWidget() {
         return widget;
-    }
-
-    public void setWidget(Widget widget) {
-        this.widget = widget;
     }
 }

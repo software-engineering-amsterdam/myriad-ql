@@ -6,7 +6,7 @@ import org.qls.ast.page.Question;
 
 public class UndefinedQLQuestion extends Issue {
 
-    private Question question;
+    private final Question question;
 
     public UndefinedQLQuestion(Question question) {
         this.question = question;
