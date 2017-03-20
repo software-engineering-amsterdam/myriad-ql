@@ -1,9 +1,9 @@
 module QL
   module GUI
     class ComputedQuestionFrame < QuestionFrame
-      def initialize(name, label, type, widget_type, condition=nil, assignment=nil)
+      def initialize(args)
         super
-        @assignment = assignment
+        @assignment = args[:assignment]
       end
 
       def reload

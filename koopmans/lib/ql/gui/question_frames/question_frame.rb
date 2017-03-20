@@ -2,14 +2,14 @@ module QL
   module GUI
     class QuestionFrame
       include Callback
-      attr_reader :enabled, :condition, :widget
+      attr_reader :name, :enabled, :condition, :widget
 
-      def initialize(name, label, type, widget_type, condition=nil, assignment=nil)
-        @name = name
-        @label = label
-        @type = type
-        @widget_type = widget_type
-        @condition = condition
+      def initialize(args)
+        @name = args[:name]
+        @label = args[:label]
+        @literal_type = args[:literal_type]
+        @widget_type = args[:widget_type]
+        @condition = args[:condition]
         @enabled = true
       end
 
@@ -36,7 +36,7 @@ module QL
       end
 
       def store_value
-        VariableTable.store(@name, @type.new(@value))
+        VariableTable.store(@name, @literal_type.new(@value))
       end
 
       def reload
