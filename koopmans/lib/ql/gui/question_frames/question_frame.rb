@@ -24,19 +24,15 @@ module QL
 
       def store_default_value
         @value = @widget.default_value
-        value_changed
+        store_value
       end
 
       def listen_to_widget
         @widget.listen do |changed_value|
           @value = changed_value
-          value_changed
+          store_value
+          callback
         end
-      end
-
-      def value_changed
-        store_value
-        callback
       end
 
       def store_value
