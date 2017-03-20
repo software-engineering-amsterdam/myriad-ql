@@ -4,9 +4,9 @@ from gui.widgets import *
 
 ParserElement.enablePackrat()
 
-identifier = Word(alphas)
-identifier.addCondition(lambda tokens: tokens[0] not in "stylesheet page "
-                        "section question default widget ".split())
+identifier = Word(alphas).addCondition(
+    lambda tokens: tokens[0] not in "stylesheet page section question default "
+                                    "widget ".split())
 
 integer_datatype = Literal("integer").setParseAction(
     lambda _: IntegerDatatype())
@@ -16,19 +16,19 @@ boolean_datatype = Literal("boolean").setParseAction(
     lambda _: BooleanDatatype())
 string_datatype = Literal("string").setParseAction(
     lambda _: StringDatatype())
-datatype = integer_datatype ^ decimal_datatype ^ boolean_datatype ^\
-           string_datatype
+datatype = (integer_datatype ^ decimal_datatype ^ boolean_datatype ^
+            string_datatype)
 
 """ pyparsing_common.integer does not support negative integers. """
 integer = Regex("-?[0-9]+").addParseAction(lambda tokens: int(tokens[0]))
 
-integer_arguments = Suppress("(") + integer + Suppress(",") + \
-                    integer + Suppress(")")
+integer_arguments = (Suppress("(") + integer + Suppress(",") +
+                     integer + Suppress(")"))
 
 string = QuotedString("\"")
 
-string_arguments = Suppress("(") + string + Suppress(",") + string +\
-                   Suppress(")")
+string_arguments = (Suppress("(") + string + Suppress(",") + string +
+                    Suppress(")"))
 
 widget_text = Suppress("text").setParseAction(
     lambda _: WidgetTypeAttribute(EntryWidget))
@@ -58,12 +58,11 @@ widget_drop_down = (Suppress("dropdown") +
                     Optional(string_arguments)).setParseAction(
     lambda tokens: WidgetTypeAttribute(DropDownWidget, *tokens))
 
-widget_type = widget_checkbox ^ widget_spinbox ^ widget_radio ^ widget_text ^\
-              widget_whole_number ^ widget_real_number ^ widget_drop_down ^\
-              widget_slider
+widget_type = (widget_checkbox ^ widget_spinbox ^ widget_radio ^ widget_text ^
+               widget_whole_number ^ widget_real_number ^ widget_drop_down ^
+               widget_slider)
 
-widget_attribute = (Suppress("widget") +
-                    widget_type).setParseAction(
+widget_attribute = (Suppress("widget") + widget_type).setParseAction(
     lambda tokens: tokens[0])
 
 hexadecimal = Regex("#[0-9a-f]{6}")
@@ -90,8 +89,8 @@ width_attribute = (Suppress("width") + Suppress(":") +
                    integer).setParseAction(
     lambda tokens: WidthAttribute(*tokens))
 
-attribute = widget_attribute ^ color_attribute ^ font_size_attribute ^\
-            font_weight_attribute ^ font_family_attribute ^ width_attribute
+attribute = (widget_attribute ^ color_attribute ^ font_size_attribute ^
+             font_weight_attribute ^ font_family_attribute ^ width_attribute)
 
 attributes = (Suppress("{") + ZeroOrMore(attribute) +
               Suppress("}")).setParseAction(

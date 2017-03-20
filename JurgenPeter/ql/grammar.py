@@ -5,9 +5,9 @@ from ql.datatypes import *
 
 ParserElement.enablePackrat()
 
-identifier = Word(alphas)
-identifier.addCondition(lambda tokens: tokens[0] not in "form if else true "
-                        "false boolean string integer decimal".split())
+identifier = Word(alphas).addCondition(
+    lambda tokens: tokens[0] not in "form if else true false boolean string "
+                                    "integer decimal".split())
 
 variable = identifier.copy().addParseAction(
     lambda tokens: Variable(tokens[0]))
@@ -94,14 +94,15 @@ boolean_datatype = Literal("boolean").setParseAction(
     lambda _: BooleanDatatype())
 string_datatype = Literal("string").setParseAction(
     lambda _: StringDatatype())
-datatype = integer_datatype ^ decimal_datatype ^ boolean_datatype ^\
-           string_datatype
+datatype = (integer_datatype ^ decimal_datatype ^ boolean_datatype ^
+            string_datatype)
 
 question = (identifier + Suppress(":") + QuotedString("\"") +
-            datatype).setParseAction(lambda tokens: Question(*tokens))
+            datatype).setParseAction(
+    lambda tokens: Question(*tokens))
 
-computed_question = (identifier + Suppress(":") + QuotedString("\"") +\
-    datatype + Suppress("=") + expression).setParseAction(
+computed_question = (identifier + Suppress(":") + QuotedString("\"") +
+                     datatype + Suppress("=") + expression).setParseAction(
     lambda tokens: ComputedQuestion(*tokens))
 
 if_conditional = (Suppress("if") + expression + block).setParseAction(
