@@ -1,4 +1,4 @@
-from gui.visitors.widget_creator import WidgetCreator
+from gui.visitors.default_widget_getter import DefaultWidgetGetter
 from gui.visitors.gui_builder import GuiBuilder
 
 
@@ -13,8 +13,8 @@ class QlGuiBuilder(GuiBuilder):
         self.create_exit_button()
 
     def visit_question(self, node):
-        widget_constructor = WidgetCreator().create(node.datatype)
-        widget = widget_constructor(self.app, node)
+        constructor = DefaultWidgetGetter().get(node.datatype)
+        widget = constructor(self.app, node)
         widget.set_listener(self.listener)
         self.widgets[node.name] = widget
 

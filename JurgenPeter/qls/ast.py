@@ -10,7 +10,7 @@ class Layout(Node):
         self.body = body
 
     def accept(self, visitor, *args):
-        visitor.visit_layout(self, *args)
+        return visitor.visit_layout(self, *args)
 
 
 class StyledLayout(Layout):
@@ -20,7 +20,7 @@ class StyledLayout(Layout):
         self.stylings = stylings
 
     def accept(self, visitor, *args):
-        visitor.visit_styled_layout(self, *args)
+        return visitor.visit_styled_layout(self, *args)
 
 
 class Page(Node):
@@ -30,7 +30,7 @@ class Page(Node):
         self.body = body
 
     def accept(self, visitor, *args):
-        visitor.visit_page(self, *args)
+        return visitor.visit_page(self, *args)
 
 
 class StyledPage(Page):
@@ -40,7 +40,7 @@ class StyledPage(Page):
         self.stylings = stylings
 
     def accept(self, visitor, *args):
-        visitor.visit_styled_page(self, *args)
+        return visitor.visit_styled_page(self, *args)
 
 
 class Section(Node):
@@ -50,7 +50,7 @@ class Section(Node):
         self.body = body
 
     def accept(self, visitor, *args):
-        visitor.visit_section(self, *args)
+        return visitor.visit_section(self, *args)
 
 
 class StyledSection(Section):
@@ -60,7 +60,7 @@ class StyledSection(Section):
         self.stylings = stylings
 
     def accept(self, visitor, *args):
-        visitor.visit_styled_section(self, *args)
+        return visitor.visit_styled_section(self, *args)
 
 
 class QuestionAnchor(Node):
@@ -69,7 +69,7 @@ class QuestionAnchor(Node):
         self.name = name
 
     def accept(self, visitor, *args):
-        visitor.visit_question_anchor(self, *args)
+        return visitor.visit_question_anchor(self, *args)
 
 
 class StyledQuestionAnchor(QuestionAnchor):
@@ -79,7 +79,7 @@ class StyledQuestionAnchor(QuestionAnchor):
         self.styling = Styling(attributes)
 
     def accept(self, visitor, *args):
-        visitor.visit_styled_question_anchor(self, *args)
+        return visitor.visit_styled_question_anchor(self, *args)
 
 
 class Styling(Node):
@@ -95,19 +95,8 @@ class Styling(Node):
             for attribute in self.attributes:
                 attribute.apply_on(widget)
 
-    def widget_type(self, datatype):
-        if self.applicable_on(datatype):
-            for attribute in self.attributes:
-                if attribute.widget_type:
-                    return attribute.widget_type
-        return None
-
-    def widget_constructor(self, datatype):
-        if self.applicable_on(datatype):
-            for attribute in self.attributes:
-                if attribute.widget_constructor:
-                    return attribute.widget_constructor
-        return None
+    def accept(self, visitor, *args):
+        return visitor.visit_styling(self, *args)
 
 
 class DefaultStyling(Styling):
@@ -121,14 +110,7 @@ class DefaultStyling(Styling):
 
 
 class Attribute(Node):
-
-    @property
-    def widget_type(self):
-        return None
-
-    @property
-    def widget_constructor(self):
-        return None
+    pass
 
 
 class ColorAttribute(Attribute):
@@ -139,6 +121,9 @@ class ColorAttribute(Attribute):
     def apply_on(self, widget):
         widget.set_color(self.color)
 
+    def accept(self, visitor, *args):
+        return visitor.visit_color_attribute(self, *args)
+
 
 class FontSizeAttribute(Attribute):
 
@@ -147,6 +132,9 @@ class FontSizeAttribute(Attribute):
 
     def apply_on(self, widget):
         widget.set_font_size(self.size)
+
+    def accept(self, visitor, *args):
+        return visitor.visit_font_size_attribute(self, *args)
 
 
 class FontWeightAttribute(Attribute):
@@ -157,6 +145,9 @@ class FontWeightAttribute(Attribute):
     def apply_on(self, widget):
         widget.set_font_weight(self.weight)
 
+    def accept(self, visitor, *args):
+        return visitor.visit_font_weight_attribute(self, *args)
+
 
 class FontFamilyAttribute(Attribute):
 
@@ -166,6 +157,9 @@ class FontFamilyAttribute(Attribute):
     def apply_on(self, widget):
         widget.set_font_family(self.family)
 
+    def accept(self, visitor, *args):
+        return visitor.visit_font_family_attribute(self, *args)
+
 
 class WidthAttribute(Attribute):
 
@@ -174,6 +168,9 @@ class WidthAttribute(Attribute):
 
     def apply_on(self, widget):
         widget.set_width(self.width)
+
+    def accept(self, visitor, *args):
+        return visitor.visit_width_attribute(self, *args)
 
 
 class WidgetTypeAttribute(Attribute):
@@ -185,11 +182,5 @@ class WidgetTypeAttribute(Attribute):
     def apply_on(self, widget):
         pass
 
-    @property
-    def widget_type(self):
-        return self.widget.get_datatype()
-
-    @property
-    def widget_constructor(self):
-        return lambda gui, question: self.widget(gui, question,
-                                                 *self.widget_arguments)
+    def accept(self, visitor, *args):
+        return visitor.visit_widget_type_attribute(self, *args)
