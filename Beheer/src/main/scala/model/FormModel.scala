@@ -3,28 +3,28 @@ package model
 import ast._
 
 class FormModel(form: Form) {
-  val questionsWithShowConditions: Seq[(Question, Seq[ExpressionNode])] = form.statements.flatMap(flattenForm(_, Nil))
+  val questionsWithDisplayConditions: Seq[(Question, Seq[DisplayCondition])] = form.statements.flatMap(flattenForm(_, Nil))
   val expressions: Seq[(ExpressionNode, Type)] = extractExpressions(form.statements)
-  val questions: Seq[Question] = questionsWithShowConditions.map { case (q, _) => q }
+  val questions: Seq[Question] = questionsWithDisplayConditions.map { case (q, _) => q }
   val questionLabels: Seq[String] = questions.map(_.label)
   val definedIdentifiers: Seq[String] = questions.map(_.identifier)
   val identifiersWithType: Seq[(String, Type)] = questions.map(q => (q.identifier, q.`type`))
   val referencedIdentifiers: Set[String] = expressions.map { case (e, _) => extractIdentifiers(e) }.reduce(_ ++ _)
 
-  val displayQuestions: Seq[DisplayQuestion] = questionsWithShowConditions.map {
+  val displayQuestions: Seq[DisplayQuestion] = questionsWithDisplayConditions.map {
     case (Question(identifier, label, questionType, None), conditions) => OpenQuestion(identifier, label, questionType, conditions)
     case (Question(identifier, label, questionType, Some(expr)), conditions) => ComputedQuestion(identifier, label, questionType, conditions, expr)
   }
-  val questionsWithReferences: Map[String, Set[String]] = questionsWithShowConditions.map {
-    case (Question(identifier, _, _, None), conditions) => (identifier, extractIdentifiers(conditions))
-    case (Question(identifier, _, _, Some(expr)), conditions) => (identifier, extractIdentifiers(expr) ++ extractIdentifiers(conditions))
+  val questionsWithReferences: Map[String, Set[String]] = questionsWithDisplayConditions.map {
+    case (Question(identifier, _, _, None), conditions) => (identifier, extractIdentifiers(conditions.map(_.condition)))
+    case (Question(identifier, _, _, Some(expr)), conditions) => (identifier, extractIdentifiers(expr) ++ extractIdentifiers(conditions.map(_.condition)))
   }.toMap
 
   private def extractExpressions(statements: Seq[Statement]): Seq[(ExpressionNode, Type)] =
     statements.flatMap(e => extractExpressions(e))
 
   private def extractExpressions(statement: Statement): Seq[(ExpressionNode, Type)] = statement match {
-    case Conditional(condition, statements) => (condition, BooleanType) +: extractExpressions(statements)
+    case Conditional(condition, ifStatements, elseStatements) => (condition, BooleanType) +: (extractExpressions(ifStatements) ++ extractExpressions(elseStatements))
     case Question(_, _, questionType, Some(expr)) => Seq((expr, questionType))
     case _ => Nil
   }
@@ -39,8 +39,12 @@ class FormModel(form: Form) {
     case _ => Set.empty
   }
 
-  private def flattenForm(statement: Statement, conditionals: Seq[ExpressionNode]): Seq[(Question, Seq[ExpressionNode])] = statement match {
-    case Conditional(condition, statements) => statements.flatMap(flattenForm(_, condition +: conditionals))
+  private def flattenForm(statement: Statement, conditionals: Seq[DisplayCondition]): Seq[(Question, Seq[DisplayCondition])] = statement match {
+    case Conditional(condition, ifStatements, elseStatements) => {
+      val first = ifStatements.flatMap(flattenForm(_, DisplayCondition(condition, isElseCondition = false) +: conditionals))
+      val second = elseStatements.flatMap(flattenForm(_, DisplayCondition(condition, isElseCondition = true) +: conditionals))
+      first ++ second
+    }
     case q: Question => Seq((q, conditionals))
   }
 }

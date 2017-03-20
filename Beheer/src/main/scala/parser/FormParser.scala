@@ -19,8 +19,9 @@ class FormParser extends QLParser with ExpressionParser {
     }
 
   private def conditional: Parser[Conditional] =
-    "if" ~> parentheses(expression) ~ statements ^^ {
-      case expression ~ block => Conditional(expression, block)
+    "if" ~> parentheses(expression) ~ statements ~ opt("else" ~> statements) ^^ {
+      case expression ~ ifBlock ~ None => Conditional(expression, ifBlock)
+      case expression ~ ifBlock ~ Some(elseBlock) => Conditional(expression, ifBlock, elseBlock)
     }
 
   private def statements: Parser[Seq[Statement]] = curlyBrackets(rep(conditional | question))

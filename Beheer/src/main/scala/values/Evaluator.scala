@@ -1,21 +1,25 @@
 package values
 
 import ast._
+import model.DisplayCondition
 import values.Evaluator.Env
 
 class Evaluator(env: Env) {
 
-  def show(conditions: Seq[ExpressionNode]): Boolean = {
+  def display(conditions: Seq[DisplayCondition]): Boolean =
     conditions match {
       case Nil => true
       case head :: tail =>
-        val headValue = calculate(head) match {
+        val headValue = calculate(head.condition) match {
           case BooleanValue(b) => b
           case _ => false
         }
-        headValue && show(tail)
+        if (head.isElseCondition) {
+          !headValue && display(tail)
+        } else {
+          headValue && display(tail)
+        }
     }
-  }
 
   def calculate(expressionNode: ExpressionNode): Value =
     expressionNode match {

@@ -37,4 +37,9 @@ stylesheet taxOfficeExample {
             }
         }
     }
+    page Else {
+        section "else" {
+            question eQuestion
+        }
+    }
 }

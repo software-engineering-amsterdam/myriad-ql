@@ -61,5 +61,5 @@ trait GUIQuestion {
   }
 
   private def isVisible(question: DisplayQuestion): BooleanBinding =
-    Bindings.createBooleanBinding(() => Evaluator(env.toMap).show(question.displayCondition), env)
+    Bindings.createBooleanBinding(() => Evaluator(env.toMap).display(question.displayConditions), env)
 }
