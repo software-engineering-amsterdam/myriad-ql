@@ -27,7 +27,8 @@ class SliderWidget(rangeStart: BigDecimal, rangeEnd: BigDecimal, numberType: Num
         selectedValue.value_=(n.value)
       } else if (n.value < rangeStart) {
         selectedValue.value_=(rangeStart)
-      } else { //n.value > rangeEnd
+      } else {
+        //n.value > rangeEnd
         selectedValue.value_=(rangeEnd)
       }
     }

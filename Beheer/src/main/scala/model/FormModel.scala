@@ -9,7 +9,9 @@ class FormModel(form: Form) {
   val questionLabels: Seq[String] = questions.map(_.label)
   val definedIdentifiers: Seq[String] = questions.map(_.identifier)
   val identifiersWithType: Seq[(String, Type)] = questions.map(q => (q.identifier, q.`type`))
-  val referencedIdentifiers: Set[String] = expressions.map { case (e, _) => extractIdentifiers(e) }.reduce(_ ++ _)
+  val referencedIdentifiers: Set[String] = expressions.map {
+    case (e, _) => extractIdentifiers(e)
+  }.reduceOption(_ ++ _).getOrElse(Set.empty)
 
   val displayQuestions: Seq[DisplayQuestion] = questionsWithDisplayConditions.map {
     case (Question(identifier, label, questionType, None), conditions) => OpenQuestion(identifier, label, questionType, conditions)

@@ -7,9 +7,10 @@ import scalafx.Includes._
 import scalafx.scene.Node
 import scalafx.scene.control.TextField
 
-class NumericTextWidget(numberType: NumericType)(implicit val changeHandler: Value => Unit) extends QLWidget {
+class NumericTextWidget(width: Double, numberType: NumericType)(implicit val changeHandler: Value => Unit) extends QLWidget {
 
   private val textfield = new TextField()
+  textfield.setPrefWidth(width)
 
   textfield.onAction = handle {
     val qlValue = NumericValue.stringToNumericValue(textfield.text.value, numberType)

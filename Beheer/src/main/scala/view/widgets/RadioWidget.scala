@@ -28,7 +28,8 @@ class RadioWidget(trueText: String, falseText: String)(implicit val changeHandle
 
   override def setValue(newVal: Value): Unit = newVal match {
     case BooleanValue(b) => trueButton.selected = b
-    case UndefinedValue => { //clear
+    case UndefinedValue => {
+      //clear
       trueButton.selected = false
       falseButton.selected = false
     }
