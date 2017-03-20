@@ -1,13 +1,15 @@
 package org.qls.typechecker;
 
+import org.ql.ast.identifier.Identifier;
 import org.ql.ast.identifier.IdentifierSet;
 import org.ql.ast.type.Type;
 import org.ql.typechecker.SymbolTable;
 import org.ql.typechecker.issues.IssuesStorage;
 import org.qls.ast.StyleSheet;
 import org.qls.ast.page.*;
-import org.qls.typechecker.issues.errors.DuplicateQLSQuestion;
-import org.qls.typechecker.issues.errors.UndefinedQLQuestion;
+import org.qls.typechecker.issues.errors.UnusedQuestion;
+import org.qls.typechecker.issues.errors.DuplicateQuestion;
+import org.qls.typechecker.issues.errors.UndefinedQuestion;
 import org.qls.typechecker.issues.errors.UnsupportedWidgetForQLQuestionType;
 
 
@@ -18,6 +20,15 @@ public class QLSQuestionVisitor implements WidgetQuestionVisitor<Void, SymbolTab
     public void visitStyleSheet(StyleSheet styleSheet, IssuesStorage issuesStorage, SymbolTable symbolTable) {
         this.issuesStorage = issuesStorage;
         styleSheet.getPages().forEach(page -> visitPage(page, symbolTable));
+        checkUnusedQuestions(symbolTable);
+    }
+
+    private void checkUnusedQuestions(SymbolTable symbolTable) {
+        for (Identifier identifier : symbolTable.identifiers()) {
+            if (!definedQuestions.isDeclared(identifier)) {
+                issuesStorage.addError(new UnusedQuestion(identifier));
+            }
+        }
     }
 
     public void visitPage(Page page, SymbolTable symbolTable) {
@@ -57,7 +68,7 @@ public class QLSQuestionVisitor implements WidgetQuestionVisitor<Void, SymbolTab
 
     private void checkDuplicateQLSQuestions(WidgetQuestion question) {
         if (definedQuestions.isDeclared(question.getIdentifier())) {
-            issuesStorage.addError(new DuplicateQLSQuestion(question));
+            issuesStorage.addError(new DuplicateQuestion(question));
         } else {
             definedQuestions.declare(question.getIdentifier());
         }
@@ -65,7 +76,7 @@ public class QLSQuestionVisitor implements WidgetQuestionVisitor<Void, SymbolTab
 
     private void checkUndefinedQLQuestions(WidgetQuestion question, SymbolTable symbolTable) {
         if (!symbolTable.isDeclared(question.getIdentifier())) {
-            issuesStorage.addError(new UndefinedQLQuestion(question));
+            issuesStorage.addError(new UndefinedQuestion(question));
         }
     }
 }

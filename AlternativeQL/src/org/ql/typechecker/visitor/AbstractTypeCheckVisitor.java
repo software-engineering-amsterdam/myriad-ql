@@ -8,11 +8,11 @@ import java.util.List;
 
 public abstract class AbstractTypeCheckVisitor<T, C> implements ASTVisitor<T, C> {
 
-    protected T visitExpression(Expression condition, C context) {
+    T visitExpression(Expression condition, C context) {
         return condition.accept(this, context);
     }
 
-    protected T visitStatements(List<Statement> statements, C context) {
+    T visitStatements(List<Statement> statements, C context) {
         for (Statement statement : statements) {
             statement.accept(this, context);
         }

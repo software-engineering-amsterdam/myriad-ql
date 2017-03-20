@@ -4,11 +4,11 @@ import org.ql.ast.Node;
 import org.ql.typechecker.issues.Issue;
 import org.qls.ast.page.WidgetQuestion;
 
-public class DuplicateQLSQuestion extends Issue {
+public class DuplicateQuestion extends Issue {
 
     private final WidgetQuestion question;
 
-    public DuplicateQLSQuestion(WidgetQuestion question) {
+    public DuplicateQuestion(WidgetQuestion question) {
         this.question = question;
     }
 

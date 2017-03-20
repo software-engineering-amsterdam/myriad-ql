@@ -5,11 +5,11 @@ import org.ql.typechecker.issues.Issue;
 import org.qls.ast.page.CustomWidgetQuestion;
 import org.qls.ast.page.WidgetQuestion;
 
-public class UndefinedQLQuestion extends Issue {
+public class UndefinedQuestion extends Issue {
 
     private final WidgetQuestion question;
 
-    public UndefinedQLQuestion(WidgetQuestion question) {
+    public UndefinedQuestion(WidgetQuestion question) {
         this.question = question;
     }
 
