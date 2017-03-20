@@ -13,16 +13,16 @@ form taxOfficeExample {
     boughtPrice: integer
   "What was the selling price?"
     sellingPrice: integer
-  if (boughtPrice != sellingPrice) {
+  if (hasSoldHouse) {
     "Private debts for the sold house:"
       privateDebt: integer
     "Value residue:"
       valueResidue: money =
-        (sellingPrice - privateDebt)
+        (sellingPrice * boughtPrice - privateDebt)
 
     "Profit on sale:"
       valueOver: money =
-        (privateDebt+ boughtPrice)
+        (privateDebt + boughtPrice)
   }
   "Is this questions being printed?"
     isPrinted: boolean

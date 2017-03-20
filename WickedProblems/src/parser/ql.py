@@ -81,14 +81,15 @@ class QL:
                              (literall_not_equal, 2, opAssoc.LEFT,
                               binary_node(Inequality))]
 
-    arithmic_precedence = [(literal_addition, 2, opAssoc.LEFT,
+    arithmic_precedence = [(literal_multiplication, 2, opAssoc.LEFT,
+                            binary_node(Multiplication)),
+                           (literal_division, 2, opAssoc.LEFT,
+                            binary_node(Division)),
+                           (literal_addition, 2, opAssoc.LEFT,
                             binary_node(Addition)),
                            (literal_substraction, 2, opAssoc.LEFT,
                             binary_node(Substraction)),
-                           (literal_multiplication, 2, opAssoc.LEFT,
-                            binary_node(Multiplication)),
-                           (literal_division, 2, opAssoc.LEFT,
-                            binary_node(Division))]
+                           ]
 
     boolean_expression = operatorPrecedence(operand, boolean_precedence)
     comparison_expression = operatorPrecedence(operand, comparison_precedence)
