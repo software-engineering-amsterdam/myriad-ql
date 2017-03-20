@@ -33,27 +33,37 @@ module QL
       end
 
       def visit_arithmetic_expression(left, binary_expression)
-        evaluate_types(left, binary_expression, [AST::IntegerType, AST::MoneyType], AST::IntegerType.new)
+        compatible_types = [AST::IntegerType, AST::MoneyType]
+        return_type = AST::IntegerType.new
+        evaluate_types(left, binary_expression, compatible_types, return_type)
       end
 
       def visit_boolean_expression(left, binary_expression)
-        evaluate_types(left, binary_expression, [AST::BooleanType], AST::BooleanType.new)
+        compatible_types = [AST::BooleanType]
+        return_type = AST::BooleanType.new
+        evaluate_types(left, binary_expression, compatible_types, return_type)
       end
 
       def visit_comparison_equal_expression(left, binary_expression)
-        evaluate_types(left, binary_expression, [AST::BooleanType, AST::IntegerType, AST::MoneyType, AST::StringType], AST::BooleanType.new)
+        compatible_types = [AST::BooleanType, AST::IntegerType, AST::MoneyType, AST::StringType]
+        return_type = AST::BooleanType.new
+        evaluate_types(left, binary_expression, compatible_types, return_type)
       end
 
       def visit_comparison_order_expression(left, binary_expression)
-        evaluate_types(left, binary_expression, [AST::IntegerType, AST::MoneyType], AST::BooleanType.new)
+        compatible_types = [AST::IntegerType, AST::MoneyType]
+        return_type = AST::BooleanType.new
+        evaluate_types(left, binary_expression, compatible_types, return_type)
       end
 
       def visit_boolean_negation(integer_negation)
-        evaluate_type(integer_negation, [AST::BooleanType])
+        compatible_types = [AST::BooleanType]
+        evaluate_type(integer_negation, compatible_types)
       end
 
       def visit_integer_negation(boolean_negation)
-        evaluate_type(boolean_negation, [AST::IntegerType, AST::MoneyType])
+        compatible_types = [AST::IntegerType, AST::MoneyType]
+        evaluate_type(boolean_negation, compatible_types)
       end
 
       def visit_boolean_type(boolean_type)

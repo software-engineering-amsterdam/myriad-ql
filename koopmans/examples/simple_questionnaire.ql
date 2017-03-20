@@ -3,7 +3,7 @@ form taxOfficeExample {
     hasSoldHouse: boolean
   "Did you buy a house in 2010?"
     hasBoughtHouse: integer
-    if (true && !false){
+    if (true && hasSoldHouse){
      "Did yoIF VRAAG?"
         xx: money = hasBoughtHouse - 2 * 2
     } else {
@@ -11,5 +11,5 @@ form taxOfficeExample {
         aa: money = -hasBoughtHouse
     }
 "Did you buy222 a house in 2010?"
-    ssss: boolean = !false
+    ssss: integer = -xx
 }
