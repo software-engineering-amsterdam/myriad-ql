@@ -4,6 +4,7 @@ import UvA.Gamma.AST.Form;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 
 
@@ -25,7 +26,7 @@ public class MainScreen {
         System.out.println(controller);
         controller.addFormItem(form);
         stage.setTitle("Tax Questionnaire");
-        stage.setScene(new Scene(root, 300, 275));
+        stage.setScene(new Scene(root));
         stage.sizeToScene();
         stage.show();
     }

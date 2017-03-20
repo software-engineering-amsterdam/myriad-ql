@@ -51,7 +51,7 @@ public class DateValue extends Value implements ASTNode {
 
     @Override
     public void showQuestion(FXMLController screen, Question question) {
-        screen.showDateValue(question); //TODO: Show the date type of the question
+        screen.showDateValue(question);
     }
 
     @Override

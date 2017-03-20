@@ -5,8 +5,6 @@ import UvA.Gamma.AST.Form;
 import UvA.Gamma.AST.FormItem;
 import UvA.Gamma.AST.Question;
 import UvA.Gamma.Validation.TypeChecker;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.scene.Node;
@@ -24,6 +22,7 @@ import java.util.Stack;
 public class FXMLController {
     private Form form;
     TypeChecker checker = new TypeChecker();
+
 
     public void addFormItem(Form form) {
         rootGrid = grid;
