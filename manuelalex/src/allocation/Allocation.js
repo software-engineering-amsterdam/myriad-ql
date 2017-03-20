@@ -25,8 +25,4 @@ export class Allocation {
     getLocation(){
         return this.location;
     }
-
-    validate() {
-
-    }
 }

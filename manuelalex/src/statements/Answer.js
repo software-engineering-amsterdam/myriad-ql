@@ -22,10 +22,6 @@ export class Answer extends Statement {
         return this.allocation;
     }
 
-    validate() {
-        /* TODO */
-    }
-
     accept(visitor) {
         visitor.visitAnswer(self);
     }

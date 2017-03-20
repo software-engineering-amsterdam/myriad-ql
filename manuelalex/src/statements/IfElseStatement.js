@@ -16,10 +16,6 @@ export class IfElseStatement extends IfStatement {
         return this.elseBody;
     }
 
-    validate() {
-        /* TODO */
-    }
-
     render(visitor, view){
         visitor.renderIfElseStatement(this, view);
     }

@@ -22,10 +22,6 @@ export class IfStatement extends Statement {
         return this.ifBody;
     }
 
-    validate() {
-        /* TODO */
-    }
-
     accept(visitor){
         visitor.visitIfStatement(this);
     }

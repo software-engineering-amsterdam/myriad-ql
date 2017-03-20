@@ -26,13 +26,6 @@ export class Question extends Statement {
         return this.propertyType;
     }
 
-    validate() {
-        /* TODO check this */
-        if (!this.name.length) {
-            this._throwError('Name should be defined');
-        }
-    }
-
     accept(visitor){
         visitor.visitQuestion(this);
     }

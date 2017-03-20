@@ -31,10 +31,6 @@ export class Expression {
         visitor.visitExpression(this);
     }
 
-    validate() {
-        throw new Error('Validate method should have been overwritten');
-    }
-
     evaluate(memoryState){
 
         const leftValue = this.leftHand.evaluate(memoryState);
@@ -70,10 +66,6 @@ export class PrefixExpression {
 
     accept(visitor){
         visitor.visitPreExpression(this);
-    }
-
-    validate() {
-        throw new Error('Validate method should have been overwritten');
     }
 
     evaluate(memoryState){
