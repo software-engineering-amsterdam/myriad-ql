@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -12,6 +13,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.lemonade.QLLexer;
 import org.lemonade.QLParser;
 import org.lemonade.QLParserErrorListener;
+import org.lemonade.exceptions.InvalidFormException;
 import org.lemonade.nodes.Form;
 import org.lemonade.visitors.EvaluateVisitor;
 import org.lemonade.visitors.FormVisitor;
@@ -50,7 +52,9 @@ public class QLApp extends Application {
         GuiForm guiRoot;
 
         try {
-            Form root = parseFileAndValidateForm(qlGui.getFile());
+            Form root = parseFile(qlGui.getFile());
+            validateForm(root);
+
             GuiVisitor guiVisitor = new GuiVisitor(qlGui);
             guiRoot = (GuiForm) root.accept(guiVisitor);
 
@@ -66,6 +70,9 @@ public class QLApp extends Application {
             qlGui.goToQuestionnaire();
         } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage());
+        } catch (InvalidFormException e) {
+            List<String> formErrors = e.getFormErrors();
+            System.err.print(formErrors);
         }
     }
 
@@ -74,7 +81,7 @@ public class QLApp extends Application {
         System.err.println("In submit");
     }
 
-    private Form parseFileAndValidateForm(final File file) throws IOException {
+    private Form parseFile(final File file) throws IOException {
         final String contents = String.join("\n", Files.readAllLines(Paths.get(file.getPath())));
 
         ANTLRInputStream input = new ANTLRInputStream(new StringReader(contents));
@@ -87,11 +94,15 @@ public class QLApp extends Application {
         ParseTree tree = parser.form();
 
         FormVisitor visitor = new FormVisitor();
-        Form root = (Form) tree.accept(visitor);
+        return (Form) tree.accept(visitor);
+    }
 
+    private void validateForm(Form root) throws InvalidFormException {
         TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
         root.accept(typeCheckVisitor);
 
-        return root;
+        if (typeCheckVisitor.hasErrors()) {
+            throw new InvalidFormException(typeCheckVisitor.getErrors());
+        }
     }
 }

@@ -5,7 +5,6 @@ import java.io.File;
 import org.lemonade.gui.elements.GuiElement;
 import org.lemonade.gui.elements.GuiLabelElement;
 import org.lemonade.visitors.EvaluateVisitor;
-import org.lemonade.visitors.GuiVisitor;
 
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
