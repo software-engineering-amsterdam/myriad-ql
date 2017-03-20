@@ -3,3 +3,4 @@
 - GUIFormBuilder#modifiedQuestions to be wrapped in a class
 - We intentionally redraw the GUI pane upon each change, and we keep form element instances.
 - Remove DateType
+- In QLSQuestionVisitor: isWidgetTypeSupportedForQuestion should check if the QuestionType is null. If it is, return false.
