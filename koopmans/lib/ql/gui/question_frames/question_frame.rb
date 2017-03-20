@@ -77,7 +77,7 @@ module QL
       end
 
       def label
-        @ast_question.label.to_value
+        @ast_question.label.value
       end
 
       def literal_type

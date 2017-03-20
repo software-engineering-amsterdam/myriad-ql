@@ -11,7 +11,7 @@ module QL
       end
 
       def compute
-        @value = assignment.accept(Evaluator.new).to_value
+        @value = assignment.accept(Evaluator.new).value
         @widget.set_value(@value)
         store_value
       end

@@ -44,8 +44,16 @@ module QL
         AST::BooleanLiteral.new(eval("#{operator} #{expression.value}"))
       end
 
-      def visit_literal(literal)
-        literal
+      def visit_integer_literal(integer_literal)
+        integer_literal
+      end
+
+      def visit_boolean_literal(boolean_literal)
+        boolean_literal
+      end
+
+      def visit_string_literal(string_literal)
+        string_literal
       end
 
       def visit_variable(variable)
