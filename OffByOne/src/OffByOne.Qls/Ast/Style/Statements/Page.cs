@@ -26,7 +26,7 @@
             this.ValueTypeRules = valueTypeRules;
         }
 
-        public string Id { get; private set; }
+        public string Id { get; }
 
         public IEnumerable<Section> Sections { get; }
 

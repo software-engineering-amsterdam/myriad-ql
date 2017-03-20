@@ -10,7 +10,7 @@
     {
         private IValue value;
 
-        public QuestionWidget(IValue value, QuestionStatement statement, GuiEnvironment guiEnvironment)
+        protected QuestionWidget(IValue value, QuestionStatement statement, GuiEnvironment guiEnvironment)
             : base(guiEnvironment)
         {
             this.Statement = statement;

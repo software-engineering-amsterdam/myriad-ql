@@ -27,7 +27,7 @@
             this.Value = new MoneyValue(value);
         }
 
-        public MoneyValue Value { get; private set; }
+        public MoneyValue Value { get; }
 
         public override TResult Accept<TResult, TContext>(
             IExpressionVisitor<TResult, TContext> visitor,

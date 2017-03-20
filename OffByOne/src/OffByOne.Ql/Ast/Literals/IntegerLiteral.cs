@@ -27,7 +27,7 @@
             this.Value = new IntegerValue(value);
         }
 
-        public IntegerValue Value { get; private set; }
+        public IntegerValue Value { get; }
 
         public override TResult Accept<TResult, TContext>(
             IExpressionVisitor<TResult, TContext> visitor,

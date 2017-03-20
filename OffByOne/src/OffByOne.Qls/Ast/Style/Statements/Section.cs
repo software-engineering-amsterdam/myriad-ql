@@ -35,7 +35,7 @@
             this.ValueTypeRules = valueTypeRules;
         }
 
-        public StringLiteral Name { get; private set; }
+        public StringLiteral Name { get; }
 
         public IEnumerable<Section> Sections { get; set; }
 

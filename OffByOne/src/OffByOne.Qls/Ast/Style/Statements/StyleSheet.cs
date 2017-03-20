@@ -25,7 +25,7 @@
 
         public string Id { get; }
 
-        public IEnumerable<Page> Pages { get; private set; }
+        public IEnumerable<Page> Pages { get; }
 
         public override TResult Accept<TResult, TContext>(
             IStatementVisitor<TResult, TContext> visitor,

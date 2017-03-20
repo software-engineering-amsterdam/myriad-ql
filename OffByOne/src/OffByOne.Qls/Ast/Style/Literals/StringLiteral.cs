@@ -17,7 +17,7 @@
             this.Value = value.Trim('"');
         }
 
-        public string Value { get; private set; }
+        public string Value { get; }
 
         public override TResult Accept<TResult, TContext>(
             ILiteralVisitor<TResult, TContext> visitor,

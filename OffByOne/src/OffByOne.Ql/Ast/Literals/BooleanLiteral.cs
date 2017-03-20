@@ -23,7 +23,7 @@
             this.Value = new BooleanValue(value);
         }
 
-        public BooleanValue Value { get; private set; }
+        public BooleanValue Value { get; }
 
         public override TResult Accept<TResult, TContext>(
             IExpressionVisitor<TResult, TContext> visitor,

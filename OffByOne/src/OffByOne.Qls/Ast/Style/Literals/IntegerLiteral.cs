@@ -24,7 +24,7 @@
             this.Value = int.Parse(value);
         }
 
-        public int Value { get; private set; }
+        public int Value { get; }
 
         public override TResult Accept<TResult, TContext>(
             ILiteralVisitor<TResult, TContext> visitor,
