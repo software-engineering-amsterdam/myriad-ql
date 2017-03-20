@@ -1,4 +1,5 @@
-from tkinter import Tk, Frame, Label, Entry, Radiobutton, Spinbox, Button, filedialog, Menu
+from tkinter import Tk, Frame, Label, Entry, Radiobutton, Spinbox, \
+    Button, filedialog, Menu, messagebox
 from operations.eval import Eval
 from parser.ql import QL
 import json
@@ -286,6 +287,15 @@ class Application(object):
             return
         f.write(json.dumps(self.environment.export()))
         f.close()
+
+    def show_error(self, message):
+        messagebox.showerror("Error", message)
+
+    def show_warning(self, message):
+        messagebox.showwarning("Warning", message)
+
+    def show_message(self, message):
+        messagebox.showinfo("Message",message)
 
     def add_element(self, element):
         element.parent = self.window
