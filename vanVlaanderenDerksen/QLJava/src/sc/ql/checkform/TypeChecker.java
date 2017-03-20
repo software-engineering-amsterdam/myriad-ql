@@ -25,11 +25,14 @@ import sc.ql.model.form_elements.*;
 import sc.ql.model.types.*;
 import sc.ql.model.visitors.*;
 
-public class CheckConditions implements FormVisitor<List<Message>>, FormElementVisitor<List<Message>>, ExpressionVisitor<Type> {
+public class TypeChecker implements FormVisitor<List<Message>>, FormElementVisitor<Void>, ExpressionVisitor<Type> {
 	private List<Message> messages = new ArrayList<Message>();
 	private Map<String, Type> stringTypes = new HashMap<String, Type>();
+	private List<String> questionIds = new ArrayList<String>();
+	private List<String> labels = new ArrayList<String>();
+	private List<String> identifiers = new ArrayList<String>();
 	
-	public CheckConditions(Map<String, Type> stringTypes) {
+	public TypeChecker(Map<String, Type> stringTypes) {
 		this.stringTypes = stringTypes;
 	}
 	
@@ -45,7 +48,7 @@ public class CheckConditions implements FormVisitor<List<Message>>, FormElementV
 	}
 	
 	@Override
-	public List<Message> visit(IfThenStatement statement) {
+	public Void visit(IfThenStatement statement) {
 		List<FormElement> thenElements = statement.getThenBody();
 		
 		Type type = statement.getCondition().accept(this);
@@ -58,17 +61,17 @@ public class CheckConditions implements FormVisitor<List<Message>>, FormElementV
 			formElement.accept(this);
 		}
 
-		return messages;
+		return null;
 	}
 	
 	@Override
-	public List<Message> visit(IfThenElseStatement statement) {
+	public Void visit(IfThenElseStatement statement) {
 		List<FormElement> thenElements = statement.getThenBody();
 		List<FormElement> elseElements = statement.getElseBody();
 		
 		Type type = statement.getCondition().accept(this);
 		
-		if (!type.isBooleanType()) {
+		if (type != null && !type.isBooleanType()) {
 			messages.add(new Message(Message.MessageType.ERROR, "if-then-else condition type error", statement.getPosition()));
 		}
 		
@@ -80,25 +83,28 @@ public class CheckConditions implements FormVisitor<List<Message>>, FormElementV
 			formElement.accept(this);
 		}
 		
-		return messages;
+		return null;
 	}
 	
 	@Override
-	public List<Message> visit(Question question) {			
-		return messages;
+	public Void visit(Question question) {	
+		checkQuestion(question);
+		
+		return null;
 	}
 	
 	@Override
-	public List<Message> visit(CalculatedQuestion question) {
+	public Void visit(CalculatedQuestion question) {
+		checkQuestion(question);
+		
 		Type type = question.getExpression().accept(this);
 		
 		if (!type.isCompatibleWith(question.getType())) {
 			messages.add(new Message(Message.MessageType.ERROR, "question type mismatch", question.getPosition()));
 		}
 		
-		return messages;
+		return null;
 	}
-	
 	
 	@Override
 	public Type visit(BinaryExpression expression) {
@@ -109,7 +115,7 @@ public class CheckConditions implements FormVisitor<List<Message>>, FormElementV
 	public Type visit(NotExpression expression) {
 		Type type = expression.getExpression().accept(this);
 		
-		if (type.isBooleanType()) {
+		if (!type.isBooleanType()) {
 			messages.add(new Message(Message.MessageType.ERROR, "not expression not of type Boolean", expression.getPosition()));
 		}
 		
@@ -136,6 +142,7 @@ public class CheckConditions implements FormVisitor<List<Message>>, FormElementV
 		return checkNumericError(expression, "substract");
 	}
 	
+	
 	@Override
 	public Type visit(BooleanLiteral expression) {
 		return new BooleanType();
@@ -143,7 +150,18 @@ public class CheckConditions implements FormVisitor<List<Message>>, FormElementV
 
 	@Override
 	public Type visit(IdLiteral expression) {
-		return this.stringTypes.get(expression.getValue());
+		String identifier = expression.getValue();
+		
+		if (!questionIds.contains(identifier)) {
+			messages.add(new Message(Message.MessageType.ERROR, "identifier is not declared", expression.getPosition()));
+		}
+		
+		Type type = new Type();
+		if (this.stringTypes.containsKey(identifier)) {
+			type = this.stringTypes.get(identifier);
+		}
+		
+		return type;
 	}
 
 	@Override
@@ -160,6 +178,7 @@ public class CheckConditions implements FormVisitor<List<Message>>, FormElementV
 	public Type visit(StringLiteral expression) {
 		return new StringType();
 	}
+	
 
 	@Override
 	public Type visit(And expression) {
@@ -199,6 +218,27 @@ public class CheckConditions implements FormVisitor<List<Message>>, FormElementV
 	@Override
 	public Type visit(Or expression) {
 		return checkBooleanError(expression, "or");
+	}
+	
+	private void checkQuestion(Question question) {
+		String label = question.getLabel();
+		String identifier = question.getId();
+		
+		questionIds.add(identifier);
+		
+		if (labels.contains(label)) {
+			messages.add(new Message(Message.MessageType.WARNING, "duplicate label detected", question.getPosition()));
+		}
+		else {
+			labels.add(label);
+		}
+		
+		if (identifiers.contains(identifier)) {
+			messages.add(new Message(Message.MessageType.ERROR, "duplicate identifier detected", question.getPosition()));
+		}
+		else {
+			identifiers.add(identifier);
+		}
 	}
 	
 	private Type checkTypeError(BinaryExpression expression, String expressionName) {

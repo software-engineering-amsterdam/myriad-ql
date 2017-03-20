@@ -1,10 +1,11 @@
-form
-	"dit is een test" buyingPrice1 BOOLEAN
-	"dit is een test 2" buyingPrice2 INTEGER = 12 + 1
-	
-	if (buyingPrice1)
-		"nog een vraag" vraag4 STRING
-	else
-		"dit is nog een vraag 7" vraag7 STRING
+form taxOfficeExample
+	"Did you sell a house in 2010?" hasSoldHouse BOOLEAN
+	"Did you buy a house in 2010?" hasBoughtHouse BOOLEAN
+	"Did you enter a loan?" hasMaintLoan BOOLEAN
+    
+	if(hasSoldHouse)
+		"What was the selling price?" sellingPrice MONEY
+		"Private debts for the sold house:" privateDebt MONEY
+		"Value residue:" valueResidue MONEY = (sellingPrice - privateDebt)
 	endif
 endform
