@@ -3,7 +3,8 @@ stylesheet taxOfficeExample
 page Housing {
     section "Buying"
       question firstName
-        widget string
+        widget slider
     section "Loaning"
-      question lastName
+      question firstName
+        widget slider
 }

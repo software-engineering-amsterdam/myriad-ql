@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class WidgetTest {
-    /*
+
     @Test
     public void shouldContainQuestionWithSpinboxWidget() {
         Parser parser = new Parser();
@@ -99,5 +99,5 @@ public class WidgetTest {
         assertEquals("\"yes\"", ((DropdownWidget) widget).getYesText());
         assertEquals("\"no\"", ((DropdownWidget) widget).getNoText());
     }
-    */
+
 }

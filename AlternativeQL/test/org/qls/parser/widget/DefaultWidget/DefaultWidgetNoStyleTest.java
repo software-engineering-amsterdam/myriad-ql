@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class DefaultWidgetNoStyleTest {
-    /*@Test
+    @Test
     public void shouldContainPageWithDefaultRadioWidget() {
         Parser parser = new Parser();
 
@@ -103,5 +103,5 @@ public class DefaultWidgetNoStyleTest {
         assertEquals(1, page.getDefaultWidgets().size());
         assertTrue(page.getDefaultWidgets().get(0).getWidget() instanceof CheckboxWidget);
         assertTrue(page.getDefaultWidgets().get(0).getType().isBoolean());
-    }*/
+    }
 }
