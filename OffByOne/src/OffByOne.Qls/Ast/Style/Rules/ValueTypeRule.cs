@@ -2,10 +2,11 @@
 {
     using System.Collections.Generic;
 
-    using OffByOne.LanguageCore.Ast.ValueTypes.Base;
+    using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Qls.Ast.Style.Properties.Base;
     using OffByOne.Qls.Ast.Style.Rules.Base;
     using OffByOne.Qls.Ast.Style.Widgets.Base;
+    using OffByOne.Qls.Visitors.Contracts;
 
     public class ValueTypeRule : Rule
     {
@@ -19,5 +20,12 @@
         }
 
         public ValueType ValueType { get; private set; }
+
+        public override TResult Accept<TResult, TContext>(
+            IRuleVisitor<TResult, TContext> visitor,
+            TContext environment)
+        {
+            return visitor.Visit(this, environment);
+        }
     }
 }

@@ -1,0 +1,4 @@
+form houseForm {
+    "Did you sell a house?" -> // The question description/label
+        hasSoldHouse  : boolean // The id of this value and the type of the value
+}

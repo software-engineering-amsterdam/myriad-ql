@@ -1,5 +1,7 @@
 package org.ql.ast;
 
-public interface Expression extends Node {
+import org.ql.ast.expression.ExpressionVisitor;
 
+public abstract class Expression extends Node {
+    public abstract <T, C> T accept(ExpressionVisitor<T, C> visitor, C context);
 }

@@ -1,63 +1,81 @@
 package org.uva.taxfree.gui;
 
-import org.uva.taxfree.model.NamedNode;
-import org.uva.taxfree.model.Node;
+import org.uva.taxfree.gui.widgets.Widget;
+import org.uva.taxfree.model.environment.SymbolTable;
+import org.uva.taxfree.qls.QlsStyle;
 
 import javax.swing.*;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class QuestionForm {
-    private Node mFormNode;
-    private JFrame mFrame;
-    public QuestionForm(Node formNode) {
-        mFormNode = formNode;
+public class QuestionForm implements FormListener {
+    private final JFrame mFrame;
+    private final JPanel mWidgetPanel;
+    private final List<Widget> mWidgets;
+    private final SymbolTable mSymbolTable;
+
+    public QuestionForm(String caption, SymbolTable symbolTable) {
+        mFrame = createFrame(caption);
+        mWidgetPanel = createWidgetPanel();
+        mFrame.add(mWidgetPanel);
+        mWidgets = new ArrayList<>();
+        mSymbolTable = symbolTable;
     }
 
-    public void show() {
-        generateForm();
-        mFormNode.setVisibility(true);
+    private JFrame createFrame(String caption) {
+        JFrame frame = new JFrame(caption);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    mSymbolTable.export(caption + ".txdata");
+                } catch (IOException error) {
+                    MessageWindow.showMessage("Unable to write results to file:\r\n" + error.getMessage());
+                }
+            }
+        });
+        return frame;
     }
 
-    public void printData(){
-        mFormNode.printData();
-    }
-
-    private void generateForm() {
-        mFrame = new JFrame(mFormNode.toString());
-        mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mFrame.add(createComponents());
-        mFrame.pack();
-        mFrame.setLocationRelativeTo(null);
-        mFrame.setVisible(true);
-    }
-
-    private JPanel createComponents() {
+    private JPanel createWidgetPanel() {
         JPanel widgetPanel = new JPanel();
         widgetPanel.setLayout(new BoxLayout(widgetPanel, BoxLayout.Y_AXIS));
-        fillWidgetPanel(widgetPanel);
         widgetPanel.setVisible(true);
         return widgetPanel;
     }
 
-    private void fillWidgetPanel(JPanel parentPanel) {
-        for (NamedNode q : extractQuestions()) {
-            parentPanel.add(q.getWidget());
+    public void show() {
+        mFrame.setLocationRelativeTo(null);
+        mFrame.setVisible(true);
+        mFrame.setPreferredSize(new Dimension(640, 480));
+        mFrame.pack();
+        mFrame.setLocationRelativeTo(null);
+        updateForm();
+    }
+
+    public void addWidget(Widget widget) {
+        widget.registerToPanel(mWidgetPanel);
+        widget.callOnUpdate(this);
+        mWidgets.add(widget);
+    }
+
+    public void updateForm() {
+        for (Widget w : mWidgets) {
+            w.updateValues(mSymbolTable);
+            w.updateVisibility(mSymbolTable.visibleIds());
         }
     }
 
-    private Set<NamedNode> extractQuestions() {
-        Set<NamedNode> questions = new LinkedHashSet<>();
-        mFormNode.retrieveQuestions(questions);
-        return questions;
+    public void applyStyle(QlsStyle qlsStyle) {
+        for (Widget w : mWidgets) {
+            w.updateStyle(qlsStyle);
+        }
     }
 
-    public void updateVisibility() {
-        mFormNode.setVisibility(true);
-    }
 
-    public void printAll() {
-        mFormNode.printAll();
-
-    }
 }

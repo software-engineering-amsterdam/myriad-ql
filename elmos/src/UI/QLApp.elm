@@ -1,30 +1,26 @@
 module UI.QLApp exposing (Model, Msg, init, update, view)
 
-import Html exposing (Html, div, text, h3, form, pre, ul, li, a)
+import Html exposing (Html, div, text, h3, ul, li, a)
 import Html.Events exposing (onClick)
 import Html.Attributes exposing (class, attribute)
-import UI.FormDslInput as FormDslInput
-import UI.FormRenderer as FormRenderer
-import UI.QLSInput as QLSInput
+import UI.QLFormRenderer as FormRenderer
+import UI.QLInput as QLInput
 
 
 type Tab
     = QLTab
-    | QLSTab
     | Preview
 
 
 type alias Model =
-    { formDslInput : FormDslInput.Model
-    , qlsInput : QLSInput.Model
+    { qlInput : QLInput.Model
     , formRenderer : Maybe FormRenderer.Model
     , activeTab : Tab
     }
 
 
 type Msg
-    = FormDslInputMsg FormDslInput.Msg
-    | QLSInputMsg QLSInput.Msg
+    = FormDslInputMsg QLInput.Msg
     | FormRendererMsg FormRenderer.Msg
     | ChangeTab Tab
 
@@ -33,11 +29,10 @@ init : Model
 init =
     let
         formDslInput =
-            FormDslInput.init
+            QLInput.init
     in
-        { formDslInput = formDslInput
-        , qlsInput = QLSInput.init
-        , formRenderer = Maybe.map FormRenderer.init (FormDslInput.asForm formDslInput)
+        { qlInput = formDslInput
+        , formRenderer = Maybe.map FormRenderer.init (QLInput.asForm formDslInput)
         , activeTab = QLTab
         }
 
@@ -51,15 +46,15 @@ update msg model =
         FormDslInputMsg subMsg ->
             let
                 newQLInput =
-                    FormDslInput.update subMsg model.formDslInput
+                    QLInput.update subMsg model.qlInput
+
+                maybeNewForm =
+                    QLInput.asForm newQLInput
             in
                 { model
-                    | formDslInput = newQLInput
-                    , formRenderer = Maybe.map FormRenderer.init (FormDslInput.asForm newQLInput)
+                    | qlInput = newQLInput
+                    , formRenderer = Maybe.map FormRenderer.init maybeNewForm
                 }
-
-        QLSInputMsg subMsg ->
-            { model | qlsInput = QLSInput.update subMsg model.qlsInput }
 
         FormRendererMsg subMsg ->
             { model | formRenderer = Maybe.map (FormRenderer.update subMsg) model.formRenderer }
@@ -72,14 +67,8 @@ view model =
         , case model.activeTab of
             QLTab ->
                 div []
-                    [ h3 [] [ text "DSL Input" ]
-                    , FormDslInput.view model.formDslInput |> Html.map FormDslInputMsg
-                    ]
-
-            QLSTab ->
-                div []
-                    [ h3 [] [ text "QLS Input" ]
-                    , QLSInput.view model.qlsInput |> Html.map QLSInputMsg
+                    [ h3 [] [ text "QL Input" ]
+                    , QLInput.view model.qlInput |> Html.map FormDslInputMsg
                     ]
 
             Preview ->
@@ -103,8 +92,7 @@ tabMenu currentlyActive =
 
 availableTabItems : List ( Tab, String )
 availableTabItems =
-    [ ( QLTab, "Dsl Input" )
-    , ( QLSTab, "QLS" )
+    [ ( QLTab, "QL" )
     , ( Preview, "Preview" )
     ]
 

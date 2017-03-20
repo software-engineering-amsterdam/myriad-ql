@@ -7,8 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class Utilities {
-    static boolean RemoveFile(String relativePath)
-    {
+    static boolean RemoveFile(String relativePath) {
         Path p = FileSystems.getDefault().getPath(relativePath);
         try {
             Files.deleteIfExists(p);

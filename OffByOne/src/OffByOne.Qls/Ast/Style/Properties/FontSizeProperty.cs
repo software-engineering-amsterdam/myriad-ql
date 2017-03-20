@@ -1,7 +1,9 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Properties
 {
-    using OffByOne.LanguageCore.Ast.Literals;
     using OffByOne.Qls.Ast.Style.Properties.Base;
+    using OffByOne.Qls.Visitors.Contracts;
+
+    using IntegerLiteral = OffByOne.Qls.Ast.Style.Literals.IntegerLiteral;
 
     public class FontSizeProperty : Property
     {
@@ -11,5 +13,12 @@
         }
 
         public IntegerLiteral Value { get; set; }
+
+        public override TResult Accept<TResult, TContext>(
+            IPropertyVisitor<TResult, TContext> visitor,
+            TContext environment)
+        {
+            return visitor.Visit(this, environment);
+        }
     }
 }

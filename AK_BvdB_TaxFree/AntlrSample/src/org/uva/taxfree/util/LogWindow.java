@@ -8,12 +8,14 @@ import java.util.Date;
 
 public class LogWindow {
     private static LogWindow mInstance;
+
     public static LogWindow getInstance() {
         if (mInstance == null) {
             mInstance = new LogWindow();
         }
         return mInstance;
     }
+
     public static void error(String message) {
         LogWindow logWindow = getInstance();
         try {

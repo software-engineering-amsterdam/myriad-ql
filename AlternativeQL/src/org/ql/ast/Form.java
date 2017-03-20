@@ -1,12 +1,10 @@
 package org.ql.ast;
 
-import org.ql.ast.Identifier;
-import org.ql.ast.Node;
-import org.ql.ast.Statement;
+import org.ql.ast.form.FormVisitor;
 
 import java.util.List;
 
-public class Form implements Node {
+public class Form extends Node {
     private final Identifier name;
     private final List<Statement> statements;
 
@@ -23,7 +21,7 @@ public class Form implements Node {
         return statements;
     }
 
-    public Statement getStatement(int index) {
-        return statements.get(index);
+    public <T, C> T accept(FormVisitor<T, C> visitor, C context) {
+        return visitor.visitForm(this, context);
     }
 }

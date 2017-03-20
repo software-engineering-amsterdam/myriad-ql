@@ -5,12 +5,15 @@ import UvA.Gamma.AST.Expressions.BooleanExpression;
 import UvA.Gamma.AST.Expressions.Expression;
 import UvA.Gamma.AST.Expressions.MoneyExpression;
 import UvA.Gamma.AST.Expressions.NumberExpression;
+import UvA.Gamma.AST.Values.Boolean;
+import UvA.Gamma.AST.Values.*;
+import UvA.Gamma.AST.Values.Number;
 import UvA.Gamma.Antlr.QL.QLBaseVisitor;
 import UvA.Gamma.Antlr.QL.QLParser;
 
 
 /**
- * Created by Tjarco on 08-02-17.
+ * Created by Tjarco, 08-02-17.
  */
 
 public class QLVisitor extends QLBaseVisitor<ASTNode> {
@@ -37,7 +40,7 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
         Question question = new Question();
         question.setQuestion(ctx.STRING_LITERAL().getText());
         question.setId(ctx.ID().getText());
-        question.setType(ctx.type().getText());
+        question.setValue((Value) visit(ctx.type()));
         return question;
     }
 
@@ -46,8 +49,8 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
         Computed computed = new Computed();
         computed.setLabel(ctx.STRING_LITERAL().getText());
         computed.setId(ctx.ID().getText());
-        computed.setType("");
         computed.setExpression((Expression) visit(ctx.expression()));
+
         return computed;
     }
 
@@ -69,9 +72,10 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
     }
 
     @Override
-    public ASTNode visitBooleanExpression(QLParser.BooleanExpressionContext ctx) {
+    public BooleanExpression visitBooleanExpression(QLParser.BooleanExpressionContext ctx) {
         return new BooleanExpression(ctx.boolExpr().getText());
     }
+
 
     @Override
     public NumberExpression visitNumberExpression(QLParser.NumberExpressionContext ctx) {
@@ -79,7 +83,28 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
     }
 
     @Override
-    public ASTNode visitMoneyExpression(QLParser.MoneyExpressionContext ctx) {
+    public MoneyExpression visitMoneyExpression(QLParser.MoneyExpressionContext ctx) {
         return new MoneyExpression(ctx.numExpr().getText());
+    }
+
+    @Override
+    public Value visitType(QLParser.TypeContext ctx) {
+        switch (ctx.getText()) {
+            case "boolean":
+                return new Boolean(false);
+            case "integer":
+                return new Number(0);
+            case "decimal":
+                return new Number(0);
+            case "money":
+                return new Money(0);
+            case "string":
+                return new StringValue();
+            case "date":
+                return new DateValue("");
+            default:
+                System.out.println("The type " + ctx.getText() + " is not valid");
+                return null;
+        }
     }
 }

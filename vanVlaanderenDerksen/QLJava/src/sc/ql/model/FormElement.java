@@ -1,9 +1,7 @@
 package sc.ql.model;
 
-public interface FormElement extends Node {	
-	public enum Type {
-		QUESTION, IF_STATEMENT;
-	}
-	
-	public Type getElementType();
+import sc.ql.model.visitors.FormElementVisitor;
+
+public abstract class FormElement extends Node {
+	public abstract <T> T accept(FormElementVisitor<T> visitor);
 }

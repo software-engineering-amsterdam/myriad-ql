@@ -3,12 +3,6 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using MoreDotNet.Extensions.Collections;
-    using MoreDotNet.Extensions.Common;
-
-    using OffByOne.LanguageCore.Ast;
-    using OffByOne.LanguageCore.Ast.Literals;
-    using OffByOne.Qls.Ast.Style;
     using OffByOne.Qls.Ast.Style.Statements;
     using OffByOne.Qls.Tests.ParserTests.Base;
 
@@ -49,8 +43,7 @@
         private IList<Section> GetAllSectionNodes(StyleSheet tree)
         {
             var nodes = tree.Pages
-                .SelectMany(x => x.Nodes
-                    .Select(y => (Section)y))
+                .SelectMany(x => x.Sections)
                 .OrderBy(x => x.Name.Value)
                 .ToList();
 

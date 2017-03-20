@@ -1,8 +1,9 @@
 package org.ql.ast.expression.arithmetic;
 
 import org.ql.ast.Expression;
+import org.ql.ast.expression.ExpressionVisitor;
 
-public class Group implements Expression {
+public class Group extends Expression {
     private final Expression expression;
 
     public Group(Expression expression) {
@@ -16,5 +17,10 @@ public class Group implements Expression {
     @Override
     public String toString() {
         return "(" + expression + ")";
+    }
+
+    @Override
+    public <T, C> T accept(ExpressionVisitor<T, C> visitor, C context) {
+        return visitor.visitGroup(this, context);
     }
 }

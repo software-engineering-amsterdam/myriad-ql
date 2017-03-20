@@ -1,39 +1,35 @@
 package sc.ql.model.form_elements;
 
-import sc.ql.model.Atom;
 import sc.ql.model.FormElement;
-import sc.ql.model.expressions.Expression;
+import sc.ql.model.expressions.literals.IdLiteral;
+import sc.ql.model.types.Type;
+import sc.ql.model.visitors.FormElementVisitor;
 
-public class Question implements FormElement {
-	private final String question; 
-	private final Atom<String> id;
-	private final Atom.Type type;
-	private final Expression expression;
+public class Question extends FormElement {
+	private final String label; 
+	private final IdLiteral id;
+	private final Type type;
 	
-	public Question(String question, Atom<String> id, Atom.Type type, Expression expression) {
-		this.question = question;
+	public Question(String label, IdLiteral id, Type type) {
+		this.label = label;
 		this.id = id;
 		this.type = type;
-		this.expression = expression;
 	}
 	
-	public String getQuestion() {
-		return this.question;
+	public String getLabel() {
+		return this.label;
 	}
 	
-	public Atom<String> getId() {
-		return this.id;
+	public String getId() {
+		return this.id.getValue();
 	}
 	
-	public Atom.Type getType() {
+	public Type getType() {
 		return this.type;
 	}
-	
-	public Expression getExpression() {
-		return this.expression;
-	}
-	
-	public Type getElementType() {
-		return Type.QUESTION;
+
+	@Override
+	public <T> T accept(FormElementVisitor<T> visitor) {
+		return visitor.visit(this);
 	}
 }

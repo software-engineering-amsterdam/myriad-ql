@@ -17,6 +17,7 @@ public abstract class Expression implements ASTNode {
     protected String expr;
     protected SimpleStringProperty stringValueProperty;
     protected Map<String, Value> ids;
+    protected Value value;
 
     public Expression(String expr) {
         this.expr = expr;
@@ -34,6 +35,18 @@ public abstract class Expression implements ASTNode {
             return true;
         }
         return false;
+    }
+
+    public Value getValue() {
+        return value;
+    }
+
+    public void setValue(Value value) {
+        this.value = value;
+    }
+
+    public String[] getIds() {
+        return ids.keySet().toArray(new String[0]);
     }
 
     public StringProperty getStringValueProperty() {
@@ -65,7 +78,6 @@ public abstract class Expression implements ASTNode {
     abstract void evaluate();
 
     abstract void initId(String id, String value);
-
 
     public abstract String toString();
 

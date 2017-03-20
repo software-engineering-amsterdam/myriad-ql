@@ -1,54 +1,58 @@
 package test.org.uva.taxfree.ast;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.uva.taxfree.ast.Ast;
-import org.uva.taxfree.main.SemanticsAnalyzer;
 
 import java.io.File;
 
-/**
- * Created by Alex on 20-2-2017.
- */
-public class SemanticsAnalyzerTest {
+public class SemanticsAnalyzerTest extends SemanticsTester {
     @Test
     public void testHasDuplicateQuestionLabels() throws Exception {
-        Ast ast = Ast.generateAst(new File("src\\test\\org\\uva\\taxfree\\ast\\semanticErrors\\duplicateQuestionLabelForm.txt"));
-        SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(ast);
-        Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Duplicate question label, so test should fail");
-        Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), 1, "We only have one duplicate here");
+        assertSemantics("duplicateQuestionLabelForm.txt", 1, "Duplicate question label expected");
     }
 
     @Test
     public void testHasMultipleDuplicateQuestionLabels() throws Exception {
-        Ast ast = Ast.generateAst(new File("src\\test\\org\\uva\\taxfree\\ast\\semanticErrors\\duplicateQuestionLabelsForm.txt"));
-        SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(ast);
-        Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Duplicate question label, so test should fail");
-        Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), 2, "We should have three duplicates here");
+        assertSemantics("duplicateQuestionLabelsForm.txt", 2, "Duplicate question labels expected");
     }
 
     @Test
-    public void testHasDuplicateQuestionIds() throws Exception {
-        Ast ast = Ast.generateAst(new File("src\\test\\org\\uva\\taxfree\\ast\\semanticErrors\\duplicateQuestionIdForm.txt"));
-        SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(ast);
-        Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Duplicate question id, so test should fail");
-        Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), 1, "We only have one duplicate here");
+    public void testHasDuplicateDeclarations() throws Exception {
+        assertSemantics("duplicateQuestionIdForm.txt", 1, "Duplicate question id expected");
     }
 
     @Test
     public void testHasMultipleDuplicateQuestionIds() throws Exception {
-        Ast ast = Ast.generateAst(new File("src\\test\\org\\uva\\taxfree\\ast\\semanticErrors\\duplicateQuestionIdsForm.txt"));
-        SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(ast);
-        Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Duplicate question id, so test should fail");
-        Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), 2, "We should have three duplicates here");
+        assertSemantics("duplicateQuestionIdsForm.txt", 2, "Duplicate question id");
     }
 
     @Test
     public void testHasDuplicateQuestionIdsAndLabels() throws Exception {
-        Ast ast = Ast.generateAst(new File("src\\test\\org\\uva\\taxfree\\ast\\semanticErrors\\duplicateQuestionIdsAndLabelsForm.txt"));
-        SemanticsAnalyzer semanticsAnalyzer = new SemanticsAnalyzer(ast);
-        Assert.assertFalse(semanticsAnalyzer.validSemantics(), "Duplicate question id, so test should fail");
-        Assert.assertEquals(semanticsAnalyzer.getSemanticErrors().size(), 4, "We should have four duplicates here");
+        assertSemantics("duplicateQuestionIdsAndLabelsForm.txt", 4, "Duplicated questions and labels");
+    }
+
+    @Test
+    public void testUndefinedDeclarationSingle() throws Exception {
+        assertSemantics("undefinedDeclarationSingle.txt", 1, "Undefined declaration should throw an error");
+    }
+
+    @Test
+    public void testUndefinedDeclarationMultiple() throws Exception {
+        assertSemantics("undefinedDeclarationMultiple.txt", 1, "Multiple conditions with same variable trigger 1 error");
+    }
+
+    @Test
+    public void testUndefinedDeclarations() throws Exception {
+        assertSemantics("undefinedDeclarations.txt", 11, "Undefined declarations");
+    }
+
+    @Test
+    void testCyclicDependency() throws Exception {
+        assertSemantics("cyclicDependencyCalculations.txt", 2, "Cyclic dependency in calculation");
+    }
+
+    @Override
+    protected File testFile(String fileName) {
+        return new File("src\\test\\org\\uva\\taxfree\\ast\\semanticErrors\\" + fileName);
     }
 
 }

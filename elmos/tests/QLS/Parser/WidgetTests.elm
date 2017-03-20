@@ -18,9 +18,17 @@ all =
           , "radio(\"Yes\",\"No\")"
           , Just (Radio [ "Yes", "No" ])
           )
-        , ( "radio widget no spacing befor parens"
+        , ( "radio widget no spacing before parens"
           , "radio (\"Yes\",\"No\")"
           , Nothing
+          )
+        , ( "radio widget no spacing on inside of parens"
+          , "radio( \"Yes\",\"No\" )"
+          , Just (Radio [ "Yes", "No" ])
+          )
+        , ( "dropdown widget"
+          , "radio( \"Yes\",\"No\", \"Maybe\" )"
+          , Just (Radio [ "Yes", "No", "Maybe" ])
           )
         , ( "spinbox widget"
           , "spinbox"

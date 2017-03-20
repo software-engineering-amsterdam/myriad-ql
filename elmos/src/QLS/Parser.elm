@@ -1,13 +1,17 @@
 module QLS.Parser exposing (parse)
 
-import Combine
-import QLS.Parser.Stylesheet exposing (stylesheet)
-import QLS.AST exposing (Stylesheet)
-import Tuple3
+import Combine exposing (InputStream, end, (<*))
+import QLS.Parser.StyleSheet as StyleSheet
+import QLS.AST exposing (StyleSheet)
 
 
-parse : String -> Maybe Stylesheet
+parse : String -> Maybe StyleSheet
 parse input =
-    Combine.parse stylesheet input
+    Combine.parse (StyleSheet.styleSheet <* end) input
         |> Result.toMaybe
-        |> Maybe.map Tuple3.third
+        |> Maybe.map asStyleSheet
+
+
+asStyleSheet : ( (), InputStream, StyleSheet ) -> StyleSheet
+asStyleSheet ( _, _, sheetSheet ) =
+    sheetSheet
