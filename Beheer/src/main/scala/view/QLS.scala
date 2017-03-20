@@ -3,11 +3,12 @@ package view
 import ast._
 import checker.Issue.Issues
 import model.DisplayQuestion
+import model.DisplayQuestion.DisplayQuestions
 
 import scalafx.scene.Node
 import scalafx.scene.text.{ Font, FontWeight, Text }
 
-class QLS(val issues: Issues, val displayQuestions: Seq[DisplayQuestion], stylesheet: Stylesheet) extends GUI {
+class QLS(val issues: Issues, val displayQuestions: DisplayQuestions, stylesheet: Stylesheet) extends GUI {
   override def displayBoxes = stylesheet.pages.flatMap(page => renderPage(page))
 
   private def renderPage(page: Page): Seq[Node] =
@@ -36,6 +37,6 @@ class QLS(val issues: Issues, val displayQuestions: Seq[DisplayQuestion], styles
 }
 
 object QLS {
-  def apply(issues: Issues, displayQuestions: Seq[DisplayQuestion], stylesheet: Stylesheet): QLS =
+  def apply(issues: Issues, displayQuestions: DisplayQuestions, stylesheet: Stylesheet): QLS =
     new QLS(issues, displayQuestions, stylesheet)
 }

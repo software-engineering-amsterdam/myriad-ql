@@ -1,19 +1,9 @@
 # Scala ignores
 target
-.class
-
 # SBT ignores
 project/project
 
 
 # Intellij specific ignores.
-*.iml
-*.ipr
-*.iws
 .idea
-out
-
-log.txt
-
 # dingen
-Beunhazerij.sc

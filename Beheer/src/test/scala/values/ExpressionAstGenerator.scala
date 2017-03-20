@@ -9,6 +9,7 @@ trait ExpressionAstGenerator extends ValueAstGenerator {
   private type SizedChildGenerator = Int => Gen[ExpressionNode]
 
   def genNumeric: Gen[ExpressionNode] = Gen.sized(genSizedNumeric)
+
   def genBoolean: Gen[ExpressionNode] = Gen.sized(genSizedBoolean)
 
   private def genSizedBoolean(size: Int): Gen[ExpressionNode] = size match {
@@ -25,6 +26,7 @@ trait ExpressionAstGenerator extends ValueAstGenerator {
   // and also enough for the 'contains no identifiers' case.
   private def genBooleanLiteral: Gen[ExpressionNode] =
     Gen.frequency((1, boolIdentifier), (6, booleanLiteral))
+
   private def genNumericLiteral: Gen[ExpressionNode] =
     Gen.frequency((2, integerLiteral), (2, decimalLiteral), (2, moneyLiteral), (1, numericIdentifier))
 
