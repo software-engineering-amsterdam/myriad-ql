@@ -1,16 +1,16 @@
-package ql.ast.visistor;
+package ql.visistor;
 
 import ql.ast.*;
-import ql.ast.environment.Env;
-import ql.ast.environment.Scope;
+import ql.visistor.environment.Env;
+import ql.visistor.environment.Scope;
 import ql.ast.expressions.binop.*;
 import ql.ast.expressions.monop.Neg;
 import ql.ast.expressions.monop.Not;
 import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
 import ql.ast.types.*;
-import ql.ast.visistor.interfaces.BaseVisitor;
-import ql.ast.visistor.interfaces.ExpressionVisitor;
+import ql.visistor.interfaces.BaseVisitor;
+import ql.visistor.interfaces.ExpressionVisitor;
 import ql.logger.Error;
 import ql.logger.ErrorHandler;
 

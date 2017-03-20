@@ -1,7 +1,7 @@
 package ql.ast;
 
 
-import ql.ast.visistor.interfaces.BaseVisitor;
+import ql.visistor.interfaces.BaseVisitor;
 
 /**
  * Created by Erik on 7-2-2017.

@@ -1,4 +1,4 @@
-package ql.ast.visistor;
+package ql.visistor;
 
 import ql.ast.*;
 import ql.ast.expressions.binop.*;
@@ -6,8 +6,8 @@ import ql.ast.expressions.monop.Neg;
 import ql.ast.expressions.monop.Not;
 import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
-import ql.ast.visistor.interfaces.BaseVisitor;
-import ql.ast.visistor.interfaces.ExpressionVisitor;
+import ql.visistor.interfaces.BaseVisitor;
+import ql.visistor.interfaces.ExpressionVisitor;
 
 import java.util.List;
 

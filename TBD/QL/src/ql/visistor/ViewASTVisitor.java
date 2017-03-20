@@ -1,10 +1,10 @@
-package ql.ast.visistor;
+package ql.visistor;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import ql.ast.*;
-import ql.ast.environment.Env;
-import ql.ast.visistor.interfaces.BaseVisitor;
+import ql.visistor.environment.Env;
+import ql.visistor.interfaces.BaseVisitor;
 import ql.gui.*;
 
 import java.util.ArrayList;

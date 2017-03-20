@@ -1,7 +1,7 @@
 package ql.gui;
 
 import javafx.beans.value.ChangeListener;
-import ql.ast.environment.Env;
+import ql.visistor.environment.Env;
 import ql.ast.values.*;
 
 /**

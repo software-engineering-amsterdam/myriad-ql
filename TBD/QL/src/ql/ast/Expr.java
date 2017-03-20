@@ -1,6 +1,6 @@
 package ql.ast;
 
-import ql.ast.visistor.interfaces.ExpressionVisitor;
+import ql.visistor.interfaces.ExpressionVisitor;
 
 /**
  * Created by Erik on 6-2-2017.

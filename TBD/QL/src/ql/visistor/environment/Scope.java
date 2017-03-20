@@ -1,4 +1,4 @@
-package ql.ast.environment;
+package ql.visistor.environment;
 
 import ql.ast.ASTNode;
 

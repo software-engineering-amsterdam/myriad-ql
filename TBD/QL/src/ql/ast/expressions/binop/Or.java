@@ -3,7 +3,7 @@ package ql.ast.expressions.binop;
 import ql.ast.Expr;
 import ql.ast.expressions.BinOp;
 import ql.ast.expressions.LogicalOp;
-import ql.ast.visistor.interfaces.ExpressionVisitor;
+import ql.visistor.interfaces.ExpressionVisitor;
 
 /**
  * Created by Erik on 7-2-2017.

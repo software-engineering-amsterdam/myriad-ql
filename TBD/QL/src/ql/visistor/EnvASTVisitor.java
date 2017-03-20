@@ -1,9 +1,9 @@
-package ql.ast.visistor;
+package ql.visistor;
 
 import ql.ast.*;
-import ql.ast.environment.Env;
-import ql.ast.environment.Scope;
-import ql.ast.visistor.interfaces.BaseVisitor;
+import ql.visistor.environment.Env;
+import ql.visistor.environment.Scope;
+import ql.visistor.interfaces.BaseVisitor;
 import ql.logger.Error;
 import ql.logger.ErrorHandler;
 

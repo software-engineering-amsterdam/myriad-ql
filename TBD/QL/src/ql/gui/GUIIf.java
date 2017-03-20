@@ -2,7 +2,7 @@ package ql.gui;
 
 import javafx.scene.layout.VBox;
 import ql.ast.Expr;
-import ql.ast.environment.Env;
+import ql.visistor.environment.Env;
 import ql.ast.values.BooleanValue;
 import ql.ast.values.UndefinedValue;
 import ql.ast.values.Value;

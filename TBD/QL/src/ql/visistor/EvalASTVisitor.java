@@ -1,14 +1,14 @@
-package ql.ast.visistor;
+package ql.visistor;
 
 import ql.ast.Expr;
-import ql.ast.environment.Env;
+import ql.visistor.environment.Env;
 import ql.ast.expressions.binop.*;
 import ql.ast.expressions.monop.Neg;
 import ql.ast.expressions.monop.Not;
 import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
 import ql.ast.values.Value;
-import ql.ast.visistor.interfaces.ExpressionVisitor;
+import ql.visistor.interfaces.ExpressionVisitor;
 
 /**
  * Created by Erik on 14-2-2017.

@@ -6,7 +6,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
-import ql.ast.environment.Env;
+import ql.visistor.environment.Env;
 import ql.ast.values.BooleanValue;
 import ql.ast.values.UndefinedValue;
 import ql.ast.values.Value;

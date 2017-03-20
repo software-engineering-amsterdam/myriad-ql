@@ -2,11 +2,11 @@ package ql;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import ql.ast.environment.Env;
-import ql.ast.visistor.EnvASTVisitor;
-import ql.ast.visistor.PrintASTVisitor;
-import ql.ast.visistor.TypeASTVisitor;
-import ql.ast.visistor.ViewASTVisitor;
+import ql.visistor.environment.Env;
+import ql.visistor.EnvASTVisitor;
+import ql.visistor.PrintASTVisitor;
+import ql.visistor.TypeASTVisitor;
+import ql.visistor.ViewASTVisitor;
 import ql.logger.ErrorHandler;
 import ql.parser.Parser;
 import ql.parser.QLLexer;

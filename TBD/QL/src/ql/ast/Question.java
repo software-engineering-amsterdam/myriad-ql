@@ -3,7 +3,7 @@ package ql.ast;
 import ql.ast.literals.QLIdent;
 import ql.ast.literals.QLString;
 import ql.ast.types.Type;
-import ql.ast.visistor.interfaces.BaseVisitor;
+import ql.visistor.interfaces.BaseVisitor;
 
 /**
  * Created by Erik on 6-2-2017.

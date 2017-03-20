@@ -1,4 +1,4 @@
-package ql.ast.visistor.interfaces;
+package ql.visistor.interfaces;
 
 import ql.ast.*;
 

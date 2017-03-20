@@ -1,4 +1,4 @@
-package ql.ast.environment;
+package ql.visistor.environment;
 
 import ql.ast.ASTNode;
 import ql.ast.Expr;
@@ -6,7 +6,7 @@ import ql.ast.Question;
 import ql.ast.QuestionExpr;
 import ql.ast.types.Type;
 import ql.ast.values.Value;
-import ql.ast.visistor.EvalASTVisitor;
+import ql.visistor.EvalASTVisitor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
