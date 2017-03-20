@@ -19,12 +19,23 @@ public class DropdownWidget extends Widget {
         return noText;
     }
 
-    @Override
-    public void initializeSupportedTypes() {
-        getSupportedTypes().add(new BooleanType());
-        getSupportedTypes().add(new FloatType());
-        getSupportedTypes().add(new IntegerType());
-        getSupportedTypes().add(new MoneyType());
-        getSupportedTypes().add(new StringType());
+    public boolean isCompatibleWith(BooleanType booleanType) {
+        return true;
+    }
+
+    public boolean isCompatibleWith(FloatType floatType) {
+        return true;
+    }
+
+    public boolean isCompatibleWith(IntegerType integerType) {
+        return true;
+    }
+
+    public boolean isCompatibleWith(MoneyType moneyType) {
+        return true;
+    }
+
+    public boolean isCompatibleWith(StringType stringType) {
+        return true;
     }
 }
