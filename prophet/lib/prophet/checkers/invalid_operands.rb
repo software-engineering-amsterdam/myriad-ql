@@ -1,38 +1,28 @@
 module Prophet
   module Checkers
     class InvalidOperands < Base
-      # Checks that, for each question having an assigned expression, all of the
-      # expression's terminals (identifiers or literals) match the type of the
-      # question
       def check
-        ast.select do |node|
-          Ast::Question === node && node.value
-        end.each do |question|
-          terminals = question.value.select do |expression|
-            expression.children.count.zero?
+        ast.select_by_type(:question_with_value).each do |question|
+          expression_type = question.value.visit(Visitors::ExpressionType.new(type_mapping))
+          if expression_type == Ast::Type.new('undefined')
+            puts mismatch_error_formatter(question)
+          elsif expression_type != question.type
+            puts invalid_error_formatter(question, expression_type)
           end
-          next if terminals.empty?
-          next if terminals.all? do |expression|
-            case expression
-            when Ast::Identifier
-              type_mapping[expression.name.to_s] == question.type.name.to_s
-            when Ast::TextLiteral
-              question.type.name.to_s == 'text'
-            when Ast::NumberLiteral
-              question.type.name.to_s == 'number'
-            when Ast::BoolLiteral
-              question.type.name.to_s == 'bool'
-            end
-          end
-
-          puts error_formatter(question)
         end
       end
 
-      def error_formatter(question)
-        "Expression attached to question `#{question.identifier.name}` " \
-        "contains types other than `#{question.type.name}` (defined on " \
-        "#{question.identifier.name.line_and_column.join(':')})"
+      def mismatch_error_formatter(question)
+        "Value attached to question `#{question.identifier.name}` contains " \
+        "type mismatches between its terms (defined on " \
+        "#{question.line_and_column.join(':')})"
+      end
+
+      def invalid_error_formatter(question, expression_type)
+        "Value attached to question `#{question.identifier.name}` evaluates " \
+        "to a type different than declared type (`#{expression_type.name}` " \
+        "vs `#{question.type.name}`, defined on " \
+        "#{question.line_and_column.join(':')})"
       end
 
       private
@@ -40,10 +30,8 @@ module Prophet
       attr_reader :ast, :type_mapping
 
       def type_mapping
-        @type_mapping ||= ast.select do |node|
-          Ast::Question === node
-        end.map do |question|
-          [question.identifier.name.to_s, question.type.name.to_s]
+        @type_mapping ||= ast.select_by_type(:question, :question_with_value).map do |question|
+          [question.identifier.name.to_s, question.type]
         end.to_h
       end
     end

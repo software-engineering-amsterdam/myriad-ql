@@ -19,7 +19,7 @@ module Prophet
       alias :visit_subtraction    :visit_binary_expression
 
       def visit_identifier(node)
-        type_mapping.fetch(node, fallback)
+        type_mapping.fetch(node.name.to_s, fallback)
       end
 
       def visit_literal(node)
