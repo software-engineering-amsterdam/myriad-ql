@@ -1,8 +1,11 @@
 module QL
   module AST
-    class BinaryExpression < Expression
-      def accept(left, visitor)
-        visitor.visit_binary_expression(left, self)
+    class BinaryExpression
+      attr_accessor :operator, :expression
+
+      def initialize(operator, expression)
+        @operator = operator
+        @expression = expression
       end
     end
   end

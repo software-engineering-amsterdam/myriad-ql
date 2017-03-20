@@ -24,8 +24,8 @@ module QL
       # operators
       rule(:multiplication_operator) { (str('*') | str('/')).as(:arithmetic_operator) >> _ }
       rule(:addition_operator) { (str('+') | str('-')).as(:arithmetic_operator) >> _ }
-      rule(:comparison_equals_operator) { (str('==') | str('!=')).as(:comparison_operator) >> _ }
-      rule(:comparison_order_operator) { (str('<=') | str('>=') | str('<') | str('>')).as(:comparison_operator) >> _ }
+      rule(:comparison_equals_operator) { (str('==') | str('!=')).as(:comparison_equals_operator) >> _ }
+      rule(:comparison_order_operator) { (str('<=') | str('>=') | str('<') | str('>')).as(:comparison_order_operator) >> _ }
       rule(:boolean_operator) { (str('&&') | str('||')).as(:boolean_operator) >> _ }
       rule(:negation_operator) { (str('!') | str('-')).as(:negation_operator) >> _ }
 

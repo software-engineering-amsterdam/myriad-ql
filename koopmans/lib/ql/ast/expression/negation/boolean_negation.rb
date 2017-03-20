@@ -4,14 +4,6 @@ module QL
       def accept(visitor)
         visitor.visit_boolean_negation(self)
       end
-
-      def is_compatible_with
-        [BooleanType.new]
-      end
-
-      def return_type(type=nil)
-        BooleanType.new
-      end
     end
   end
 end
