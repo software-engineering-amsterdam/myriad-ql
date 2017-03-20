@@ -1,17 +1,4 @@
-Feedback Tijs:
-
-constructors voor values wel exposen.
--> Eens
-
-Wie gaat er over dat int een nothing moet worden. Integer field zou die op de parse kunnen doen
--> Widget en evaluator
-
-
-Collectors, zouden we die moeten samenvoegen? meegeven aan typecheckers.
-(duplicateQuestions, badreferences, etc zouden in een travelsal kunnen)
--> Later evaluaren/beargumenteren
-
-expressions.elm moet beter
--> o.a. renamen van functies
-
-Hoe om te gaan met crashes? -> Debug.Crash ? Tantric/Constucrtism
+rename Decimal -> Float
+Rename Question -> Fields
+duplicate configuredWidget
+QLS package in UI 

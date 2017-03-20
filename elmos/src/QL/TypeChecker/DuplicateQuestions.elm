@@ -2,7 +2,6 @@ module QL.TypeChecker.DuplicateQuestions exposing (duplicateQuestions)
 
 import QL.AST exposing (..)
 import Dict exposing (Dict)
-import List.Extra as List
 import QL.AST.Collectors as Collectors
 import QL.TypeChecker.QuestionIndex as QuestionIndex exposing (QuestionIndex)
 import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(DuplicateQuestionDefinition))
@@ -19,6 +18,7 @@ type alias DuplicateIndex =
 duplicateQuestions : Form -> List Message
 duplicateQuestions form =
     let
+        {- questionIndex contains the unique values and ignores duplicates -}
         questionIds =
             QuestionIndex.questionIndexFromForm form
 
@@ -27,24 +27,24 @@ duplicateQuestions form =
     in
         List.filterMap (duplicateQuestionDeclarations questionIds) itemIds
             |> mergeOverlappingDuplicates
-            |> Dict.map (\k v -> DuplicateQuestionDefinition k v |> Error)
+            |> Dict.map (\id locations -> Error (DuplicateQuestionDefinition id locations))
             |> Dict.values
 
 
 mergeOverlappingDuplicates : List Duplicate -> DuplicateIndex
-mergeOverlappingDuplicates duplicates =
-    List.foldl updateDuplicateIndex Dict.empty duplicates
+mergeOverlappingDuplicates =
+    List.foldl updateDuplicateIndex Dict.empty
 
 
 updateDuplicateIndex : Duplicate -> DuplicateIndex -> DuplicateIndex
-updateDuplicateIndex ( id, locations ) duplicateIndex =
-    Dict.update id (Maybe.withDefault [] >> mergeLocations locations >> Just) duplicateIndex
+updateDuplicateIndex ( id, locations ) =
+    Dict.update id (Maybe.withDefault [] >> mergeLocations locations >> Just)
 
 
 mergeLocations : List Location -> List Location -> List Location
 mergeLocations newLocations existingLocations =
-    (existingLocations ++ newLocations)
-        |> List.uniqueBy (\(Location line col) -> ( line, col ))
+    existingLocations
+        ++ List.filter (\x -> not (List.member x existingLocations)) newLocations
 
 
 duplicateQuestionDeclarations : QuestionIndex -> Id -> Maybe Duplicate

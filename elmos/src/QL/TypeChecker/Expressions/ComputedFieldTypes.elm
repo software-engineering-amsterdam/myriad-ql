@@ -8,17 +8,17 @@ import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(InvalidCom
 
 
 computedFieldTypeErrors : Form -> TypeEnvironment -> List Message
-computedFieldTypeErrors form questionTypes =
+computedFieldTypeErrors form typeEnv =
     Collectors.collectComputedFields form
-        |> List.filterMap (computationToType questionTypes)
-        |> List.filterMap (withExpectedType questionTypes)
+        |> List.filterMap (computationToType typeEnv)
+        |> List.filterMap (withExpectedType typeEnv)
         |> List.filter badComputedField
-        |> List.map (\( id, actualType, expectedType ) -> Error <| InvalidComputedFieldType id actualType expectedType)
+        |> List.map (\( id, actualType, expectedType ) -> Error (InvalidComputedFieldType id actualType expectedType))
 
 
 computationToType : TypeEnvironment -> ( Id, Expression ) -> Maybe ( Id, ValueType )
-computationToType questionTypes ( name, computation ) =
-    case getType questionTypes computation of
+computationToType typeEnv ( name, computation ) =
+    case getType typeEnv computation of
         Ok valueType ->
             Just ( name, valueType )
 
@@ -27,8 +27,8 @@ computationToType questionTypes ( name, computation ) =
 
 
 withExpectedType : TypeEnvironment -> ( Id, ValueType ) -> Maybe ( Id, ValueType, ValueType )
-withExpectedType questionTypes ( ( name, _ ) as id, actualType ) =
-    Dict.get name questionTypes
+withExpectedType typeEnv ( ( name, _ ) as id, actualType ) =
+    Dict.get name typeEnv
         |> Maybe.map (\expectedType -> ( id, actualType, expectedType ))
 
 

@@ -11,9 +11,11 @@ import QL.TypeChecker.Expressions.OperandTypes exposing (operandTypeErrors)
 typeCheckerErrors : Form -> List Message
 typeCheckerErrors form =
     let
-        questionTypes =
-            Collectors.collectQuestionTypes form
+        typeEnv =
+            Collectors.collectTypeEnv form
     in
-        operandTypeErrors form questionTypes
-            ++ conditionTypeErrors form questionTypes
-            ++ computedFieldTypeErrors form questionTypes
+        List.concat
+            [ operandTypeErrors form typeEnv
+            , conditionTypeErrors form typeEnv
+            , computedFieldTypeErrors form typeEnv
+            ]

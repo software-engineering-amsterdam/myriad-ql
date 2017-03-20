@@ -23,11 +23,13 @@ view { identifier, env, onChange, editable } labels =
             , selectEventHandler (onChange << indexToBoolValue)
             , disabled (not editable)
             ]
-            (renderPlaceholder
-                :: List.indexedMap
-                    (\index optionLabel -> renderOption ((index + 1) == selectedIndex) optionLabel)
-                    labels
-            )
+            (renderPlaceholder :: renderLabels selectedIndex labels)
+
+
+renderLabels : Int -> List String -> List (Html msg)
+renderLabels selectedIndex =
+    List.indexedMap
+        (\index optionLabel -> renderOption ((index + 1) == selectedIndex) optionLabel)
 
 
 indexToBoolValue : Maybe Int -> Value

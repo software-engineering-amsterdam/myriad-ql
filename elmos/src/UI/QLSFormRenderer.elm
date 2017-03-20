@@ -23,6 +23,7 @@ import UI.Field as Field exposing (Field(Editable, Computed))
 import UI.QLS.Pagination as Pagination exposing (Pagination)
 import UI.StyleContext as StyleContext exposing (StyleContext)
 import UI.Headings as Headings exposing (Heading)
+import UI.QLFormRenderer
 
 
 type alias Model =
@@ -91,7 +92,7 @@ view ({ form, env } as model) =
                         ]
 
             Nothing ->
-                div [] [ text "noCurrentPage TODO" ]
+                div [] []
 
 
 renderPage : Environment -> List Field -> Page -> Html Msg
@@ -147,11 +148,11 @@ renderSectionChild env heading visibleFields styleContext sectionChild =
             renderSection env (Headings.deeper heading) visibleFields styleContext subSection
 
         Field (Question ( name, _ )) ->
-            Field.visibleFieldForName name visibleFields
+            Field.fieldForName name visibleFields
                 |> Maybe.map (renderField env styleContext)
 
         Field (ConfiguredQuestion ( name, _ ) fieldConfig) ->
-            Field.visibleFieldForName name visibleFields
+            Field.fieldForName name visibleFields
                 |> Maybe.map
                     (\field ->
                         renderField env (StyleContext.addValueTypeConfig (Field.fieldValueType field) fieldConfig styleContext) field
@@ -276,24 +277,11 @@ textWidgetRendererForValueType valueType =
 
 visibleFieldWidgetConfig : Environment -> List Style -> Field -> WidgetContext Msg
 visibleFieldWidgetConfig env styles field =
-    case field of
-        Editable label identifier _ ->
-            { identifier = identifier
-            , label = label
-            , env = env
-            , onChange = OnFieldChange identifier
-            , editable = True
-            , style = List.map styleAsPair styles
-            }
-
-        Computed label identifier _ _ ->
-            { identifier = identifier
-            , label = label
-            , env = env
-            , onChange = OnFieldChange identifier
-            , editable = False
-            , style = List.map styleAsPair styles
-            }
+    let
+        config =
+            UI.QLFormRenderer.visibleFieldWidgetConfig env field
+    in
+        { config | style = List.map styleAsPair styles }
 
 
 styleAsPair : Style -> ( String, String )

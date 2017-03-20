@@ -5,7 +5,6 @@ import QLS.AST exposing (StyleSheet, Question, Configuration(..), Widget(..))
 import QLS.TypeChecker.Messages exposing (Message(WidgetConfigMismatch))
 import QLS.AST.Collectors as QLSCollectors
 import Dict exposing (Dict)
-import Dict.Extra as Dict
 import QL.AST.Collectors as QLCollectors exposing (TypeEnvironment)
 import Maybe.Extra as Maybe
 import QLS.TypeChecker.WidgetCompatibility as WidgetCompatibility
@@ -14,18 +13,18 @@ import QLS.TypeChecker.WidgetCompatibility as WidgetCompatibility
 check : Form -> StyleSheet -> List Message
 check form styleSheet =
     let
-        questionTypes =
-            QLCollectors.collectQuestionTypes form
+        typeEnv =
+            QLCollectors.collectTypeEnv form
     in
         QLSCollectors.collectConfiguredQuestions styleSheet
-            |> List.filterMap (invalidWidgetConfiguration questionTypes)
+            |> List.filterMap (invalidWidgetConfiguration typeEnv)
 
 
 invalidWidgetConfiguration : TypeEnvironment -> ( Id, Configuration ) -> Maybe Message
-invalidWidgetConfiguration questionTypes ( ( name, loc ), conf ) =
-    Maybe.map2 (,) (Dict.get name questionTypes) (configuredWidget conf)
+invalidWidgetConfiguration typeEnv ( ( name, loc ), conf ) =
+    Maybe.map2 (,) (Dict.get name typeEnv) (configuredWidget conf)
         |> Maybe.filter (not << WidgetCompatibility.allowedValueTypeWidgetPair)
-        |> Maybe.map (\( vt, widget ) -> WidgetConfigMismatch name loc vt widget)
+        |> Maybe.map (\( valueType, widget ) -> WidgetConfigMismatch name loc valueType widget)
 
 
 configuredWidget : Configuration -> Maybe Widget

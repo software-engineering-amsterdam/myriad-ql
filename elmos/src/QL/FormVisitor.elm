@@ -1,33 +1,33 @@
-module QL.FormVisitor exposing (Config, Order, defaultConfig, actionLambda, inspect, continue, on)
+module QL.FormVisitor exposing (Config, Action, defaultConfig, actionLambda, inspect, continue, on)
 
 import QL.AST exposing (..)
 
 
 type alias Config context =
-    { onIfThen : Order context ( Expression, Block )
-    , onIfThenElse : Order context ( Expression, Block, Block )
-    , onField : Order context ( Label, Id, ValueType )
-    , onComputedField : Order context ( Label, Id, ValueType, Expression )
-    , onExpression : Order context Expression
+    { onIfThen : Action context ( Expression, Block )
+    , onIfThenElse : Action context ( Expression, Block, Block )
+    , onField : Action context ( Label, Id, ValueType )
+    , onComputedField : Action context ( Label, Id, ValueType, Expression )
+    , onExpression : Action context Expression
     }
 
 
-type Order context node
+type Action context node
     = Continue
     | On (node -> context -> context)
 
 
-continue : Order context node
+continue : Action context node
 continue =
     Continue
 
 
-on : (node -> context -> context) -> Order context node
+on : (node -> context -> context) -> Action context node
 on =
     On
 
 
-actionLambda : Order context node -> (context -> context) -> node -> context -> context
+actionLambda : Action context node -> (context -> context) -> node -> context -> context
 actionLambda action =
     case action of
         Continue ->

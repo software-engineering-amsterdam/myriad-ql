@@ -1,4 +1,4 @@
-module UI.QLFormRenderer exposing (Model, Msg, init, update, view)
+module UI.QLFormRenderer exposing (Model, Msg, init, update, view, visibleFieldWidgetConfig)
 
 import Html exposing (Html, div, text, h3, pre)
 import Html.Attributes exposing (class)
@@ -79,19 +79,18 @@ visibleFieldWidgetConfig : Environment -> Field -> WidgetContext Msg
 visibleFieldWidgetConfig env field =
     case field of
         Editable label identifier _ ->
-            { identifier = identifier
-            , label = label
-            , env = env
-            , onChange = OnFieldChange identifier
-            , editable = True
-            , style = []
-            }
+            widgetContext label identifier env True
 
         Computed label identifier _ _ ->
-            { identifier = identifier
-            , label = label
-            , env = env
-            , onChange = OnFieldChange identifier
-            , editable = False
-            , style = []
-            }
+            widgetContext label identifier env False
+
+
+widgetContext : String -> String -> Environment -> Bool -> WidgetContext Msg
+widgetContext label identifier env editable =
+    { identifier = identifier
+    , label = label
+    , env = env
+    , onChange = OnFieldChange identifier
+    , editable = editable
+    , style = []
+    }

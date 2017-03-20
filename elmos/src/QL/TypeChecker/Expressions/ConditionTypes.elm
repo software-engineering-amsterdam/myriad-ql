@@ -7,16 +7,16 @@ import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(InvalidCon
 
 
 conditionTypeErrors : Form -> TypeEnvironment -> List Message
-conditionTypeErrors form questionTypes =
+conditionTypeErrors form typeEnv =
     Collectors.collectConditions form
-        |> List.filterMap (conditionWithType questionTypes)
-        |> List.filter (Tuple.second >> badConditional)
-        |> List.map (\( condition, conditionType ) -> Error <| InvalidConditionType (locationOf condition) conditionType)
+        |> List.filterMap (conditionWithType typeEnv)
+        |> List.filter (\( _, conditionType ) -> isBadConditional conditionType)
+        |> List.map (\( condition, conditionType ) -> Error (InvalidConditionType (locationOf condition) conditionType))
 
 
 conditionWithType : TypeEnvironment -> Expression -> Maybe ( Expression, ValueType )
-conditionWithType questionTypes condition =
-    case getType questionTypes condition of
+conditionWithType typeEnv condition =
+    case getType typeEnv condition of
         Ok valueType ->
             Just ( condition, valueType )
 
@@ -24,8 +24,8 @@ conditionWithType questionTypes condition =
             Nothing
 
 
-badConditional : ValueType -> Bool
-badConditional =
+isBadConditional : ValueType -> Bool
+isBadConditional =
     (/=) BooleanType
 
 

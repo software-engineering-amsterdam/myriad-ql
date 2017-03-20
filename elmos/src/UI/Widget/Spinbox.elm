@@ -21,7 +21,11 @@ view { identifier, env, onChange, editable } =
             , class "form-control"
             , id identifier
             , step "1"
-            , defaultValue (Maybe.withDefault "" <| Maybe.map toString currentValue)
+            , defaultValue
+                (currentValue
+                    |> Maybe.map toString
+                    |> Maybe.withDefault ""
+                )
             , onInput (NumberParser.parseIntegerInput >> onChange)
             , disabled (not editable)
             ]

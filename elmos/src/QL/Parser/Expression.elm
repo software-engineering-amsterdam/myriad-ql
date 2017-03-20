@@ -4,24 +4,7 @@ import Combine exposing (Parser, chainl, choice, lazy, parens, succeed, (<$>), (
 import Combine.Num exposing (int, float)
 import Combine.Extra exposing (trimmed, stringAs)
 import List exposing (foldr)
-import QL.AST
-    exposing
-        ( Location
-        , Expression
-            ( Integer
-            , Decimal
-            , ParensExpression
-            , Var
-            , Str
-            , Boolean
-            , BinaryExpression
-            )
-        , LogicOperator(And, Or)
-        , ComparisonOperator(Equal, NotEqual)
-        , RelationOperator(GreaterThanOrEqual, LessThanOrEqual, LessThan, GreaterThan)
-        , Operator(..)
-        , ArithmeticOperator(Plus, Minus, Multiply, Divide)
-        )
+import QL.AST exposing (..)
 import QL.Parser.Token exposing (identifier, quotedString, withLocation, parseLocation)
 
 
