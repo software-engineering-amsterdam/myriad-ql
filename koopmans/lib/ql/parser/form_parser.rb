@@ -44,7 +44,7 @@ module QL
       # statement
       rule(:assignment?) { (str('=') >> _ >> expression.as(:assignment)).maybe >> _ }
       rule(:question) { (string_literal.as(:label) >> variable_assignment >> type.as(:type) >> assignment?).as(:question) >> _ }
-      rule(:body) { _ >> (question | if_else_statement | if_statement).repeat(1).as(:body) }
+      rule(:body) { _ >> (question | if_else_statement | if_statement).repeat.as(:body) }
       rule(:if_statement) { (str('if') >> _ >> expression.as(:condition) >> str('{') >> body >> str('}')).as(:if_statement) >> _ }
       rule(:if_else_statement) { (if_statement >> _ >> str('else') >> _ >> str('{') >> body >> str('}')).as(:if_else_statement) >> _ }
 

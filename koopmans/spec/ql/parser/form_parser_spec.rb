@@ -131,6 +131,7 @@ module QL
 
       describe 'form' do
         it 'parses' do
+          expect(form_parser.form).to parse('form _ {}')
           expect(form_parser.form).to parse('form taxOfficeExample {
             "Did you sell a house in 2010?"
               hasSoldHouse: boolean
