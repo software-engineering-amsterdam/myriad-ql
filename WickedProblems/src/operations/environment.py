@@ -56,12 +56,6 @@ class Environment(object):
     def update_var(self, var, value):
         self.variables_dict.update({var: value})
 
-    def check_type(self, variable):
-        pass
-
-    def check_question_type(self, question):
-        pass
-
     def check_types(self):
         sequence = [(_var, _datatype) for _var, _datatype in self.variables]
         var_table = {}
