@@ -3,18 +3,21 @@ package qls.semantic;
 import java.util.Map;
 
 import QL.Faults;
+import QL.ReferenceTable;
 import QL.ast.type.Type;
+import QL.semantic.Environment;
 import qls.ast.Stylesheet;
 
 public class Analyzer {
 	
-	private final Environment environment;
+	private final ReferenceTable variables;
 	
-	public Analyzer(Map<String, Type> variableTypes) {
-		this.environment = new Environment(variableTypes);
+	public Analyzer(ReferenceTable variables) {
+		this.variables = variables;
 	}
 	
 	public Faults analyze(Stylesheet stylesheet) {
+		
 		VerifyQuestions verifyQuestions = new VerifyQuestions(environment);
 		verifyQuestions.visit(stylesheet);
 		

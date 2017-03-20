@@ -1,12 +1,34 @@
 package QL.semantic;
 
 
-import QL.semantic.Environment;
-import QL.ast.*;
+import QL.ast.Block;
+import QL.ast.BlockItem;
+import QL.ast.ComputedQuestion;
+import QL.ast.Form;
+import QL.ast.FormVisitor;
+import QL.ast.IfElseStatement;
+import QL.ast.Question;
+import QL.ast.Statement;
+import QL.ast.TypeVisitor;
 import QL.ast.atom.BoolAtom;
 import QL.ast.atom.IntegerAtom;
 import QL.ast.atom.StringAtom;
-import QL.ast.expression.*;
+import QL.ast.expression.AddExpr;
+import QL.ast.expression.AndExpr;
+import QL.ast.expression.DivExpr;
+import QL.ast.expression.EqExpr;
+import QL.ast.expression.GEqExpr;
+import QL.ast.expression.GExpr;
+import QL.ast.expression.IdExpr;
+import QL.ast.expression.LEqExpr;
+import QL.ast.expression.LExpr;
+import QL.ast.expression.MinusExpr;
+import QL.ast.expression.MulExpr;
+import QL.ast.expression.NEqExpr;
+import QL.ast.expression.NotExpr;
+import QL.ast.expression.OrExpr;
+import QL.ast.expression.PlusExpr;
+import QL.ast.expression.SubExpr;
 import QL.ast.type.BooleanType;
 import QL.ast.type.IntegerType;
 import QL.ast.type.StringType;
@@ -22,7 +44,7 @@ import QL.errorhandling.Error;
  * <li> whether expressions return a boolean
  *
  */
-public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<Type>, TypeVisitor {
+public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<Type>, TypeVisitor<Type> {
 
 	private final Environment environment;
 
@@ -156,14 +178,13 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
     @Override
 	public Type visit(IdExpr id) {
     	
-    	Type type = environment.getReferenceTable().getType(id.getName(), id.getLine());
-    	
-    	if (type.equals(new UnknownType(id.getLine()))) {
+    	if (!environment.getReferenceTable().variableExists(id.getName())) {
 	        environment.getFaults().add(new Error("The variable: " + id.getName() + 
 	        		" is not defined", id.getLine()));
+	        return new UnknownType(id.getLine());
     	}
     	
-        return environment.getReferenceTable().getType(id.getName(), id.getLine());
+        return environment.getReferenceTable().getType(id.getName());
 	}
 
 	@Override

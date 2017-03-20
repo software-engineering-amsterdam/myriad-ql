@@ -1,11 +1,9 @@
 package QL;
 
-import QL.ast.type.Type;
-import QL.ast.type.UnknownType;
-import QL.errorhandling.Error;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import QL.ast.type.Type;
 
 public class ReferenceTable {
 
@@ -19,11 +17,9 @@ public class ReferenceTable {
 		variableType.put(variable, type);
 	}
 	
-	public Type getType(String variable, int line) {
+	
+	public Type getType(String variable) {
 		
-		if (!variableExists(variable)) {
-	        return new UnknownType(line);
-		}
 		return variableType.get(variable);
 	}
 	

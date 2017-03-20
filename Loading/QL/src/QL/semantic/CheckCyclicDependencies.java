@@ -78,12 +78,10 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
 
     @Override
     public void visit(Statement statement) {
-        // TODO
     }
 
     @Override
     public void visit(IfElseStatement statement) {
-        // TODO
     }
 
     @Override
