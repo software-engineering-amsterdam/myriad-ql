@@ -2,58 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="62885f6a-3817-416b-8e65-17efacae74f2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ql/ast/visistor/interfaces/BaseVisitor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ql/ast/visistor/interfaces/ExpressionVisitor.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ql/ast/visistor/ASTVisitor.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/Main.java" afterPath="$PROJECT_DIR$/src/ql/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/ASTNode.java" afterPath="$PROJECT_DIR$/src/ql/ast/ASTNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/Expr.java" afterPath="$PROJECT_DIR$/src/ql/ast/Expr.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/Form.java" afterPath="$PROJECT_DIR$/src/ql/ast/Form.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/If.java" afterPath="$PROJECT_DIR$/src/ql/ast/If.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/IfElse.java" afterPath="$PROJECT_DIR$/src/ql/ast/IfElse.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/Question.java" afterPath="$PROJECT_DIR$/src/ql/ast/Question.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/QuestionExpr.java" afterPath="$PROJECT_DIR$/src/ql/ast/QuestionExpr.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/Statement.java" afterPath="$PROJECT_DIR$/src/ql/ast/Statement.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/Statements.java" afterPath="$PROJECT_DIR$/src/ql/ast/Statements.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/binop/Add.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/binop/Add.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/binop/And.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/binop/And.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/binop/Div.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/binop/Div.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/binop/Eq.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/binop/Eq.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/binop/GEq.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/binop/GEq.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/binop/GT.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/binop/GT.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/binop/LEq.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/binop/LEq.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/binop/LT.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/binop/LT.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/binop/Mul.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/binop/Mul.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/binop/NEq.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/binop/NEq.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/binop/Or.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/binop/Or.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/binop/Sub.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/binop/Sub.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/monop/Neg.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/monop/Neg.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/monop/Not.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/monop/Not.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/expressions/monop/Pos.java" afterPath="$PROJECT_DIR$/src/ql/ast/expressions/monop/Pos.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/literals/QLBoolean.java" afterPath="$PROJECT_DIR$/src/ql/ast/literals/QLBoolean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/literals/QLFloat.java" afterPath="$PROJECT_DIR$/src/ql/ast/literals/QLFloat.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/literals/QLIdent.java" afterPath="$PROJECT_DIR$/src/ql/ast/literals/QLIdent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/literals/QLInt.java" afterPath="$PROJECT_DIR$/src/ql/ast/literals/QLInt.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/literals/QLString.java" afterPath="$PROJECT_DIR$/src/ql/ast/literals/QLString.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/types/NumType.java" afterPath="$PROJECT_DIR$/src/ql/ast/types/NumType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/values/FloatValue.java" afterPath="$PROJECT_DIR$/src/ql/ast/values/FloatValue.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/values/IntValue.java" afterPath="$PROJECT_DIR$/src/ql/ast/values/IntValue.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/values/StringValue.java" afterPath="$PROJECT_DIR$/src/ql/ast/values/StringValue.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/visistor/ASTVisitor.java" afterPath="$PROJECT_DIR$/src/ql/ast/visistor/ASTVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/visistor/EnvASTVisitor.java" afterPath="$PROJECT_DIR$/src/ql/ast/visistor/EnvASTVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/visistor/EvalASTVisitor.java" afterPath="$PROJECT_DIR$/src/ql/ast/visistor/EvalASTVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/visistor/PrintASTVisitor.java" afterPath="$PROJECT_DIR$/src/ql/ast/visistor/PrintASTVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/visistor/TypeASTVisitor.java" afterPath="$PROJECT_DIR$/src/ql/ast/visistor/TypeASTVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/ast/visistor/ViewASTVisitor.java" afterPath="$PROJECT_DIR$/src/ql/ast/visistor/ViewASTVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/gui/fields/BooleanField.java" afterPath="$PROJECT_DIR$/src/ql/gui/fields/BooleanField.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/parser/QLLexer.java" afterPath="$PROJECT_DIR$/src/ql/parser/QLLexer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/parser/QLParser.java" afterPath="$PROJECT_DIR$/src/ql/parser/QLParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ql/parser/QLTokens.java" afterPath="$PROJECT_DIR$/src/ql/parser/QLTokens.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qls/ast/literals/QLSIdent.java" afterPath="$PROJECT_DIR$/src/qls/ast/literals/QLSIdent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qls/ast/literals/QLSInt.java" afterPath="$PROJECT_DIR$/src/qls/ast/literals/QLSInt.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/qls/ast/literals/QLSString.java" afterPath="$PROJECT_DIR$/src/qls/ast/literals/QLSString.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/TypeTest.java" afterPath="$PROJECT_DIR$/src/test/TypeTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.txt" afterPath="$PROJECT_DIR$/test.txt" />
     </list>
     <list id="76b6b3a2-7088-4438-a30c-090bb2c79e79" name="Revert: " comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -76,16 +26,6 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TypeTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/TypeTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="37" lean-forward="false" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ql/Main.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -106,7 +46,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ql.jacc" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ql.jacc" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ql/parser/ql.jacc">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="547">
@@ -116,33 +56,51 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="QLLexer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ql/parser/QLLexer.java">
+      <file leaf-file-name="Env.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ql/ast/environment/Env.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-148">
-              <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+            <state relative-caret-position="170">
+              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="21" selection-end-column="75" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="QLSIdent.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/qls/ast/literals/QLSIdent.java">
+      <file leaf-file-name="EnvQuestion.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ql/ast/environment/EnvQuestion.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="27" lean-forward="false" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="119">
+              <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="QLSInt.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/qls/ast/literals/QLSInt.java">
+      <file leaf-file-name="Scope.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ql/ast/environment/Scope.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="30" lean-forward="false" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
+            <state relative-caret-position="119">
+              <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EnvironmentEventListener.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ql/ast/environment/EnvironmentEventListener.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BooleanValue.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ql/ast/values/BooleanValue.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -153,26 +111,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="238">
               <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="QLSString.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/qls/ast/literals/QLSString.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="33" lean-forward="false" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PrintASTVisitor.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/PrintASTVisitor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -456,6 +394,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="visistor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="QL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="QL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ql" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ast" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="environment" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -996,7 +960,7 @@
       <workItem from="1489414407367" duration="6566000" />
       <workItem from="1489488070433" duration="4616000" />
       <workItem from="1489493655826" duration="7039000" />
-      <workItem from="1490004059088" duration="3395000" />
+      <workItem from="1490004059088" duration="3575000" />
     </task>
     <task id="LOCAL-00001" summary="jacc and beginning of ASt">
       <created>1486468125187</created>
@@ -1089,7 +1053,14 @@
       <option name="project" value="LOCAL" />
       <updated>1490005450401</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Split visitor interfaces">
+      <created>1490007480405</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1490007480405</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1125,7 +1096,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="61515000" />
+    <option name="totallyTimeSpent" value="61695000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1183,7 +1154,8 @@
     <MESSAGE value="removed parser unit tests" />
     <MESSAGE value="small refactor&#10;" />
     <MESSAGE value="renamed gui elements" />
-    <option name="LAST_COMMIT_MESSAGE" value="renamed gui elements" />
+    <MESSAGE value="Split visitor interfaces" />
+    <option name="LAST_COMMIT_MESSAGE" value="Split visitor interfaces" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1216,68 +1188,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/ASTVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="21" column="20" lean-forward="false" selection-start-line="20" selection-start-column="7" selection-end-line="22" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#3381#0" expanded="true" />
-            <marker date="1490005874784" expanded="false" signature="1011:1022" ph=" { " />
-            <marker date="1490005874784" expanded="false" signature="1034:1040" ph=" }" />
-            <marker date="1490005874784" expanded="false" signature="1182:1193" ph=" { " />
-            <marker date="1490005874784" expanded="false" signature="1205:1211" ph=" }" />
-            <marker date="1490005874784" expanded="false" signature="1248:1259" ph=" { " />
-            <marker date="1490005874784" expanded="false" signature="1271:1277" ph=" }" />
-            <marker date="1490005874784" expanded="false" signature="1310:1321" ph=" { " />
-            <marker date="1490005874784" expanded="false" signature="1333:1339" ph=" }" />
-            <marker date="1490005874784" expanded="false" signature="1375:1386" ph=" { " />
-            <marker date="1490005874784" expanded="false" signature="1398:1404" ph=" }" />
-            <marker date="1490005874784" expanded="false" signature="1439:1450" ph=" { " />
-            <marker date="1490005874784" expanded="false" signature="1462:1468" ph=" }" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ql/ast/ASTNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="15" lean-forward="false" selection-start-line="0" selection-start-column="15" selection-end-line="0" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ql/ast/If.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ql/ast/QuestionExpr.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="32" lean-forward="false" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ql/ast/Array.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="8" column="22" lean-forward="false" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ql/ast/Statements.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="18" column="30" lean-forward="false" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ql/ast/Form.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -1714,6 +1624,54 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="547">
           <caret line="64" column="4" lean-forward="true" selection-start-line="64" selection-start-column="4" selection-end-line="64" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/ast/values/BooleanValue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/ast/environment/Env.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="21" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/ast/environment/EnvironmentEventListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/ast/environment/Scope.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/ast/visistor/ASTVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/ast/environment/EnvQuestion.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
           <folding />
         </state>
       </provider>
