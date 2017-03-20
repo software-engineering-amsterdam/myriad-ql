@@ -28,7 +28,7 @@ export class Expression {
     }
 
     accept(visitor){
-        visitor.visitExpression(this);
+        return visitor.visitExpression(this);
     }
 
     evaluate(memoryState){
@@ -65,7 +65,7 @@ export class PrefixExpression {
     }
 
     accept(visitor){
-        visitor.visitPreExpression(this);
+        return visitor.visitPrefixExpression(this);
     }
 
     evaluate(memoryState){

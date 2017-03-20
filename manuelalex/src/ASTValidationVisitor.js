@@ -37,7 +37,7 @@ export class ASTValidationVisitor {
     }
 
     visitQuestion(question) {
-        this.memoryState.set(question.propertyName, question.propertyType);
+        this.memoryState.set(question.propertyName.name, question.propertyType);
 
 
         //TODO: cyclic dependencies between questions
@@ -88,33 +88,38 @@ export class ASTValidationVisitor {
         ifstatement.condition.accept(this);
     }
 
-    /* TODO remove, bad code.  */
-    findExpressionInArray(object){
-        if(object instanceof Array){
-            return this.findExpressionInArray(object[0]);
-        } else if (object instanceof Expression) {
-            return object;
-        }
-        return {};
-    }
 
-    visitPreExpression(condition){
+
+    visitPrefixExpression(condition){
+        if(!(condition.expression.accept(this) instanceof QLBoolean)){
+            this.errors.push(`Invalid expression. The prefix operator ${condition.prefix} can not be applied to ${condition.expression.name}, because it is not a boolean`);
+        }
         condition.expression.accept(this);
     }
 
     visitExpression(condition) {
-        if(condition.leftHand instanceof Expression){
-            condition.leftHand.accept(this);
-        }
 
-        if(condition.rightHand instanceof Expression){
-            condition.rightHand.accept(this);
-        }
+        //
+        //    condition.leftHand.accept(this);
+        //
+        // // if(condition.rightHand != undefined){
+        // //     condition.rightHand.accept(this);
+        // // }
+
+
+        condition.leftHand.accept(this);
+        condition.rightHand.accept(this);
+
+        // if(condition.leftHand instanceof Expression){
+        //     condition.leftHand.accept(this);
+        // }
+        //
+        // if(condition.rightHand instanceof Expression){
+        //     condition.rightHand.accept(this);
+        // }
 
         if (condition.operator === undefined){
-            //this.visitExpression(condition.leftHand);
-            const subExpression = this.findExpressionInArray(condition.leftHand);
-            subExpression.accept(this);
+            //condition.leftHand.accept(this);
         } else {
             //Todo: add prefix operator !
 
@@ -126,8 +131,8 @@ export class ASTValidationVisitor {
         }
     }
 
-    visitProperty(condition) {
-
+    visitProperty(property) {
+        return this.memoryState.getType(property.name);
     }
 
     validateOperator(condition, validOperators, validType) {
