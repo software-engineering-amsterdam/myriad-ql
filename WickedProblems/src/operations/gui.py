@@ -2,7 +2,7 @@ from user_interface.ui import FormController,QuestionController, \
                               ComputedQuestionController,ReadOnlyController, \
                               BooleanController,IntegerController, \
                               TextController
-import operations.ql
+
 from .ql import *
 from tkinter import IntVar,StringVar
 

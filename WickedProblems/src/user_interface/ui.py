@@ -1,10 +1,17 @@
 from tkinter import Tk, Frame, Label, Entry, Radiobutton, Spinbox, \
     Button, filedialog, Menu, messagebox
 from operations.eval import Eval
+from operations.environment import Environment
+from operations.variables import GetVariables
+# from operations.gui import BuildGui
+from operations.register_questions import RegisterComputedQuestions
+from operations.register_conditions import RegisterConditions
 from parser.ql import QL
 import json
 
+
 class FormElement(object):
+
     def __init__(self):
         pass
 
@@ -37,6 +44,7 @@ class FormController(object):
 class SectionElement(FormElement):
     pass
 
+
 class InputElement(FormElement):
     label = "InputElement "
 
@@ -53,6 +61,7 @@ class InputElement(FormElement):
             entry = Entry(self.parent, textvariable=self.variable)
             entry.pack()
             entry.bind('<FocusOut>', self.parent.app.reload)
+
 
 class DisabledInputElement(FormElement):
     label = "DisabledInputElement "
@@ -71,7 +80,9 @@ class DisabledInputElement(FormElement):
                           state='readonly')
             entry.pack()
 
+
 class ScaleElement(FormElement):
+
     def __init__(self, parent):
         self.parent = parent
 
@@ -83,7 +94,9 @@ class ScaleElement(FormElement):
             w = Scale(self.parent, from_=0, to=10, orient=HORIZONTAL)
             w.pack()
 
+
 class NumberElement(FormElement):
+
     def __init__(self, parent, label, variable):
         self.parent = parent
         self.label = label
@@ -98,6 +111,7 @@ class NumberElement(FormElement):
                         textvariable=self.variable, command=self.parent.app.reload)
             w.bind('<FocusOut>', self.parent.app.reload)
             w.pack()
+
 
 class IntegerController(FormElement):
     parent = None
@@ -114,7 +128,9 @@ class IntegerController(FormElement):
             self.element.label = self.label
             self.element.pack()
 
+
 class CheckboxElement(FormElement):
+
     def __init__(self, parent):
         self.parent = parent
 
@@ -126,7 +142,9 @@ class CheckboxElement(FormElement):
             Checkbutton(self.parent, text="Checkbox element",
                         command=self.parent.app.reload).pack()
 
+
 class RadioElement(FormElement):
+
     def __init__(self, parent, label, variable):
         self.label = label
         self.parent = parent
@@ -146,13 +164,16 @@ class RadioElement(FormElement):
                 Radiobutton(self.parent, variable=self.variable, text=option,
                             value=index, command=self.parent.app.reload).pack()
 
+
 class ButtonElement(FormElement):
+
     def __init__(self, parent):
         self.parent = parent
 
     def pack(self):
         b = Button(self.parent, text="OK")
         b.pack()
+
 
 class TextController(FormElement):
     parent = None
@@ -169,6 +190,7 @@ class TextController(FormElement):
             self.element.label = self.label
             self.element.pack()
 
+
 class ReadOnlyController(FormElement):
     parent = None
     label = "ReadOnlyController"
@@ -184,6 +206,7 @@ class ReadOnlyController(FormElement):
             self.element.label = self.label
             self.element.pack()
 
+
 class BooleanController(FormElement):
     parent = None
     label = "BooleanController"
@@ -197,6 +220,7 @@ class BooleanController(FormElement):
         self.element.label = self.label
         self.element.pack()
 
+
 class ButtonController(FormElement):
     parent = None
 
@@ -207,7 +231,9 @@ class ButtonController(FormElement):
     def render(self):
         self.element.pack()
 
+
 class PageElement(FormElement):
+
     def __init__(self, parent):
         self.parent = parent
 
@@ -215,7 +241,9 @@ class PageElement(FormElement):
         group = Frame(self.parent)
         group.pack(padx=10, pady=10)
 
+
 class PageController(FormElement):
+
     def __init__(self, parent):
         self.parent = parent
         self.element = PageElement(parent)
@@ -228,6 +256,7 @@ class PageController(FormElement):
     def render(self):
         [element.render() for element in self.elements]
         self.element.pack()
+
 
 class QuestionController(FormElement):
     label = "This is a question"
@@ -244,6 +273,7 @@ class QuestionController(FormElement):
         ''' Return Controller '''
         self.controller.render()
 
+
 class ComputedQuestionController(FormElement):
     label = "This is a question"
     variable = None  # depends on type needed
@@ -259,68 +289,78 @@ class ComputedQuestionController(FormElement):
         ''' Return Controller '''
         self.controller.render()
 
+
 class Window(Frame):
+
     def __init__(self, parent=None):
         Frame.__init__(self, parent)
 
-class Application(object):
-    def __init__(self, name = "My Program"):
-        root = Tk()
-        root.app = self
-        root.title(name)
-        self.window = Window(root)
-        self.root = root
-        self.root.minsize(width=670, height=670)
-        self.environment = None
-        self.elements = []
 
-    def reload(self, event=None):
-        for widget in self.root.winfo_children():
-            widget.destroy()
+# class Application(object):
 
-        self.environment.update_computed_questions()
-        self.setup_elements()
+#     def __init__(self, ast, name="My Program"):
+#         root = Tk()
+#         root.app = self
+#         root.title(name)
+#         self.window = Window(root)
+#         self.root = root
+#         self.root.minsize(width=670, height=670)
+#         self.environment = None 
+#         self.elements = []
+#         self.environment = Environment()
+#         ast.alg(GetVariables(self.environment)).execute()
+#         ast.alg(RegisterComputedQuestions(self.environment)).execute()
+#         ast.alg(RegisterConditions(self.environment)).execute()
+#         form = ast.alg(BuildGui(self.root, self.environment)).execute()
+#         app.add_element(form)
 
-    def export_form(self):
-        f = filedialog.asksaveasfile(mode='w', defaultextension=".json")
-        if f is None:
-            return
-        f.write(json.dumps(self.environment.export()))
-        f.close()
+#     def reload(self, event=None):
+#         for widget in self.root.winfo_children():
+#             widget.destroy()
 
-    def show_error(self, message):
-        messagebox.showerror("Error", message)
+#         self.environment.update_computed_questions()
+#         self.setup_elements()
 
-    def show_warning(self, message):
-        messagebox.showwarning("Warning", message)
+#     def export_form(self):
+#         f = filedialog.asksaveasfile(mode='w', defaultextension=".json")
+#         if f is None:
+#             return
+#         f.write(json.dumps(self.environment.export()))
+#         f.close()
 
-    def show_message(self, message):
-        messagebox.showinfo("Message",message)
+#     def show_error(self, message):
+#         messagebox.showerror("Error", message)
 
-    def add_element(self, element):
-        element.parent = self.window
-        self.elements.append(element)
+#     def show_warning(self, message):
+#         messagebox.showwarning("Warning", message)
 
-    def construct_menu(self):
-        self.menu = Menu(self.root)
-        self.root.config(menu=self.menu)
+#     def show_message(self, message):
+#         messagebox.showinfo("Message", message)
 
-        self.filemenu = Menu(self.menu)
-        self.menu.add_cascade(label="File", menu=self.filemenu)
-        self.filemenu.add_command(label="Save as...", command=self.export_form)
-        self.filemenu.add_command(label="Reload", command=self.reload)
-        self.filemenu.add_separator()
-        self.filemenu.add_command(label="Exit", command=self.root.destroy)
+#     def add_element(self, element):
+#         element.parent = self.window
+#         self.elements.append(element)
 
-        self.helpmenu = Menu(self.menu)
-        self.menu.add_cascade(label="Help", menu=self.helpmenu)
-        self.helpmenu.add_command(label="About...", command=self.reload)
+#     def construct_menu(self):
+#         self.menu = Menu(self.root)
+#         self.root.config(menu=self.menu)
 
-    def setup_elements(self):
-        self.construct_menu()
-        [element.render() for element in self.elements]
+#         self.filemenu = Menu(self.menu)
+#         self.menu.add_cascade(label="File", menu=self.filemenu)
+#         self.filemenu.add_command(label="Save as...", command=self.export_form)
+#         self.filemenu.add_command(label="Reload", command=self.reload)
+#         self.filemenu.add_separator()
+#         self.filemenu.add_command(label="Exit", command=self.root.destroy)
 
-    def render(self):
-        self.setup_elements()
-        self.window.pack()
-        self.root.mainloop()
+#         self.helpmenu = Menu(self.menu)
+#         self.menu.add_cascade(label="Help", menu=self.helpmenu)
+#         self.helpmenu.add_command(label="About...", command=self.reload)
+
+#     def setup_elements(self):
+#         self.construct_menu()
+#         [element.render() for element in self.elements]
+
+#     def render(self):
+#         self.setup_elements()
+#         self.window.pack()
+#         self.root.mainloop()

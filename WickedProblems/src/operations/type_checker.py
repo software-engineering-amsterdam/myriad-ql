@@ -13,6 +13,12 @@ class MessageContainer(object):
     def add_error(self, message):
         self.error_messages.append(message)
 
+    def get_errors(self):
+        return self.error_messages
+
+    def get_warnings(self):
+        return self.warning_messages
+
     def has_errors(self):
         return len(self.error_messages) > 0
 
@@ -120,7 +126,6 @@ class InvalidOperandChecker(VoidAlg):
 
     def RefVariable(self, name):
         def _register():
-            print(name)
             return self.variables.get(name)
 
         class _anon():
@@ -174,8 +179,6 @@ class InvalidOperandChecker(VoidAlg):
         class _anon():
             execute = lambda self: _register()
         return _anon()
-
-
 
     def Substraction(self, lhs, rhs):
         def _register():
@@ -292,7 +295,11 @@ class TypeChecker(object):
     def is_valid(self, ast):
         message_container = MessageContainer()
         self._validate(ast, message_container)
-        print(message_container.error_messages)
+        for message in message_container.get_errors():
+            print("Error: " + message)
+        for message in message_container.get_warnings():
+            print("Warning: " + message)
+            
         return not message_container.has_errors()
 
     def _validate(self, ast, message_container):

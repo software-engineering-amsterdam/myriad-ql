@@ -13,9 +13,7 @@ form taxOfficeExample {
     boughtPrice: integer
   "What was the selling price?"
     sellingPrice: integer
-  "What was the selling price?"
-    sellingPrice: money
-  if (boughtPrice > sellingPrice) {
+  if (hasSoldHouse) {
     "Private debts for the sold house:"
       privateDebt: integer
     "Value residue:"
