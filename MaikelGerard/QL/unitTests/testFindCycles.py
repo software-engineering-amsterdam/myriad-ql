@@ -5,7 +5,7 @@ from QL.stages.findCycles import FindCycles
 import unittest
 
 
-class TestEvaluator(unittest.TestCase):
+class TestCycles(unittest.TestCase):
     parser = Parser()
     handler = ErrorHandler()
 
