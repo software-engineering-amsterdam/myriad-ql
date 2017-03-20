@@ -39,5 +39,8 @@ class Money(Value):
         return _alg.Money(self.value)
 
 class Undefined(Value):
-    def __init__(self):
+    def __init__(self, value=False):
         self._value = False
+    
+    def alg(self, _alg):
+        return _alg.Undefined(self.value)
