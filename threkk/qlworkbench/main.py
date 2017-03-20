@@ -6,7 +6,7 @@ printed in the screen. If not, the application will be launched.
 import click
 from ql.lexer import QLLexer
 from ql.parser import QLParser
-from ui.visitor import UIVisitor
+from ui.builder import Visitor
 
 
 @click.command()
@@ -31,7 +31,7 @@ def cli(file):
         for error in ast.get_errors():
             click.secho(error.__str__(), fg='red')
     else:
-        ui_generator = UIVisitor(ast)
+        ui_generator = Visitor(ast)
         ui = ui_generator.execute()
         ui.run()
 
