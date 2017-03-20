@@ -1,12 +1,14 @@
 package org.uva.taxfree.ql.model.node.literal;
 
+import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.types.StringType;
 import org.uva.taxfree.ql.model.types.Type;
 
 public class StringLiteralNode extends LiteralNode {
     private final String mValue;
 
-    public StringLiteralNode(String constantValue) {
+    public StringLiteralNode(String constantValue, SourceInfo sourceInfo) {
+        super(sourceInfo);
         mValue = constantValue;
     }
 

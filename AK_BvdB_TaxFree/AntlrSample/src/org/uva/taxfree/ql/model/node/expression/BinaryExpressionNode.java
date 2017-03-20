@@ -1,6 +1,7 @@
 package org.uva.taxfree.ql.model.node.expression;
 
 import org.uva.taxfree.ql.gui.MessageList;
+import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.operators.Operator;
 import org.uva.taxfree.ql.model.types.Type;
@@ -13,7 +14,8 @@ public class BinaryExpressionNode extends ExpressionNode {
     private final Operator mOperator;
     private final ExpressionNode mRight;
 
-    public BinaryExpressionNode(ExpressionNode right, Operator operator, ExpressionNode left) {
+    public BinaryExpressionNode(ExpressionNode right, Operator operator, ExpressionNode left, SourceInfo sourceInfo) {
+        super(sourceInfo);
         mRight = right;
         mOperator = operator;
         mLeft = left;
