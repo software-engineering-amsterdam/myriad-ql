@@ -9,9 +9,9 @@ import javafx.scene.text.Text;
 /**
  * Created by Erik on 28-2-2017.
  */
-public class QLFormBox extends VBox {
+public class GUIForm extends VBox {
 
-    public QLFormBox(String name, VBox statementsBox) {
+    public GUIForm(String name, VBox statementsBox) {
         this.setPadding(new Insets(10));
         this.setSpacing(8);
 

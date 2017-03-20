@@ -9,8 +9,8 @@ import ql.gui.fields.*;
 /**
  * Created by Erik on 28-2-2017.
  */
-public class QLQuestionBox extends VBox {
-    public QLQuestionBox(Env env, String question, String variableName) {
+public class GUIQuestion extends VBox {
+    public GUIQuestion(Env env, String question, String variableName) {
         QLField field;
         Type type = env.getQuestionType(variableName);
 

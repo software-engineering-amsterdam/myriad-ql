@@ -11,10 +11,10 @@ import ql.ast.values.Value;
 /**
  * Created by Erik on 28-2-2017.
  */
-public class QLIfBox extends VBox {
+public class GUIIf extends VBox {
     private final VBox ifStatements;
 
-    public QLIfBox(Env env, Expr condition, VBox ifStatements) {
+    public GUIIf(Env env, Expr condition, VBox ifStatements) {
         this.ifStatements = ifStatements;
 
         env.addEventListener(() -> {

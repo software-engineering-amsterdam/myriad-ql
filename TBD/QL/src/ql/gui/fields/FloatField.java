@@ -5,7 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import ql.ast.environment.Env;
 import ql.ast.values.Value;
-import ql.gui.QLChangeListener;
+import ql.gui.GUIChangeListener;
 
 /**
  * Created by Erik on 28-2-2017.
@@ -13,7 +13,7 @@ import ql.gui.QLChangeListener;
 public class FloatField extends TextField implements QLField{
 
     public FloatField(Env env, String variableName) {
-        this.textProperty().addListener(new QLChangeListener<String>(env, variableName) {
+        this.textProperty().addListener(new GUIChangeListener<String>(env, variableName) {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (!newValue.matches("[-+]?[0-9]*(\\.[0-9]*)?")) {

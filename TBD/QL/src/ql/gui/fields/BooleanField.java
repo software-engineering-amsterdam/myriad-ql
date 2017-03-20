@@ -11,7 +11,7 @@ import ql.ast.environment.Env;
 import ql.ast.values.BooleanValue;
 import ql.ast.values.UndefinedValue;
 import ql.ast.values.Value;
-import ql.gui.QLChangeListener;
+import ql.gui.GUIChangeListener;
 
 /**
  * Created by Erik on 28-2-2017.
@@ -24,7 +24,7 @@ public class BooleanField extends ToggleGroup implements QLField{
         rbYes.setToggleGroup(this);
         rbNo.setToggleGroup(this);
 
-        this.selectedToggleProperty().addListener(new QLChangeListener<Toggle>(env, variableName) {
+        this.selectedToggleProperty().addListener(new GUIChangeListener<Toggle>(env, variableName) {
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
                 if (newValue == null) {

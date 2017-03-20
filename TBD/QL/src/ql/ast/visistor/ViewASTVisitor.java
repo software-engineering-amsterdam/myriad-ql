@@ -25,7 +25,7 @@ public class ViewASTVisitor extends ASTVisitor<VBox> {
 
     public VBox visit(Form node) {
         VBox statements = node.getStatements().accept(this);
-        QLFormBox formBox = new QLFormBox(node.getName(), statements);
+        GUIForm formBox = new GUIForm(node.getName(), statements);
 
         return formBox;
     }
@@ -40,28 +40,28 @@ public class ViewASTVisitor extends ASTVisitor<VBox> {
                 statementBoxes.add(stat);
         }
 
-        return new QLStatementsBox(statementBoxes.toArray(new VBox[statementBoxes.size()]));
+        return new QUIStatements(statementBoxes.toArray(new VBox[statementBoxes.size()]));
     }
 
     public VBox visit(If node) {
         Expr condition = node.getCondition();
         VBox statements = node.getIfBlock().accept(this);
-        return new QLIfBox(env, condition, statements);
+        return new GUIIf(env, condition, statements);
     }
 
     public VBox visit(IfElse node) {
         Expr condition = node.getCondition();
         VBox ifStatements = node.getIfBlock().accept(this);
         VBox elseStatements = node.getElseBlock().accept(this);
-        return new QLIfElseBox(env, condition, ifStatements, elseStatements);
+        return new GUIIfElse(env, condition, ifStatements, elseStatements);
     }
 
 
     public VBox visit(Question node) {
-        return new QLQuestionBox(env, node.getQuestion(), node.getId());
+        return new GUIQuestion(env, node.getQuestion(), node.getId());
     }
 
     public VBox visit(QuestionExpr node) {
-        return new QLQuestionBox(env, node.getQuestion(), node.getId());
+        return new GUIQuestion(env, node.getQuestion(), node.getId());
     }
 }

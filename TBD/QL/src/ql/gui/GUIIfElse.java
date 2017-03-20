@@ -10,12 +10,12 @@ import ql.ast.values.Value;
 /**
  * Created by Erik on 28-2-2017.
  */
-public class QLIfElseBox extends VBox {
+public class GUIIfElse extends VBox {
     private final VBox ifStatements;
     private final VBox elseStatements;
     private Boolean current = null;
 
-    public QLIfElseBox(Env env, Expr condition, VBox ifStatements, VBox elseStatements) {
+    public GUIIfElse(Env env, Expr condition, VBox ifStatements, VBox elseStatements) {
         this.ifStatements = ifStatements;
         this.elseStatements = elseStatements;
 

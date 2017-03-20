@@ -7,11 +7,11 @@ import ql.ast.values.*;
 /**
  * Created by rico on 27-2-17.
  */
-public abstract class QLChangeListener<T> implements ChangeListener<T> {
+public abstract class GUIChangeListener<T> implements ChangeListener<T> {
     private final String key;
     private final Env env;
 
-    public QLChangeListener(Env env, String key) {
+    public GUIChangeListener(Env env, String key) {
         this.env = env;
         this.key = key;
     }
