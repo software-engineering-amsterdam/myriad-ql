@@ -2,7 +2,7 @@ package org.ql.ast.type;
 
 import org.ql.ast.Node;
 
-public abstract class Type extends Node {
+public abstract class Type extends Node implements TypeCompatibility {
 
     public boolean isBoolean() {
         return false;
@@ -19,8 +19,6 @@ public abstract class Type extends Node {
     public boolean isDate() {
         return false;
     }
-
-    public abstract boolean isCompatibleWith(Type type);
 
     public boolean isCompatibleWith(BooleanType type) {
         return false;

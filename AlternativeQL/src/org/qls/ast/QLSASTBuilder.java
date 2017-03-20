@@ -62,8 +62,8 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
     }
 
     @Override
-    public GenericWidgetQuestion visitQuestionNoWidget(QLSParser.QuestionNoWidgetContext ctx) {
-        return hydrateSourceLocation(new GenericWidgetQuestion(visitIdentifier(ctx.identifier())), ctx);
+    public WidgetQuestion visitQuestionNoWidget(QLSParser.QuestionNoWidgetContext ctx) {
+        return hydrateSourceLocation(new WidgetQuestion(visitIdentifier(ctx.identifier())), ctx);
     }
 
     @Override

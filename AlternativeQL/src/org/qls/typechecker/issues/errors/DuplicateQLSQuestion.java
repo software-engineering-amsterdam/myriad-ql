@@ -2,13 +2,13 @@ package org.qls.typechecker.issues.errors;
 
 import org.ql.ast.Node;
 import org.ql.typechecker.issues.Issue;
-import org.qls.ast.page.CustomWidgetQuestion;
+import org.qls.ast.page.WidgetQuestion;
 
 public class DuplicateQLSQuestion extends Issue {
 
-    private final CustomWidgetQuestion question;
+    private final WidgetQuestion question;
 
-    public DuplicateQLSQuestion(CustomWidgetQuestion question) {
+    public DuplicateQLSQuestion(WidgetQuestion question) {
         this.question = question;
     }
 

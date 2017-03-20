@@ -1,21 +1,35 @@
 package org.qls.ast.widget;
 
 import org.ql.ast.Node;
-import org.ql.ast.type.Type;
+import org.ql.ast.type.*;
 
-import java.util.ArrayList;
-import java.util.List;
+public abstract class Widget extends Node implements TypeCompatibility {
 
-public abstract class Widget extends Node {
-    private List<Type> supportedTypes = new ArrayList<>();
-
-    public Widget() {
-        initializeSupportedTypes();
+    public boolean isCompatibleWith(BooleanType type) {
+        return false;
     }
 
-    public abstract void initializeSupportedTypes();
+    public boolean isCompatibleWith(DateType type) {
+        return false;
+    }
 
-    public List<Type> getSupportedTypes() {
-        return supportedTypes;
+    public boolean isCompatibleWith(FloatType type) {
+        return false;
+    }
+
+    public boolean isCompatibleWith(IntegerType type) {
+        return false;
+    }
+
+    public boolean isCompatibleWith(MoneyType type) {
+        return false;
+    }
+
+    public boolean isCompatibleWith(StringType type) {
+        return false;
+    }
+
+    public boolean isCompatibleWith(UnknownType type) {
+        return false;
     }
 }

@@ -3,12 +3,13 @@ package org.qls.typechecker.issues.errors;
 import org.ql.ast.Node;
 import org.ql.typechecker.issues.Issue;
 import org.qls.ast.page.CustomWidgetQuestion;
+import org.qls.ast.page.WidgetQuestion;
 
 public class UndefinedQLQuestion extends Issue {
 
-    private final CustomWidgetQuestion question;
+    private final WidgetQuestion question;
 
-    public UndefinedQLQuestion(CustomWidgetQuestion question) {
+    public UndefinedQLQuestion(WidgetQuestion question) {
         this.question = question;
     }
 
