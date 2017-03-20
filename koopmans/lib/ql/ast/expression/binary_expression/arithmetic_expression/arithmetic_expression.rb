@@ -12,14 +12,6 @@ module QL
       def accept(left, visitor)
         visitor.visit_arithmetic_expression(left, self)
       end
-
-      def is_compatible_with
-        [IntegerType.new, MoneyType.new]
-      end
-
-      def return_type(type=nil)
-        type
-      end
     end
   end
 end

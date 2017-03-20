@@ -42,19 +42,47 @@ module QL
 
       # visit both left and right sides of binary expression and perform type check
       # they can be for example BooleanType, IntegerType, StringType or ErrorType
-      def visit_binary_expression(left, binary_expression)
+      # def visit_binary_expression(left, binary_expression)
+      #   left = left.accept(self)
+      #   right = binary_expression.expression.accept(self)
+      #   binary_expression.eval_type(left, right)
+      # end
+
+      def visit_arithmetic_expression(left, binary_expression)
         left = left.accept(self)
         right = binary_expression.expression.accept(self)
-        binary_expression.eval_type(left, right)
+        evaluate_types(left, right, [AST::IntegerType, AST::MoneyType], AST::IntegerType.new)
       end
 
-      def visit_negation(negation)
-        expression = negation.expression.accept(self)
-        negation.eval_type(expression)
+      # def visit_negation(negation)
+      #   expression = negation.expression.accept(self)
+      #   negation.eval_type(expression)
+      # end
+
+      def visit_boolean_negation(integer_negation)
+        expression_type = integer_negation.expression.accept(self)
+        evaluate_type(expression_type, [AST::BooleanType])
       end
 
-      def visit_literal(literal)
-        literal.to_type
+      def visit_integer_negation(boolean_negation)
+        expression_type = boolean_negation.expression.accept(self)
+        evaluate_type(expression_type, [AST::IntegerType, AST::MoneyType])
+      end
+
+      # def visit_literal(literal)
+      #   literal.to_type
+      # end
+
+      def visit_integer_literal(_)
+        AST::IntegerType.new
+      end
+
+      def visit_boolean_literal(_)
+        AST::BooleanType.new
+      end
+
+      def visit_string_literal(_)
+        AST::StringType.new
       end
 
       def visit_type(type)
@@ -70,6 +98,30 @@ module QL
         unless condition_type.is_a?(AST::BooleanType)
           NotificationTable.store(Notification::Error.new("#{if_statement.condition} is not of the type boolean"))
         end
+      end
+
+      def evaluate_types(left_type, right_type, compatible_types, return_type)
+        # return the left type if there are no errors and else return an error
+        if check_compatibility(left_type, compatible_types) and check_compatibility(right_type, compatible_types)
+          return_type
+        else
+          #TODO fix error msg
+          NotificationTable.store(Notification::Error.new("1incompatible types at #{self}"))
+          AST::ErrorType.new
+        end
+      end
+
+      def evaluate_type(expression_type, compatible_types)
+        if check_compatibility(expression_type, compatible_types)
+          expression_type
+        else
+          #TODO fix error msg
+          NotificationTable.store(Notification::Error.new("2incompatible types at #{self}"))
+        end
+      end
+
+      def check_compatibility(type, compatible_types)
+        compatible_types.include?(type.class)
       end
     end
   end

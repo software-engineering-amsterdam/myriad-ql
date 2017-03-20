@@ -37,29 +37,53 @@ module QL
         end
       end
 
-      def visit_binary_expression(left, binary_expression)
-        # check if left and binary_expression.expression are an array (of variables), if so, don't call .accept
-        unless left.kind_of?(Array)
-          left = left.accept(self)
-        end
-        if binary_expression.expression.kind_of?(Array)
-          right = binary_expression.expression
-        else
-          right = binary_expression.expression.accept(self)
-        end
-        [left, right]
+      # def visit_binary_expression(left, binary_expression)
+      #   # check if left and binary_expression.expression are an array (of variables), if so, don't call .accept
+      #   unless left.kind_of?(Array)
+      #     left = left.accept(self)
+      #   end
+      #   if binary_expression.expression.kind_of?(Array)
+      #     right = binary_expression.expression
+      #   else
+      #     right = binary_expression.expression.accept(self)
+      #   end
+      #   [left, right]
+      # end
+
+      def visit_arithmetic_expression(left, binary_expression)
+        left = left.accept(self)
+        right = binary_expression.expression.accept(self)
+        [left ,right]
+        # AST::IntegerLiteral.new(left.to_value * right.to_value)
       end
 
-      def visit_negation(negation)
-        negation.expression.accept(self)
+      def visit_boolean_negation(integer_negation)
+        integer_negation.expression.accept(self)
+      end
+
+      def visit_integer_negation(boolean_negation)
+        boolean_negation.expression.accept(self)
       end
 
       # nothing has to be done with a literal
-      def visit_literal(_)
+      # def visit_literal(_)
+      #   []
+      # end
+
+      def visit_integer_literal(_)
+        []
+      end
+
+      def visit_boolean_literal(_)
+        []
+      end
+
+      def visit_string_literal(_)
         []
       end
 
       def visit_variable(variable)
+        #TODO add to global variable
         [variable]
       end
     end

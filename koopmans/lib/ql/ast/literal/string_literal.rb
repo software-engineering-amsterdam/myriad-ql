@@ -1,16 +1,14 @@
 module QL
   module AST
-    class StringLiteral < Literal
+    class StringLiteral
+      attr_reader :value
+
       def initialize(value)
         @value = value.to_s
       end
 
-      def to_value
-        value.to_s
-      end
-
-      def to_type
-        StringType.new
+      def accept(visitor)
+        visitor.visit_string_literal(self)
       end
     end
   end

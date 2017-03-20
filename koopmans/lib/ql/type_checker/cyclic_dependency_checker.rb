@@ -41,13 +41,30 @@ module QL
         negation.expression.accept(self)
       end
 
-      def visit_binary_expression(left, binary_expression)
+      # def visit_binary_expression(left, binary_expression)
+      #   left.accept(self)
+      #   binary_expression.expression.accept(self)
+      # end
+
+      def visit_arithmetic_expression(left, binary_expression)
         left.accept(self)
         binary_expression.expression.accept(self)
       end
 
-      def visit_literal(literal)
-        literal
+      # def visit_literal(literal)
+      #   literal
+      # end
+
+      def visit_integer_literal(integer_literal)
+        integer_literal
+      end
+
+      def visit_boolean_literal(boolean_literal)
+        boolean_literal
+      end
+
+      def visit_string_literal(string_literal)
+        string_literal
       end
 
       def visit_variable(variable)

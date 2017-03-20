@@ -8,6 +8,7 @@ module QL
         @assignment = assignment
       end
 
+      # TODO
       def accept(visitor, condition=nil)
         if condition
           visitor.visit_computed_question(self, condition)

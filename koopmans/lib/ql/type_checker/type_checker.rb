@@ -13,7 +13,7 @@ module QL
 
       # checkers
       def duplicate_label_checker(questions)
-        duplicate_labels = select_duplicates(questions.map(&:label).map(&:to_value))
+        duplicate_labels = select_duplicates(questions.map(&:label).map(&:value))
         duplicate_labels.each do |label|
           NotificationTable.store(Notification::Warning.new("question with label '#{label}' is defined multiple times"))
         end

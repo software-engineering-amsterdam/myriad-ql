@@ -8,13 +8,13 @@ module QL
         @expression = expression
       end
 
-      def eval_type(expression)
-        if self.is_compatible_with.include?(expression)
-          expression
-        else
-          NotificationTable.store(Error.new("incompatible types at #{self}"))
-        end
-      end
+      # def eval_type(expression)
+      #   if self.is_compatible_with.include?(expression)
+      #     expression
+      #   else
+      #     NotificationTable.store(Error.new("incompatible types at #{self}"))
+      #   end
+      # end
     end
   end
 end

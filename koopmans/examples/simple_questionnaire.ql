@@ -2,7 +2,7 @@ form taxOfficeExample {
   "Did you sell a house in 2010?"
     hasSoldHouse: boolean
   "Did you buy a house in 2010?"
-    hasBoughtHouse: money = 2
+    hasBoughtHouse: integer = 2
     if (!hasSoldHouse ){
      "Did yoIF VRAAG?"
         xx: money = hasBoughtHouse - 2 * 2
