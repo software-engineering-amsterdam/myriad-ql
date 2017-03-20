@@ -1,12 +1,12 @@
 package view
 
 import checker.Issue.Issues
-import model.DisplayQuestion
+import model.DisplayQuestion.DisplayQuestions
 
-class QL(val issues: Issues, val displayQuestions: Seq[DisplayQuestion]) extends GUI {
+class QL(val issues: Issues, val displayQuestions: DisplayQuestions) extends GUI {
   override def displayBoxes = displayQuestions.map(question => renderQuestion(question))
 }
 
 object QL {
-  def apply(issues: Issues, displayQuestions: Seq[DisplayQuestion]) = new QL(issues, displayQuestions)
+  def apply(issues: Issues, displayQuestions: DisplayQuestions) = new QL(issues, displayQuestions)
 }

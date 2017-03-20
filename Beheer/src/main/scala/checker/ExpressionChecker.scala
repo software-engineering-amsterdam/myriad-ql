@@ -46,8 +46,8 @@ class ExpressionChecker(identifiersWithType: Seq[(String, Type)], expression: Ex
         case (_: Lt, _: NumericType, _: NumericType) => (Some(BooleanType), errors)
         case (_: And, BooleanType, BooleanType) => (Some(BooleanType), errors)
         case (_: Or, BooleanType, BooleanType) => (Some(BooleanType), errors)
-        case (n: Neq, t1: Type, t2: Type) => checkEqualityOperator(n, t1, t2, errors)
-        case (n: Eq, t1: Type, t2: Type) => checkEqualityOperator(n, t1, t2, errors)
+        case (n: Neq, l: Type, r: Type) => checkEqualityOperator(n, l, r, errors)
+        case (n: Eq, l: Type, r: Type) => checkEqualityOperator(n, l, r, errors)
         case (n: InfixNode, l: Type, r: Type) => emitError(n, l, r, errors)
       }
     }
@@ -66,8 +66,8 @@ class ExpressionChecker(identifiersWithType: Seq[(String, Type)], expression: Ex
   }
 
   // Equality: Among different numbers, ok, otherwise: strict type match.
-  private def checkEqualityOperator(node: ExpressionNode, lhs: Type, rhs: Type, errors: Issues): (Option[Type], Issues) =
-    (lhs, rhs) match {
+  private def checkEqualityOperator(node: ExpressionNode, left: Type, right: Type, errors: Issues): (Option[Type], Issues) =
+    (left, right) match {
       case (_: NumericType, _: NumericType) => (Some(BooleanType), errors)
       case (t1: Type, t2: Type) if t1 == t2 => (Some(BooleanType), errors)
       case (l, r) => emitError(node, l, r, errors)
@@ -100,6 +100,6 @@ class ExpressionChecker(identifiersWithType: Seq[(String, Type)], expression: Ex
 }
 
 object ExpressionChecker {
-  def apply(identifiersWithType: Seq[(String, Type)], expressionNode: ExpressionNode, expectedType: Type): Seq[Issue] =
+  def apply(identifiersWithType: Seq[(String, Type)], expressionNode: ExpressionNode, expectedType: Type): Issues =
     new ExpressionChecker(identifiersWithType, expressionNode, expectedType).check
 }

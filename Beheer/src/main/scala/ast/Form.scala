@@ -1,10 +1,12 @@
 package ast
 
-case class Form(identifier: String, statements: Seq[Statement])
+import ast.Form.Statements
+
+case class Form(identifier: String, statements: Statements)
 
 sealed trait Statement
 
-case class Conditional(condition: ExpressionNode, ifStatements: Seq[Statement], elseStatements: Seq[Statement] = Nil) extends Statement
+case class Conditional(condition: ExpressionNode, ifStatements: Statements, elseStatements: Statements) extends Statement
 
 case class Question(identifier: String, label: String, `type`: Type, expressionNode: Option[ExpressionNode]) extends Statement
 
@@ -23,3 +25,7 @@ case object IntegerType extends NumericType
 case object DecimalType extends NumericType
 
 case object MoneyType extends NumericType
+
+object Form {
+  type Statements = Seq[Statement]
+}
