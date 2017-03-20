@@ -6,7 +6,7 @@ import com.matthewchapman.ql.ast.atomic.Type;
 import com.matthewchapman.ql.ast.atomic.type.BooleanType;
 import com.matthewchapman.ql.ast.atomic.type.IntegerType;
 import com.matthewchapman.ql.core.CoreParser;
-import com.matthewchapman.ql.core.QLErrorLogger;
+import com.matthewchapman.ql.core.ErrorLogger;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by matt on 18/03/2017.
  */
-public class QLTypeCheckerTest {
+public class TypeCheckerTest {
 
     private CoreParser coreParser;
 
@@ -37,8 +37,8 @@ public class QLTypeCheckerTest {
         typeTable.put("test1", new BooleanType());
         typeTable.put("test2", new IntegerType());
 
-        QLTypeChecker checker = new QLTypeChecker();
-        QLErrorLogger logger = checker.checkExpressionTypes(form, typeTable);
+        TypeChecker checker = new TypeChecker();
+        ErrorLogger logger = checker.checkExpressionTypes(form, typeTable);
 
         assertEquals(EXPECTED_RESULT, logger.getErrorNumber());
 

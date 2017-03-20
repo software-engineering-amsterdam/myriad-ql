@@ -24,22 +24,12 @@ public class Launcher extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         File file = new File("res/test.txt");
-        String fileContents = "";
 
         if (!this.getParameters().getUnnamed().contains("-debug")) {
             file = getFileSelection(primaryStage);
         }
 
-        if (file == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Quitting");
-            alert.setHeaderText("No file selected");
-            alert.setContentText("Please select a valid QL file to continue.");
-            alert.showAndWait();
-        } else {
-            FileReader reader = new FileReader();
-            fileContents = reader.readFile(file);
-        }
+        String fileContents = processInputFile(file);
 
         if(fileContents != null) {
             CoreParser parser = new CoreParser();
@@ -51,6 +41,21 @@ public class Launcher extends Application {
                 new GUICreator().generateFormUI(primaryStage, form);
             }
         }
+    }
+
+    private String processInputFile(File file) {
+        String fileContents = "";
+        if (file == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Quitting");
+            alert.setHeaderText("No file selected");
+            alert.setContentText("Please select a valid QL file to continue.");
+            alert.showAndWait();
+        } else {
+            FileReader reader = new FileReader();
+            fileContents = reader.readFile(file);
+        }
+        return fileContents;
     }
 
     private File getFileSelection(Stage primaryStage) {

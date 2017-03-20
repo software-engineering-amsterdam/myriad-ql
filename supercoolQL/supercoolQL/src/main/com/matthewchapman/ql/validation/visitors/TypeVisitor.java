@@ -7,7 +7,7 @@ import com.matthewchapman.ql.ast.atomic.type.StringType;
 /**
  * Created by matt on 18/03/2017.
  */
-public interface QLTypeVisitor<T, C> {
+public interface TypeVisitor<T, C> {
 
     //Types
     T visit(BooleanType booleanType, C context);

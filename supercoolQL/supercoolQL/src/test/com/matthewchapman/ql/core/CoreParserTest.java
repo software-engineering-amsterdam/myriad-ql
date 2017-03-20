@@ -6,7 +6,7 @@ import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
-import com.matthewchapman.ql.validation.visitors.QLStatementVisitor;
+import com.matthewchapman.ql.validation.visitors.StatementVisitor;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by matt on 02/03/2017.
  */
-public class CoreParserTest implements QLStatementVisitor<Void, String> {
+public class CoreParserTest implements StatementVisitor<Void, String> {
 
     private final CoreParser parser = new CoreParser();
     private String testInput;

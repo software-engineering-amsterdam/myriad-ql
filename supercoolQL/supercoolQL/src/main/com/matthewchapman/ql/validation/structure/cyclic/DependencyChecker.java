@@ -1,7 +1,7 @@
 package com.matthewchapman.ql.validation.structure.cyclic;
 
 import com.matthewchapman.ql.ast.expression.Parameter;
-import com.matthewchapman.ql.core.QLErrorLogger;
+import com.matthewchapman.ql.core.ErrorLogger;
 
 import java.util.HashSet;
 import java.util.List;
@@ -15,23 +15,23 @@ import java.util.Set;
  *
  * Thanks to Theodore & Yoan for the basic algorithm for closure generation
  */
-public class QLDependencyChecker {
+public class DependencyChecker {
 
-    private Set<QLDependencyPair> dependencies;
+    private Set<DependencyPair> dependencies;
 
-    public QLDependencyChecker() {
+    public DependencyChecker() {
 
         this.dependencies = new HashSet<>();
     }
 
-    public QLErrorLogger checkForCircularDependencies(Map<String, List<Parameter>> expressionMap) {
+    public ErrorLogger checkForCircularDependencies(Map<String, List<Parameter>> expressionMap) {
 
-        QLErrorLogger logger = new QLErrorLogger();
+        ErrorLogger logger = new ErrorLogger();
 
         dependencies = makeSet(expressionMap);
-        Set<QLDependencyPair> closure = makeClosure(dependencies);
+        Set<DependencyPair> closure = makeClosure(dependencies);
 
-        for(QLDependencyPair pair : closure) {
+        for(DependencyPair pair : closure) {
             if (pair.isReflexive()) {
                 logger.addError(expressionMap.get(pair.getStart()).get(0).getLine(), expressionMap.get(pair.getStart()).get(0).getColumn(), pair.getStart(), "Circular reference found");
             }
@@ -40,27 +40,27 @@ public class QLDependencyChecker {
         return logger;
     }
 
-    private Set<QLDependencyPair> makeSet(Map<String, List<Parameter>> expressionMap) {
+    private Set<DependencyPair> makeSet(Map<String, List<Parameter>> expressionMap) {
 
-        Set<QLDependencyPair> dependencySet = new HashSet<>();
+        Set<DependencyPair> dependencySet = new HashSet<>();
 
         for (Map.Entry<String, List<Parameter>> entry : expressionMap.entrySet()) {
             for(Parameter parameter : entry.getValue()) {
-                dependencySet.add(new QLDependencyPair(entry.getKey(), parameter.getID()));
+                dependencySet.add(new DependencyPair(entry.getKey(), parameter.getID()));
             }
         }
 
         return dependencySet;
     }
 
-    private Set<QLDependencyPair> generateNewEdges(Set<QLDependencyPair> input) {
+    private Set<DependencyPair> generateNewEdges(Set<DependencyPair> input) {
 
-        Set<QLDependencyPair> result = new HashSet<>();
+        Set<DependencyPair> result = new HashSet<>();
 
-        for(QLDependencyPair pair1 : input) {
-            for(QLDependencyPair pair2 : input) {
+        for(DependencyPair pair1 : input) {
+            for(DependencyPair pair2 : input) {
                 if(pair1.isTransitive(pair2)) {
-                    result.add(new QLDependencyPair(pair1.getEnd(), pair2.getStart()));
+                    result.add(new DependencyPair(pair1.getEnd(), pair2.getStart()));
                 }
             }
         }
@@ -68,13 +68,13 @@ public class QLDependencyChecker {
         return result;
     }
 
-    Set<QLDependencyPair> makeClosure(Set<QLDependencyPair> input) {
+    Set<DependencyPair> makeClosure(Set<DependencyPair> input) {
 
-        Set<QLDependencyPair> closure = new HashSet<>();
+        Set<DependencyPair> closure = new HashSet<>();
         closure.addAll(input);
 
         while(true) {
-            Set<QLDependencyPair> temp = generateNewEdges(closure);
+            Set<DependencyPair> temp = generateNewEdges(closure);
             temp.addAll(closure);
 
             if(temp.equals(closure)) {

@@ -1,6 +1,6 @@
 package com.matthewchapman.ql.parsing;
 
-import com.matthewchapman.ql.core.QLErrorLogger;
+import com.matthewchapman.ql.core.ErrorLogger;
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
@@ -8,15 +8,15 @@ import org.antlr.v4.runtime.Recognizer;
 /**
  * Created by matt on 24/02/2017.
  */
-public class AntlrErrorListener extends BaseErrorListener {
+public class ParseTreeErrorListener extends BaseErrorListener {
 
-    private final QLErrorLogger logger;
+    private final ErrorLogger logger;
 
-    public AntlrErrorListener() {
-        this.logger = new QLErrorLogger();
+    public ParseTreeErrorListener() {
+        this.logger = new ErrorLogger();
     }
 
-    public QLErrorLogger getLogger() {
+    public ErrorLogger getLogger() {
         return this.logger;
     }
 
