@@ -17,7 +17,6 @@ class TestGrammar(TestCase):
         (grammar.question, "question x {color: #aabbcc widget text}"),
         (grammar.default, "default integer widget spinbox"),
         (grammar.default, "default integer {color: #aabbcc widget text}"),
-        (grammar.section, "section \"x\" {}"),
         (grammar.section, "section \"x\" {question y}"),
         (grammar.section, "section \"x\" {question y question z}"),
         (grammar.section, "section \"x\" {"
@@ -30,7 +29,6 @@ class TestGrammar(TestCase):
                           "     question y"
                           "     default string widget text"
                           "}"),
-        (grammar.page, "page p {}"),
         (grammar.page, "page p {"
                        "    section \"x\" {"
                        "        section \"y\" {"
@@ -40,13 +38,13 @@ class TestGrammar(TestCase):
                        "    }"
                        "}"),
         (grammar.page, "page p {"
-                       "    section \"x\" {}"
+                       "    section \"x\" {question x}"
                        "    default string widget text"
                        "}"),
-        (grammar.layout, "stylesheet s {page p {}"
-                         "              page q {}}"),
+        (grammar.layout, "stylesheet s {page p {question x}"
+                         "              page q {question y}}"),
         (grammar.layout, "stylesheet s {"
-                         "  page p {}"
+                         "  page p {question x}"
                          "  default integer widget slider"
                          "}"),
     ]
@@ -64,11 +62,13 @@ class TestGrammar(TestCase):
         (grammar.question, "question x widget dropdown(0, 1)"),
         (grammar.question, "question x widget: spinbox(\"0\",\"100\")"),
         (grammar.question, "question x widget: slider(\"0\",\"100\")"),
-        (grammar.section, "section x {}"),
+        (grammar.section, "section x {question x}"),
+        (grammar.section, "section \"x\" {}"),
         (grammar.section, "section \"x\" {"
                           "     default boolean widget radio question x"
                           "}"),
-        (grammar.page, "page \"x\" {}"),
+        (grammar.page, "page \"x\" {question x}"),
+        (grammar.page, "page x {}"),
         (grammar.page, "page x {default boolean widget radio question x}"),
         (grammar.layout, "stylesheet \"x\" {}"),
         (grammar.layout, "stylesheet x {"
@@ -140,17 +140,17 @@ class TestGrammar(TestCase):
                                           [WidgetTypeAttribute(
                                              IntegerEntryWidget)])])),
         (grammar.section, "section \"x\" {"
-                          "     section \"y\" {}"
+                          "     section \"y\" {question x}"
                           "}",
                           Section("x",
                                   [Section("y",
-                                           [])])),
+                                           [QuestionAnchor("x")])])),
         (grammar.page, "page x {"
-                       "    section \"y\" {}"
+                       "    section \"y\" {question x}"
                        "}",
                        Page("x",
                             [Section("y",
-                                     [])])),
+                                     [QuestionAnchor("x")])])),
         (grammar.page, "page x {"
                        "    question y"
                        "    question z"
@@ -174,18 +174,18 @@ class TestGrammar(TestCase):
                                                   [WidgetTypeAttribute(
                                                       IntegerEntryWidget)])])),
         (grammar.layout, "stylesheet x {"
-                         "      page y {}"
-                         "      page z {}"
+                         "      page y {question x}"
+                         "      page z {question y}"
                          "}",
                          Layout("x",
-                                [Page("y", []),
-                                 Page("z", [])])),
+                                [Page("y", [QuestionAnchor("x")]),
+                                 Page("z", [QuestionAnchor("y")])])),
         (grammar.layout, "stylesheet x {"
-                         "      page y {}"
+                         "      page y {question x}"
                          "      default decimal widget real-number"
                          "}",
                          StyledLayout("x",
-                                      [Page("y", [])],
+                                      [Page("y", [QuestionAnchor("x")])],
                                       [DefaultStyling(DecimalDatatype(),
                                                       [WidgetTypeAttribute(
                                                           DecimalEntryWidget)

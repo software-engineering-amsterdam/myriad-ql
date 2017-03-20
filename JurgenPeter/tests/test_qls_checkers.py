@@ -26,9 +26,6 @@ class TestSymbolChecker(TestCase):
          "      question y"
          "  }"
          "}", 1),
-        ("stylesheet S {"
-         "  page P { }"
-         "}", 1),
     ]
 
     def testSymbolErrors(self):
