@@ -1,14 +1,14 @@
 from .eval import Eval
 class Environment(object):
-    variables = []
-    ref_variables = []
-    questions = []
-    computed_questions = []
-    variables_dict = {}
-    conditional_questions = {}
+
 
     def __init__(self):
-        pass
+        self.variables = []
+        self.ref_variables = []
+        self.questions = []
+        self.computed_questions = []
+        self.variables_dict = {}
+        self.conditional_questions = {}
 
     def add_var(self, var):
         self.variables.append(var)

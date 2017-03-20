@@ -5,8 +5,8 @@ from ast.base_nodes import *
 from ast.field_types import *
 
 class RegisterComputedQuestions(QlAlg):
-    def __init__(self, environment_vars):
-        self.environment = Environment()
+    def __init__(self, environment):
+        self.environment = environment
 
     def Literal(self, value):
         class _anon():

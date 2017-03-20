@@ -2,8 +2,8 @@ from .ql import QlAlg
 from .environment import Environment
 
 class GetVariables(QlAlg):
-    def __init__(self, environment_vars):
-        self.environment = Environment()
+    def __init__(self, environment):
+        self.environment = environment
 
     def Literal(self, value):
         class _anon():
