@@ -21,13 +21,15 @@ namespace Questionnaires.QL.SemanticAnalysis
 
         protected void AnalyzeAstNode(INode node)
         {
-            QLContext Context = new QLContext();
+            var Context = new QLContext();
 
             // Get and check question declarations
-            new DeclarationValidator(Result).Analyze(node, Context);
+            var declarationValidator = new DeclarationValidator(Result);
+            declarationValidator.Analyze(node, Context);
             if (!Result.ContainsErrors()) // Only apply type checking if the declaration validator passed
             {
-                new TypeChecker(Result).Analyze(node, Context);
+                var typeChecker = new TypeChecker(Result);
+                typeChecker.Analyze(node, Context);
             }
         }
     }
