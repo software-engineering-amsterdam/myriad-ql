@@ -8,27 +8,21 @@ import java.util.List;
 
 public class IfThen extends ASTNode implements Item{
 
-    private Expression condition;
-    private List<Item> thenStatements;
+    private final Expression condition;
+    private final List<Item> thenStatements;
 
-    public IfThen(int lineNumber) {
+    public IfThen(int lineNumber, Expression condition, List<Item> thenStatements) {
         super(lineNumber);
+        this.condition = condition;
+        this.thenStatements = thenStatements;
     }
 
     public Expression getCondition() {
         return condition;
     }
 
-    public void setCondition(Expression condition) {
-        this.condition = condition;
-    }
-
     public List<Item> getThenStatements() {
         return thenStatements;
-    }
-
-    public void setThenStatements(List<Item> thenStatements) {
-        this.thenStatements = thenStatements;
     }
 
     public <T> T accept(Visitor<T> visitor){

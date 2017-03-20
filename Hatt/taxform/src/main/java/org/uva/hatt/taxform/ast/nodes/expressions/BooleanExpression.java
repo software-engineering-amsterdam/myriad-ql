@@ -4,8 +4,8 @@ import org.uva.hatt.taxform.ast.visitors.Visitor;
 
 public abstract class BooleanExpression extends Expression{
 
-    private Expression lhs;
-    private Expression rhs;
+    private final Expression lhs;
+    private final Expression rhs;
 
     public BooleanExpression(int lineNumber, Expression lhs, Expression rhs) {
         super(lineNumber);

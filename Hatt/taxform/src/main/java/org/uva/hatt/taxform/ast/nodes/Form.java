@@ -3,33 +3,25 @@ package org.uva.hatt.taxform.ast.nodes;
 import org.uva.hatt.taxform.ast.nodes.items.Item;
 import org.uva.hatt.taxform.ast.visitors.Visitor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Form extends ASTNode {
 
-    private String formId;
-    private List<Item> questions;
+    private final String formId;
+    private final List<Item> questions;
 
-    public Form(int lineNumber) {
+    public Form(int lineNumber, String formId, List<Item> questions) {
         super(lineNumber);
-        this.questions = new ArrayList<>();
+        this.formId = formId;
+        this.questions = questions;
     }
 
     public String getFormId() {
         return formId;
     }
 
-    public void setFormId(String formId) {
-        this.formId = formId;
-    }
-
     public List<Item> getQuestions() {
         return questions;
-    }
-
-    public void setQuestions(List<Item> questions) {
-        this.questions = questions;
     }
 
     @Override

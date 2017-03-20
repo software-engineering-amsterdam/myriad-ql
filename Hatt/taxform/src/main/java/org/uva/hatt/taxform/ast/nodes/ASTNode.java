@@ -6,7 +6,7 @@ public abstract class ASTNode {
 
     public abstract <T> T accept(Visitor<T> visitor);
 
-    private int lineNumber;
+    private final int lineNumber;
 
     public ASTNode(int lineNumber) {
         this.lineNumber = lineNumber;

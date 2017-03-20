@@ -30,54 +30,48 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitForm(QLParser.FormContext ctx) {
-        form = new Form(ctx.start.getLine());
-        form.setFormId(ctx.Identifier().getText());
-
-        form.setQuestions(ctx.items().stream().map(item -> (Item) visit(item)).collect(Collectors.toList()));
+        form = new Form(ctx.start.getLine(),
+                ctx.Identifier().getText(),
+                ctx.items().stream().map(item -> (Item) visit(item)).collect(Collectors.toList())
+        );
 
         return form;
     }
 
     @Override
     public ASTNode visitQuestion(QLParser.QuestionContext ctx) {
-        Question question = new Question(ctx.start.getLine());
-        question.setQuestion(ctx.StringLiteral().getText());
-        question.setValue(ctx.Identifier().getText());
-        question.setType((ValueType) visit(ctx.valueType()));
-
-        return question;
+        return new Question(ctx.start.getLine(),
+                ctx.StringLiteral().getText(),
+                ctx.Identifier().getText(),
+                (ValueType) visit(ctx.valueType())
+        );
     }
 
     @Override
     public ASTNode visitComputedQuestion(QLParser.ComputedQuestionContext ctx) {
-        ComputedQuestion computedQuestion = new ComputedQuestion(ctx.start.getLine());
-        computedQuestion.setQuestion(ctx.StringLiteral().getText());
-        computedQuestion.setValue(ctx.Identifier().getText());
-        computedQuestion.setType((ValueType) visit(ctx.valueType()));
-        computedQuestion.setComputedValue((Expression) visit(ctx.expression()));
-
-        return computedQuestion;
+        return new ComputedQuestion(ctx.start.getLine(),
+                ctx.StringLiteral().getText(),
+                ctx.Identifier().getText(),
+                (ValueType) visit(ctx.valueType()),
+                (Expression) visit(ctx.expression())
+        );
     }
 
     @Override
     public ASTNode visitIfThen(QLParser.IfThenContext ctx) {
-        IfThen ifThen = new IfThen(ctx.start.getLine());
-
-        ifThen.setCondition((Expression) visit(ctx.ifBlock().expression()));
-        ifThen.setThenStatements(getStatements(ctx.ifBlock().items()));
-
-        return ifThen;
+        return new IfThen(ctx.start.getLine(),
+                (Expression) visit(ctx.ifBlock().expression()),
+                getStatements(ctx.ifBlock().items())
+        );
     }
 
     @Override
     public ASTNode visitIfThenElse(QLParser.IfThenElseContext ctx) {
-        IfThenElse ifThenElse = new IfThenElse(ctx.start.getLine());
-
-        ifThenElse.setCondition((Expression) visit(ctx.ifBlock().expression()));
-        ifThenElse.setThenStatements(getStatements(ctx.ifBlock().items()));
-        ifThenElse.setElseStatements(getStatements(ctx.elseBlock().items()));
-
-        return ifThenElse;
+        return new IfThenElse(ctx.start.getLine(),
+                (Expression) visit(ctx.ifBlock().expression()),
+                getStatements(ctx.ifBlock().items()),
+                getStatements(ctx.elseBlock().items())
+        );
     }
 
     @Override
@@ -142,10 +136,7 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitGroupedExpression(QLParser.GroupedExpressionContext ctx) {
-        GroupedExpression groupedExpression = new GroupedExpression(ctx.start.getLine());
-        groupedExpression.setExpression((Expression) visit(ctx.expression()));
-
-        return groupedExpression;
+        return new GroupedExpression(ctx.start.getLine(), (Expression) visit(ctx.expression()));
     }
 
     private List<Item> getStatements(List<QLParser.ItemsContext> items) {

@@ -4,18 +4,15 @@ import org.uva.hatt.taxform.ast.visitors.Visitor;
 
 public class GroupedExpression extends Expression{
 
-    private Expression expression;
+    private final Expression expression;
 
-    public GroupedExpression(int lineNumber) {
+    public GroupedExpression(int lineNumber, Expression expression) {
         super(lineNumber);
+        this.expression = expression;
     }
 
     public Expression getExpression() {
         return expression;
-    }
-
-    public void setExpression(Expression expression) {
-        this.expression = expression;
     }
 
     @Override
