@@ -39,16 +39,16 @@ public class SymbolTable {
     }
 
     private void updateDeclaration(String variableId, String updatedValue) {
-        for (Declaration decl : mDeclarations) {
-            if (decl.equals(variableId)) {
-                decl.setValue(updatedValue);
+        for (Declaration declaration : mDeclarations) {
+            if (declaration.equals(variableId)) {
+                declaration.setValue(updatedValue);
             }
         }
     }
 
     private void recalculate() {
-        for (CalculationNode calc : mCalculations) {
-            updateDeclaration(calc.getId(), calc.resolveValue());
+        for (CalculationNode calculation : mCalculations) {
+            updateDeclaration(calculation.getId(), calculation.resolveValue());
         }
     }
 
@@ -59,6 +59,15 @@ public class SymbolTable {
             }
         }
         throw new RuntimeException("Unknown variable queried in SymbolTable");
+    }
+
+    public boolean containsAll(Set<String> variableIds) {
+        for (String variableId : variableIds) {
+            if (!contains(variableId)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean contains(String variableId) {
@@ -72,9 +81,9 @@ public class SymbolTable {
 
     private List<Declaration> findDeclarations(String variableId) {
         List<Declaration> declarations = new ArrayList<>();
-        for (Declaration decl : mDeclarations) {
-            if (decl.equals(variableId)) {
-                declarations.add(decl);
+        for (Declaration declaration : mDeclarations) {
+            if (declaration.equals(variableId)) {
+                declarations.add(declaration);
             }
         }
         return declarations;
@@ -117,14 +126,18 @@ public class SymbolTable {
     }
 
     private void addDependencies(String usedVariable, Set<String> usedVariables) {
-        for (CalculationNode calc : mCalculations) {
-            if (calc.getId().equals(usedVariable)) {
-                usedVariables.addAll(calc.getUsedVariables());
+        for (CalculationNode calculation : mCalculations) {
+            if (calculation.getId().equals(usedVariable)) {
+                usedVariables.addAll(calculation.getUsedVariables());
             }
         }
     }
 
-    public List<String> visibleIds() {
+    public boolean isVisible(String variableId) {
+        return visibleIds().contains(variableId);
+    }
+
+    private List<String> visibleIds() {
         List<String> visibleDeclarations = new ArrayList<>();
         for (BlockNode blockNode : mBlocks) {
             blockNode.generateVisibleIds(visibleDeclarations);
