@@ -38,7 +38,7 @@ public class SemanticsAnalyzerTest extends SemanticsTester {
 
     @Test
     public void testUndefinedDeclarationMultiple() throws Exception {
-        assertSemantics("undefinedDeclarationMultiple.txt", 1, "Multiple conditions with same variable trigger 1 error");
+        assertSemantics("undefinedDeclarationMultiple.txt", 2, "Multiple conditions with same variable trigger multiple errors");
     }
 
     @Test
@@ -53,7 +53,7 @@ public class SemanticsAnalyzerTest extends SemanticsTester {
 
     @Override
     protected File testFile(String fileName) {
-        return new File("src\\test\\org\\uva\\taxfree\\ql\\ast\\semanticErrors\\" + fileName);
+        return new File("src\\test\\org\\uva\\taxfree\\ql\\testFiles\\semanticErrors\\" + fileName);
     }
 
 }
