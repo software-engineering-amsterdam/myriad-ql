@@ -1,18 +1,9 @@
 package QL.ui;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
-
-import javax.json.Json;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonWriter;
-
-import QL.Faults;
 import QL.ReferenceTable;
 import QL.ast.Form;
+import QL.message.Message;
+import QL.ui.message.MessageDialog;
 import QL.value.Value;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -20,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -31,29 +23,40 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
+
 public class Questionnaire extends Application implements Notifier {
 	
 	// TODO do not make static
 	private static Form form;
 	private static Environment environment;
 	private static GridPane grid;
-	private static Faults faults;
+	private static List<Message> messages;
 	
-    public void main(Form f, ReferenceTable variables, Faults flts) {
+    public void main(Form f, ReferenceTable variables, List<Message> msgs) {
     	form = f;
     	environment = new Environment(variables);
-    	faults = flts;
+    	messages = msgs;
  
         launch();
     }
     
     @Override
     public void start(Stage primaryStage) {
-        
-    	if (!faults.showAndContinue()) {
-    		return;
-    	}
-    	
+
+
+        showMessages();
+        if (hasFatalMessage()) {
+            return;
+        }
+
         primaryStage.setTitle(form.getId());
 
         initGrid();
@@ -65,7 +68,24 @@ public class Questionnaire extends Application implements Notifier {
         primaryStage.show();
 
     }
-    
+
+    private void showMessages() {
+        if (messages.isEmpty()) {
+            return;
+        }
+
+        new MessageDialog(messages);
+    }
+
+    private boolean hasFatalMessage() {
+        boolean isFatalMessage = false;
+        for (Message msg : messages) {
+            isFatalMessage = isFatalMessage || msg.isFatal();
+        }
+
+        return isFatalMessage;
+    }
+
     private GridPane initGrid() {
     	
         grid = new GridPane();
@@ -76,8 +96,7 @@ public class Questionnaire extends Application implements Notifier {
         
         return grid;
     }
-    
-    
+
     private void renderQuestionnaire() {
     	
         renderTitle(form.getId());
@@ -158,7 +177,7 @@ public class Questionnaire extends Application implements Notifier {
 	public void updateQuestionnaire(String name, Value newValue) {
 
 		if (!environment.isAnswered(name) || !(environment.getAnswer(name).equals(newValue))) {
-	    	
+
 			environment.addAnswer(name, newValue);
 	    	grid.getChildren().clear();
 	        renderQuestionnaire();

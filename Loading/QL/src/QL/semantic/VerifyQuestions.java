@@ -3,8 +3,8 @@ package QL.semantic;
 import QL.semantic.Environment;
 import QL.ast.*;
 import QL.ast.type.Type;
-import QL.errorhandling.Error;
-import QL.errorhandling.Warning;
+import QL.message.Error;
+import QL.message.Warning;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,8 +75,8 @@ public class VerifyQuestions implements FormVisitor {
 
 	private void checkLabel(String label, String variableName, int line) {
 		if (labelExists(label)) {
-			environment.getFaults().add(new Warning("The question: " + label + 
-					" exists twice in the questionnaire", line));
+		    environment.addMessage(new Warning("The question: " + label +
+                    " exists twice in the questionnaire", line));
 		}
 		addLabel(label, variableName);
 	}
@@ -85,7 +85,7 @@ public class VerifyQuestions implements FormVisitor {
 	private void checkVariableType(String variable, Type type, int line) {
 
 		if (environment.getReferenceTable().variableExists(variable)) {
-			environment.getFaults().add(new Error("The variable " + variable + " cannot be added, because it is "
+			environment.addMessage(new Error("The variable " + variable + " cannot be added, because it is "
 					+ "already defined", line));
 		}
 		environment.getReferenceTable().addVariableType(variable, type);

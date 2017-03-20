@@ -1,9 +1,9 @@
 package QL;
 
+import QL.ast.type.Type;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import QL.ast.type.Type;
 
 public class ReferenceTable {
 
@@ -16,18 +16,12 @@ public class ReferenceTable {
 	public void addVariableType(String variable, Type type) {
 		variableType.put(variable, type);
 	}
-	
-	
+
 	public Type getType(String variable) {
-		
 		return variableType.get(variable);
 	}
 	
 	public boolean variableExists(String variable) {
 		return variableType.containsKey(variable);
-	}
-	
-	public Map<String, Type> getVariableTypes() {
-		return variableType;
 	}
 }
