@@ -3,7 +3,7 @@ package org.uva.hatt.taxform;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.uva.hatt.taxform.ast.ASTGenerator;
 import org.uva.hatt.taxform.ast.nodes.Form;
-import org.uva.hatt.taxform.ast.visitors.ExceptionHandler;
+import org.uva.hatt.taxform.ast.visitors.exceptionHandler.ExceptionHandler;
 import org.uva.hatt.taxform.ast.visitors.QLVisitor;
 import org.uva.hatt.taxform.ast.visitors.TypeChecker;
 
