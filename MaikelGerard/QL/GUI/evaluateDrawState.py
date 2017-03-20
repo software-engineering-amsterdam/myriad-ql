@@ -34,8 +34,8 @@ class EvaluateDrawState(object):
             value = self.env.get_var_value(identifier)
             if value == Undefined:
                 value = ''
-            widget.show()
             widget.set_entry(value)
+            widget.show()
 
     def comp_question_node(self, comp_question_node, widget_visible):
         identifier = comp_question_node.name

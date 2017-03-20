@@ -5,7 +5,7 @@ from QL.stages.findCycles import FindCycles
 import unittest
 
 
-class TestEvaluator(unittest.TestCase):
+class TestCycles(unittest.TestCase):
     parser = Parser()
     handler = ErrorHandler()
 
@@ -15,7 +15,8 @@ class TestEvaluator(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_cycles(self):
+    def test_cycles1(self):
+        # Cycle : x, y, z
         form = """
             form taxOfficeExample {
                 if (x) { "Y?" y: boolean }
@@ -25,12 +26,11 @@ class TestEvaluator(unittest.TestCase):
             }
         """
         parsed_form = self.parser.parse(form)
-        find_cycles = FindCycles(parsed_form, self.handler)
-        parsed_form.accept(find_cycles)
-
+        FindCycles(parsed_form, self.handler).start_traversal()
         self.assertEqual(self.handler.error_count, 1)
 
-        self.handler.clear_errors()
+    def test_cycles2(self):
+        # Cycle : x, y
         form = """
             form taxOfficeExample {
                 if (x) { "Y?" y: boolean }
@@ -38,11 +38,40 @@ class TestEvaluator(unittest.TestCase):
             }
         """
         parsed_form = self.parser.parse(form)
-        find_cycles = FindCycles(parsed_form, self.handler)
-        parsed_form.accept(find_cycles)
-
+        FindCycles(parsed_form, self.handler).start_traversal()
         self.assertEqual(self.handler.error_count, 1)
 
+    def test_cycles3(self):
+        # Cycle : x, y
+        form = """
+            form taxOfficeExample {
+                if (x) {
+                    "Y?" y: boolean
+                    if (y) {
+                        "X?" x: boolean
+                    }
+                }
+            }
+        """
+        parsed_form = self.parser.parse(form)
+        FindCycles(parsed_form, self.handler).start_traversal()
+        self.assertEqual(self.handler.error_count, 1)
+
+    def test_no_cycles(self):
+        form = """
+            form taxOfficeExample {
+                if (x) { "Y?" y: boolean }
+                if (y) {
+                    "Z?" z: boolean
+                    if (z || x) {
+                        "Q?" q: boolean
+                    }
+                }
+            }
+        """
+        parsed_form = self.parser.parse(form)
+        FindCycles(parsed_form, self.handler).start_traversal()
+        self.assertEqual(self.handler.error_count, 0)
 
 if __name__ == '__main__':
     unittest.main()
