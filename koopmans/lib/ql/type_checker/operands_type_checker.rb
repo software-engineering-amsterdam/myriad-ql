@@ -6,14 +6,6 @@ module QL
         form.statements.map { |statement| statement.accept(self) }
       end
 
-      # nothing has to be done with a question
-      def visit_question(_)
-      end
-
-      def visit_computed_question(computed_question)
-        computed_question.assignment.accept(self)
-      end
-
       def visit_if_statement(if_statement)
         condition_type = if_statement.condition.accept(self)
         check_if_condition(if_statement, condition_type)
@@ -23,14 +15,19 @@ module QL
       def visit_if_else_statement(if_else_statement)
         condition_type = if_else_statement.condition.accept(self)
         check_if_condition(if_else_statement, condition_type)
-
         if_else_statement.if_body.map { |statement| statement.accept(self) }
         if_else_statement.else_body.map { |statement| statement.accept(self) }
       end
 
-      # visit operation in expression
-      def visit_expression(expression)
-        expression.expression.reduce do |left, operation|
+      def visit_question(_)
+      end
+
+      def visit_computed_question(computed_question)
+        computed_question.assignment.accept(self)
+      end
+
+      def visit_expression_sequence(expression_sequence)
+        expression_sequence.expressions.reduce do |left, operation|
           operation.accept(left, self)
         end
       end
@@ -59,7 +56,6 @@ module QL
         evaluate_types(left, right, [AST::IntegerType, AST::MoneyType], AST::BooleanType.new)
       end
 
-
       def visit_boolean_negation(integer_negation)
         expression_type = integer_negation.expression.accept(self)
         evaluate_type(expression_type, [AST::BooleanType])
@@ -68,22 +64,6 @@ module QL
       def visit_integer_negation(boolean_negation)
         expression_type = boolean_negation.expression.accept(self)
         evaluate_type(expression_type, [AST::IntegerType, AST::MoneyType])
-      end
-
-      # def visit_literal(literal)
-      #   literal.to_type
-      # end
-
-      def visit_integer_literal(_)
-        AST::IntegerType.new
-      end
-
-      def visit_boolean_literal(_)
-        AST::BooleanType.new
-      end
-
-      def visit_string_literal(_)
-        AST::StringType.new
       end
 
       def visit_boolean_type(boolean_type)
@@ -108,6 +88,18 @@ module QL
 
       def visit_string_type(string_type)
         string_type
+      end
+
+      def visit_boolean_literal(_)
+        AST::BooleanType.new
+      end
+
+      def visit_integer_literal(_)
+        AST::IntegerType.new
+      end
+
+      def visit_string_literal(_)
+        AST::StringType.new
       end
 
       def visit_variable(variable)
