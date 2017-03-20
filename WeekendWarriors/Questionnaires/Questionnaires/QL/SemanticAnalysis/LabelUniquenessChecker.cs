@@ -32,7 +32,7 @@ namespace Questionnaires.QL.SemanticAnalysis
 
         private string FormatMessage(string body, List<Question> questions)
         {
-            List<string> questionNames = questions.Select(q => q.Identifier).ToList();
+            var questionNames = questions.Select(q => q.Identifier).ToList();
             return string.Format("Questions {0} have an idetical body: \"{1}\"", Utility.String.FormatSequenceOfStrings(questionNames), body);
         }
     }

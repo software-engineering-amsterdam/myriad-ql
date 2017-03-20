@@ -6,7 +6,6 @@ import QL.ast.ComputedQuestion;
 import QL.ast.IfElseStatement;
 import QL.ast.Question;
 import QL.ast.Statement;
-import QL.Environment;
 import QL.evaluation.Evaluator;
 import QL.ui.field.Field;
 import QL.value.BoolValue;

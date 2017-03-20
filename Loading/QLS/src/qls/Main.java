@@ -5,12 +5,12 @@ import java.util.Map;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-import QL.Environment;
 import QL.Faults;
 import QL.QLLexer;
 import QL.QLParser;
 import QL.ast.Form;
 import QL.ast.type.Type;
+import QL.ui.Environment;
 import QL.ui.Questionnaire;
 import qls.ast.Stylesheet;
 
@@ -48,6 +48,18 @@ public class Main {
 
 	}
 	
+	public static Map<String, Type> ql() {
+		
+		Form form = createForm();
+
+		QL.semantic.Analyzer analyzer = new QL.semantic.Analyzer();
+		
+		// TODO pass faults QL QLS
+		Faults faults = analyzer.analyze(form);
+
+		return analyzer.getVariableTypes();
+	}
+	
 	public static Form createForm() {
 		String tmp = "form Testing { "
 				 + "Name0: \"Question0\" integer "
@@ -70,15 +82,5 @@ public class Main {
 		return parser.form().result;
 	}
 	
-	public static Map<String, Type> ql() {
-		
-		Form form = createForm();
 
-		QL.semantic.Analyzer analyzer = new QL.semantic.Analyzer();
-		
-		// TODO pass faults QL QLS
-		Faults faults = analyzer.analyze(form);
-
-		return analyzer.getVariableTypes();
-	}
 }

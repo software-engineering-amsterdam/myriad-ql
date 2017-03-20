@@ -1,5 +1,6 @@
 package QL.semantic;
 
+import QL.semantic.Environment;
 import QL.ast.*;
 import QL.ast.type.Type;
 import QL.errorhandling.Error;
@@ -83,10 +84,10 @@ public class VerifyQuestions implements FormVisitor {
 
 	private void checkVariableType(String variable, Type type, int line) {
 
-		if (environment.variableExists(variable)) {
+		if (environment.getReferenceTable().variableExists(variable)) {
 			environment.getFaults().add(new Error("The variable " + variable + " cannot be added, because it is "
 					+ "already defined", line));
 		}
-		environment.addVariableType(variable, type);
+		environment.getReferenceTable().addVariableType(variable, type);
 	}
 }
