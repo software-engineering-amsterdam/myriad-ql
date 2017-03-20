@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 import org.uva.taxfree.ql.model.node.declarations.CalculationNode;
 import org.uva.taxfree.ql.model.node.expression.BinaryExpressionNode;
 import org.uva.taxfree.ql.model.node.literal.VariableLiteralNode;
-import org.uva.taxfree.ql.model.node.operators.AddOperator;
+import org.uva.taxfree.ql.model.operators.AddOperator;
 import org.uva.taxfree.ql.model.types.IntegerType;
 
 import java.util.Set;

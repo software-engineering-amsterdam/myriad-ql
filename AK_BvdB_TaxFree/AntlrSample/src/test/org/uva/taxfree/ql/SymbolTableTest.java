@@ -42,7 +42,7 @@ public class SymbolTableTest extends SemanticsTester {
 
     @Test
     public void testWritingAndReading() throws Exception {
-        String variableId = "intDecl";
+        String variableId = "intDeclaration";
         Assert.assertFalse(mSymbolTable.contains(variableId), "empty table should not contain anything");
         mSymbolTable.addDeclaration(new DeclarationNode("newDeclaration", variableId, new IntegerType()));
         Assert.assertTrue(mSymbolTable.contains(variableId), "newly added declaration should be present");
