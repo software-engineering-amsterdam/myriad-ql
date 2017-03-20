@@ -20,11 +20,11 @@ form taxOfficeExample {
       privateDebt: integer
     "Value residue:"
       valueResidue: money =
-        (sellingPrice - privateDebt)
+        (sellingPrice * boughtPrice - privateDebt)
 
     "Profit on sale:"
       valueOver: money =
-        (privateDebt+ appleBottom)
+        (privateDebt + boughtPrice)
   }
   "Is this questions being printed?"
     isPrinted: boolean

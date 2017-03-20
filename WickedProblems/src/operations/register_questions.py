@@ -121,7 +121,7 @@ class RegisterComputedQuestions(QlAlg):
 
     def Inequality(self, lhs, rhs):
         class _anon():
-            execute = lambda self: Equality(lhs.execute(), rhs.execute())
+            execute = lambda self: Inequality(lhs.execute(), rhs.execute())
         return _anon()
 
     def Division(self, lhs, rhs):

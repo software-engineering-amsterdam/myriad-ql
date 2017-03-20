@@ -1,4 +1,5 @@
-from tkinter import Tk, Frame, Label, Entry, Radiobutton, Spinbox, Button, filedialog, Menu
+from tkinter import Tk, Frame, Label, Entry, Radiobutton, Spinbox, \
+    Button, filedialog, Menu, messagebox
 from operations.eval import Eval
 from parser.ql import QL
 import json
@@ -263,15 +264,15 @@ class Window(Frame):
         Frame.__init__(self, parent)
 
 class Application(object):
-    def __init__(self):
+    def __init__(self, name = "My Program"):
         root = Tk()
         root.app = self
+        root.title(name)
         self.window = Window(root)
         self.root = root
         self.root.minsize(width=670, height=670)
         self.environment = None
         self.elements = []
-        self.parser = QL()
 
     def reload(self, event=None):
         for widget in self.root.winfo_children():
@@ -286,6 +287,15 @@ class Application(object):
             return
         f.write(json.dumps(self.environment.export()))
         f.close()
+
+    def show_error(self, message):
+        messagebox.showerror("Error", message)
+
+    def show_warning(self, message):
+        messagebox.showwarning("Warning", message)
+
+    def show_message(self, message):
+        messagebox.showinfo("Message",message)
 
     def add_element(self, element):
         element.parent = self.window
