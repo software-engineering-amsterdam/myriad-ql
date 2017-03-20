@@ -1,6 +1,7 @@
 package org.uva.hatt.taxform.gui;
 
 import javafx.scene.layout.VBox;
+import org.uva.hatt.taxform.ast.nodes.Form;
 import org.uva.hatt.taxform.ast.visitors.EnvironmentsTable;
 import org.uva.hatt.taxform.gui.fields.Field;
 
@@ -11,8 +12,12 @@ public class Question extends VBox implements ChangeListener{
 
     private final List<Field> fields;
     private final EnvironmentsTable environmentsTable;
+    private final UIVisitor uiVisitor;
+    private final Form form;
 
-    public Question(EnvironmentsTable environmentsTable) {
+    public Question(EnvironmentsTable environmentsTable, UIVisitor uiVisitor, Form form) {
+        this.uiVisitor = uiVisitor;
+        this.form = form;
         this.fields = new ArrayList<>();
         this.environmentsTable = environmentsTable;
     }
@@ -26,5 +31,6 @@ public class Question extends VBox implements ChangeListener{
     @Override
     public void update() {
         fields.forEach(field -> field.update(environmentsTable));
+        uiVisitor.visit(form);
     }
 }

@@ -33,6 +33,7 @@ public class UIVisitor implements Visitor<Pane> {
 
     private Stage stage;
     private EnvironmentsTable environmentsTable;
+    private Form form;
 
     public UIVisitor(Stage stage, EnvironmentsTable environmentsTable) {
         this.stage = stage;
@@ -41,6 +42,7 @@ public class UIVisitor implements Visitor<Pane> {
 
     @Override
     public Pane visit(Form node) {
+        form = node;
         stage.setTitle(node.getFormId());
 
         VBox vBox = new VBox();
@@ -67,7 +69,10 @@ public class UIVisitor implements Visitor<Pane> {
         widget.setIdentifier(node.getValue());
         widget.setLabel(node.getQuestion());
 
-        Question question = new Question(environmentsTable);
+        java.lang.String value = environmentsTable.find(node.getValue());
+        widget.setValue(value);
+
+        Question question = new Question(environmentsTable, this, form);
         question.addField(widget);
 
         return question;

@@ -11,12 +11,19 @@ public class QLInteger extends Field {
     private final TextField textField;
 
     public QLInteger() {
-        textField = new TextField();
+        TextField textField = new TextField();
+        textField.setFocusTraversable(false);
+
+        this.textField = textField;
     }
 
     @Override
     public void updateCallback(ChangeListener listener) {
-        textField.focusedProperty().addListener((observable, oldValue, newValue) -> listener.update());
+        textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (oldValue) {
+                listener.update();
+            }
+        });
     }
 
     @Override
@@ -27,5 +34,10 @@ public class QLInteger extends Field {
     @Override
     protected void addField(ObservableList<Node> nodes) {
         nodes.add(textField);
+    }
+
+    @Override
+    public void setValue(String value) {
+        textField.setText(value);
     }
 }

@@ -16,6 +16,8 @@ public abstract class Field extends Pane{
 
     public abstract void update(EnvironmentsTable environmentsTable);
 
+    public abstract void setValue(String value);
+
     protected abstract void addField(ObservableList<Node> nodes);
 
     public void fillContent(ObservableList<Node> nodes) {

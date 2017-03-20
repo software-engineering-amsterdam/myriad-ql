@@ -6,17 +6,24 @@ import javafx.scene.control.TextField;
 import org.uva.hatt.taxform.ast.visitors.EnvironmentsTable;
 import org.uva.hatt.taxform.gui.ChangeListener;
 
-public class QLTextField extends Field{
+public class QLTextField extends Field {
 
     private final TextField textField;
 
     public QLTextField() {
-        this.textField = new TextField();
+        TextField textField = new TextField();
+        textField.setFocusTraversable(false);
+
+        this.textField = textField;
     }
 
     @Override
     public void updateCallback(ChangeListener listener) {
-        textField.focusedProperty().addListener((observable, oldValue, newValue) -> listener.update());
+        textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (oldValue) {
+                listener.update();
+            }
+        });
     }
 
     @Override
@@ -27,5 +34,10 @@ public class QLTextField extends Field{
     @Override
     protected void addField(ObservableList<Node> nodes) {
         nodes.add(textField);
+    }
+
+    @Override
+    public void setValue(String value) {
+        textField.setText(value);
     }
 }
