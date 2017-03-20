@@ -17,7 +17,7 @@ exampleForm =
         , Field "Has house" ( "hasHouse", Location 0 0 ) BooleanType
         , IfThen (Var ( "hasHouse", Location 0 0 ))
             [ Field "Price" ( "price", Location 0 0 ) IntegerType ]
-        , IfThenElse (ComparisonExpression Equal (Location 0 0) (Var ( "name", Location 0 0 )) (Str (Location 0 0) "John"))
+        , IfThenElse (BinaryExpression (Comparison Equal) (Location 0 0) (Var ( "name", Location 0 0 )) (Str (Location 0 0) "John"))
             [ Field "Is your name john?" ( "isJohn", Location 0 0 ) BooleanType ]
             [ Field "Are you sure your name is not john?" ( "sure", Location 0 0 ) BooleanType ]
         ]
