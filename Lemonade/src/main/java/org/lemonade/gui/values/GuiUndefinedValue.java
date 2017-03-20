@@ -16,6 +16,11 @@ public class GuiUndefinedValue extends GuiValue<Void> {
     }
 
     @Override
+    public GuiValue<?> plus(GuiValue<?> that) {
+        return this;
+    }
+
+    @Override
     public boolean isDefined() {
         return false;
     }

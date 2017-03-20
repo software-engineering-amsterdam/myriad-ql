@@ -1,104 +1,45 @@
 package org.lemonade.gui.values;
 
+import org.lemonade.exceptions.NotSupportedException;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 /**
  *
  */
 public abstract class GuiNumericalValue<T> extends GuiComparableValue<T> {
 
-    public abstract GuiNumericalValue<?> plus(GuiIntegerValue that);
+    public abstract GuiNumericalValue<?> plus(GuiNumericalValue<?> that);
 
-    public abstract GuiNumericalValue<?> plus(GuiDecimalValue that);
+    public abstract GuiNumericalValue<?> minus(GuiNumericalValue<?> that);
 
-    public abstract GuiNumericalValue<?> plus(GuiMoneyValue that);
+    public abstract GuiNumericalValue<?> product(GuiNumericalValue<?> that);
 
-    public abstract GuiNumericalValue<?> minus(GuiIntegerValue that);
+    public abstract GuiNumericalValue<?> divide(GuiNumericalValue<?> that);
 
-    public abstract GuiNumericalValue<?> minus(GuiDecimalValue that);
+    public abstract GuiNumericalValue<?> add(GuiIntegerValue that);
 
-    public abstract GuiNumericalValue<?> minus(GuiMoneyValue that);
+    public abstract GuiNumericalValue<?> add(GuiDecimalValue that);
 
-    public abstract GuiNumericalValue<?> product(GuiIntegerValue that);
+    public abstract GuiNumericalValue<?> add(GuiMoneyValue that);
 
-    public abstract GuiNumericalValue<?> product(GuiDecimalValue that);
+    public abstract GuiNumericalValue<?> min(GuiIntegerValue that);
 
-    public abstract GuiNumericalValue<?> product(GuiMoneyValue that);
+    public abstract GuiNumericalValue<?> min(GuiDecimalValue that);
 
-    public abstract GuiNumericalValue<?> divide(GuiIntegerValue that);
+    public abstract GuiNumericalValue<?> min(GuiMoneyValue that);
 
-    public abstract GuiNumericalValue<?> divide(GuiDecimalValue that);
+    public abstract GuiNumericalValue<?> prod(GuiIntegerValue that);
 
-    public abstract GuiNumericalValue<?> divide(GuiMoneyValue that);
+    public abstract GuiNumericalValue<?> prod(GuiDecimalValue that);
+
+    public abstract GuiNumericalValue<?> prod(GuiMoneyValue that);
+
+    public abstract GuiNumericalValue<?> div(GuiIntegerValue that);
+
+    public abstract GuiNumericalValue<?> div(GuiDecimalValue that);
+
+    public abstract GuiNumericalValue<?> div(GuiMoneyValue that);
 
     public abstract GuiNumericalValue<?> neg();
 
-    public boolean isInteger() {
-        return false;
-    }
-
-    public boolean isDecimal() {
-        return false;
-    }
-
-    public boolean isMoney() {
-        return false;
-    }
-
-    public GuiValue<?> plus(final GuiNumericalValue<?> that) {
-        if (!that.isDefined()) {
-            return that;
-        } else if (that.isInteger()) {
-            return this.plus((GuiIntegerValue) that);
-        } else if (that.isDecimal()) {
-            return this.plus((GuiDecimalValue) that);
-        } else if (that.isMoney()) {
-            return this.plus((GuiMoneyValue) that);
-        } else {
-            return new GuiUndefinedValue();
-        }
-    }
-
-    public GuiValue<?> product(final GuiNumericalValue<?> that) {
-        if (!that.isDefined()) {
-            return that;
-        } else if (!that.isDefined()) {
-            return that;
-        } else if (that.isInteger()) {
-            return this.product((GuiIntegerValue) that);
-        } else if (that.isDecimal()) {
-            return this.product((GuiDecimalValue) that);
-        } else if (that.isMoney()) {
-            return this.product((GuiMoneyValue) that);
-        } else {
-            return new GuiUndefinedValue();
-        }
-    }
-
-    public GuiValue<?> minus(final GuiNumericalValue<?> that) {
-        if (!that.isDefined()) {
-            return that;
-        } else if (that.isInteger()) {
-            return this.minus((GuiIntegerValue) that);
-        } else if (that.isDecimal()) {
-            return this.minus((GuiDecimalValue) that);
-        } else if (that.isMoney()) {
-            return this.minus((GuiMoneyValue) that);
-        } else {
-            return new GuiUndefinedValue();
-        }
-    }
-
-    public GuiValue<?> divide(final GuiNumericalValue<?> that) {
-        if (!that.isDefined()) {
-            return that;
-        } else if (that.isInteger()) {
-            return this.divide((GuiIntegerValue) that);
-        } else if (that.isDecimal()) {
-            return this.divide((GuiDecimalValue) that);
-        } else if (that.isMoney()) {
-            return this.divide((GuiMoneyValue) that);
-
-        } else {
-            return new GuiUndefinedValue();
-        }
-    }
 }

@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.lemonade.exceptions.NotSupportedException;
 import org.lemonade.gui.values.*;
 
 
@@ -69,10 +70,10 @@ public class EvaluateTest {
 
     @Test
     public void testNumericPlus() {
-        GuiIntegerValue onePlusTwo = one.plus(two);
-        GuiDecimalValue onePlusOnePointFive = one.plus(onePointFive);
-        GuiMoneyValue onePlusOneFifty = one.plus(oneFifty);
-        GuiNumericalValue<?> onePlusOnePointTwo = (GuiNumericalValue<?>) one.plus(onePointTwo);
+        GuiNumericalValue<?> onePlusTwo = one.plus(two);
+        GuiNumericalValue<?> onePlusOnePointFive = one.plus(onePointFive);
+        GuiNumericalValue<?> onePlusOneFifty = one.plus(oneFifty);
+        GuiNumericalValue<?> onePlusOnePointTwo =  one.plus(onePointTwo);
 
         assertThat(onePlusTwo.getValue()).isEqualTo(3);
         assertThat(onePlusTwo).isInstanceOf(GuiIntegerValue.class);
@@ -89,9 +90,9 @@ public class EvaluateTest {
 
     @Test
     public void testNumericMinus() {
-        GuiIntegerValue twoMinusOne = two.minus(one);
-        GuiDecimalValue twoMinusOnePointFive = two.minus(onePointFive);
-        GuiMoneyValue twoMinusOneFifty = two.minus(oneFifty);
+        GuiNumericalValue<?> twoMinusOne = two.minus(one);
+        GuiNumericalValue<?> twoMinusOnePointFive = two.minus(onePointFive);
+        GuiNumericalValue<?> twoMinusOneFifty = two.minus(oneFifty);
         GuiNumericalValue<?> twoMinusOnePointTwo = (GuiNumericalValue<?>) two.minus(onePointTwo);
 
         assertThat(twoMinusOne.getValue()).isEqualTo(1);
@@ -109,10 +110,13 @@ public class EvaluateTest {
 
     @Test
     public void testNumericProduct() {
-        GuiNumericalValue<?> result = (GuiNumericalValue<?>) two.product(onePointTwo);
+        GuiNumericalValue<?> result = two.product(onePointTwo);
         assertThat(result).isInstanceOf(GuiDecimalValue.class);
 
-        GuiNumericalValue<?> result2 = result.product(two);
+        GuiNumericalValue<?> result2 = null;
+
+        result2 = (GuiNumericalValue<?>) result.product(two);
+
         assertThat(result2).isInstanceOf(GuiDecimalValue.class);
         assertThat(result2.getValue()).isEqualTo(4.8);
     }
