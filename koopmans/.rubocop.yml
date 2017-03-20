@@ -8,3 +8,9 @@ Metrics/LineLength:
 
 Metrics/ModuleLength:
   Enabled: false
+
+Documentation:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false

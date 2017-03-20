@@ -10,10 +10,10 @@ module QL
     describe FormBuilder do
       let(:form_builder) { FormBuilder.new }
       let(:question) { Question.new(StringLiteral.new('Did you sell a house in 2010?'), Variable.new('hasSoldHouse'), BooleanType.new) }
-      let(:computed_question) { ComputedQuestion.new(StringLiteral.new('Did you sell a house in 2010?'), Variable.new('hasSoldHouse'), MoneyType.new, IntegerLiteral.new(1))}
+      let(:computed_question) { ComputedQuestion.new(StringLiteral.new('Did you sell a house in 2010?'), Variable.new('hasSoldHouse'), MoneyType.new, IntegerLiteral.new(1)) }
       let(:condition) { BooleanLiteral.new(true) }
-      let(:if_statement) { IfStatement.new(condition, [question])}
-      let(:if_else_statement) { IfElseStatement.new(condition, [question], [question])}
+      let(:if_statement) { IfStatement.new(condition, [question]) }
+      let(:if_else_statement) { IfElseStatement.new(condition, [question], [question]) }
 
       context 'ast with one question' do
         it 'has only one question frame' do
