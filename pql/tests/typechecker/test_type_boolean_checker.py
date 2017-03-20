@@ -340,7 +340,7 @@ class TestBooleanTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 1, "This cases is supposed to fail: following errors {}"
+        self.assertEqual(len(type_checker_result), 0, "This cases is not supposed to fail: following errors {}"
                          .format(type_checker_result))
 
     def test_boolean_equality_boolean_and_boolean(self):
@@ -360,7 +360,7 @@ class TestBooleanTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 1, "This cases is supposed to fail: following errors {}"
+        self.assertEqual(len(type_checker_result), 0, "This cases is not supposed to fail: following errors {}"
                          .format(type_checker_result))
 
     def test_boolean_equality_boolean_and_money(self):
@@ -370,7 +370,7 @@ class TestBooleanTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 1, "This cases is supposed to fail: following errors {}"
+        self.assertEqual(len(type_checker_result), 0, "This cases is not supposed to fail: following errors {}"
                          .format(type_checker_result))
 
     def test_boolean_inequality_boolean_and_integer(self):
@@ -380,7 +380,7 @@ class TestBooleanTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 1, "This cases is supposed to fail: following errors {}"
+        self.assertEqual(len(type_checker_result), 0, "This cases is not supposed to fail: following errors {}"
                          .format(type_checker_result))
 
     def test_boolean_inequality_boolean_and_boolean(self):
@@ -400,7 +400,7 @@ class TestBooleanTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 1, "This cases is not supposed to fail: following errors {}"
+        self.assertEqual(len(type_checker_result), 0, "This cases is not supposed to fail: following errors {}"
                          .format(type_checker_result))
 
     def test_boolean_inequality_boolean_and_money(self):
@@ -410,7 +410,7 @@ class TestBooleanTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 1, "This cases is supposed to fail: following errors {}"
+        self.assertEqual(len(type_checker_result), 0, "This cases is not supposed to fail: following errors {}"
                          .format(type_checker_result))
 
     def test_boolean_greater_inclusive_boolean_and_integer(self):
