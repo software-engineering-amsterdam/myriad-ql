@@ -54,10 +54,25 @@ module QL
         evaluate_types(left, right, [AST::IntegerType, AST::MoneyType], AST::IntegerType.new)
       end
 
-      # def visit_negation(negation)
-      #   expression = negation.expression.accept(self)
-      #   negation.eval_type(expression)
-      # end
+      def visit_boolean_expression(left, binary_expression)
+        left = left.accept(self)
+        right = binary_expression.expression.accept(self)
+        evaluate_types(left, right, [AST::BooleanType], AST::BooleanType.new)
+      end
+
+      def visit_comparison_equal_expression(left, binary_expression)
+        left = left.accept(self)
+        right = binary_expression.expression.accept(self)
+        evaluate_types(left, right, [AST::BooleanType, AST::IntegerType, AST::MoneyType, AST::StringType], AST::BooleanType.new)
+      end
+
+      def visit_comparison_order_expression(left, binary_expression)
+        left = left.accept(self)
+        right = binary_expression.expression.accept(self)
+        evaluate_types(left, right, [AST::IntegerType, AST::MoneyType], AST::BooleanType.new)
+      end
+
+
 
       def visit_boolean_negation(integer_negation)
         expression_type = integer_negation.expression.accept(self)

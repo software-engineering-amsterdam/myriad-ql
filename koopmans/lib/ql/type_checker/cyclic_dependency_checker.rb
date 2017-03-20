@@ -51,9 +51,21 @@ module QL
         binary_expression.expression.accept(self)
       end
 
-      # def visit_literal(literal)
-      #   literal
-      # end
+      def visit_boolean_expression(left, binary_expression)
+        left.accept(self)
+        binary_expression.expression.accept(self)
+      end
+
+      def visit_comparison_equal_expression(left, binary_expression)
+        left.accept(self)
+        binary_expression.expression.accept(self)
+      end
+
+      def visit_comparison_order_expression(left, binary_expression)
+        left.accept(self)
+        binary_expression.expression.accept(self)
+      end
+
 
       def visit_integer_literal(integer_literal)
         integer_literal
