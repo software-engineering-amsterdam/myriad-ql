@@ -172,7 +172,8 @@ public class GrammarListener extends QLGrammarBaseListener {
     public void exitBinaryExpression(BinaryExpressionContext ctx) {
         super.exitBinaryExpression(ctx);
         Operator operator = createOperator(ctx.op);
-        ExpressionNode booleanExpressionNode = new BinaryExpressionNode(popCachedCondition(), operator, popCachedCondition(), createSourceInfo(ctx));
+        ExpressionNode rightExpressionNode = popCachedCondition();
+        ExpressionNode booleanExpressionNode = new BinaryExpressionNode(popCachedCondition(), operator, rightExpressionNode, createSourceInfo(ctx));
         addToStack(booleanExpressionNode);
     }
 

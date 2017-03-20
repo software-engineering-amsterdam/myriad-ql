@@ -14,11 +14,11 @@ public class BinaryExpressionNode extends ExpressionNode {
     private final Operator mOperator;
     private final ExpressionNode mRight;
 
-    public BinaryExpressionNode(ExpressionNode right, Operator operator, ExpressionNode left, SourceInfo sourceInfo) {
+    public BinaryExpressionNode(ExpressionNode left, Operator operator, ExpressionNode right, SourceInfo sourceInfo) {
         super(sourceInfo);
-        mRight = right;
-        mOperator = operator;
         mLeft = left;
+        mOperator = operator;
+        mRight = right;
     }
 
     @Override
