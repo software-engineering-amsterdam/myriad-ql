@@ -4,39 +4,20 @@ import org.uva.taxfree.model.node.declarations.DeclarationNode;
 import org.uva.taxfree.model.types.Type;
 
 public class Declaration {
-    private Value mValue;
+    private String mValue;
     private DeclarationNode mNode;
 
     public Declaration(DeclarationNode node) {
-        mValue = new NullValue();
+        mValue = "";
         mNode = node;
     }
 
-
     public String getValue() {
-        return mValue.getValue();
+        return mValue.isEmpty() ? mNode.defaultValue() : mValue;
     }
 
-    public void setValue(boolean boolValue) {
-        if (mValue.isUninitialized()) {
-            mValue = new BoolValue(boolValue);
-        }
-        mValue.setValue(boolValue);
-    }
-
-    public void setValue(int intValue) {
-        if (mValue.isUninitialized()) {
-            mValue = new IntValue(intValue);
-        }
-        mValue.setValue(intValue);
-    }
-
-    public void setValue(String stringValue) {
-        if (mValue.isUninitialized()) {
-            mValue = new StringValue(stringValue);
-        }
-        mValue.setValue(stringValue);
-
+    public void setValue(String value) {
+        mValue = value;
     }
 
     @Override
