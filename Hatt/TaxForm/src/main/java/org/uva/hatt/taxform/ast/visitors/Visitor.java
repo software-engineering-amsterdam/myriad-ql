@@ -17,7 +17,6 @@ import org.uva.hatt.taxform.ast.nodes.types.String;
 
 public interface Visitor<T> {
     T visit(Form node);
-    T visit(FormId node);
     T visit(Question node);
     T visit(ComputedQuestion node);
     T visit(IfThen node);
