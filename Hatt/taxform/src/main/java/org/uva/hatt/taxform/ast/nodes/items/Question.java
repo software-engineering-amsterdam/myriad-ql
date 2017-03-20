@@ -1,10 +1,9 @@
 package org.uva.hatt.taxform.ast.nodes.items;
 
-import org.uva.hatt.taxform.ast.nodes.ASTNode;
 import org.uva.hatt.taxform.ast.nodes.types.ValueType;
 import org.uva.hatt.taxform.ast.visitors.Visitor;
 
-public class Question extends ASTNode implements Item{
+public class Question extends Item{
 
     private final String question;
     private final String value;
@@ -38,6 +37,7 @@ public class Question extends ASTNode implements Item{
                 '}';
     }
 
+    @Override
     public <T> T accept(Visitor<T> visitor){
         return visitor.visit(this);
     }

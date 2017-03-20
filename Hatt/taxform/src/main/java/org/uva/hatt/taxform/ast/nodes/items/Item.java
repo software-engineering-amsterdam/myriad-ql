@@ -1,7 +1,9 @@
 package org.uva.hatt.taxform.ast.nodes.items;
 
-import org.uva.hatt.taxform.ast.visitors.Visitor;
+import org.uva.hatt.taxform.ast.nodes.ASTNode;
 
-public interface Item {
-    <T> T accept(Visitor<T> visitor);
+public abstract class Item extends ASTNode{
+    public Item(int lineNumber) {
+        super(lineNumber);
+    }
 }
