@@ -28,6 +28,12 @@ public class GuiBooleanElement implements GuiElement {
     }
 
     @Override
+    public void clear() {
+        ((GuiBooleanValue) value).update(false);
+        checkBox.setSelected(false);
+    }
+
+    @Override
     public Control getWidget() {
         return checkBox;
     }

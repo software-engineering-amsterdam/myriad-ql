@@ -24,10 +24,6 @@ public class GuiQuestion extends GuiBody {
         return identifier;
     }
 
-    public GuiLabelElement getLabelElement() {
-        return labelElement;
-    }
-
     public GuiElement getElement() {
         return element;
     }
@@ -43,7 +39,8 @@ public class GuiQuestion extends GuiBody {
 
     @Override
     public void isVisible(final boolean flag) {
-        labelElement.getWidget().setVisible(flag);
-        element.getWidget().setVisible(flag);
+        element.getWidget().getParent().setVisible(flag);
+        if (!flag)
+            element.clear();
     }
 }

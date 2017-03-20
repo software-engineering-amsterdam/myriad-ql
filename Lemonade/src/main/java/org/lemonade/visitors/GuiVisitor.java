@@ -9,6 +9,7 @@ import org.lemonade.gui.GuiConditional;
 import org.lemonade.gui.GuiExpression;
 import org.lemonade.gui.GuiForm;
 import org.lemonade.gui.GuiQuestion;
+import org.lemonade.gui.QLGui;
 import org.lemonade.gui.elements.GuiBooleanElement;
 import org.lemonade.gui.elements.GuiDateElement;
 import org.lemonade.gui.elements.GuiDecimalElement;
@@ -73,18 +74,12 @@ import org.lemonade.visitors.interfaces.BaseVisitor;
 import org.lemonade.visitors.interfaces.ExpressionVisitor;
 import org.lemonade.visitors.interfaces.TypeVisitor;
 
-import javafx.geometry.Insets;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-
 public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>, ExpressionVisitor<GuiExpression> {
 
-    private GridPane pane;
-    private int rowCount;
+    private QLGui qlGui;
 
-    public GuiVisitor(GridPane pane) {
-        this.pane = pane;
-        this.rowCount = 0;
+    public GuiVisitor(QLGui qlGui) {
+        this.qlGui = qlGui;
     }
 
     @Override
@@ -94,8 +89,8 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
 
         for (Body body : form.getBodies()) {
             bodies.add(body.accept(this));
-            rowCount++;
         }
+
         return new GuiForm(identifier, bodies);
     }
 
@@ -106,24 +101,7 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
         GuiLabelElement labelElement = new GuiLabelElement(question.getLabel());
         GuiQuestion guiQuestion = new GuiQuestion(identifier, labelElement, element);
 
-        final GridPane gridPane = new GridPane();
-        gridPane.setPadding(new Insets(3, 6, 3, 6));
-        //        gridPane.setMaxWidth(560);
-
-        ColumnConstraints col1 = new ColumnConstraints();
-        col1.setPercentWidth(50);
-        ColumnConstraints col2 = new ColumnConstraints();
-        col2.setPercentWidth(50);
-        gridPane.getColumnConstraints().addAll(col1, col2);
-
-        GridPane.setConstraints(labelElement.getWidget(), 0, 0);
-        GridPane.setConstraints(element.getWidget(), 1, 0);
-        gridPane.getChildren().addAll(labelElement.getWidget(), element.getWidget());
-
-        labelElement.getWidget().managedProperty().bind(labelElement.getWidget().visibleProperty());
-        element.getWidget().managedProperty().bind(element.getWidget().visibleProperty());
-
-        pane.addRow(rowCount, gridPane);
+        qlGui.addQuestion(labelElement, element);
 
         return guiQuestion;
     }
@@ -138,6 +116,7 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
         GuiExpression expression = conditional.getCondition().accept(this);
         GuiConditional guiConditional = new GuiConditional(conditionalBodies, expression);
         guiConditional.isVisible(false);
+
         return guiConditional;
     }
 

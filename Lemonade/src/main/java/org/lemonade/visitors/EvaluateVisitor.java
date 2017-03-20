@@ -69,11 +69,9 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
         GuiValue<?> condition = (GuiValue<?>) conditional.getCondition().accept(this);
         if (condition.isDefined() && ((GuiBooleanValue) condition).getValue()) {
             conditional.isVisible(true);
-            for (GuiBody body : conditional.getBodies()) {
-                body.accept(this);
-            }
+            conditional.getBodies().forEach(body -> body.accept(this));
         } else {
-            conditional.isVisible(false);
+            conditional.getBodies().forEach(body -> body.isVisible(false));
         }
     }
 
