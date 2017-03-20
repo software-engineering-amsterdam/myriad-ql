@@ -72,7 +72,7 @@ class Questionnaire(FormVisitor, TypeVisitor):
 
     def trigger_conditional_if(self):
         for if_block_container, node in self.conditional_if_list:
-            result = self.evaluator.expression(node.condition)
+            result = node.condition.apply(self.evaluator)
             cond = (result is not None and result)
             if_block_container.setEnabled(cond)
             if cond:
@@ -82,7 +82,7 @@ class Questionnaire(FormVisitor, TypeVisitor):
 
     def trigger_conditional_if_else(self):
         for if_container, else_container, node in self.conditional_if_else_list:
-            result = self.evaluator.expression(node.condition)
+            result = node.condition.apply(self.evaluator)
             cond = (result is not None and result)
             if_container.setEnabled(cond)
             else_container.setEnabled(not cond)
