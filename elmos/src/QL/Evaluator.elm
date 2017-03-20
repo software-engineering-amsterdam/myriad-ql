@@ -40,13 +40,13 @@ evaluateBinaryExpression op leftValue rightValue =
                 maybeInteger =
                     Maybe.map2 (,) (Values.asInt leftValue) (Values.asInt rightValue)
                         |> Maybe.map (\( l, r ) -> binaryForIntArithmitic arithmetic l r)
-                        |> Maybe.filter (Values.isValidInt)
+                        |> Maybe.filter Values.isValidInt
                         |> Maybe.map Values.int
 
                 maybeFloat =
                     Maybe.map2 (,) (Values.asFloat leftValue) (Values.asFloat rightValue)
                         |> Maybe.map (\( l, r ) -> binaryForFloatArithmitic arithmetic l r)
-                        |> Maybe.filter (Values.isValidFloat)
+                        |> Maybe.filter Values.isValidFloat
                         |> Maybe.map Values.float
             in
                 Maybe.or maybeInteger maybeFloat
