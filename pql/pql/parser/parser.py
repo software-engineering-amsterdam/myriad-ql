@@ -3,7 +3,6 @@ from pyparsing import (Suppress, Literal, Word, alphas, alphanums, nums, opAssoc
                        QuotedString, Optional, Forward, Combine, ParserElement)
 
 from pql.ast import ast
-from pql.typechecker.types import DataTypes
 
 
 def parse(input_string):
@@ -50,14 +49,14 @@ def parse(input_string):
     lit_op_or = Literal("||").setParseAction(lambda _: ast.Or)
 
     type_money = Literal("money").setParseAction(
-        lambda source, position, parsed_tokens: ast.Money(position, source))
+        lambda source, position, _: ast.Money(position, source))
     type_integer = Literal("integer").setParseAction(
-        lambda source, position, parsed_tokens: ast.Integer(position, source))
+        lambda source, position, _: ast.Integer(position, source))
     type_boolean = Literal("boolean").setParseAction(
-        lambda source, position, parsed_tokens: ast.Boolean(position, source))
+        lambda source, position, _: ast.Boolean(position, source))
 
     type_string = Literal("string").setParseAction(
-        lambda source, position, parsed_tokens: ast.String(position, source))
+        lambda source, position, _: ast.String(position, source))
 
     data_types = type_money | type_integer | type_boolean | type_string
 
@@ -116,10 +115,20 @@ def parse(input_string):
     ]
 
     operand_list_string = [
+        (lit_op_multiplication,
+         2, opAssoc.LEFT,
+         lambda source, position, flattened_tokens: flatten_binary_operators(position, source, *flattened_tokens)),
         (lit_op_addition,
          2, opAssoc.LEFT,
          lambda source, position, flattened_tokens: flatten_binary_operators(position, source, *flattened_tokens)),
+        (lit_op_lower_inclusive | lit_op_greater_inclusive | lit_op_greater_exclusive | lit_op_lower_exclusive,
+         2, opAssoc.LEFT,
+         lambda source, position, flattened_tokens: flatten_binary_operators(position, source, *flattened_tokens)),
+        (lit_op_equality | lit_op_inequality,
+         2, opAssoc.LEFT,
+         lambda source, position, flattened_tokens: flatten_binary_operators(position, source, *flattened_tokens)),
     ]
+
 
     operator_precendence = infixNotation(
         operand_bool,
@@ -181,6 +190,8 @@ def parse(input_string):
     body.addParseAction(lambda parsed_tokens: [parsed_tokens.asList()])
     body.setResultsName('statement_list')
 
-    form = (lit_form + name + body).addParseAction(lambda parsed_tokens: ast.Form(*parsed_tokens)).\
-        setResultsName('form')
+    form = (lit_form + name + body)\
+        .addParseAction(lambda parsed_tokens: ast.Form(*parsed_tokens))\
+        .setResultsName('form')\
+        .parseWithTabs()
     return form.parseString(input_string).form
