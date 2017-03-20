@@ -50,14 +50,14 @@ def parse(input_string):
     lit_op_or = Literal("||").setParseAction(lambda _: ast.Or)
 
     type_money = Literal("money").setParseAction(
-        lambda source, position, parsed_tokens: ast.Money(position, source, DataTypes.money))
+        lambda source, position, parsed_tokens: ast.Money(position, source))
     type_integer = Literal("integer").setParseAction(
-        lambda source, position, parsed_tokens: ast.Integer(position, source, DataTypes.integer))
+        lambda source, position, parsed_tokens: ast.Integer(position, source))
     type_boolean = Literal("boolean").setParseAction(
-        lambda source, position, parsed_tokens: ast.Boolean(position, source, DataTypes.boolean))
+        lambda source, position, parsed_tokens: ast.Boolean(position, source))
 
     type_string = Literal("string").setParseAction(
-        lambda source, position, parsed_tokens: ast.String(position, source, DataTypes.string))
+        lambda source, position, parsed_tokens: ast.String(position, source))
 
     data_types = type_money | type_integer | type_boolean | type_string
 

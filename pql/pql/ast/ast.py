@@ -2,6 +2,10 @@
 
 from pyparsing import lineno
 
+from pql.typechecker.boolean_type_checker import BooleanTypeChecker
+from pql.typechecker.integer_type_checker import IntegerTypeChecker
+from pql.typechecker.money_type_checker import MoneyTypeChecker
+from pql.typechecker.string_type_checker import StringTypeChecker
 from pql.typechecker.types import DataTypes
 
 
@@ -223,47 +227,47 @@ class Value(Node):
 
 
 class Integer(Value):
-    def __init__(self, position, source, value):
+    def __init__(self, position, source, value=0):
         super(Integer, self).__init__("integer", position, source, value, DataTypes.integer)
 
     def apply(self, visitor):
         return visitor.integer(self)
 
-    def default_value(self):
-        return int(0)
+    def checker(self):
+        return IntegerTypeChecker()
 
 
 class Boolean(Value):
-    def __init__(self, position, source, value):
+    def __init__(self, position, source, value=False):
         super(Boolean, self).__init__("boolean", position, source, value, DataTypes.boolean)
 
     def apply(self, visitor):
         return visitor.boolean(self)
 
-    def default_value(self):
-        return False
+    def checker(self):
+        return BooleanTypeChecker()
 
 
 class Money(Value):
-    def __init__(self, position, source, value):
+    def __init__(self, position, source, value=0.00):
         super(Money, self).__init__("money", position, source, value, DataTypes.money)
 
     def apply(self, visitor):
         return visitor.money(self)
 
-    def default_value(self):
-        return float(0.00)
+    def checker(self):
+        return MoneyTypeChecker(self)
 
 
 class String(Value):
-    def __init__(self, position, source, value):
+    def __init__(self, position, source, value=''):
         super(String, self).__init__("string", position, source, value, DataTypes.string)
 
     def apply(self, visitor):
         return visitor.string(self)
 
-    def default_value(self):
-        return ""
+    def checker(self):
+        return StringTypeChecker()
 
 
 class Identifier(Node):
