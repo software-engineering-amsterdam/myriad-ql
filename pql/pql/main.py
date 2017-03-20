@@ -14,9 +14,10 @@ if __name__ == '__main__':
 
 # TODO: Error messages aan parser toevoegen
 # TODO: duplicate labels (warning)
-# TODO: Environment een class maken en een update value methode geven $$
+# TODO: NICE TO HAVE Highlight betreffende error line
+# TODO: QLS
 # NICE TO HAVES ---------------------------------
-# TODO: NICE TO HAVE Dynamic types in operators ipv python operators
+# TODO: Environment een class maken en een update value methode geven $$
 # TODO: Export of values ?
 # TODO: Make all fields mandatory
-# TODO: NICE TO HAVE Highlight betreffende error line
+# TODO: NICE TO HAVE Dynamic types in operators ipv python operators
