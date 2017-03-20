@@ -66,13 +66,6 @@ public class ConditionEvaluator implements FormVisitor<List<Question>, ValueTabl
     }
 
     private boolean evaluateIfCondition(Expression expression, ValueTable valueTable) {
-        Value value = expressionEvaluator.evaluate(expression, valueTable);
-
-        if (value instanceof UnknownValue) {
-            return false;
-        }
-
-        return (Boolean) value.getPlainValue();
+        return expressionEvaluator.evaluate(expression, valueTable).toBoolean();
     }
-
 }

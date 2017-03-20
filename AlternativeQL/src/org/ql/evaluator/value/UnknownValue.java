@@ -19,6 +19,11 @@ public class UnknownValue extends Value {
     }
 
     @Override
+    public boolean toBoolean() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return "";
     }
