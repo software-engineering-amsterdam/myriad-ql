@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.declarations.DeclarationNode;
 import org.uva.taxfree.ql.model.types.BooleanType;
+import org.uva.taxfree.ql.model.types.IntegerType;
 
 import java.io.File;
 
@@ -38,4 +39,16 @@ public class SymbolTableTest extends SemanticsTester {
     protected File testFile(String fileName) {
         return new File("forms\\" + fileName);
     }
+
+    @Test
+    public void testWritingAndReading() throws Exception {
+        String variableId = "intDecl";
+        Assert.assertFalse(mSymbolTable.contains(variableId), "empty table should not contain anything");
+        mSymbolTable.addDeclaration(new DeclarationNode("newDeclaration", variableId, new IntegerType()));
+        Assert.assertTrue(mSymbolTable.contains(variableId), "newly added declaration should be present");
+        Assert.assertEquals(mSymbolTable.resolveValue(variableId), "0", "Expect default value");
+        mSymbolTable.updateValue(variableId, "30");
+        Assert.assertEquals(mSymbolTable.resolveValue(variableId), "30", "Expect new value");
+    }
+
 }
