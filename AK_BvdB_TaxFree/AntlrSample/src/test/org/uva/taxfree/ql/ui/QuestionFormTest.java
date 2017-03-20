@@ -75,10 +75,13 @@ public class QuestionFormTest {
         BinaryExpressionNode expCalc = new BinaryExpressionNode(variableSold, new SubtractOperator(), variableBought, mEmptySource);
         CalculationNode intCalc = new CalculationNode("Money balance:", "moneyBalance", new IntegerType(), expCalc, mEmptySource);
 
-//        Assert.assertEquals(expCalc.resolveValue(), "(0-0)", "Nodes should have ability to resolveValue data");
-        Assert.assertEquals(expCalc.evaluate(), "0", "Nodes should be able to calculate the result");
         add(intCalc);
-        expCalc.evaluate();
+        add(expCalc);
+
+        mSymbolTable.updateValue("soldHouseValue", "100000");
+        mSymbolTable.updateValue("boughtHouseValue", "50000");
+
+        Assert.assertEquals(intCalc.resolveValue(), "50000", "100k - 50k = 50k");
     }
 
     @Test
