@@ -21,14 +21,15 @@ import qls.ast.Stylesheet;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		String tmp = "stylesheet taxOfficeExample "
-				 + "page Housing { "
-				 + "section \"Buying\" "
-				 + "question hasBoughtHouse "
-				 + "widget checkbox "
-		 		 + "section \"Loaning\" "
-				 + "question hasMaintLoan "
-				 + "default boolean widget radio(\"Yes\", \"No\") "
+		String tmp = "stylesheet taxOfficeExample \n"
+				 + "page Housing { \n"
+				 + "section \"Buying\" \n"
+				 + "question Name0 \n"
+				 + "widget checkbox \n"
+		 		 + "section \"Loaning\" \n"
+				 + "question Name1 \n"
+		 		 + "default boolean widget checkbox"
+				 // + "default boolean widget radio(\"Yes\", \"No\") \n"
 				 + "}";
 		
 		ANTLRInputStream input = new ANTLRInputStream( tmp );
@@ -53,10 +54,9 @@ public class Main {
 		analyzer.analyze(stylesheet);
 		
 		messages.addAll(analyzer.getMessages());
-		
+
 		Questionnaire questionnaire = new Questionnaire();
 		questionnaire.main(form, referenceTable, messages);
-
 	}
 	
 

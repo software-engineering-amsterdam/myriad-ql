@@ -51,7 +51,7 @@ public class VerifyQuestions implements StylesheetVisitor {
 		
 		if (environment.isCovered(question.getName())) {
 			environment.getMessages().add(new Error("The variable " + question.getName() + 
-			" is already defined int the QLS", question.getLine()));
+			" is already defined in the QLS", question.getLine()));
 		}
 		
 		environment.setCovered(question.getName());

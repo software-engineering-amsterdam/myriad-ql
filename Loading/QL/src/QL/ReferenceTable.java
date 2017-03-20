@@ -1,6 +1,5 @@
 package QL;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -27,8 +26,7 @@ public class ReferenceTable implements Iterable<String> {
 		return variableType.containsKey(variable);
 	}
 	
-	public Iterator<String> iterator() {
-		
+	public Iterator<String> iterator() {		
 		return variableType.keySet().iterator();
         
 	}

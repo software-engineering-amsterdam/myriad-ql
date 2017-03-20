@@ -21,7 +21,6 @@ public class Analyzer {
 		VerifyQuestions verifyQuestions = new VerifyQuestions(environment);
 		verifyQuestions.visit(stylesheet);
 		
-		// return environment.getFaults();
 	}
 	
 	public List<Message> getMessages() {

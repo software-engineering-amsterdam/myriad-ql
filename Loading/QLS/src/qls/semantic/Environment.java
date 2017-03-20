@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import QL.ReferenceTable;
-import QL.ast.type.Type;
-import QL.message.Message;
 import QL.message.Error;
+import QL.message.Message;
 
 class Environment {
 	
@@ -36,7 +35,7 @@ class Environment {
 	}
 	
 	public boolean isCovered(String name) {
-		return variableCovered.containsKey(name);
+		return variableCovered.get(name);
 	}
 	
 	public void setCovered(String name) {
