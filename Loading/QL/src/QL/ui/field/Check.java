@@ -18,15 +18,7 @@ public class Check implements Field {
 		
 		field.setSelected(value.getValue());
 		
-		field.selectedProperty().addListener(new ChangeListener<Boolean>()  {
-	           
-			@Override
-           public void changed(ObservableValue<? extends Boolean> observable,
-                               Boolean oldValue, Boolean newValue) {
-				
-				notifier.updateQuestionnaire(name, new BoolValue(newValue));
-            }
-		});
+		field.selectedProperty().addListener((observable, oldValue, newValue) -> notifier.updateQuestionnaire(name, new BoolValue(newValue)));
 	}
 	
 	@Override

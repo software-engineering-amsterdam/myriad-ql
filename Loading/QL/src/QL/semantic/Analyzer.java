@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Analyzer {
 
-	private Environment environment;
+	private final Environment environment;
 
 	public Analyzer() {
 		this.environment = new Environment();

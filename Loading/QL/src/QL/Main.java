@@ -10,7 +10,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		String tmp = "form Testing { "
 				 + "Name0: \"Question0\" integer "
-				 + "Name0: \"Question1\" boolean "
+				 + "Name1: \"Question1\" boolean "
 				 + "if (Name0 < 5) {"
 				 + "if (Name0 == 4) {"
  		 		 + "Name2: \"Question2\" boolean"

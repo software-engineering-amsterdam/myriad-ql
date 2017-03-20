@@ -1,6 +1,5 @@
 package QL.semantic;
 
-import QL.semantic.Environment;
 import QL.ast.*;
 import QL.ast.type.Type;
 import QL.message.Error;
@@ -55,14 +54,14 @@ public class VerifyQuestions implements FormVisitor {
 	
 	@Override
 	public void visit(Question question) {
-		checkVariableType(question.getVariable(), question.getType(), question.getLine());
-		checkLabel(question.getLabel(), question.getVariable(), question.getLine());
+		checkDuplicateId(question.getVariable(), question.getType(), question.getLine());
+		checkDuplicateLabel(question.getLabel(), question.getVariable(), question.getLine());
 	}
 
 	@Override
 	public void visit(ComputedQuestion question) {
-		checkVariableType(question.getVariable(), question.getType(), question.getLine());
-		checkLabel(question.getLabel(), question.getVariable(), question.getLine());
+		checkDuplicateId(question.getVariable(), question.getType(), question.getLine());
+		checkDuplicateLabel(question.getLabel(), question.getVariable(), question.getLine());
 	}
 
 	private void addLabel(String label, String variableName) {
@@ -73,7 +72,7 @@ public class VerifyQuestions implements FormVisitor {
 		return labelVariable.containsKey(label);
 	}
 
-	private void checkLabel(String label, String variableName, int line) {
+	private void checkDuplicateLabel(String label, String variableName, int line) {
 		if (labelExists(label)) {
 		    environment.addMessage(new Warning("The question: " + label +
                     " exists twice in the questionnaire", line));
@@ -82,7 +81,7 @@ public class VerifyQuestions implements FormVisitor {
 	}
 
 
-	private void checkVariableType(String variable, Type type, int line) {
+	private void checkDuplicateId(String variable, Type type, int line) {
 
 		if (environment.getReferenceTable().variableExists(variable)) {
 			environment.addMessage(new Error("The variable " + variable + " cannot be added, because it is "

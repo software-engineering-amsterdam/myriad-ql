@@ -268,11 +268,11 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 		check(expected, rhs);
 	}
 
-    private void check(Type expected, Type current) {
-    	if (!expected.equals(current)) {
-        	environment.addMessage(new Error("The type " + current.getKeyWord()
+    private void check(Type expected, Type actual) {
+    	if (!expected.equals(actual)) {
+        	environment.addMessage(new Error("The type " + actual.getKeyWord()
         	+ " is not of the expected type: "
-    		+ expected.getKeyWord(), current.getLine()));
+    		+ expected.getKeyWord(), actual.getLine()));
         }
     }
 

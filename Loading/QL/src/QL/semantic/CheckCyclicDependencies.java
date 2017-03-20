@@ -44,7 +44,7 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
 
     private final Map<String, List<String>> dependencies ;
 
-    public CheckCyclicDependencies(Environment environment) {
+    CheckCyclicDependencies(Environment environment) {
         this.environment = environment;
         dependencies = new HashMap<>();
     }
@@ -229,9 +229,9 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
     private void check() {
         List<String> references = getReferences(current.getVariable());
 
-        for (String reference: references) {
+        for (String reference : references) {
             List<String> cycleReferences = getReferences(reference);
-            if (cycleReferences != null && cycleReferences.contains(current.getVariable())) {
+            if (!cycleReferences.isEmpty() && cycleReferences.contains(current.getVariable())) {
             	environment.addMessage(new Error("There is a cyclic dependency in "
             			+ "the computed questions " + current.getVariable() + " and " + reference, 
             			current.getLine()));
@@ -256,7 +256,7 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
         if (dependencies.containsKey(name)) {
             return dependencies.get(name);
         } else {
-            return null;
+            return new ArrayList<>();
         }
     }
 

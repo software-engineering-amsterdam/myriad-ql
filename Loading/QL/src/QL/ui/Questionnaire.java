@@ -11,7 +11,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -86,15 +85,13 @@ public class Questionnaire extends Application implements Notifier {
         return isFatalMessage;
     }
 
-    private GridPane initGrid() {
+    private void initGrid() {
     	
         grid = new GridPane();
         grid.setAlignment(Pos.TOP_LEFT);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
-        
-        return grid;
     }
 
     private void renderQuestionnaire() {
@@ -115,14 +112,7 @@ public class Questionnaire extends Application implements Notifier {
         Text actiontarget = new Text();
         grid.add(actiontarget, 1, activeQuestions.size() + 2);
     	
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent e) {
-            	
-            	complete(activeQuestions, actiontarget);
-            }
-        });
+        btn.setOnAction(e -> complete(activeQuestions, actiontarget));
     }
     
     private void complete(List<Row> activeQuestions, Text actiontarget) {

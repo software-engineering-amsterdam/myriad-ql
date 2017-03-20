@@ -68,7 +68,7 @@ class VerifyQuestionnaireTest {
     }
 
 
-    public Form createForm(String file) throws IOException {
+    private Form createForm(String file) throws IOException {
         InputStream src = new FileInputStream(file);
         ANTLRInputStream input = new ANTLRInputStream(src);
 
@@ -77,7 +77,6 @@ class VerifyQuestionnaireTest {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
 
         QLParser parser = new QLParser(tokens);
-        Form form = parser.form().result;
-        return form;
+        return parser.form().result;
     }
 }
