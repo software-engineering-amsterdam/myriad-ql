@@ -6,9 +6,8 @@ module Prophet
       # We want to use Enumerable's implementation of select, ...
       prepend Enumerable
 
-      def visit(visitor, parent = nil)
-        visitor.send(method_name, self, parent)
-        children.each { |child| child.visit(visitor, self) }
+      def visit(visitor)
+        visitor.send(method_name, self)
       end
 
       # def walk(&block)
