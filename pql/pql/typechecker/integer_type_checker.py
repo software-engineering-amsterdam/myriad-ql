@@ -16,7 +16,7 @@ class IntegerTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
         return None
 
     def multiplication(self, node):
-        if is_number_type(node.data_type) or node.data_type is DataTypes.string:
+        if is_number_type(node.data_type):
             return node
         return None
 

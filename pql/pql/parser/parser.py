@@ -77,17 +77,13 @@ def parse(input_string):
             lambda source, position, parsed_tokens:
                 ast.String(position, source, str(parsed_tokens[0])))
 
-    # TODO: (by Adrian) I have deleted the 'reserved_words' out of the 'name' because of its incompatibility with the reserved words being in the name of the form. Let's discuss about this.
     reserved_words = (lit_form | lit_if | lit_else | boolean | number | data_types)
 
-    name = Word(alphas, alphanums + '_').setResultsName(
+    name = ~reserved_words + Word(alphas, alphanums + '_').setResultsName(
         'identifier').setParseAction(
         lambda source, position, parsed_tokens: ast.Identifier(position, source, parsed_tokens[0]))
 
-    operand_arith = (number | name | string)
-    operand_bool = (boolean | operand_arith)
-    # TODO: (by Adrian) 'operand_string' seem to be not needed anymore
-    operand_string = (operand_arith | string)
+    operand_arith = (number | boolean | name | string)
 
     operand_list_arith = [
         (lit_op_positive | lit_op_negative | lit_op_not,
@@ -116,40 +112,15 @@ def parse(input_string):
          lambda source, position, flattened_tokens: flatten_binary_operators(position, source, *flattened_tokens)),
     ]
 
-    operand_list_string = [
-        (lit_op_multiplication,
-         2, opAssoc.LEFT,
-         lambda source, position, flattened_tokens: flatten_binary_operators(position, source, *flattened_tokens)),
-        (lit_op_addition,
-         2, opAssoc.LEFT,
-         lambda source, position, flattened_tokens: flatten_binary_operators(position, source, *flattened_tokens)),
-        (lit_op_lower_inclusive | lit_op_greater_inclusive | lit_op_greater_exclusive | lit_op_lower_exclusive,
-         2, opAssoc.LEFT,
-         lambda source, position, flattened_tokens: flatten_binary_operators(position, source, *flattened_tokens)),
-        (lit_op_equality | lit_op_inequality,
-         2, opAssoc.LEFT,
-         lambda source, position, flattened_tokens: flatten_binary_operators(position, source, *flattened_tokens)),
-    ]
-
-
-    operator_precendence = infixNotation(
-        operand_bool,
-        (operand_list_arith + operand_list_bool)
-    )
-
-    string_precedence = infixNotation(
+    literal_precedence = infixNotation(
         operand_arith,
         (operand_list_arith + operand_list_bool)
     )
 
     expression = \
         OneOrMore(
-            operator_precendence |
-            string_precedence |
-            (lit_l_paren +
-             (operator_precendence |
-              string_precedence) +
-             lit_r_paren)
+            literal_precedence |
+            (lit_l_paren + literal_precedence + lit_r_paren)
         )
 
     field = Forward()

@@ -12,8 +12,7 @@ class StringTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
         return None
 
     def multiplication(self, node):
-        if node.data_type is DataTypes.integer:
-            return node
+        return None
 
     def addition(self, node):
         if node.data_type is DataTypes.string:
@@ -61,6 +60,6 @@ class StringTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
         return None
 
     def assignment(self, node):
-        if node is not None and ((node.data_type is DataTypes.string) or (node.data_type is DataTypes.integer)):
+        if node is not None and (node.data_type is DataTypes.string):
             return node
         return None

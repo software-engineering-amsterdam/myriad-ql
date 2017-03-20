@@ -292,3 +292,54 @@ class TestParser(TestCase):
         }
         """
         self.assertIsNotNone(parse(input_string))
+
+    def test_parse_form_name_reserved_1(self):
+        input_string = """
+        form form {
+            "Value residue:" valueResidue: money = 100.00
+        }
+        """
+        with self.assertRaises(ParseException):
+            parse(input_string)
+            self.fail('form is reserved')
+
+    def test_parse_form_name_reserved_2(self):
+        input_string = """
+        form if {
+            "Value residue:" valueResidue: money = 100.00
+        }
+        """
+        with self.assertRaises(ParseException):
+            parse(input_string)
+            self.fail('if is reserved')
+
+    def test_parse_form_name_reserved_3(self):
+        input_string = """
+        form string {
+            "Value residue:" valueResidue: money = 100.00
+        }
+        """
+        with self.assertRaises(ParseException):
+            parse(input_string)
+            self.fail('form is reserved')
+
+
+    def test_parse_form_name_reserved_4(self):
+        input_string = """
+        form else {
+            "Value residue:" valueResidue: money = 100.00
+        }
+        """
+        with self.assertRaises(ParseException):
+            parse(input_string)
+            self.fail('else is reserved')
+
+    def test_parse_form_name_reserved_5(self):
+        input_string = """
+        form "acbc" {
+            "Value residue:" valueResidue: money = 100.00
+        }
+        """
+        with self.assertRaises(ParseException):
+            parse(input_string)
+            self.fail('"" not allowed')

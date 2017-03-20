@@ -130,7 +130,7 @@ class TestStringTypeChecker(Shared):
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
-        self.assertEqual(len(type_checker_result), 0, "This cases is not supposed to fail: following errors {}"
+        self.assertEqual(len(type_checker_result), 1, "This cases is supposed to fail: following errors {}"
                          .format(type_checker_result))
 
     def test_string_multiplication_string_and_boolean(self):
