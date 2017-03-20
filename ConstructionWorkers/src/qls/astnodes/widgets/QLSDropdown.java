@@ -21,26 +21,23 @@ import java.util.List;
 
 public class QLSDropdown extends QLSWidget {
 
+    // TODO: needed?
     private String yesLabel;
     private String noLabel;
 
     public QLSDropdown(String label, String yes, String no, LineNumber lineNumber) {
         super(lineNumber);
-        this.widgetLabel.setText(label);
-        this.yesLabel = yes;
-        this.noLabel = no;
+        widgetLabel.setText(label);
+        yesLabel = yes;
+        noLabel = no;
     }
 
     @Override
-    public void setLabel(String label) {
-        this.widgetLabel.setText(label);
-    }
-
-    @Override
-    public List<Type> getQuestionTypes() {
-        List<Type> supportedTypes = new ArrayList<>();
-        supportedTypes.add(new BooleanType());
-        return supportedTypes;
+    public List<Type> getSupportedQuestionTypes() {
+        List<Type> supportedQuestionTypes = new ArrayList<>();
+        // TODO: also support string type?
+        supportedQuestionTypes.add(new BooleanType());
+        return supportedQuestionTypes;
     }
 
     public <T> T accept(StyleAndWidgetVisitor<T> visitor) {

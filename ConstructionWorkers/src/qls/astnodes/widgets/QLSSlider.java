@@ -24,20 +24,15 @@ public class QLSSlider extends QLSWidget {
 
     public QLSSlider(String label, LineNumber lineNumber) {
         super(lineNumber);
-        this.widgetLabel.setText(label);
+        widgetLabel.setText(label);
     }
 
     @Override
-    public void setLabel(String label) {
-        this.widgetLabel.setText(label);
-    }
-
-    @Override
-    public List<Type> getQuestionTypes() {
-        List<Type> supportedTypes = new ArrayList<>();
-        supportedTypes.add(new IntegerType());
-        supportedTypes.add(new MoneyType());
-        return supportedTypes;
+    public List<Type> getSupportedQuestionTypes() {
+        List<Type> supportedQuestionTypes = new ArrayList<>();
+        supportedQuestionTypes.add(new IntegerType());
+        supportedQuestionTypes.add(new MoneyType());
+        return supportedQuestionTypes;
     }
 
     public <T> T accept(StyleAndWidgetVisitor<T> visitor) {

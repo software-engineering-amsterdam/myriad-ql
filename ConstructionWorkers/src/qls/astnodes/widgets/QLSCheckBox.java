@@ -20,28 +20,25 @@ import qls.visitorinterfaces.StyleAndWidgetVisitor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QLSCheckBox extends QLSWidget{
+public class QLSCheckBox extends QLSWidget {
 
+    // TODO: why is there an empty constructor?
     public QLSCheckBox() {
 
     }
 
     public QLSCheckBox(String label, LineNumber lineNumber) {
         super(lineNumber);
-        this.widgetLabel.setText(label);
+        widgetLabel.setText(label);
     }
 
     @Override
-    public void setLabel(String label) {
-        this.widgetLabel.setText(label);
-    }
-
-    @Override
-    public List<Type> getQuestionTypes() {
-        List<Type> supportedTypes = new ArrayList<>();
-        supportedTypes.add(new StringType());
-        supportedTypes.add(new BooleanType());
-        return supportedTypes;
+    public List<Type> getSupportedQuestionTypes() {
+        List<Type> supportedQuestionTypes = new ArrayList<>();
+        // TODO: support string type?
+        supportedQuestionTypes.add(new StringType());
+        supportedQuestionTypes.add(new BooleanType());
+        return supportedQuestionTypes;
     }
 
     public <T> T accept(StyleAndWidgetVisitor<T> visitor) {

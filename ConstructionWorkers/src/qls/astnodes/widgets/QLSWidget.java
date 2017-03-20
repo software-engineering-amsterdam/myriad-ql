@@ -21,25 +21,27 @@ import java.util.List;
 
 public abstract class QLSWidget extends Node {
 
-    protected JLabel widgetLabel;
+    JLabel widgetLabel;
 
-    public QLSWidget(){
+    // TODO: why is there an empty constructor?
+    public QLSWidget() {
+
     }
 
     public QLSWidget(LineNumber lineNumber) {
         super(lineNumber);
-        this.widgetLabel = new JLabel();
+        widgetLabel = new JLabel();
     }
 
     public void setLabel(String label) {
-        this.widgetLabel.setText(label);
+        widgetLabel.setText(label);
     }
 
-    public abstract List<Type> getQuestionTypes();
-
-    public abstract <T> T accept(StyleAndWidgetVisitor<T> visitor);
+    public abstract List<Type> getSupportedQuestionTypes();
 
     public boolean isUndefined() {
         return false;
     }
+
+    public abstract <T> T accept(StyleAndWidgetVisitor<T> visitor);
 }

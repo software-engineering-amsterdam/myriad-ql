@@ -17,11 +17,11 @@ import ql.astnodes.Node;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Style extends Node{
+public class Style extends Node {
 
     private final List<StyleType> styleTypes;
 
-    public Style(LineNumber lineNumber) {
+    Style(LineNumber lineNumber) {
         super(lineNumber);
         styleTypes = new ArrayList<>();
     }
@@ -32,7 +32,7 @@ public class Style extends Node{
     }
 
     public int getWidth(int styleValue) {
-        for (StyleType styleProperty : this.styleTypes) {
+        for (StyleType styleProperty : styleTypes) {
             if (styleProperty.getName().equals("width")) {
                 return Integer.parseInt(styleProperty.getValue());
             }
@@ -41,7 +41,7 @@ public class Style extends Node{
     }
 
     public String getFont(String styleValue) {
-        for (StyleType styleProperty : this.styleTypes) {
+        for (StyleType styleProperty : styleTypes) {
             if (styleProperty.getName().equals("font")) {
                 return styleProperty.getValue();
             }
@@ -50,7 +50,7 @@ public class Style extends Node{
     }
 
     public int getFontSize(int styleValue) {
-        for (StyleType styleProperty : this.styleTypes) {
+        for (StyleType styleProperty : styleTypes) {
             if (styleProperty.getName().equals("fontsize")) {
                 return Integer.parseInt(styleProperty.getValue());
             }
@@ -59,7 +59,7 @@ public class Style extends Node{
     }
 
     public java.awt.Color getColor(int styleValue) {
-        for (StyleType styleProperty : this.styleTypes) {
+        for (StyleType styleProperty : styleTypes) {
             if (styleProperty.getName().equals("color")) {
                 return new java.awt.Color(Integer.parseInt(styleProperty.getValue()));
             }
@@ -70,5 +70,4 @@ public class Style extends Node{
     public boolean isUndefined() {
         return false;
     }
-
 }

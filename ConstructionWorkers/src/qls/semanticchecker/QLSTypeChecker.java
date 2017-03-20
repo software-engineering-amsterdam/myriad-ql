@@ -53,7 +53,7 @@ public class QLSTypeChecker implements StyleSheetVisitor {
 
             QLSWidget widget = question.getWidget();
             if (!widget.isUndefined()) {
-                List<Type> supportedTypes = widget.getQuestionTypes();
+                List<Type> supportedTypes = widget.getSupportedQuestionTypes();
                 Type questionType = identifierMap.get(question.getName());
 
                 if (questionType != null && !supportedTypes.contains(questionType)) {
@@ -142,7 +142,7 @@ public class QLSTypeChecker implements StyleSheetVisitor {
         QLSWidget widget = question.getWidget();
 
         if (widget.isUndefined()) {
-            List<Type> supportedTypes = currentDefaultWidget.getQuestionTypes();
+            List<Type> supportedTypes = currentDefaultWidget.getSupportedQuestionTypes();
             Type questionType = identifierMap.get(question.getName());
 
             if (questionType != null && !supportedTypes.contains(questionType)) {
@@ -151,5 +151,4 @@ public class QLSTypeChecker implements StyleSheetVisitor {
         }
 
     }
-
 }

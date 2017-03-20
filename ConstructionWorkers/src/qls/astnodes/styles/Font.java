@@ -14,7 +14,7 @@ package qls.astnodes.styles;
 import ql.astnodes.LineNumber;
 import qls.visitorinterfaces.StyleAndWidgetVisitor;
 
-public class Font extends StyleType{
+public class Font extends StyleType {
 
     private static final String NAME = "font";
 

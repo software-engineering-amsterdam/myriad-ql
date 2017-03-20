@@ -47,7 +47,7 @@ public class QLSMessageTest {
         List<Section> sectionList = new ArrayList<>();
         sectionList.add(testSection);
 
-        StyleSheet testSheet = new StyleSheet(sectionList, new ArrayList<>(), "testSheet", new LineNumber(1));
+        StyleSheet testSheet = new StyleSheet("testSheet", sectionList, new ArrayList<>(), new LineNumber(1));
 
         MessageData messages = new MessageData();
 
@@ -74,7 +74,7 @@ public class QLSMessageTest {
         List<Section> sectionList = new ArrayList<>();
         sectionList.add(testSection);
 
-        StyleSheet testSheet = new StyleSheet(sectionList, new ArrayList<>(), "testSheet", new LineNumber(1));
+        StyleSheet testSheet = new StyleSheet("testSheet", sectionList, new ArrayList<>(), new LineNumber(1));
 
         MessageData messages = new MessageData();
 
@@ -104,7 +104,7 @@ public class QLSMessageTest {
         List<Section> sectionList = new ArrayList<>();
         sectionList.add(testSection);
 
-        StyleSheet testSheet = new StyleSheet(sectionList, new ArrayList<>(), "testSheet", new LineNumber(1));
+        StyleSheet testSheet = new StyleSheet("testSheet", sectionList, new ArrayList<>(), new LineNumber(1));
 
         MessageData messages = new MessageData();
 
@@ -130,7 +130,7 @@ public class QLSMessageTest {
         List<Section> sectionList = new ArrayList<>();
         sectionList.add(testSection);
 
-        StyleSheet testSheet = new StyleSheet(sectionList, new ArrayList<>(), "testSheet", new LineNumber(1));
+        StyleSheet testSheet = new StyleSheet("testSheet", sectionList, new ArrayList<>(), new LineNumber(1));
 
         MessageData messages = new MessageData();
 

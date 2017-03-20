@@ -31,40 +31,43 @@ public class QLSASTVisitor extends QLSBaseVisitor<Node> {
     @Override
     public Node visitStylesheet(QLSParser.StylesheetContext ctx) {
         String name = ctx.Identifier().getText();
-
         List<Section> sections = new ArrayList<>();
+
         for (QLSParser.SectionContext sectionContext : ctx.section()) {
             Section section = (Section) sectionContext.accept(this);
             sections.add(section);
         }
 
         List<DefaultStyle> defaultStyles = new ArrayList<>();
+
         for (QLSParser.DefaultStyleContext defaultStyleContext : ctx.defaultStyle()) {
             DefaultStyle defaultStyle = (DefaultStyle) defaultStyleContext.accept(this);
             defaultStyles.add(defaultStyle);
         }
 
-        return new StyleSheet(sections, defaultStyles, name, getLineNumber(ctx));
+        return new StyleSheet(name, sections, defaultStyles, getLineNumber(ctx));
     }
     
 
     @Override
     public Node visitSection(QLSParser.SectionContext ctx) {
         String name = ctx.STRING().getText();
-
         List<Section> sections = new ArrayList<>();
+
         for (QLSParser.SectionContext sectionContext : ctx.section()) {
             Section section = (Section) sectionContext.accept(this);
             sections.add(section);
         }
 
         List<StyleQuestion> questions = new ArrayList<>();
+
         for (QLSParser.QuestionContext questionContext : ctx.question()) {
             StyleQuestion question = (StyleQuestion) questionContext.accept(this);
             questions.add(question);
         }
 
         List<DefaultStyle> defaultStyles = new ArrayList<>();
+
         for (QLSParser.DefaultStyleContext defaultStyleContext : ctx.defaultStyle()) {
             DefaultStyle defaultStyle = (DefaultStyle) defaultStyleContext.accept(this);
             defaultStyles.add(defaultStyle);
@@ -76,17 +79,14 @@ public class QLSASTVisitor extends QLSBaseVisitor<Node> {
     @Override
     public Node visitWidgetQuestion(QLSParser.WidgetQuestionContext ctx) {
         String identifier = ctx.Identifier().getText();
-
         QLSWidget widget = (QLSWidget) ctx.widget().accept(this);
         widget.setLabel(identifier);
-
         return new StyleQuestion(identifier, widget, getLineNumber(ctx));
     }
 
     @Override
     public Node visitNormalQuestion(QLSParser.NormalQuestionContext ctx) {
         String identifier = ctx.Identifier().getText();
-
         return new StyleQuestion(identifier, new QLSUndefinedWidget(getLineNumber(ctx)), getLineNumber(ctx));
     }
 
@@ -94,24 +94,22 @@ public class QLSASTVisitor extends QLSBaseVisitor<Node> {
     public Node visitDefaultWithoutStyleDeclaration(QLSParser.DefaultWithoutStyleDeclarationContext ctx) {
         Type questionType = (Type) ctx.type().accept(this);
         QLSWidget widget = (QLSWidget) ctx.widget().accept(this);
-
-        return new DefaultStyle(new UndefinedStyle(getLineNumber(ctx)), widget, questionType, getLineNumber(ctx));
+        return new DefaultStyle(questionType, new UndefinedStyle(getLineNumber(ctx)), widget, getLineNumber(ctx));
     }
 
     @Override
     public Node visitDefaultWithStyleDeclaration(QLSParser.DefaultWithStyleDeclarationContext ctx) {
         Type questionType = (Type) ctx.type().accept(this);
         QLSWidget widget = (QLSWidget) ctx.widget().accept(this);
-
         List<StyleType> styleProperties = new ArrayList<>();
+
         for (QLSParser.StyleContext styleContext : ctx.style()) {
             StyleType style = (StyleType) styleContext.accept(this);
             styleProperties.add(style);
         }
 
         Style style = new Style(styleProperties, getLineNumber(ctx));
-
-        return new DefaultStyle(style, widget, questionType, getLineNumber(ctx));
+        return new DefaultStyle(questionType, style, widget, getLineNumber(ctx));
     }
 
     @Override
@@ -123,7 +121,6 @@ public class QLSASTVisitor extends QLSBaseVisitor<Node> {
     public Node visitRadio(QLSParser.RadioContext ctx) {
         String yesLabel = ctx.yes.getText();
         String noLabel = ctx.no.getText();
-
         return new QLSRadio(ctx.getText(), yesLabel, noLabel, getLineNumber(ctx));
     }
 
