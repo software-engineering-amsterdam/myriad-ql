@@ -61,3 +61,8 @@ class Eval(ExpressionAlg):
         class _anon():
             execute = lambda self: lhs.execute() or rhs.execute()
         return _anon()
+
+    def UnaryNegation(self, lhs):
+        class _anon():
+            execute = lambda self: True if lhs.execute() == 0 else False
+        return _anon()

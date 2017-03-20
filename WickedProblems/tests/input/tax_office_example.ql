@@ -10,7 +10,7 @@ form taxOfficeExample {
   "Did you enter a loan?"
     hasMaintLoan: boolean
 
-  if (hasSoldHouse || hasBoughtHouse) {
+  if (!hasSoldHouse) {
     "What was the bought price?"
       boughtPrice: integer
     "What was the selling price?"
