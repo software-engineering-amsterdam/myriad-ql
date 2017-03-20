@@ -1,5 +1,6 @@
 package qls;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -8,6 +9,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import QL.Faults;
 import QL.QLLexer;
 import QL.QLParser;
+import QL.ReferenceTable;
 import QL.ast.Form;
 import QL.ast.type.Type;
 import QL.ui.Environment;
@@ -37,27 +39,30 @@ public class Main {
 		Stylesheet stylesheet = parser.stylesheet().result;
 		System.out.println(stylesheet);
 		
+		// TODO faults from ql?
+		// TODO change to QL
+	
 		qls.semantic.Analyzer analyzer = new qls.semantic.Analyzer(ql());
 		
-		Faults faults = analyzer.analyze(stylesheet);
-		
-		Environment env = new Environment(ql());
-		
-		Questionnaire questionnaire = new Questionnaire();
-		questionnaire.main(createForm(), env, faults);
+		// Faults faults = analyzer.analyze(stylesheet);
+//		
+//		Environment env = new Environment(ql());
+//		
+//		Questionnaire questionnaire = new Questionnaire();
+//		questionnaire.main(createForm(), env, faults);
 
 	}
 	
-	public static Map<String, Type> ql() {
+	public static ReferenceTable ql() {
 		
 		Form form = createForm();
 
 		QL.semantic.Analyzer analyzer = new QL.semantic.Analyzer();
 		
 		// TODO pass faults QL QLS
-		Faults faults = analyzer.analyze(form);
+		ReferenceTable variables = analyzer.analyze(form);
 
-		return analyzer.getVariableTypes();
+		return variables;
 	}
 	
 	public static Form createForm() {

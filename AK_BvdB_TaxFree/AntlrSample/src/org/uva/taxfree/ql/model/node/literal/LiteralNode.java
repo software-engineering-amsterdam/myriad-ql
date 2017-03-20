@@ -39,4 +39,9 @@ public abstract class LiteralNode extends ExpressionNode {
     public void generateVisibleIds(List<String> visibleIds) {
         // intentionally left blank
     }
+
+    @Override
+    protected boolean isConstant() {
+        return true;
+    }
 }

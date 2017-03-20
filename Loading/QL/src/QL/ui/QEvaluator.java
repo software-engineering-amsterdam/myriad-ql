@@ -1,6 +1,4 @@
 package QL.ui;
-import java.util.ArrayList;
-import java.util.List;
 
 import QL.ast.ComputedQuestion;
 import QL.ast.IfElseStatement;
@@ -10,6 +8,9 @@ import QL.evaluation.Evaluator;
 import QL.ui.field.Field;
 import QL.value.BoolValue;
 import QL.value.Value;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class QEvaluator extends Evaluator {
@@ -44,11 +45,19 @@ public class QEvaluator extends Evaluator {
     }
     
     private Row createRow(Question question) {
-    	
-    	Value answer = getAnswer(question);
+
+        Value answer;
+        if (answers.isAnswered(question.getVariable())) {
+            answer = answers.getAnswer(question.getVariable());
+        }
+        else {
+            answer = question.getType().accept(this);
+        }
+
 
         Field field = answer.getField(question.getVariable(), notifier, answer);
-        
+
+
         return new Row(question.getVariable(), question.getLabel(), field);
     }
 

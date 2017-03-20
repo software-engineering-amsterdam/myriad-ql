@@ -1,9 +1,6 @@
 package QL.ast.type;
 
 import QL.ast.TypeVisitor;
-import QL.ui.Notifier;
-import QL.ui.field.Field;
-import QL.value.Value;
 
 public class UnknownType extends Type {
 

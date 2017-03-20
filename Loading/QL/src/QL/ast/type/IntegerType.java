@@ -1,11 +1,6 @@
 package QL.ast.type;
 
 import QL.ast.TypeVisitor;
-import QL.ui.Notifier;
-import QL.ui.field.Field;
-import QL.ui.field.Number;
-import QL.value.IntegerValue;
-import QL.value.Value;
 
 public class IntegerType extends Type {
 

@@ -18,13 +18,7 @@ public class Text implements Field {
 		field.setText(value.getValue());
 		field.positionCaret(value.getValue().length());
 		
-		field.textProperty().addListener(new ChangeListener<String>()  {
-            @Override
-            public void changed(ObservableValue<? extends String> observable,
-                                String oldValue, String newValue) {
-            	notifier.updateQuestionnaire(name, new StringValue(newValue));
-            }
-    	});
+		field.textProperty().addListener((observable, oldValue, newValue) -> notifier.updateQuestionnaire(name, new StringValue(newValue)));
 	}
 	
 	@Override

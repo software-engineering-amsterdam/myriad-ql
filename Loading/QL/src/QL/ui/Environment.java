@@ -41,8 +41,8 @@ public class Environment {
 			throw new AssertionError("The variable " + variable + " is evaluated, " +
 					"but not checked by the typechecker");
 		}
-		// TODO int line 0 does not make sense
-		return variableType.getType(variable, 0);
+		
+		return variableType.getType(variable);
 		
 	}
 }
