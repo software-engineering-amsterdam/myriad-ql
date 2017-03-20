@@ -7,8 +7,8 @@ module QL
         duplicate_label_checker(questions)
         duplicate_variable_checker(questions)
         undefined_variable_checker(questions, ast)
-        # operands_type_checker(questions, ast)
-        # cyclic_checker(questions, ast)
+        operands_type_checker(questions, ast)
+        cyclic_checker(questions, ast)
       end
 
       # checkers
@@ -29,6 +29,8 @@ module QL
       def undefined_variable_checker(questions, ast)
         question_variables = questions.map(&:variable).map(&:name)
         expression_variables = ast.accept(ExpressionVariableCollector.new).flatten.compact.map(&:name)
+        pp question_variables
+        pp expression_variables
 
         (expression_variables - question_variables).each do |undefined_variable|
           NotificationTable.store(Notification::Error.new("variable '#{undefined_variable}' is undefined"))

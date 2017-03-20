@@ -24,29 +24,16 @@ module QL
         condition_type = if_else_statement.condition.accept(self)
         check_if_condition(if_else_statement, condition_type)
 
-        if_body_types = if_else_statement.if_body.map { |statement| statement.accept(self) }
-        else_body_types = if_else_statement.else_body.map { |statement| statement.accept(self) }
-        [if_body_types, else_body_types]
+        if_else_statement.if_body.map { |statement| statement.accept(self) }
+        if_else_statement.else_body.map { |statement| statement.accept(self) }
       end
 
       # visit operation in expression
       def visit_expression(expression)
-        if expression.expression.respond_to? :reduce
-          expression.expression.reduce do |left, operation|
-            operation.accept(left, self)
-          end
-        else
-          expression.expression.accept(self)
+        expression.expression.reduce do |left, operation|
+          operation.accept(left, self)
         end
       end
-
-      # visit both left and right sides of binary expression and perform type check
-      # they can be for example BooleanType, IntegerType, StringType or ErrorType
-      # def visit_binary_expression(left, binary_expression)
-      #   left = left.accept(self)
-      #   right = binary_expression.expression.accept(self)
-      #   binary_expression.eval_type(left, right)
-      # end
 
       def visit_arithmetic_expression(left, binary_expression)
         left = left.accept(self)
@@ -71,7 +58,6 @@ module QL
         right = binary_expression.expression.accept(self)
         evaluate_types(left, right, [AST::IntegerType, AST::MoneyType], AST::BooleanType.new)
       end
-
 
 
       def visit_boolean_negation(integer_negation)
@@ -100,8 +86,28 @@ module QL
         AST::StringType.new
       end
 
-      def visit_type(type)
-        type
+      def visit_boolean_type(boolean_type)
+        boolean_type
+      end
+
+      def visit_date_type(date_type)
+        date_type
+      end
+
+      def visit_decimal_type(decimal_type)
+        decimal_type
+      end
+
+      def visit_integer_type(integer_type)
+        integer_type
+      end
+
+      def visit_money_type(money_type)
+        money_type
+      end
+
+      def visit_string_type(string_type)
+        string_type
       end
 
       def visit_variable(variable)
