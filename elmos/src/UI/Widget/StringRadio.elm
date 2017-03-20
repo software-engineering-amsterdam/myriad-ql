@@ -30,7 +30,7 @@ renderOption editable value isSelected onChange =
                 [ type_ "radio"
                 , checked isSelected
                 , disabled (not editable)
-                , onClick (onChange (Values.string value))
+                , onClick (onChange (Values.Str value))
                 ]
                 []
             , text value

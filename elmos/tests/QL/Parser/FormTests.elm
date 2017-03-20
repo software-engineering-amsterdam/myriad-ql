@@ -1,13 +1,6 @@
 module QL.Parser.FormTests exposing (all)
 
-import QL.AST
-    exposing
-        ( FormItem(Field, ComputedField, IfThen, IfThenElse)
-        , ValueType(IntegerType, BooleanType, StringType, MoneyType)
-        , Expression(Var, Integer, ArithmeticExpression)
-        , Operator(Plus)
-        , Location(Location)
-        )
+import QL.AST exposing (..)
 import QL.ASTTestUtil exposing (removeLocationFromBlock, removeLocationFromFormItem)
 import Expect
 import QL.Parser.Form as Form
@@ -101,7 +94,7 @@ fieldTests =
                 (ComputedField "label"
                     ( "id", Location 0 0 )
                     IntegerType
-                    (ArithmeticExpression Plus
+                    (BinaryExpression (Arithmetic Plus)
                         (Location 0 0)
                         (Integer (Location 0 0) 1)
                         (Integer (Location 0 0) 3)

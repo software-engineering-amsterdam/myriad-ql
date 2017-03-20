@@ -22,6 +22,6 @@ view { identifier, env, onChange, editable } =
             , id identifier
             , value textValue
             , disabled (not editable)
-            , onInput (Values.string >> onChange)
+            , onInput (Values.Str >> onChange)
             ]
             []

@@ -1,4 +1,4 @@
-module UI.FormUpdater exposing (updateValue)
+module UI.FormUpdater exposing (updateValue, updateComputedFields)
 
 import QL.AST exposing (Form, Label, ValueType, Expression, FormItem)
 import QL.Environment as Env exposing (Environment)

@@ -17,8 +17,8 @@ view { identifier, env, onChange, editable } optionLabels =
                 |> Maybe.andThen Values.asBool
 
         selections =
-            [ ( selectedValue == Just True, Values.bool True )
-            , ( selectedValue == Just False, Values.bool False )
+            [ ( selectedValue == Just True, Values.Boolean True )
+            , ( selectedValue == Just False, Values.Boolean False )
             ]
     in
         div []
