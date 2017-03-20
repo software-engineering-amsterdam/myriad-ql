@@ -34,6 +34,10 @@ module QL
         end
       end
 
+      def reload_questions
+        @question_frames.each(&:reload)
+      end
+
       def render_submit_buttom
         @submit_button = SubmitButton.new
       end
@@ -42,10 +46,6 @@ module QL
         @submit_button.listen do
           print_form
         end
-      end
-
-      def reload_questions
-        @question_frames.each(&:reload)
       end
 
       def print_form
