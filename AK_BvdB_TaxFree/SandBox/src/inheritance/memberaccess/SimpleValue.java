@@ -1,6 +1,4 @@
-package memberaccess;
-
-import sun.java2d.pipe.SpanShapeRenderer;
+package inheritance.memberaccess;
 
 public class SimpleValue {
     private final int mValue;
@@ -17,4 +15,13 @@ public class SimpleValue {
     public boolean isSameAs(SimpleValue b) {
         return mValue == b.mValue;
     }
+
+    public boolean equals(SimpleValue b) {
+        return mValue == b.mValue;
+    }
+
+    int getValue(){
+        return mValue;
+    }
+
 }
