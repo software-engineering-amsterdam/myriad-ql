@@ -4,6 +4,7 @@
     using System.Drawing;
 
     using MoreDotNet.Extensions.Common;
+    using MoreDotNet.Wrappers;
 
     using OffByOne.Ql.Ast.Literals.Base;
     using OffByOne.Ql.Common.Visitors.Contracts;
@@ -18,9 +19,11 @@
 
         public HexLiteral(string value)
         {
-            if (value == null)
+            if (value.IsNullOrWhiteSpace())
             {
-                throw new ArgumentNullException(nameof(value), "Literal must have a value.");
+                throw new ArgumentException(
+                    "Literal must have a value.",
+                    nameof(value));
             }
 
             this.Value = new StringValue(value);

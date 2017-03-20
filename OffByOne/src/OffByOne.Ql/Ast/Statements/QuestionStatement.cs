@@ -1,12 +1,16 @@
 ﻿namespace OffByOne.Ql.Ast.Statements
 {
+    using System;
     using System.Collections.Generic;
+
+    using MoreDotNet.Wrappers;
 
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Literals;
     using OffByOne.Ql.Ast.Statements.Base;
-    using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Ql.Common.Visitors.Contracts;
+
+    using ValueType = OffByOne.Ql.Ast.ValueTypes.Base.ValueType;
 
     public class QuestionStatement : Statement
     {
@@ -16,6 +20,23 @@
             StringLiteral label,
             Expression computationExpression = null)
         {
+            if (identifier.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException(
+                    "A non-null, non-empty identifier must be given",
+                    nameof(identifier));
+            }
+
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            if (label == null)
+            {
+                throw new ArgumentNullException(nameof(label));
+            }
+
             this.Identifier = identifier;
             this.Type = type;
             this.Label = label;

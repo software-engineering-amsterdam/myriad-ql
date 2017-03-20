@@ -7,7 +7,7 @@
     {
         public override ISet<string> GetDependencies()
         {
-            return new SortedSet<string>();
+            return new HashSet<string>();
         }
     }
 }

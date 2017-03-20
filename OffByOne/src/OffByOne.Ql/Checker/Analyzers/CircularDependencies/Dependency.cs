@@ -1,11 +1,23 @@
 ﻿namespace OffByOne.Ql.Checker.Analyzers.CircularDependencies
 {
+    using System;
+
     using MoreDotNet.Extensions.Common;
 
     public class Dependency
     {
         public Dependency(string startPointId, string endPointId)
         {
+            if (startPointId == null)
+            {
+                throw new ArgumentNullException(nameof(startPointId));
+            }
+
+            if (startPointId == null)
+            {
+                throw new ArgumentNullException(nameof(endPointId));
+            }
+
             this.StartPointId = startPointId;
             this.EndPointId = endPointId;
         }
@@ -54,6 +66,11 @@
 
         public bool IsTransitiveTo(Dependency supposedPair)
         {
+            if (supposedPair == null)
+            {
+                throw new ArgumentNullException(nameof(supposedPair));
+            }
+
             return this.EndPointId == supposedPair.StartPointId;
         }
 

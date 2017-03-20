@@ -56,6 +56,11 @@
 
         public void Analyze(FormStatement root)
         {
+            if (root == null)
+            {
+                throw new ArgumentNullException(nameof(root));
+            }
+
             this.Visit(root, new TypeEnvironment());
         }
 

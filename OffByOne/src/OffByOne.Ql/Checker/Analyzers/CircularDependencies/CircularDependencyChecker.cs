@@ -1,5 +1,6 @@
 ﻿namespace OffByOne.Ql.Checker.Analyzers.CircularDependencies
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -18,16 +19,36 @@
 
         public void AddDependency(Dependency dependency)
         {
+            if (dependency == null)
+            {
+                throw new ArgumentNullException(nameof(dependency));
+            }
+
             this.dependencySet.Add(dependency);
         }
 
-        public void AddDependencies(IEnumerable<Dependency> dependency)
+        public void AddDependencies(IEnumerable<Dependency> dependencies)
         {
-            this.dependencySet.AddRange(dependency);
+            if (dependencies == null)
+            {
+                throw new ArgumentNullException(nameof(dependencies));
+            }
+
+            this.dependencySet.AddRange(dependencies);
         }
 
         public void AddDependencies(IEnumerable<string> startPoints, IEnumerable<string> endPoints)
         {
+            if (startPoints == null)
+            {
+                throw new ArgumentNullException(nameof(startPoints));
+            }
+
+            if (endPoints == null)
+            {
+                throw new ArgumentNullException(nameof(endPoints));
+            }
+
             foreach (var startPoint in startPoints)
             {
                 foreach (var endPoint in endPoints)

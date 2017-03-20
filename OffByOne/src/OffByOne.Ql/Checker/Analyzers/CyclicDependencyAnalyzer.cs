@@ -17,7 +17,7 @@
     using OffByOne.Ql.Common.Visitors.Base;
     using OffByOne.Ql.Common.Visitors.Contracts;
 
-    public class CyclicDependencyAnalyzer : BaseQlVisitor<object, IEnvironment>, IAnalyzer
+    public class CyclicDependencyAnalyzer : BaseQlDfsVisitor<object, IEnvironment>, IAnalyzer
     {
         private readonly CircularDependencyChecker circularDependencyChecker;
 
@@ -41,6 +41,11 @@
 
         public void Analyze(FormStatement root)
         {
+            if (root == null)
+            {
+                throw new ArgumentNullException(nameof(root));
+            }
+
             this.Visit(root, new QuestionEnvironment());
             var errors = this.circularDependencyChecker.CircularDependencies;
 

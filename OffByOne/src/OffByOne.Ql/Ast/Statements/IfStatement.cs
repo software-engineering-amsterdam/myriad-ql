@@ -1,5 +1,6 @@
 ﻿namespace OffByOne.Ql.Ast.Statements
 {
+    using System;
     using System.Collections.Generic;
 
     using OffByOne.Ql.Ast.Expressions;
@@ -13,6 +14,16 @@
             IEnumerable<Statement> statements,
             IEnumerable<Statement> elseStatements)
         {
+            if (condition == null)
+            {
+                throw new ArgumentNullException(nameof(condition));
+            }
+
+            if (statements == null)
+            {
+                throw new ArgumentNullException(nameof(condition));
+            }
+
             this.Condition = condition;
             this.Statements = statements;
             this.ElseStatements = elseStatements;

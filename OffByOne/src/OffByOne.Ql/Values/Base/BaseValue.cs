@@ -4,10 +4,8 @@
 
     using OffByOne.Ql.Values.Contracts;
 
-    public class BaseValue : IValue
+    public abstract class BaseValue : IValue
     {
-        public object Value { get; protected set; }
-
         public static bool operator >(BaseValue valueOne, BaseValue valueTwo)
         {
             return valueOne.GreaterThan(valueTwo).Value;

@@ -3,8 +3,6 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using MoreDotNet.Extensions.Collections;
-
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary.Base;
     using OffByOne.Ql.Ast.Expressions.Unary.Base;
@@ -13,7 +11,8 @@
     using OffByOne.Ql.Checker.Analyzers.Environment;
     using OffByOne.Ql.Common.Visitors.Base;
 
-    public class DependencyCollector : BaseQlVisitor<object, TypeEnvironment>
+    // TODO: Test
+    public class DependencyCollector : BaseQlDfsVisitor<object, TypeEnvironment>
     {
         public DependencyCollector()
         {

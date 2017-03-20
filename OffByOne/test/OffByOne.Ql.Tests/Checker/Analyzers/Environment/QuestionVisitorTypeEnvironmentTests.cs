@@ -3,6 +3,7 @@
     using System;
 
     using OffByOne.Ql.Checker.Analyzers.Environment;
+    using OffByOne.Ql.Values;
 
     using Xunit;
 
@@ -31,11 +32,10 @@
         [Theory]
         [InlineData("")]
         [InlineData("         ")]
-        [InlineData(null)]
         public void AddQuestionLabel_ShouldThrowExceptionIfInvalidNameIsGiven(string questionLabel)
         {
             var typeEnv = new QuestionEnvironment();
-            Assert.Throws<ArgumentException>(() => typeEnv.AddQuestionLabel(questionLabel));
+            Assert.Throws<ArgumentException>(() => typeEnv.AddQuestionLabel(new StringValue(questionLabel)));
         }
 
         [Fact]
@@ -43,9 +43,9 @@
         {
             var typeEnv = new QuestionEnvironment();
             var questionLabel = "HeyWorld!";
-            typeEnv.AddQuestionLabel(questionLabel);
+            typeEnv.AddQuestionLabel(new StringValue(questionLabel));
 
-            Assert.True(typeEnv.IsLableDuplicate(questionLabel));
+            Assert.True(typeEnv.IsLabelDuplicate(new StringValue(questionLabel)));
         }
 
         [Theory]
@@ -61,11 +61,10 @@
         [Theory]
         [InlineData("")]
         [InlineData("         ")]
-        [InlineData(null)]
         public void IsLableDuplicate_ShouldThrowExceptionIfInvalidNameIsGiven(string questionLabel)
         {
             var typeEnv = new QuestionEnvironment();
-            Assert.Throws<ArgumentException>(() => typeEnv.IsLableDuplicate(questionLabel));
+            Assert.Throws<ArgumentException>(() => typeEnv.IsLabelDuplicate(new StringValue(questionLabel)));
         }
     }
 }

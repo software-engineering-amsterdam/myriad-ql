@@ -10,7 +10,7 @@
     using OffByOne.Ql.Checker.Messages;
     using OffByOne.Ql.Common.Visitors.Base;
 
-    public class QuestionAnalyzer : BaseQlVisitor<object, IQuestionEnvironment>, IAnalyzer
+    public class QuestionAnalyzer : BaseQlDfsVisitor<object, IQuestionEnvironment>, IAnalyzer
     {
         public QuestionAnalyzer()
             : this(new CheckerReport())
@@ -31,6 +31,11 @@
 
         public void Analyze(FormStatement root)
         {
+            if (root == null)
+            {
+                throw new ArgumentNullException(nameof(root));
+            }
+
             this.Visit(root, new QuestionEnvironment());
         }
 
@@ -48,13 +53,13 @@
                 environment.AddQuestionIdentifier(statement.Identifier);
             }
 
-            if (environment.IsLableDuplicate(statement.Label.Value.Value))
+            if (environment.IsLabelDuplicate(statement.Label.Value))
             {
                 this.Report.Add(new DuplicateQuestionLabelMessage(statement));
             }
             else
             {
-                environment.AddQuestionLabel(statement.Label.Value.Value);
+                environment.AddQuestionLabel(statement.Label.Value);
             }
 
             return base.Visit(statement, environment);

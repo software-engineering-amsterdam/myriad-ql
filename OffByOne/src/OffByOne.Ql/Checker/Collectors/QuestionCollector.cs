@@ -1,13 +1,15 @@
 ﻿namespace OffByOne.Ql.Checker.Collectors
 {
+    using System;
     using System.Collections.Generic;
 
     using OffByOne.Ql.Ast.Statements;
-    using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Ql.Checker.Analyzers.Environment;
     using OffByOne.Ql.Common.Visitors.Base;
 
-    public class QuestionCollector : BaseQlVisitor<object, QuestionEnvironment>
+    using ValueType = OffByOne.Ql.Ast.ValueTypes.Base.ValueType;
+
+    public class QuestionCollector : BaseQlDfsVisitor<object, QuestionEnvironment>
     {
         public QuestionCollector()
         {
@@ -18,6 +20,11 @@
 
         public void Collect(FormStatement root)
         {
+            if (root == null)
+            {
+                throw new ArgumentNullException(nameof(root));
+            }
+
             this.Visit(root, new QuestionEnvironment());
         }
 

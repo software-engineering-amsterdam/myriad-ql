@@ -6,6 +6,7 @@
     using MoreDotNet.Wrappers;
 
     using OffByOne.Ql.Checker.Analyzers.Environment.Contracts;
+    using OffByOne.Ql.Values;
 
     public class QuestionEnvironment : IQuestionEnvironment
     {
@@ -30,16 +31,16 @@
             this.questionNames.Add(name);
         }
 
-        public void AddQuestionLabel(string label)
+        public void AddQuestionLabel(StringValue label)
         {
-            if (label.IsNullOrWhiteSpace())
+            if (label.Value.IsNullOrWhiteSpace())
             {
                 throw new ArgumentException(
                     "Question label must not be empty or null.",
                     nameof(label));
             }
 
-            this.questionLables.Add(label);
+            this.questionLables.Add(label.Value);
         }
 
         public bool IsIdentifierDuplicate(string name)
@@ -54,16 +55,16 @@
             return this.questionNames.Contains(name);
         }
 
-        public bool IsLableDuplicate(string label)
+        public bool IsLabelDuplicate(StringValue label)
         {
-            if (label.IsNullOrWhiteSpace())
+            if (label.Value.IsNullOrWhiteSpace())
             {
                 throw new ArgumentException(
                     "Question label must not be empty or null.",
                     nameof(label));
             }
 
-            return this.questionLables.Contains(label);
+            return this.questionLables.Contains(label.Value);
         }
     }
 }

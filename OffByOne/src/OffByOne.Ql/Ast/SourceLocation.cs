@@ -1,9 +1,16 @@
 ﻿namespace OffByOne.Ql.Ast
 {
+    using System;
+
     public class SourceLocation
     {
         public SourceLocation(string text, int line, int column)
         {
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+
             this.Text = text;
             this.Line = line;
             this.Column = column;

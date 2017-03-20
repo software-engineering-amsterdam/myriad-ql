@@ -31,7 +31,6 @@
                 throw new ArgumentNullException(nameof(type));
             }
 
-            // TODO: What about redeclaration?
             if (!this.symbolMappings.ContainsKey(name))
             {
                 this.symbolMappings[name] = type;

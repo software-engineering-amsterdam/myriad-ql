@@ -15,7 +15,7 @@
     using OffByOne.Ql.Checker.Analyzers.Environment;
     using OffByOne.Ql.Common.Visitors.Contracts;
 
-    public class BaseQlVisitor<TResult, TEnvironment>
+    public class BaseQlDfsVisitor<TResult, TEnvironment>
         : IValueTypeVisitor<TResult, TEnvironment>,
         IExpressionVisitor<TResult, TEnvironment>,
         IStatementVisitor<TResult, TEnvironment>
