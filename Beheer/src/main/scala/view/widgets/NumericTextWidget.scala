@@ -20,7 +20,7 @@ class NumericTextWidget(numberType: NumericType)(implicit val changeHandler: Val
   override def setValue(newVal: Value): Unit = newVal match {
     case n: NumericValue => textfield.text.value = NumericValue.upgradeNumericToType(n, numberType).toString
     case UndefinedValue => textfield.text.value = ""
-    case other => sys.error(s"Incompatible value for numeric text field: $other")
+    case v => sys.error(s"Incompatible value $v for NumericText widget")
   }
 
   override def getSFXNode: Node = textfield

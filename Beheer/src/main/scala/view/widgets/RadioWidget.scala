@@ -1,6 +1,6 @@
 package view.widgets
 
-import values.{ BooleanValue, Value }
+import values.{ BooleanValue, UndefinedValue, Value }
 
 import scalafx.scene.Node
 import scalafx.scene.control.{ RadioButton, ToggleGroup }
@@ -27,12 +27,12 @@ class RadioWidget(trueText: String, falseText: String)(implicit val changeHandle
   }
 
   override def setValue(newVal: Value): Unit = newVal match {
-    case BooleanValue(true) => trueButton.selected = true
-    case BooleanValue(false) => falseButton.selected = true
-    case _ => { //clear
+    case BooleanValue(b) => trueButton.selected = b
+    case UndefinedValue => { //clear
       trueButton.selected = false
       falseButton.selected = false
     }
+    case v => sys.error(s"Incompatible value $v for Radio widget.")
   }
 
   override def getSFXNode: Node = new HBox {

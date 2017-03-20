@@ -25,7 +25,7 @@ class DropDownWidget(trueText: String, falseText: String)(implicit val changeHan
     case BooleanValue(true) => dropDownBox.selectionModel.select(trueText)
     case BooleanValue(false) => dropDownBox.selectionModel.select(falseText)
     case UndefinedValue => dropDownBox.selectionModel.select("")
-    case v => sys.error(s"Incompatible value for widget: $v")
+    case v => sys.error(s"Incompatible value $v for Dropdown widget")
   }
 
   override def getSFXNode = dropDownBox

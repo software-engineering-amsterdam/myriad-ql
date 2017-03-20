@@ -22,7 +22,7 @@ class SpinboxWidget(numType: NumericType)(implicit val changeHandler: Value => U
   override def setValue(newVal: Value): Unit = newVal match {
     case n: NumericValue => spinbox.valueFactory.value.setValue(n.value.doubleValue)
     case UndefinedValue => spinbox.valueFactory.value.setValue(0)
-    case v => sys.error(s"Incompatible value $v for spinbox widget")
+    case v => sys.error(s"Incompatible value $v for Spinbox widget")
   }
 
   override def getSFXNode = spinbox
