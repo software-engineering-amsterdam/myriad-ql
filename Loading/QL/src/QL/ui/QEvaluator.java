@@ -15,9 +15,9 @@ import QL.value.Value;
 
 public class QEvaluator extends Evaluator {
 
-	private List<Row> activeQuestions;
-    private Environment answers;
-    private Notifier notifier;
+	private final List<Row> activeQuestions;
+    private final Environment answers;
+    private final Notifier notifier;
 
 	public QEvaluator(Environment answers, Notifier notifier) {
 		super(answers);
@@ -45,17 +45,32 @@ public class QEvaluator extends Evaluator {
     }
     
     private Row createRow(Question question) {
-        Value answer = answers.getAnswer(question.getVariable());
-        Field field = question.getType().getField(question.getVariable(), notifier, answer);
+    	
+    	Value answer = getAnswer(question);
+
+        Field field = answer.getField(question.getVariable(), notifier, answer);
         
-        return new Row(question.getVariable(), question.getLabel(), question.getType(), field);
+        return new Row(question.getVariable(), question.getLabel(), field);
+    }
+
+    private Value getAnswer(Question question) {
+
+        if (!answers.isAnswered(question.getVariable())) {
+            return getDefaultAnswer(question);
+        }
+
+        return answers.getAnswer(question.getVariable());
+    }
+
+    private Value getDefaultAnswer(Question question) {
+        return question.getType().accept(this);
     }
 
     @Override
     public void visit(Statement statement) {
         Value value = statement.getExpression().accept(this);
 
-        if (value.isSet() && ((BoolValue) value).getValue()) {
+        if (((BoolValue) value).getValue()) {
         	statement.getBlock().accept(this);
         }
     }
@@ -64,7 +79,7 @@ public class QEvaluator extends Evaluator {
     public void visit(IfElseStatement statement) {
         Value value = statement.getExpression().accept(this);
 
-        if (value.isSet() && ((BoolValue) value).getValue()) {
+        if (((BoolValue) value).getValue()) {
         	statement.getBlock().accept(this);
         } else {
             statement.getElseBlock().accept(this);

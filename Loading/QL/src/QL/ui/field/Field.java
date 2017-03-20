@@ -6,8 +6,8 @@ import QL.value.Value;
 
 public interface Field {
 	
-	public Value getAnswer();
+	Value getAnswer();
 	
-	public Control getField();
+	Control getField();
 	
 }

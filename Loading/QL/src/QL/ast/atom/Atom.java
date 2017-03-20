@@ -5,7 +5,7 @@ import QL.ast.expression.Expression;
 
 public abstract class Atom extends Expression {
 	
-	public Atom(int line) {
+	Atom(int line) {
 		super(line);
 	}
 

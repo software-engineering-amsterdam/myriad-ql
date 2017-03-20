@@ -1,13 +1,12 @@
 ﻿namespace OffByOne.Qls.Checker.Messages
 {
-    using OffByOne.LanguageCore.Checker.Messages.Base;
-    using OffByOne.LanguageCore.Checker.Models;
+    using OffByOne.Ql.Checker.Messages.Base;
     using OffByOne.Qls.Ast.Style.Statements;
 
-    public class DuplicateStyleSheetMesssage : CheckerMessage
+    public class DuplicateStyleSheetMesssage : ErrorMessage
     {
-        public DuplicateStyleSheetMesssage(StyleSheet styleSheet, LogLevel level = LogLevel.Error)
-            : base($"Duplicate stylesheet name {styleSheet.Id} at {styleSheet.SourceCode}", level)
+        public DuplicateStyleSheetMesssage(StyleSheet styleSheet)
+            : base($"Duplicate stylesheet name \"{styleSheet.Id}\" at: {styleSheet.SourceCode}")
         {
         }
     }

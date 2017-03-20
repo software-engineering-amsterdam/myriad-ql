@@ -1,11 +1,12 @@
 package QL.semantic;
 
-import QL.Warning;
-import QL.Error;
 import QL.ast.*;
 import QL.ast.type.Type;
-import QL.ast.FormVisitor;
-import QL.ast.Form;
+import QL.errorhandling.Error;
+import QL.errorhandling.Warning;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * VerifyQuestions checks for
@@ -14,10 +15,12 @@ import QL.ast.Form;
  */
 public class VerifyQuestions implements FormVisitor {
 	
-	private Environment environment;
+	private final Environment environment;
+	private final Map<String, String> labelVariable;
 	
 	public VerifyQuestions(Environment environment) {
 		this.environment = environment;
+		labelVariable = new HashMap<>();
 	}
 
 	@Override
@@ -51,30 +54,39 @@ public class VerifyQuestions implements FormVisitor {
 	
 	@Override
 	public void visit(Question question) {
-		addVariableType(question.getVariable(), question.getType(), question.getLine());
-		addLabel(question.getLabel(), question.getVariable(), question.getLine());
+		checkVariableType(question.getVariable(), question.getType(), question.getLine());
+		checkLabel(question.getLabel(), question.getVariable(), question.getLine());
 	}
 
 	@Override
 	public void visit(ComputedQuestion question) {
-		addVariableType(question.getVariable(), question.getType(), question.getLine());
-		addLabel(question.getLabel(), question.getVariable(), question.getLine());
+		checkVariableType(question.getVariable(), question.getType(), question.getLine());
+		checkLabel(question.getLabel(), question.getVariable(), question.getLine());
 	}
 
-	private void addVariableType(String variable, Type type, int line) {
+	private void addLabel(String label, String variableName) {
+		labelVariable.put(label, variableName);
+	}
+
+	private boolean labelExists(String label) {
+		return labelVariable.containsKey(label);
+	}
+
+	private void checkLabel(String label, String variableName, int line) {
+		if (labelExists(label)) {
+			environment.getFaults().add(new Warning("The question: " + label + 
+					" exists twice in the questionnaire", line));
+		}
+		addLabel(label, variableName);
+	}
+
+
+	private void checkVariableType(String variable, Type type, int line) {
 
 		if (environment.variableExists(variable)) {
 			environment.getFaults().add(new Error("The variable " + variable + " cannot be added, because it is "
 					+ "already defined", line));
 		}
 		environment.addVariableType(variable, type);
-	}
-
-	private void addLabel(String label, String variableName, int line) {
-		if (environment.labelExists(label)) {
-			environment.getFaults().add(new Warning("The question: " + label + 
-					" exists twice in the questionnaire", line));
-		}
-		environment.addLabel(label, variableName);
 	}
 }

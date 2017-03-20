@@ -12,19 +12,9 @@ public class UnknownType extends Type {
 	}
 
 	@Override
-	public Field getField(String name, Notifier notifier, Value value) {
-		return null;
-	}
-
-	@Override
-	public void accept(TypeVisitor v) {
-		v.visit(this);
+	public <T> T accept(TypeVisitor<T> v) {
+		return v.visit(this);
 		
-	}
-
-	@Override
-	public Value getValue() {
-		return null;
 	}
 
 }

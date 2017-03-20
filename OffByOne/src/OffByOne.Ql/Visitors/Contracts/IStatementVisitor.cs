@@ -1,16 +1,17 @@
 ﻿namespace OffByOne.Ql.Visitors.Contracts
 {
-    using OffByOne.LanguageCore.Visitors.Contracts;
     using OffByOne.Ql.Ast.Statements;
-    using OffByOne.Ql.Ast.Statements.Branch;
+    using OffByOne.Ql.Ast.Statements.Base;
 
-    public interface IStatementVisitor<out TResult, in TContext> : IVisitor
-        where TContext : IContext
+    public interface IStatementVisitor<out TResult, in TEnvironment> : IVisitor
+        where TEnvironment : IEnvironment
     {
-        TResult Visit(QuestionStatement expression, TContext context);
+        TResult Visit(Statement statement, TEnvironment environment);
 
-        TResult Visit(IfStatement expression, TContext context);
+        TResult Visit(QuestionStatement statement, TEnvironment environment);
 
-        TResult Visit(FormStatement expression, TContext context);
+        TResult Visit(IfStatement statement, TEnvironment environment);
+
+        TResult Visit(FormStatement statement, TEnvironment environment);
     }
 }

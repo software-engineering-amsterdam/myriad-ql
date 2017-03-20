@@ -7,7 +7,7 @@ import QL.ast.type.Type;
 
 public class Analyzer {
 	
-	Environment environment;
+	private Environment environment;
 
     public Faults analyze(Form form) {
         this.environment = new Environment();

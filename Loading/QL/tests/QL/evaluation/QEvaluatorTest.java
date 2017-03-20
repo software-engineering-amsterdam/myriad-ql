@@ -6,7 +6,6 @@ import QL.ast.atom.StringAtom;
 import QL.ast.expression.*;
 import QL.evaluation.Evaluator;
 import QL.value.Value;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -127,7 +126,7 @@ class QEvaluatorTest extends Evaluator {
         Expression rhs = new OrExpr(new BoolAtom(false,1),new BoolAtom(true,1),1);
         expr = new NotExpr(new AndExpr(lhs, rhs,1),1);
         v = expr.accept(this);
-        assertEquals(v.convertToString(), "false");
+        assertEquals(v.convertToString(), "true");
     }
 
     @Test
@@ -153,7 +152,7 @@ class QEvaluatorTest extends Evaluator {
 
         expr = new PlusExpr(new IntegerAtom(-10,1),1);
         v = expr.accept(this);
-        assertEquals(v.convertToString(), "10");
+        assertEquals(v.convertToString(), "-10");
     }
 
     @Test

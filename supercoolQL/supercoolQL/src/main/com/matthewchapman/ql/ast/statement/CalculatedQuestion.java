@@ -1,8 +1,8 @@
 package com.matthewchapman.ql.ast.statement;
 
 import com.matthewchapman.ql.ast.Expression;
-import com.matthewchapman.ql.ast.Type;
-import com.matthewchapman.ql.validation.QLVisitor;
+import com.matthewchapman.ql.ast.atomic.Type;
+import com.matthewchapman.ql.validation.visitors.QLStatementVisitor;
 
 /**
  * Created by matt on 08/03/2017.
@@ -16,10 +16,17 @@ public class CalculatedQuestion extends Question {
         this.calculatedValue = calculatedValue;
     }
 
-    public Expression getCalculation() { return this.calculatedValue; }
+    public Expression getCalculation() {
+        return this.calculatedValue;
+    }
 
     @Override
-    public <T> T accept(QLVisitor<T> visitor, String context) {
+    public String toString() {
+        return "\t" + getText() + "\n\t" + getName() + ":" + getType() + " = \n\t" + getCalculation() + "\n";
+    }
+
+    @Override
+    public <T, C> T accept(QLStatementVisitor<T, C> visitor, C context) {
         return visitor.visit(this, context);
     }
 }

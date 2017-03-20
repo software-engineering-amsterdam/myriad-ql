@@ -1,0 +1,21 @@
+form testForm {
+
+    "Question 1"
+    question1:boolean;
+
+    "Question 1"
+    question6:boolean;
+
+    "Question 2"
+    question2: boolean;
+
+    "Question 3"
+    question3: boolean;
+
+    "Question 4"
+    question4: integer;
+
+    "Question 5"
+    question5: integer = 12 + question4;
+
+}

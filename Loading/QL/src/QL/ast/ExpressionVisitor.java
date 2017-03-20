@@ -4,7 +4,6 @@ import QL.ast.atom.BoolAtom;
 import QL.ast.atom.IntegerAtom;
 import QL.ast.atom.StringAtom;
 import QL.ast.expression.*;
-import QL.ast.expression.AddExpr;
 
 public interface ExpressionVisitor<T> {
 

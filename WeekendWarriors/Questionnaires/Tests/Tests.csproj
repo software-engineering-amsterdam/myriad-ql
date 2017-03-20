@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Tests</RootNamespace>
     <AssemblyName>Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -16,6 +16,7 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,6 +39,7 @@
     <Reference Include="Antlr4.Runtime.Standard">
       <HintPath>..\packages\Antlr4.Runtime.Standard.4.6.0\lib\net35\Antlr4.Runtime.Standard.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Numerics" />
   </ItemGroup>
@@ -60,12 +62,23 @@
     <Compile Include="QL\AST\Literals.cs" />
     <Compile Include="QL\DSL\LexerTest.cs" />
     <Compile Include="QL\DSL\LexerTestHarness.cs" />
+    <Compile Include="QL\ExpressionEvaluator\Arithmatic.cs" />
     <Compile Include="QL\SemanticAnalysis\ArithmaticOperations.cs" />
+    <Compile Include="QL\SemanticAnalysis\ExposedSemanticAnalyzer.cs" />
     <Compile Include="QL\SemanticAnalysis\LogicalOperations.cs" />
     <Compile Include="QL\SemanticAnalysis\QuestionDefinition.cs" />
     <Compile Include="QL\SemanticAnalysis\Scoping.cs" />
     <Compile Include="QL\SemanticAnalysis\SemanticTestHarness.cs" />
     <Compile Include="QL\SemanticAnalysis\Ranges.cs" />
+    <Compile Include="QL\Value\UnaryOperations.cs" />
+    <Compile Include="QL\Value\LogicalOperations.cs" />
+    <Compile Include="QL\Value\ArithmaticOperations.cs" />
+    <Compile Include="QL\Value\ComparisonOperations.cs" />
+    <Compile Include="QL\Value\EqualityOperations.cs" />
+    <Compile Include="QL\Value\BinaryOperationTestInput.cs" />
+    <Compile Include="QL\Value\OperationTestInput.cs" />
+    <Compile Include="TestUtilities\ValueCreator.cs" />
+    <Compile Include="TestUtilities\ValueTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Questionnaires\Questionnaires.csproj">

@@ -8,7 +8,7 @@ import qls.ast.Stylesheet;
 
 public class Analyzer {
 	
-	private Environment environment;
+	private final Environment environment;
 	
 	public Analyzer(Map<String, Type> variableTypes) {
 		this.environment = new Environment(variableTypes);
@@ -18,8 +18,7 @@ public class Analyzer {
 		VerifyQuestions verifyQuestions = new VerifyQuestions(environment);
 		verifyQuestions.visit(stylesheet);
 		
-		// TODO implement
-		return new Faults();
+		return environment.getFaults();
 	}
 
 }

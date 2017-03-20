@@ -1,15 +1,15 @@
 package QL;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import QL.ast.type.Type;
 import QL.value.Value;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Environment {
 
-	private Map<String, Value> variableAnswer;
-	private Map<String, Type> variableType;
+	private final Map<String, Value> variableAnswer;
+	private final Map<String, Type> variableType;
 	
 	public Environment(Map<String, Type> variableType) {
 		this.variableAnswer = new HashMap<>(); 
@@ -21,10 +21,16 @@ public class Environment {
 	}
 
 	public Value getAnswer(String variable) {
-		if (isAnswered(variable)) {
-			return variableAnswer.get(variable);
+		if (!variableAnswer.containsKey(variable)) {
+			throw new AssertionError("The answer of variable " + variable + " is requested, " +
+					"but is not answered");
 		}
-		return getType(variable).getValue();
+		
+		return variableAnswer.get(variable);
+	}
+
+	public boolean isAnswered(String variable) {
+		return variableAnswer.containsKey(variable);
 	}
 	
 	public Type getType(String variable) {
@@ -34,9 +40,5 @@ public class Environment {
 		}
 		return variableType.get(variable);
 		
-	}
-	
-	public boolean isAnswered(String variable) {
-		return variableAnswer.containsKey(variable);
 	}
 }

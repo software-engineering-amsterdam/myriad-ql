@@ -1,95 +1,54 @@
 ﻿namespace OffByOne.Runner
 {
     using System;
-    using System.Collections.Generic;
+    using System.IO;
+    using System.Windows;
 
-    using Antlr4.Runtime;
+    using OffByOne.Runner.Builder;
 
-    using MoreDotNet.Extensions.Collections;
-
-    using OffByOne.LanguageCore.Ast.Literals;
-    using OffByOne.LanguageCore.Ast.ValueTypes;
-    using OffByOne.LanguageCore.Visitors;
-    using OffByOne.Ql;
-    using OffByOne.Ql.Ast.Expressions;
-    using OffByOne.Ql.Ast.Expressions.Binary;
-    using OffByOne.Ql.Ast.Statements;
-    using OffByOne.Ql.Ast.Statements.Branch;
-    using OffByOne.Ql.Checker;
-    using OffByOne.Ql.Evaluator;
-    using OffByOne.Ql.Generated;
-    using OffByOne.Qls;
-    using OffByOne.Qls.Ast.Style.Statements;
-    using OffByOne.Qls.Checker;
-
-    public class Program
+    public class Program : Application
     {
-        [STAThread]
-        public static void Main(string[] args)
-        {
-            ////TestQlGrammar();
-            TestQlsGrammar();
-
-            ////var typeChcker = new TypeChecker();
-            ////var testCondition = new IfStatement(
-            ////    new EqualExpression(
-            ////        new LiteralExpression(new BooleanLiteral(true)),
-            ////        new LiteralExpression(new IntegerLiteral(2))),
-            ////    new List<Statement>(),
-            ////    new List<Statement>());
-
-            ////var report = typeChcker.Check(new FormStatement(
-            ////    "test",
-            ////    new List<Statement> { testCondition }));
-
-            ////foreach (var message in report.AllMessages)
-            ////{
-            ////    Console.WriteLine(message);
-            ////}
-
-            ////Console.WriteLine("Type check done!");
-        }
-
-        private static void TestQlGrammar()
-        {
-            ICharStream input = new AntlrInputStream(@"
+        private static string sampleQlInput = @"
                 form questionnaire { 
-                    ""Is this a question?""
-                        existentialism: boolean
-
                     ""Is this a question?""
                         existentialism: boolean
 
                     ""When will this be finished?""
                         deadline: date
 
-                    ""What is your favourite colour?""
-                        deadline: string
-
-                    ""What is your favourite number?""
-                        deadline: integer
-
-                    ""How much does one beer cost?""
-                        deadline: money
-
                     ""What is your favourite decimal number?""
-                        deadline: decimal
-                }
-            ");
-            ICharStream input2 = new AntlrInputStream("true or false");
-            QlLexer lexer = new QlLexer(input);
-            QlParser parser = new QlParser(new CommonTokenStream(lexer));
-            var v = new CustomQlVisitor();
-            var tree = v.Visit(parser.form());
-            CheckTypes((FormStatement)tree);
-            Console.WriteLine("Done!");
-            var eval = new QlEvaluator();
-            eval.Visit((FormStatement)tree, new VisitorContext());
-        }
+                        favDecimal: decimal
 
-        private static void TestQlsGrammar()
-        {
-            var input = new AntlrInputStream(@"
+                    ""Answer the following equation: 5 + 2 * 3""
+                        equation: integer
+
+                    ""How much money do you have?"" 
+                        account: money
+
+                    ""String two:""
+                        stringtwo: string
+
+                    if(equation == 11){
+                        ""Do you like pie?""
+                            pie: boolean (existentialism)
+                    } else {
+                        ""Some numbers""
+                            comments: decimal (favDecimal + equation)
+                    }
+
+                    if (x){ 
+                        ""Y?"" 
+                            y: boolean 
+                    }
+
+                    if (y) { 
+                        ""X?"" 
+                            x: boolean 
+                    }
+                }
+            ";
+
+        private static string sampleQlsInput = @"
                 stylesheet taxOfficeExample
                   page Housing {
                     section ""Buying"" {
@@ -123,40 +82,22 @@
                       }
                     }
                     default boolean widget radio(""Yes"", ""No"")
-                  }");
+                  }";
 
-            var lexer = new QlsGrammarLexer(input);
-            var parser = new QlsGrammarParser(new CommonTokenStream(lexer));
-            var visitor = new CustomQlsVisitor();
-            var astTree = visitor.Visit(parser.stylesheet());
-            CheckTypes((StyleSheet)astTree);
-            Console.WriteLine("QLS AST conversion done.");
-        }
-
-        private static void CheckTypes(FormStatement ast)
+        [STAThread]
+        public static void Main(string[] args)
         {
-            var typeChcker = new TypeChecker();
-            var report = typeChcker.Check(ast);
+            var qlCode = File.ReadAllText(Path.GetFullPath(@"..\..\LanguageSamples\structure.ql"));
+            var qlsCode = File.ReadAllText(Path.GetFullPath(@"..\..\LanguageSamples\style.qls"));
 
-            foreach (var message in report.AllMessages)
-            {
-                Console.WriteLine(message);
-            }
+            var qlBuilder = new QlLanguageBuilder(sampleQlInput);
+            var qlsBuilder = new QlsLanguageBuilder(sampleQlsInput);
+            var appRunner = new AppRunner();
+            appRunner.Run(qlBuilder);
+            ////appRunner.Run(qlBuilder, qlsBuilder);
 
-            Console.WriteLine("Type check done!");
-        }
-
-        private static void CheckTypes(StyleSheet ast)
-        {
-            var typeChcker = new StyleSheetAnalyzer();
-            var report = typeChcker.Check(ast);
-
-            foreach (var message in report.AllMessages)
-            {
-                Console.WriteLine(message);
-            }
-
-            Console.WriteLine("Type check done!");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
     }
 }

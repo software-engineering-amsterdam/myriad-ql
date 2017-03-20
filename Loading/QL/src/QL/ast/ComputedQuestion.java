@@ -5,7 +5,7 @@ import QL.ast.type.Type;
 
 public class ComputedQuestion extends Question {
 
-	private Expression computedQuestion;
+	private final Expression computedQuestion;
 
 	public ComputedQuestion(String variable, String label, Type type, Expression computedQuestion, int line) {
 		super(variable, label, type, line);

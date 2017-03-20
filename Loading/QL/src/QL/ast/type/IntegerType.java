@@ -14,18 +14,9 @@ public class IntegerType extends Type {
 	}
 	
 	@Override
-	public void accept(TypeVisitor v) {
-		v.visit(this);
+	public <T> T accept(TypeVisitor<T> v) {
+		return v.visit(this);
 	}
 
-	@Override
-	public Field getField(String name, Notifier notifier, Value value) {
-		return new Number(name, notifier, (IntegerValue) value);
-	}
-
-	@Override
-	public Value getValue() {
-		return new IntegerValue();
-	}
 	
 }

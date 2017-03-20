@@ -10,7 +10,7 @@ public abstract class Type extends Node {
 	
 	final private String keyWord;
 	
-	public Type(String keyWord, int line) {
+	Type(String keyWord, int line) {
 		super(line);
 		this.keyWord = keyWord;
 	}
@@ -18,12 +18,11 @@ public abstract class Type extends Node {
 	public String getKeyWord() {
 		return keyWord;
 	}
-
-	// TODO field and QL.value in here?
-	public abstract Field getField(String name, Notifier notifier, Value value);
 	
-	public abstract Value getValue();
+	public boolean equals(Type other) {
+		return keyWord.equals(other.getKeyWord());
+	}
 
-	public abstract void accept(TypeVisitor v);
+	public abstract <T> T accept(TypeVisitor<T> v);
 
 }

@@ -6,16 +6,20 @@ import QL.ast.atom.BoolAtom;
 import QL.ast.atom.IntegerAtom;
 import QL.ast.atom.StringAtom;
 import QL.ast.expression.*;
+import QL.ast.type.BooleanType;
+import QL.ast.type.IntegerType;
+import QL.ast.type.StringType;
+import QL.ast.type.UnknownType;
 import QL.value.BoolValue;
 import QL.value.IntegerValue;
 import QL.value.StringValue;
 import QL.value.Value;
 
-public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value> {
+public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value>, TypeVisitor<Value> {
 
 	private final Environment environment;
 
-	public Evaluator(Environment environment) {
+	protected Evaluator(Environment environment) {
 		this.environment = environment;
 	}
 
@@ -42,20 +46,18 @@ public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value> {
 
     @Override
     public void visit(ComputedQuestion question) {
-        Value value = question.getComputedQuestion().accept(this);
+        question.getComputedQuestion().accept(this);
     }
 
     @Override
     public void visit(Statement statement) {
-        Value value = statement.getExpression().accept(this);
-        // Add to environment
+	    statement.getExpression().accept(this);
         statement.getBlock().accept(this);
     }
 
     @Override
     public void visit(IfElseStatement statement) {
-        Value value = statement.getExpression().accept(this);
-        // Add to environment
+	    statement.getExpression().accept(this);
         statement.getBlock().accept(this);
         statement.getElseBlock().accept(this);
     }
@@ -92,9 +94,9 @@ public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value> {
 
     @Override
 	public Value visit(IdExpr id) {
-
+    	    	
 		if (!environment.isAnswered(id.getName())) {
-			return environment.getType(id.getName()).getValue();
+			return environment.getType(id.getName()).accept(this);
 		}
 
 		return environment.getAnswer(id.getName());
@@ -159,6 +161,26 @@ public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value> {
     public Value visit(StringAtom expr) {
 	    return new StringValue(expr.getAtom());
     }
+
+	@Override
+	public Value visit(BooleanType type) {
+		return new BoolValue();
+	}
+
+	@Override
+	public Value visit(IntegerType type) {
+		return new IntegerValue();
+	}
+
+	@Override
+	public Value visit(StringType type) {
+		return new StringValue();
+	}
+
+	@Override
+	public Value visit(UnknownType unknownType) {
+        throw new RuntimeException("Should never visit an unknown type during evaluation");
+	}
 }
 
 

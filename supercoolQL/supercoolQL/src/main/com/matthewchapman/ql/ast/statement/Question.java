@@ -1,12 +1,12 @@
 package com.matthewchapman.ql.ast.statement;
 
 import com.matthewchapman.ql.ast.Statement;
-import com.matthewchapman.ql.ast.Type;
-import com.matthewchapman.ql.validation.QLVisitor;
+import com.matthewchapman.ql.ast.atomic.Type;
+import com.matthewchapman.ql.validation.visitors.QLStatementVisitor;
 
 /**
  * Created by matt on 20/02/2017.
- *
+ * <p>
  * Base question class, contains an identifier, type and a possibly calculated value.
  */
 public class Question extends Statement {
@@ -21,20 +21,27 @@ public class Question extends Statement {
         this.type = type;
         this.setColumn(column);
         this.setLine(line);
-
     }
 
     public String getName() {
         return this.name;
     }
 
-    public Type getType() { return this.type; }
+    public Type getType() {
+        return this.type;
+    }
 
-    public String getText() { return this.text; }
-
+    public String getText() {
+        return this.text;
+    }
 
     @Override
-    public <T> T accept(QLVisitor<T> visitor, String context) {
+    public String toString() {
+        return "\t" + this.text + "\n\t" + this.name + ":" + this.type + "\n";
+    }
+
+    @Override
+    public <T, C> T accept(QLStatementVisitor<T, C> visitor, C context) {
         return visitor.visit(this, context);
     }
 

@@ -4,7 +4,7 @@ import QL.ast.ExpressionVisitor;
 
 public class IdExpr extends Expression {
 
-	private String name;
+	private final String name;
 	
 	public IdExpr(String name, int line) {
 		super(line);

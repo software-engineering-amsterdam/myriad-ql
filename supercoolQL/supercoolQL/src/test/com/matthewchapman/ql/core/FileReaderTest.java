@@ -12,8 +12,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class FileReaderTest {
 
-    File file;
-    FileReader fileReader;
+    private File file;
+    private FileReader fileReader;
 
     @Before
     public void setUp() {
@@ -24,7 +24,7 @@ public class FileReaderTest {
     @Test
     public void readFile() {
         String output = fileReader.readFile(file);
-        int expectedLines = 39;
+        int expectedLines = 47;
         String[] lines = output.split(System.getProperty("line.separator"));
 
         assertEquals(expectedLines, lines.length);

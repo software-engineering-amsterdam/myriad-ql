@@ -1,10 +1,10 @@
 package test.org.uva.taxfree.ast;
 
 import org.testng.Assert;
-import org.uva.taxfree.ast.AstBuilder;
-import org.uva.taxfree.gui.MessageList;
-import org.uva.taxfree.model.environment.SymbolTable;
-import org.uva.taxfree.model.node.blocks.FormNode;
+import org.uva.taxfree.ql.ast.AstBuilder;
+import org.uva.taxfree.ql.gui.MessageList;
+import org.uva.taxfree.ql.model.environment.SymbolTable;
+import org.uva.taxfree.ql.model.node.blocks.FormNode;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,8 +16,9 @@ public abstract class SemanticsTester {
         MessageList semanticsMessages = new MessageList();
         SymbolTable symbolTable = new SymbolTable();
         ast.fillSymbolTable(symbolTable);
-        Assert.assertEquals(semanticsMessages.isEmpty(), expectedValid, "Expecting errors: " + description);
-        Assert.assertEquals(semanticsMessages.size(), expectedErrorAmount, "Invalid error amount");
+        ast.checkSemantics(symbolTable, semanticsMessages);
+        Assert.assertEquals(!semanticsMessages.hasMessages(), expectedValid, "Expecting errors: " + description);
+        Assert.assertEquals(semanticsMessages.messageAmount(), expectedErrorAmount, "Invalid error amount");
     }
 
     private FormNode createAst(String fileName) throws IOException {

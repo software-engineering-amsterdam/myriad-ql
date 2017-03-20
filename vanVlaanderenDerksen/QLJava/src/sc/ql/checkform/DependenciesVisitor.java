@@ -6,14 +6,14 @@ import java.util.List;
 import sc.ql.model.ConditionalBlock;
 import sc.ql.model.Node;
 import sc.ql.model.NodeVisitor;
-import sc.ql.model.atoms.AtomBoolean;
-import sc.ql.model.atoms.AtomId;
-import sc.ql.model.atoms.AtomInteger;
-import sc.ql.model.atoms.AtomMoney;
-import sc.ql.model.atoms.AtomString;
 import sc.ql.model.expressions.CalcExpression;
 import sc.ql.model.expressions.NotExpression;
-import sc.ql.model.expressions.OpExpression;
+import sc.ql.model.expressions.BinaryExpression;
+import sc.ql.model.expressions.literals.BooleanLiteral;
+import sc.ql.model.expressions.literals.IdLiteral;
+import sc.ql.model.expressions.literals.IntegerLiteral;
+import sc.ql.model.expressions.literals.AtomMoney;
+import sc.ql.model.expressions.literals.StringLiteral;
 import sc.ql.model.form_elements.IfStatement;
 import sc.ql.model.form_elements.Question;
 
@@ -59,7 +59,7 @@ public class DependenciesVisitor implements NodeVisitor<List<String>> {
 	}
 
 	@Override
-	public List<String> visit(OpExpression op_expression) throws Exception {
+	public List<String> visit(BinaryExpression op_expression) throws Exception {
 		op_expression.getLeft().accept(this);
 		op_expression.getRight().accept(this);
 		
@@ -75,12 +75,12 @@ public class DependenciesVisitor implements NodeVisitor<List<String>> {
 	}
 	
 	@Override
-	public List<String> visit(AtomBoolean atom_boolean) throws Exception {
+	public List<String> visit(BooleanLiteral atom_boolean) throws Exception {
 		return question_ids;
 	}
 
 	@Override
-	public List<String> visit(AtomId atom_id) throws Exception {		
+	public List<String> visit(IdLiteral atom_id) throws Exception {		
 		if (!question_ids.contains(atom_id.getValue())) {
 			throw new Exception("The identifier '"+atom_id.getValue()+"' on line "+atom_id.getLineNumber()+" is not (yet) declared.");
 		}
@@ -89,7 +89,7 @@ public class DependenciesVisitor implements NodeVisitor<List<String>> {
 	}
 
 	@Override
-	public List<String> visit(AtomInteger atom_integer) throws Exception {
+	public List<String> visit(IntegerLiteral atom_integer) throws Exception {
 		return question_ids;
 	}
 
@@ -99,7 +99,7 @@ public class DependenciesVisitor implements NodeVisitor<List<String>> {
 	}
 
 	@Override
-	public List<String> visit(AtomString atom_string) throws Exception {
+	public List<String> visit(StringLiteral atom_string) throws Exception {
 		return question_ids;
 	}
 }

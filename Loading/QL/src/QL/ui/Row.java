@@ -1,21 +1,18 @@
 package QL.ui;
 
-import QL.ast.type.Type;
-import javafx.scene.control.Control;
 import QL.ui.field.Field;
 import QL.value.Value;
+import javafx.scene.control.Control;
 
-public class Row {
+class Row {
 
-	private String name;
-	private String label;
-	private Type type;
-	private Field field;
+	private final String name;
+	private final String label;
+	private final Field field;
 
-	public Row(String name, String label, Type type, Field field) {
+	public Row(String name, String label, Field field) {
 		this.name = name;
 		this.label = label;
-		this.type = type;
 		this.field = field;
 	}
 
@@ -29,10 +26,6 @@ public class Row {
 
 	public String getLabel() {
 		return label;
-	}
-
-	public Type getType() {
-		return type;
 	}
 
 	public Control getControl() {

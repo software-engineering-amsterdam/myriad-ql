@@ -4,7 +4,7 @@ import QL.ast.ExpressionVisitor;
 
 public class StringAtom extends Atom {
 
-	private String atom;
+	private final String atom;
     
 	public StringAtom(String atom, int line) {
 		super(line);
