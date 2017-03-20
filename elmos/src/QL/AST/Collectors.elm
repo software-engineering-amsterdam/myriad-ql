@@ -1,6 +1,6 @@
 module QL.AST.Collectors
     exposing
-        ( QuestionTypes
+        ( TypeEnvironment
         , collectConditions
         , collectComputedFields
         , collectDeclaredIds
@@ -15,7 +15,7 @@ import QL.FormVisitor as FormVisitor exposing (defaultConfig)
 import Dict exposing (Dict)
 
 
-type alias QuestionTypes =
+type alias TypeEnvironment =
     Dict String ValueType
 
 
@@ -95,7 +95,7 @@ collectQuestionReferences expression =
             collectQuestionReferences exprLeft ++ collectQuestionReferences exprRight
 
 
-collectQuestionTypes : Form -> QuestionTypes
+collectQuestionTypes : Form -> TypeEnvironment
 collectQuestionTypes form =
     FormVisitor.inspect
         { defaultConfig

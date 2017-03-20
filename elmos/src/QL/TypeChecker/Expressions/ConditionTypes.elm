@@ -1,12 +1,12 @@
 module QL.TypeChecker.Expressions.ConditionTypes exposing (conditionTypeErrors)
 
 import QL.AST exposing (Form, FormItem(..), Expression(..), Id, ValueType(BooleanType), Location)
-import QL.AST.Collectors as Collectors exposing (QuestionTypes)
+import QL.AST.Collectors as Collectors exposing (TypeEnvironment)
 import QL.TypeChecker.Expressions.ExpressionType exposing (getType)
 import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(InvalidConditionType))
 
 
-conditionTypeErrors : Form -> QuestionTypes -> List Message
+conditionTypeErrors : Form -> TypeEnvironment -> List Message
 conditionTypeErrors form questionTypes =
     Collectors.collectConditions form
         |> List.filterMap (conditionWithType questionTypes)
@@ -14,7 +14,7 @@ conditionTypeErrors form questionTypes =
         |> List.map (\( condition, conditionType ) -> Error <| InvalidConditionType (locationOf condition) conditionType)
 
 
-conditionWithType : QuestionTypes -> Expression -> Maybe ( Expression, ValueType )
+conditionWithType : TypeEnvironment -> Expression -> Maybe ( Expression, ValueType )
 conditionWithType questionTypes condition =
     case getType questionTypes condition of
         Ok valueType ->

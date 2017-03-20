@@ -6,7 +6,7 @@ import QLS.TypeChecker.Messages exposing (Message(WidgetConfigMismatch))
 import QLS.AST.Collectors as QLSCollectors
 import Dict exposing (Dict)
 import Dict.Extra as Dict
-import QL.AST.Collectors as QLCollectors exposing (QuestionTypes)
+import QL.AST.Collectors as QLCollectors exposing (TypeEnvironment)
 import Maybe.Extra as Maybe
 import QLS.TypeChecker.WidgetCompatibility as WidgetCompatibility
 
@@ -21,7 +21,7 @@ check form styleSheet =
             |> List.filterMap (invalidWidgetConfiguration questionTypes)
 
 
-invalidWidgetConfiguration : QuestionTypes -> ( Id, Configuration ) -> Maybe Message
+invalidWidgetConfiguration : TypeEnvironment -> ( Id, Configuration ) -> Maybe Message
 invalidWidgetConfiguration questionTypes ( ( name, loc ), conf ) =
     Maybe.map2 (,) (Dict.get name questionTypes) (configuredWidget conf)
         |> Maybe.filter (not << WidgetCompatibility.allowedValueTypeWidgetPair)

@@ -2,11 +2,11 @@ module QL.TypeChecker.Expressions.ExpressionType exposing (getType)
 
 import Dict exposing (Dict)
 import QL.AST exposing (..)
-import QL.AST.Collectors exposing (QuestionTypes)
+import QL.AST.Collectors exposing (TypeEnvironment)
 import QL.TypeChecker.Messages exposing (..)
 
 
-getType : QuestionTypes -> Expression -> Result (List Message) ValueType
+getType : TypeEnvironment -> Expression -> Result (List Message) ValueType
 getType variableTypes expression =
     case expression of
         Var ( name, _ ) ->
