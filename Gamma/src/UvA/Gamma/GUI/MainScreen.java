@@ -25,7 +25,7 @@ public class MainScreen {
         FXMLController controller = loader.getController();
         System.out.println(controller);
         controller.addFormItem(form);
-        stage.setTitle("Tax Questionnaire");
+        stage.setTitle(form.getId());
         stage.setScene(new Scene(root));
         stage.sizeToScene();
         stage.show();

@@ -8,6 +8,7 @@ import UvA.Gamma.AST.Values.Money;
 import UvA.Gamma.Validation.TypeChecker;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
@@ -54,9 +55,8 @@ public class FXMLController {
     public void showQuestion(Question question) {
         assert rootGrid != null;
         Text questionLabel = new Text(question.getQuestion());
-
-        Text euroLabel = new Text("€");
         TextField input = new TextField();
+
         input.textProperty().addListener((observable, oldValue, newValue) -> {
             if (question.check(checker, newValue)) {
                 input.setStyle("-fx-text-fill: green");
@@ -65,11 +65,7 @@ public class FXMLController {
                 input.setStyle("-fx-text-fill: red");
             }
         });
-
-        HBox box = new HBox();
-        box.getChildren().addAll(euroLabel, input);
-
-        rootGrid.addRow(getRowCount(rootGrid) + 1, questionLabel, box);
+        rootGrid.addRow(getRowCount(rootGrid) + 1, questionLabel, input);
     }
 
     @FXML
@@ -112,8 +108,9 @@ public class FXMLController {
     public void showMoney(Question question){
         assert rootGrid != null;
         Text questionLabel = new Text(question.getQuestion());
-        TextField input = new TextField();
 
+        Text euroLabel = new Text("€");
+        TextField input = new TextField();
         input.textProperty().addListener((observable, oldValue, newValue) -> {
             if (question.check(checker, newValue)) {
                 input.setStyle("-fx-text-fill: green");
@@ -122,7 +119,12 @@ public class FXMLController {
                 input.setStyle("-fx-text-fill: red");
             }
         });
-        rootGrid.addRow(getRowCount(rootGrid) + 1, questionLabel, input);
+
+        HBox box = new HBox();
+        box.getChildren().addAll(euroLabel, input);
+        box.setAlignment(Pos.CENTER_RIGHT);
+
+        rootGrid.addRow(getRowCount(rootGrid) + 1, questionLabel, box);
     }
 
     public GridPane startRenderCondition() {
