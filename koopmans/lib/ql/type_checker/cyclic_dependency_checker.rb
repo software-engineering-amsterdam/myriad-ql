@@ -6,16 +6,6 @@ module QL
         form.statements.map { |statement| statement.accept(self) }
       end
 
-      # nothing has to be done with a question
-      def visit_question(_)
-      end
-
-      # visit the assignment of a computed question
-      def visit_computed_question(computed_question)
-        computed_question.assignment.accept(self)
-      end
-
-      # only visit all statements of the if statement because nothing has to be done with the condition
       def visit_if_statement(if_statement)
         if_statement.body.map { |statement| statement.accept(self) }
       end
@@ -25,9 +15,15 @@ module QL
         if_else_statement.else_body.map { |statement| statement.accept(self) }
       end
 
-      # visit operation in expression
-      def visit_expression(expression)
-        expression.expression.reduce do |left, operation|
+      def visit_question(_)
+      end
+
+      def visit_computed_question(computed_question)
+        computed_question.assignment.accept(self)
+      end
+
+      def visit_expression_sequence(expression_sequence)
+        expression_sequence.expressions.reduce do |left, operation|
           operation.accept(left, self)
         end
       end
@@ -39,7 +35,6 @@ module QL
       def visit_integer_negation(boolean_negation)
         boolean_negation.expression.accept(self)
       end
-
 
       def visit_arithmetic_expression(left, binary_expression)
         left.accept(self)
@@ -60,7 +55,6 @@ module QL
         left.accept(self)
         binary_expression.expression.accept(self)
       end
-
 
       def visit_integer_literal(integer_literal)
         integer_literal

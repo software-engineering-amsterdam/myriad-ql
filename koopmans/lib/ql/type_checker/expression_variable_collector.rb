@@ -5,15 +5,6 @@ module QL
         form.statements.map { |statement| statement.accept(self) }
       end
 
-      # nothing has to be done with a question
-      def visit_question(_)
-      end
-
-      def visit_computed_question(computed_question)
-        computed_question.assignment.accept(self)
-      end
-
-      # combine the visit of the condition and the visit of all statements of the if statement
       def visit_if_statement(if_statement)
         if_condition_variables = if_statement.condition.accept(self)
         if_body_variables = if_statement.body.map { |statement| statement.accept(self) }
@@ -27,8 +18,15 @@ module QL
         [if_condition_variables, if_body_variables, else_body_variables]
       end
 
-      def visit_expression(expression)
-        expression.expression.reduce do |left, operation|
+      def visit_question(_)
+      end
+
+      def visit_computed_question(computed_question)
+        computed_question.assignment.accept(self)
+      end
+
+      def visit_expression_sequence(expression_sequence)
+        expression_sequence.expressions.reduce do |left, operation|
           operation.accept(left, self)
         end
       end
@@ -36,33 +34,25 @@ module QL
       def visit_arithmetic_expression(left, binary_expression)
         left = try_accept(left)
         right = try_accept(binary_expression.expression)
-        [left ,right]
-      end
-
-      def try_accept(node)
-        if node.respond_to?(:accept)
-          node.accept(self)
-        else
-          node
-        end
+        [left, right]
       end
 
       def visit_boolean_expression(left, binary_expression)
-        left = left.accept(self)
-        right = binary_expression.expression.accept(self)
-        [left ,right]
+        left = try_accept(left)
+        right = try_accept(binary_expression.expression)
+        [left, right]
       end
 
       def visit_comparison_equal_expression(left, binary_expression)
-        left = left.accept(self)
-        right = binary_expression.expression.accept(self)
-        [left ,right]
+        left = try_accept(left)
+        right = try_accept(binary_expression.expression)
+        [left, right]
       end
 
       def visit_comparison_order_expression(left, binary_expression)
-        left = left.accept(self)
-        right = binary_expression.expression.accept(self)
-        [left ,right]
+        left = try_accept(left)
+        right = try_accept(binary_expression.expression)
+        [left, right]
       end
 
       def visit_boolean_negation(integer_negation)
@@ -74,19 +64,27 @@ module QL
       end
 
       def visit_integer_literal(_)
-
+        []
       end
 
       def visit_boolean_literal(_)
-
+        []
       end
 
       def visit_string_literal(_)
-
+        []
       end
 
       def visit_variable(variable)
         [variable]
+      end
+
+      def try_accept(node)
+        if node.respond_to?(:accept)
+          node.accept(self)
+        else
+          node
+        end
       end
     end
   end

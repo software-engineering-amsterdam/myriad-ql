@@ -29,8 +29,6 @@ module QL
       def undefined_variable_checker(questions, ast)
         question_variables = questions.map(&:variable).map(&:name)
         expression_variables = ast.accept(ExpressionVariableCollector.new).flatten.compact.map(&:name)
-        pp question_variables
-        pp expression_variables
 
         (expression_variables - question_variables).each do |undefined_variable|
           NotificationTable.store(Notification::Error.new("variable '#{undefined_variable}' is undefined"))
@@ -49,11 +47,11 @@ module QL
       end
 
       def cyclic_checker(questions, ast)
+        computed_questions = questions.select { |q| q.is_a?(AST::ComputedQuestion) }
         # get computed question assignment with dependency variables as hash
         # e.g. {"sellingPrice"=>[#<Variable:0x007ff31ca431e0 @name="privateDebt">, #<Variable:0x007ff31ca4ae90 @name="var1">],
         #       "privateDebt"=>[#<Variable:0x007ff31e17eaf8 @name="sellingPrice">, #<Variable:0x007ff31e1868e8 @name="var2">]}
         variable_dependencies = {}
-        computed_questions = questions.select { |q| q.is_a?(AST::ComputedQuestion) }
         computed_questions.each do |computed_question|
           assignment_variables = computed_question.assignment.accept(ExpressionVariableCollector.new).flatten.compact
           variable_dependencies[computed_question.variable.name] = assignment_variables
@@ -61,7 +59,6 @@ module QL
         ast.accept(CyclicDependencyChecker.new, variable_dependencies)
       end
 
-      # helper
       def select_duplicates(elements)
         elements.select { |element| elements.count(element) > 1 }.uniq
       end
