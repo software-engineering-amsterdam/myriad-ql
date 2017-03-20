@@ -24,7 +24,7 @@ module QL
             stored = VariableTable.find(variable_name)
 
             expect(stored).to be_a(BooleanLiteral)
-            expect(stored.to_value).to be(true)
+            expect(stored.value).to be(true)
           end
         end
       end
