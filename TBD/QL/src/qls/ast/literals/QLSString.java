@@ -1,8 +1,6 @@
 package qls.ast.literals;
 
 import ql.ast.values.StringValue;
-import ql.ast.visistor.ASTVisitor;
-
 /**
  * Created by rico on 7-3-17.
  */

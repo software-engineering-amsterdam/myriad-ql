@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import ql.ast.*;
 import ql.ast.environment.Env;
+import ql.ast.visistor.interfaces.BaseVisitor;
 import ql.gui.*;
 
 import java.util.ArrayList;
@@ -12,14 +13,14 @@ import java.util.List;
 /**
  * Created by Erik on 28-2-2017.
  */
-public class ViewASTVisitor extends ASTVisitor<VBox> {
+public class ViewASTVisitor implements BaseVisitor<VBox> {
     private final Env env;
 
     public ViewASTVisitor(Env env) {
         this.env = env;
     }
 
-    public Scene startVisitor(ASTNode node) {
+    public Scene startVisitor(Form node) {
         return new Scene(node.accept(this));
     }
 

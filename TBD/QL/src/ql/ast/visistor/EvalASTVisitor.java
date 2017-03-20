@@ -1,6 +1,6 @@
 package ql.ast.visistor;
 
-import ql.ast.ASTNode;
+import ql.ast.Expr;
 import ql.ast.environment.Env;
 import ql.ast.expressions.binop.*;
 import ql.ast.expressions.monop.Neg;
@@ -8,18 +8,19 @@ import ql.ast.expressions.monop.Not;
 import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
 import ql.ast.values.Value;
+import ql.ast.visistor.interfaces.ExpressionVisitor;
 
 /**
  * Created by Erik on 14-2-2017.
  */
-public class EvalASTVisitor extends ASTVisitor<Value> {
+public class EvalASTVisitor implements ExpressionVisitor<Value> {
     private final Env env;
 
     public EvalASTVisitor(Env env) {
         this.env = env;
     }
 
-    public Value startVisitor(ASTNode node) {
+    public Value startVisitor(Expr node) {
         return node.accept(this);
     }
 

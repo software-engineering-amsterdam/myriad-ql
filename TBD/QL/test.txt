@@ -12,21 +12,3 @@ form taxOfficeExample {
        hasMaintLoan3: boolean = hasMaintLoan2
     }
 }
-
-form ParseTest {
-    "test question1?"
-        testQuestion1: int
-    if (testQuestion1 > 0) {
-    "test question2?"
-        testQuestion2: int
-     }
-}
-
-"form ParseTest1 {   " +
-                "\"test question1?\"\n" +
-                "    testQuestion1: int" +
-                "if (testQuestion1 > 0) {" +
-                "\"test question2?\"\n" +
-                "    testQuestion2: int" +
-                "}" +
-                "}"

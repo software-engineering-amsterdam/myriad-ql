@@ -1,7 +1,7 @@
 package ql.ast;
 
 import ql.ast.literals.QLIdent;
-import ql.ast.visistor.ASTVisitor;
+import ql.ast.visistor.interfaces.BaseVisitor;
 
 /**
  * Created by Erik on 6-2-2017.
@@ -24,7 +24,7 @@ public class Form extends ASTNode {
         return statements;
     }
 
-    public <T> T accept(ASTVisitor<T> visitor) {
+    public <T> T accept(BaseVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

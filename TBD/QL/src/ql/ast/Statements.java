@@ -1,7 +1,7 @@
 package ql.ast;
 
-import ql.ast.visistor.ASTVisitor;
 
+import ql.ast.visistor.interfaces.BaseVisitor;
 
 /**
  * Created by Erik on 7-2-2017.
@@ -16,7 +16,7 @@ public class Statements extends Array<Statement> {
         super(current, rowNumber);
     }
 
-    public <T> T accept(ASTVisitor<T> visitor) {
+    public <T> T accept(BaseVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

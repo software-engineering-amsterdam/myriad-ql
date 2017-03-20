@@ -1,7 +1,6 @@
 package ql.ast.types;
 
 import ql.ast.expressions.ArithmeticOp;
-import ql.ast.expressions.EqualityOp;
 import ql.ast.expressions.RelationalOp;
 
 /**

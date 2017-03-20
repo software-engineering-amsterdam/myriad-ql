@@ -3,7 +3,8 @@ package ql.ast.expressions.binop;
 import ql.ast.Expr;
 import ql.ast.expressions.BinOp;
 import ql.ast.expressions.RelationalOp;
-import ql.ast.visistor.ASTVisitor;
+import ql.ast.visistor.interfaces.ExpressionVisitor;
+
 
 /**
  * Created by Erik on 7-2-2017.
@@ -13,7 +14,7 @@ public class GT extends BinOp implements RelationalOp {
         super(left, right, rowNumber);
     }
 
-    public <T> T accept(ASTVisitor<T> visitor) {
+    public <T> T accept(ExpressionVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

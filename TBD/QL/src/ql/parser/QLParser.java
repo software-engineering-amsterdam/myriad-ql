@@ -1,4 +1,4 @@
-// Output created by jacc on Mon Mar 13 17:03:24 CET 2017
+// Output created by jacc on Mon Mar 20 11:56:36 CET 2017
 
 package ql.parser;
 
@@ -2137,7 +2137,7 @@ class QLParser implements QLTokens {
     }
 
     private int yyr1() { // form : FORM IDENT '{' statements '}'
-        { result = new Form(((QLIdent)yysv[yysp-4]), ((Statements)yysv[yysp-2]));    }
+        { System.out.println("test"); result = new Form(((QLIdent)yysv[yysp-4]), ((Statements)yysv[yysp-2]));    }
         yysv[yysp-=5] = yyrv;
         return 1;
     }

@@ -1,19 +1,20 @@
 package ql.ast.visistor;
 
 import ql.ast.*;
-import ql.ast.types.Type;
 import ql.ast.expressions.binop.*;
 import ql.ast.expressions.monop.Neg;
 import ql.ast.expressions.monop.Not;
 import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
+import ql.ast.visistor.interfaces.BaseVisitor;
+import ql.ast.visistor.interfaces.ExpressionVisitor;
 
 import java.util.List;
 
 /**
  * Created by Erik on 14-2-2017.
  */
-public class PrintASTVisitor extends ASTVisitor<Void> {
+public class PrintASTVisitor implements BaseVisitor<Void>, ExpressionVisitor<Void> {
     @Override
     public Void visit(Form node) {
         System.out.print("form ");

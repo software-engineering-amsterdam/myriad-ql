@@ -3,12 +3,14 @@ package ql.ast.visistor;
 import ql.ast.*;
 import ql.ast.environment.Env;
 import ql.ast.environment.Scope;
-import ql.ast.types.*;
 import ql.ast.expressions.binop.*;
 import ql.ast.expressions.monop.Neg;
 import ql.ast.expressions.monop.Not;
 import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
+import ql.ast.types.*;
+import ql.ast.visistor.interfaces.BaseVisitor;
+import ql.ast.visistor.interfaces.ExpressionVisitor;
 import ql.logger.Error;
 import ql.logger.ErrorHandler;
 
@@ -17,7 +19,7 @@ import java.util.List;
 /**
  * Created by Erik on 14-2-2017.
  */
-public class TypeASTVisitor extends ASTVisitor<Type>{
+public class TypeASTVisitor implements BaseVisitor<Void>, ExpressionVisitor<Type> {
 
     private ErrorHandler errorHandler;
     private final Env env;
@@ -27,13 +29,19 @@ public class TypeASTVisitor extends ASTVisitor<Type>{
         this.env = env;
     }
 
-    public void startVisitor(ErrorHandler errorHandler, ASTNode node) {
+    public void startVisitor(ErrorHandler errorHandler, Form node) {
         this.errorHandler = errorHandler;
         node.accept(this);
         errorHandler.showErrors();
     }
 
-    public Type visit(Statements node) {
+    @Override
+    public Void visit(Form node) {
+        node.getStatements().accept(this);
+        return null;
+    }
+
+    public Void visit(Statements node) {
         currentScope = env.getScope(node);
         List<Statement> statements = node.getItems();
         for (Statement statement: statements) {
@@ -44,7 +52,7 @@ public class TypeASTVisitor extends ASTVisitor<Type>{
     }
 
     @Override
-    public Type visit(If node) {
+    public Void visit(If node) {
         Type expr = node.getCondition().accept(this);
 
         if (expr.equals(new ErrorType())) {
@@ -60,7 +68,7 @@ public class TypeASTVisitor extends ASTVisitor<Type>{
     }
 
     @Override
-    public Type visit(IfElse node) {
+    public Void visit(IfElse node) {
         Type expr = node.getCondition().accept(this);
 
 
@@ -78,7 +86,12 @@ public class TypeASTVisitor extends ASTVisitor<Type>{
     }
 
     @Override
-    public Type visit(QuestionExpr node) {
+    public Void visit(Question node) {
+        return null;
+    }
+
+    @Override
+    public Void visit(QuestionExpr node) {
         Type expr = node.getExpr().accept(this);
         if (!expr.equals(node.getType())) {
             errorHandler.addError(new Error("Wrong type for assignment expected " + node.getType() + " found " + expr, node.getRowNumber()));

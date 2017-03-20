@@ -1,8 +1,5 @@
 package ql.ast.values;
 
-import ql.ast.types.BooleanType;
-import ql.ast.types.FloatType;
-
 /**
  * Created by Erik on 21-2-2017.
  */

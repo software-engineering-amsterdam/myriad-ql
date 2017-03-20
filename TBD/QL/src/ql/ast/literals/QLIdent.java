@@ -2,7 +2,7 @@ package ql.ast.literals;
 
 import ql.ast.values.UndefinedValue;
 import ql.ast.values.Value;
-import ql.ast.visistor.ASTVisitor;
+import ql.ast.visistor.interfaces.ExpressionVisitor;
 
 /**
  * Created by Erik on 7-2-2017.
@@ -24,7 +24,7 @@ public class QLIdent extends QLLiteral {
         return new UndefinedValue();
     }
 
-    public <T> T accept(ASTVisitor<T> visitor) {
+    public <T> T accept(ExpressionVisitor<T> visitor) {
         return visitor.visit(this);
     }
 

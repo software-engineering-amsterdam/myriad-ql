@@ -2,8 +2,6 @@ package qls.ast.literals;
 
 import ql.ast.values.UndefinedValue;
 import ql.ast.values.Value;
-import ql.ast.visistor.ASTVisitor;
-
 /**
  * Created by rico on 7-3-17.
  */

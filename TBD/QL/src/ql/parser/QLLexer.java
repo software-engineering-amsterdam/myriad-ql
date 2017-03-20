@@ -4,7 +4,10 @@ package ql.parser;
  * Created by Erik on 6-2-2017.
  */
 
-import ql.ast.literals.*;
+import ql.ast.literals.QLFloat;
+import ql.ast.literals.QLIdent;
+import ql.ast.literals.QLInt;
+import ql.ast.literals.QLString;
 
 import java.io.IOException;
 import java.io.Reader;

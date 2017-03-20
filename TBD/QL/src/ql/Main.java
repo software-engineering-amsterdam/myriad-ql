@@ -3,7 +3,10 @@ package ql;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import ql.ast.environment.Env;
-import ql.ast.visistor.*;
+import ql.ast.visistor.EnvASTVisitor;
+import ql.ast.visistor.PrintASTVisitor;
+import ql.ast.visistor.TypeASTVisitor;
+import ql.ast.visistor.ViewASTVisitor;
 import ql.logger.ErrorHandler;
 import ql.parser.Parser;
 import ql.parser.QLLexer;
@@ -35,9 +38,11 @@ public class Main extends Application {
             Parser parser = new Parser(lexer);
             parser.parse();
 
+            System.out.println(parser.getResult());
+
             System.out.println("Parser done");
 
-            ASTVisitor<Void> printVisitor = new PrintASTVisitor();
+            PrintASTVisitor printVisitor = new PrintASTVisitor();
             printVisitor.visit(parser.getResult());
 
             ErrorHandler errorHandler = new ErrorHandler();

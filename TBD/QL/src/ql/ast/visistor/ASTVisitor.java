@@ -1,3 +1,4 @@
+/*
 package ql.ast.visistor;
 
 import ql.ast.*;
@@ -9,9 +10,11 @@ import ql.ast.literals.*;
 
 import java.util.List;
 
+*/
 /**
  * Created by Erik on 14-2-2017.
- */
+ *//*
+
 public abstract class ASTVisitor<T> {
 
     public T visit(Form node) {
@@ -180,3 +183,4 @@ public abstract class ASTVisitor<T> {
         return null;
     }
 }
+*/
