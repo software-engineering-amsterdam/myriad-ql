@@ -2,7 +2,7 @@ package org.uva.taxfree.ql.model.node.expression;
 
 import org.uva.taxfree.ql.gui.MessageList;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
-import org.uva.taxfree.ql.model.node.operators.Operator;
+import org.uva.taxfree.ql.model.operators.Operator;
 import org.uva.taxfree.ql.model.types.Type;
 
 import java.util.List;
