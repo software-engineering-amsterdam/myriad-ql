@@ -5,6 +5,7 @@ import checker.Issue.Issues
 import checker.{ Error, Warning }
 import model.DisplayQuestion
 import view.questions.{ BooleanQuestion, DateQuestion, NumericQuestion, StringQuestion }
+import view.style.DisplayStyle
 
 import scalafx.application.JFXApp
 import scalafx.geometry.Insets
@@ -18,7 +19,8 @@ trait GUI extends JFXApp.PrimaryStage {
 
   def displayBoxes: Seq[Node]
 
-  protected def renderQuestion(question: DisplayQuestion, style: Option[QuestionStyle] = None): VBox = {
+  protected def renderQuestion(question: DisplayQuestion, definedStyle: Option[QuestionStyle] = None): VBox = {
+    val style = new DisplayStyle(definedStyle)
     question.`type` match {
       case BooleanType => new BooleanQuestion(question, style)
       case DateType => new DateQuestion(question, style)

@@ -4,25 +4,23 @@ import ast.NumericType
 import values.{ NumericValue, UndefinedValue, Value }
 
 import scalafx.Includes._
-import scalafx.scene.Node
 import scalafx.scene.control.TextField
 
-class NumericTextWidget(width: Double, numberType: NumericType)(implicit val changeHandler: Value => Unit) extends QLWidget {
+class NumericTextWidget(width: Double, numberType: NumericType, changeHandler: Option[Value => Unit]) extends QLWidget(changeHandler) {
 
-  private val textfield = new TextField()
-  textfield.setPrefWidth(width)
+  override val displayNode: TextField = new TextField()
+  displayNode.setPrefWidth(width)
 
-  textfield.onAction = handle {
-    val qlValue = NumericValue.stringToNumericValue(textfield.text.value, numberType)
+  displayNode.onAction = handle {
+    val qlValue = NumericValue.stringToNumericValue(displayNode.text.value, numberType)
     this.setValue(qlValue)
-    changeHandler(qlValue)
+    super.handleUpdate(qlValue)
   }
 
   override def setValue(newVal: Value): Unit = newVal match {
-    case n: NumericValue => textfield.text.value = NumericValue.upgradeNumericToType(n, numberType).toString
-    case UndefinedValue => textfield.text.value = ""
+    case n: NumericValue => displayNode.text.value = NumericValue.upgradeNumericToType(n, numberType).toString
+    case UndefinedValue => displayNode.text.value = ""
     case v => sys.error(s"Incompatible value $v for NumericText widget")
   }
 
-  override def getSFXNode: Node = textfield
 }

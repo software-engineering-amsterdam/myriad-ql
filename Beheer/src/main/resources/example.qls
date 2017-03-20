@@ -21,9 +21,12 @@ stylesheet taxOfficeExample {
             section "You sold a house" {
                 question sellingPrice
                 question privateDebt {
-                    widget slider(1,100)
+                    widget slider(1,10000000)
                 }
                 question valueResidue
+                question valueResidue2 {
+                    widget slider(0,99999999)
+                }
                 default money {
                     width: 400
                     font: "Arial"

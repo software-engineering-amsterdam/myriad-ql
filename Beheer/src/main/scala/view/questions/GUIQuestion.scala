@@ -1,69 +1,43 @@
 package view.questions
 
-import ast.Stylesheet.Styling
-import ast._
 import model.{ ComputedQuestion, DisplayQuestion, OpenQuestion }
 import values.{ Evaluator, Value }
+import view.style.DisplayStyle
+import view.widgets.QLWidget
 import view.{ env, updateEnv }
 
-import scala.language.implicitConversions
-import scalafx.beans.binding.{ Bindings, BooleanBinding, StringBinding }
-import scalafx.event.subscriptions.Subscription
+import scalafx.beans.binding.{ Bindings, BooleanBinding }
 import scalafx.scene.layout.VBox
-import scalafx.scene.text.{ Font, Text }
+import scalafx.scene.text.Text
 
-trait GUIQuestion {
-  val question: DisplayQuestion
-  val questionStyle: Option[QuestionStyle]
+abstract class GUIQuestion(question: DisplayQuestion, displayStyle: DisplayStyle) {
+  protected val widget: QLWidget
+  protected val widgetUpdateHandler: Option[Value => Unit] = question match {
+    case o: OpenQuestion => Some(updateEnv(o.identifier))
+    case _: ComputedQuestion => None
+  }
 
-  implicit protected def widgetUpdateHandler(newVal: Value): Unit = updateEnv(question.identifier, newVal)
+  question match {
+    case c: ComputedQuestion => Bindings.createObjectBinding(() => Evaluator(env.toMap).calculate(c.value), env).onChange {
+      (newValue, _, _) =>
+        {
+          widget.setValue(newValue.value)
+          updateEnv(c.identifier)(newValue.value)
+        }
+    }
+    case _: OpenQuestion => Unit
+  }
+  private val label: Text = new Text {
+    text = question.label
+    font = displayStyle.font
+    fill = displayStyle.fill
+  }
 
-  val displayBox = new VBox {
-    children = Seq(createLabel)
+  //Depends on potentially child-class overridden val, therefore must be lazy to delay instantiation.
+  lazy val displayBox = new VBox {
+    children = Seq(label, widget.displayNode)
     disable = isDisabled(question)
     visible <== isVisible(question)
-  }
-
-  protected val width: Double = questionStyle.flatMap {
-    q => extractStyle(q.styling, { case Width(w) => w.toDouble })
-  }.getOrElse(100.0)
-
-  protected def createValueBinding(c: ComputedQuestion)(changeHandler: Value => Unit): Subscription =
-    Bindings.createObjectBinding[Value](() => Evaluator(env.toMap).calculate(c.value), env)
-      .onChange((newValue, _, _) => changeHandler(newValue.value))
-
-  protected def computeValue(question: ComputedQuestion): StringBinding =
-    Bindings.createStringBinding(() => Evaluator(env.toMap).calculate(question.value).toString, env)
-
-  private def createLabel: Text = {
-    questionStyle match {
-      case Some(d) =>
-        val text = new Text(question.label)
-        text.font_=(getFont(d.styling))
-        text.fill_=(getFill(d.styling))
-        text
-      case None => new Text(question.label)
-    }
-  }
-
-  private def getFill(styling: Styling) =
-    extractStyle(styling, { case Color(c) => c })
-      .map(color => scalafx.scene.paint.Color.web(color))
-      .getOrElse(scalafx.scene.paint.Color.Black)
-
-  private def extractStyle[T](styling: Styling, pf: PartialFunction[Style, T]): Option[T] =
-    styling.values.collect(pf).lastOption
-
-  private def getFont(styling: Styling): Font = {
-    val font = extractStyle(styling, { case ast.Font(f) => f })
-    val size = extractStyle(styling, { case FontSize(s) => s })
-
-    (font, size) match {
-      case (Some(f), Some(s)) => Font.font(f, s.toDouble)
-      case (Some(f), None) => Font.font(f)
-      case (None, Some(s)) => Font.font(s.toDouble)
-      case (None, None) => new Font(Font.default)
-    }
   }
 
   private def isDisabled(question: DisplayQuestion): Boolean = question match {

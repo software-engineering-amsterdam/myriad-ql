@@ -7,18 +7,19 @@ import scalafx.beans.property.DoubleProperty
 import scalafx.scene.Node
 import scalafx.scene.control.Slider
 
-class SliderWidget(min: BigDecimal, max: BigDecimal, numericType: NumericType)(implicit val changeHandler: Value => Unit) extends QLWidget {
+class SliderWidget(min: BigDecimal, max: BigDecimal, numericType: NumericType, changeHandler: Option[Value => Unit]) extends QLWidget(changeHandler) {
   private val selectedValue: DoubleProperty = new DoubleProperty()
-  private val slider = new Slider {
-    min = min.doubleValue
-    max = max.doubleValue
-    value <==> selectedValue
-  }
 
   selectedValue.onChange {
     val qlValue = NumericValue.doubleToNumericValue(selectedValue.value, numericType)
     this.setValue(qlValue)
-    changeHandler(qlValue)
+    super.handleUpdate(qlValue)
+  }
+
+  override val displayNode: Slider = new Slider {
+    min = min.doubleValue
+    max = max.doubleValue
+    value <==> selectedValue
   }
 
   override def setValue(newVal: Value): Unit = newVal match {
@@ -33,6 +34,4 @@ class SliderWidget(min: BigDecimal, max: BigDecimal, numericType: NumericType)(i
     case UndefinedValue => selectedValue.value_=(min)
     case v => sys.error(s"Incompatible value $v for Slider Widget")
   }
-
-  override def getSFXNode: Node = slider
 }
