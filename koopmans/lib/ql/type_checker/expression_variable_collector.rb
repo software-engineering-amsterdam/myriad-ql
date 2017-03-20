@@ -54,7 +54,24 @@ module QL
         left = left.accept(self)
         right = binary_expression.expression.accept(self)
         [left ,right]
-        # AST::IntegerLiteral.new(left.to_value * right.to_value)
+      end
+
+      def visit_boolean_expression(left, binary_expression)
+        left = left.accept(self)
+        right = binary_expression.expression.accept(self)
+        [left ,right]
+      end
+
+      def visit_comparison_equal_expression(left, binary_expression)
+        left = left.accept(self)
+        right = binary_expression.expression.accept(self)
+        [left ,right]
+      end
+
+      def visit_comparison_order_expression(left, binary_expression)
+        left = left.accept(self)
+        right = binary_expression.expression.accept(self)
+        [left ,right]
       end
 
       def visit_boolean_negation(integer_negation)
@@ -64,11 +81,6 @@ module QL
       def visit_integer_negation(boolean_negation)
         boolean_negation.expression.accept(self)
       end
-
-      # nothing has to be done with a literal
-      # def visit_literal(_)
-      #   []
-      # end
 
       def visit_integer_literal(_)
         []
@@ -83,7 +95,7 @@ module QL
       end
 
       def visit_variable(variable)
-        #TODO add to global variable
+        # @variables << variable
         [variable]
       end
     end
