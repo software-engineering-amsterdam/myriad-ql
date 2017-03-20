@@ -1,10 +1,10 @@
-package ql.view;
+package ql.gui;
 
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import ql.ast.environment.Env;
 import ql.ast.types.*;
-import ql.view.fields.*;
+import ql.gui.fields.*;
 
 /**
  * Created by Erik on 28-2-2017.

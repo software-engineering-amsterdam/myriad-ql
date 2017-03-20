@@ -4,7 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import ql.ast.*;
 import ql.ast.environment.Env;
-import ql.view.*;
+import ql.gui.*;
 
 import java.util.ArrayList;
 import java.util.List;

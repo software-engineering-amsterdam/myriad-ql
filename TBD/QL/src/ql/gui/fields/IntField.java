@@ -1,22 +1,31 @@
-package ql.view.fields;
+package ql.gui.fields;
+
 
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import ql.ast.environment.Env;
 import ql.ast.values.Value;
-import ql.view.QLChangeListener;
+import ql.gui.QLChangeListener;
 
 /**
  * Created by Erik on 28-2-2017.
  */
-public class StringField extends TextField implements QLField{
+public class IntField extends TextField implements QLField{
 
-    public StringField(Env env, String variableName) {
+    public IntField(Env env, String variableName) {
         this.textProperty().addListener(new QLChangeListener<String>(env, variableName) {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                this.setValue(newValue);
+                if (!newValue.matches("[-+]?[0-9]*")) {
+                    setText(oldValue);
+                    return;
+                }
+                try {
+                    this.setValue(Integer.valueOf(newValue));
+                }catch (NumberFormatException e){
+                    this.setValueUndefined();
+                }
             }
         });
 

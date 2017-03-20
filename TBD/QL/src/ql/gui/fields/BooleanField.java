@@ -1,4 +1,4 @@
-package ql.view.fields;
+package ql.gui.fields;
 
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
@@ -11,7 +11,7 @@ import ql.ast.environment.Env;
 import ql.ast.values.BooleanValue;
 import ql.ast.values.UndefinedValue;
 import ql.ast.values.Value;
-import ql.view.QLChangeListener;
+import ql.gui.QLChangeListener;
 
 /**
  * Created by Erik on 28-2-2017.

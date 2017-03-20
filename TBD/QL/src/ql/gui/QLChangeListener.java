@@ -1,4 +1,4 @@
-package ql.view;
+package ql.gui;
 
 import javafx.beans.value.ChangeListener;
 import ql.ast.environment.Env;

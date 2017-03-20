@@ -1,4 +1,4 @@
-package ql.view.fields;
+package ql.gui.fields;
 
 import javafx.scene.Node;
 
