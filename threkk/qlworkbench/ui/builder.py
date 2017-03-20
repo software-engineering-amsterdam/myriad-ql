@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 """
 This module takes care of the construction of the UI that the user will
-interact with.
+interact with. This only contains the TK related logic, the application logic,
+result of the parsing, is located in a context class so it can be easily
+modified or substituted.
 """
 from tkinter import Tk
 from tkinter import ttk
@@ -9,7 +11,27 @@ from tkinter import ttk
 from .context import UIContext
 
 
-class UIBuilder(object):
+class Visitor(object):
+    """
+    Implements the visitor pattern. Given an AST and a GUI builder, it will go
+    trough the AST to retrieve all the nodes and use them to build the user
+    interface.
+    """
+    def __init__(self, ast):
+        self.__ast = ast
+        self.__ui = Builder()
+
+    def execute(self):
+        self.__ui.set_title(self.__ast.title)
+        queue = self.__ast.build_order
+
+        for node in queue:
+            self.__ast.register[node].build_ui(self.__ui)
+
+        return self.__ui
+
+
+class Builder(object):
     """
     This class represents a UI object. It initalises the environment and allows
     to place different types of widgets. The available widgets depends on the
@@ -52,7 +74,7 @@ class UIBuilder(object):
         conditions. The type and format of the questions will depend on the
         type of the variable given.
         """
-        label = ttk.Label(self.mainframe, text=text, wraplength=200)
+        label = ttk.Label(self.mainframe, text=text[1:-1], wraplength=200)
         value = variable.type.init_variable()
         field = variable.type.init_field(self, value)
 
@@ -69,7 +91,7 @@ class UIBuilder(object):
         expression and conditions. The type and format of the questions will
         depend on the type of the variable given.
         """
-        label = ttk.Label(self.mainframe, text=text, wraplength=200)
+        label = ttk.Label(self.mainframe, text=text[1:-1], wraplength=200)
         value = variable.type.init_variable()
         field = variable.type.init_field(self, value, assignation=True)
 
