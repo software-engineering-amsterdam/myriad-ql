@@ -1,10 +1,10 @@
 package test.org.uva.taxfree.ast;
 
 import org.testng.Assert;
-import org.uva.taxfree.ast.AstBuilder;
-import org.uva.taxfree.gui.MessageList;
-import org.uva.taxfree.model.environment.SymbolTable;
-import org.uva.taxfree.model.node.blocks.FormNode;
+import org.uva.taxfree.ql.ast.AstBuilder;
+import org.uva.taxfree.ql.gui.MessageList;
+import org.uva.taxfree.ql.model.environment.SymbolTable;
+import org.uva.taxfree.ql.model.node.blocks.FormNode;
 
 import java.io.File;
 import java.io.IOException;

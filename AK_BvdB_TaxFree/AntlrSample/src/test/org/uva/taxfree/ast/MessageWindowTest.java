@@ -1,8 +1,8 @@
 package test.org.uva.taxfree.ast;
 
 import org.testng.annotations.Test;
-import org.uva.taxfree.gui.MessageList;
-import org.uva.taxfree.gui.MessageWindow;
+import org.uva.taxfree.ql.gui.MessageList;
+import org.uva.taxfree.ql.gui.MessageWindow;
 
 public class MessageWindowTest {
     @Test

@@ -3,7 +3,7 @@ package test.org.uva.taxfree.ast;
 import org.testng.Assert;
 import org.testng.TestException;
 import org.testng.annotations.Test;
-import org.uva.taxfree.ast.AstBuilder;
+import org.uva.taxfree.ql.ast.AstBuilder;
 
 import java.io.File;
 

@@ -1,9 +1,9 @@
 package test;
 
-import org.uva.taxfree.ast.AstBuilder;
-import org.uva.taxfree.gui.QuestionForm;
-import org.uva.taxfree.model.environment.SymbolTable;
-import org.uva.taxfree.model.node.blocks.FormNode;
+import org.uva.taxfree.ql.ast.AstBuilder;
+import org.uva.taxfree.ql.gui.QuestionForm;
+import org.uva.taxfree.ql.model.environment.SymbolTable;
+import org.uva.taxfree.ql.model.node.blocks.FormNode;
 import org.uva.taxfree.qls.QlsStyleBuilder;
 import test.org.uva.taxfree.ast.SemanticsTester;
 

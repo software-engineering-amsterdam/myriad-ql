@@ -2,9 +2,9 @@ package test;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.uva.taxfree.model.environment.Declaration;
-import org.uva.taxfree.model.node.declarations.DeclarationNode;
-import org.uva.taxfree.model.types.IntegerType;
+import org.uva.taxfree.ql.model.environment.Declaration;
+import org.uva.taxfree.ql.model.node.declarations.DeclarationNode;
+import org.uva.taxfree.ql.model.types.IntegerType;
 
 public class DeclarationTest {
     @Test

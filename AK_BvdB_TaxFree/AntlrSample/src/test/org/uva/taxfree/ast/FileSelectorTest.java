@@ -1,7 +1,7 @@
 package test.org.uva.taxfree.ast;
 
 import org.testng.annotations.Test;
-import org.uva.taxfree.gui.FileSelector;
+import org.uva.taxfree.ql.gui.FileSelector;
 
 import java.io.File;
 

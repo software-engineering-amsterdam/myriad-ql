@@ -3,9 +3,9 @@ package test.org.uva.taxfree.ast;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.uva.taxfree.model.environment.SymbolTable;
-import org.uva.taxfree.model.node.declarations.DeclarationNode;
-import org.uva.taxfree.model.types.BooleanType;
+import org.uva.taxfree.ql.model.environment.SymbolTable;
+import org.uva.taxfree.ql.model.node.declarations.DeclarationNode;
+import org.uva.taxfree.ql.model.types.BooleanType;
 
 import java.io.File;
 

@@ -2,12 +2,11 @@ package test;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.uva.taxfree.model.node.declarations.CalculationNode;
-import org.uva.taxfree.model.node.expression.BinaryExpressionNode;
-import org.uva.taxfree.model.node.literal.VariableLiteralNode;
-import org.uva.taxfree.model.node.operators.AddOperator;
-import org.uva.taxfree.model.node.operators.NumericOperator;
-import org.uva.taxfree.model.types.IntegerType;
+import org.uva.taxfree.ql.model.node.declarations.CalculationNode;
+import org.uva.taxfree.ql.model.node.expression.BinaryExpressionNode;
+import org.uva.taxfree.ql.model.node.literal.VariableLiteralNode;
+import org.uva.taxfree.ql.model.node.operators.AddOperator;
+import org.uva.taxfree.ql.model.types.IntegerType;
 
 import java.util.Set;
 
