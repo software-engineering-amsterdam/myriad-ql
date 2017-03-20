@@ -4,7 +4,7 @@ module QL
       attr_accessor :operator, :expression
 
       def initialize(operator, expression)
-        @operator = operator
+        @operator = operator.to_s
         @expression = expression
       end
     end

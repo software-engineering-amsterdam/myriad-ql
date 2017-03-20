@@ -1,12 +1,8 @@
 module QL
   module AST
     class DecimalType < Type
-      def literal_type
-        IntegerLiteral
-      end
-
-      def widget
-        QL::GUI::SpinboxWidget
+      def accept(visitor)
+        visitor.visit_decimal_type(self)
       end
     end
   end
