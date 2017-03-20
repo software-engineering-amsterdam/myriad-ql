@@ -3,7 +3,6 @@ package org.lemonade.gui.values;
 import org.lemonade.exceptions.NotSupportedException;
 import org.lemonade.gui.GuiExpression;
 import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public abstract class GuiValue<T> implements GuiExpression {
 
@@ -57,35 +56,67 @@ public abstract class GuiValue<T> implements GuiExpression {
         throw new NotSupportedException();
     }
 
-    public GuiValue<?> add(GuiValue<?> that) {
+    public GuiValue<?> add(GuiIntegerValue that) {
         throw new NotSupportedException();
     }
 
-    public GuiValue<?> divide(GuiValue<?> that) {
+    public GuiValue<?> add(GuiMoneyValue that) {
         throw new NotSupportedException();
     }
 
-    public GuiValue<?> product(GuiValue<?> that) {
+    public GuiValue<?> add(GuiDecimalValue that) {
         throw new NotSupportedException();
     }
 
-    public GuiValue<?> minus(GuiValue<?> that) {
+    public GuiValue<?> divide(GuiIntegerValue that) {
         throw new NotSupportedException();
     }
 
-    public GuiValue<?> lT(GuiValue<?> that ) {
+    public GuiValue<?> divide(GuiMoneyValue that) {
         throw new NotSupportedException();
     }
 
-    public GuiValue<?> gT(GuiValue<?> that ) {
+    public GuiValue<?> divide(GuiDecimalValue that) {
         throw new NotSupportedException();
     }
 
-    public GuiValue<?> lTE(GuiValue<?> that ) {
+    public GuiValue<?> product(GuiIntegerValue that) {
         throw new NotSupportedException();
     }
 
-    public GuiValue<?> gTE(GuiValue<?> that ) {
+    public GuiValue<?> product(GuiMoneyValue that) {
+        throw new NotSupportedException();
+    }
+
+    public GuiValue<?> product(GuiDecimalValue that) {
+        throw new NotSupportedException();
+    }
+
+    public GuiValue<?> minus(GuiIntegerValue that) {
+        throw new NotSupportedException();
+    }
+
+    public GuiValue<?> minus(GuiMoneyValue that) {
+        throw new NotSupportedException();
+    }
+
+    public GuiValue<?> minus(GuiDecimalValue that) {
+        throw new NotSupportedException();
+    }
+
+    public GuiValue<?> lT(GuiValue<?> that) {
+        throw new NotSupportedException();
+    }
+
+    public GuiValue<?> gT(GuiValue<?> that) {
+        throw new NotSupportedException();
+    }
+
+    public GuiValue<?> lTE(GuiValue<?> that) {
+        throw new NotSupportedException();
+    }
+
+    public GuiValue<?> gTE(GuiValue<?> that) {
         throw new NotSupportedException();
     }
 }

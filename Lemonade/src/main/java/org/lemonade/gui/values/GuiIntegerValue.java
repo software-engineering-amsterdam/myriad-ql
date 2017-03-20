@@ -25,67 +25,83 @@ public class GuiIntegerValue extends GuiNumericalValue<Integer> implements Compa
         return visitor.visit(this);
     }
 
-    public GuiValue<?> plus(GuiNumericalValue<?> that) {
+    @Override
+    public GuiValue<?> plus(GuiValue<?> that) {
         return that.add(this);
     }
 
-    public GuiValue<?> minus(GuiValue<?> that) {
-        return that.min(this);
+    @Override
+    public GuiValue<?> min(GuiValue<?> that) {
+        return that.minus(this);
     }
 
-    public GuiValue<?> product(GuiValue<?> that) {
-        return that.prod(this);
+    @Override
+    public GuiValue<?> prod(GuiValue<?> that) {
+        return that.product(this);
     }
 
-    public GuiValue<?> divide(GuiValue<?> that) {
-        return that.div(this);
+    @Override
+    public GuiValue<?> div(GuiValue<?> that) {
+        return that.divide(this);
     }
 
+    @Override
     public GuiDecimalValue add(GuiDecimalValue that){
         return new GuiDecimalValue(that.getValue() + this.getValue());
     }
 
+    @Override
     public GuiIntegerValue add(GuiIntegerValue that){
         return new GuiIntegerValue(that.getValue() + this.getValue());
     }
 
+    @Override
     public GuiMoneyValue add(GuiMoneyValue that){
         return new GuiMoneyValue(that.getValue() + this.getValue());
     }
 
-    public GuiDecimalValue min(GuiDecimalValue that){
+    @Override
+    public GuiDecimalValue minus(GuiDecimalValue that){
         return new GuiDecimalValue(that.getValue() - this.getValue());
     }
 
-    public GuiIntegerValue min(GuiIntegerValue that){
+    @Override
+    public GuiIntegerValue minus(GuiIntegerValue that){
         return new GuiIntegerValue(that.getValue() - this.getValue());
     }
 
-    public GuiMoneyValue min(GuiMoneyValue that){
+    @Override
+    public GuiMoneyValue minus(GuiMoneyValue that){
         return new GuiMoneyValue(that.getValue() - this.getValue());
     }
 
-    public GuiDecimalValue prod(GuiDecimalValue that){
+    @Override
+    public GuiDecimalValue product(GuiDecimalValue that){
         return new GuiDecimalValue(that.getValue() * this.getValue());
     }
 
-    public GuiIntegerValue prod(GuiIntegerValue that){
+    @Override
+    public GuiIntegerValue product(GuiIntegerValue that){
         return new GuiIntegerValue(that.getValue() * this.getValue());
     }
 
-    public GuiMoneyValue prod(GuiMoneyValue that){
+    @Override
+    public GuiMoneyValue product(GuiMoneyValue that){
         return new GuiMoneyValue(that.getValue() * this.getValue());
     }
 
-    public GuiDecimalValue div(GuiDecimalValue that){
+    @Override
+    public GuiDecimalValue divide(GuiDecimalValue that){
         return new GuiDecimalValue(that.getValue() / this.getValue());
     }
 
-    public GuiIntegerValue div(GuiIntegerValue that){
+    @Override
+    public GuiIntegerValue divide(GuiIntegerValue that){
         return new GuiIntegerValue((that.getValue() / this.getValue()));
     }
 
-    public GuiMoneyValue div(GuiMoneyValue that) {
+    @Override
+    public GuiMoneyValue divide(GuiMoneyValue that) {
         return new GuiMoneyValue((Double) (that.getValue() / this.getValue()));
     }
 

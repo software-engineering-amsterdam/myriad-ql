@@ -12,12 +12,6 @@ public class GuiUndefinedValue extends GuiValue<Void> {
 
     @Override
     public void update(final Void value) {
-
-    }
-
-    @Override
-    public GuiValue<?> plus(GuiValue<?> that) {
-        return this;
     }
 
     @Override
@@ -31,25 +25,90 @@ public class GuiUndefinedValue extends GuiValue<Void> {
     }
 
     @Override
-    public GuiValue<?> divide(GuiValue<?> that) {
+    public GuiValue<?> plus(GuiValue<?> that) {
         return this;
     }
 
     @Override
-    public GuiValue<?> product(GuiValue<?> that) {
+    public GuiValue<?> div(GuiValue<?> that) {
         return this;
     }
 
     @Override
-    public GuiValue<?> minus(GuiValue<?> that) {
+    public GuiValue<?> prod(GuiValue<?> that) {
         return this;
     }
 
-    public GuiValue<?> doAnd(GuiValue<?> that){
+    @Override
+    public GuiValue<?> min(GuiValue<?> that) {
         return this;
     }
 
-    public GuiValue<?> doOr(GuiValue<?> that){
+    @Override
+    public GuiValue<?> add(final GuiIntegerValue that) {
+        return this;
+    }
+
+    @Override
+    public GuiValue<?> add(final GuiMoneyValue that) {
+        return this;
+    }
+
+    @Override
+    public GuiValue<?> add(final GuiDecimalValue that) {
+        return this;
+    }
+
+    @Override
+    public GuiValue<?> divide(final GuiIntegerValue that) {
+        return this;
+    }
+
+    @Override
+    public GuiValue<?> divide(final GuiMoneyValue that) {
+        return this;
+    }
+
+    @Override
+    public GuiValue<?> divide(final GuiDecimalValue that) {
+        return this;
+    }
+
+    @Override
+    public GuiValue<?> product(final GuiIntegerValue that) {
+        return this;
+    }
+
+    @Override
+    public GuiValue<?> product(final GuiMoneyValue that) {
+        return this;
+    }
+
+    @Override
+    public GuiValue<?> product(final GuiDecimalValue that) {
+        return this;
+    }
+
+    @Override
+    public GuiValue<?> minus(final GuiIntegerValue that) {
+        return this;
+    }
+
+    @Override
+    public GuiValue<?> minus(final GuiMoneyValue that) {
+        return this;
+    }
+
+    @Override
+    public GuiValue<?> minus(final GuiDecimalValue that) {
+        return this;
+    }
+
+    public GuiValue<?> doAnd(GuiValue<?> that) {
+        return this;
+    }
+
+    public GuiValue<?> doOr(GuiValue<?> that) {
         return this;
     }
 }

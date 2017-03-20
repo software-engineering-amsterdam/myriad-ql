@@ -90,10 +90,10 @@ public class EvaluateTest {
 
     @Test
     public void testNumericMinus() {
-        GuiValue<?> twoMinusOne = two.minus(one);
-        GuiValue<?> twoMinusOnePointFive = two.minus(onePointFive);
-        GuiValue<?> twoMinusOneFifty = two.minus(oneFifty);
-        GuiValue<?> twoMinusOnePointTwo = (GuiNumericalValue<?>) two.minus(onePointTwo);
+        GuiValue<?> twoMinusOne = two.min(one);
+        GuiValue<?> twoMinusOnePointFive = two.min(onePointFive);
+        GuiValue<?> twoMinusOneFifty = two.min(oneFifty);
+        GuiValue<?> twoMinusOnePointTwo = (GuiValue<?>) two.min(onePointTwo);
 
         assertThat(twoMinusOne.getValue()).isEqualTo(1);
         assertThat(twoMinusOne).isInstanceOf(GuiIntegerValue.class);
@@ -110,12 +110,12 @@ public class EvaluateTest {
 
     @Test
     public void testNumericProduct() {
-        GuiValue<?> result = two.product(onePointTwo);
+        GuiValue<?> result = two.prod(onePointTwo);
         assertThat(result).isInstanceOf(GuiDecimalValue.class);
 
-        GuiNumericalValue<?> result2 = null;
+        GuiNumericalValue<?> result2;
 
-        result2 = (GuiNumericalValue<?>) result.product(two);
+        result2 = (GuiNumericalValue<?>) result.prod(two);
 
         assertThat(result2).isInstanceOf(GuiDecimalValue.class);
         assertThat(result2.getValue()).isEqualTo(4.8);
@@ -132,9 +132,9 @@ public class EvaluateTest {
 
     @Test
     public void testDivision() {
-        assertThat(one.divide(two)).isEqualTo(zero);
-        assertThat(one.divide(twoPointZero).getValue()).isEqualTo(zeroPointFive.getValue());
-        assertThat(onePointTwo.divide(onePointTwo).getValue()).isEqualTo(onePointZero.getValue());
+        assertThat(one.div(two)).isEqualTo(zero);
+        assertThat(one.div(twoPointZero).getValue()).isEqualTo(zeroPointFive.getValue());
+        assertThat(onePointTwo.div(onePointTwo).getValue()).isEqualTo(onePointZero.getValue());
     }
 
     @Test
