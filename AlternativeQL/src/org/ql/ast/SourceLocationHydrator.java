@@ -1,4 +1,4 @@
-package org.util.ast;
+package org.ql.ast;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.ql.ast.Node;

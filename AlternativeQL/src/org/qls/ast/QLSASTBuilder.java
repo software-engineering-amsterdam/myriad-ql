@@ -9,7 +9,6 @@ import org.ql.ast.Node;
 import org.ql.ast.SourceLocation;
 import org.ql.ast.type.*;
 import org.qls.ast.page.*;
-import org.qls.ast.StyleSheet;
 import org.qls.ast.widget.*;
 import org.qls.ast.widget.defaultWidget.DefaultWidget;
 import org.qls.ast.widget.defaultWidget.DefaultWidgetNoStyle;
@@ -18,8 +17,6 @@ import org.qls.ast.widget.defaultWidget.style.*;
 import org.qls.grammar.QLSLexer;
 import org.qls.grammar.QLSParser;
 import org.qls.grammar.QLSVisitor;
-
-import static org.util.ast.SourceLocationHydrator.*;
 
 import java.io.IOException;
 import java.io.InputStream;

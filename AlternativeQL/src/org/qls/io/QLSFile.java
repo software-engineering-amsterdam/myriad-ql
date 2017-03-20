@@ -1,6 +1,6 @@
 package org.qls.io;
 
-import org.io.SourceFile;
+import org.ql.io.SourceFile;
 
 import java.io.IOException;
 

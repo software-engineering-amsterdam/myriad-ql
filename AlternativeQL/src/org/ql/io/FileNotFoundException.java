@@ -1,4 +1,4 @@
-package org.io;
+package org.ql.io;
 
 class FileNotFoundException extends java.io.FileNotFoundException {
 }

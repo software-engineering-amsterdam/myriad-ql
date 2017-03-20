@@ -20,8 +20,8 @@ import org.ql.grammar.QLLexer;
 import org.ql.grammar.QLParser;
 import org.ql.grammar.QLVisitor;
 
-import static org.util.ast.SourceLocationHydrator.*;
-import static org.util.ast.StringDequoter.*;
+import static org.ql.ast.SourceLocationHydrator.*;
+import static org.ql.ast.StringUnquoter.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -106,7 +106,7 @@ public class QLASTBuilder extends AbstractParseTreeVisitor<Node> implements QLVi
 
     @Override
     public QuestionLabel visitQuestionLabel(QLParser.QuestionLabelContext ctx) {
-        return hydrateSourceLocation(new QuestionLabel(dequoteString(ctx.getText())), ctx);
+        return hydrateSourceLocation(new QuestionLabel(unquoteString(ctx.getText())), ctx);
     }
 
     @Override
@@ -191,7 +191,7 @@ public class QLASTBuilder extends AbstractParseTreeVisitor<Node> implements QLVi
 
     @Override
     public StringLiteral visitStringLiteral(QLParser.StringLiteralContext ctx) {
-        return hydrateSourceLocation(new StringLiteral(dequoteString(ctx.STRING_LITERAL().getText())), ctx);
+        return hydrateSourceLocation(new StringLiteral(unquoteString(ctx.STRING_LITERAL().getText())), ctx);
     }
 
     @Override
