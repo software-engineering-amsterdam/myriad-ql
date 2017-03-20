@@ -32,35 +32,27 @@ module QL
       end
 
       def visit_arithmetic_expression(left, binary_expression)
-        left = try_accept(left)
-        right = try_accept(binary_expression.expression)
-        [left, right]
+        collect_binary_expression_variables(left, binary_expression)
       end
 
       def visit_boolean_expression(left, binary_expression)
-        left = try_accept(left)
-        right = try_accept(binary_expression.expression)
-        [left, right]
+        collect_binary_expression_variables(left, binary_expression)
       end
 
       def visit_comparison_equal_expression(left, binary_expression)
-        left = try_accept(left)
-        right = try_accept(binary_expression.expression)
-        [left, right]
+        collect_binary_expression_variables(left, binary_expression)
       end
 
       def visit_comparison_order_expression(left, binary_expression)
-        left = try_accept(left)
-        right = try_accept(binary_expression.expression)
-        [left, right]
+        collect_binary_expression_variables(left, binary_expression)
       end
 
       def visit_boolean_negation(integer_negation)
-        integer_negation.expression.accept(self)
+        collect_negation_variables(integer_negation)
       end
 
       def visit_integer_negation(boolean_negation)
-        boolean_negation.expression.accept(self)
+        collect_negation_variables(boolean_negation)
       end
 
       def visit_integer_literal(_)
@@ -77,6 +69,16 @@ module QL
 
       def visit_variable(variable)
         [variable]
+      end
+
+      def collect_binary_expression_variables(left, binary_expression)
+        left = try_accept(left)
+        right = try_accept(binary_expression.expression)
+        [left, right]
+      end
+
+      def collect_negation_variables(negation)
+        negation.expression.accept(self)
       end
 
       def try_accept(node)

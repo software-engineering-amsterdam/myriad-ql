@@ -1,8 +1,8 @@
 module QL
   module TypeChecker
-    class OperandsTypeChecker
+    class OperandsTypeEvaluator
       def visit_form(form, collected_data=nil)
-        @variable_types = collected_data
+        @variable_type = collected_data
         form.statements.map { |statement| statement.accept(self) }
       end
 
@@ -33,27 +33,19 @@ module QL
       end
 
       def visit_arithmetic_expression(left, binary_expression)
-        left = left.accept(self)
-        right = binary_expression.expression.accept(self)
-        evaluate_types(left, right, [AST::IntegerType, AST::MoneyType], AST::IntegerType.new)
+        evaluate_types(left, binary_expression, [AST::IntegerType, AST::MoneyType], AST::IntegerType.new)
       end
 
       def visit_boolean_expression(left, binary_expression)
-        left = left.accept(self)
-        right = binary_expression.expression.accept(self)
-        evaluate_types(left, right, [AST::BooleanType], AST::BooleanType.new)
+        evaluate_types(left, binary_expression, [AST::BooleanType], AST::BooleanType.new)
       end
 
       def visit_comparison_equal_expression(left, binary_expression)
-        left = left.accept(self)
-        right = binary_expression.expression.accept(self)
-        evaluate_types(left, right, [AST::BooleanType, AST::IntegerType, AST::MoneyType, AST::StringType], AST::BooleanType.new)
+        evaluate_types(left, binary_expression, [AST::BooleanType, AST::IntegerType, AST::MoneyType, AST::StringType], AST::BooleanType.new)
       end
 
       def visit_comparison_order_expression(left, binary_expression)
-        left = left.accept(self)
-        right = binary_expression.expression.accept(self)
-        evaluate_types(left, right, [AST::IntegerType, AST::MoneyType], AST::BooleanType.new)
+        evaluate_types(left, binary_expression, [AST::IntegerType, AST::MoneyType], AST::BooleanType.new)
       end
 
       def visit_boolean_negation(integer_negation)
@@ -76,6 +68,10 @@ module QL
 
       def visit_decimal_type(decimal_type)
         decimal_type
+      end
+
+      def visit_error_type(error_type)
+        error_type
       end
 
       def visit_integer_type(integer_type)
@@ -103,18 +99,18 @@ module QL
       end
 
       def visit_variable(variable)
-        @variable_types[variable.name]
+        @variable_type[variable.name]
       end
 
-      # check if if condition is of boolean type
       def check_if_condition(if_statement, condition_type)
         unless condition_type.is_a?(AST::BooleanType)
           NotificationTable.store(Notification::Error.new("#{if_statement.condition} is not of the type boolean"))
         end
       end
 
-      def evaluate_types(left_type, right_type, compatible_types, return_type)
-        # return the left type if there are no errors and else return an error
+      def evaluate_types(left, binary_expression, compatible_types, return_type)
+        left_type = left.accept(self)
+        right_type = binary_expression.expression.accept(self)
         if check_compatibility(left_type, compatible_types) and check_compatibility(right_type, compatible_types)
           return_type
         else
@@ -130,6 +126,7 @@ module QL
         else
           #TODO fix error msg
           NotificationTable.store(Notification::Error.new("2incompatible types at #{self}"))
+          AST::ErrorType.new
         end
       end
 

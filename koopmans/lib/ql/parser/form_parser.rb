@@ -27,7 +27,7 @@ module QL
       rule(:comparison_equals_operator) { (str('==') | str('!=')).as(:comparison_equals_operator) >> _ }
       rule(:comparison_order_operator) { (str('<=') | str('>=') | str('<') | str('>')).as(:comparison_order_operator) >> _ }
       rule(:boolean_operator) { (str('&&') | str('||')).as(:boolean_operator) >> _ }
-      rule(:negation_operator) { (str('!') | str('-')).as(:negation_operator) >> _ }
+      rule(:negation_operator) { (str('!') | str('-')).as(:negation_operator)}
 
       # expression (order: boolean, order, equals, addition, multiplication, negation, literal )
       #TODO clean

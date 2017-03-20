@@ -8,7 +8,7 @@ module QL
         duplicate_variable_checker(questions)
         undefined_variable_checker(questions, ast)
         operands_type_checker(questions, ast)
-        cyclic_checker(questions, ast)
+        cyclic_dependency_checker(questions)
       end
 
       # checkers
@@ -36,27 +36,49 @@ module QL
       end
 
       def operands_type_checker(questions, ast)
-        # create hash with variable and type e.g. {"hasSoldHouse"=>#<BooleanType:0x007f959593fb70>,
-        #                                          "hasBoughtHouse"=>#<BooleanType:0x007f9594969ac0>}
-        variable_types = {}
+        variable_type_map = {}
         questions.each do |question|
-          variable_types[question.variable.name] = question.type
+          variable_type_map[question.variable.name] = question.type
         end
-
-        ast.accept(OperandsTypeChecker.new, variable_types)
+        ast.accept(OperandsTypeEvaluator.new, variable_type_map)
       end
 
-      def cyclic_checker(questions, ast)
+      def cyclic_dependency_checker(questions)
         computed_questions = questions.select { |q| q.is_a?(AST::ComputedQuestion) }
-        # get computed question assignment with dependency variables as hash
-        # e.g. {"sellingPrice"=>[#<Variable:0x007ff31ca431e0 @name="privateDebt">, #<Variable:0x007ff31ca4ae90 @name="var1">],
-        #       "privateDebt"=>[#<Variable:0x007ff31e17eaf8 @name="sellingPrice">, #<Variable:0x007ff31e1868e8 @name="var2">]}
-        variable_dependencies = {}
-        computed_questions.each do |computed_question|
-          assignment_variables = computed_question.assignment.accept(ExpressionVariableCollector.new).flatten.compact
-          variable_dependencies[computed_question.variable.name] = assignment_variables
+
+        @variable_dependencies_map = {}
+        build_variable_dependencies_map(computed_questions)
+
+        @variable_dependencies_map.each do |variable_name, dependencies|
+          if dependencies
+            dependencies.each do |dependency|
+              check_dependency(variable_name, dependency)
+            end
+          end
         end
-        ast.accept(CyclicDependencyChecker.new, variable_dependencies)
+      end
+
+      def build_variable_dependencies_map(computed_questions)
+        computed_questions.each do |computed_question|
+          assignment_variables = computed_question.accept(ExpressionVariableCollector.new).flatten.compact
+          @variable_dependencies_map[computed_question.variable.name] = assignment_variables
+        end
+      end
+
+      # add new dependency to original dependency hash if they exist, don't add duplicates
+      def check_dependency(variable_name, dependency)
+        next_dependencies = @variable_dependencies_map[dependency.name]
+        if next_dependencies
+          @variable_dependencies_map[variable_name] |= next_dependencies
+          is_cyclic_dependency?(variable_name)
+        end
+      end
+
+      # check for cyclic dependency if there is a dependency on itself, else visit the next variable
+      def is_cyclic_dependency?(variable_name)
+        if @variable_dependencies_map[variable_name].map(&:name).include?(variable_name)
+          NotificationTable.store(Notification::Error.new("question '#{variable_name}' has a cyclic dependency"))
+        end
       end
 
       def select_duplicates(elements)
