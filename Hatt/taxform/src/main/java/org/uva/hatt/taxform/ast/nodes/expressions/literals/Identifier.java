@@ -13,7 +13,7 @@ public class Identifier extends Literal{
 
     @Override
     public String evaluateExpression(EnvironmentsTable environmentsTable) {
-        return environmentsTable.find(getId());
+        return "\"" + environmentsTable.find(getId()) + "\"";
     }
 
     @Override
