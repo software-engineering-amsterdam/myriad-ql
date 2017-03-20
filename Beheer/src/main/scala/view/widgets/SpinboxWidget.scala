@@ -3,7 +3,7 @@ package view.widgets
 import ast.{ DecimalType, IntegerType, MoneyType, NumericType }
 import values.{ NumericValue, UndefinedValue, Value }
 
-import scalafx.scene.control.{ Spinner }
+import scalafx.scene.control.Spinner
 
 class SpinboxWidget(numType: NumericType)(implicit val changeHandler: Value => Unit) extends QLWidget {
   private val spinbox: Spinner[Double] = numType match {
@@ -12,6 +12,7 @@ class SpinboxWidget(numType: NumericType)(implicit val changeHandler: Value => U
     case MoneyType => new Spinner(Double.MinValue, Double.MaxValue, 0, 0.01)
   }
 
+  spinbox.editable = true
   spinbox.value.onChange {
     val qlValue = NumericValue.doubleToNumericValue(spinbox.value.value, numType)
     this.setValue(qlValue)
