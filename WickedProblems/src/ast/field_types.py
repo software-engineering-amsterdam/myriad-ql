@@ -3,9 +3,6 @@ from .base_nodes import Node
 class Value(Node):
     value = None
 
-class FieldType(Node):
-    pass
-
 class Boolean(Value):
     def __init__(self, value=[False]):
         self.value = bool(value[0])
