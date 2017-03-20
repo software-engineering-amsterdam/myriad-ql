@@ -2,7 +2,7 @@ package com.matthewchapman.ql.core;
 
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.gui.FormWindow;
-import com.matthewchapman.ql.validation.structure.QuestionCollection;
+import com.matthewchapman.ql.validation.structure.LabelChecker;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -14,9 +14,9 @@ class GUICreator {
 
     void generateFormUI(Stage stage, Form ast) {
 
-        QuestionCollection questionCollection = new QuestionCollection();
-        questionCollection.gatherQuestions(ast);
-        FormWindow window = new FormWindow().makeForm(questionCollection.getQuestionList());
+        LabelChecker labelChecker = new LabelChecker();
+        labelChecker.gatherQuestions(ast);
+        FormWindow window = new FormWindow().makeForm(labelChecker.getQuestionList());
 
         BorderPane pane = new BorderPane();
         pane.setCenter(window);
