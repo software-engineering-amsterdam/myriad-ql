@@ -1,24 +1,30 @@
 package QL.semantic;
 
-import QL.Faults;
 import QL.ReferenceTable;
+import QL.message.Message;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Environment {
-	
-	private ReferenceTable variables;
-	private Faults faults;
+
+	private final ReferenceTable variables;
+	private final List<Message> messages;
 	
 	public Environment() {
 		this.variables = new ReferenceTable();
-		this.faults = new Faults();
+		this.messages = new ArrayList<>();
 	}
 	
 	ReferenceTable getReferenceTable() {
 		return variables;
 	}
-	
-	Faults getFaults() {
-		return faults;
+
+    List<Message> getMessages() {
+		return messages;
 	}
 
+	void addMessage(Message m) {
+        messages.add(m);
+    }
 }

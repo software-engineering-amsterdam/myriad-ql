@@ -1,53 +1,38 @@
 package qls.semantic;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import QL.Faults;
+import QL.ReferenceTable;
 import QL.ast.type.Type;
-import QL.errorhandling.Error;
+import QL.message.Message;
+import QL.message.Error;
 
 class Environment {
 	
 	private final Map<String, Boolean> variableCovered;
-	private final Faults faults;
+	
+	private final List<Message> messages;
 	
 	public Environment(Map<String, Type> variableTypes) {
 		
-		this.variableCovered = new HashMap<>();		
+		this.variableCovered = new HashMap<>();	
+		
 		for (String variable : variableTypes.keySet()) {
 			variableCovered.put(variable, false);
 		}
-		this.faults = new Faults(); // TODO move to analyzing part
+		this.messages = new ArrayList<>(); // TODO move to analyzing part
 	}
 	
-	public Faults getFaults() {
-		return faults;
+	public List<Message> getFaults() {
+		return messages;
 	}
-	
-//	public void isCovered(String name, int line) {
-//		
-//		// TODO move to separate functions
-//
-//		else if (variableCovered.get(name)) {
-//			faults.add(new Error("The variable " + name + 
-//					" is already defined int the QLS", line));
-//		}
-//		else {
-//			variableCovered.replace(name, true);	
-//		}
-//	}
 	
 	public boolean presentInQL(String name) {
 		
 		return variableCovered.containsKey(name);
-		
-//		if (!variableCovered.containsKey(name)) {
-//			faults.add(new Error("The variable " + name + 
-//					" appears in the QLS, but does not exist in QL", line));
-//			return false;
-//		}
-//		return true;
 	}
 	
 	public boolean isCovered(String name) {
@@ -62,7 +47,7 @@ class Environment {
 	public void checkCoverage() {
 		for (String name : variableCovered.keySet()) {
 			if (!variableCovered.get(name)) {
-				faults.add(new Error("The variable " + name + 
+				messages.add(new Error("The variable " + name + 
 						" is not defined in QLS", 0));
 			}
 		}

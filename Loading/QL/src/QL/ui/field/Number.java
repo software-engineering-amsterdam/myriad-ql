@@ -21,20 +21,16 @@ public class Number implements Field {
 		field.setText(valueText);
 		field.positionCaret(valueText.length());
 		
-    	field.textProperty().addListener(new ChangeListener<String>() {
-	      @Override
-	      public void changed(ObservableValue<? extends String> observable, 
-	      				    String oldValue, String newValue) {
+    	field.textProperty().addListener((observable, oldValue, newValue) -> {
 
-	          if (!newValue.matches("\\d*")) {
-	              field.setText(newValue.replaceAll("[^\\d]", ""));
-	          } else if (!newValue.isEmpty()) {
-	        	  notifier.updateQuestionnaire(name, new IntegerValue(Integer.parseInt(newValue)));
-	          } else {
-	        	  notifier.updateQuestionnaire(name, new IntegerValue());
-	          }
-	      }
-    	});
+            if (!newValue.matches("\\d*")) {
+                field.setText(newValue.replaceAll("[^\\d]", ""));
+            } else if (!newValue.isEmpty()) {
+                notifier.updateQuestionnaire(name, new IntegerValue(Integer.parseInt(newValue)));
+            } else {
+                notifier.updateQuestionnaire(name, new IntegerValue());
+            }
+        });
 	}
 
 	@Override

@@ -1,7 +1,6 @@
 package qls.semantic;
 
-import java.util.Map;
-
+import QL.message.Error;
 import qls.ast.Page;
 import qls.ast.Question;
 import qls.ast.Section;
@@ -46,11 +45,16 @@ public class VerifyQuestions implements StylesheetVisitor {
 	public void visit(Question question) {
 		
 		if (!environment.presentInQL(question.getName())) {
-			environment.getFaults().add("The variable " + question.getName() + 
-					" appears in the QLS, but does not exist in QL", question.getLine());
+			environment.getFaults().add(new Error("The variable " + question.getName() + 
+					" appears in the QLS, but does not exist in QL", question.getLine()));
 		}
 		
-		environment.isCovered(question.getName());
+		if (environment.isCovered(question.getName())) {
+			environment.getFaults().add(new Error("The variable " + question.getName() + 
+			" is already defined int the QLS", question.getLine()));
+		}
+		
+		environment.setCovered(question.getName());
 	}
 
 }
