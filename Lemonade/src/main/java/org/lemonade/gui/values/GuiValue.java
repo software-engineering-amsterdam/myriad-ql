@@ -35,7 +35,7 @@ public abstract class GuiValue<T> implements GuiExpression {
     public GuiValue<Boolean> eq(GuiValue<?> that) {
         return new GuiBooleanValue(that.equals(this));
     }
-
+    
     public GuiValue<Boolean> nEq(GuiValue<?> that) {
         return new GuiBooleanValue(!that.equals(this));
     }
@@ -56,6 +56,22 @@ public abstract class GuiValue<T> implements GuiExpression {
         throw new NotSupportedException();
     }
 
+    public GuiValue<?> lT(GuiValue<?> that) {
+        throw new NotSupportedException();
+    }
+
+    public GuiValue<?> gT(GuiValue<?> that) {
+        throw new NotSupportedException();
+    }
+
+    public GuiValue<?> lTEq(GuiValue<?> that) {
+        throw new NotSupportedException();
+    }
+
+    public GuiValue<?> gTEq(GuiValue<?> that) {
+        throw new NotSupportedException();
+    }
+    
     public GuiValue<?> add(GuiIntegerValue that) {
         throw new NotSupportedException();
     }
@@ -104,19 +120,24 @@ public abstract class GuiValue<T> implements GuiExpression {
         throw new NotSupportedException();
     }
 
-    public GuiValue<?> lT(GuiValue<?> that) {
-        throw new NotSupportedException();
-    }
-
-    public GuiValue<?> gT(GuiValue<?> that) {
-        throw new NotSupportedException();
-    }
-
-    public GuiValue<?> lTE(GuiValue<?> that) {
-        throw new NotSupportedException();
-    }
-
-    public GuiValue<?> gTE(GuiValue<?> that) {
-        throw new NotSupportedException();
-    }
+    public GuiValue<?> doGt(GuiIntegerValue that) {throw new NotSupportedException(); }
+    public GuiValue<?> doLt(GuiIntegerValue that) {throw new NotSupportedException(); }
+    public GuiValue<?> doGtE(GuiIntegerValue that) {throw new NotSupportedException(); }
+    public GuiValue<?> doLtE(GuiIntegerValue that) {throw new NotSupportedException(); }
+    public GuiValue<?> doGt(GuiDecimalValue that) {throw new NotSupportedException(); }
+    public GuiValue<?> doLt(GuiDecimalValue that) {throw new NotSupportedException(); }
+    public GuiValue<?> doGtE(GuiDecimalValue that) {throw new NotSupportedException(); }
+    public GuiValue<?> doLtE(GuiDecimalValue that) {throw new NotSupportedException(); }
+    public GuiValue<?> doGt(GuiMoneyValue that) {throw new NotSupportedException(); }
+    public GuiValue<?> doLt(GuiMoneyValue that) {throw new NotSupportedException(); }
+    public GuiValue<?> doGtE(GuiMoneyValue that) {throw new NotSupportedException(); }
+    public GuiValue<?> doLtE(GuiMoneyValue that) {throw new NotSupportedException(); }
+    public GuiValue<?> doGt(GuiDateValue that) {throw new NotSupportedException(); }
+    public GuiValue<?> doLt(GuiDateValue that) {throw new NotSupportedException(); }
+    public GuiValue<?> doGtE(GuiDateValue that) {throw new NotSupportedException(); }
+    public GuiValue<?> doLtE(GuiDateValue that) {throw new NotSupportedException(); }
+    public GuiValue<?> doGt(GuiStringValue that) {throw new NotSupportedException(); }
+    public GuiValue<?> doLt(GuiStringValue that) {throw new NotSupportedException(); }
+    public GuiValue<?> doGtE(GuiStringValue that) {throw new NotSupportedException(); }
+    public GuiValue<?> doLtE(GuiStringValue that) {throw new NotSupportedException(); }
 }

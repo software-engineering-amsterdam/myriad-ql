@@ -139,78 +139,78 @@ public class EvaluateTest {
 
     @Test
     public void testGreaterThan() {
-        assertThat(one.gT(two).getValue()).isFalse();
-        assertThat(two.gT(one).getValue()).isTrue();
-        assertThat(one.gT(one).getValue()).isFalse();
+        assertThat((Boolean) one.gT(two).getValue()).isFalse();
+        assertThat((Boolean) two.gT(one).getValue()).isTrue();
+        assertThat((Boolean) one.gT(one).getValue()).isFalse();
 
-        assertThat(zeroPointFive.gT(onePointFive).getValue()).isFalse();
-        assertThat(onePointFive.gT(zeroPointFive).getValue()).isTrue();
-        assertThat(zeroPointFive.gT(zeroPointFive).getValue()).isFalse();
+        assertThat((Boolean) zeroPointFive.gT(onePointFive).getValue()).isFalse();
+        assertThat((Boolean) onePointFive.gT(zeroPointFive).getValue()).isTrue();
+        assertThat((Boolean) zeroPointFive.gT(zeroPointFive).getValue()).isFalse();
 
-        assertThat(oneFifty.gT(twoFifty).getValue()).isFalse();
-        assertThat(twoFifty.gT(oneFifty).getValue()).isTrue();
-        assertThat(oneFifty.gT(oneFifty).getValue()).isFalse();
+        assertThat((Boolean) oneFifty.gT(twoFifty).getValue()).isFalse();
+        assertThat((Boolean) twoFifty.gT(oneFifty).getValue()).isTrue();
+        assertThat((Boolean) oneFifty.gT(oneFifty).getValue()).isFalse();
 
-        assertThat(date.gT(dateTwo).getValue()).isFalse();
-        assertThat(dateTwo.gT(date).getValue()).isTrue();
-        assertThat(date.gT(date).getValue()).isFalse();
+        assertThat((Boolean) date.gT(dateTwo).getValue()).isFalse();
+        assertThat((Boolean) dateTwo.gT(date).getValue()).isTrue();
+        assertThat((Boolean) date.gT(date).getValue()).isFalse();
     }
 
     @Test
     public void testLessThan() {
-        assertThat(one.lT(two).getValue()).isTrue();
-        assertThat(two.lT(one).getValue()).isFalse();
-        assertThat(one.lT(one).getValue()).isFalse();
+        assertThat((Boolean) one.lT(two).getValue()).isTrue();
+        assertThat((Boolean) two.lT(one).getValue()).isFalse();
+        assertThat((Boolean) one.lT(one).getValue()).isFalse();
 
-        assertThat(zeroPointFive.lT(onePointFive).getValue()).isTrue();
-        assertThat(onePointFive.lT(zeroPointFive).getValue()).isFalse();
-        assertThat(zeroPointFive.lT(zeroPointFive).getValue()).isFalse();
+        assertThat((Boolean) zeroPointFive.lT(onePointFive).getValue()).isTrue();
+        assertThat((Boolean) onePointFive.lT(zeroPointFive).getValue()).isFalse();
+        assertThat((Boolean) zeroPointFive.lT(zeroPointFive).getValue()).isFalse();
 
-        assertThat(oneFifty.lT(twoFifty).getValue()).isTrue();
-        assertThat(twoFifty.lT(oneFifty).getValue()).isFalse();
-        assertThat(oneFifty.lT(oneFifty).getValue()).isFalse();
+        assertThat((Boolean) oneFifty.lT(twoFifty).getValue()).isTrue();
+        assertThat((Boolean) twoFifty.lT(oneFifty).getValue()).isFalse();
+        assertThat((Boolean) oneFifty.lT(oneFifty).getValue()).isFalse();
 
-        assertThat(date.lT(dateTwo).getValue()).isTrue();
-        assertThat(dateTwo.lT(date).getValue()).isFalse();
-        assertThat(date.lT(date).getValue()).isFalse();
+        assertThat((Boolean) date.lT(dateTwo).getValue()).isTrue();
+        assertThat((Boolean) dateTwo.lT(date).getValue()).isFalse();
+        assertThat((Boolean) date.lT(date).getValue()).isFalse();
     }
 
     @Test
     public void testGreaterThanOrEqual() {
-        assertThat(one.gTEq(two).getValue()).isFalse();
-        assertThat(two.gTEq(one).getValue()).isTrue();
-        assertThat(one.gTEq(one).getValue()).isTrue();
+        assertThat((Boolean) one.gTEq(two).getValue()).isFalse();
+        assertThat((Boolean) two.gTEq(one).getValue()).isTrue();
+        assertThat((Boolean) one.gTEq(one).getValue()).isTrue();
 
-        assertThat(zeroPointFive.gTEq(onePointFive).getValue()).isFalse();
-        assertThat(onePointFive.gTEq(zeroPointFive).getValue()).isTrue();
-        assertThat(zeroPointFive.gTEq(zeroPointFive).getValue()).isTrue();
+        assertThat((Boolean) zeroPointFive.gTEq(onePointFive).getValue()).isFalse();
+        assertThat((Boolean) onePointFive.gTEq(zeroPointFive).getValue()).isTrue();
+        assertThat((Boolean) zeroPointFive.gTEq(zeroPointFive).getValue()).isTrue();
 
-        assertThat(oneFifty.gTEq(twoFifty).getValue()).isFalse();
-        assertThat(twoFifty.gTEq(oneFifty).getValue()).isTrue();
-        assertThat(oneFifty.gTEq(oneFifty).getValue()).isTrue();
+        assertThat((Boolean) oneFifty.gTEq(twoFifty).getValue()).isFalse();
+        assertThat((Boolean) twoFifty.gTEq(oneFifty).getValue()).isTrue();
+        assertThat((Boolean) oneFifty.gTEq(oneFifty).getValue()).isTrue();
 
-        assertThat(date.gTEq(dateTwo).getValue()).isFalse();
-        assertThat(dateTwo.gTEq(date).getValue()).isTrue();
-        assertThat(date.gTEq(date).getValue()).isTrue();
+        assertThat((Boolean) date.gTEq(dateTwo).getValue()).isFalse();
+        assertThat((Boolean) dateTwo.gTEq(date).getValue()).isTrue();
+        assertThat((Boolean) date.gTEq(date).getValue()).isTrue();
     }
 
     @Test
     public void testLessThanOrEqual() {
-        assertThat(one.lTEq(two).getValue()).isTrue();
-        assertThat(two.lTEq(one).getValue()).isFalse();
-        assertThat(one.lTEq(one).getValue()).isTrue();
+        assertThat((Boolean) one.lTEq(two).getValue()).isTrue();
+        assertThat((Boolean) two.lTEq(one).getValue()).isFalse();
+        assertThat((Boolean) one.lTEq(one).getValue()).isTrue();
 
-        assertThat(zeroPointFive.lTEq(onePointFive).getValue()).isTrue();
-        assertThat(onePointFive.lTEq(zeroPointFive).getValue()).isFalse();
-        assertThat(zeroPointFive.lTEq(zeroPointFive).getValue()).isTrue();
+        assertThat((Boolean) zeroPointFive.lTEq(onePointFive).getValue()).isTrue();
+        assertThat((Boolean) onePointFive.lTEq(zeroPointFive).getValue()).isFalse();
+        assertThat((Boolean) zeroPointFive.lTEq(zeroPointFive).getValue()).isTrue();
 
-        assertThat(oneFifty.lTEq(twoFifty).getValue()).isTrue();
-        assertThat(twoFifty.lTEq(oneFifty).getValue()).isFalse();
-        assertThat(oneFifty.lTEq(oneFifty).getValue()).isTrue();
+        assertThat((Boolean) oneFifty.lTEq(twoFifty).getValue()).isTrue();
+        assertThat((Boolean) twoFifty.lTEq(oneFifty).getValue()).isFalse();
+        assertThat((Boolean) oneFifty.lTEq(oneFifty).getValue()).isTrue();
 
-        assertThat(date.lTEq(dateTwo).getValue()).isTrue();
-        assertThat(dateTwo.lTEq(date).getValue()).isFalse();
-        assertThat(date.lTEq(date).getValue()).isTrue();
+        assertThat((Boolean) date.lTEq(dateTwo).getValue()).isTrue();
+        assertThat((Boolean) dateTwo.lTEq(date).getValue()).isFalse();
+        assertThat((Boolean) date.lTEq(date).getValue()).isTrue();
     }
 
     @Test

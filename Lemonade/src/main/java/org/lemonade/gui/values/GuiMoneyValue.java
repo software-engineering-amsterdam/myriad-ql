@@ -46,6 +46,26 @@ public class GuiMoneyValue extends GuiNumericalValue<Double> implements Comparab
     }
 
     @Override
+    public GuiValue<?> lT(GuiValue<?> that) {
+        return that.doLt(this);
+    }
+
+    @Override
+    public GuiValue<?> gT(GuiValue<?> that) {
+        return that.doGt(this);
+    }
+
+    @Override
+    public GuiValue<?> lTEq(GuiValue<?> that) {
+        return that.doLtE(this);
+    }
+
+    @Override
+    public GuiValue<?> gTEq(GuiValue<?> that) {
+        return that.doGtE(this);
+    }
+
+    @Override
     public GuiMoneyValue add(GuiDecimalValue that) {
         return new GuiMoneyValue(that.getValue() + this.getValue());
     }
@@ -106,23 +126,23 @@ public class GuiMoneyValue extends GuiNumericalValue<Double> implements Comparab
     }
 
     @Override
-    public GuiBooleanValue gT(final GuiComparableValue<?> that) {
-        return new GuiBooleanValue(this.compareTo((GuiMoneyValue) that) == 1);
+    public GuiValue<?> doGt(GuiMoneyValue that) {
+        return new GuiBooleanValue(that.compareTo(this) == 1);
     }
 
     @Override
-    public GuiBooleanValue gTEq(final GuiComparableValue<?> that) {
-        return new GuiBooleanValue(this.compareTo((GuiMoneyValue) that) >= 0);
+    public GuiValue<?> doLt(GuiMoneyValue that) {
+        return new GuiBooleanValue(that.compareTo(this) == -1);
     }
 
     @Override
-    public GuiBooleanValue lT(final GuiComparableValue<?> that) {
-        return new GuiBooleanValue(this.compareTo((GuiMoneyValue) that) == -1);
+    public GuiValue<?> doGtE(GuiMoneyValue that) {
+        return new GuiBooleanValue(that.compareTo(this) >= 0);
     }
 
     @Override
-    public GuiBooleanValue lTEq(final GuiComparableValue<?> that) {
-        return new GuiBooleanValue(this.compareTo((GuiMoneyValue) that) <= 0);
+    public GuiValue<?> doLtE(GuiMoneyValue that) {
+        return new GuiBooleanValue(that.compareTo(this) <= 0);
     }
 
     @Override
