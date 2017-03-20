@@ -43,6 +43,9 @@ public class CalculationNode extends DeclarationNode {
             }
         }
         mExpression.checkSemantics(symbolTable, semanticsMessages);
+        if (mExpression.isConstant()) {
+            semanticsMessages.addWarning("Constant calculation found, always resolves to: " + mExpression.evaluate());
+        }
     }
 
 

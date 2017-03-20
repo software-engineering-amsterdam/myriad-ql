@@ -64,7 +64,7 @@ public class VariableLiteralNode extends LiteralNode {
     }
 
     @Override
-    protected boolean isConstant() {
+    public boolean isConstant() {
         return false;
     }
 }

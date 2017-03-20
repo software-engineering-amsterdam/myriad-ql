@@ -57,7 +57,7 @@ public class ParenthesizedExpressionNode extends ExpressionNode {
     }
 
     @Override
-    protected boolean isConstant() {
+    public boolean isConstant() {
         return mExpression.isConstant();
     }
 }

@@ -63,7 +63,7 @@ public class BinaryExpressionNode extends ExpressionNode {
     }
 
     @Override
-    protected boolean isConstant() {
+    public boolean isConstant() {
         return mLeft.isConstant() && mRight.isConstant();
     }
 

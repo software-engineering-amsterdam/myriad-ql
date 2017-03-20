@@ -46,7 +46,7 @@ public abstract class LiteralNode extends ExpressionNode {
     }
 
     @Override
-    protected boolean isConstant() {
+    public boolean isConstant() {
         return true;
     }
 }
