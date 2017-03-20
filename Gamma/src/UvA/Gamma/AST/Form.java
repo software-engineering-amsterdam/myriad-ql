@@ -11,6 +11,7 @@ import java.util.stream.StreamSupport;
  */
 public class Form implements ASTNode, Iterable<FormItem> {
     private List<FormItem> formItems;
+    private
 
     public Form() {
         formItems = new ArrayList<>();

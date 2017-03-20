@@ -4,6 +4,7 @@ import UvA.Gamma.AST.Computed;
 import UvA.Gamma.AST.Form;
 import UvA.Gamma.AST.FormItem;
 import UvA.Gamma.AST.Question;
+import UvA.Gamma.AST.Values.Money;
 import UvA.Gamma.Validation.TypeChecker;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -101,6 +102,22 @@ public class FXMLController {
         result.textProperty().bind(computed.getStringValueProperty());
 
         rootGrid.addRow(getRowCount(rootGrid) + 1, label, result);
+    }
+
+    public void showMoney(Question question){
+        assert rootGrid != null;
+        Text questionLabel = new Text(question.getQuestion());
+        TextField input = new TextField();
+
+        input.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (question.check(checker, newValue)) {
+                input.setStyle("-fx-text-fill: green");
+                form.stream().forEach(item -> item.idChanged(form, question, newValue));
+            } else {
+                input.setStyle("-fx-text-fill: red");
+            }
+        });
+        rootGrid.addRow(getRowCount(rootGrid) + 1, questionLabel, input);
     }
 
     public GridPane startRenderCondition() {

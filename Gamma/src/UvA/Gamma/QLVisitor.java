@@ -32,6 +32,7 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
         for (QLParser.FormItemContext formItemContext : ctx.formItem()) {
             form.addFormItem((FormItem) visit(formItemContext));
         }
+        String id = ctx.ID().getText();
         return form;
     }
 
