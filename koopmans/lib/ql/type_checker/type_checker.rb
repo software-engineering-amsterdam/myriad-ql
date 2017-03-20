@@ -1,7 +1,6 @@
 module QL
   module TypeChecker
     class TypeChecker
-
       def check(ast)
         questions = ast.accept(QuestionCollector.new).flatten
         duplicate_label_checker(questions)
@@ -11,7 +10,6 @@ module QL
         cyclic_dependency_checker(questions)
       end
 
-      # checkers
       def duplicate_label_checker(questions)
         duplicate_labels = select_duplicates(questions.map(&:label).map(&:value))
         duplicate_labels.each do |label|
