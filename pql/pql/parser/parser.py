@@ -139,7 +139,7 @@ def parse(input_string):
 
     string_precedence = infixNotation(
         operand_arith,
-        operand_list_string
+        (operand_list_arith + operand_list_bool)
     )
 
     expression = \
