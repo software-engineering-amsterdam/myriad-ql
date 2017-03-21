@@ -1,11 +1,7 @@
 package qls.semantic;
 
 import QL.message.Error;
-import qls.ast.Page;
-import qls.ast.Question;
-import qls.ast.Section;
-import qls.ast.Stylesheet;
-import qls.ast.StylesheetVisitor;
+import qls.ast.*;
 
 // you cannot place a single question multiple times.
 // all questions of the QL program are placed by the QLS program.
@@ -30,7 +26,6 @@ public class VerifyQuestions implements StylesheetVisitor {
 		for (Section section : page.getSections()) {
 			visit(section);
 		}
-		
 	}
 
 	@Override
@@ -45,16 +40,21 @@ public class VerifyQuestions implements StylesheetVisitor {
 	public void visit(Question question) {
 		
 		if (!environment.presentInQL(question.getName())) {
-			environment.getMessages().add(new Error("The variable " + question.getName() + 
+			environment.addMessage(new Error("The variable " + question.getName() +
 					" appears in the QLS, but does not exist in QL", question.getLine()));
 		}
-		
+
 		if (environment.isCovered(question.getName())) {
-			environment.getMessages().add(new Error("The variable " + question.getName() + 
+			environment.addMessage(new Error("The variable " + question.getName() +
 			" is already defined in the QLS", question.getLine()));
 		}
 		
 		environment.setCovered(question.getName());
+	}
+
+	@Override
+	public void visit(QuestionWithWidget question) {
+		System.out.println(question.getName());
 	}
 
 }

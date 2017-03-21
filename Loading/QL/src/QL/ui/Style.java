@@ -6,7 +6,7 @@ public class Style {
 	private final int fontSize;
 	private final String color;
 	
-	public Style(int width, String font, int fontSize, String color) {
+	Style(int width, String font, int fontSize, String color) {
 		this.width = width;
 		this.font = font;
 		this.fontSize = fontSize;

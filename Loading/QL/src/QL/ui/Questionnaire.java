@@ -6,8 +6,6 @@ import QL.message.Message;
 import QL.ui.message.MessageDialog;
 import QL.value.Value;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -32,8 +30,7 @@ import java.io.OutputStream;
 import java.util.List;
 
 public class Questionnaire extends Application implements Notifier {
-	
-	// TODO do not make static
+
 	private static Form form;
 	private static Environment environment;
 	private static GridPane grid;
@@ -50,7 +47,6 @@ public class Questionnaire extends Application implements Notifier {
     @Override
     public void start(Stage primaryStage) {
 
-
         showMessages();
         if (hasFatalMessage()) {
             return;
@@ -59,13 +55,12 @@ public class Questionnaire extends Application implements Notifier {
         primaryStage.setTitle(form.getId());
 
         initGrid();
-        Scene scene = new Scene(grid, 500, 275);
+        Scene scene = new Scene(grid, 700, 350);
         primaryStage.setScene(scene);
         
         renderQuestionnaire();
         
         primaryStage.show();
-
     }
 
     private void showMessages() {
@@ -98,30 +93,29 @@ public class Questionnaire extends Application implements Notifier {
     	
         renderTitle(form.getId());
         
-        List<Row> activeQuestions = createQuestions();
+        List<Row> visibleRows = createQuestions();
         
-    	renderQuestions(activeQuestions);
+    	renderQuestions(visibleRows);
     	
-        Button btn = renderButton(activeQuestions.size() + 2);
+        Button btn = renderButton(visibleRows.size() + 2);
               
-        submit(btn, activeQuestions);
+        submit(btn, visibleRows);
     }
     
-    private void submit(Button btn, List<Row> activeQuestions) {
+    private void submit(Button btn, List<Row> visibleRows) {
     	
         Text actiontarget = new Text();
-        grid.add(actiontarget, 1, activeQuestions.size() + 2);
+        grid.add(actiontarget, 1, visibleRows.size() + 2);
     	
-        btn.setOnAction(e -> complete(activeQuestions, actiontarget));
+        btn.setOnAction(e -> complete(visibleRows, actiontarget));
     }
     
-    private void complete(List<Row> activeQuestions, Text actiontarget) {
+    private void complete(List<Row> visibleRows, Text actiontarget) {
         
     	actiontarget.setFill(Color.GREEN);
         actiontarget.setText("Thank you for filling in the questionnaire");
 
-        export(activeQuestions);
-    	
+        export(visibleRows);
     }
     
     private void renderTitle(String title) {
@@ -135,14 +129,13 @@ public class Questionnaire extends Application implements Notifier {
         
     	QEvaluator qVisitor = new QEvaluator(environment, this);
     	qVisitor.visit(form);
-    	return qVisitor.getActiveQuestions();
-    	
+    	return qVisitor.getVisibleRows();
     }
     
-    private void renderQuestions(List<Row> activeQuestions) {
+    private void renderQuestions(List<Row> visibleRows) {
 
     	int rowIndex = 1;
-        for (Row question : activeQuestions) {
+        for (Row question : visibleRows) {
             
         	environment.applyStyle(question.getName(), question.getLabel());
             grid.add(question.getLabel(), 0, rowIndex);
@@ -175,7 +168,7 @@ public class Questionnaire extends Application implements Notifier {
 		}
 	}
 
-	private void export(List<Row> activeQuestions) {
+	private void export(List<Row> visibleRows) {
         FileChooser fileChooser = new FileChooser();
 
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
@@ -192,7 +185,7 @@ public class Questionnaire extends Application implements Notifier {
         try {
             JsonObjectBuilder questionnaire = Json.createObjectBuilder();
 
-            for (Row question : activeQuestions) {
+            for (Row question : visibleRows) {
                 questionnaire.add(question.getName(), question.getAnswer().convertToString());
             }
 
@@ -203,8 +196,7 @@ public class Questionnaire extends Application implements Notifier {
         } 
         catch (IOException ex) {
             throw new RuntimeException(
-                    "This should never happen, I know this file exists", ex);
+                    "This should never happen, this file exists", ex);
         }
 	}
-
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import QL.ReferenceTable;
+import QL.ast.type.Type;
 import QL.message.Error;
 import QL.message.Message;
 
@@ -51,5 +52,12 @@ class Environment {
 			}
 		}
 	}
-	
+
+	Type getType(String name) {
+		return referenceTable.getType(name);
+	}
+
+	public void addMessage(Message m) {
+		messages.add(m);
+	}
 }

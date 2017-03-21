@@ -9,6 +9,6 @@ public interface StylesheetVisitor {
     void visit(Section section);
 //    void visit(SectionWithDefault sectionWithDefault);
     void visit(Question question);
-//    void visit(QuestionWithWidget questionWithDefault);
+    void visit(QuestionWithWidget questionWithDefault);
 	
 }

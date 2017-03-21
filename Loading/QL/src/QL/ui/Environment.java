@@ -11,20 +11,20 @@ import javafx.scene.control.Label;
 public class Environment {
 
 	private final Map<String, Value> variableAnswer;
-	private final ReferenceTable variableType;
+	private final ReferenceTable references;
 	private final StyleTable styleTable;
 	
-	public Environment(ReferenceTable variableType) {
+	public Environment(ReferenceTable references) {
 		this.variableAnswer = new HashMap<>(); 
-		this.variableType = variableType;
-		this.styleTable = new StyleTable(variableType);
-	}
-	
-	public Environment(ReferenceTable variableType, StyleTable styleTable) {
-		this.variableAnswer = new HashMap<>(); 
-		this.variableType = variableType;
-		this.styleTable = styleTable;
-	}
+		this.references = references;
+		this.styleTable = new StyleTable(references);
+    }
+
+    public Environment(ReferenceTable references, StyleTable styleTable) {
+        this.variableAnswer = new HashMap<>();
+        this.references = references;
+        this.styleTable = styleTable;
+    }
 	
 	public void addAnswer(String variable, Value answer) {
 		variableAnswer.put(variable, answer);
@@ -46,19 +46,19 @@ public class Environment {
 	
 	public Type getType(String variable) {
 		
-		if (!variableType.variableExists(variable)) {
+		if (!references.variableExists(variable)) {
 			throw new AssertionError("The variable " + variable + " is evaluated, " +
 					"but not checked by the typechecker");
 		}
 		
-		return variableType.getType(variable);
-		
+		return references.getType(variable);
+
 	}
-	
+
 	public void applyStyle(String variable, Label label) {
-		
-		styleTable.applyStyle(variable, label);			
+
+		styleTable.applyStyle(variable, label);
 	}
-	
+
 
 }

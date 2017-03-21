@@ -10,25 +10,15 @@ import QL.semantic.Analyzer;
 import QL.ui.Questionnaire;
 import QL.ui.Environment;
 
-public class Main {
+import java.io.FileInputStream;
+import java.io.InputStream;
+
+class Main {
 	public static void main(String[] args) throws Exception {
-		String tmp = "form Testing { "
-				 + "Name0: \"Question0\" integer "
-				 + "Name1: \"Question1\" boolean "
-				 + "if (Name0 < 5) {"
-				 + "if (Name0 == 4) {"
- 		 		 + "Name2: \"Question2\" boolean"
-				 + "} else { "
-				 + "Name9: \"Question9\" boolean } } "
-				 + "Name3: \"Question3\" string "
-				 + "}";
-
-		ANTLRInputStream input = new ANTLRInputStream( tmp );
-
+		InputStream src = new FileInputStream("assets/questionnaire.ql");
+		ANTLRInputStream input = new ANTLRInputStream(src);
 		QLLexer lexer = new QLLexer(input);
-
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
-
 		QLParser parser = new QLParser(tokens);
 		Form form = parser.form().result;
 

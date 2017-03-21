@@ -1,38 +1,16 @@
 package QL.semantic;
 
+import QL.ast.*;
+import QL.ast.atom.BoolAtom;
+import QL.ast.atom.IntegerAtom;
+import QL.ast.atom.StringAtom;
+import QL.ast.expression.*;
+import QL.message.Error;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import QL.ast.Block;
-import QL.ast.BlockItem;
-import QL.ast.ComputedQuestion;
-import QL.ast.Form;
-import QL.ast.FormVisitor;
-import QL.ast.IfElseStatement;
-import QL.ast.Question;
-import QL.ast.Statement;
-import QL.ast.atom.BoolAtom;
-import QL.ast.atom.IntegerAtom;
-import QL.ast.atom.StringAtom;
-import QL.ast.expression.AddExpr;
-import QL.ast.expression.AndExpr;
-import QL.ast.expression.DivExpr;
-import QL.ast.expression.EqExpr;
-import QL.ast.expression.GEqExpr;
-import QL.ast.expression.GExpr;
-import QL.ast.expression.IdExpr;
-import QL.ast.expression.LEqExpr;
-import QL.ast.expression.LExpr;
-import QL.ast.expression.MinusExpr;
-import QL.ast.expression.MulExpr;
-import QL.ast.expression.NEqExpr;
-import QL.ast.expression.NotExpr;
-import QL.ast.expression.OrExpr;
-import QL.ast.expression.PlusExpr;
-import QL.ast.expression.SubExpr;
-import QL.message.Error;
 
 /** CheckCyclicDependencies checks for
  * <li> cyclic dependencies between the questions

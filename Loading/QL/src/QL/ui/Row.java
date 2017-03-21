@@ -17,11 +17,11 @@ public class Row {
 		this.field = field;
 	}
 
-	public Value getAnswer() {
+	Value getAnswer() {
 		return field.getAnswer();
 	}
 
-	public String getName() {
+	String getName() {
 		return name;
 	}
 
@@ -29,7 +29,7 @@ public class Row {
 		return label;
 	}
 
-	public Control getControl() {
+	Control getControl() {
 		return field.getField();
 	}
 
