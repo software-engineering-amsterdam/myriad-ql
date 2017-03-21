@@ -191,7 +191,7 @@ class Editor(QMainWindow, QWidget):
         except FatalError as fe:
             self.add_message("Parsing:\n    {}".format(fe), fe.location)
         except Exception as e:
-            self.add_message("Parsing:\n    {}".format(e))
+            raise e
 
     def add_message(self, string, location=None):
         widget = ErrorWidget(location)

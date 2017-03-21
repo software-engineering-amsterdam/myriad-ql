@@ -1,8 +1,10 @@
 # coding=utf-8
+from pyparsing import ParseFatalException
+
 from ast.ast import Location
 
 
-class FatalError(Exception):
+class FatalError(ParseFatalException):
     def __init__(self, source, text, position):
         self.text = text
         self.location = Location(position, source)

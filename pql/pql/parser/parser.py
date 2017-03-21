@@ -159,7 +159,7 @@ def parse(input_string):
     )
     conditional_if_else.setParseAction(ast.IfElse)
 
-    conditional = conditional_if_else | conditional_if
+    conditional = (conditional_if_else | conditional_if)
 
     statement <<= (field_order | conditional)
 

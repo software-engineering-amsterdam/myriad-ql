@@ -68,3 +68,15 @@ class TestIdentifierChecker(Shared):
         form_node = self.acquire_ast(input_string)
         errors = self.acquire_identifiers(form_node)
         self.assertEqual(len(errors), 1, "There should be exactly 1 error")
+
+    def test_identifierchecker_not_existing_identifier(self):
+        input_string = """
+        form stufftrue {
+            if(notExistingIdentifier){
+                "q2?"   hasA: string = 'a'
+            }
+        }
+        """
+        form_node = self.acquire_ast(input_string)
+        errors = self.acquire_identifiers(form_node)
+        self.assertEqual(len(errors), 1, "There should be exactly 1 error")
