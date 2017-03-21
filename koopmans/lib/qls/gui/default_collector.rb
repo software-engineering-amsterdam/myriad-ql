@@ -1,10 +1,14 @@
 module QLS
   module GUI
     class DefaultCollector
-      def visit_stylesheet(stylesheet, _)
+      attr_reader :defaults
+
+      def initialize
         @defaults = {}
+      end
+
+      def visit_stylesheet(stylesheet, _)
         stylesheet.pages.map { |page| page.accept(self) }
-        @defaults
       end
 
       def visit_page(page)

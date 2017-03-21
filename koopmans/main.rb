@@ -106,7 +106,11 @@ qls_parsed
 qls_ast = QLS::Parser::FormTransformer.new.apply(qls_parsed)
 qls_ast
 '-------------------------------------'
-stylesheet_builder = QLS::GUI::StylesheetBuilder.new
+
+default_collector = QLS::GUI::DefaultCollector.new
+qls_ast.accept(default_collector)
+
+stylesheet_builder = QLS::GUI::StylesheetBuilder.new(default_collector.defaults)
 qls_ast.accept(stylesheet_builder)
 question_frame_styles = stylesheet_builder.question_frame_styles
 # qls_notifications = QLS::TypeChecker::TypeChecker.check(qls_ast, ql_ast)

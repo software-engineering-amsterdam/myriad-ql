@@ -4,12 +4,12 @@ module QLS
     class StylesheetBuilder
       attr_reader :question_frame_styles
 
-      def initialize
+      def initialize(defaults)
         @question_frame_styles = {}
+        @defaults = defaults
       end
 
       def visit_stylesheet(stylesheet, _)
-        @defaults = stylesheet.accept(DefaultCollector.new)
         stylesheet.pages.map { |page| page.accept(self) }
       end
 
