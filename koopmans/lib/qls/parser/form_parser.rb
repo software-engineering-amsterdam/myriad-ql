@@ -9,52 +9,52 @@ module QLS
     class FormParser < Parslet::Parser
       root(:stylesheet)
 
-      # spaces
-      rule(:spaces) { match('\s').repeat(1) }
-      rule(:spaces?) { spaces.maybe }
+      # spaces, breaks, tabs
+      rule(:_) { match('\s').repeat(1).maybe }
+
 
       # literals and variable
-      rule(:string_literal) { str('"') >> match('[^"]').repeat.as(:string) >> str('"') >> spaces? }
-      rule(:integer_literal) { match('[0-9]').repeat(1).as(:integer) >> spaces? }
-      rule(:variable) { match('\w+').repeat(1).as(:variable) }
+      rule(:string_literal)  { str('"') >> match('[^"]').repeat.as(:string_literal) >> str('"') >> _ }
+      rule(:integer_literal) { match('[0-9]').repeat(1).as(:integer_literal) >> _ }
+      rule(:variable)        { match('\w+').repeat(1).as(:variable) }
 
       # stylesheet
-      rule(:stylesheet) { spaces? >> (str('stylesheet') >> spaces? >> variable >> spaces? >> page.repeat.as(:pages) >> spaces?).as(:stylesheet) }
+      rule(:stylesheet) { _ >> (str('stylesheet') >> _ >> variable >> _ >> page.repeat.as(:pages) >> _).as(:stylesheet) }
 
       # page
-      rule(:page) { spaces? >> str('page') >> spaces? >> (variable >> spaces? >> str('{') >> (spaces? >> (section | default)).repeat.as(:block)).as(:page) >> str('}') >> spaces? }
+      rule(:page) { _ >> str('page') >> _ >> (variable >> _ >> str('{') >> (_ >> (section | default)).repeat.as(:block)).as(:page) >> str('}') >> _ }
 
       # section
-      rule(:section) { (spaces? >> str('section') >> spaces? >> string_literal >> spaces? >> (section_brackets | section_no_brackets).as(:block) >> spaces?).as(:section) }
-      rule(:section_brackets) { str('{') >> spaces? >> (section | question | default).repeat >> spaces? >> str('}') }
-      rule(:section_no_brackets) { (question | default).repeat }
+      rule(:section)                  { (_ >> str('section') >> _ >> string_literal >> _ >> (section_brackets | section_without_brackets).as(:block) >> _).as(:section) }
+      rule(:section_brackets)         { str('{') >> _ >> (section | question | default).repeat >> _ >> str('}') }
+      rule(:section_without_brackets) { (question | default).repeat }
 
       # question
-      rule(:question) { (spaces? >> str('question') >> spaces? >> variable >> spaces? >> (question_brackets | question_no_brackets).as(:properties) >> spaces?).as(:question) }
-      rule(:question_brackets) { str('{') >> (spaces? >> attributes).repeat >> spaces? >> str('}') }
-      rule(:question_no_brackets) { attributes.maybe }
+      rule(:question)                  { (_ >> str('question') >> _ >> variable >> _ >> (question_brackets | question_without_brackets).as(:properties) >> _).as(:question) }
+      rule(:question_brackets)         { str('{') >> (_ >> properties).repeat >> _ >> str('}') }
+      rule(:question_without_brackets) { properties.maybe }
 
       # widget
-      rule(:widget) { str('widget') >> spaces? >> (str('checkbox') | str('spinbox') | str('text') | slider | radio | dropdown).as(:widget) >> spaces? }
-      rule(:widget_string) { string_literal.as(:first_value) >> spaces? >> str(',') >> spaces? >> string_literal.as(:second_value) }
-      rule(:widget_integer) { integer_literal.as(:first_value) >> spaces? >> str(',') >> spaces? >> integer_literal.as(:second_value) }
+      rule(:widget)         { str('widget') >> _ >> (str('checkbox') | str('spinbox') | str('text') | slider | radio | dropdown).as(:widget) >> _ }
+      rule(:widget_string)  { string_literal.as(:first_value) >> _ >> str(',') >> _ >> string_literal.as(:second_value) }
+      rule(:widget_integer) { integer_literal.as(:first_value) >> _ >> str(',') >> _ >> integer_literal.as(:second_value) }
 
-      rule(:radio) { str('radio') >> str('(') >> spaces? >> widget_string.as(:radio) >> spaces? >> str(')') }
-      rule(:dropdown) { str('dropdown') >> str('(') >> spaces? >> widget_string.as(:dropdown) >> spaces? >> str(')') }
-      rule(:slider) { str('slider') >> str('(') >> spaces? >> widget_integer.as(:slider) >> spaces? >> str(')') }
+      rule(:radio)    { str('radio') >> str('(') >> _ >> widget_string.as(:radio) >> _ >> str(')') }
+      rule(:dropdown) { str('dropdown') >> str('(') >> _ >> widget_string.as(:dropdown) >> _ >> str(')') }
+      rule(:slider)   { str('slider') >> str('(') >> _ >> widget_integer.as(:slider) >> _ >> str(')') }
 
       # default
-      rule(:default) { str('default') >> spaces? >> (type >> (default_brackets | default_no_brackets).as(:properties)).as(:default) >> spaces? }
-      rule(:default_brackets) { str('{') >> default_no_brackets >> str('}') }
-      rule(:default_no_brackets) { (spaces? >> attributes).repeat >> spaces? }
-      rule(:attributes) { width | font | fontsize | color | widget }
+      rule(:default)             { str('default') >> _ >> (type.as(:type) >> (default_brackets | default_no_brackets).as(:properties)).as(:default) >> _ }
+      rule(:default_brackets)    { str('{') >> default_no_brackets >> str('}') }
+      rule(:default_no_brackets) { (_ >> properties).repeat >> _ }
+      rule(:properties)          { width | font | fontsize | color | widget }
 
-      # default attributes
-      rule(:type) { (str('boolean') | str('string') | str('integer') | str('decimal') | str('date') | str('money')).as(:type) >> spaces? }
-      rule(:width) { str('width:') >> spaces? >> integer_literal.as(:width) }
-      rule(:font) { str('font:') >> spaces? >> string_literal.as(:font) }
-      rule(:fontsize) { str('fontsize:') >> spaces? >> integer_literal.as(:fontsize) }
-      rule(:color) { str('color:') >> spaces? >> hex_value.as(:string).as(:color) }
+      # properties
+      rule(:type)      { (str('boolean') | str('string') | str('integer') | str('decimal') | str('date') | str('money')).as(:type) >> _ }
+      rule(:width)     { str('width:') >> _ >> integer_literal.as(:width) }
+      rule(:font)      { str('font:') >> _ >> string_literal.as(:font) }
+      rule(:fontsize)  { str('fontsize:') >> _ >> integer_literal.as(:fontsize) }
+      rule(:color)     { str('color:') >> _ >> hex_value.as(:string).as(:color) }
       rule(:hex_value) { str('#') >> (digit_hex.repeat(6, 6) | digit_hex.repeat(3, 3)) }
       rule(:digit_hex) { match('[0-9a-fA-F]') }
     end

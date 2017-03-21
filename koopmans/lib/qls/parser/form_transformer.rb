@@ -16,27 +16,30 @@ module QLS
       # question
       rule(question: { variable: simple(:name), properties: subtree(:properties) }) { Question.new(QL::AST::Variable.new(name), properties) }
 
+      # types
+      rule(type: 'boolean') { QL::AST::BooleanType.new }
+      rule(type: 'integer') { QL::AST::IntegerType.new }
+      rule(type: 'money')   { QL::AST::MoneyType.new }
+      rule(type: 'string')  { QL::AST::StringType.new }
+      rule(type: 'decimal') { QL::AST::DecimalType.new }
+      rule(type: 'date')    { QL::AST::DateType.new }
+
       # default type properties
-      rule(default: { type: 'boolean', properties: subtree(:properties) }) { Default.new(QL::AST::BooleanType, properties) }
-      rule(default: { type: 'integer', properties: subtree(:properties) }) { Default.new(QL::AST::IntegerType, properties) }
-      rule(default: { type: 'money', properties: subtree(:properties) }) { Default.new(QL::AST::MoneyType, properties) }
-      rule(default: { type: 'string', properties: subtree(:properties) }) { Default.new(QL::AST::StringType, properties) }
-      rule(default: { type: 'decimal', properties: subtree(:properties) }) { Default.new(QL::AST::DecimalType, properties) }
-      rule(default: { type: 'date', properties: subtree(:properties) }) { Default.new(QL::AST::DateType, properties) }
+      rule(default: { type: simple(:type), properties: subtree(:properties) }) { Default.new(type, properties) }
 
       # properties
-      # rule(width: { integer: simple(:value) }) { Width.new(value) }
-      # rule(font: { string: simple(:value) }) { Font.new(value) }
-      # rule(fontsize: { integer: simple(:value) }) { Fontsize.new(value) }
-      # rule(color: { string: simple(:value) }) { Color.new(value) }
+      rule(width: { integer_literal: simple(:value) }) { Width.new(value) }
+      rule(font: { string_literal: simple(:value) }) { Font.new(value) }
+      rule(fontsize: { integer_literal: simple(:value) }) { Fontsize.new(value) }
+      rule(color: { string_literal: simple(:value) }) { Color.new(value) }
 
       # rule(width: { integer: simple(:value) }) { value }
       # rule(font: { string: simple(:value) }) { value }
       # rule(fontsize: { integer: simple(:value) }) { value }
       # rule(color: { string: simple(:value) }) { value }
 
-      rule(integer: simple(:value)) { value }
-      rule(string: simple(:value)) { value }
+      rule(integer_literal: simple(:value)) { value }
+      rule(string_literal: simple(:value)) { value }
 
       # widgets
       rule(widget: 'spinbox') { { widget: SpinboxWidget.new } }
