@@ -1,5 +1,6 @@
 package com.matthewchapman.ql.environment.evaluation;
 
+import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
@@ -7,16 +8,28 @@ import com.matthewchapman.ql.ast.expression.literal.BooleanLiteral;
 import com.matthewchapman.ql.ast.expression.literal.IntegerLiteral;
 import com.matthewchapman.ql.ast.expression.literal.StringLiteral;
 import com.matthewchapman.ql.ast.expression.unary.Negation;
-import com.matthewchapman.ql.gui.values.Value;
+import com.matthewchapman.ql.environment.datastores.ValueTable;
+import com.matthewchapman.ql.environment.values.IntegerValue;
+import com.matthewchapman.ql.environment.values.Value;
 import com.matthewchapman.ql.validation.visitors.ExpressionVisitor;
 
 /**
  * Created by matt on 20/03/2017.
  */
 public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
+
+    public Value evaluateExpression(String id, Expression expression, ValueTable valueTable) {
+        valueTable.addValue(id, expression.accept(this, id));
+        Value value = expression.accept(this, id);
+        return null;
+    }
+
     @Override
     public Value visit(Addition addition, String context) {
-        return null;
+        Value left = addition.getLeft().accept(this, context);
+        Value right = addition.getRight().accept(this, context);
+
+        return left.add(right);
     }
 
     @Override
@@ -96,7 +109,7 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
 
     @Override
     public Value visit(IntegerLiteral integerLiteral, String context) {
-        return null;
+        return new IntegerValue(integerLiteral.getValue());
     }
 
     @Override

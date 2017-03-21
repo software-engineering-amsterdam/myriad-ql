@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.gui.values;
+package com.matthewchapman.ql.environment.values;
 
 /**
  * Created by matt on 18/03/2017.
@@ -15,4 +15,12 @@ public class StringValue extends Value {
     public String getValue() {
         return this.value;
     }
+
+    @Override
+    public Value equalTo(StringValue value) {
+        return new BooleanValue(this.value.equals(value.getValue()));
+    }
+
+    @Override
+    public Value equalTo(Value value) { return value.equalTo(this); }
 }

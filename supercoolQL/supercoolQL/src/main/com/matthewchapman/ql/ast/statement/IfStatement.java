@@ -17,6 +17,7 @@ public class IfStatement extends Statement {
 
     private final List<Statement> ifCaseStatements;
     private final Expression condition;
+    private final String name;
 
     public IfStatement(Expression e, List<Statement> s, int line, int column) {
         this.ifCaseStatements = new ArrayList<>();
@@ -24,6 +25,7 @@ public class IfStatement extends Statement {
         this.condition = e;
         this.setLine(line);
         this.setColumn(column);
+        this.name = "If Statement";
     }
 
     @Override
@@ -58,5 +60,8 @@ public class IfStatement extends Statement {
     public <T, C> T accept(StatementVisitor<T, C> visitor, C context) {
         return visitor.visit(this, context);
     }
+
+    @Override
+    public String getName() { return this.name; }
 
 }

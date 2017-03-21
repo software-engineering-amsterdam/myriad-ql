@@ -2,7 +2,9 @@ package com.matthewchapman.ql.environment.datastores;
 
 import com.matthewchapman.ql.ast.statement.Question;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,4 +25,6 @@ public class QuestionTable {
     public Question getQuestionByID(String name) {
         return questions.get(name);
     }
+
+    public List<Question> getQuestionsAsList() { return new ArrayList<>(questions.values()); }
 }

@@ -1,6 +1,6 @@
 package com.matthewchapman.ql.environment.datastores;
 
-import com.matthewchapman.ql.gui.values.Value;
+import com.matthewchapman.ql.environment.values.Value;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,6 +1,7 @@
 package com.matthewchapman.ql.core;
 
 import com.matthewchapman.ql.ast.Form;
+import com.matthewchapman.ql.environment.FormEnvironment;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -38,7 +39,8 @@ public class Launcher extends Application {
             if (form == null) {
                 Platform.exit();
             } else if (parser.validateAST(form)) {
-                new GUICreator().generateFormUI(primaryStage, form);
+                FormEnvironment env = new FormEnvironment(form);
+                new GUICreator().generateFormUI(primaryStage, env);
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.gui.values;
+package com.matthewchapman.ql.environment.values;
 
 /**
  * Created by matt on 18/03/2017.
