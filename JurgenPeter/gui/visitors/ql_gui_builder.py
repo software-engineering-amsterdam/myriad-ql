@@ -27,6 +27,7 @@ class QlGuiBuilder(GuiBuilder):
             self.visit(element)
 
     def visit_ifelse_conditional(self, node):
-        self.visit_if_conditional(node)
+        for element in node.ifbody:
+            self.visit(element)
         for element in node.elsebody:
             self.visit(element)

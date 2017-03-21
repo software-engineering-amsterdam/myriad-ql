@@ -1,6 +1,6 @@
 form BoxHouseOwning {
     dropdown: "Dropdown Boolean Question" boolean
-    compBool: "Computed Boolean Question" boolean = dropdown
+    compBool: "Copies Dropdown at the bottom" boolean = dropdown
     genericInt: "Make this integer >= 5?" integer
 
     if compInt >= 10 {
@@ -28,5 +28,9 @@ form BoxHouseOwning {
     greenText: "Here the default is overwritten" integer
     otherFont: "Times New Roman Font" integer
     bigBoldFont: "This text is big and bold" integer
+
+    if !dropdown {
+        hideWhenTrue: "Hidden when dropdown is true (boolean page)" boolean
+    }
 
 }

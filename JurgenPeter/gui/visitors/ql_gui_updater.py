@@ -2,15 +2,17 @@ from misc.visitor import Visitor
 from ql.visitors.evaluator import Evaluator
 
 
-class GuiUpdater(Visitor):
+class QlGuiUpdater(Visitor):
 
     def __init__(self, app, environment):
         self.app = app
         self.environment = environment
         self.evaluator = Evaluator(environment)
+        self.visible_questions = []
 
     def update(self, node):
         self.visit(node, True)
+        return self.visible_questions
 
     def visit_form(self, node, visible):
         for element in node.body:
@@ -30,6 +32,7 @@ class GuiUpdater(Visitor):
     def visit_question(self, node, visible):
         if visible:
             self.app.show_widget(node.name)
+            self.visible_questions.append(node.name)
         else:
             self.app.hide_widget(node.name)
 
