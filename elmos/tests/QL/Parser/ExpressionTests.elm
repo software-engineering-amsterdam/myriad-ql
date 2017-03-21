@@ -42,7 +42,7 @@ atomTests =
         "atomTests"
         [ ( "Should parse varName", "someVarName", Just (Var ( "someVarName", Location 0 0 )) )
         , ( "Should parse int literal", "2", Just (Integer (Location 0 0) 2) )
-        , ( "Should parse a float", "1.0", Just (Decimal (Location 0 0) 1.0) )
+        , ( "Should parse a decimal", "1.0", Just (Decimal (Location 0 0) 1.0) )
         , ( "Should parse parens int literal", "(2)", Just (ParensExpression (Location 0 0) (Integer (Location 0 0) 2)) )
         , ( "Should parse parens boolean literal", "true", Just (Boolean (Location 0 0) True) )
         , ( "Should parse string expression", "\"Hello\"", Just (Str (Location 0 0) "Hello") )
@@ -54,7 +54,15 @@ arithmeticTests =
     testWithParserAndMap expression
         removeLocactionFromExpression
         "arithmeticTests"
-        [ ( "Should parse simple add", "2+3", Just (BinaryExpression (Arithmetic Plus) (Location 0 0) (Integer (Location 0 0) 2) (Integer (Location 0 0) 3)) )
+        [ ( "Should parse simple add"
+          , "2+3"
+          , Just
+                (BinaryExpression (Arithmetic Plus)
+                    (Location 0 0)
+                    (Integer (Location 0 0) 2)
+                    (Integer (Location 0 0) 3)
+                )
+          )
         , ( "Should parse bigger add"
           , "2+3+4"
           , Just
@@ -82,7 +90,15 @@ arithmeticTests =
                     (BinaryExpression (Arithmetic Divide) (Location 0 0) (Integer (Location 0 0) 3) (Integer (Location 0 0) 4))
                 )
           )
-        , ( "Should parse variables", "x+y", Just (BinaryExpression (Arithmetic Plus) (Location 0 0) (Var ( "x", Location 0 0 )) (Var ( "y", Location 0 0 ))) )
+        , ( "Should parse variables"
+          , "x+y"
+          , Just
+                (BinaryExpression (Arithmetic Plus)
+                    (Location 0 0)
+                    (Var ( "x", Location 0 0 ))
+                    (Var ( "y", Location 0 0 ))
+                )
+          )
         ]
 
 

@@ -30,7 +30,7 @@ public abstract class LiteralNode extends ExpressionNode {
     }
 
     @Override
-    public void getDependencies(Set<String> dependencies) {
+    public void collectUsedVariables(Set<String> dependencies) {
         // Intentionally left blank
     }
 
@@ -46,6 +46,11 @@ public abstract class LiteralNode extends ExpressionNode {
 
     @Override
     public boolean isConstant() {
+        return true;
+    }
+
+    @Override
+    public boolean isLiteral() {
         return true;
     }
 }

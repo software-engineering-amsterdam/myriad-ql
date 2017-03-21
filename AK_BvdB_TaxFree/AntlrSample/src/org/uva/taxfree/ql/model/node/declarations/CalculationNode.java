@@ -44,15 +44,15 @@ public class CalculationNode extends DeclarationNode {
             }
         }
         mExpression.checkSemantics(symbolTable, semanticsMessages);
-        if (mExpression.isConstant()) {
-            semanticsMessages.addWarning("Constant calculation found, always resolves to: " + mExpression.evaluate());
+        if(mExpression.isLiteral() && mExpression.isConstant()){
+            semanticsMessages.addWarning("Constant expression found, always evaluates to: " + mExpression.evaluate());
         }
     }
 
 
     public Set<String> getUsedVariables() {
         Set<String> declarations = new HashSet<>();
-        mExpression.getDependencies(declarations);
+        mExpression.collectUsedVariables(declarations);
         return declarations;
     }
 

@@ -15,7 +15,6 @@ import QL.message.Error;
  * <li> unreferenced variables
  * <li> invalid type operations
  * <li> whether expressions return a boolean
- *
  */
 public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<Type>, TypeVisitor<Type> {
 

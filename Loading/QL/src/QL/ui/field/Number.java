@@ -1,11 +1,9 @@
 package QL.ui.field;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.TextField;
 import QL.ui.Notifier;
 import QL.value.IntegerValue;
 import QL.value.Value;
+import javafx.scene.control.TextField;
 
 public class Number implements Field {
 	
@@ -15,8 +13,7 @@ public class Number implements Field {
 		this.field = new TextField();
 		
 		field.setId(name);
-		
-		
+
 		String valueText = Integer.toString(value.getValue());
 		field.setText(valueText);
 		field.positionCaret(valueText.length());

@@ -3,32 +3,33 @@ package QL.ui;
 import QL.ui.field.Field;
 import QL.value.Value;
 import javafx.scene.control.Control;
+import javafx.scene.control.Label;
 
 class Row {
 
 	private final String name;
-	private final String label;
+	private final Label label;
 	private final Field field;
 
-	public Row(String name, String label, Field field) {
+	public Row(String name, Label label, Field field) {
 		this.name = name;
 		this.label = label;
 		this.field = field;
 	}
 
-	public Value getAnswer() {
+	Value getAnswer() {
 		return field.getAnswer();
 	}
 
-	public String getName() {
+	String getName() {
 		return name;
 	}
 
-	public String getLabel() {
+	public Label getLabel() {
 		return label;
 	}
 
-	public Control getControl() {
+	Control getControl() {
 		return field.getField();
 	}
 

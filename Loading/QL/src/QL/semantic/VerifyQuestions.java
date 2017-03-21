@@ -18,7 +18,7 @@ public class VerifyQuestions implements FormVisitor {
 	private final Environment environment;
 	private final Map<String, String> labelVariable;
 	
-	public VerifyQuestions(Environment environment) {
+	VerifyQuestions(Environment environment) {
 		this.environment = environment;
 		labelVariable = new HashMap<>();
 	}
@@ -79,7 +79,6 @@ public class VerifyQuestions implements FormVisitor {
 		}
 		addLabel(label, variableName);
 	}
-
 
 	private void checkDuplicateId(String variable, Type type, int line) {
 

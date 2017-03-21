@@ -2,7 +2,7 @@ module QL.TypeChecker.BadReferencesTests exposing (all)
 
 import QL.AST exposing (..)
 import QL.ASTTestUtil exposing (emptyLoc, loc)
-import QL.TypeChecker.BadReferences exposing (badReferences)
+import QL.TypeChecker.BadReferences exposing (check)
 import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(ReferenceToUndefinedQuestion))
 import QL.Parser.Form exposing (form)
 import Test exposing (..)
@@ -124,28 +124,28 @@ testBadReferences =
     describe "testBadReferences"
         [ test "bad reference in If block" <|
             \() ->
-                badReferences
+                check
                     (Form
                         ( "", emptyLoc )
                         [ IfThen (Var ( "x", loc 1 1 )) [] ]
                     )
                     |> Expect.equal [ Error <| ReferenceToUndefinedQuestion ( "x", loc 1 1 ) ]
-        , test "bad reference in ComputedField" <|
+        , test "bad reference in ComputedQuestion" <|
             \() ->
-                badReferences
+                check
                     (Form
                         ( "", emptyLoc )
-                        [ ComputedField "question" ( "someId", emptyLoc ) StringType (Var ( "x", loc 1 1 )) ]
+                        [ ComputedQuestion "question" ( "someId", emptyLoc ) StringType (Var ( "x", loc 1 1 )) ]
                     )
                     |> Expect.equal [ Error <| ReferenceToUndefinedQuestion ( "x", loc 1 1 ) ]
-        , test "bad reference in ComputedField" <|
+        , test "bad reference in ComputedQuestion" <|
             \() ->
-                badReferences
+                check
                     (Form
                         ( "", emptyLoc )
                         [ IfThen (Boolean emptyLoc True)
                             [ IfThen (Boolean emptyLoc True)
-                                [ ComputedField "question" ( "someId", emptyLoc ) StringType (Var ( "x", loc 3 3 )) ]
+                                [ ComputedQuestion "question" ( "someId", emptyLoc ) StringType (Var ( "x", loc 3 3 )) ]
                             ]
                         ]
                     )
@@ -175,4 +175,4 @@ parseAndFindExpectedBadReferences message input expectedBadReferences =
 
 parseAndGetBadReferences : String -> Maybe (List Message)
 parseAndGetBadReferences rawForm =
-    Maybe.map badReferences (parseToMaybe form rawForm)
+    Maybe.map check (parseToMaybe form rawForm)

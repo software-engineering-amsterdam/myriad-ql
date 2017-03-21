@@ -7,21 +7,24 @@ import values.{ DateValue, UndefinedValue, Value }
 
 import scala.language.implicitConversions
 import scalafx.Includes._
+import scalafx.scene.Node
 import scalafx.scene.control.DatePicker
 
-class DateWidget(changeHandler: Option[Value => Unit]) extends QLWidget(changeHandler) {
+class DateWidget(protected val changeHandler: Option[Value => Unit]) extends QLWidget {
 
-  override val displayNode: DatePicker = new DatePicker()
+  private val datePicker: DatePicker = new DatePicker()
 
-  displayNode.onAction = handle {
-    super.handleUpdate(DateValue(displayNode.value.value))
+  datePicker.onAction = handle {
+    changeHandler.foreach((f) => f(DateValue(datePicker.value.value)))
   }
 
   override def setValue(newVal: Value): Unit = newVal match {
-    case DateValue(date) => displayNode.value_=(date)
-    case UndefinedValue => displayNode.value_=(LocalDate.now)
+    case DateValue(date) => datePicker.value = date
+    case UndefinedValue => datePicker.value = LocalDate.now
     case v => sys.error(s"Incompatible value $v for Date widget.")
   }
+
+  override def displayNode: Node = datePicker
 
   private implicit def dateToLocalDate(date: Date): LocalDate = {
     val instant = Instant.ofEpochMilli(date.getTime)

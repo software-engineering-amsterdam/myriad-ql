@@ -11,11 +11,11 @@ import Dict exposing (Dict)
 check : Form -> StyleSheet -> List Message
 check form styleSheet =
     let
-        declaredQuestions =
+        declaredQuestionNames =
             QLCollectors.collectDeclaredIds form
                 |> List.map Tuple.first
     in
         QLSCollectors.collectQuestionReferencesAsDict styleSheet
-            |> Dict.filter (\k _ -> not (List.member k declaredQuestions))
+            |> Dict.filter (\name _ -> not (List.member name declaredQuestionNames))
             |> Dict.toList
             |> List.map (uncurry UndefinedQuestionReference)

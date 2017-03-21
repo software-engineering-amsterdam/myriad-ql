@@ -1,7 +1,7 @@
 module UI.Widget.Slider exposing (..)
 
 import Html exposing (Html, div, input, span, text)
-import Html.Attributes as HA exposing (type_, class, step, value, title, disabled)
+import Html.Attributes as Attributes exposing (type_, class, step, value, title, disabled)
 import Html.Events exposing (onInput)
 import UI.Widget.Base exposing (WidgetContext)
 import QL.Environment as Environment
@@ -29,7 +29,10 @@ view sliderProperties { identifier, env, onChange, editable } =
             editable
             (toString start)
             (toString end)
-            (Maybe.withDefault "" <| Maybe.map toString currentValue)
+            (currentValue
+                |> Maybe.map toString
+                |> Maybe.withDefault ""
+            )
             (NumberParser.parseIntegerInput >> onChange)
 
 
@@ -42,8 +45,8 @@ renderSlider editable start end currentValue onChange =
         , div [ class "col-md-8 col-sm-8 col-xs-6" ]
             [ input
                 [ type_ "range"
-                , HA.min start
-                , HA.max end
+                , Attributes.min start
+                , Attributes.max end
                 , step "1"
                 , value currentValue
                 , title ("Value: " ++ currentValue)

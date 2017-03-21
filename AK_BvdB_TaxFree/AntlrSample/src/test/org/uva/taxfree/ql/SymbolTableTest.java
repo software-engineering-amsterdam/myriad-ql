@@ -40,7 +40,12 @@ public class SymbolTableTest extends SemanticsTester {
 
     @Override
     protected File testFile(String fileName) {
-        return new File("forms\\" + fileName);
+        return new File(fileDirectory() + "\\" + fileName);
+    }
+
+    @Override
+    protected String fileDirectory() {
+        return "forms";
     }
 
     @Test

@@ -1,20 +1,20 @@
-module QL.TypeChecker.Expressions.OperandTypes exposing (operandTypeErrors)
+module QL.TypeChecker.Expressions.OperandTypes exposing (check)
 
 import QL.TypeChecker.Expressions.ExpressionType exposing (getType)
-import QL.AST exposing (Form, FormItem(..), Expression(..), Id, ValueType, Location)
-import QL.AST.Collectors as Collectors exposing (QuestionTypes)
+import QL.AST exposing (Form, Expression, ValueType, Location)
+import QL.AST.Collectors as Collectors exposing (TypeEnvironment)
 import QL.TypeChecker.Messages exposing (Message, ErrorMessage)
 
 
-operandTypeErrors : Form -> QuestionTypes -> List Message
-operandTypeErrors form questionTypes =
+check : Form -> TypeEnvironment -> List Message
+check form typeEnv =
     Collectors.collectTopLevelExpressions form
-        |> List.concatMap (checkExpression questionTypes)
+        |> List.concatMap (checkExpression typeEnv)
 
 
-checkExpression : QuestionTypes -> Expression -> List Message
-checkExpression questionTypes expression =
-    case getType questionTypes expression of
+checkExpression : TypeEnvironment -> Expression -> List Message
+checkExpression typeEnv expression =
+    case getType typeEnv expression of
         Ok _ ->
             []
 

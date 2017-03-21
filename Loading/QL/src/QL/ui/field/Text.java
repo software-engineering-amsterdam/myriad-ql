@@ -1,11 +1,9 @@
 package QL.ui.field;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.TextField;
 import QL.ui.Notifier;
 import QL.value.StringValue;
 import QL.value.Value;
+import javafx.scene.control.TextField;
 
 public class Text implements Field {
 	
@@ -18,7 +16,8 @@ public class Text implements Field {
 		field.setText(value.getValue());
 		field.positionCaret(value.getValue().length());
 		
-		field.textProperty().addListener((observable, oldValue, newValue) -> notifier.updateQuestionnaire(name, new StringValue(newValue)));
+		field.textProperty().addListener(
+				(observable, oldValue, newValue) -> notifier.updateQuestionnaire(name, new StringValue(newValue)));
 	}
 	
 	@Override

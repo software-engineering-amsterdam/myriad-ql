@@ -8,6 +8,7 @@ import QL.evaluation.Evaluator;
 import QL.ui.field.Field;
 import QL.value.BoolValue;
 import QL.value.Value;
+import javafx.scene.control.Label;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,25 +16,25 @@ import java.util.List;
 
 public class QEvaluator extends Evaluator {
 
-	private final List<Row> activeQuestions;
+	private final List<Row> visibleRows;
     private final Environment answers;
     private final Notifier notifier;
 
 	public QEvaluator(Environment answers, Notifier notifier) {
 		super(answers);
 		this.answers = answers;
-		this.activeQuestions = new ArrayList<>();
+		this.visibleRows = new ArrayList<>();
 		this.notifier = notifier;
 	}
 	
-	public List<Row> getActiveQuestions() {
-		return activeQuestions;
+	List<Row> getVisibleRows() {
+		return visibleRows;
 	}
 	
     @Override
     public void visit(Question question) {
     	    	
-        activeQuestions.add(createRow(question));
+        visibleRows.add(createRow(question));
     }
     
     @Override
@@ -41,24 +42,16 @@ public class QEvaluator extends Evaluator {
         Value value = question.getComputedQuestion().accept(this);
         answers.addAnswer(question.getVariable(), value);
 
-        activeQuestions.add(createRow(question));
+        visibleRows.add(createRow(question));
     }
-    
+
     private Row createRow(Question question) {
 
-        Value answer;
-        if (answers.isAnswered(question.getVariable())) {
-            answer = answers.getAnswer(question.getVariable());
-        }
-        else {
-            answer = question.getType().accept(this);
-        }
-
+        Value answer = getAnswer(question);
 
         Field field = answer.getField(question.getVariable(), notifier, answer);
 
-
-        return new Row(question.getVariable(), question.getLabel(), field);
+        return new Row(question.getVariable(), new Label(question.getLabel()), field);
     }
 
     private Value getAnswer(Question question) {

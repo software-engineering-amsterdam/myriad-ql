@@ -1,7 +1,8 @@
 package QL.semantic;
-import QL.message.Message;
+
 import QL.ReferenceTable;
 import QL.ast.Form;
+import QL.message.Message;
 
 import java.util.List;
 
@@ -12,7 +13,6 @@ public class Analyzer {
 	public Analyzer() {
 		this.environment = new Environment();
 	}
-
 
     public ReferenceTable analyze(Form form) {
         VerifyQuestions verifyQuestions = new VerifyQuestions(environment);
@@ -26,7 +26,6 @@ public class Analyzer {
 
         return environment.getReferenceTable();
     }
-
 
     public List<Message> getMessages() {
     	return environment.getMessages();

@@ -1,3 +1,4 @@
+# coding=utf-8
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QScrollArea

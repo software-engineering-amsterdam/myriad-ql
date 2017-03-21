@@ -1,45 +1,43 @@
 # coding=utf-8
 from collections import defaultdict
 
+from pql.messages.error import Error
 from pql.traversal.FormVisitor import FormVisitor
 
 
 class IdentifierChecker(FormVisitor):
-    def visit(self, pql_ast):
-        def recursively_build_dictionary(items, dct):
-            for dictionary in items:
-                if isinstance(dictionary, list):
-                    recursively_build_dictionary(dictionary, dct)
-                else:
-                    for d_key, d_value in dictionary.items():
-                        dct[d_key].append(d_value)
+    def __init__(self, ast):
+        self.__symbol_table = defaultdict(list)
+        self.ast = ast
 
+    def visit(self):
         def build_error_list(identifiers):
             errors = list()
             for key, value in identifiers.items():
                 if len(value) > 1:
-                    errors.append("Key: {} contained multiple entries, the following: {}".format(key, value))
+                    errors.append(Error("Key: {} contained multiple entries, at the following locations: {}"
+                                  .format(key, [v.location for v in value]), value[0].location))
             return errors
 
-        def normalize(identifiers):
-            normalized_dictionary = dict()
-            for key, value_list in identifiers.items():
-                for value in value_list:
-                    normalized_dictionary[key] = value
-            return normalized_dictionary
+        self.__symbol_table.clear()
+        self.ast.apply(self)
+        return build_error_list(self.__symbol_table)
 
-        identifier_dictionary = defaultdict(list)
-        recursively_build_dictionary([form.apply(self) for form in pql_ast], identifier_dictionary)
-        return normalize(identifier_dictionary), build_error_list(identifier_dictionary)
+    def form(self, node, args=None):
+        for statement in node.statements:
+            statement.apply(self)
 
-    def form(self, node):
-        return [statement.apply(self) for statement in node.statements]
+    def conditional_if_else(self, node, args=None):
+        self.conditional_if(node)
+        for statement in node.else_statement_list:
+            statement.apply(self)
 
-    def conditional_if_else(self, node):
-        return self.conditional_if(node) + [statement.apply(self) for statement in node.else_statement_list]
+    def conditional_if(self, node, args=None):
+        for statement in node.statements:
+            statement.apply(self)
 
-    def conditional_if(self, node):
-        return [statement.apply(self) for statement in node.statements]
+    def field(self, node, args=None):
+        self.__symbol_table[node.name.name].append(node.name)
 
-    def field(self, node):
-        return {node.name.name: node.data_type}
+    def assignment(self, node, args=None):
+        self.field(node)

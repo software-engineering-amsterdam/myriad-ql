@@ -1,33 +1,33 @@
-module QL.FormVisitor exposing (Config, Order, defaultConfig, actionLambda, inspect, continue, on)
+module QL.FormVisitor exposing (Config, Action, defaultConfig, actionLambda, inspect, continue, on)
 
 import QL.AST exposing (..)
 
 
 type alias Config context =
-    { onIfThen : Order context ( Expression, Block )
-    , onIfThenElse : Order context ( Expression, Block, Block )
-    , onField : Order context ( Label, Id, ValueType )
-    , onComputedField : Order context ( Label, Id, ValueType, Expression )
-    , onExpression : Order context Expression
+    { onIfThen : Action context ( Expression, Block )
+    , onIfThenElse : Action context ( Expression, Block, Block )
+    , onQuestion : Action context ( Label, Id, ValueType )
+    , onComputedQuestion : Action context ( Label, Id, ValueType, Expression )
+    , onExpression : Action context Expression
     }
 
 
-type Order context node
+type Action context node
     = Continue
     | On (node -> context -> context)
 
 
-continue : Order context node
+continue : Action context node
 continue =
     Continue
 
 
-on : (node -> context -> context) -> Order context node
+on : (node -> context -> context) -> Action context node
 on =
     On
 
 
-actionLambda : Order context node -> (context -> context) -> node -> context -> context
+actionLambda : Action context node -> (context -> context) -> node -> context -> context
 actionLambda action =
     case action of
         Continue ->
@@ -41,8 +41,8 @@ defaultConfig : Config x
 defaultConfig =
     { onIfThen = Continue
     , onIfThenElse = Continue
-    , onField = Continue
-    , onComputedField = Continue
+    , onQuestion = Continue
+    , onComputedQuestion = Continue
     , onExpression = Continue
     }
 
@@ -68,14 +68,14 @@ inspectExpression config expression context =
 inspectFormItem : Config a -> FormItem -> a -> a
 inspectFormItem config formItem context =
     case formItem of
-        Field label id valueType ->
-            actionLambda config.onField
+        Question label id valueType ->
+            actionLambda config.onQuestion
                 identity
                 ( label, id, valueType )
                 context
 
-        ComputedField label id valueType computation ->
-            actionLambda config.onComputedField
+        ComputedQuestion label id valueType computation ->
+            actionLambda config.onComputedQuestion
                 (inspectExpression config computation)
                 ( label, id, valueType, computation )
                 context

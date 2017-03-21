@@ -24,8 +24,8 @@ type alias Block =
 
 
 type FormItem
-    = Field Label Id ValueType
-    | ComputedField Label Id ValueType Expression
+    = Question Label Id ValueType
+    | ComputedQuestion Label Id ValueType Expression
     | IfThen Expression Block
     | IfThenElse Expression Block Block
 

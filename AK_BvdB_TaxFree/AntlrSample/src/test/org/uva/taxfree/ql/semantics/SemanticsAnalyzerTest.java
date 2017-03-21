@@ -3,8 +3,6 @@ package test.org.uva.taxfree.ql.semantics;
 import org.testng.annotations.Test;
 import test.org.uva.taxfree.ql.SemanticsTester;
 
-import java.io.File;
-
 public class SemanticsAnalyzerTest extends SemanticsTester {
     @Test
     public void testHasDuplicateQuestionLabels() throws Exception {
@@ -33,17 +31,17 @@ public class SemanticsAnalyzerTest extends SemanticsTester {
 
     @Test
     public void testUndefinedDeclarationSingle() throws Exception {
-        assertSemantics("undefinedDeclarationSingle.txt", 2, "Undefined declaration should throw an error");
+        assertSemantics("undefinedDeclarationSingle.txt", 1, "Undefined declaration should throw an error");
     }
 
     @Test
     public void testUndefinedDeclarationMultiple() throws Exception {
-        assertSemantics("undefinedDeclarationMultiple.txt", 4, "Multiple conditions with same variable trigger multiple errors");
+        assertSemantics("undefinedDeclarationMultiple.txt", 2, "Multiple conditions with same variable trigger multiple errors");
     }
 
     @Test
     public void testUndefinedDeclarations() throws Exception {
-        assertSemantics("undefinedDeclarations.txt", 22, "Undefined declarations");
+        assertSemantics("undefinedDeclarations.txt", 11, "Undefined declarations");
     }
 
     @Test
@@ -62,19 +60,29 @@ public class SemanticsAnalyzerTest extends SemanticsTester {
     }
 
     @Test
+    public void testCyclicIndirectDependency() throws Exception {
+        assertSemantics("cyclicIndirectDependency.txt", 1, "If directly depends on internals");
+    }
+
+    @Test
+    public void testCyclicInnerDependency() throws Exception {
+        assertSemantics("cyclicInnerDependency.txt", 1, "If indirectly depends on internals");
+    }
+
+    @Test
     void testConstantCalculation() throws Exception {
         assertSemantics("constantCalculation.txt", 1, "A constant calculation should display a warning");
     }
 
     @Test
-    void testConstandCalculations() throws Exception {
-        assertSemantics("constantCalculations.txt", 2, "Mutltiple constant calculation should display multiple warning");
+    void testConstantCalculations() throws Exception {
+        assertSemantics("constantCalculations.txt", 3, "Mutltiple constant calculations should display multiple warning");
     }
-
 
     @Override
-    protected File testFile(String fileName) {
-        return new File("src\\test\\org\\uva\\taxfree\\ql\\testFiles\\semanticErrors\\" + fileName);
+    protected String fileDirectory() {
+        return "semanticErrors";
     }
+
 
 }

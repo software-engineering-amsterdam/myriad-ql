@@ -1,9 +1,8 @@
 package qls.ast;
 
-import java.util.List;
-
 import QL.ast.Node;
-import qls.ast.Page;
+
+import java.util.List;
 
 public class Stylesheet extends Node {
 	

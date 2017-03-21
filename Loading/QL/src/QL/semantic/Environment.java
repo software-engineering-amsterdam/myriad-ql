@@ -6,7 +6,7 @@ import QL.message.Message;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Environment {
+class Environment {
 
 	private final ReferenceTable variables;
 	private final List<Message> messages;

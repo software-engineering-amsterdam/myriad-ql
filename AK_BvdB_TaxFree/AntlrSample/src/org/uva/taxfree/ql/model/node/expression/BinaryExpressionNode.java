@@ -35,6 +35,7 @@ public class BinaryExpressionNode extends ExpressionNode {
 
     @Override
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
+        super.checkSemantics(symbolTable, semanticsMessages);
         mLeft.checkSemantics(symbolTable, semanticsMessages);
         mRight.checkSemantics(symbolTable, semanticsMessages);
         if (!mLeft.isSameType(mRight)) {
@@ -53,9 +54,14 @@ public class BinaryExpressionNode extends ExpressionNode {
     }
 
     @Override
-    public void getDependencies(Set<String> dependencies) {
-        mLeft.getDependencies(dependencies);
-        mRight.getDependencies(dependencies);
+    public boolean isLiteral() {
+        return false;
+    }
+
+    @Override
+    public void collectUsedVariables(Set<String> dependencies) {
+        mLeft.collectUsedVariables(dependencies);
+        mRight.collectUsedVariables(dependencies);
     }
 
     @Override

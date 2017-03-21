@@ -9,6 +9,7 @@ import org.uva.taxfree.ql.model.types.Type;
 import org.uva.taxfree.ql.model.values.Value;
 
 import java.util.List;
+import java.util.Set;
 
 public class DeclarationNode extends Node {
     private final String mId;
@@ -57,5 +58,10 @@ public class DeclarationNode extends Node {
 
     public Value generateValue() {
         return mType.defaultValue();
+    }
+
+    @Override
+    public void collectUsedVariables(Set<String> dependencies) {
+        dependencies.add(mId);
     }
 }

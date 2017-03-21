@@ -32,8 +32,8 @@ public class ParenthesizedExpressionNode extends ExpressionNode {
     }
 
     @Override
-    public void getDependencies(Set<String> dependencies) {
-        mExpression.getDependencies(dependencies);
+    public void collectUsedVariables(Set<String> dependencies) {
+        mExpression.collectUsedVariables(dependencies);
     }
 
     @Override
@@ -44,5 +44,10 @@ public class ParenthesizedExpressionNode extends ExpressionNode {
     @Override
     public boolean isConstant() {
         return mExpression.isConstant();
+    }
+
+    @Override
+    public boolean isLiteral() {
+        return mExpression.isLiteral();
     }
 }
