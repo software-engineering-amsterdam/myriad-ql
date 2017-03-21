@@ -3,11 +3,11 @@ package org.ql.gui;
 import javafx.stage.Stage;
 import org.ql.gui.widgets.Widget;
 
-class Window {
+public class Window {
 
     private final QuestionPane mainPane;
 
-    Window(Stage stage, String title) {
+    public Window(Stage stage, String title) {
         stage.setTitle(title);
         stage.setResizable(false);
 
@@ -15,11 +15,11 @@ class Window {
         stage.setScene(mainPane.createScene());
     }
 
-    void reset() {
+    public void reset() {
         mainPane.reset();
     }
 
-    void attachWidget(Widget widget) {
+    public void attachWidget(Widget widget) {
         mainPane.add(widget.createGridPane());
     }
 }

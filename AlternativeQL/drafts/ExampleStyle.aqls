@@ -1,10 +1,28 @@
 stylesheet taxOfficeExample
 
 page Housing {
-    section "Buying"
-      question firstName
-        widget slider
-    section "Loaning"
-      question firstName
-        widget slider
+    section "You sold a house" {
+        question firstName
+        question lastName
+        default money {
+          font: "Arial"
+          fontsize: 14
+          color: #FF0000
+          widget spinbox
+        }
+    }
+}
+
+
+page AnotherPage {
+    section "AnotherSection" {
+        question areYouSure
+        question fullName
+        default money {
+          font: "Arial"
+          fontsize: 14
+          color: #FF0000
+          widget spinbox
+        }
+    }
 }

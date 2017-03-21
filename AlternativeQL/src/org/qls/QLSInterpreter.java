@@ -7,6 +7,7 @@ import org.ql.io.QLFile;
 import org.ql.typechecker.issues.Issue;
 import org.ql.typechecker.issues.IssuesStorage;
 import org.qls.ast.StyleSheet;
+import org.qls.gui.QLSApplication;
 import org.qls.io.QLSFile;
 import org.qls.ast.QLSASTBuilder;
 import org.qls.typechecker.QLSTypeChecker;
@@ -24,7 +25,7 @@ public class QLSInterpreter {
 
         reportIssues(qlsTypeChecker.checkStyleSheet(form, styleSheet));
 
-        QLApplication.run(form);
+        QLSApplication.run(form, styleSheet);
     }
 
     private void reportIssues(IssuesStorage issues) {
