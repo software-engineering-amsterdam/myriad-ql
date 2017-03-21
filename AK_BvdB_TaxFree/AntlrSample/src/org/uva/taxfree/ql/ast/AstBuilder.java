@@ -26,8 +26,8 @@ public class AstBuilder {
             ANTLRErrorListener errorListener = new ANTLRErrorListener() {
                 @Override
                 public void syntaxError(Recognizer<?, ?> recognizer, Object o, int line, int column, String message, RecognitionException e) {
-                    semanticsMessages.addError("(" + line + ":" + column + "):" + e);
-                    throw new UnsupportedOperationException(e);
+                    semanticsMessages.addError("(" + line + ":" + column + "):" + message);
+                    throw new UnsupportedOperationException(message);
                 }
 
                 @Override
@@ -56,6 +56,7 @@ public class AstBuilder {
             walker.walk(listener, formContext);
             return listener.getAst();
         } catch (UnsupportedOperationException e) {
+            // The null is returned since the message is already logged and will be gracefully handled by the main.
             return null;
         }
     }
