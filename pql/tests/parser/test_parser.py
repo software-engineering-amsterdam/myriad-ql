@@ -1,7 +1,7 @@
 # coding=utf-8
 from unittest import TestCase
 
-from pyparsing import ParseFatalException
+from pyparsing import ParseException
 
 from pql.parser.parser import parse
 
@@ -9,7 +9,7 @@ from pql.parser.parser import parse
 class TestParser(TestCase):
     def test_parse_simple_empty_form(self):
         input_string = "form taxOfficeExample {}"
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('Empty form block should not be possible')
 
@@ -17,7 +17,7 @@ class TestParser(TestCase):
         input_string = """form  {
                             "Did you sell a house in 2010?" hasSoldHouse: boolean
                        }"""
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('Form should always have a name')
 
@@ -25,7 +25,7 @@ class TestParser(TestCase):
         input_string = """form $$$$$ {
                             "Did you sell a house in 2010?" hasSoldHouse: boolean
                        }"""
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('Form is not allowed to contain $')
 
@@ -33,7 +33,7 @@ class TestParser(TestCase):
         input_string = """form example
                             "Did you sell a house in 2010?" hasSoldHouse: boolean
                        }"""
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('Form needs a left curly after the name')
 
@@ -41,7 +41,7 @@ class TestParser(TestCase):
         input_string = """form example {
                             "Did you sell a house in 2010?" hasSoldHouse: boolean
                        """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('Form needs a right curly after its statements')
 
@@ -51,7 +51,7 @@ class TestParser(TestCase):
             "Did you sell a house in 2010?" hasSoldHouse boolean
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('Field should have a colon denoting the type after its name')
 
@@ -61,7 +61,7 @@ class TestParser(TestCase):
             "Did you sell a house in 2010?" hasSoldHouse: magic
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('This type should not be recognized as valid')
 
@@ -71,7 +71,7 @@ class TestParser(TestCase):
             Did you sell a house in 2010? hasSoldHouse: string
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('Question title needs to have quotes surrounding it')
 
@@ -81,7 +81,7 @@ class TestParser(TestCase):
             if (hasSoldHouse) { }
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('Empty if block should not be possible')
 
@@ -93,7 +93,7 @@ class TestParser(TestCase):
             }
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('If statement needs to have an expression inside the parenthesis')
 
@@ -105,7 +105,7 @@ class TestParser(TestCase):
             }
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('A singular & should not be recognized')
 
@@ -117,7 +117,7 @@ class TestParser(TestCase):
             }
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('a | a is an invalid expression')
 
@@ -129,7 +129,7 @@ class TestParser(TestCase):
             }
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('If statement needs to have an expression inside the parenthesis')
 
@@ -141,7 +141,7 @@ class TestParser(TestCase):
             }
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('If statement needs to have a parenthesis next to the expression')
 
@@ -153,7 +153,7 @@ class TestParser(TestCase):
             }
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('If statement needs to have a parenthesis next to the expression')
 
@@ -165,7 +165,7 @@ class TestParser(TestCase):
 
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('If statement needs to have a curly bracket surrounding the statements')
 
@@ -179,7 +179,7 @@ class TestParser(TestCase):
             }
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('An else statements needs to have an if preceding it')
 
@@ -189,7 +189,7 @@ class TestParser(TestCase):
             "Value residue:" valueResidue: money := (sellingPrice - privateDebt)
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('Assignment needs to only have an assignment literal')
 
@@ -199,7 +199,7 @@ class TestParser(TestCase):
             "Value residue:" valueResidue: money  (sellingPrice - privateDebt)
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('Assignment needs an assignment literal')
 
@@ -209,7 +209,7 @@ class TestParser(TestCase):
             "Value residue:" valueResidue: money = sellingPrice -
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('Assignment needs two operands')
 
@@ -219,7 +219,7 @@ class TestParser(TestCase):
             "Value residue:" valueResidue: money =
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('Assignment needs an expression')
 
@@ -229,7 +229,7 @@ class TestParser(TestCase):
             "Value residue:" valueResidue:  = selling - buying
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('Assignment needs a type')
 
@@ -239,7 +239,7 @@ class TestParser(TestCase):
             "Value residue:" : money  = selling - buying
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('Assignment needs an identifier')
 
@@ -249,7 +249,7 @@ class TestParser(TestCase):
              hasSold : money  = selling - buying
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('Assignment needs a title')
 
@@ -275,7 +275,7 @@ class TestParser(TestCase):
             "Value residue:" valueResidue: money = (sellingPrice =! privateDebt)
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('Switched operator order is not allowed')
 
@@ -301,7 +301,7 @@ class TestParser(TestCase):
             "Value residue:" valueResidue: money = 100.00
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('form is reserved')
 
@@ -311,7 +311,7 @@ class TestParser(TestCase):
             "Value residue:" valueResidue: money = 100.00
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('if is reserved')
 
@@ -321,7 +321,7 @@ class TestParser(TestCase):
             "Value residue:" valueResidue: money = 100.00
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('form is reserved')
 
@@ -331,7 +331,7 @@ class TestParser(TestCase):
             "Value residue:" valueResidue: money = 100.00
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('else is reserved')
 
@@ -341,7 +341,7 @@ class TestParser(TestCase):
             "Value residue:" valueResidue: money = 100.00
         }
         """
-        with self.assertRaises(ParseFatalException):
+        with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('"" not allowed')
 
