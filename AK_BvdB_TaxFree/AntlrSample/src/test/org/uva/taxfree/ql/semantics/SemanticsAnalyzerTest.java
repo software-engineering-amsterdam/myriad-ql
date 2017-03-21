@@ -59,8 +59,7 @@ public class SemanticsAnalyzerTest extends SemanticsTester {
         assertSemantics("constantConditions.txt", 2, "Multiple constant conditions should display multiple warning");
     }
 
-
-    /// TODO: Would be a nice to have?
+    // TODO: Would be a nice to have?
     @Test
     public void testCyclicIndirectDependency() throws Exception {
         assertSemantics("cyclicIndirectDependency.txt", 0, "If directly depends on internals");
@@ -90,6 +89,4 @@ public class SemanticsAnalyzerTest extends SemanticsTester {
     protected String fileDirectory() {
         return "semanticErrors";
     }
-
-
 }

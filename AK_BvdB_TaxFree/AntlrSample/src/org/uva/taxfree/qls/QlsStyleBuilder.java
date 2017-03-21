@@ -16,9 +16,8 @@ public class QlsStyleBuilder {
     }
 
     public QlsStyle generateStyle() {
-        // TODO parse etc.
+        // TODO parse and generate the styles.
         QlsStyle qlsStyle = new QlsStyle();
-//        qlsStyle.addWidgetDeclaration("likesToPayTaxes", "checkbox");
         List<StyleOption> booleanStyleOptions = new ArrayList<>();
         booleanStyleOptions.add(new FontStyleOption("Arial"));
         booleanStyleOptions.add(new FontSizeStyleOption(20));

@@ -85,7 +85,6 @@ public class QuestionFormTest {
     }
 
     @Test
-    // TODO
     public void testSimpleIfElseStatement() throws Exception {
         List<Node> ifQuestions = new ArrayList<>();
         ifQuestions.add(createNestedIfStatement());

@@ -9,5 +9,4 @@ public abstract class StyleOption {
     }
 
     public abstract void applyStyle(JComponent component);
-
 }

@@ -59,5 +59,4 @@ public class SymbolTableTest extends SemanticsTester {
         mSymbolTable.updateValue(variableId, new IntValue(30));
         Assert.assertTrue(mSymbolTable.resolveValue(variableId).equalTo(30));
     }
-
 }

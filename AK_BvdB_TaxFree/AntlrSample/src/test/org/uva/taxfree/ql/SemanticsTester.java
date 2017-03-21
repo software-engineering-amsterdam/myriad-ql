@@ -36,6 +36,4 @@ public abstract class SemanticsTester {
     protected File testFile(String fileName) {
         return new File(basePath() + fileDirectory() + "\\" + fileName);
     }
-
-
 }

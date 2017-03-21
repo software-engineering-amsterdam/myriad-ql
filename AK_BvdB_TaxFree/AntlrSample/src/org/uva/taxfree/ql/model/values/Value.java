@@ -120,6 +120,7 @@ public abstract class Value {
         return new UnsupportedOperationException("Operation '" + operationName + "' is not supported on this value");
     }
 
+    // Equals operations
     public abstract boolean equalsToValue(Value value);
 
     public boolean equalTo(boolean value) {
