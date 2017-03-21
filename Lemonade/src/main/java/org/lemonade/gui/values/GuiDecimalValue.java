@@ -40,7 +40,10 @@ public class GuiDecimalValue extends GuiNumericalValue<Double> implements Compar
 
     @Override
     public GuiValue<?> div(GuiValue<?> that) {
-        return that.divide(this);
+        if (!(this.getValue() == 0.0)) {
+            return that.divide(this);
+        }
+        return new GuiUndefinedValue();
     }
 
     @Override
@@ -109,18 +112,27 @@ public class GuiDecimalValue extends GuiNumericalValue<Double> implements Compar
     }
 
     @Override
-    public GuiDecimalValue divide(GuiDecimalValue that) {
-        return new GuiDecimalValue(that.getValue() / this.getValue());
+    public GuiValue<?> divide(GuiDecimalValue that){
+        if (!(this.getValue() == 0.0)) {
+            return new GuiDecimalValue(that.getValue() / this.getValue());
+        }
+        return new GuiUndefinedValue();
     }
 
     @Override
-    public GuiDecimalValue divide(GuiIntegerValue that) {
-        return new GuiDecimalValue((Double) (that.getValue() / this.getValue()));
+    public GuiValue<?> divide(GuiIntegerValue that){
+        if (!(this.getValue() == 0.0)) {
+            return new GuiDecimalValue((Double)(that.getValue() / this.getValue()));
+        }
+        return new GuiUndefinedValue();
     }
 
     @Override
-    public GuiMoneyValue divide(GuiMoneyValue that) {
-        return new GuiMoneyValue(that.getValue() / this.getValue());
+    public GuiValue<?> divide(GuiMoneyValue that) {
+        if (!(this.getValue() == 0.0)) {
+            return new GuiMoneyValue(that.getValue() / this.getValue());
+        }
+        return new GuiUndefinedValue();
     }
 
     @Override

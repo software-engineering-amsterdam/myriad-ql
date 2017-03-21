@@ -42,7 +42,10 @@ public class GuiIntegerValue extends GuiNumericalValue<Integer> implements Compa
 
     @Override
     public GuiValue<?> div(GuiValue<?> that) {
-        return that.divide(this);
+        if (!(this.getValue() == 0)) {
+            return that.divide(this);
+        }
+        return new GuiUndefinedValue();
     }
 
     @Override
@@ -111,18 +114,27 @@ public class GuiIntegerValue extends GuiNumericalValue<Integer> implements Compa
     }
 
     @Override
-    public GuiDecimalValue divide(GuiDecimalValue that){
-        return new GuiDecimalValue(that.getValue() / this.getValue());
+    public GuiValue<?> divide(GuiDecimalValue that){
+        if (!(this.getValue() == 0.0)) {
+            return new GuiDecimalValue((Double)(that.getValue() / this.getValue()));
+        }
+        return new GuiUndefinedValue();
     }
 
     @Override
-    public GuiIntegerValue divide(GuiIntegerValue that){
-        return new GuiIntegerValue((that.getValue() / this.getValue()));
+    public GuiValue<?> divide(GuiIntegerValue that){
+        if (!(this.getValue() == 0.0)) {
+            return new GuiIntegerValue((that.getValue() / this.getValue()));
+        }
+        return new GuiUndefinedValue();
     }
 
     @Override
-    public GuiMoneyValue divide(GuiMoneyValue that) {
-        return new GuiMoneyValue((Double) (that.getValue() / this.getValue()));
+    public GuiValue<?> divide(GuiMoneyValue that) {
+        if (!(this.getValue() == 0.0)) {
+            return new GuiMoneyValue((Double) (that.getValue() / this.getValue()));
+        }
+        return new GuiUndefinedValue();
     }
 
     @Override

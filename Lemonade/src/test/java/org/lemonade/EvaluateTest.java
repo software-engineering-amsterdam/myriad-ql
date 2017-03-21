@@ -21,10 +21,12 @@ public class EvaluateTest {
     private GuiIntegerValue zero;
     private GuiIntegerValue two;
     private GuiIntegerValue one;
+    private GuiDecimalValue zeroPointZero;
     private GuiDecimalValue zeroPointFive;
     private GuiDecimalValue onePointZero;
     private GuiDecimalValue onePointFive;
     private GuiDecimalValue twoPointZero;
+    private GuiMoneyValue zeroZero;
     private GuiMoneyValue oneFifty;
     private GuiMoneyValue twoFifty;
     private GuiNumericalValue<?> onePointTwo;
@@ -46,11 +48,13 @@ public class EvaluateTest {
         two = new GuiIntegerValue(2);
         one = new GuiIntegerValue(1);
 
+        zeroPointZero = new GuiDecimalValue(0.0);
         zeroPointFive = new GuiDecimalValue(0.5);
         onePointFive = new GuiDecimalValue(1.5);
         onePointZero = new GuiDecimalValue(1.0);
         twoPointZero = new GuiDecimalValue(2.0);
 
+        zeroZero = new GuiMoneyValue(0.0);
         oneFifty = new GuiMoneyValue(1.50);
         twoFifty = new GuiMoneyValue(2.50);
 
@@ -152,6 +156,26 @@ public class EvaluateTest {
         assertThat(one.div(two)).isEqualTo(zero);
         assertThat(one.div(twoPointZero).getValue()).isEqualTo(zeroPointFive.getValue());
         assertThat(onePointTwo.div(onePointTwo).getValue()).isEqualTo(onePointZero.getValue());
+
+        assertThat(one.div(zero).isDefined()).isFalse();
+        assertThat(onePointTwo.div(zero).isDefined()).isFalse();
+        assertThat(onePointFive.div(zero).isDefined()).isFalse();
+        assertThat(oneFifty.div(zero).isDefined()).isFalse();
+
+        assertThat(one.div(zeroPointZero).isDefined()).isFalse();
+        assertThat(onePointTwo.div(zeroPointZero).isDefined()).isFalse();
+        assertThat(onePointFive.div(zeroPointZero).isDefined()).isFalse();
+        assertThat(oneFifty.div(zeroPointZero).isDefined()).isFalse();
+
+        assertThat(one.div(zeroZero).isDefined()).isFalse();
+        assertThat(onePointTwo.div(zeroZero).isDefined()).isFalse();
+        assertThat(onePointFive.div(zeroZero).isDefined()).isFalse();
+        assertThat(oneFifty.div(zeroZero).isDefined()).isFalse();
+
+        assertThat(zero.div(zero).isDefined()).isFalse();
+        assertThat(zero.div(zero).isDefined()).isFalse();
+        assertThat(zero.div(zero).isDefined()).isFalse();
+        assertThat(zero.div(zero).isDefined()).isFalse();
     }
 
     @Test
