@@ -25,8 +25,6 @@ class DependencyChecker(CheckerVisitor):
             self.error("computed question \"{}\" has dependency on "
                        "itself".format(node.name))
 
-        """ Find all indirect dependencies of this questions by sequentially
-            expanding the found dependencies. """
         for dependency in dependencies:
             dependencies += [indirect_dependency
                              for indirect_dependency in
