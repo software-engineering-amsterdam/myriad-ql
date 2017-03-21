@@ -9,7 +9,9 @@ import com.matthewchapman.ql.ast.expression.literal.IntegerLiteral;
 import com.matthewchapman.ql.ast.expression.literal.StringLiteral;
 import com.matthewchapman.ql.ast.expression.unary.Negation;
 import com.matthewchapman.ql.environment.datastores.ValueTable;
+import com.matthewchapman.ql.environment.values.BooleanValue;
 import com.matthewchapman.ql.environment.values.IntegerValue;
+import com.matthewchapman.ql.environment.values.StringValue;
 import com.matthewchapman.ql.environment.values.Value;
 import com.matthewchapman.ql.validation.visitors.ExpressionVisitor;
 
@@ -18,10 +20,17 @@ import com.matthewchapman.ql.validation.visitors.ExpressionVisitor;
  */
 public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
 
+    private ValueTable valueTable;
+
+    public ExpressionEvaluator() {
+        valueTable = new ValueTable();
+    }
+
     public Value evaluateExpression(String id, Expression expression, ValueTable valueTable) {
-        valueTable.addValue(id, expression.accept(this, id));
+        this.valueTable = valueTable;
         Value value = expression.accept(this, id);
-        return null;
+        this.valueTable.addValue(id, value);
+        return value;
     }
 
     @Override
@@ -34,77 +43,111 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
 
     @Override
     public Value visit(Division division, String context) {
-        return null;
+        Value left = division.getLeft().accept(this, context);
+        Value right = division.getRight().accept(this, context);
+
+        return left.divide(right);
     }
 
     @Override
     public Value visit(Equal equal, String context) {
-        return null;
+        Value left = equal.getLeft().accept(this, context);
+        Value right = equal.getRight().accept(this, context);
+
+        return left.equalTo(right);
     }
 
     @Override
     public Value visit(GreaterThan greaterThan, String context) {
-        return null;
+        Value left = greaterThan.getLeft().accept(this, context);
+        Value right = greaterThan.getRight().accept(this, context);
+
+        return left.greaterThan(right);
     }
 
     @Override
     public Value visit(GreaterThanEqualTo greaterThanEqualTo, String context) {
-        return null;
+        Value left = greaterThanEqualTo.getLeft().accept(this, context);
+        Value right = greaterThanEqualTo.getRight().accept(this, context);
+
+        return left.greaterThanEqualTo(right);
     }
 
     @Override
     public Value visit(LessThan lessThan, String context) {
-        return null;
+        Value left = lessThan.getLeft().accept(this, context);
+        Value right = lessThan.getRight().accept(this, context);
+
+        return left.lessThan(right);
     }
 
     @Override
     public Value visit(LessThanEqualTo lessThanEqualTo, String context) {
-        return null;
+        Value left = lessThanEqualTo.getLeft().accept(this, context);
+        Value right = lessThanEqualTo.getRight().accept(this, context);
+
+        return left.lessThanEqualTo(right);
     }
 
     @Override
     public Value visit(LogicalAnd logicalAnd, String context) {
-        return null;
+        Value left = logicalAnd.getLeft().accept(this, context);
+        Value right = logicalAnd.getRight().accept(this, context);
+
+        return left.logicalAnd(right);
     }
 
     @Override
     public Value visit(LogicalOr logicalOr, String context) {
-        return null;
+        Value left = logicalOr.getLeft().accept(this, context);
+        Value right = logicalOr.getRight().accept(this, context);
+
+        return left.logicalOr(right);
     }
 
     @Override
     public Value visit(Multiplication multiplication, String context) {
-        return null;
+        Value left = multiplication.getLeft().accept(this, context);
+        Value right = multiplication.getRight().accept(this, context);
+
+        return left.multiply(right);
     }
 
     @Override
     public Value visit(NotEqual notEqual, String context) {
-        return null;
+        Value left = notEqual.getLeft().accept(this, context);
+        Value right = notEqual.getRight().accept(this, context);
+
+        return left.notEqualTo(right);
     }
 
     @Override
     public Value visit(Subtraction subtraction, String context) {
-        return null;
+        Value left = subtraction.getLeft().accept(this, context);
+        Value right = subtraction.getRight().accept(this, context);
+
+        return left.subtract(right);
     }
 
     @Override
     public Value visit(Negation negation, String context) {
-        return null;
+        Value value = negation.getExpression().accept(this, context);
+        return value.negate(value);
     }
 
     @Override
     public Value visit(Parameter parameter, String context) {
-        return null;
+        return valueTable.getValueByID(parameter.getID());
     }
 
     @Override
     public Value visit(ParameterGroup parameterGroup, String context) {
-        return null;
+        return parameterGroup.getExpression().accept(this, context);
     }
 
     @Override
     public Value visit(StringLiteral stringLiteral, String context) {
-        return null;
+        return new StringValue(stringLiteral.getValue());
     }
 
     @Override
@@ -114,6 +157,6 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
 
     @Override
     public Value visit(BooleanLiteral booleanLiteral, String context) {
-        return null;
+        return new BooleanValue(booleanLiteral.getValue());
     }
 }
