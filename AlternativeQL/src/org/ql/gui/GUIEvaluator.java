@@ -19,9 +19,10 @@ public class GUIEvaluator {
 
     public GUIEvaluator(ValueTable valueTable) {
         this.valueTable = valueTable;
+        this.modifiedQuestions = new IdentifierSet();
+
         conditionEvaluator = new ConditionEvaluator();
-        modifiedQuestions = new IdentifierSet();
-        questionEvaluator = new QuestionEvaluator(modifiedQuestions);
+        questionEvaluator = new QuestionEvaluator(this.modifiedQuestions);
     }
 
     public void declareQuestionValue(Identifier identifier, Value newValue) {
