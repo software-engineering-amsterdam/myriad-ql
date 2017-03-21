@@ -20,8 +20,8 @@ import org.lemonade.nodes.Form;
 import org.lemonade.visitors.EvaluateVisitor;
 import org.lemonade.visitors.FormVisitor;
 import org.lemonade.visitors.GuiVisitor;
-import org.lemonade.visitors.TypeCheckVisitor;
 import org.lemonade.visitors.JsonVisitor;
+import org.lemonade.visitors.TypeCheckVisitor;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -76,8 +76,9 @@ public class QLApp extends Application implements ButtonCallback {
                 writer.write(jsonVisitor.getJSONString());
                 writer.flush();
                 writer.close();
+                qlGui.updateFileStatus("JSON saved to " + file.getPath(), true);
             } catch (IOException e) {
-                // TODO something here
+                qlGui.updateFileStatus("Failed to save JSON: " + e.getMessage(), false);
             }
         }
     }
