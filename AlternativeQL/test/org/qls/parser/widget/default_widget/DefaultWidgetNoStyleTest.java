@@ -1,4 +1,4 @@
-package org.qls.parser.widget.DefaultWidget;
+package org.qls.parser.widget.default_widget;
 
 import org.junit.Test;
 import org.qls.ast.page.Page;

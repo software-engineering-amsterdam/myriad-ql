@@ -22,7 +22,9 @@ import static org.ql.ast.StringUnquoter.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLSVisitor<Node> {
     public StyleSheet buildAST(InputStream inputStream) throws IOException {
@@ -115,7 +117,7 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
 
     @Override
     public DefaultWidgetWithStyle visitDefaultWithStyle(QLSParser.DefaultWithStyleContext ctx) {
-        List<StyleRule> styleRules = new ArrayList<>();
+        Set<StyleRule> styleRules = new HashSet<>();
 
         for (QLSParser.StyleRuleContext styleRuleContext : ctx.styleRule()) {
             styleRules.add((StyleRule) visit(styleRuleContext));

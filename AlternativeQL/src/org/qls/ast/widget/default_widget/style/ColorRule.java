@@ -6,4 +6,8 @@ public class ColorRule extends StyleRule {
     public ColorRule(String hexCode) {
         this.hexCode = hexCode;
     }
+
+    public String getHexCode() {
+        return hexCode;
+    }
 }

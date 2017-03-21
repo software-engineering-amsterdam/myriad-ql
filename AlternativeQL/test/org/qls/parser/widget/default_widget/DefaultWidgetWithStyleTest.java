@@ -1,4 +1,4 @@
-package org.qls.parser.widget.DefaultWidget;
+package org.qls.parser.widget.default_widget;
 
 import org.junit.Test;
 import org.qls.ast.page.Page;
@@ -6,6 +6,7 @@ import org.qls.ast.widget.SpinboxWidget;
 import org.qls.ast.widget.default_widget.DefaultWidgetWithStyle;
 import org.qls.ast.widget.default_widget.style.FontRule;
 import org.qls.ast.widget.default_widget.style.FontSizeRule;
+import org.qls.ast.widget.default_widget.style.StyleRule;
 import org.qls.ast.widget.default_widget.style.WidthRule;
 import org.qls.parser.Parser;
 
@@ -47,10 +48,12 @@ public class DefaultWidgetWithStyleTest {
                 "}\n" +
                 "}");
 
+        DefaultWidgetWithStyle defaultWidgetWithStyle = (DefaultWidgetWithStyle) page.getSections().get(0).getDefaultWidgets().get(0);
+        StyleRule widthRule = defaultWidgetWithStyle.getStyleRules().iterator().next();
+
         assertEquals(1, page.getSections().get(0).getDefaultWidgets().size());
-        assertTrue(((DefaultWidgetWithStyle) page.getSections().get(0).getDefaultWidgets().get(0)).getStyleRules().get(0) instanceof WidthRule);
-        WidthRule widthRule = (WidthRule) ((DefaultWidgetWithStyle) page.getSections().get(0).getDefaultWidgets().get(0)).getStyleRules().get(0);
-        assertEquals(400, widthRule.getWidth());
+        assertTrue(widthRule instanceof WidthRule);
+        assertEquals(400, ((WidthRule) widthRule).getWidth());
     }
 
     @Test
@@ -67,10 +70,12 @@ public class DefaultWidgetWithStyleTest {
                 "}\n" +
                 "}");
 
+        DefaultWidgetWithStyle defaultWidgetWithStyle = (DefaultWidgetWithStyle) page.getSections().get(0).getDefaultWidgets().get(0);
+        StyleRule fontRule = defaultWidgetWithStyle.getStyleRules().iterator().next();
+
         assertEquals(1, page.getSections().get(0).getDefaultWidgets().size());
-        assertTrue(((DefaultWidgetWithStyle) page.getSections().get(0).getDefaultWidgets().get(0)).getStyleRules().get(0) instanceof FontRule);
-        FontRule widthRule = (FontRule) ((DefaultWidgetWithStyle) page.getSections().get(0).getDefaultWidgets().get(0)).getStyleRules().get(0);
-        assertEquals("Arial", widthRule.getFont());
+        assertTrue(fontRule instanceof FontRule);
+        assertEquals("Arial", ((FontRule)fontRule).getFont());
     }
 
     @Test
@@ -87,10 +92,12 @@ public class DefaultWidgetWithStyleTest {
                 "}\n" +
                 "}");
 
+        DefaultWidgetWithStyle defaultWidgetWithStyle = (DefaultWidgetWithStyle) page.getSections().get(0).getDefaultWidgets().get(0);
+        StyleRule fontSizeRule = defaultWidgetWithStyle.getStyleRules().iterator().next();
+
         assertEquals(1, page.getSections().get(0).getDefaultWidgets().size());
-        assertTrue(((DefaultWidgetWithStyle) page.getSections().get(0).getDefaultWidgets().get(0)).getStyleRules().get(0) instanceof FontSizeRule);
-        FontSizeRule widthRule = (FontSizeRule) ((DefaultWidgetWithStyle) page.getSections().get(0).getDefaultWidgets().get(0)).getStyleRules().get(0);
-        assertEquals(14, widthRule.getFontSize());
+        assertTrue(fontSizeRule instanceof FontSizeRule);
+        assertEquals(14, ((FontSizeRule) fontSizeRule).getFontSize());
     }
 
     @Test
