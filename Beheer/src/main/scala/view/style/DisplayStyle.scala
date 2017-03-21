@@ -6,7 +6,6 @@ import scalafx.scene.paint.Color
 import scalafx.scene.text.Font
 
 class DisplayStyle(questionStyle: Option[QuestionStyle]) {
-  val widget: Option[Widget] = questionStyle.flatMap(_.widget)
 
   val width: Double = extractStyle({ case Width(w) => w.toDouble }).getOrElse(100.0)
 

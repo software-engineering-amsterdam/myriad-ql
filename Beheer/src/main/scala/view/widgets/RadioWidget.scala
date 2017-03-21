@@ -2,10 +2,11 @@ package view.widgets
 
 import values.{ BooleanValue, UndefinedValue, Value }
 
+import scalafx.scene.Node
 import scalafx.scene.control.{ RadioButton, ToggleGroup }
 import scalafx.scene.layout.HBox
 
-class RadioWidget(trueText: String, falseText: String, changeHandler: Option[Value => Unit]) extends QLWidget(changeHandler) {
+class RadioWidget(trueText: String, falseText: String, protected val changeHandler: Option[Value => Unit]) extends QLWidget {
   private val toggle = new ToggleGroup()
   private val trueButton = new RadioButton {
     text = trueText
@@ -18,13 +19,13 @@ class RadioWidget(trueText: String, falseText: String, changeHandler: Option[Val
     userData = BooleanValue(false)
   }
 
-  override val displayNode: HBox = new HBox {
+  private val buttons: HBox = new HBox {
     children = Seq(trueButton, falseButton)
   }
 
   toggle.selectedToggle.onChange {
     toggle.selectedToggle.value.getUserData match {
-      case b: BooleanValue => super.handleUpdate(b)
+      case b: BooleanValue => changeHandler.foreach((f) => f(b))
       case _ => sys.error("Wrong type in radiobutton userdata field.")
     }
   }
@@ -36,4 +37,6 @@ class RadioWidget(trueText: String, falseText: String, changeHandler: Option[Val
       falseButton.selected = false
     case v => sys.error(s"Incompatible value $v for Radio widget.")
   }
+
+  override def displayNode: Node = buttons
 }
