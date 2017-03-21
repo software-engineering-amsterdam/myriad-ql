@@ -72,14 +72,14 @@ module QLS
       describe 'default properties' do
         context 'boolean default' do
           it 'transforms' do
-            expect(transformer.apply(default_properties: { type: 'boolean', widgets: [{ width: '400' }] })).to be_a DefaultProperties
+            expect(transformer.apply(default_properties: { type: 'boolean', properties: [{ width: '400' }] })).to be_a DefaultProperties
           end
         end
       end
 
       describe 'question' do
         it 'transforms' do
-          expect(transformer.apply(question: { id: {variable: 'hasSoldHouse'}, widgets: [{ width: '400' }] })).to be_a Question
+          expect(transformer.apply(question: { id: {variable: 'hasSoldHouse'}, properties: [{ width: '400' }] })).to be_a Question
         end
       end
 
