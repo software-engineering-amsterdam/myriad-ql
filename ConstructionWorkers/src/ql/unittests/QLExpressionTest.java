@@ -11,6 +11,7 @@
 
 package ql.unittests;
 
+import ql.astnodes.Form;
 import ql.astnodes.LineNumber;
 import ql.astnodes.expressions.binaries.equality.*;
 import ql.astnodes.expressions.binaries.logic.AND;
@@ -19,10 +20,7 @@ import ql.astnodes.expressions.binaries.numerical.Addition;
 import ql.astnodes.expressions.binaries.numerical.Division;
 import ql.astnodes.expressions.binaries.numerical.Multiplication;
 import ql.astnodes.expressions.binaries.numerical.Subtraction;
-import ql.astnodes.expressions.literals.Money;
-import ql.astnodes.expressions.literals.MyBoolean;
-import ql.astnodes.expressions.literals.MyInteger;
-import ql.astnodes.expressions.literals.MyString;
+import ql.astnodes.expressions.literals.*;
 import ql.astnodes.expressions.unaries.Negation;
 import ql.astnodes.expressions.unaries.Negative;
 import ql.astnodes.expressions.unaries.Positive;
@@ -33,15 +31,20 @@ import org.junit.Test;
 import ql.gui.evaluation.ExpressionEvaluator;
 import ql.gui.formenvironment.Context;
 import ql.gui.formenvironment.values.Value;
+import ql.semanticchecker.TypeChecker;
+import ql.semanticchecker.messagehandling.MessageData;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-public class QLExpressionTest extends QLTestSetUp {
+public class QLExpressionTest {
 
-    private Context context = new Context();
     private ExpressionEvaluator expressionEvaluator;
+    private TypeChecker typeChecker;
 
     private final MyInteger testInteger = new MyInteger(1, new LineNumber(1));
     private final MyInteger testInteger2 = new MyInteger(2, null);
@@ -57,8 +60,13 @@ public class QLExpressionTest extends QLTestSetUp {
 
     @Before
     public void setUp() throws IOException{
-        inputFileName = "CorrectForm.ql";
-        super.setUp();
+        Form form = new Form(new Identifier("testID", null), new ArrayList<>(), null);
+
+        MessageData messages = new MessageData();
+        Map<String, Type> identifierToTypeMap = new HashMap<>();
+        Context context = new Context();
+
+        typeChecker= new TypeChecker(form, identifierToTypeMap, messages);
         expressionEvaluator = new ExpressionEvaluator(context);
     }
 
