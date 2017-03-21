@@ -6,13 +6,12 @@ import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.Node;
 import org.uva.taxfree.ql.model.types.Type;
+import org.uva.taxfree.ql.model.values.Value;
 
 import java.util.List;
-import java.util.Set;
 
 public abstract class ExpressionNode extends Node {
 
-    // Private because this class is abstract and may not be initialized
     protected ExpressionNode(SourceInfo sourceInfo) {
         super(sourceInfo);
     }
@@ -25,8 +24,6 @@ public abstract class ExpressionNode extends Node {
 
     public abstract Type getType();
 
-    public abstract void getDependencies(Set<String> dependencies);
-
     @Override
     public void fillQuestionForm(QuestionForm form) {
         // Intentionally left blank
@@ -37,20 +34,10 @@ public abstract class ExpressionNode extends Node {
         // Intentionally left blank
     }
 
-    public abstract String evaluate();
-
-    public abstract boolean asBoolean();
-
-    public abstract int asInteger();
-
-    public abstract String asString();
+    public abstract Value evaluate();
 
     @Override
-    public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
-        if (isConstant()) {
-            semanticsMessages.addWarning("Constant expression found, always evaluates to: " + this.evaluate());
-        }
-    }
+    public abstract void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages);
 
     public abstract boolean isConstant();
 

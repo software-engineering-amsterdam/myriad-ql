@@ -222,6 +222,11 @@ public class TypeChecker implements StatementVisitor<Type, String>, ExpressionVi
     }
 
     @Override
+    public Type visit(ErrorType errorType, String context) {
+        return errorType;
+    }
+
+    @Override
     public Type visit(IntegerType integerType, String context) {
         return integerType;
     }

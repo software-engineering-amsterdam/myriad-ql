@@ -5,6 +5,7 @@ import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.operators.Operator;
 import org.uva.taxfree.ql.model.types.Type;
+import org.uva.taxfree.ql.model.values.Value;
 
 import java.util.List;
 import java.util.Set;
@@ -22,23 +23,8 @@ public class BinaryExpressionNode extends ExpressionNode {
     }
 
     @Override
-    public String asString() {
-        return evaluate();
-    }
-
-    @Override
-    public String evaluate() {
+    public Value evaluate() {
         return mOperator.evaluate(mLeft, mRight);
-    }
-
-    @Override
-    public boolean asBoolean() {
-        return Boolean.valueOf(evaluate());
-    }
-
-    @Override
-    public int asInteger() {
-        return Integer.valueOf(evaluate());
     }
 
     @Override
@@ -49,14 +35,16 @@ public class BinaryExpressionNode extends ExpressionNode {
 
     @Override
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
-        super.checkSemantics(symbolTable, semanticsMessages);
         mLeft.checkSemantics(symbolTable, semanticsMessages);
         mRight.checkSemantics(symbolTable, semanticsMessages);
         if (!mLeft.isSameType(mRight)) {
-            semanticsMessages.addError("Incompatible types in expression: " + mLeft.getType() + " & " + mRight.getType());
-        }
-        if (!mOperator.supports(mLeft.getType(), mRight.getType())) {
-            semanticsMessages.addError("Unsupported operator called:" + mLeft.getType() + " " + mOperator + " " + mRight.getType());
+            semanticsMessages.addError(sourceString() + "Incompatible types in expression: " + mLeft.getType() + " & " + mRight.getType());
+        } else {
+            if (!mOperator.supports(mLeft.getType(), mRight.getType())) {
+                semanticsMessages.addError(sourceString() + "Unsupported operator called:" + mLeft.getType() + " " + mOperator + " " + mRight.getType());
+            } else if (isConstant()) {
+                semanticsMessages.addWarning(sourceString() + "Constant expression found, always evaluates to: " + evaluate());
+            }
         }
     }
 
@@ -71,14 +59,14 @@ public class BinaryExpressionNode extends ExpressionNode {
     }
 
     @Override
-    public void getDependencies(Set<String> dependencies) {
-        mLeft.getDependencies(dependencies);
-        mRight.getDependencies(dependencies);
+    public void collectUsedVariables(Set<String> dependencies) {
+        mLeft.collectUsedVariables(dependencies);
+        mRight.collectUsedVariables(dependencies);
     }
 
     @Override
     public void generateVisibleIds(List<String> visibleIds) {
-        // intentionally left blank
+        // Intentionally left blank
     }
 
     @Override

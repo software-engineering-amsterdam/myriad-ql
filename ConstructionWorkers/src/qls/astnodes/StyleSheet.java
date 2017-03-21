@@ -25,23 +25,23 @@ public class StyleSheet extends Node {
     private final List<Section> sections;
     private final List<DefaultStyle> defaultStyle;
 
-    public StyleSheet(List<Section> sections, List<DefaultStyle> defaults, String name, LineNumber lineNumber) {
+    public StyleSheet(String styleSheetName, List<Section> sections, List<DefaultStyle> defaults, LineNumber lineNumber) {
         super(lineNumber);
+        this.styleSheetName = styleSheetName;
         this.sections = sections;
-        this.defaultStyle = defaults;
-        this.styleSheetName = name;
+        defaultStyle = defaults;
     }
 
     public String getName() {
-        return this.styleSheetName;
+        return styleSheetName;
     }
 
     public List<Section> getSections() {
-        return this.sections;
+        return sections;
     }
 
     public List<DefaultStyle> getDefaultStyle() {
-        return this.defaultStyle;
+        return defaultStyle;
     }
 
     public void accept(StyleSheetVisitor visitor) {

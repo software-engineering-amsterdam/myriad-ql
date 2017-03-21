@@ -27,5 +27,13 @@ public abstract class SemanticsTester {
         return builder.generateTree();
     }
 
-    protected abstract File testFile(String fileName);
+    protected abstract String fileDirectory();
+
+    protected String basePath() {
+        return "src\\test\\org\\uva\\taxfree\\ql\\testFiles\\";
+    }
+
+    protected File testFile(String fileName) {
+        return new File(basePath() + fileDirectory() + "\\" + fileName);
+    }
 }

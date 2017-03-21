@@ -1,34 +1,31 @@
 package qls;
 
-import java.util.List;
-import java.util.Map;
-
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-
 import QL.QLLexer;
 import QL.QLParser;
 import QL.ReferenceTable;
 import QL.ast.Form;
 import QL.message.Message;
 import QL.ui.Environment;
-import QL.ui.Questionnaire;
-import QL.ui.Style;
 import QL.ui.StyleTable;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 import qls.ast.Stylesheet;
 import qls.semantic.Analyzer;
+import qls.ui.PrettyQuestionnaire;
+
+import java.util.List;
 
 
-public class Main {
+class Main {
 	public static void main(String[] args) throws Exception {
 		String tmp = "stylesheet taxOfficeExample \n"
 				 + "page Housing { \n"
 				 + "section \"Buying\" \n"
-				 + "question Name0 \n"
-				 + "widget checkbox \n"
+				 + "question Name0 widget spinbox \n"
 		 		 + "section \"Loaning\" \n"
 				 + "question Name1 \n"
-		 		 + "default boolean widget checkbox"
+		 		 + "default boolean widget checkbox \n"
+		 		 + "default integer widget spinbox"
 				 // + "default boolean widget radio(\"Yes\", \"No\") \n"
 				 + "}";
 		
@@ -54,20 +51,14 @@ public class Main {
 		StyleTable styleTable = analyzer.analyze(stylesheet);
 		
 		messages.addAll(analyzer.getMessages());
-		
-		// TODO
-		// Evaluate the ast to create a variablename - Style map
-		// Rename DefaultStyle to Style?
-		// extend the referenceTable with the StyleTable
-		
 
-		Questionnaire questionnaire = new Questionnaire();
-		questionnaire.main(form, new Environment(referenceTable, styleTable), messages);
+		PrettyQuestionnaire questionnaire = new PrettyQuestionnaire();
+		questionnaire.main(form, new Environment(referenceTable), messages, stylesheet);
 	}
 	
 
 	
-	public static Form createForm() {
+	private static Form createForm() {
 		String tmp = "form Testing { "
 				 + "Name0: \"Question0\" integer "
 				 + "Name1: \"Question1\" integer (Name0 + 2)"

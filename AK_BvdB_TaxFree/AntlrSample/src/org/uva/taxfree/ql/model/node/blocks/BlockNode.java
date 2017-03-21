@@ -6,14 +6,16 @@ import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.Node;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public abstract class BlockNode extends Node {
     private final List<Node> mChildren;
 
     public BlockNode(List<Node> children, SourceInfo sourceInfo) {
         super(sourceInfo);
-        mChildren = children; ///< preserves the order in which the items were inserted
+        mChildren = children;
     }
 
     @Override
@@ -42,6 +44,26 @@ public abstract class BlockNode extends Node {
             for (Node child : mChildren) {
                 child.generateVisibleIds(visibleIds);
             }
+        }
+    }
+
+    protected void checkCyclicDependency(Set<String> dependencies, SymbolTable symbolTable, MessageList semanticsMessages) {
+        Set<String> childVariables = new HashSet<>();
+        for (Node child : mChildren) {
+            child.collectUsedVariables(childVariables);
+        }
+        symbolTable.generateDependencies(dependencies);
+        for (String variableName : dependencies) {
+            if (childVariables.contains(variableName)) {
+                semanticsMessages.addError("Condition depends on inner declaration: " + variableName);
+            }
+        }
+    }
+
+    @Override
+    public void collectUsedVariables(Set<String> dependencies) {
+        for (Node child : mChildren) {
+            child.collectUsedVariables(dependencies);
         }
     }
 

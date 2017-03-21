@@ -1,11 +1,7 @@
 package qls.semantic;
 
 import QL.message.Error;
-import qls.ast.Page;
-import qls.ast.Question;
-import qls.ast.Section;
-import qls.ast.Stylesheet;
-import qls.ast.StylesheetVisitor;
+import qls.ast.*;
 
 // you cannot place a single question multiple times.
 // all questions of the QL program are placed by the QLS program.
@@ -21,40 +17,51 @@ public class VerifyQuestions implements StylesheetVisitor {
 	@Override
 	public void visit(Stylesheet stylesheet) {
 		for (Page page : stylesheet.getPages()) {
-			visit(page);
+			page.accept(this);
 		}
 	}
 
 	@Override
 	public void visit(Page page) {
 		for (Section section : page.getSections()) {
-			visit(section);
+			section.accept(this);
 		}
-		
 	}
 
 	@Override
 	public void visit(Section section) {
 		for (Question question : section.getQuestions()) {
-			visit(question);
+			question.accept(this);
 		}		
 	}
 
 	@Override
-	// TODO check the logic here instead of in the environment
 	public void visit(Question question) {
 		
-		if (!environment.presentInQL(question.getName())) {
-			environment.getMessages().add(new Error("The variable " + question.getName() + 
-					" appears in the QLS, but does not exist in QL", question.getLine()));
-		}
-		
-		if (environment.isCovered(question.getName())) {
-			environment.getMessages().add(new Error("The variable " + question.getName() + 
-			" is already defined in the QLS", question.getLine()));
-		}
+		check(question.getName(), question.getLine());
 		
 		environment.setCovered(question.getName());
+	}
+
+	@Override
+	public void visit(QuestionWithWidget question) {
+
+		check(question.getName(), question.getLine());
+
+		environment.setCovered(question.getName());
+	}
+
+	private void check(String name, int line) {
+
+		if (!environment.presentInQL(name)) {
+			environment.addMessage(new Error("The variable " + name +
+					" appears in the QLS, but does not exist in QL", line));
+		}
+
+		if (environment.isCovered(name)) {
+			environment.addMessage(new Error("The variable " + name +
+			" is already defined in the QLS", line));
+		}
 	}
 
 }

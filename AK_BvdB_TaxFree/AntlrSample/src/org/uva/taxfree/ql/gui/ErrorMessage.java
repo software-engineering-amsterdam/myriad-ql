@@ -7,7 +7,7 @@ public class ErrorMessage extends Message {
 
     @Override
     protected String messagePrefix() {
-        return "Error";
+        return "Error at ";
     }
 
     @Override

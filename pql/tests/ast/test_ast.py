@@ -1,18 +1,16 @@
 # coding=utf-8
-import unittest
+from pql.typechecker.types import DataTypes
+from tests.shared import Shared
 
-from pql.parser.parser import *
 
-
-class TestAst(unittest.TestCase):
+class TestAst(Shared):
     def test_ast_single_question(self):
         input_string = """
         form taxOfficeExample {
             "Did you sell a house in 2010?" hasSoldHouse: boolean
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
 
         self.assertEqual('taxOfficeExample', form_node.name.name)
         field_node_1 = form_node.statements[0]
@@ -28,8 +26,7 @@ class TestAst(unittest.TestCase):
             "Did you sell a house in 2010?" hasSoldHouse: boolean
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
 
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(2, len(form_node.statements))
@@ -50,17 +47,16 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  sellingPrice - privateDebt
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.statements[0]
-        self.assertEqual('field', field_node_1.var_type)
-        self.assertEqual('valueResidue', field_node_1.name.name)
-        self.assertEqual('Value residue:', field_node_1.title)
+        assignment_node_1 = form_node.statements[0]
+        self.assertEqual('assignment', assignment_node_1.var_type)
+        self.assertEqual('valueResidue', assignment_node_1.name.name)
+        self.assertEqual('Value residue:', assignment_node_1.title)
 
-        subtraction_node = field_node_1.expression
+        subtraction_node = assignment_node_1.expression
         self.assertEqual('subtraction', subtraction_node.var_type,
                          'Subtraction node should have type subtraction')
 
@@ -73,17 +69,16 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  sellingPrice + privateDebt - interest
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.statements[0]
-        self.assertEqual('field', field_node_1.var_type)
-        self.assertEqual('valueResidue', field_node_1.name.name)
-        self.assertEqual('Value residue:', field_node_1.title)
+        assignment_node_1 = form_node.statements[0]
+        self.assertEqual('assignment', assignment_node_1.var_type)
+        self.assertEqual('valueResidue', assignment_node_1.name.name)
+        self.assertEqual('Value residue:', assignment_node_1.title)
 
-        subtraction_node = field_node_1.expression
+        subtraction_node = assignment_node_1.expression
         self.assertEqual('subtraction', subtraction_node.var_type,
                          'Subtraction node should have type subtraction')
         self.assertEqual('interest', subtraction_node.rhs.name)
@@ -101,17 +96,16 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  sellingPrice - privateDebt + interest
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.statements[0]
-        self.assertEqual('field', field_node_1.var_type)
-        self.assertEqual('valueResidue', field_node_1.name.name)
-        self.assertEqual('Value residue:', field_node_1.title)
+        assignment_node_1 = form_node.statements[0]
+        self.assertEqual('assignment', assignment_node_1.var_type)
+        self.assertEqual('valueResidue', assignment_node_1.name.name)
+        self.assertEqual('Value residue:', assignment_node_1.title)
 
-        addition_node = field_node_1.expression
+        addition_node = assignment_node_1.expression
         self.assertEqual('addition', addition_node.var_type,
                          'Addition node should have type addition')
         self.assertEqual('interest', addition_node.rhs.name)
@@ -129,18 +123,16 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  (sellingPrice - privateDebt) * debt
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.statements[0]
-        self.assertEqual('field', field_node_1.var_type)
-        self.assertEqual('valueResidue', field_node_1.name.name)
-        self.assertEqual('Value residue:', field_node_1.title)
+        assignment_node_1 = form_node.statements[0]
+        self.assertEqual('assignment', assignment_node_1.var_type)
+        self.assertEqual('valueResidue', assignment_node_1.name.name)
+        self.assertEqual('Value residue:', assignment_node_1.title)
 
-
-        multiplication_node = field_node_1.expression
+        multiplication_node = assignment_node_1.expression
         self.assertEqual('multiplication', multiplication_node.var_type,
                          'Multiplication node should have type multiplication')
         self.assertEqual('debt', multiplication_node.rhs.name)
@@ -158,17 +150,16 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  sellingPrice - privateDebt * debt *  salary + interest
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.statements[0]
-        self.assertEqual('field', field_node_1.var_type)
-        self.assertEqual('valueResidue', field_node_1.name.name)
-        self.assertEqual('Value residue:', field_node_1.title)
+        assignment_node_1 = form_node.statements[0]
+        self.assertEqual('assignment', assignment_node_1.var_type)
+        self.assertEqual('valueResidue', assignment_node_1.name.name)
+        self.assertEqual('Value residue:', assignment_node_1.title)
 
-        addition_node = field_node_1.expression
+        addition_node = assignment_node_1.expression
         self.assertEqual('addition', addition_node.var_type,
                          'Addition node should have type addition')
         self.assertEqual('interest', addition_node.rhs.name)
@@ -198,8 +189,7 @@ class TestAst(unittest.TestCase):
                 }
             }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
@@ -230,8 +220,7 @@ class TestAst(unittest.TestCase):
                 }
             }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
@@ -270,8 +259,7 @@ class TestAst(unittest.TestCase):
                 }
             }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
@@ -316,8 +304,7 @@ class TestAst(unittest.TestCase):
                 }
             }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
@@ -362,8 +349,7 @@ class TestAst(unittest.TestCase):
                 }
             }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
@@ -420,8 +406,7 @@ class TestAst(unittest.TestCase):
                 }
             }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
@@ -455,7 +440,6 @@ class TestAst(unittest.TestCase):
         self.assertEqual('buyingPrice', field_node_2.name.name)
         self.assertEqual(DataTypes.money, field_node_2.data_type.data_type)
         self.assertEqual('What was the buying price?', field_node_2.title)
-        self.assertIsNone(field_node_2.expression)
 
     def test_ast_question_with_if_single_question(self):
         input_string = """
@@ -466,8 +450,7 @@ class TestAst(unittest.TestCase):
                 }
             }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
 
         field_node_1 = form_node.statements[0]
@@ -506,8 +489,7 @@ class TestAst(unittest.TestCase):
                 "Did you buy a house in 2010?" hasBoughtHouse: boolean
             }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
 
         field_node_1 = form_node.statements[0]
@@ -552,8 +534,7 @@ class TestAst(unittest.TestCase):
                 }
             }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
 
         field_node_1 = form_node.statements[0]
@@ -608,8 +589,7 @@ class TestAst(unittest.TestCase):
                 }
             }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
 
         field_node_1 = form_node.statements[0]
@@ -664,21 +644,20 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  +privateDebt
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.statements[0]
-        self.assertEqual('field', field_node_1.var_type)
-        self.assertEqual('valueResidue', field_node_1.name.name)
-        self.assertEqual('Value residue:', field_node_1.title)
+        assignment_node_1 = form_node.statements[0]
+        self.assertEqual('assignment', assignment_node_1.var_type)
+        self.assertEqual('valueResidue', assignment_node_1.name.name)
+        self.assertEqual('Value residue:', assignment_node_1.title)
 
-        positive_node = field_node_1.expression
+        positive_node = assignment_node_1.expression
         self.assertEqual('positive', positive_node.var_type,
                          'Positive node should have type positive')
 
-        identifier_node = positive_node.rhs
+        identifier_node = positive_node.operand
         self.assertEqual('identifier', identifier_node.var_type,
                          'Identifier node should have type identifier')
 
@@ -690,21 +669,20 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  -privateDebt
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.statements[0]
-        self.assertEqual('field', field_node_1.var_type)
-        self.assertEqual('valueResidue', field_node_1.name.name)
-        self.assertEqual('Value residue:', field_node_1.title)
+        assignment_node_1 = form_node.statements[0]
+        self.assertEqual('assignment', assignment_node_1.var_type)
+        self.assertEqual('valueResidue', assignment_node_1.name.name)
+        self.assertEqual('Value residue:', assignment_node_1.title)
 
-        negative = field_node_1.expression
+        negative = assignment_node_1.expression
         self.assertEqual('negative', negative.var_type,
                          'Negative node should have type negative')
 
-        identifier_node = negative.rhs
+        identifier_node = negative.operand
         self.assertEqual('identifier', identifier_node.var_type,
                          'Identifier node should have type identifier')
 
@@ -716,21 +694,20 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  !privateDebt
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.statements[0]
-        self.assertEqual('field', field_node_1.var_type)
-        self.assertEqual('valueResidue', field_node_1.name.name)
-        self.assertEqual('Value residue:', field_node_1.title)
+        assignment_node_1 = form_node.statements[0]
+        self.assertEqual('assignment', assignment_node_1.var_type)
+        self.assertEqual('valueResidue', assignment_node_1.name.name)
+        self.assertEqual('Value residue:', assignment_node_1.title)
 
-        negative = field_node_1.expression
+        negative = assignment_node_1.expression
         self.assertEqual('negation', negative.var_type,
                          'Negation node should have type negation')
 
-        identifier_node = negative.rhs
+        identifier_node = negative.operand
         self.assertEqual('identifier', identifier_node.var_type,
                          'Identifier node should have type identifier')
 
@@ -742,17 +719,16 @@ class TestAst(unittest.TestCase):
             "Value residue:" valueResidue: money =  sellingPrice && (!privateDebt || hasLoans)
         }
         """
-        parse_result = parse(input_string).asList()
-        form_node = parse_result[0]
+        form_node = self.acquire_ast(input_string)
         self.assertEqual('taxOfficeExample', form_node.name.name)
         self.assertEqual(1, len(form_node.statements))
 
-        field_node_1 = form_node.statements[0]
-        self.assertEqual('field', field_node_1.var_type)
-        self.assertEqual('valueResidue', field_node_1.name.name)
-        self.assertEqual('Value residue:', field_node_1.title)
+        assignment_node_1 = form_node.statements[0]
+        self.assertEqual('assignment', assignment_node_1.var_type)
+        self.assertEqual('valueResidue', assignment_node_1.name.name)
+        self.assertEqual('Value residue:', assignment_node_1.title)
 
-        and_node = field_node_1.expression
+        and_node = assignment_node_1.expression
         self.assertEqual('and', and_node.var_type,
                          'And node should have type and')
 
@@ -770,7 +746,7 @@ class TestAst(unittest.TestCase):
         self.assertEqual('negation', negation_node.var_type,
                          'Negation node should have type negation')
 
-        identifier_node_2 = negation_node.rhs
+        identifier_node_2 = negation_node.operand
         self.assertEqual('identifier', identifier_node_2.var_type,
                          'Identifier node should have type identifier')
 

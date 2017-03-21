@@ -25,13 +25,13 @@ public class QLSUndefinedWidget extends QLSWidget {
     }
 
     @Override
-    public boolean isUndefined() {
-        return true;
+    public List<Type> getSupportedQuestionTypes() {
+        return new ArrayList<>();
     }
 
     @Override
-    public List<Type> getQuestionTypes() {
-        return new ArrayList<>();
+    public boolean isUndefined() {
+        return true;
     }
 
     public <T> T accept(StyleAndWidgetVisitor<T> visitor) {

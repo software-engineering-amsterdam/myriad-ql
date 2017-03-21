@@ -11,8 +11,11 @@ public class QuestionWithWidget extends Question {
 		this.widget = widget;
 	}
 	
-//	public void accept(StylesheetVisitor v) {
-//		v.visit(this);
-//	}
+	public void accept(StylesheetVisitor v) {
+		v.visit(this);
+	}
 
+	public Widget getWidget() {
+		return widget;
+	}
 }

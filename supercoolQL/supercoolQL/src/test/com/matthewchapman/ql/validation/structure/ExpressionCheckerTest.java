@@ -2,13 +2,10 @@ package com.matthewchapman.ql.validation.structure;
 
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.atomic.type.BooleanType;
-import com.matthewchapman.ql.ast.atomic.Type;
 import com.matthewchapman.ql.core.CoreParser;
 import com.matthewchapman.ql.core.ErrorLogger;
+import com.matthewchapman.ql.validation.type.TypeTable;
 import org.junit.Test;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -25,7 +22,8 @@ public class ExpressionCheckerTest {
         ExpressionChecker checker = new ExpressionChecker();
         CoreParser parser = new CoreParser();
         Form form = parser.getForm(parser.getQlParser("form test { if (parameter1) { \"Test\" testquestion:boolean; } if (testquestion2) { \"anothertest\" anothertest:boolean; } }"));
-        Map<String, Type> typeTable = new HashMap<String, Type>(){{ put("testquestion2", new BooleanType()); }};
+        TypeTable typeTable = new TypeTable();
+        typeTable.addEntry("testquestion2", new BooleanType());
 
         ErrorLogger logger = checker.checkExpressions(form, typeTable);
 

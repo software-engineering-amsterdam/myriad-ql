@@ -13,7 +13,7 @@ public class Number implements Field {
 		this.field = new TextField();
 		
 		field.setId(name);
-				
+
 		String valueText = Integer.toString(value.getValue());
 		field.setText(valueText);
 		field.positionCaret(valueText.length());

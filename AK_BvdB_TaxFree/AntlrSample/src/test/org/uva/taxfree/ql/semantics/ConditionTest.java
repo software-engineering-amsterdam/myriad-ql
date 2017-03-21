@@ -3,8 +3,6 @@ package test.org.uva.taxfree.ql.semantics;
 import org.testng.annotations.Test;
 import test.org.uva.taxfree.ql.SemanticsTester;
 
-import java.io.File;
-
 public class ConditionTest extends SemanticsTester {
 
     @Test
@@ -42,8 +40,8 @@ public class ConditionTest extends SemanticsTester {
         assertSemantics("invalidConditionForm.txt", 1, "An invalid condition due to it's types");
     }
 
-    protected File testFile(String fileName) {
-        return new File("src\\test\\org\\uva\\taxfree\\ql\\testFiles\\conditionForms\\" + fileName);
+    @Override
+    protected String fileDirectory() {
+        return "conditionForms";
     }
-
 }

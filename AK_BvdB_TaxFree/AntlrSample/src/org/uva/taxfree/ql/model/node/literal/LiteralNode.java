@@ -5,6 +5,7 @@ import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.expression.ExpressionNode;
 import org.uva.taxfree.ql.model.types.Type;
+import org.uva.taxfree.ql.model.values.Value;
 
 import java.util.List;
 import java.util.Set;
@@ -16,9 +17,7 @@ public abstract class LiteralNode extends ExpressionNode {
     }
 
     @Override
-    public String evaluate() {
-        return asString();
-    }
+    public abstract Value evaluate();
 
     @Override
     public void fillSymbolTable(SymbolTable symbolTable) {
@@ -31,7 +30,7 @@ public abstract class LiteralNode extends ExpressionNode {
     }
 
     @Override
-    public void getDependencies(Set<String> dependencies) {
+    public void collectUsedVariables(Set<String> dependencies) {
         // Intentionally left blank
     }
 

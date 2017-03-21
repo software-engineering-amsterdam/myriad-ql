@@ -6,8 +6,10 @@ import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.Node;
 import org.uva.taxfree.ql.model.types.Type;
+import org.uva.taxfree.ql.model.values.Value;
 
 import java.util.List;
+import java.util.Set;
 
 public class DeclarationNode extends Node {
     private final String mId;
@@ -30,6 +32,7 @@ public class DeclarationNode extends Node {
         symbolTable.addDeclaration(this);
     }
 
+    @Override
     public void fillQuestionForm(QuestionForm frame) {
         mType.generateWidget(mLabel, mId, frame);
     }
@@ -40,10 +43,6 @@ public class DeclarationNode extends Node {
 
     public String getLabel() {
         return mLabel;
-    }
-
-    public String defaultValue() {
-        return mType.defaultValue();
     }
 
     @Override
@@ -58,4 +57,12 @@ public class DeclarationNode extends Node {
         visibleIds.add(mId);
     }
 
+    public Value generateValue() {
+        return mType.defaultValue();
+    }
+
+    @Override
+    public void collectUsedVariables(Set<String> dependencies) {
+        dependencies.add(mId);
+    }
 }

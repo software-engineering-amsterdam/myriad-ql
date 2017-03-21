@@ -22,7 +22,8 @@ scalacOptions ++= Seq(
   "-Ywarn-dead-code",
   "-Ywarn-numeric-widen",
   "-Ywarn-value-discard",
-  "-Ywarn-unused"
+  "-Ywarn-unused",
+  "-Xcheckinit"
 )
 
 unmanagedJars in Compile += {

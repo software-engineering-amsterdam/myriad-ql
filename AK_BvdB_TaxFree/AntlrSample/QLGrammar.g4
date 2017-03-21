@@ -49,6 +49,6 @@ OP_LOGICAL_OR : '||';
 // Types
 LABEL : '"'(~'"')+'"' ;
 BOOLEAN_LITERAL : ('true' | 'false');
-INTEGER_LITERAL : [0-9]+;
+INTEGER_LITERAL : [-]?[0-9]+;
 STRING_LITERAL : '"'~["]+'"';
 VARIABLE_LITERAL : [a-zA-Z]+;

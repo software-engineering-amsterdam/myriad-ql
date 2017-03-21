@@ -1,31 +1,28 @@
 package QL.ui;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import QL.ReferenceTable;
 import QL.ast.type.Type;
+import QL.ui.field.Field;
 import QL.value.Value;
 import javafx.scene.control.Label;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Environment {
 
 	private final Map<String, Value> variableAnswer;
-	private final ReferenceTable variableType;
+	private final ReferenceTable references;
 	private final StyleTable styleTable;
+	private Map<String, Field> fieldTable;
 	
-	public Environment(ReferenceTable variableType) {
+	public Environment(ReferenceTable references) {
 		this.variableAnswer = new HashMap<>(); 
-		this.variableType = variableType;
-		this.styleTable = new StyleTable(variableType);
-	}
-	
-	public Environment(ReferenceTable variableType, StyleTable styleTable) {
-		this.variableAnswer = new HashMap<>(); 
-		this.variableType = variableType;
-		this.styleTable = styleTable;
-	}
-	
+		this.references = references;
+		this.styleTable = new StyleTable(references);
+		this.fieldTable = new HashMap<>();
+    }
+
 	public void addAnswer(String variable, Value answer) {
 		variableAnswer.put(variable, answer);
 	}
@@ -46,19 +43,29 @@ public class Environment {
 	
 	public Type getType(String variable) {
 		
-		if (!variableType.variableExists(variable)) {
+		if (!references.variableExists(variable)) {
 			throw new AssertionError("The variable " + variable + " is evaluated, " +
 					"but not checked by the typechecker");
 		}
 		
-		return variableType.getType(variable);
-		
-	}
-	
-	public void applyStyle(String variable, Label label) {
-		
-		styleTable.applyStyle(variable, label);			
-	}
-	
+		return references.getType(variable);
 
+	}
+
+	void applyStyle(String variable, Label label) {
+		styleTable.applyStyle(variable, label);
+	}
+
+
+	void addField(String name, Field field) {
+		fieldTable.put(name, field);
+	}
+
+	boolean hasEmptyFieldTable() {
+		return fieldTable.isEmpty();
+	}
+
+	public Field getField(String variable) {
+		return fieldTable.get(variable);
+	}
 }

@@ -2,21 +2,22 @@ package org.uva.taxfree.ql.model.environment;
 
 import org.uva.taxfree.ql.model.node.declarations.DeclarationNode;
 import org.uva.taxfree.ql.model.types.Type;
+import org.uva.taxfree.ql.model.values.Value;
 
 public class Declaration {
-    private String mValue;
+    private Value mValue;
     private DeclarationNode mNode;
 
     protected Declaration(DeclarationNode node) {
-        mValue = "";
         mNode = node;
+        mValue = node.generateValue();
     }
 
-    protected String getValue() {
-        return mValue.isEmpty() ? mNode.defaultValue() : mValue;
+    protected Value getValue() {
+        return mValue;
     }
 
-    protected void setValue(String value) {
+    protected void setValue(Value value) {
         mValue = value;
     }
 
@@ -40,6 +41,10 @@ public class Declaration {
     @Override
     public String toString() {
         return getId();
+    }
+
+    protected String sourceString() {
+        return mNode.sourceString();
     }
 
 }

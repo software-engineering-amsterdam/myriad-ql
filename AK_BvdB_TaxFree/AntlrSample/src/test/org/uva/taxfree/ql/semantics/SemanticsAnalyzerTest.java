@@ -3,8 +3,6 @@ package test.org.uva.taxfree.ql.semantics;
 import org.testng.annotations.Test;
 import test.org.uva.taxfree.ql.SemanticsTester;
 
-import java.io.File;
-
 public class SemanticsAnalyzerTest extends SemanticsTester {
     @Test
     public void testHasDuplicateQuestionLabels() throws Exception {
@@ -61,20 +59,34 @@ public class SemanticsAnalyzerTest extends SemanticsTester {
         assertSemantics("constantConditions.txt", 2, "Multiple constant conditions should display multiple warning");
     }
 
+    // TODO: Would be a nice to have?
+    @Test
+    public void testCyclicIndirectDependency() throws Exception {
+        assertSemantics("cyclicIndirectDependency.txt", 0, "If directly depends on internals");
+    }
+
+    @Test
+    public void testCyclicInnerDependency() throws Exception {
+        assertSemantics("cyclicInnerDependency.txt", 1, "If indirectly depends on internals");
+    }
+
+    @Test
+    public void testInvalidError() throws Exception {
+        assertSemantics("invalidError.txt", 0, "Invalidly marked as erroneous");
+    }
+
     @Test
     void testConstantCalculation() throws Exception {
         assertSemantics("constantCalculation.txt", 1, "A constant calculation should display a warning");
     }
 
     @Test
-    void testConstandCalculations() throws Exception {
+    void testConstantCalculations() throws Exception {
         assertSemantics("constantCalculations.txt", 3, "Mutltiple constant calculations should display multiple warning");
     }
 
-
     @Override
-    protected File testFile(String fileName) {
-        return new File("src\\test\\org\\uva\\taxfree\\ql\\testFiles\\semanticErrors\\" + fileName);
+    protected String fileDirectory() {
+        return "semanticErrors";
     }
-
 }

@@ -4,7 +4,7 @@ import QL.AST exposing (..)
 import QL.ASTTestUtil exposing (emptyLoc, loc)
 import Expect
 import Test exposing (Test, describe, test)
-import QL.TypeChecker.DuplicateLabels exposing (duplicateLabels)
+import QL.TypeChecker.DuplicateLabels exposing (check)
 import QL.TypeChecker.Messages exposing (Message(Warning), WarningMessage(DuplicateLabels))
 
 
@@ -13,45 +13,45 @@ all =
     describe "DuplicateLabels"
         [ test "should detect duplicate labels" <|
             \() ->
-                duplicateLabels
+                check
                     (Form
                         ( "", emptyLoc )
                         [ IfThenElse (Boolean emptyLoc True)
-                            [ Field "label" ( "x", loc 3 3 ) StringType ]
-                            [ Field "label" ( "y", loc 4 4 ) StringType ]
+                            [ Question "label" ( "x", loc 3 3 ) StringType ]
+                            [ Question "label" ( "y", loc 4 4 ) StringType ]
                         ]
                     )
                     |> Expect.equal [ Warning (DuplicateLabels "label" [ ( "y", loc 4 4 ), ( "x", loc 3 3 ) ]) ]
         , test "should detect duplicate labels with three occurrences" <|
             \() ->
-                duplicateLabels
+                check
                     (Form
                         ( "", emptyLoc )
-                        [ Field "someLabel?" ( "x", loc 3 3 ) StringType
-                        , Field "someLabel?" ( "y", loc 4 4 ) IntegerType
-                        , Field "someLabel?" ( "z", loc 5 5 ) MoneyType
+                        [ Question "someLabel?" ( "x", loc 3 3 ) StringType
+                        , Question "someLabel?" ( "y", loc 4 4 ) IntegerType
+                        , Question "someLabel?" ( "z", loc 5 5 ) MoneyType
                         ]
                     )
                     |> Expect.equal [ Warning (DuplicateLabels "someLabel?" [ ( "z", loc 5 5 ), ( "y", loc 4 4 ), ( "x", loc 3 3 ) ]) ]
         , test "should only detect labels that are duplicated" <|
             \() ->
-                duplicateLabels
+                check
                     (Form
                         ( "", emptyLoc )
-                        [ Field "someLabel?" ( "x", loc 3 3 ) StringType
-                        , Field "OtherLabel!" ( "z", loc 5 5 ) MoneyType
+                        [ Question "someLabel?" ( "x", loc 3 3 ) StringType
+                        , Question "OtherLabel!" ( "z", loc 5 5 ) MoneyType
                         ]
                     )
                     |> Expect.equal []
         , test "should detect multiple types of duplicate labels" <|
             \() ->
-                duplicateLabels
+                check
                     (Form
                         ( "", emptyLoc )
-                        [ Field "OtherLabel!" ( "x", loc 3 3 ) StringType
-                        , Field "someLabel?" ( "y", loc 4 4 ) IntegerType
-                        , Field "OtherLabel!" ( "z", loc 5 5 ) MoneyType
-                        , Field "someLabel?" ( "a", loc 6 6 ) MoneyType
+                        [ Question "OtherLabel!" ( "x", loc 3 3 ) StringType
+                        , Question "someLabel?" ( "y", loc 4 4 ) IntegerType
+                        , Question "OtherLabel!" ( "z", loc 5 5 ) MoneyType
+                        , Question "someLabel?" ( "a", loc 6 6 ) MoneyType
                         ]
                     )
                     |> Expect.equal

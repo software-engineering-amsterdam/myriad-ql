@@ -1,7 +1,7 @@
 package QL.ui.field;
 
-import javafx.scene.control.Control;
 import QL.value.Value;
+import javafx.scene.control.Control;
 
 
 public interface Field {

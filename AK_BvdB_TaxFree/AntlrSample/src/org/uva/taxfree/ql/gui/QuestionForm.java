@@ -28,14 +28,14 @@ public class QuestionForm implements FormListener {
 
     private JFrame createFrame(String caption) {
         JFrame frame = new JFrame(caption);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 try {
-                    mSymbolTable.export(caption + ".txdata");
+                    mSymbolTable.exportData(caption + ".txdata");
                 } catch (IOException error) {
-                    MessageWindow.showMessage("Unable to write results to file:\r\n" + error.getMessage());
+                    MessageWindow.showMessage("(QuestionForm.java:38): Unable to write results to file:\r\n" + error.getMessage());
                 }
             }
         });
@@ -69,7 +69,7 @@ public class QuestionForm implements FormListener {
             widget.updateValues(mSymbolTable);
         }
 
-        for( Widget widget : mWidgets){
+        for (Widget widget : mWidgets) {
             widget.updateVisibility(mSymbolTable);
         }
     }
@@ -79,6 +79,4 @@ public class QuestionForm implements FormListener {
             w.updateStyle(qlsStyle);
         }
     }
-
-
 }

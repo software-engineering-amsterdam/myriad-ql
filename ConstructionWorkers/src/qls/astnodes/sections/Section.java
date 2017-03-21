@@ -23,29 +23,29 @@ public class Section extends AbstractSection {
     private final List<DefaultStyle> defaultStyles;
     private final List<StyleQuestion> questions;
 
-    public Section(String name, List<Section> sections, List<DefaultStyle> defaultStyles, List<StyleQuestion> questions,
+    public Section(String sectionName, List<Section> sections, List<DefaultStyle> defaultStyles, List<StyleQuestion> questions,
                    LineNumber lineNumber) {
         super(lineNumber);
-        this.sectionName = name;
+        this.sectionName = sectionName;
         this.sections = sections;
         this.defaultStyles = defaultStyles;
         this.questions = questions;
     }
 
-    public List<StyleQuestion> getQuestions() {
-        return this.questions;
-    }
-
     public String getName() {
-        return this.sectionName;
+        return sectionName;
     }
 
     public List<Section> getSections() {
-        return this.sections;
+        return sections;
     }
 
     public List<DefaultStyle> getDefaultStyles() {
-        return this.defaultStyles;
+        return defaultStyles;
+    }
+
+    public List<StyleQuestion> getQuestions() {
+        return questions;
     }
 
     public void accept(StyleSheetVisitor visitor) {

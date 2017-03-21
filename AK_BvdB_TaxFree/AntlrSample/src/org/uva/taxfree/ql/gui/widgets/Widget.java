@@ -2,6 +2,7 @@ package org.uva.taxfree.ql.gui.widgets;
 
 import org.uva.taxfree.ql.gui.FormListener;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
+import org.uva.taxfree.ql.model.values.Value;
 import org.uva.taxfree.qls.QlsStyle;
 
 import javax.swing.*;
@@ -32,7 +33,7 @@ public abstract class Widget {
 
     protected abstract void fillPanel(JPanel widgetPanel);
 
-    public abstract String resolveValue();
+    public abstract Value resolveValue();
 
     public abstract void callOnUpdate(FormListener listener);
 
@@ -47,7 +48,7 @@ public abstract class Widget {
     }
 
     protected String readFromTable(SymbolTable symbolTable) {
-        return symbolTable.resolveValue(mId);
+        return symbolTable.resolveValue(mId).toString();
     }
 
     public void updateStyle(QlsStyle qlsStyle) {
@@ -55,7 +56,7 @@ public abstract class Widget {
     }
 
     protected void applyStyle(JPanel panel, JLabel label, QlsStyle qlsStyle) {
-        // TODO: make abstract
+        // Only used for QLS
     }
 
 }

@@ -1,0 +1,55 @@
+stylesheet taxOfficeExample {
+  page Boolean {
+
+    section "Selling A" {
+
+      section "YOLO" {
+          question compBool
+          question y
+
+          section "Last" {
+            question z
+            default boolean widget radio
+          }
+
+          default boolean widget radio
+      }
+      section "Int on next page <5" {
+        question x
+        question condBool widget dropdown
+      }
+      question dropdown widget dropdown("ja", "nee")
+
+    }
+  }
+
+  page Integer {
+    section "Selling B" {
+
+      question genericInt
+      question compInt widget spinbox
+
+    }
+
+    section "Other input types" {
+        question condIntB widget slider(5, 20)
+        question integerspinbox widget spinbox(5, 10)
+    }
+  }
+
+  page Decimal {
+    section "Dividing Decimals" {
+        question decimalA
+        question decimalB
+        question decimalQ
+    }
+  }
+
+  page Styling {
+        question defaultText
+        question greenText {color: #55ff55}
+        question otherFont {family: "Times New Roman"}
+        question bigBoldFont {weight: bold size: 20}
+        default integer {color: #0000ff}
+  }
+}

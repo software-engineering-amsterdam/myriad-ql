@@ -42,19 +42,19 @@ import java.util.Map;
 public class QLMain {
 
     public static void main(String[] arguments) throws Exception {
-        String inputFileQL = "./src/test.ql";
-        String inputFileQLS = "./src/test.qls";
+        String inputFileQL = "./src/form.ql";
+        String inputFileQLS = "./src/stylesheet.qls";
 
         new QLMain(inputFileQL, inputFileQLS);
     }
 
-    private QLMain(String inputQL, String inputQLS) throws IOException {
+    private QLMain(String inputFileQL, String inputFileQLS) throws IOException {
 
-        if (!fileExists(inputQL, inputQLS)) {
+        if (!fileExists(inputFileQL, inputFileQLS)) {
             throw new IOException();
         }
 
-        InputStream qlInputStream = new FileInputStream(inputQL);
+        InputStream qlInputStream = new FileInputStream(inputFileQL);
         Form qlAST = getASTQL(qlInputStream);
 
         Map<String, Type> identifierToTypeMap = new HashMap<>();
@@ -71,7 +71,7 @@ public class QLMain {
             System.exit(1);
         }
 
-        InputStream qlsInputStream = new FileInputStream(inputQLS);
+        InputStream qlsInputStream = new FileInputStream(inputFileQLS);
         StyleSheet qlsAST = getASTQLS(qlsInputStream);
 
         Boolean semanticallyCorrectQLS = checkSemanticCorrectnessQLS(qlsAST, messages, identifierToTypeMap);
@@ -89,14 +89,14 @@ public class QLMain {
         buildGUI(qlAST);
     }
 
-    private boolean fileExists(String inputQL, String inputQLS) {
-        Path pathQL = Paths.get(inputQL);
-        Path pathQLS = Paths.get(inputQLS);
+    private boolean fileExists(String inputFileQL, String inputFileQLS) {
+        Path pathQL = Paths.get(inputFileQL);
+        Path pathQLS = Paths.get(inputFileQLS);
         return (Files.exists(pathQL) && Files.exists(pathQLS));
     }
 
-    private Form getASTQL(InputStream inputStream) throws IOException {
-        ANTLRInputStream input = new ANTLRInputStream(inputStream);
+    private Form getASTQL(InputStream qlInputStream) throws IOException {
+        ANTLRInputStream input = new ANTLRInputStream(qlInputStream);
         QLLexer lexer = new QLLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         QLParser parser = new QLParser(tokens);
@@ -108,8 +108,8 @@ public class QLMain {
         return (Form) nodeAST;
     }
 
-    private StyleSheet getASTQLS(InputStream inputStream) throws IOException {
-        ANTLRInputStream input = new ANTLRInputStream(inputStream);
+    private StyleSheet getASTQLS(InputStream qlsInputStream) throws IOException {
+        ANTLRInputStream input = new ANTLRInputStream(qlsInputStream);
         QLSLexer lexer = new QLSLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         QLSParser parser = new QLSParser(tokens);
@@ -125,7 +125,7 @@ public class QLMain {
         new IdentifierChecker(qlAST, identifierToTypeMap, messages);
         new TypeChecker(qlAST, identifierToTypeMap, messages);
 
-        if (messages.containsNoWarnings()) {
+        if (!messages.containsNoWarnings()) {
             for (Message warning : messages.getWarnings()) {
                 System.out.println(warning.getMessage());
             }

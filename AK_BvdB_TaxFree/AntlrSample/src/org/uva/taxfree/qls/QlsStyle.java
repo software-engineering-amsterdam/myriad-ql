@@ -36,7 +36,6 @@ public class QlsStyle {
 
 
     public void applyStyle(Type type, JComponent component) {
-//        mVariableStyleDeclarations.forEach((key, value) ->);
         Iterator<Map.Entry<Type, List<StyleOption>>> variableDeclarations = mVariableStyleDeclarations.entrySet().iterator();
         while (variableDeclarations.hasNext()) {
             Map.Entry<Type, List<StyleOption>> thisEntry = variableDeclarations.next();

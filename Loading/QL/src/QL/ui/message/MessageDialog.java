@@ -1,9 +1,9 @@
 package QL.ui.message;
 
-import java.util.List;
-
 import QL.message.Message;
 import javafx.scene.control.Alert;
+
+import java.util.List;
 
 public class MessageDialog {
 
@@ -21,12 +21,7 @@ public class MessageDialog {
 			body += msg.getBody() + "\n\n";
 		}
 
-		if (body.equals("")) {
-			throw new AssertionError("Shows the fault dialog without any messages");
-		}
-
 		alert.setContentText(body);
-
 		alert.showAndWait();
 	}
 	

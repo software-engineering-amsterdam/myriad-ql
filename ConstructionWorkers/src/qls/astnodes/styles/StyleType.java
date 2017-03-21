@@ -9,7 +9,6 @@
  * March, 2017
  */
 
-
 package qls.astnodes.styles;
 
 import ql.astnodes.LineNumber;
@@ -18,7 +17,7 @@ import qls.visitorinterfaces.StyleAndWidgetVisitor;
 
 import java.util.Objects;
 
-public abstract class StyleType extends Node{
+public abstract class StyleType extends Node {
 
     private final String name;
     private final String value;
@@ -30,11 +29,11 @@ public abstract class StyleType extends Node{
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public String getValue() {
-        return this.value;
+        return value;
     }
 
     @Override
@@ -48,7 +47,7 @@ public abstract class StyleType extends Node{
         }
 
         StyleType other = (StyleType) o;
-        return Objects.equals(this.name, other.name);
+        return Objects.equals(name, other.name);
     }
 
     public abstract <T> T accept(StyleAndWidgetVisitor<T> visitor);

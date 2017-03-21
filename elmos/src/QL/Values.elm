@@ -4,7 +4,7 @@ module QL.Values
         , asString
         , asBool
         , asInt
-        , asFloat
+        , asDecimal
         , isUndefined
         )
 
@@ -32,8 +32,8 @@ asInt value =
             Nothing
 
 
-asFloat : Value -> Maybe Float
-asFloat value =
+asDecimal : Value -> Maybe Float
+asDecimal value =
     case value of
         Integer b ->
             Just (toFloat b)

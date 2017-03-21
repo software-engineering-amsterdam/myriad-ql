@@ -6,6 +6,7 @@ import org.uva.taxfree.ql.model.node.declarations.CalculationNode;
 import org.uva.taxfree.ql.model.node.declarations.DeclarationNode;
 import org.uva.taxfree.ql.model.types.Type;
 import org.uva.taxfree.ql.model.types.UnknownType;
+import org.uva.taxfree.ql.model.values.Value;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -34,12 +35,12 @@ public class SymbolTable {
         mCalculations.add(calculation);
     }
 
-    public void updateValue(String variableId, String updatedValue) {
+    public void updateValue(String variableId, Value updatedValue) {
         updateDeclaration(variableId, updatedValue);
         recalculate();
     }
 
-    private void updateDeclaration(String variableId, String updatedValue) {
+    private void updateDeclaration(String variableId, Value updatedValue) {
         for (Declaration declaration : mDeclarations) {
             if (declaration.equals(variableId)) {
                 declaration.setValue(updatedValue);
@@ -53,7 +54,7 @@ public class SymbolTable {
         }
     }
 
-    public String resolveValue(String variableId) {
+    public Value resolveValue(String variableId) {
         for (Declaration declaration : mDeclarations) {
             if (declaration.equals(variableId)) {
                 return declaration.getValue();
@@ -66,8 +67,11 @@ public class SymbolTable {
         return findDeclarations(variableId).size() > 0;
     }
 
+    // UnknownType is used to be able to finish type checking without having to question whether or not a variable exists.
+    // If an undefined identifier is queried, an error will be given stating an undefined identifier.
+    // The Undefined Type then suppresses errors cascading from the undeclared identifier, showing only the root cause
     public Type resolveType(String variableId) {
-        if (true == contains(variableId)) {
+        if (contains(variableId)) {
             return findDeclaration(variableId).getType();
         }
         return new UnknownType();
@@ -93,7 +97,7 @@ public class SymbolTable {
         for (Declaration declaration : mDeclarations) {
             String label = declaration.getLabel();
             if (!processedLabels.add(label)) {
-                messageList.addWarning("Duplicate question label found: " + label);
+                messageList.addWarning(declaration.sourceString() + "Duplicate label found: " + label);
             }
         }
     }
@@ -103,11 +107,13 @@ public class SymbolTable {
         for (Declaration declaration : mDeclarations) {
             String id = declaration.getId();
             if (!processedDeclarations.add(id)) {
-                messageList.addError("Duplicate declaration found: " + id);
+                messageList.addError(declaration.sourceString() + "Duplicate declaration found: " + id);
             }
         }
     }
 
+    // We use a string of dependencies because this terminates when a cyclic dependency is found.
+    // If you REALLY want to use an ArrayList you can pass in the varname and compare it inside the if.
     public void generateDependencies(Set<String> usedVariables) {
         Set<String> dependencies = new HashSet<>(usedVariables);
         for (String variableName : usedVariables) {
@@ -140,7 +146,7 @@ public class SymbolTable {
         return visibleDeclarations;
     }
 
-    public void export(String fileName) throws IOException {
+    public void exportData(String fileName) throws IOException {
         FileWriter results = new FileWriter(fileName);
         for (Declaration declaration : mDeclarations) {
             results.write(declaration.getId() + ":" + declaration.getValue() + "\r\n");

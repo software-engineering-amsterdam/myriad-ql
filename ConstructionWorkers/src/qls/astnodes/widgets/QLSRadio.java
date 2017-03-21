@@ -27,22 +27,16 @@ public class QLSRadio extends QLSWidget {
 
     public QLSRadio(String label, String yes, String no, LineNumber lineNumber) {
         super(lineNumber);
-        this.yesLabel = yes;
-        this.noLabel = no;
-        this.widgetLabel.setText(label);
+        widgetLabel.setText(label);
+        yesLabel = yes;
+        noLabel = no;
     }
 
     @Override
-    public void setLabel(String label) {
-        this.widgetLabel.setText(label);
-    }
-
-    @Override
-    public List<Type> getQuestionTypes() {
-        List<Type> supportedTypes = new ArrayList<>();
-        supportedTypes.add(new StringType());
-        supportedTypes.add(new BooleanType());
-        return supportedTypes;
+    public List<Type> getSupportedQuestionTypes() {
+        List<Type> supportedQuestionTypes = new ArrayList<>();
+        supportedQuestionTypes.add(new BooleanType());
+        return supportedQuestionTypes;
     }
 
     public <T> T accept(StyleAndWidgetVisitor<T> visitor) {

@@ -1,11 +1,11 @@
 package test.org.uva.taxfree.ql.ui;
 
-import org.testng.annotations.Test;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.uva.taxfree.ql.gui.MessageList;
 import org.uva.taxfree.ql.gui.MessageWindow;
 
 public class MessageWindowTest {
-    @Test
+    @Ignore
     public void testComposedDialog() throws Exception {
         MessageList errors = new MessageList();
         errors.addError("Big error!");
@@ -13,7 +13,7 @@ public class MessageWindowTest {
         MessageWindow.showMessages(errors);
     }
 
-    @Test
+    @Ignore
     public void testWarningDialog() throws Exception {
         MessageList warnings = new MessageList();
         warnings.addWarning("This is a warning");

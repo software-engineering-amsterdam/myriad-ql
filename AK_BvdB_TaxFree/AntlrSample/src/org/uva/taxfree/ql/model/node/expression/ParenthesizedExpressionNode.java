@@ -4,6 +4,7 @@ import org.uva.taxfree.ql.gui.MessageList;
 import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.types.Type;
+import org.uva.taxfree.ql.model.values.Value;
 
 import java.util.Set;
 
@@ -16,24 +17,8 @@ public class ParenthesizedExpressionNode extends ExpressionNode {
     }
 
     @Override
-    public String evaluate() {
+    public Value evaluate() {
         return mExpression.evaluate();
-    }
-
-
-    @Override
-    public boolean asBoolean() {
-        return Boolean.valueOf(evaluate());
-    }
-
-    @Override
-    public int asInteger() {
-        return Integer.valueOf(evaluate());
-    }
-
-    @Override
-    public String asString() {
-        return evaluate();
     }
 
     @Override
@@ -47,8 +32,8 @@ public class ParenthesizedExpressionNode extends ExpressionNode {
     }
 
     @Override
-    public void getDependencies(Set<String> dependencies) {
-        mExpression.getDependencies(dependencies);
+    public void collectUsedVariables(Set<String> dependencies) {
+        mExpression.collectUsedVariables(dependencies);
     }
 
     @Override

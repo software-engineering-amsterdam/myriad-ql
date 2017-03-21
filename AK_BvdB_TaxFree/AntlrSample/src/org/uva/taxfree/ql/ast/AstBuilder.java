@@ -16,18 +16,9 @@ import java.util.BitSet;
 public class AstBuilder {
     private final File mInputFile;
 
-    public AstBuilder(File inputFile) throws IOException {
+    public AstBuilder(File inputFile) {
         mInputFile = inputFile;
     }
-
-    private QLGrammarParser createGrammarParser(File inputFile) throws IOException {
-        FileReader reader = new FileReader(inputFile);
-        ANTLRInputStream inputStream = new ANTLRInputStream(reader);
-        QLGrammarLexer qlGrammarLexer = new QLGrammarLexer(inputStream);
-        CommonTokenStream commonTokenStream = new CommonTokenStream(qlGrammarLexer);
-        return new QLGrammarParser(commonTokenStream);
-    }
-
 
     public FormNode generateTree() throws IOException {
         ANTLRErrorListener errorListener = new ANTLRErrorListener() {
@@ -61,6 +52,14 @@ public class AstBuilder {
         GrammarListener listener = new GrammarListener();
         walker.walk(listener, formContext);
         return listener.getAst();
+    }
+
+    private QLGrammarParser createGrammarParser(File inputFile) throws IOException {
+        FileReader reader = new FileReader(inputFile);
+        ANTLRInputStream inputStream = new ANTLRInputStream(reader);
+        QLGrammarLexer qlGrammarLexer = new QLGrammarLexer(inputStream);
+        CommonTokenStream commonTokenStream = new CommonTokenStream(qlGrammarLexer);
+        return new QLGrammarParser(commonTokenStream);
     }
 }
 
