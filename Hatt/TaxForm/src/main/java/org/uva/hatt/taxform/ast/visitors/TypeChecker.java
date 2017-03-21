@@ -17,6 +17,7 @@ import org.uva.hatt.taxform.ast.nodes.types.Integer;
 import org.uva.hatt.taxform.ast.nodes.types.String;
 import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.DuplicateDeclaration;
 import org.uva.hatt.taxform.ast.visitors.exceptionHandler.ExceptionHandler;
+import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.TypeMismatch;
 import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.UndefinedReference;
 import org.uva.hatt.taxform.ast.visitors.exceptionHandler.warning.DuplicateLabel;
 
@@ -64,6 +65,9 @@ public class TypeChecker implements Visitor{
 
     @Override
     public IfThen visit(IfThen node) {
+        Expression expression = node.getCondition();
+        Object type = expression.accept(this);
+
         node.getCondition().accept(this);
 
         node.getThenStatements().forEach(item -> item.accept(this));
@@ -72,6 +76,14 @@ public class TypeChecker implements Visitor{
 
     @Override
     public IfThenElse visit(IfThenElse node){
+        Expression expression = node.getCondition();
+        ValueType type = (ValueType) expression.accept(this);
+
+        if(!type.isBoolean())
+        {
+            exceptionHandler.addError(new TypeMismatch(node.getLineNumber(), type.name()));
+        }
+
         node.getCondition().accept(this);
 
         node.getThenStatements().forEach(item -> item.accept(this));
@@ -143,38 +155,46 @@ public class TypeChecker implements Visitor{
     public Expression visit(Expression expression) { return null; }
 
     @Override
-    public Set<java.lang.String> visit(Addition addition){
-        return visitBinaryExpression(addition);
+    public ValueType visit(Addition addition){
+
+        return new Integer(1);
+        //return visitBinaryExpression(addition);
     }
 
     @Override
-    public Set<java.lang.String> visit(Division division){
-        return visitBinaryExpression(division);
+    public ValueType visit(Division division){
+        return new Boolean(1);
+        //return visitBinaryExpression(division);
     }
 
     @Override
-    public Set<java.lang.String> visit(Equal equal){
-        return visitBinaryExpression(equal);
+    public ValueType visit(Equal equal){
+        return new Boolean(1);
+        //return visitBinaryExpression(equal);
     }
 
     @Override
-    public Set<java.lang.String> visit(GreaterThan greaterThan){
-        return visitBinaryExpression(greaterThan);
+    public ValueType visit(GreaterThan greaterThan){
+        return new Boolean(1);
+        //return visitBinaryExpression(greaterThan);
     }
 
     @Override
-    public Set<java.lang.String> visit(GreaterThanOrEqual greaterThanOrEqual){
-        return visitBinaryExpression(greaterThanOrEqual);
+    public ValueType visit(GreaterThanOrEqual greaterThanOrEqual){
+        return new Boolean(1);
+        //return visitBinaryExpression(greaterThanOrEqual);
     }
 
     @Override
-    public Set<java.lang.String> visit(LessThan lessThan){
-        return visitBinaryExpression(lessThan);
+    public ValueType visit(LessThan lessThan){
+        return new Boolean(1);
+        //return visitBinaryExpression(lessThan);
     }
 
     @Override
-    public Set<java.lang.String> visit(LessThanOrEqual lessThanOrEqual){
-        return visitBinaryExpression(lessThanOrEqual);
+    public ValueType visit(LessThanOrEqual lessThanOrEqual){
+        return new Boolean(1);
+        //return visitBinaryExpression(lessThanOrEqual);
     }
 
 //    @Override
@@ -188,23 +208,26 @@ public class TypeChecker implements Visitor{
 //    }
 
     @Override
-    public Set<java.lang.String> visit(Multiplication multiplication){
-        return visitBinaryExpression(multiplication);
+    public ValueType visit(Multiplication multiplication){
+        return new Boolean(1);
+        //return visitBinaryExpression(multiplication);
     }
 
     @Override
-    public Set<java.lang.String> visit(NotEqual notEqual){
-        return visitBinaryExpression(notEqual);
+    public ValueType visit(NotEqual notEqual){
+        return new Boolean(1);
+        //return visitBinaryExpression(notEqual);
     }
 
     @Override
-    public Set<java.lang.String> visit(Subtraction subtraction){
-        return visitBinaryExpression(subtraction);
+    public ValueType visit(Subtraction subtraction){
+        return new Boolean(1);
+        //return visitBinaryExpression(subtraction);
     }
 
-    private Set<java.lang.String> visitBinaryExpression(BooleanExpression expression){
-        expression.getLhs().accept(this);
-        expression.getRhs().accept(this);
-        return dependencies;
+    private ValueType visitBinaryExpression(BooleanExpression expression){
+        ValueType lhsType = (ValueType)expression.getLhs().accept(this);
+        ValueType rhsType = (ValueType) expression.getRhs().accept(this);
+        return lhsType;
     }
 }
