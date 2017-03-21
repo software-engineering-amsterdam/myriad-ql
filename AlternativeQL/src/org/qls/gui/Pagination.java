@@ -1,35 +1,52 @@
 package org.qls.gui;
 
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
 public class Pagination {
     private int currentPage;
-    private Button previousButton = new Button();
-    private Button nextButton = new Button();
+    private Button previousButton;
+    private Button nextButton;
     private int maxPage;
 
     public Pagination(QLSGUIFormBuilder qlsGUIFormBuilder, int maxPage) {
         this.maxPage = maxPage;
-        checkButtonActivity();
 
-        nextButton.setText("Next page");
-        nextButton.setOnAction(event -> {
-            if(currentPage < (maxPage-1)) {
+        nextButton = createButton("Next page", event -> {
+            if(hasReachedLastPage()) {
                 nextPage();
-                qlsGUIFormBuilder.constructFormPage(currentPage);
-                checkButtonActivity();
+                performPageAction(qlsGUIFormBuilder);
             }
         });
 
-        previousButton.setText("Previous page");
-        previousButton.setOnAction(event -> {
-            if(!(currentPage <= 0)) {
+        previousButton = createButton("Previous page", event -> {
+            if(hasReachedBottomPage()) {
                 previousPage();
-                qlsGUIFormBuilder.constructFormPage(currentPage);
-                checkButtonActivity();
+                performPageAction(qlsGUIFormBuilder);
             }
         });
+
+        checkButtonActivity();
+    }
+
+    private void performPageAction(QLSGUIFormBuilder qlsGUIFormBuilder) {
+        qlsGUIFormBuilder.constructFormPage(currentPage);
+        checkButtonActivity();
+    }
+
+    private boolean hasReachedBottomPage() {
+        return !(currentPage <= 0);
+    }
+
+    private boolean hasReachedLastPage() {
+        return currentPage < (maxPage-1);
+    }
+
+    private Button createButton(String text, EventHandler event) {
+        Button button = new Button(text);
+        button.setOnAction(event);
+        return button;
     }
 
     private void checkButtonActivity() {
