@@ -12,6 +12,7 @@ module QLS
       rule(:_) { match('\s').repeat(1).maybe }
 
       # literals and variable
+      rule(:literal)         { string_literal | integer_literal }
       rule(:string_literal)  { str('"') >> match('[^"]').repeat.as(:string_literal) >> str('"') >> _ }
       rule(:integer_literal) { match('[0-9]').repeat(1).as(:integer_literal) >> _ }
       rule(:variable)        { match('\w+').repeat(1).as(:variable) }
@@ -33,13 +34,11 @@ module QLS
       rule(:question_without_brackets) { properties.maybe }
 
       # widget
-      rule(:widget)         { str('widget') >> _ >> (str('checkbox') | str('spinbox') | str('text') | slider | radio | dropdown).as(:widget) >> _ }
-      rule(:widget_string)  { string_literal.as(:first_value) >> _ >> str(',') >> _ >> string_literal.as(:second_value) }
-      rule(:widget_integer) { integer_literal.as(:first_value) >> _ >> str(',') >> _ >> integer_literal.as(:second_value) }
-
-      rule(:radio)    { str('radio') >> str('(') >> _ >> widget_string.as(:radio) >> _ >> str(')') }
-      rule(:dropdown) { str('dropdown') >> str('(') >> _ >> widget_string.as(:dropdown) >> _ >> str(')') }
-      rule(:slider)   { str('slider') >> str('(') >> _ >> widget_integer.as(:slider) >> _ >> str(')') }
+      rule(:widget)        { str('widget') >> _ >> (str('checkbox') | str('spinbox') | str('text') | slider | radio | dropdown).as(:widget) >> _ }
+      rule(:widget_values) { literal.as(:first_value) >> _ >> str(',') >> _ >> literal.as(:second_value) }
+      rule(:radio)         { str('radio') >> str('(') >> _ >> widget_values.as(:radio) >> _ >> str(')') }
+      rule(:dropdown)      { str('dropdown') >> str('(') >> _ >> widget_values.as(:dropdown) >> _ >> str(')') }
+      rule(:slider)        { str('slider') >> str('(') >> _ >> widget_values.as(:slider) >> _ >> str(')') }
 
       # default
       rule(:default)                  { str('default') >> _ >> (type.as(:type) >> (default_brackets | default_without_brackets).as(:properties)).as(:default) >> _ }
