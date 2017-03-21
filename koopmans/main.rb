@@ -52,7 +52,7 @@ def render_errors
     type: 'ok',
     icon: 'error',
     title: 'Errors found!',
-    message: NotificationTable.errors.map(&:message).join('\n')
+    message: NotificationTable.errors.map(&:message).join("\n")
   )
 end
 
@@ -61,7 +61,7 @@ def render_warnings
     type: 'ok',
     icon: 'warning',
     title: 'Warnings found!',
-    message: NotificationTable.warnings.map(&:message).join('\n')
+    message: NotificationTable.warnings.map(&:message).join("\n")
   )
 end
 
