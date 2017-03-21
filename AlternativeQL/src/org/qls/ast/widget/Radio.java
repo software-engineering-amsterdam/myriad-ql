@@ -2,11 +2,11 @@ package org.qls.ast.widget;
 
 import org.ql.ast.type.*;
 
-public class DropdownWidget extends Widget {
+public class Radio extends Widget {
     private final String yesText;
     private final String noText;
 
-    public DropdownWidget(String yesText, String noText) {
+    public Radio(String yesText, String noText) {
         this.yesText = yesText;
         this.noText = noText;
     }
@@ -19,7 +19,12 @@ public class DropdownWidget extends Widget {
         return noText;
     }
 
-    public boolean isCompatibleWith(BooleanType booleanType) {
+    public boolean isCompatibleWith(BooleanType type) {
         return true;
+    }
+
+    @Override
+    public <T, C> T accept(WidgetVisitor<T, C> visitor, C context) {
+        return visitor.visitRadio(this, context);
     }
 }

@@ -2,7 +2,7 @@ package org.qls.ast.widget.default_widget;
 
 import org.junit.Test;
 import org.ql.ast.type.BooleanType;
-import org.qls.ast.widget.CheckboxWidget;
+import org.qls.ast.widget.Checkbox;
 import org.qls.ast.widget.default_widget.style.ColorRule;
 import org.qls.ast.widget.default_widget.style.FontRule;
 import org.qls.ast.widget.default_widget.style.StyleRule;
@@ -21,7 +21,7 @@ public class DefaultWidgetWithStyleTest {
             add(new ColorRule("#333333"));
         }};
 
-        DefaultWidgetWithStyle widget = new DefaultWidgetWithStyle(new BooleanType(), new CheckboxWidget(), styleRules);
+        DefaultWidgetWithStyle widget = new DefaultWidgetWithStyle(new BooleanType(), new Checkbox(), styleRules);
 
         ColorRule colorRule = (ColorRule) widget.getStyleRules().toArray()[0];
         FontRule fontRule = (FontRule) widget.getStyleRules().toArray()[1];

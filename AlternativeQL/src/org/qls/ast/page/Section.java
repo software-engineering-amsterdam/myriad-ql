@@ -2,18 +2,21 @@ package org.qls.ast.page;
 
 import org.ql.ast.Node;
 import org.qls.ast.widget.default_widget.DefaultWidget;
+import org.qls.ast.widget.default_widget.DefaultWidgetSet;
 
 import java.util.List;
+import java.util.Set;
 
 public class Section extends Node {
     private final String name;
     private final List<WidgetQuestion> questions;
     private final List<Section> sections;
-    private final List<DefaultWidget> defaultWidgets;
+    private final DefaultWidgetSet defaultWidgets;
 
-    public Section(String name, List<WidgetQuestion> questions,
+    public Section(String name,
+                   List<WidgetQuestion> questions,
                    List<Section> sections,
-                   List<DefaultWidget> defaultWidgets) {
+                   DefaultWidgetSet defaultWidgets) {
         this.name = name;
         this.questions = questions;
         this.sections = sections;
@@ -28,7 +31,7 @@ public class Section extends Node {
         return questions;
     }
 
-    public List<DefaultWidget> getDefaultWidgets() {
+    public DefaultWidgetSet getDefaultWidgets() {
         return defaultWidgets;
     }
 

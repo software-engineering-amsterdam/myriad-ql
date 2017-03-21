@@ -10,7 +10,7 @@ import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.Value;
 import org.ql.gui.ValueReviser;
 
-abstract class SpinnerWidget<V> extends Widget {
+public abstract class SpinnerWidget<V> extends Widget {
     private final Spinner<V> spinner;
     private final Label label;
 

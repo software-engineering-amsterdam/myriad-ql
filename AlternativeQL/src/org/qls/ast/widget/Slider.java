@@ -2,7 +2,7 @@ package org.qls.ast.widget;
 
 import org.ql.ast.type.*;
 
-public class SpinboxWidget extends Widget {
+public class Slider extends Widget {
 
     public boolean isCompatibleWith(FloatType type) {
         return true;
@@ -14,5 +14,10 @@ public class SpinboxWidget extends Widget {
 
     public boolean isCompatibleWith(MoneyType type) {
         return true;
+    }
+
+    @Override
+    public <T, C> T accept(WidgetVisitor<T, C> visitor, C context) {
+        return visitor.visitSlider(this, context);
     }
 }

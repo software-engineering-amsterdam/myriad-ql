@@ -2,7 +2,6 @@ package org.qls.typechecker.issues.errors;
 
 import org.ql.ast.Node;
 import org.ql.typechecker.issues.Issue;
-import org.qls.ast.page.CustomWidgetQuestion;
 import org.qls.ast.page.WidgetQuestion;
 
 public class UndefinedQuestion extends Issue {
@@ -15,7 +14,7 @@ public class UndefinedQuestion extends Issue {
 
     @Override
     public String getMessage() {
-        return "QLS question: " + question.getIdentifier() + " is not defined in QL source file.";
+        return "QLS question: " + question.getId() + " is not defined in QL source file.";
     }
 
     @Override

@@ -21,7 +21,7 @@ public class DefaultWidgetNoStyleTest {
 
         assertTrue(page.getDefaultWidgets() != null);
         assertEquals(1, page.getDefaultWidgets().size());
-        assertTrue(page.getDefaultWidgets().get(0).getWidget() instanceof RadioWidget);
+        assertTrue(page.getDefaultWidgets().get(0).getWidget() instanceof Radio);
         assertTrue(page.getDefaultWidgets().get(0).getType().isBoolean());
     }
 
@@ -37,7 +37,7 @@ public class DefaultWidgetNoStyleTest {
 
         assertTrue(page.getDefaultWidgets() != null);
         assertEquals(1, page.getDefaultWidgets().size());
-        assertTrue(page.getDefaultWidgets().get(0).getWidget() instanceof SliderWidget);
+        assertTrue(page.getDefaultWidgets().get(0).getWidget() instanceof Slider);
         assertTrue(page.getDefaultWidgets().get(0).getType().isNumeric());
     }
 
@@ -53,7 +53,7 @@ public class DefaultWidgetNoStyleTest {
 
         assertTrue(page.getDefaultWidgets() != null);
         assertEquals(1, page.getDefaultWidgets().size());
-        assertTrue(page.getDefaultWidgets().get(0).getWidget() instanceof SpinboxWidget);
+        assertTrue(page.getDefaultWidgets().get(0).getWidget() instanceof Spinbox);
         assertTrue(page.getDefaultWidgets().get(0).getType().isNumeric());
     }
 
@@ -69,7 +69,7 @@ public class DefaultWidgetNoStyleTest {
 
         assertTrue(page.getDefaultWidgets() != null);
         assertEquals(1, page.getDefaultWidgets().size());
-        assertTrue(page.getDefaultWidgets().get(0).getWidget() instanceof TextWidget);
+        assertTrue(page.getDefaultWidgets().get(0).getWidget() instanceof Text);
         assertTrue(page.getDefaultWidgets().get(0).getType().isNumeric());
     }
 
@@ -85,7 +85,7 @@ public class DefaultWidgetNoStyleTest {
 
         assertTrue(page.getDefaultWidgets() != null);
         assertEquals(1, page.getDefaultWidgets().size());
-        assertTrue(page.getDefaultWidgets().get(0).getWidget() instanceof DropdownWidget);
+        assertTrue(page.getDefaultWidgets().get(0).getWidget() instanceof Dropdown);
         assertTrue(page.getDefaultWidgets().get(0).getType().isBoolean());
     }
 
@@ -101,7 +101,7 @@ public class DefaultWidgetNoStyleTest {
 
         assertTrue(page.getDefaultWidgets() != null);
         assertEquals(1, page.getDefaultWidgets().size());
-        assertTrue(page.getDefaultWidgets().get(0).getWidget() instanceof CheckboxWidget);
+        assertTrue(page.getDefaultWidgets().get(0).getWidget() instanceof Checkbox);
         assertTrue(page.getDefaultWidgets().get(0).getType().isBoolean());
     }
 }

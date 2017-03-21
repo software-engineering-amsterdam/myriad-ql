@@ -9,10 +9,10 @@ import org.ql.evaluator.value.BooleanValue;
 import org.ql.evaluator.value.Value;
 import org.ql.gui.ValueReviser;
 
-public class CheckBoxWidget extends Widget {
+public class CheckboxWidget extends Widget {
     private final CheckBox checkBox;
 
-    public CheckBoxWidget(ValueReviser valueReviser, Question question) {
+    public CheckboxWidget(ValueReviser valueReviser, Question question) {
         checkBox = new CheckBox(question.getLabel().toString());
         checkBox.setOnAction(event -> valueReviser.reviseValue(question.getId(), value()));
     }

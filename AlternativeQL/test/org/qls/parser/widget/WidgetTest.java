@@ -23,7 +23,7 @@ public class WidgetTest {
 
         CustomWidgetQuestion actualQuestion = (CustomWidgetQuestion) page.getSections().get(0).getQuestions().get(0);
 
-        assertTrue(actualQuestion.getWidget() instanceof SpinboxWidget);
+        assertTrue(actualQuestion.getWidget() instanceof Spinbox);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class WidgetTest {
 
         CustomWidgetQuestion actualQuestion = (CustomWidgetQuestion) page.getSections().get(0).getQuestions().get(0);
 
-        assertTrue(actualQuestion.getWidget() instanceof SliderWidget);
+        assertTrue(actualQuestion.getWidget() instanceof Slider);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class WidgetTest {
 
         CustomWidgetQuestion actualQuestion = (CustomWidgetQuestion) page.getSections().get(0).getQuestions().get(0);
 
-        assertTrue(actualQuestion.getWidget() instanceof TextWidget);
+        assertTrue(actualQuestion.getWidget() instanceof Text);
     }
 
     @Test
@@ -68,7 +68,7 @@ public class WidgetTest {
 
         CustomWidgetQuestion actualQuestion = (CustomWidgetQuestion) page.getSections().get(0).getQuestions().get(0);
 
-        assertTrue(actualQuestion.getWidget() instanceof CheckboxWidget);
+        assertTrue(actualQuestion.getWidget() instanceof Checkbox);
     }
 
     @Test
@@ -83,9 +83,9 @@ public class WidgetTest {
 
         CustomWidgetQuestion actualQuestion = (CustomWidgetQuestion) page.getSections().get(0).getQuestions().get(0);
 
-        assertTrue(actualQuestion.getWidget() instanceof RadioWidget);
-        assertEquals("yes", ((RadioWidget) actualQuestion.getWidget()).getYesText());
-        assertEquals("no", ((RadioWidget) actualQuestion.getWidget()).getNoText());
+        assertTrue(actualQuestion.getWidget() instanceof Radio);
+        assertEquals("yes", ((Radio) actualQuestion.getWidget()).getYesText());
+        assertEquals("no", ((Radio) actualQuestion.getWidget()).getNoText());
     }
 
     @Test
@@ -100,9 +100,9 @@ public class WidgetTest {
 
         CustomWidgetQuestion actualQuestion = (CustomWidgetQuestion) page.getSections().get(0).getQuestions().get(0);
 
-        assertTrue(actualQuestion.getWidget() instanceof DropdownWidget);
-        assertEquals("yes", ((DropdownWidget) actualQuestion.getWidget()).getYesText());
-        assertEquals("no", ((DropdownWidget) actualQuestion.getWidget()).getNoText());
+        assertTrue(actualQuestion.getWidget() instanceof Dropdown);
+        assertEquals("yes", ((Dropdown) actualQuestion.getWidget()).getYesText());
+        assertEquals("no", ((Dropdown) actualQuestion.getWidget()).getNoText());
     }
 
 }

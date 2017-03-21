@@ -14,7 +14,7 @@ public class DuplicateQuestion extends Issue {
 
     @Override
     public String getMessage() {
-        return "QLS question " + question.getIdentifier() + " is already defined in the QLS source.";
+        return "QLS question " + question.getId() + " is already defined in the QLS source.";
     }
 
     @Override

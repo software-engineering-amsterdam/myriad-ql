@@ -2,7 +2,7 @@ package org.qls.parser.widget.default_widget;
 
 import org.junit.Test;
 import org.qls.ast.page.Page;
-import org.qls.ast.widget.SpinboxWidget;
+import org.qls.ast.widget.Spinbox;
 import org.qls.ast.widget.default_widget.DefaultWidgetWithStyle;
 import org.qls.ast.widget.default_widget.style.FontRule;
 import org.qls.ast.widget.default_widget.style.FontSizeRule;
@@ -115,6 +115,6 @@ public class DefaultWidgetWithStyleTest {
                 "}");
 
         assertEquals(1, page.getSections().get(0).getDefaultWidgets().size());
-        assertTrue((page.getSections().get(0).getDefaultWidgets().get(0)).getWidget() instanceof SpinboxWidget);
+        assertTrue((page.getSections().get(0).getDefaultWidgets().get(0)).getWidget() instanceof Spinbox);
     }
 }

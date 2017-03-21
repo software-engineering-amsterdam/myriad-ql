@@ -3,15 +3,17 @@ package org.qls.ast.page;
 import org.ql.ast.identifier.Identifier;
 import org.ql.ast.Node;
 import org.qls.ast.widget.default_widget.DefaultWidget;
+import org.qls.ast.widget.default_widget.DefaultWidgetSet;
 
 import java.util.List;
+import java.util.Set;
 
 public class Page extends Node {
     private final Identifier identifier;
     private final List<Section> sections;
-    private final List<DefaultWidget> defaultWidgets;
+    private final DefaultWidgetSet defaultWidgets;
 
-    public Page(Identifier identifier, List<Section> sections, List<DefaultWidget> defaultWidgets) {
+    public Page(Identifier identifier, List<Section> sections, DefaultWidgetSet defaultWidgets) {
         this.identifier = identifier;
         this.sections = sections;
         this.defaultWidgets = defaultWidgets;
@@ -25,7 +27,7 @@ public class Page extends Node {
         return sections;
     }
 
-    public List<DefaultWidget> getDefaultWidgets() {
+    public DefaultWidgetSet getDefaultWidgets() {
         return defaultWidgets;
     }
 }

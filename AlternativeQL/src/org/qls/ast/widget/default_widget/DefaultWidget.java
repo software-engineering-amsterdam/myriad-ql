@@ -4,11 +4,11 @@ import org.ql.ast.Node;
 import org.ql.ast.type.Type;
 import org.qls.ast.widget.Widget;
 
-public class DefaultWidget extends Node {
+public abstract class DefaultWidget extends Node {
     private final Type type;
     private final Widget widget;
 
-    public DefaultWidget(Type type, Widget widget) {
+    DefaultWidget(Type type, Widget widget) {
         this.type = type;
         this.widget = widget;
     }

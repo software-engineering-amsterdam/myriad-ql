@@ -20,8 +20,9 @@ import org.qls.ast.page.CustomWidgetQuestion;
 import org.qls.ast.page.Page;
 import org.qls.ast.page.Section;
 import org.qls.ast.page.WidgetQuestion;
-import org.qls.ast.widget.CheckboxWidget;
-import org.qls.ast.widget.SliderWidget;
+import org.qls.ast.widget.Checkbox;
+import org.qls.ast.widget.Slider;
+import org.qls.ast.widget.default_widget.DefaultWidgetSet;
 import org.qls.typechecker.issues.errors.DuplicateQuestion;
 import org.qls.typechecker.issues.errors.UndefinedQuestion;
 import org.qls.typechecker.issues.errors.InconsistentWidgetWithQuestionType;
@@ -40,13 +41,13 @@ public class QLSTypeCheckerTest {
             new Identifier("taxOfficeExample"), new ArrayList<Page>() {{
                 add(new Page(new Identifier("Housing"), new ArrayList<Section>() {{
                     add(new Section("Buying", new ArrayList<WidgetQuestion>() {{
-                        add(new CustomWidgetQuestion(new Identifier("firstName"), new SliderWidget()));
-                        add(new CustomWidgetQuestion(new Identifier("firstName"), new SliderWidget()));
-                        add(new CustomWidgetQuestion(new Identifier("lastName"), new SliderWidget()));
-                        add(new CustomWidgetQuestion(new Identifier("fullName"), new SliderWidget()));
-                        add(new CustomWidgetQuestion(new Identifier("areYouSure"), new CheckboxWidget()));
-                    }}, new ArrayList<>(), new ArrayList<>()));
-                }}, new ArrayList<>()));
+                        add(new CustomWidgetQuestion(new Identifier("firstName"), new Slider()));
+                        add(new CustomWidgetQuestion(new Identifier("firstName"), new Slider()));
+                        add(new CustomWidgetQuestion(new Identifier("lastName"), new Slider()));
+                        add(new CustomWidgetQuestion(new Identifier("fullName"), new Slider()));
+                        add(new CustomWidgetQuestion(new Identifier("areYouSure"), new Checkbox()));
+                    }}, new ArrayList<>(), new DefaultWidgetSet()));
+                }}, new DefaultWidgetSet()));
             }}
         ));
 
@@ -62,13 +63,13 @@ public class QLSTypeCheckerTest {
                 new Identifier("taxOfficeExample"), new ArrayList<Page>() {{
             add(new Page(new Identifier("Housing"), new ArrayList<Section>() {{
                 add(new Section("Buying", new ArrayList<WidgetQuestion>() {{
-                    add(new CustomWidgetQuestion(new Identifier("firstName"), new SliderWidget()));
-                    add(new CustomWidgetQuestion(new Identifier("undefined"), new SliderWidget()));
-                    add(new CustomWidgetQuestion(new Identifier("lastName"), new SliderWidget()));
-                    add(new CustomWidgetQuestion(new Identifier("fullName"), new SliderWidget()));
-                    add(new CustomWidgetQuestion(new Identifier("areYouSure"), new CheckboxWidget()));
-                }}, new ArrayList<>(), new ArrayList<>()));
-            }}, new ArrayList<>()));
+                    add(new CustomWidgetQuestion(new Identifier("firstName"), new Slider()));
+                    add(new CustomWidgetQuestion(new Identifier("undefined"), new Slider()));
+                    add(new CustomWidgetQuestion(new Identifier("lastName"), new Slider()));
+                    add(new CustomWidgetQuestion(new Identifier("fullName"), new Slider()));
+                    add(new CustomWidgetQuestion(new Identifier("areYouSure"), new Checkbox()));
+                }}, new ArrayList<>(), new DefaultWidgetSet()));
+            }}, new DefaultWidgetSet()));
         }}
         ));
 
@@ -84,12 +85,12 @@ public class QLSTypeCheckerTest {
                 new Identifier("taxOfficeExample"), new ArrayList<Page>() {{
             add(new Page(new Identifier("Housing"), new ArrayList<Section>() {{
                 add(new Section("Buying", new ArrayList<WidgetQuestion>() {{
-                    add(new CustomWidgetQuestion(new Identifier("firstName"), new CheckboxWidget()));
-                    add(new CustomWidgetQuestion(new Identifier("lastName"), new SliderWidget()));
-                    add(new CustomWidgetQuestion(new Identifier("fullName"), new SliderWidget()));
-                    add(new CustomWidgetQuestion(new Identifier("areYouSure"), new CheckboxWidget()));
-                }}, new ArrayList<>(), new ArrayList<>()));
-            }}, new ArrayList<>()));
+                    add(new CustomWidgetQuestion(new Identifier("firstName"), new Checkbox()));
+                    add(new CustomWidgetQuestion(new Identifier("lastName"), new Slider()));
+                    add(new CustomWidgetQuestion(new Identifier("fullName"), new Slider()));
+                    add(new CustomWidgetQuestion(new Identifier("areYouSure"), new Checkbox()));
+                }}, new ArrayList<>(), new DefaultWidgetSet()));
+            }}, new DefaultWidgetSet()));
         }}
         ));
 
@@ -105,11 +106,11 @@ public class QLSTypeCheckerTest {
                 new Identifier("taxOfficeExample"), new ArrayList<Page>() {{
             add(new Page(new Identifier("Housing"), new ArrayList<Section>() {{
                 add(new Section("Buying", new ArrayList<WidgetQuestion>() {{
-                    add(new CustomWidgetQuestion(new Identifier("lastName"), new SliderWidget()));
-                    add(new CustomWidgetQuestion(new Identifier("fullName"), new SliderWidget()));
-                    add(new CustomWidgetQuestion(new Identifier("areYouSure"), new CheckboxWidget()));
-                }}, new ArrayList<>(), new ArrayList<>()));
-            }}, new ArrayList<>()));
+                    add(new CustomWidgetQuestion(new Identifier("lastName"), new Slider()));
+                    add(new CustomWidgetQuestion(new Identifier("fullName"), new Slider()));
+                    add(new CustomWidgetQuestion(new Identifier("areYouSure"), new Checkbox()));
+                }}, new ArrayList<>(), new DefaultWidgetSet()));
+            }}, new DefaultWidgetSet()));
         }}
         ));
 

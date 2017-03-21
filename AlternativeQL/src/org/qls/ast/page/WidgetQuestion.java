@@ -10,7 +10,7 @@ public class WidgetQuestion extends Node {
         this.identifier = identifier;
     }
 
-    public Identifier getIdentifier() {
+    public Identifier getId() {
         return identifier;
     }
 

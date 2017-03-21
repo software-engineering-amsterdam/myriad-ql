@@ -2,7 +2,8 @@ package org.qls.ast.widget;
 
 import org.ql.ast.type.*;
 
-public class TextWidget extends Widget {
+public class Spinbox extends Widget {
+
     public boolean isCompatibleWith(FloatType type) {
         return true;
     }
@@ -15,7 +16,8 @@ public class TextWidget extends Widget {
         return true;
     }
 
-    public boolean isCompatibleWith(StringType type) {
-        return true;
+    @Override
+    public <T, C> T accept(WidgetVisitor<T, C> visitor, C context) {
+        return visitor.visitSpinbox(this, context);
     }
 }

@@ -5,11 +5,11 @@ stylesheet
     ;
 
 page
-    :   'page' id=identifier '{' (section | defaultWidget)* '}'
+    :   'page' id=identifier '{' section* defaultWidget* '}'
     ;
 
 section
-    :   'section' name=STRING_LITERAL '{' (question | section | defaultWidget)* '}'
+    :   'section' name=STRING_LITERAL '{' question* section* defaultWidget* '}'
     |   'section' name=STRING_LITERAL (question | section | defaultWidget)
     ;
 
@@ -27,8 +27,8 @@ widgetType
     | 'slider'                                                      #sliderWidget
     | 'text'                                                        #textWidget
     | 'checkbox'                                                    #checkboxWidget
-    | 'radio' '(' yes=STRING_LITERAL ',' no=STRING_LITERAL ')'      #radioWidget
-    | 'dropdown' '(' yes=STRING_LITERAL ',' no=STRING_LITERAL ')'   #dropdownWidget
+    | 'radio' '(' yes=STRING_LITERAL ',' no=STRING_LITERAL ')'      #radio
+    | 'dropdown' '(' yes=STRING_LITERAL ',' no=STRING_LITERAL ')'   #dropdown
     ;
 
 defaultWidget

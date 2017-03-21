@@ -7,16 +7,11 @@ import org.ql.typechecker.issues.IssuesStorage;
 import org.qls.ast.StyleSheet;
 
 public class QLSTypeChecker {
-    private final QLTypeChecker qlTypeChecker;
-    private final QLSQuestionVisitor qlsQuestionVisitor;
-
-    public QLSTypeChecker() {
-        qlTypeChecker = new QLTypeChecker();
-        qlsQuestionVisitor = new QLSQuestionVisitor();
-    }
+    private final QLTypeChecker qlTypeChecker = new QLTypeChecker();
+    private final QLSQuestionVisitor qlsQuestionVisitor = new QLSQuestionVisitor();
+    private final SymbolTable symbolTable = new SymbolTable();
 
     public IssuesStorage checkStyleSheet(Form formAST, StyleSheet styleSheet) {
-        SymbolTable symbolTable = new SymbolTable();
         IssuesStorage issuesStorage = qlTypeChecker.checkForm(formAST, symbolTable);
 
         qlsQuestionVisitor.visitStyleSheet(styleSheet, issuesStorage, symbolTable);

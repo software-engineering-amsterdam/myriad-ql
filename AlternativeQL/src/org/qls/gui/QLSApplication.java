@@ -3,7 +3,6 @@ package org.qls.gui;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.ql.ast.form.Form;
-import org.ql.gui.Window;
 import org.qls.ast.StyleSheet;
 
 public class QLSApplication extends Application {
@@ -12,8 +11,9 @@ public class QLSApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        QLSGUIFormBuilder guiFormBuilder = new QLSGUIFormBuilder(new Window(primaryStage, form.getName().toString()), form, styleSheet);
-        guiFormBuilder.constructGUIForm();
+        Window window = new Window(primaryStage, form.getName().toString());
+        QLSGUIFormBuilder guiFormBuilder = new QLSGUIFormBuilder(window, form, styleSheet);
+        guiFormBuilder.constructFormPage(0);
         primaryStage.show();
     }
 
