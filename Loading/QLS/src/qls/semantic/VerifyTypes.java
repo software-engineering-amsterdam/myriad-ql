@@ -23,6 +23,10 @@ public class VerifyTypes implements StylesheetVisitor {
         for (Section section : page.getSections()) {
             section.accept(this);
         }
+
+        for (DefaultWidget widget : page.getDefaultWidgets()) {
+            check(widget.getWidget().getType(), widget.getType());
+        }
     }
 
     @Override
@@ -30,11 +34,15 @@ public class VerifyTypes implements StylesheetVisitor {
         for (Question question : section.getQuestions()) {
             question.accept(this);
         }
+
+        for (DefaultWidget widget : section.getDefaultWidgets()) {
+            check(widget.getWidget().getType(), widget.getType());
+        }
     }
 
     @Override
     public void visit(Question question) {
-        System.out.println("VISIT QUESTION QLS");
+
     }
 
     @Override

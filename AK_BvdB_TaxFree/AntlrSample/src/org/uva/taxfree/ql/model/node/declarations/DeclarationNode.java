@@ -6,6 +6,7 @@ import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.Node;
 import org.uva.taxfree.ql.model.types.Type;
+import org.uva.taxfree.ql.model.values.Value;
 
 import java.util.List;
 import java.util.Set;
@@ -43,10 +44,6 @@ public class DeclarationNode extends Node {
         return mLabel;
     }
 
-    public String defaultValue() {
-        return mType.defaultValue();
-    }
-
     @Override
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
         if (!symbolTable.contains(mId)) {
@@ -57,6 +54,10 @@ public class DeclarationNode extends Node {
     @Override
     public void generateVisibleIds(List<String> visibleIds) {
         visibleIds.add(mId);
+    }
+
+    public Value generateValue() {
+        return mType.defaultValue();
     }
 
     @Override

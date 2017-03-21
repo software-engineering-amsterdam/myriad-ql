@@ -23,6 +23,7 @@ import org.uva.taxfree.ql.model.operators.SubtractOperator;
 import org.uva.taxfree.ql.model.types.BooleanType;
 import org.uva.taxfree.ql.model.types.IntegerType;
 import org.uva.taxfree.ql.model.types.StringType;
+import org.uva.taxfree.ql.model.values.IntValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,10 +78,10 @@ public class QuestionFormTest {
         add(intCalc);
         add(expCalc);
 
-        mSymbolTable.updateValue("soldHouseValue", "100000");
-        mSymbolTable.updateValue("boughtHouseValue", "50000");
+        mSymbolTable.updateValue("soldHouseValue", new IntValue(100000));
+        mSymbolTable.updateValue("boughtHouseValue", new IntValue(50000));
 
-        Assert.assertEquals(intCalc.resolveValue(), "50000", "100k - 50k = 50k");
+        Assert.assertTrue(intCalc.resolveValue().equalTo(50000), "100k - 50k = 50k");
     }
 
     @Test

@@ -4,6 +4,8 @@ import org.uva.taxfree.ql.gui.QuestionForm;
 import org.uva.taxfree.ql.model.operators.BooleanOperator;
 import org.uva.taxfree.ql.model.operators.CompareOperator;
 import org.uva.taxfree.ql.model.operators.NumericOperator;
+import org.uva.taxfree.ql.model.values.StringValue;
+import org.uva.taxfree.ql.model.values.Value;
 
 // The UnknownType enables a configurable output of sematics messages.
 // If a variable is not declared in the symbol table, its resolveType() will return
@@ -31,7 +33,7 @@ public class UnknownType extends Type {
     }
 
     @Override
-    public String defaultValue() {
+    public Value defaultValue() {
         throw new RuntimeException("UnknownValues can not be present in a running application.");
     }
 

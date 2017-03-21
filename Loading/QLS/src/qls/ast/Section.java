@@ -20,6 +20,10 @@ public class Section extends Node {
 	public List<Question> getQuestions() {
 		return questions;
 	}
+
+	public List<DefaultWidget> getDefaultWidgets() {
+		return defaultWidgets;
+	}
 	
 	public void accept(StylesheetVisitor v) {
 		v.visit(this);

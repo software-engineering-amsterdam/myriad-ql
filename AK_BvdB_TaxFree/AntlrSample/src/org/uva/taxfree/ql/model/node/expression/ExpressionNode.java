@@ -6,6 +6,7 @@ import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.Node;
 import org.uva.taxfree.ql.model.types.Type;
+import org.uva.taxfree.ql.model.values.Value;
 
 import java.util.List;
 
@@ -34,13 +35,7 @@ public abstract class ExpressionNode extends Node {
         // Intentionally left blank
     }
 
-    public abstract String evaluate();
-
-    public abstract boolean asBoolean();
-
-    public abstract int asInteger();
-
-    public abstract String asString();
+    public abstract Value evaluate();
 
     @Override
     public abstract void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages);

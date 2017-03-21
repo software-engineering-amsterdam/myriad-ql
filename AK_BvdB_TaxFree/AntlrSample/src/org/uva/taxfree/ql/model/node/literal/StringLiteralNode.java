@@ -3,6 +3,8 @@ package org.uva.taxfree.ql.model.node.literal;
 import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.types.StringType;
 import org.uva.taxfree.ql.model.types.Type;
+import org.uva.taxfree.ql.model.values.StringValue;
+import org.uva.taxfree.ql.model.values.Value;
 
 public class StringLiteralNode extends LiteralNode {
     private final String mValue;
@@ -13,18 +15,8 @@ public class StringLiteralNode extends LiteralNode {
     }
 
     @Override
-    public boolean asBoolean() {
-        return Boolean.valueOf(mValue);
-    }
-
-    @Override
-    public int asInteger() {
-        return Integer.valueOf(mValue);
-    }
-
-    @Override
-    public String asString() {
-        return mValue;
+    public Value evaluate() {
+        return new StringValue(mValue);
     }
 
     @Override
