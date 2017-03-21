@@ -1,6 +1,6 @@
 module QLS
   module TypeChecker
-    class WidgetCollector
+    class TypeWidgetMapCollector
       def visit_stylesheet(stylesheet, collected_data)
         @variable_type_map = collected_data
         stylesheet.pages.map { |page| page.accept(self) }
@@ -10,22 +10,17 @@ module QLS
         page.body.map { |element| element.accept(self) }
       end
 
-      def visit_section(section)
+      def visit_section(section, _)
         section.body.map { |element| element.accept(self) }
       end
 
-      #TODO global var?
-      def visit_question(question)
-        widget = question.properties.map { |property| property.accept(self) }.compact
-        return if widget.empty?
-        { @variable_type_map[question.variable.name] => widget }
+      def visit_question(question, _)
+        question_type = @variable_type_map[question.variable.name]
+        question.properties.map { |property| property.accept(self, question_type) }
       end
 
-      #TODO global var?
-      def visit_default(default)
-        widget = default.properties.map { |property| property.accept(self) }.compact
-        return if widget.empty?
-        { default.type => widget }
+      def visit_default(default, _)
+        default.properties.map { |property| property.accept(self, default.type) }
       end
 
       def visit_slider_widget(slider_widget, _)
@@ -52,7 +47,7 @@ module QLS
         dropdown_widget
       end
 
-      def visit_property(_) end
+      def visit_property(_, _) end
     end
   end
 end

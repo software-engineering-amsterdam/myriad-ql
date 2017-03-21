@@ -7,8 +7,8 @@ module QLS
         @value = value
       end
 
-      def accept(visitor)
-        visitor.visit_property(self)
+      def accept(visitor, type = nil)
+        visitor.visit_property(self, type)
       end
     end
 

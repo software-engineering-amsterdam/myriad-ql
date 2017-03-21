@@ -9,11 +9,11 @@ module QLS
         page.body.map { |element| element.accept(self) }
       end
 
-      def visit_section(section)
+      def visit_section(section, _)
         section.body.map { |element| element.accept(self) }
       end
 
-      def visit_question(question)
+      def visit_question(question, _)
         question.variable.accept(self)
       end
 
@@ -21,7 +21,7 @@ module QLS
         variable
       end
 
-      def visit_default(_) end
+      def visit_default(_, _) end
     end
   end
 end
