@@ -166,6 +166,7 @@ def parse(input_string):
     body <<= lit_l_curly + OneOrMore(statement) + lit_r_curly
     body.addParseAction(lambda parsed_tokens: [parsed_tokens.asList()])
     body.setResultsName('statement_list')
+    body.setFailAction(lambda s, pos, expr, err: FatalError(s, err, pos))
 
     form = (lit_form + name + body)\
         .addParseAction(lambda parsed_tokens: ast.Form(*parsed_tokens))\

@@ -1,7 +1,9 @@
 # coding=utf-8
 from unittest import TestCase
-from pql.parser.parser import parse
+
 from pyparsing import ParseException
+
+from pql.parser.parser import parse
 
 
 class TestParser(TestCase):
@@ -342,3 +344,11 @@ class TestParser(TestCase):
         with self.assertRaises(ParseException):
             parse(input_string)
             self.fail('"" not allowed')
+
+    def test_parse_money_integer(self):
+        input_string = """
+        form teststuff {
+            "q1?"   hasTwoA: money = 2
+        }
+        """
+        self.assertIsNotNone(parse(input_string))
