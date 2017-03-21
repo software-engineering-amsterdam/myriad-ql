@@ -30,11 +30,11 @@ evaluate env expression =
             evaluate env inner
 
         BinaryExpression op _ left right ->
-            evaluateBinaryExpression op (evaluate env left) (evaluate env right)
+            evaluateBinaryOperator op (evaluate env left) (evaluate env right)
 
 
-evaluateBinaryExpression : Operator -> Value -> Value -> Value
-evaluateBinaryExpression op leftValue rightValue =
+evaluateBinaryOperator : Operator -> Value -> Value -> Value
+evaluateBinaryOperator op leftValue rightValue =
     case op of
         Arithmetic arithmetic ->
             let
