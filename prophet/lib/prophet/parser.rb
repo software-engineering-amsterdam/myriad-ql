@@ -9,12 +9,12 @@ module Prophet
     rule(:qmark) { str('?') >> space? }
     rule(:hashrocket) { space? >> str('=>') >> space? }
 
+    rule(:comment) { str('#') >> match['^\n'].repeat >> match('\n') >> space? }
+
     rule(:text) { quote >> match['^"'].repeat.as(:text) >> quote }
     rule(:number) { match['0-9'].repeat(1).as(:number) >> space? }
     rule(:bool) { (str('true') | str('false')).as(:bool) >> space? }
     rule(:literal) { text | number | bool }
-
-    rule(:comment) { str('#') >> any.repeat >> space? }
 
     rule(:type) { (str('text') | str('bool') | str('number')).as(:type) >> space? }
 
@@ -29,7 +29,7 @@ module Prophet
     rule(:term) { factor.as(:left) >> (multiplication | division) >> term.as(:right) | factor }
     rule(:factor) { lparen >> expression >> rparen | literal | identifier }
 
-    rule(:block) { (if_statement | question).repeat }
+    rule(:block) { (if_statement | question | comment).repeat }
 
     rule(:if_statement) { (str('if') >> space >> expression.as(:condition) >> block.as(:true_branch) >> (str('else') >> space >> block.as(:false_branch)).maybe >> str('end')).as(:if_statement) >> space? }
 
