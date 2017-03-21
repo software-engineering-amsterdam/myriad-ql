@@ -6,10 +6,9 @@ import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.blocks.FormNode;
 
 import java.io.File;
-import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         File inputFile = FileSelector.select();
         if (!inputFile.exists()) {
             if (MessageWindow.retryDialog(new ErrorMessage("No file selected...\nRetry?"))) {

@@ -21,13 +21,12 @@ public class AstBuilder {
         mInputFile = inputFile;
     }
 
-    public FormNode generateTree(MessageList semanticsMessages) throws IOException, UnsupportedOperationException {
+    public FormNode generateTree(MessageList semanticsMessages) {
         try {
             ANTLRErrorListener errorListener = new ANTLRErrorListener() {
                 @Override
                 public void syntaxError(Recognizer<?, ?> recognizer, Object o, int line, int column, String message, RecognitionException e) {
-                    semanticsMessages.addError("(" + line + ":" + column + "):" + message);
-                    throw new UnsupportedOperationException(message);
+                    throw new UnsupportedOperationException("(" + line + ":" + column + "):" + message);
                 }
 
                 @Override
@@ -45,7 +44,13 @@ public class AstBuilder {
 
                 }
             };
-            QLGrammarParser parser = createGrammarParser(mInputFile);
+            QLGrammarParser parser;
+            try {
+                parser = createGrammarParser(mInputFile);
+            } catch (IOException e) {
+                semanticsMessages.addError("(AstBuilder.java:52): Unable to create grammarParser: " + e.getMessage());
+                return null;
+            }
             parser.addErrorListener(errorListener);
             parser.addErrorListener(errorListener);
 
@@ -56,7 +61,7 @@ public class AstBuilder {
             walker.walk(listener, formContext);
             return listener.getAst();
         } catch (UnsupportedOperationException e) {
-            // The null is returned since the message is already logged and will be gracefully handled by the main.
+            semanticsMessages.addError(e.getMessage());
             return null;
         }
     }
