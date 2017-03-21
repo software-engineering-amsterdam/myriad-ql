@@ -82,6 +82,19 @@ public class BinaryExpressionTests extends SemanticsTester {
     }
 
     @Test
+    public void testMultiplyOperator() throws Exception {
+        assertThat(10, new MultiplyOperator(), 5, "50");
+        assertThat(-10, new MultiplyOperator(), 3, "-30");
+    }
+
+    @Test
+    public void testDivideOperator() throws Exception {
+        assertThat(10, new DivideOperator(), 5, "2");
+        assertThat(10, new DivideOperator(), 9, "1");
+        assertThat(10, new DivideOperator(), 0, "");
+    }
+
+    @Test
     public void testOrOperator() throws Exception {
         assertTrue(true, new OrOperator(), false);
         assertTrue(true, new OrOperator(), true);
