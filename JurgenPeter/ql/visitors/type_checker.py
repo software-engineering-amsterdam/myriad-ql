@@ -31,17 +31,11 @@ class TypeChecker(CheckerVisitor):
         condition_type = self.visit(node.condition)
         if condition_type is not None and condition_type != BooleanDatatype():
             self.error("condition does not evaluate to boolean value")
-
         for element in node.ifbody:
             self.visit(element)
 
     def visit_ifelse_conditional(self, node):
-        condition_type = self.visit(node.condition)
-        if condition_type is not None and condition_type != BooleanDatatype():
-            self.error("condition does not evaluate to boolean value")
-
-        for element in node.ifbody:
-            self.visit(element)
+        self.visit_if_conditional(node)
         for element in node.elsebody:
             self.visit(element)
 
@@ -82,8 +76,17 @@ class TypeChecker(CheckerVisitor):
         if left_type is None or right_type is None:
             return None
         if left_type == right_type:
-            return left_type
+            return BooleanDatatype()
         self.error("{} operator has incompatible datatypes".format(op))
+        return None
+
+    def visit_logical_unop(self, node, op):
+        right_type = self.visit(node.right)
+        if right_type is None:
+            return None
+        if right_type == BooleanDatatype():
+            return BooleanDatatype()
+        self.error("{} operator has incompatible datatype".format(op))
         return None
 
     def visit_logical_binop(self, node, op):
@@ -103,13 +106,7 @@ class TypeChecker(CheckerVisitor):
         return self.visit_sign_unop(node, "-")
 
     def visit_notop(self, node):
-        right_type = self.visit(node.right)
-        if right_type is None:
-            return None
-        if right_type == BooleanDatatype():
-            return BooleanDatatype()
-        self.error("! operator has incompatible datatype")
-        return None
+        return self.visit_logical_unop(node, "!")
 
     def visit_mulop(self, node):
         return self.visit_computation_binop(node, "*")
