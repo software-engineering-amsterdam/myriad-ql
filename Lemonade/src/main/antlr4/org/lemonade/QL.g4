@@ -15,8 +15,7 @@ question
     ;
 
 conditional
-    : 'if' LPAREN expr RPAREN '{' body+ '}' 'else' '{' body+ '}'
-    | 'if' LPAREN expr RPAREN '{' body+ '}'
+    : 'if' LPAREN expr RPAREN '{' body+ '}'
     ;
 
 type_specifier
