@@ -38,11 +38,7 @@ public abstract class ExpressionNode extends Node {
     public abstract Value evaluate();
 
     @Override
-    public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
-        if (isConstant()) {
-            semanticsMessages.addWarning("Constant expression found, always evaluates to: " + this.evaluate());
-        }
-    }
+    public abstract void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages);
 
     public abstract boolean isConstant();
 
