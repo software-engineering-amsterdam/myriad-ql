@@ -62,6 +62,16 @@ public class SemanticsAnalyzerTest extends SemanticsTester {
     }
 
     @Test
+    public void testCyclicIndirectDependency() throws Exception {
+        assertSemantics("cyclicIndirectDependency.txt", 1, "If directly depends on internals");
+    }
+
+    @Test
+    public void testCyclicInnerDependency() throws Exception {
+        assertSemantics("cyclicInnerDependency.txt", 1, "If indirectly depends on internals");
+    }
+
+    @Test
     void testConstantCalculation() throws Exception {
         assertSemantics("constantCalculation.txt", 1, "A constant calculation should display a warning");
     }
