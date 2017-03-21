@@ -1,4 +1,4 @@
-package org.uva.taxfree.ql.main;
+package org.uva.taxfree.ql;
 
 import org.uva.taxfree.ql.ast.AstBuilder;
 import org.uva.taxfree.ql.gui.*;
