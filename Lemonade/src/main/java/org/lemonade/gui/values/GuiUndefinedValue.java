@@ -243,6 +243,16 @@ public class GuiUndefinedValue extends GuiValue<Void> {
     }
 
     @Override
+    public GuiValue<?> neg() {
+        return this;
+    }
+
+    @Override
+    public GuiValue<?> bang() {
+        return this;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof GuiUndefinedValue)) {
             return false;

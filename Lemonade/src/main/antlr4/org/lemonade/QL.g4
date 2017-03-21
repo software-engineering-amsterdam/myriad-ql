@@ -10,11 +10,13 @@ body
     ;
 
 question
-    : identifier ':' label type_specifier
+    : identifier ':' label type_specifier '=' expr
+    | identifier ':' label type_specifier
     ;
 
 conditional
-    : 'if' LPAREN expr RPAREN '{' body+ '}'
+    : 'if' LPAREN expr RPAREN '{' body+ '}' 'else' '{' body+ '}'
+    | 'if' LPAREN expr RPAREN '{' body+ '}'
     ;
 
 type_specifier

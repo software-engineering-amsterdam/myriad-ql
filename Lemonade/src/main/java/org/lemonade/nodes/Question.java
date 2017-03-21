@@ -1,5 +1,6 @@
 package org.lemonade.nodes;
 
+import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.nodes.expressions.literal.IdentifierLiteral;
 import org.lemonade.nodes.types.QLType;
 import org.lemonade.visitors.interfaces.BaseVisitor;

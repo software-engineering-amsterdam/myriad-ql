@@ -1,9 +1,6 @@
 package org.lemonade.visitors;
 
-import org.lemonade.nodes.Body;
-import org.lemonade.nodes.Conditional;
-import org.lemonade.nodes.Form;
-import org.lemonade.nodes.Question;
+import org.lemonade.nodes.*;
 import org.lemonade.nodes.expressions.BinaryExpression;
 import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.nodes.expressions.binary.*;
@@ -52,6 +49,19 @@ public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<
         if (symbolTable.containsKey(identifier.getValue())) {
             errors.add("QLQuestion identifier: " + identifier + " found at " + question.getPosition() + " already declared.");
         }
+        symbolTable.put(identifier.getValue(), type);
+        return null;
+    }
+
+    @Override
+    public QLType visit(ComputedQuestion question) {
+        IdentifierLiteral identifier = question.getIdentifier();
+        QLType type = question.getType();
+
+        if (symbolTable.containsKey(identifier.getValue())) {
+            errors.add("QLQuestion identifier: " + identifier + " found at " + question.getPosition() + " already declared.");
+        }
+        question.getExpression().accept(this);
         symbolTable.put(identifier.getValue(), type);
         return null;
     }

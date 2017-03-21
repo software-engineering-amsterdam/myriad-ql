@@ -278,6 +278,8 @@ public class EvaluateTest {
         assertThat((Boolean) boolTrue.or(boolFalse).getValue()).isTrue();
         assertThat((Boolean) boolFalse.and(boolFalse).getValue()).isFalse();
         assertThat((Boolean) boolFalse.or(boolFalse).getValue()).isFalse();
+        assertThat((Boolean) boolFalse.bang().getValue()).isTrue();
+        assertThat(undefined.bang().isDefined()).isFalse();
     }
 
     @Test
@@ -348,34 +350,8 @@ public class EvaluateTest {
     }
 
     @Test
-    public void cantCompareDifferentTypes() {
-//        assertThatThrownBy(() -> one.gT(onePointFive))
-//                .isInstanceOf(IllegalArgumentException.class)
-//                .hasMessage("Cannot compare integer with decimal");
-//
-//        assertThatThrownBy(() -> one.gT(oneFifty))
-//                .isInstanceOf(IllegalArgumentException.class)
-//                .hasMessage("Cannot compare integer with money");
-//
-//        assertThatThrownBy(() -> one.gT(date))
-//                .isInstanceOf(IllegalArgumentException.class)
-//                .hasMessage("Cannot compare integer with date");
-//
-//        assertThatThrownBy(() -> zeroPointFive.gT(oneFifty))
-//                .isInstanceOf(IllegalArgumentException.class)
-//                .hasMessage("Cannot compare decimal with money");
-//
-//        assertThatThrownBy(() -> zeroPointFive.gT(date))
-//                .isInstanceOf(IllegalArgumentException.class)
-//                .hasMessage("Cannot compare decimal with date");
-//
-//        assertThatThrownBy(() -> oneFifty.gT(date))
-//                .isInstanceOf(IllegalArgumentException.class)
-//                .hasMessage("Cannot compare money with date");
-    }
-
-    @Test
     public void testNeg() {
         assertThat(one.neg().getValue()).isEqualTo(-1);
+        assertThat(undefined.neg().isDefined()).isFalse();
     }
 }

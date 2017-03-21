@@ -39,10 +39,7 @@ import org.lemonade.gui.values.GuiIdentifierValue;
 import org.lemonade.gui.values.GuiIntegerValue;
 import org.lemonade.gui.values.GuiMoneyValue;
 import org.lemonade.gui.values.GuiStringValue;
-import org.lemonade.nodes.Body;
-import org.lemonade.nodes.Conditional;
-import org.lemonade.nodes.Form;
-import org.lemonade.nodes.Question;
+import org.lemonade.nodes.*;
 import org.lemonade.nodes.expressions.binary.AndBinary;
 import org.lemonade.nodes.expressions.binary.DivideBinary;
 import org.lemonade.nodes.expressions.binary.EqBinary;
@@ -104,6 +101,13 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
         qlGui.addQuestion(labelElement, element);
 
         return guiQuestion;
+    }
+
+    @Override
+    public GuiBody visit(ComputedQuestion question) {
+
+
+        return ;
     }
 
     @Override
