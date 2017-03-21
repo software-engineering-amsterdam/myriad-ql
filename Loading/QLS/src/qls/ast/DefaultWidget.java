@@ -15,4 +15,11 @@ public class DefaultWidget extends Node {
 		this.widget = widget;
 	}
 
+	public Type getType() {
+		return type;
+	}
+
+	public Widget getWidget() {
+		return widget;
+	}
 }

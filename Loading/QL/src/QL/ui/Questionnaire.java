@@ -141,7 +141,6 @@ public class Questionnaire extends Application implements Notifier {
             
             ++rowIndex;
         }
-        
     }
     
     private Button renderButton(int rowIndex) {
