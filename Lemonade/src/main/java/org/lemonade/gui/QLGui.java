@@ -70,8 +70,8 @@ public class QLGui {
         submitFileButton.setOnAction(e -> {
             if (questionnaireFile != null) {
                 setUpQuestionnaireScene(buttonCallback);
-                buttonCallback.goToQuestionnaire(questionnaireFile);
-                this.stage.setScene(questionnaireScene);
+                if (buttonCallback.goToQuestionnaire(questionnaireFile))
+                    this.stage.setScene(questionnaireScene);
             }
         });
 

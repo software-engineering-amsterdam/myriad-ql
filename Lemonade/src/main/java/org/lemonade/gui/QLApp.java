@@ -40,7 +40,7 @@ public class QLApp extends Application implements ButtonCallback {
 
     // Called on file submit
     @Override
-    public void goToQuestionnaire(File file) {
+    public boolean goToQuestionnaire(File file) {
         try {
             Form root = parseFile(file);
             validateForm(root);
@@ -50,12 +50,16 @@ public class QLApp extends Application implements ButtonCallback {
 
             EvaluateVisitor evaluateVisitor = new EvaluateVisitor();
             qlGui.addUserInputListeners(guiRoot, evaluateVisitor);
+            return true;
         } catch (IOException e) {
             qlGui.addErrors("Error reading file: ", Collections.singletonList(e.getMessage()));
+            return false;
         } catch (InvalidFormException e) {
             qlGui.addErrors("Errors found while parsing form:", e.getFormErrors());
+            return false;
         } catch (TypeMismatchException e) {
             qlGui.addErrors("Type mismatches found in form:", e.getTypeMismatches());
+            return false;
         }
     }
 

@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public interface ButtonCallback {
 
-    void goToQuestionnaire(File file);
+    boolean goToQuestionnaire(File file);
 
     void submitForm(File file);
 

@@ -1,5 +1,6 @@
 package org.lemonade.visitors;
 
+import org.lemonade.nodes.Position;
 import org.lemonade.nodes.expressions.binary.*;
 import org.lemonade.nodes.expressions.literal.*;
 import org.lemonade.nodes.expressions.unary.BangUnary;
@@ -13,9 +14,11 @@ public class CycleDetector implements ExpressionVisitor<Boolean> {
 
     private String identifier;
     private String error;
+    private Position position;
 
-    public CycleDetector(String identifier) {
+    public CycleDetector(String identifier, Position parentPosition) {
         this.identifier = identifier;
+        this.position = parentPosition;
     }
 
     public String getError() {
@@ -150,9 +153,9 @@ public class CycleDetector implements ExpressionVisitor<Boolean> {
 
     @Override
     public Boolean visit(IdentifierLiteral identifierValue) {
-        boolean cyclic = identifierValue.getValue() == this.identifier;
+        boolean cyclic = identifierValue.getValue().equals(this.identifier);
         if (cyclic)
-            error = "Cyclic dependency on " + identifier +  " found at " + identifierValue.getPosition();
+            error = "Cyclic dependency on " + identifier +  " found at " + this.position;
         return cyclic;
     }
 }

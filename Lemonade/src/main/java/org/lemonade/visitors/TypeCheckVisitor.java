@@ -57,16 +57,18 @@ public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<
         IdentifierLiteral identifier = question.getIdentifier();
         QLType questionType = question.getType();
 
-        findCycle(identifier.getValue(), question.getExpression());
         if (symbolTable.containsKey(identifier.getValue())) {
             errors.add("QLComputedQuestion identifier: " + identifier + " found at " + question.getPosition() + " already declared.");
         }
+        symbolTable.put(identifier.getValue(), questionType);
+        findCycle(identifier.getValue(), question.getExpression(), question.getPosition());
+
         QLType expressionType = question.getExpression().accept(this);
 
         if (!expressionType.isOf(questionType.getClass())) {
             errors.add("QLComputedQuestion type mismatch at: " + question.getPosition() + " " + expressionType + " cannot be cast to " + questionType);
         }
-        symbolTable.put(identifier.getValue(), questionType);
+
         return null;
     }
 
@@ -247,8 +249,8 @@ public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<
         return qlStringType;
     }
 
-    private void findCycle(String identifier, Expression expression) {
-        CycleDetector cycleDetector = new CycleDetector(identifier);
+    private void findCycle(String identifier, Expression expression, Position position) {
+        CycleDetector cycleDetector = new CycleDetector(identifier, position);
         if (expression.accept(cycleDetector)) {
             errors.add(cycleDetector.getError());
         }
