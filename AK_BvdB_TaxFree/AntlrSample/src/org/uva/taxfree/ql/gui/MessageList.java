@@ -18,7 +18,7 @@ public class MessageList {
         return mMessages.size();
     }
 
-    public boolean fatalErrors() {
+    public boolean hasFatalErrors() {
         for (Message m : mMessages) {
             if (m.isFatal()) {
                 return true;

@@ -22,11 +22,9 @@ public class Main {
         MessageList semanticsMessages = new MessageList();
         FormNode ast = builder.generateTree(semanticsMessages);
 
-        if (semanticsMessages.hasMessages()) {
-            MessageWindow.showMessages(semanticsMessages);
-        }
+        checkMessages(semanticsMessages);
 
-        if (semanticsMessages.fatalErrors()) {
+        if (semanticsMessages.hasFatalErrors()) {
             System.exit(1);
         }
 
@@ -34,16 +32,20 @@ public class Main {
         ast.fillSymbolTable(symbolTable);
         ast.checkSemantics(symbolTable, semanticsMessages);
 
-        if (semanticsMessages.hasMessages()) {
-            MessageWindow.showMessages(semanticsMessages);
-        }
+        checkMessages(semanticsMessages);
 
-        if (semanticsMessages.fatalErrors()) {
+        if (semanticsMessages.hasFatalErrors()) {
             System.exit(2);
         }
         QuestionForm taxForm = new QuestionForm(ast.toString(), symbolTable);
         ast.fillQuestionForm(taxForm);
         taxForm.show();
+    }
+
+    private static void checkMessages(MessageList semanticsMessages) {
+        if (semanticsMessages.hasMessages()) {
+            MessageWindow.showMessages(semanticsMessages);
+        }
     }
 }
 
