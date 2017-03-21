@@ -21,8 +21,8 @@ module QLS
       rule(:stylesheet) { _ >> (str('stylesheet') >> _ >> variable >> _ >> page.repeat.as(:pages) >> _).as(:stylesheet) }
 
       # page
-      rule(:page) { _ >> str('page') >> _ >> (variable >> _ >> str('{') >> (_ >> (section | default)).repeat.as(:body)).as(:page) >> str('}') >> _ }
-
+      rule(:page)      { _ >> str('page') >> _ >> (variable >> _ >> str('{') >> _ >> page_body).as(:page) >> str('}') >> _ }
+      rule(:page_body) { (section | default).repeat.as(:body) }
       # section
       rule(:section)                    { (_ >> str('section') >> _ >> string_literal >> _ >> (section_body_with_brackets | section_body) >> _).as(:section) }
       rule(:section_body_with_brackets) { str('{') >> _ >> section_body >> _ >> str('}') }
