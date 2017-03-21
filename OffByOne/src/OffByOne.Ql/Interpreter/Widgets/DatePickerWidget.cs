@@ -33,17 +33,12 @@
 
         private void CreateControls(QuestionStatement statement, WidgetStyle style)
         {
-            var label = new Label { Content = statement.Label };
             this.Input = new DatePicker { SelectedDateFormat = DatePickerFormat.Short };
             this.Input.SelectedDateChanged += (e, a) => this.UpdateValue();
             this.Input.IsEnabled = !this.IsReadOnly();
             this.Input.SelectedDate = ((DateValue)this.Value).Value;
 
-            style.Apply(label);
-            style.Apply(this.Input);
-
-            this.Controls.Add(label);
-            this.Controls.Add(this.Input);
+            this.CreateControls(this.Input, statement, style);
         }
     }
 }

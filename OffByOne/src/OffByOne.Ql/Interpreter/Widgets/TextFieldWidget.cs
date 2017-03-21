@@ -37,11 +37,7 @@
             this.Input.IsEnabled = !this.IsReadOnly();
             this.Input.Text = this.Value.ToString();
 
-            style.Apply(label);
-            style.Apply(this.Input);
-
-            this.Controls.Add(label);
-            this.Controls.Add(this.Input);
+            this.CreateControls(this.Input, statement, style);
         }
 
         protected virtual void UpdateValue()

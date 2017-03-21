@@ -2,6 +2,7 @@
 {
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Checker.Contracts;
+    using OffByOne.Ql.Interpreter.Widgets;
 
     public interface IQlLanguageBuilder
     {
@@ -9,6 +10,8 @@
 
         ICheckerReport CheckSyntax(FormStatement root);
 
-        void RunApplication(FormStatement structureNode);
+        FormWidget CreateFormWidget(FormStatement structureNode);
+
+        void RunApplication(FormWidget structureNode);
     }
 }

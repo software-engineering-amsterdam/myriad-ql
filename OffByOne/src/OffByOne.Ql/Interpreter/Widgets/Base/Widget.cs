@@ -4,6 +4,7 @@
     using System.Windows;
     using System.Windows.Controls;
 
+    using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Common.Observers.Conracts;
 
     public abstract class Widget : IObserver<AnswerInput>
@@ -13,7 +14,7 @@
         protected Widget(GuiEnvironment environment)
         {
             this.Environment = environment;
-            this.Controls = new List<Control>();
+            this.Controls = new SortedDictionary<string, Control>();
             this.Dependencies = new SortedSet<string>();
 
             this.Environment.RegisterObserver(this);
@@ -22,9 +23,17 @@
 
         public GuiEnvironment Environment { get; }
 
-        public IList<Control> Controls { get; set; }
+        public SortedDictionary<string, Control> Controls { get; set; }
 
         protected ISet<string> Dependencies { get; }
+
+        public void AddControls(SortedDictionary<string, Control> controls)
+        {
+            foreach (var control in controls)
+            {
+                this.Controls.Add(control.Key, control.Value);
+            }
+        }
 
         public void Show()
         {
@@ -40,9 +49,20 @@
 
         public abstract void OnObserve(AnswerInput observation);
 
+        protected void CreateControls(Control input, QuestionStatement statement, WidgetStyle style)
+        {
+            var label = new Label { Content = statement.Label };
+
+            style.Apply(label);
+            style.Apply(input);
+
+            this.Controls.Add(statement.Identifier + "Label", label);
+            this.Controls.Add(statement.Identifier, input);
+        }
+
         private void UpdateControlVisibility()
         {
-            foreach (var control in this.Controls)
+            foreach (var control in this.Controls.Values)
             {
                 control.Visibility = this.isVisible ? Visibility.Visible : Visibility.Collapsed;
             }

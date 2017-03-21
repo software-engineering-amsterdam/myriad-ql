@@ -14,6 +14,7 @@ namespace OffByOne.Runner.Builder
     using OffByOne.Ql.Checker.Contracts;
     using OffByOne.Ql.Generated;
     using OffByOne.Ql.Interpreter;
+    using OffByOne.Ql.Interpreter.Widgets;
     using OffByOne.Runner.Builder.Contracts;
 
     public class QlLanguageBuilder : IQlLanguageBuilder
@@ -52,14 +53,19 @@ namespace OffByOne.Runner.Builder
             return report;
         }
 
-        public void RunApplication(FormStatement structureNode)
+        public FormWidget CreateFormWidget(FormStatement structureNode)
         {
             var interpreter = new Interpreter();
-            var env = new GuiEnvironment();
-            var form = interpreter.Visit(structureNode, env);
+            var environment = new GuiEnvironment();
+            var form = interpreter.Visit(structureNode, environment);
+            return (FormWidget)form;
+        }
+
+        public void RunApplication(FormWidget form)
+        {
             var window = new Window();
             var view = new ListView();
-            foreach (var control in form.Controls)
+            foreach (var control in form.Controls.Values)
             {
                 view.Items.Add(control);
             }
