@@ -3,8 +3,6 @@ package test.org.uva.taxfree.ql.semantics;
 import org.testng.annotations.Test;
 import test.org.uva.taxfree.ql.SemanticsTester;
 
-import java.io.File;
-
 public class SemanticsAnalyzerTest extends SemanticsTester {
     @Test
     public void testHasDuplicateQuestionLabels() throws Exception {
@@ -81,10 +79,10 @@ public class SemanticsAnalyzerTest extends SemanticsTester {
         assertSemantics("constantCalculations.txt", 3, "Mutltiple constant calculations should display multiple warning");
     }
 
-
     @Override
-    protected File testFile(String fileName) {
-        return new File("src\\test\\org\\uva\\taxfree\\ql\\testFiles\\semanticErrors\\" + fileName);
+    protected String fileDirectory() {
+        return "semanticErrors";
     }
+
 
 }
