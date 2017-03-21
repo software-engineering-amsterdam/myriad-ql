@@ -4,8 +4,7 @@ import ast._
 import checker.Issue.Issues
 import checker.{ Error, Warning }
 import model.{ DisplayCondition, DisplayQuestion }
-import values.{ Evaluator, UndefinedValue, Value }
-import view.GUI.ObservableEnv
+import values.{ Evaluator, Value }
 import view.questions.{ BooleanQuestion, DateQuestion, NumericQuestion, StringQuestion }
 
 import scalafx.application.JFXApp
@@ -19,7 +18,7 @@ import scalafx.scene.{ Node, Scene }
 
 trait GUI extends JFXApp.PrimaryStage {
   val issues: Issues
-  val env: ObservableEnv = ObservableMap()
+  val env: ObservableMap[String, Value] = ObservableMap()
 
   def displayBoxes: Seq[Node]
 
@@ -37,13 +36,13 @@ trait GUI extends JFXApp.PrimaryStage {
   }
 
   def updateEnv(identifier: String)(value: Value) = {
-    println(s"Updating env, identifier: $identifier, old value: ${env.getOrElse(identifier, UndefinedValue)} value: $value")
     env += (identifier -> value)
     println(env.toMap)
   }
 
   private def valueBindingGenerator: ExpressionNode => ObjectBinding[Value] =
-    (valueExpression: ExpressionNode) => Bindings.createObjectBinding[Value](() => Evaluator(env.toMap).calculate(valueExpression), env)
+    (valueExpression: ExpressionNode) =>
+      Bindings.createObjectBinding[Value](() => Evaluator(env.toMap).calculate(valueExpression), env)
 
   private def visibilityBinding(displayConditions: Seq[DisplayCondition]): BooleanBinding =
     Bindings.createBooleanBinding(() => Evaluator(env.toMap).display(displayConditions), env)
@@ -73,8 +72,4 @@ trait GUI extends JFXApp.PrimaryStage {
       children = issueBox ++ displayBoxes
     }
   }
-}
-
-object GUI {
-  type ObservableEnv = ObservableMap[String, Value]
 }

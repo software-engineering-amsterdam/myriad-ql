@@ -6,7 +6,13 @@ import scalafx.collections.ObservableBuffer
 import scalafx.scene.Node
 import scalafx.scene.control.ChoiceBox
 
-class DropDownWidget(trueText: String, falseText: String, width: Double, protected val changeHandler: Option[Value => Unit]) extends QLWidget {
+class DropDownWidget(
+  trueText: String,
+    falseText: String,
+    width: Double,
+    protected val changeHandler: Option[Value => Unit]
+) extends QLWidget {
+
   private val choiceBox: ChoiceBox[String] = new ChoiceBox(ObservableBuffer(trueText, falseText))
   choiceBox.setPrefWidth(width)
 

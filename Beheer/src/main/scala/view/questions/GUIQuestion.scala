@@ -6,7 +6,7 @@ import values.Value
 import view.style.DisplayStyle
 import view.widgets.QLWidget
 
-import scalafx.beans.binding.{ ObjectBinding }
+import scalafx.beans.binding.ObjectBinding
 import scalafx.scene.layout.VBox
 import scalafx.scene.text.Text
 
@@ -29,13 +29,15 @@ trait GUIQuestion {
   }
 
   def subscribeToValueBinding(bindingGenerator: ExpressionNode => ObjectBinding[Value]): Unit = question match {
-    case ComputedQuestion(_, _, _, _, valueExpression) => bindingGenerator(valueExpression).onChange {
-      (newValue, _, _) =>
-        {
-          widget.setValue(newValue.value)
-          updateEnv(newValue.value)
-        }
-    }
+    case ComputedQuestion(_, _, _, _, valueExpression) =>
+      bindingGenerator(valueExpression).onChange {
+        (newValue, _, _) =>
+          {
+            widget.setValue(newValue.value)
+            updateEnv(newValue.value)
+          }
+      }
+      ()
     case _: OpenQuestion => ()
   }
 
@@ -49,7 +51,4 @@ trait GUIQuestion {
     case _: OpenQuestion => false
     case _: ComputedQuestion => true
   }
-
-  //private def isVisible(question: DisplayQuestion): BooleanBinding =
-  //  Bindings.createBooleanBinding(() => Evaluator(env.toMap).display(question.displayConditions), env)
 }

@@ -5,7 +5,12 @@ import model.DisplayQuestion
 import values.Value
 import view.widgets.{ CheckboxWidget, DropDownWidget, QLWidget, RadioWidget }
 
-class BooleanQuestion(protected val question: DisplayQuestion, protected val questionStyle: Option[QuestionStyle], protected val updateEnv: Value => Unit) extends GUIQuestion {
+class BooleanQuestion(
+  protected val question: DisplayQuestion,
+    protected val questionStyle: Option[QuestionStyle],
+    protected val updateEnv: Value => Unit
+) extends GUIQuestion {
+
   override val widget: QLWidget =
     widgetStyle match {
       case Some(w) => w match {

@@ -7,7 +7,11 @@ import scalafx.Includes._
 import scalafx.scene.Node
 import scalafx.scene.control.TextField
 
-class NumericTextWidget(width: Double, numberType: NumericType, protected val changeHandler: Option[Value => Unit]) extends QLWidget {
+class NumericTextWidget(
+  width: Double,
+    numberType: NumericType,
+    protected val changeHandler: Option[Value => Unit]
+) extends QLWidget {
 
   private val textfield: TextField = new TextField()
   textfield.setPrefWidth(width)

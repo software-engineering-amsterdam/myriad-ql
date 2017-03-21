@@ -5,7 +5,12 @@ import model.DisplayQuestion
 import values.Value
 import view.widgets.{ NumericTextWidget, QLWidget, SliderWidget, SpinboxWidget }
 
-class NumericQuestion(protected val question: DisplayQuestion, protected val questionStyle: Option[QuestionStyle], protected val updateEnv: Value => Unit) extends GUIQuestion {
+class NumericQuestion(
+  protected val question: DisplayQuestion,
+    protected val questionStyle: Option[QuestionStyle],
+    protected val updateEnv: Value => Unit
+) extends GUIQuestion {
+
   protected override val widget: QLWidget =
     widgetStyle match {
       case Some(w) => w match {

@@ -6,7 +6,13 @@ import values.{ NumericValue, UndefinedValue, Value }
 import scalafx.scene.Node
 import scalafx.scene.control.Slider
 
-class SliderWidget(min: BigDecimal, max: BigDecimal, numericType: NumericType, protected val changeHandler: Option[Value => Unit]) extends QLWidget {
+class SliderWidget(
+  min: BigDecimal,
+    max: BigDecimal,
+    numericType: NumericType,
+    protected val changeHandler: Option[Value => Unit]
+) extends QLWidget {
+
   private val slider = new Slider()
   slider.min = min.doubleValue
   slider.max = max.doubleValue
