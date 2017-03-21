@@ -4,7 +4,7 @@ import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
 import org.uva.hatt.taxform.ast.nodes.types.ValueType;
 import org.uva.hatt.taxform.ast.visitors.Visitor;
 
-public class ComputedQuestion extends Question implements Item{
+public class ComputedQuestion extends Question {
 
     private final Expression computedValue;
 
