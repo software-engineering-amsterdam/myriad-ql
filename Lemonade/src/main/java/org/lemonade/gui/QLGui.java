@@ -154,7 +154,7 @@ public class QLGui {
         }
     }
 
-    public void addQuestion(GuiLabelElement labelElement, GuiElement element) {
+    public void addQuestion(GuiQuestion guiQuestion) {
         final GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(3, 6, 3, 6));
 
@@ -164,9 +164,9 @@ public class QLGui {
         col2.setPercentWidth(50);
         gridPane.getColumnConstraints().addAll(col1, col2);
 
-        GridPane.setConstraints(labelElement.getWidget(), 0, 0);
-        GridPane.setConstraints(element.getWidget(), 1, 0);
-        gridPane.getChildren().addAll(labelElement.getWidget(), element.getWidget());
+        GridPane.setConstraints(guiQuestion.getLabelElement().getWidget(), 0, 0);
+        GridPane.setConstraints(guiQuestion.getElement().getWidget(), 1, 0);
+        gridPane.getChildren().addAll(guiQuestion.getLabelElement().getWidget(), guiQuestion.getElement().getWidget());
         gridPane.managedProperty().bind(gridPane.visibleProperty());
 
         // Increment rowCount to place question on next row

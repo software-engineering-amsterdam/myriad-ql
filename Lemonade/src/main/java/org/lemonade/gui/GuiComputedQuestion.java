@@ -59,7 +59,6 @@ public class GuiComputedQuestion extends GuiBody {
         labelElement.getWidget().getParent().setVisible(flag);
         if (!flag) {
             valueElement.clear();
-            labelElement.clear();
         }
     }
 }

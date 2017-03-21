@@ -1,8 +1,9 @@
 package org.lemonade.gui.elements;
 
+import org.lemonade.gui.values.GuiValue;
+
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
-import org.lemonade.gui.values.GuiValue;
 
 /**
  *
@@ -21,23 +22,19 @@ public class GuiComputedElement extends GuiElement {
         return value;
     }
 
-    @Override
-    public Control getWidget() {
-        return label;
-    }
-
     public void update(GuiValue<?> value) {
         this.value = value;
         label.setText(value.toString());
     }
 
     @Override
-    public void update() {
-
+    public Label getWidget() {
+        return label;
     }
 
     @Override
     public void clear() {
 
     }
+
 }

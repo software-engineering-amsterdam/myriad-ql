@@ -53,7 +53,7 @@ import org.lemonade.visitors.interfaces.BaseVisitor;
 import org.lemonade.visitors.interfaces.ExpressionVisitor;
 import org.lemonade.visitors.interfaces.TypeVisitor;
 
-public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>, ExpressionVisitor<GuiExpression> {
+public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiMutableElement>, ExpressionVisitor<GuiExpression> {
 
     private QLGui qlGui;
 
@@ -76,11 +76,11 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
     @Override
     public GuiBody visit(final Question question) {
         GuiIdentifierValue identifier = new GuiIdentifierValue(question.getIdentifier().getValue());
-        GuiElement element = question.getType().accept(this);
+        GuiMutableElement element = question.getType().accept(this);
         GuiLabelElement labelElement = new GuiLabelElement(question.getLabel());
         GuiQuestion guiQuestion = new GuiQuestion(identifier, labelElement, element);
 
-        qlGui.addQuestion(labelElement, element);
+        qlGui.addQuestion(guiQuestion);
 
         return guiQuestion;
     }
@@ -92,7 +92,7 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
         GuiExpression expression = question.getExpression().accept(this);
         GuiComputedElement element = new GuiComputedElement(new GuiUndefinedValue());
         GuiComputedQuestion guiComputedQuestion = new GuiComputedQuestion(identifier, labelElement, element, expression);
-        qlGui.addQuestion(labelElement, element);
+        qlGui.addQuestion(guiComputedQuestion);
 
         return guiComputedQuestion;//TODO fixme
     }
@@ -112,32 +112,32 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
     }
 
     @Override
-    public GuiElement visit(final QLIntegerType qlIntegerType) {
+    public GuiMutableElement visit(final QLIntegerType qlIntegerType) {
         return new GuiIntegerElement();
     }
 
     @Override
-    public GuiElement visit(final QLBooleanType qlBooleanType) {
+    public GuiMutableElement visit(final QLBooleanType qlBooleanType) {
         return new GuiBooleanElement();
     }
 
     @Override
-    public GuiElement visit(final QLDateType qlDateType) {
+    public GuiMutableElement visit(final QLDateType qlDateType) {
         return new GuiDateElement();
     }
 
     @Override
-    public GuiElement visit(final QLDecimalType qlDecimalType) {
+    public GuiMutableElement visit(final QLDecimalType qlDecimalType) {
         return new GuiDecimalElement();
     }
 
     @Override
-    public GuiElement visit(final QLMoneyType qlMoneyType) {
+    public GuiMutableElement visit(final QLMoneyType qlMoneyType) {
         return new GuiMoneyElement();
     }
 
     @Override
-    public GuiElement visit(final QLStringType qlStringType) {
+    public GuiMutableElement visit(final QLStringType qlStringType) {
         return new GuiStringElement();
     }
 

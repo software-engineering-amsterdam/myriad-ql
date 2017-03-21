@@ -1,21 +1,19 @@
 package org.lemonade.gui;
 
-import org.lemonade.gui.elements.GuiElement;
 import org.lemonade.gui.elements.GuiLabelElement;
+import org.lemonade.gui.elements.GuiMutableElement;
 import org.lemonade.gui.values.GuiIdentifierValue;
-import org.lemonade.visitors.EvaluateVisitor;
 import org.lemonade.visitors.interfaces.GuiBaseElementsVisitor;
 
-/**
- *
- */
+
+
 public class GuiQuestion extends GuiBody {
 
     private GuiIdentifierValue identifier;
     private GuiLabelElement labelElement;
-    private GuiElement element;
+    private GuiMutableElement element;
 
-    public GuiQuestion(GuiIdentifierValue identifier, GuiLabelElement labelElement, GuiElement element) {
+    public GuiQuestion(GuiIdentifierValue identifier, GuiLabelElement labelElement, GuiMutableElement element) {
         this.identifier = identifier;
         this.labelElement = labelElement;
         this.element = element;
@@ -25,7 +23,11 @@ public class GuiQuestion extends GuiBody {
         return identifier;
     }
 
-    public GuiElement getElement() {
+    public GuiLabelElement getLabelElement() {
+        return labelElement;
+    }
+
+    public GuiMutableElement getElement() {
         return element;
     }
 

@@ -2,6 +2,7 @@ package org.lemonade.gui.elements;
 
 import org.lemonade.gui.values.GuiStringValue;
 
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 
 public class GuiLabelElement extends GuiElement {
@@ -24,13 +25,8 @@ public class GuiLabelElement extends GuiElement {
         return label;
     }
 
-    // Intentionally left empty as labels are immutable
     @Override
     public void clear() {
-    }
-
-    // Intentionally left empty as labels are immutable
-    @Override
-    public void update() {
+        label.setText("");
     }
 }
