@@ -1,6 +1,6 @@
 package com.matthewchapman.ql.environment.values;
 
-import com.matthewchapman.ql.exception.InvalidOperationException;
+import com.matthewchapman.ql.errorhandling.InvalidOperationException;
 
 /**
  * Created by matt on 18/03/2017.

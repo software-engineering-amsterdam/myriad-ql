@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.app;
+package com.matthewchapman.ql.errorhandling;
 
 /**
  * Created by matt on 19/03/2017.

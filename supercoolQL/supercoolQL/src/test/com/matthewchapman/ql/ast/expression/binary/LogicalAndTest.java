@@ -1,7 +1,7 @@
 package com.matthewchapman.ql.ast.expression.binary;
 
 import com.matthewchapman.antlr.QLParser;
-import com.matthewchapman.ql.app.ASTBuilder;
+import com.matthewchapman.ql.parsing.ASTBuilder;
 import org.junit.Before;
 import org.junit.Test;
 

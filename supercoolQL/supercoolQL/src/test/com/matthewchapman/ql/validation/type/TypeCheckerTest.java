@@ -4,8 +4,8 @@ import com.matthewchapman.antlr.QLParser;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.atomic.type.BooleanType;
 import com.matthewchapman.ql.ast.atomic.type.IntegerType;
-import com.matthewchapman.ql.app.ASTBuilder;
-import com.matthewchapman.ql.app.ErrorLogger;
+import com.matthewchapman.ql.parsing.ASTBuilder;
+import com.matthewchapman.ql.errorhandling.ErrorLogger;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,7 +27,7 @@ public class TypeCheckerTest {
     public void checkTypeChecker() {
         final int EXPECTED_RESULT = 2;
         QLParser parser = ASTBuilder.getQlParser("form testform { \"test1\" test1:boolean; \"test2\" test2:integer = 12 + test1");
-        Form form = (Form) ASTBuilder.getForm(parser);
+        Form form = ASTBuilder.getForm(parser);
 
         TypeTable typeTable = new TypeTable();
         typeTable.addEntry("test1", new BooleanType());

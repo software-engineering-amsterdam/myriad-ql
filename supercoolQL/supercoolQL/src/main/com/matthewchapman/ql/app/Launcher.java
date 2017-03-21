@@ -2,8 +2,9 @@ package com.matthewchapman.ql.app;
 
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.environment.FormEnvironment;
-import com.matthewchapman.ql.environment.ValueTableObserver;
+import com.matthewchapman.ql.environment.observers.ValueTableObserver;
 import com.matthewchapman.ql.gui.GUIHandler;
+import com.matthewchapman.ql.parsing.ASTBuilder;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;

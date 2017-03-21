@@ -18,7 +18,7 @@ import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
-import com.matthewchapman.ql.app.ErrorLogger;
+import com.matthewchapman.ql.errorhandling.ErrorLogger;
 import com.matthewchapman.ql.visitors.ExpressionVisitor;
 import com.matthewchapman.ql.visitors.StatementVisitor;
 import com.matthewchapman.ql.visitors.TypeVisitor;

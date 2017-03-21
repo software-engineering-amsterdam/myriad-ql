@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.environment;
+package com.matthewchapman.ql.environment.observers;
 
 import java.util.Observable;
 import java.util.Observer;

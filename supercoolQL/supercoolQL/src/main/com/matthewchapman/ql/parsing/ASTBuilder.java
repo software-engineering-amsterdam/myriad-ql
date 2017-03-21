@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.app;
+package com.matthewchapman.ql.parsing;
 
 import com.matthewchapman.antlr.QLLexer;
 import com.matthewchapman.antlr.QLParser;
@@ -6,8 +6,6 @@ import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.gui.errors.ErrorDialogGenerator;
-import com.matthewchapman.ql.parsing.ParseTreeErrorListener;
-import com.matthewchapman.ql.parsing.ParseTreeVisitor;
 import com.matthewchapman.ql.validation.Validator;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -71,7 +69,7 @@ public class ASTBuilder {
         return parser;
     }
 
-    boolean validateAST(Form form) {
+    public boolean validateAST(Form form) {
 
         return new Validator().runChecks(form);
     }

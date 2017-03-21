@@ -16,6 +16,7 @@ import com.matthewchapman.ql.environment.datastores.ConditionTable;
 import com.matthewchapman.ql.environment.datastores.ExpressionTable;
 import com.matthewchapman.ql.environment.datastores.QuestionTable;
 import com.matthewchapman.ql.environment.datastores.ValueTable;
+import com.matthewchapman.ql.environment.observers.ValueTableObserver;
 import com.matthewchapman.ql.environment.values.*;
 import com.matthewchapman.ql.visitors.StatementVisitor;
 import com.matthewchapman.ql.visitors.TypeVisitor;
@@ -32,7 +33,7 @@ public class FormEnvironment implements StatementVisitor<Void, String>, TypeVisi
     private final QuestionTable questions;
     private final ValueTable values;
 
-    public FormEnvironment(Form ast, ValueTableObserver con) {
+    public FormEnvironment(Form ast, ValueTableObserver observer) {
         expressions = new ExpressionTable();
         conditions = new ConditionTable();
         questions = new QuestionTable();
@@ -42,7 +43,7 @@ public class FormEnvironment implements StatementVisitor<Void, String>, TypeVisi
             statement.accept(this, null);
         }
 
-        values.addObserver(con);
+        values.addObserver(observer);
     }
 
     public List<Question> getQuestionsAsList() { return this.questions.getQuestionsAsList(); }

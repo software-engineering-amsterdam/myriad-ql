@@ -22,15 +22,10 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
 
     private ValueTable valueTable;
 
-    public ExpressionEvaluator() {
-
-    }
-
-    public Value evaluateExpression(String id, Expression expression, ValueTable valueTable) {
+    public void evaluateExpression(String id, Expression expression, ValueTable valueTable) {
         this.valueTable = valueTable;
         Value value = expression.accept(this, id);
         this.valueTable.addOrUpdateValue(id, value);
-        return value;
     }
 
     @Override

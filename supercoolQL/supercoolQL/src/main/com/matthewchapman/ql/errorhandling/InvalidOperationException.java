@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.exception;
+package com.matthewchapman.ql.errorhandling;
 
 import com.matthewchapman.ql.environment.values.Value;
 import javafx.scene.control.Alert;

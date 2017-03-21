@@ -10,8 +10,6 @@ import com.matthewchapman.ql.visitors.StatementVisitor;
  */
 public abstract class Statement extends TreeNode {
 
-    private String id;
-
     @Override
     public int getLine() {
         return super.getLine();
@@ -24,5 +22,5 @@ public abstract class Statement extends TreeNode {
 
     public abstract <T, C> T accept(StatementVisitor<T, C> visitor, C context);
 
-    public String getName() { return id; }
+    public abstract String getName();
 }

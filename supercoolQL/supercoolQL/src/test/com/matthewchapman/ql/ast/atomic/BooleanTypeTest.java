@@ -2,7 +2,7 @@ package com.matthewchapman.ql.ast.atomic;
 
 import com.matthewchapman.antlr.QLParser;
 import com.matthewchapman.ql.ast.statement.Question;
-import com.matthewchapman.ql.app.ASTBuilder;
+import com.matthewchapman.ql.parsing.ASTBuilder;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.app;
+package com.matthewchapman.ql.errorhandling;
 
 import java.util.ArrayList;
 import java.util.Collections;

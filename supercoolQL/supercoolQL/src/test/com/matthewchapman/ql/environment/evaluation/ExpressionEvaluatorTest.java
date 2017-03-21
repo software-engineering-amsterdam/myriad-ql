@@ -11,8 +11,8 @@ import com.matthewchapman.ql.ast.expression.literal.StringLiteral;
 import com.matthewchapman.ql.environment.datastores.ValueTable;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by matt on 21/03/2017.
@@ -20,7 +20,7 @@ import static junit.framework.Assert.assertNotNull;
 public class ExpressionEvaluatorTest {
 
     @Test
-    public void testAddition() {
+    public void testEvaluation() {
 
         final int RESULT_1 = 24;
         final int RESULT_2 = 120;
