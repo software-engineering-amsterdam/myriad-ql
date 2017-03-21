@@ -13,6 +13,5 @@ if __name__ == '__main__':
     exit(app.exec_())
 
 # TODO: QLS
-# TODO: Environment een class maken en een update value methode geven $$
 # NICE TO HAVES ---------------------------------
 # TODO: Export of values ?
