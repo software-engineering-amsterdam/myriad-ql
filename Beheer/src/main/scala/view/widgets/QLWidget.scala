@@ -9,8 +9,5 @@ abstract class QLWidget(changeHandler: Option[Value => Unit]) {
 
   def setValue(newVal: Value): Unit
 
-  protected def handleUpdate(newVal: Value): Unit = changeHandler match {
-    case Some(handler) => handler(newVal)
-    case None => Unit
-  }
+  protected def handleUpdate(newVal: Value) = changeHandler.foreach(f => f(newVal))
 }
