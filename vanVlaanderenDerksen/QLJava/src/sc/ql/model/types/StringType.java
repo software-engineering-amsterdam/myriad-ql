@@ -1,5 +1,8 @@
 package sc.ql.model.types;
 
+import java.awt.Component;
+import javax.swing.JTextField;
+
 public class StringType extends Type {
 
 	@Override
@@ -22,4 +25,9 @@ public class StringType extends Type {
 		return true;
 	}
 	
+	@Override 
+	public Component getWidget() {
+		JTextField field = new JTextField(30);
+		return field;
+	}
 }

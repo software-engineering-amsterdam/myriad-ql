@@ -1,4 +1,4 @@
-form test
+form taxOfficeExample
 	"Did you sell a house in 2010?" hasSoldHouse BOOLEAN
 	"Did you buy a house in 2010?" hasBoughtHouse BOOLEAN
 	"Did you enter a loan?" hasMaintLoan BOOLEAN

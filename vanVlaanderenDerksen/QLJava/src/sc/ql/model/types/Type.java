@@ -1,5 +1,7 @@
 package sc.ql.model.types;
 
+import java.awt.Component;
+
 import sc.ql.model.Node;
 
 public class Type extends Node {
@@ -40,4 +42,7 @@ public class Type extends Node {
 		return false;
 	}
 	
+	public Component getWidget() {
+		return null;
+	}
 }
