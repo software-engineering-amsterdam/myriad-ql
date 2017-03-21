@@ -8,8 +8,10 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Before;
 import org.junit.Test;
+import org.lemonade.gui.QLGui;
 import org.lemonade.nodes.Form;
 import org.lemonade.visitors.FormVisitor;
+import org.lemonade.visitors.GuiVisitor;
 import org.lemonade.visitors.TypeCheckVisitor;
 
 public class ParseTest {

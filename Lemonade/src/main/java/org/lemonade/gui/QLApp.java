@@ -21,7 +21,7 @@ import org.lemonade.visitors.EvaluateVisitor;
 import org.lemonade.visitors.FormVisitor;
 import org.lemonade.visitors.GuiVisitor;
 import org.lemonade.visitors.TypeCheckVisitor;
-import org.lemonade.visitors.WriteToJsonVisitor;
+import org.lemonade.visitors.JsonVisitor;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -68,7 +68,7 @@ public class QLApp extends Application implements ButtonCallback {
     @Override
     public void submitForm(File file) {
         if (guiRoot != null) {
-            WriteToJsonVisitor jsonVisitor = new WriteToJsonVisitor();
+            JsonVisitor jsonVisitor = new JsonVisitor();
             guiRoot.accept(jsonVisitor);
 
             try {

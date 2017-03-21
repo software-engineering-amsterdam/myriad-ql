@@ -1,32 +1,33 @@
 package org.lemonade.visitors;
 
-import com.cedarsoftware.util.io.JsonWriter;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-import org.json.simple.JSONObject;
+import com.cedarsoftware.util.io.JsonWriter;
+import com.owlike.genson.Genson;
+
 import org.lemonade.gui.GuiConditional;
 import org.lemonade.gui.GuiForm;
 import org.lemonade.gui.GuiQuestion;
 import org.lemonade.visitors.interfaces.GuiBaseElementsVisitor;
 
-public class WriteToJsonVisitor implements GuiBaseElementsVisitor {
+public class JsonVisitor implements GuiBaseElementsVisitor {
 
-    private JSONObject rootJSON;
-    private JSONObject formContents;
+    private Map<String, Object> formResults;
 
-    public WriteToJsonVisitor() {
-        rootJSON = new JSONObject();
-        formContents = new JSONObject();
+    public JsonVisitor() {
+        formResults = new LinkedHashMap<>();
     }
 
     @Override
     public void visit(final GuiForm form) {
+        formResults.put("formName", form.getIdentifier().toString());
         form.getBodies().forEach(body -> body.accept(this));
-        rootJSON.put(form.getIdentifier(), formContents);
     }
 
     @Override
     public void visit(final GuiQuestion question) {
-        formContents.put(question.getIdentifier(), question.getElement());
+        formResults.put(question.getIdentifier().toString(), question.getElement().toString());
     }
 
     @Override
@@ -35,7 +36,8 @@ public class WriteToJsonVisitor implements GuiBaseElementsVisitor {
     }
 
     public String getJSONString() {
-        return JsonWriter.formatJson(rootJSON.toString());
+        Genson genson = new Genson();
+        return JsonWriter.formatJson(genson.serialize(formResults));
     }
 
 }
