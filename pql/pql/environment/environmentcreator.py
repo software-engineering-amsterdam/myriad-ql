@@ -1,16 +1,17 @@
 # coding=utf-8
+from pql.environment.environment import Environment
 from pql.traversal.FormVisitor import FormVisitor
 
 
 class EnvironmentCreator(FormVisitor):
     def __init__(self, ast):
-        self.__symbol_table = dict()
+        self.__environment = Environment()
         self.ast = ast
 
     def visit(self):
-        self.__symbol_table.clear()
+        self.__environment.clear()
         self.ast.apply(self)
-        return self.__symbol_table
+        return self.__environment
 
     def form(self, node, args=None):
         for statement in node.statements:
@@ -26,7 +27,7 @@ class EnvironmentCreator(FormVisitor):
             statement.apply(self)
 
     def field(self, node, args=None):
-        self.__symbol_table[node.name.name] = node.data_type.value
+        self.__environment.update(node.name.name, node.data_type.value)
 
     def assignment(self, node, args=None):
         self.field(node)

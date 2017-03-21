@@ -50,7 +50,7 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
                 Error("Expression of field [{}] did not match declared type [{}], at location: {}"
                          .format(result, node.data_type.data_type, node.expression.location), node.expression.location))
 
-    def subtraction(self, node):
+    def subtraction(self, node, args=None):
         lhs_type = node.lhs.apply(self)
         if lhs_type is not None:
             lhs_checker = lhs_type.checker()
@@ -59,7 +59,7 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
                 return lhs_checker.subtraction(rhs)
         return None
 
-    def division(self, node):
+    def division(self, node, args=None):
         lhs_type = node.lhs.apply(self)
         if lhs_type is not None:
             lhs_checker = lhs_type.checker()
@@ -68,7 +68,7 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
                 return lhs_checker.division(rhs)
         return None
 
-    def multiplication(self, node):
+    def multiplication(self, node, args=None):
         lhs_type = node.lhs.apply(self)
         if lhs_type is not None:
             lhs_checker = lhs_type.checker()
@@ -77,7 +77,7 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
                 return lhs_checker.multiplication(rhs)
         return None
 
-    def addition(self, node):
+    def addition(self, node, args=None):
         lhs_type = node.lhs.apply(self)
         if lhs_type is not None:
             lhs_checker = lhs_type.checker()
@@ -86,7 +86,7 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
                 return lhs_checker.addition(rhs)
         return None
 
-    def greater_exclusive(self, node):
+    def greater_exclusive(self, node, args=None):
         lhs_type = node.lhs.apply(self)
         if lhs_type is not None:
             lhs_checker = lhs_type.checker()
@@ -97,7 +97,7 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
                     return Boolean(0, '')
         return None
 
-    def greater_inclusive(self, node):
+    def greater_inclusive(self, node, args=None):
         lhs_type = node.lhs.apply(self)
         if lhs_type is not None:
             lhs_checker = lhs_type.checker()
@@ -108,7 +108,7 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
                     return Boolean(0, '')
         return None
 
-    def lower_inclusive(self, node):
+    def lower_inclusive(self, node, args=None):
         lhs_type = node.lhs.apply(self)
         if lhs_type is not None:
             lhs_checker = lhs_type.checker()
@@ -119,7 +119,7 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
                     return Boolean(0, '')
         return None
 
-    def lower_exclusive(self, node):
+    def lower_exclusive(self, node, args=None):
         lhs_type = node.lhs.apply(self)
         if lhs_type is not None:
             lhs_checker = lhs_type.checker()
@@ -130,7 +130,7 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
                     return Boolean(0, '')
         return None
 
-    def equality(self, node):
+    def equality(self, node, args=None):
         lhs_type = node.lhs.apply(self)
         if lhs_type is not None:
             lhs_checker = lhs_type.checker()
@@ -141,7 +141,7 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
                     return Boolean(0, '')
         return None
 
-    def inequality(self, node):
+    def inequality(self, node, args=None):
         lhs_type = node.lhs.apply(self)
         if lhs_type is not None:
             lhs_checker = lhs_type.checker()
@@ -152,7 +152,7 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
                     return Boolean(0, '')
         return None
 
-    def and_(self, node):
+    def and_(self, node, args=None):
         lhs_type = node.lhs.apply(self)
         if lhs_type is not None:
             lhs_checker = lhs_type.checker()
@@ -163,7 +163,7 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
                     return Boolean(0, '')
         return None
 
-    def or_(self, node):
+    def or_(self, node, args=None):
         lhs_type = node.lhs.apply(self)
         if lhs_type is not None:
             lhs_checker = lhs_type.checker()
@@ -174,38 +174,38 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
                     return Boolean(0, '')
         return None
 
-    def negation(self, node):
+    def negation(self, node, args=None):
         operand_result = node.operand.apply(self)
         if operand_result is not None:
             lhs_checker = operand_result.checker()
             return lhs_checker.negation(node)
         return None
 
-    def positive(self, node):
+    def positive(self, node, args=None):
         operand_result = node.operand.apply(self)
         if operand_result is not None:
             lhs_checker = operand_result.checker()
             return lhs_checker.positive(node)
         return None
 
-    def negative(self, node):
+    def negative(self, node, args=None):
         operand_result = node.operand.apply(self)
         if operand_result is not None:
             lhs_checker = operand_result.checker()
             return lhs_checker.negative(node)
         return None
 
-    def identifier(self, node):
+    def identifier(self, node, args=None):
         return self.symbol_table[node.name]
 
-    def integer(self, node):
+    def integer(self, node, args=None):
         return node
 
-    def money(self, node):
+    def money(self, node, args=None):
         return node
 
-    def boolean(self, node):
+    def boolean(self, node, args=None):
         return node
 
-    def string(self, node):
+    def string(self, node, args=None):
         return node

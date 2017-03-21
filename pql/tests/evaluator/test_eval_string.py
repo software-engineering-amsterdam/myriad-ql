@@ -11,5 +11,5 @@ class TestStringEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier = 'valueResidue'
-        self.assertTrue(expected_identifier in environment, "Environment should contain key valueResidue")
-        self.assertEqual('abcdabc', environment[expected_identifier], "Evaluation should result in abcdabc")
+        self.assertTrue(environment.contains(expected_identifier), "Environment should contain key valueResidue")
+        self.assertEqual('abcdabc', environment.value(expected_identifier), "Evaluation should result in abcdabc")

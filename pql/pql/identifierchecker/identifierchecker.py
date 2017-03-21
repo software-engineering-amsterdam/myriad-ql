@@ -56,62 +56,62 @@ class IdentifierChecker(FormVisitor, BinaryExpressionVisitor, UnaryExpressionVis
                 self.__errors.append(Error("Identifier {} was not found in assignment on location {}"
                                            .format(key, node.location)))
 
-    def greater_inclusive(self, node):
+    def greater_inclusive(self, node, args=None):
         return node.lhs.apply(self) + node.rhs.apply(self)
 
-    def addition(self, node):
+    def addition(self, node, args=None):
         return node.lhs.apply(self) + node.rhs.apply(self)
 
-    def and_(self, node):
+    def and_(self, node, args=None):
         return node.lhs.apply(self) + node.rhs.apply(self)
 
-    def subtraction(self, node):
+    def subtraction(self, node, args=None):
         return node.lhs.apply(self) + node.rhs.apply(self)
 
-    def lower_inclusive(self, node):
+    def lower_inclusive(self, node, args=None):
         return node.lhs.apply(self) + node.rhs.apply(self)
 
-    def inequality(self, node):
+    def inequality(self, node, args=None):
         return node.lhs.apply(self) + node.rhs.apply(self)
 
-    def lower_exclusive(self, node):
+    def lower_exclusive(self, node, args=None):
         return node.lhs.apply(self) + node.rhs.apply(self)
 
-    def or_(self, node):
+    def or_(self, node, args=None):
         return node.lhs.apply(self) + node.rhs.apply(self)
 
-    def multiplication(self, node):
+    def multiplication(self, node, args=None):
         return node.lhs.apply(self) + node.rhs.apply(self)
 
-    def greater_exclusive(self, node):
+    def greater_exclusive(self, node, args=None):
         return node.lhs.apply(self) + node.rhs.apply(self)
 
-    def division(self, node):
+    def division(self, node, args=None):
         return node.lhs.apply(self) + node.rhs.apply(self)
 
-    def equality(self, node):
+    def equality(self, node, args=None):
         return node.lhs.apply(self) + node.rhs.apply(self)
 
-    def positive(self, node):
+    def positive(self, node, args=None):
         return node.operand.apply(self)
 
-    def negation(self, node):
+    def negation(self, node, args=None):
         return node.operand.apply(self)
 
-    def negative(self, node):
+    def negative(self, node, args=None):
         return node.operand.apply(self)
 
-    def money(self, node):
+    def money(self, node, args=None):
         return []
 
-    def integer(self, node):
+    def integer(self, node, args=None):
         return []
 
-    def string(self, node):
+    def string(self, node, args=None):
         return []
 
-    def boolean(self, node):
+    def boolean(self, node, args=None):
         return []
 
-    def identifier(self, node):
+    def identifier(self, node, args=None):
         return [node.name]

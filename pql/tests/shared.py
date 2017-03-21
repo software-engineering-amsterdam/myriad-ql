@@ -22,7 +22,7 @@ class Shared(TestCase):
         return TypeChecker(ast, TypeEnvironment).visit()
 
     def evaluate(self, ast):
-        return Evaluator(EnvironmentCreator, ast).visit()
+        return Evaluator(ast).visit()
 
     def check_labels(self, ast):
         return LabelChecker(ast).visit()

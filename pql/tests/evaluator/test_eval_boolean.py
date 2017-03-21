@@ -11,8 +11,8 @@ class TestBooleanEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)         
         expected_identifier = 'valueResidue'
-        self.assertTrue(expected_identifier in environment, "Environment should contain key valueResidue")
-        self.assertEqual(False, environment[expected_identifier], "Evaluation should result in False")
+        self.assertTrue(environment.contains(expected_identifier), "Environment should contain key valueResidue")
+        self.assertEqual(False, environment.value(expected_identifier), "Evaluation should result in False")
 
     def test_boolean_and_boolean_and_boolean(self):
         input_string = """
@@ -22,8 +22,8 @@ class TestBooleanEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier = 'valueResidue'
-        self.assertTrue(expected_identifier in environment, "Environment should contain key valueResidue")
-        self.assertEqual(True, environment[expected_identifier], "Evaluation should result in True")
+        self.assertTrue(environment.contains(expected_identifier), "Environment should contain key valueResidue")
+        self.assertEqual(True, environment.value(expected_identifier), "Evaluation should result in True")
 
     def test_boolean_or_boolean_and_boolean(self):
         input_string = """
@@ -33,8 +33,8 @@ class TestBooleanEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier = 'valueResidue'
-        self.assertTrue(expected_identifier in environment, "Environment should contain key valueResidue")
-        self.assertEqual(True, environment[expected_identifier], "Evaluation should result in True")
+        self.assertTrue(environment.contains(expected_identifier), "Environment should contain key valueResidue")
+        self.assertEqual(True, environment.value(expected_identifier), "Evaluation should result in True")
 
     def test_boolean_equality_boolean_and_integer(self):
         input_string = """
@@ -44,8 +44,8 @@ class TestBooleanEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier = 'valueResidue'
-        self.assertTrue(expected_identifier in environment, "Environment should contain key valueResidue")
-        self.assertEqual(False, environment[expected_identifier], "Evaluation should result in False")
+        self.assertTrue(environment.contains(expected_identifier), "Environment should contain key valueResidue")
+        self.assertEqual(False, environment.value(expected_identifier), "Evaluation should result in False")
 
     def test_boolean_equality_boolean_and_boolean(self):
         input_string = """
@@ -55,8 +55,8 @@ class TestBooleanEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier = 'valueResidue'
-        self.assertTrue(expected_identifier in environment, "Environment should contain key valueResidue")
-        self.assertEqual(True, environment[expected_identifier], "Evaluation should result in True")
+        self.assertTrue(environment.contains(expected_identifier), "Environment should contain key valueResidue")
+        self.assertEqual(True, environment.value(expected_identifier), "Evaluation should result in True")
 
     def test_boolean_equality_boolean_and_string(self):
         input_string = """
@@ -66,8 +66,8 @@ class TestBooleanEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier = 'valueResidue'
-        self.assertTrue(expected_identifier in environment, "Environment should contain key valueResidue")
-        self.assertEqual(False, environment[expected_identifier], "Evaluation should result in False")
+        self.assertTrue(environment.contains(expected_identifier), "Environment should contain key valueResidue")
+        self.assertEqual(False, environment.value(expected_identifier), "Evaluation should result in False")
 
     def test_boolean_equality_boolean_and_money(self):
         input_string = """
@@ -77,8 +77,8 @@ class TestBooleanEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier = 'valueResidue'
-        self.assertTrue(expected_identifier in environment, "Environment should contain key valueResidue")
-        self.assertEqual(False, environment[expected_identifier], "Evaluation should result in False")
+        self.assertTrue(environment.contains(expected_identifier), "Environment should contain key valueResidue")
+        self.assertEqual(False, environment.value(expected_identifier), "Evaluation should result in False")
 
     def test_boolean_inequality_boolean_and_integer(self):
         input_string = """
@@ -88,8 +88,8 @@ class TestBooleanEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier = 'valueResidue'
-        self.assertTrue(expected_identifier in environment, "Environment should contain key valueResidue")
-        self.assertEqual(True, environment[expected_identifier], "Evaluation should result in True")
+        self.assertTrue(environment.contains(expected_identifier), "Environment should contain key valueResidue")
+        self.assertEqual(True, environment.value(expected_identifier), "Evaluation should result in True")
 
     def test_boolean_inequality_boolean_and_boolean(self):
         input_string = """
@@ -99,8 +99,8 @@ class TestBooleanEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier = 'valueResidue'
-        self.assertTrue(expected_identifier in environment, "Environment should contain key valueResidue")
-        self.assertEqual(False, environment[expected_identifier], "Evaluation should result in False")
+        self.assertTrue(environment.contains(expected_identifier), "Environment should contain key valueResidue")
+        self.assertEqual(False, environment.value(expected_identifier), "Evaluation should result in False")
 
     def test_boolean_inequality_boolean_and_string(self):
         input_string = """
@@ -110,8 +110,8 @@ class TestBooleanEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier = 'valueResidue'
-        self.assertTrue(expected_identifier in environment, "Environment should contain key valueResidue")
-        self.assertEqual(True, environment[expected_identifier], "Evaluation should result in True")
+        self.assertTrue(environment.contains(expected_identifier), "Environment should contain key valueResidue")
+        self.assertEqual(True, environment.value(expected_identifier), "Evaluation should result in True")
 
     def test_boolean_inequality_boolean_and_money(self):
         input_string = """
@@ -121,5 +121,5 @@ class TestBooleanEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier = 'valueResidue'
-        self.assertTrue(expected_identifier in environment, "Environment should contain key valueResidue")
-        self.assertEqual(True, environment[expected_identifier], "Evaluation should result in True")
+        self.assertTrue(environment.contains(expected_identifier), "Environment should contain key valueResidue")
+        self.assertEqual(True, environment.value(expected_identifier), "Evaluation should result in True")

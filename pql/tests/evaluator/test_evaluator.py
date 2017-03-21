@@ -13,8 +13,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier = 'hasSoldHouse'
-        self.assertTrue(expected_identifier in environment, "Environment should contain key hasSoldHouse")
-        self.assertEqual(2, environment[expected_identifier], "Evaluation should result in 2")
+        self.assertTrue(environment.contains(expected_identifier), "Environment should contain key hasSoldHouse")
+        self.assertEqual(2, environment.value(expected_identifier), "Evaluation should result in 2")
 
     def test_eval_arithmetic_integer_negative(self):
         input_string = """
@@ -24,8 +24,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier = 'hasSoldHouse'
-        self.assertTrue(expected_identifier in environment, "Environment should contain key hasSoldHouse")
-        self.assertEqual(-2, environment[expected_identifier], "Evaluation should result in -2")
+        self.assertTrue(environment.contains(expected_identifier), "Environment should contain key hasSoldHouse")
+        self.assertEqual(-2, environment.value(expected_identifier), "Evaluation should result in -2")
 
     def test_eval_arithmetic_both_integers(self):
         input_string = """
@@ -35,8 +35,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier = 'hasSoldHouse'
-        self.assertTrue(expected_identifier in environment, "Environment should contain key hasSoldHouse")
-        self.assertEqual(12, environment[expected_identifier], "Evaluation should result in 12")
+        self.assertTrue(environment.contains(expected_identifier), "Environment should contain key hasSoldHouse")
+        self.assertEqual(12, environment.value(expected_identifier), "Evaluation should result in 12")
 
     def test_eval_arithmetic_integer_and_money(self):
         input_string = """
@@ -46,8 +46,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier = 'hasSoldHouse'
-        self.assertTrue(expected_identifier in environment, "Environment should contain key hasSoldHouse")
-        self.assertEqual(12.0, environment[expected_identifier], "Evaluation should result in 12.0")
+        self.assertTrue(environment.contains(expected_identifier), "Environment should contain key hasSoldHouse")
+        self.assertEqual(12.0, environment.value(expected_identifier), "Evaluation should result in 12.0")
 
     def test_eval_arithmetic_double_field(self):
         input_string = """
@@ -58,12 +58,12 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertEqual(12, environment[expected_identifier_1], "Evaluation should result in 12")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertEqual(12, environment.value(expected_identifier_1), "Evaluation should result in 12")
 
         expected_identifier_2 = 'inflationPrice'
-        self.assertTrue(expected_identifier_2 in environment, "Environment should contain key inflationPrice")
-        self.assertEqual(float((10 + 2) * 1.1), environment[expected_identifier_2], "Evaluation should result in 13.2")
+        self.assertTrue(environment.contains(expected_identifier_2), "Environment should contain key inflationPrice")
+        self.assertEqual(float((10 + 2) * 1.1), environment.value(expected_identifier_2), "Evaluation should result in 13.2")
 
     def test_eval_boolean_and_simple(self):
         input_string = """
@@ -73,8 +73,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertFalse(environment[expected_identifier_1], "Evaluation should result in false")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertFalse(environment.value(expected_identifier_1), "Evaluation should result in false")
 
     def test_eval_string_plus(self):
         input_string = """
@@ -84,8 +84,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertEqual("abcbcd", environment[expected_identifier_1], "Evaluation should result in abcbcd ")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertEqual("abcbcd", environment.value(expected_identifier_1), "Evaluation should result in abcbcd ")
 
     def test_eval_boolean_equality_boolean(self):
         input_string = """
@@ -95,8 +95,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertFalse(environment[expected_identifier_1], "Evaluation should result in false")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertFalse(environment.value(expected_identifier_1), "Evaluation should result in false")
 
     def test_eval_boolean_inequality_boolean(self):
         input_string = """
@@ -106,8 +106,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertTrue(environment[expected_identifier_1], "Evaluation should result in true")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertTrue(environment.value(expected_identifier_1), "Evaluation should result in true")
 
     def test_eval_boolean_inequality_integer(self):
         input_string = """
@@ -117,8 +117,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertTrue(environment[expected_identifier_1], "Evaluation should result in true")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertTrue(environment.value(expected_identifier_1), "Evaluation should result in true")
 
     def test_eval_boolean_inequality_money(self):
         input_string = """
@@ -128,8 +128,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertTrue(environment[expected_identifier_1], "Evaluation should result in true")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertTrue(environment.value(expected_identifier_1), "Evaluation should result in true")
 
     def test_eval_boolean_equality_money_integer(self):
         input_string = """
@@ -139,8 +139,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertTrue(environment[expected_identifier_1], "Evaluation should result in true")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertTrue(environment.value(expected_identifier_1), "Evaluation should result in true")
 
     def test_eval_boolean_equality_money(self):
         input_string = """
@@ -150,8 +150,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertTrue(environment[expected_identifier_1], "Evaluation should result in true")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertTrue(environment.value(expected_identifier_1), "Evaluation should result in true")
 
     def test_eval_boolean_greater_equal_money(self):
         input_string = """
@@ -161,8 +161,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertTrue(environment[expected_identifier_1], "Evaluation should result in true")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertTrue(environment.value(expected_identifier_1), "Evaluation should result in true")
 
     def test_eval_boolean_smaller_equal_money(self):
         input_string = """
@@ -172,8 +172,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertTrue(environment[expected_identifier_1], "Evaluation should result in true")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertTrue(environment.value(expected_identifier_1), "Evaluation should result in true")
 
     def test_eval_boolean_smaller_money(self):
         input_string = """
@@ -183,8 +183,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertFalse(environment[expected_identifier_1], "Evaluation should result in true")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertFalse(environment.value(expected_identifier_1), "Evaluation should result in true")
 
     def test_eval_boolean_greater_money(self):
         input_string = """
@@ -194,8 +194,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertFalse(environment[expected_identifier_1], "Evaluation should result in true")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertFalse(environment.value(expected_identifier_1), "Evaluation should result in true")
 
     def test_eval_integer_subtraction(self):
         input_string = """
@@ -205,8 +205,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertEqual(float(9.00), environment[expected_identifier_1], "Evaluation should result in 9.00")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertEqual(float(9.00), environment.value(expected_identifier_1), "Evaluation should result in 9.00")
 
     def test_eval_integer_division(self):
         input_string = """
@@ -216,8 +216,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertEqual(float(5.00), environment[expected_identifier_1], "Evaluation should result in 5.00")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertEqual(float(5.00), environment.value(expected_identifier_1), "Evaluation should result in 5.00")
 
     def test_eval_money_division(self):
         input_string = """
@@ -227,8 +227,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertEqual(float(5.00), environment[expected_identifier_1], "Evaluation should result in 5.00")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertEqual(float(5.00), environment.value(expected_identifier_1), "Evaluation should result in 5.00")
 
     def test_eval_money_division_zero_money(self):
         input_string = """
@@ -238,8 +238,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertEqual(float(0.00), environment[expected_identifier_1], "Evaluation should result in 5.00")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertEqual(float(0.00), environment.value(expected_identifier_1), "Evaluation should result in 5.00")
 
     def test_eval_money_division_zero_integer(self):
         input_string = """
@@ -249,8 +249,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertEqual(float(0.00), environment[expected_identifier_1], "Evaluation should result in 5.00")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertEqual(float(0.00), environment.value(expected_identifier_1), "Evaluation should result in 5.00")
 
     def test_eval_if_money_division(self):
         input_string = """
@@ -262,8 +262,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertEqual(float(5.00), environment[expected_identifier_1], "Evaluation should result in 5.00")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertEqual(float(5.00), environment.value(expected_identifier_1), "Evaluation should result in 5.00")
 
     def test_eval_if_else_false_money_division(self):
         input_string = """
@@ -279,10 +279,10 @@ class TestEvaluator(Shared):
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
         expected_identifier_2 = 'hasBoughtHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertTrue(expected_identifier_2 in environment, "Environment should contain key hasBoughtHouse")
-        self.assertEqual(float(0.00), environment[expected_identifier_1], "Evaluation should result in 5.00")
-        self.assertEqual(float(5.00), environment[expected_identifier_2], "Evaluation should result in 0.00")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertTrue(environment.contains(expected_identifier_2), "Environment should contain key hasBoughtHouse")
+        self.assertEqual(float(0.00), environment.value(expected_identifier_1), "Evaluation should result in 5.00")
+        self.assertEqual(float(5.00), environment.value(expected_identifier_2), "Evaluation should result in 0.00")
 
     def test_eval_if_else_true_money_division(self):
         input_string = """
@@ -298,10 +298,10 @@ class TestEvaluator(Shared):
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
         expected_identifier_2 = 'hasBoughtHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertTrue(expected_identifier_2 in environment, "Environment should contain key hasBoughtHouse")
-        self.assertEqual(float(5.00), environment[expected_identifier_1], "Evaluation should result in 5.00")
-        self.assertEqual(float(0.00), environment[expected_identifier_2], "Evaluation should result in 0.00")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertTrue(environment.contains(expected_identifier_2), "Environment should contain key hasBoughtHouse")
+        self.assertEqual(float(5.00), environment.value(expected_identifier_1), "Evaluation should result in 5.00")
+        self.assertEqual(float(0.00), environment.value(expected_identifier_2), "Evaluation should result in 0.00")
 
     def test_eval_boolean_negation(self):
         input_string = """
@@ -311,8 +311,8 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertFalse(environment[expected_identifier_1], "Evaluation should result in false")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertFalse(environment.value(expected_identifier_1), "Evaluation should result in false")
 
     def test_eval_boolean_and_or(self):
         input_string = """
@@ -323,11 +323,12 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'hasSoldHouse'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertTrue(environment[expected_identifier_1], "Evaluation should result in false")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertTrue(environment.value(expected_identifier_1), "Evaluation should result in false")
 
         expected_identifier_2 = 'hasSoldHouse11'
-        self.assertFalse(environment[expected_identifier_2], "Evaluation should result in false")
+        self.assertTrue(environment.contains(expected_identifier_2), "Environment should contain key hasSoldHouse11")
+        self.assertFalse(environment.value(expected_identifier_2), "Evaluation should result in false")
 
     def test_eval_boolean_greater_than(self):
         input_string = """
@@ -339,16 +340,16 @@ class TestEvaluator(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier_1 = 'sellingPrice'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key hasSoldHouse")
-        self.assertTrue(environment[expected_identifier_1], "Evaluation should result in false")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key hasSoldHouse")
+        self.assertTrue(environment.value(expected_identifier_1), "Evaluation should result in false")
 
         expected_identifier_2 = 'sellingPriceWithInflation'
-        self.assertTrue(expected_identifier_2 in environment, "Environment should contain key hasSoldHouse")
-        self.assertEqual(float(23000.87 * 1.1), environment[expected_identifier_2], "Output should equal 25300.957")
+        self.assertTrue(environment.contains(expected_identifier_2), "Environment should contain key hasSoldHouse")
+        self.assertEqual(float(23000.87 * 1.1), environment.value(expected_identifier_2), "Output should equal 25300.957")
 
         expected_identifier_3 = 'wasMoreExpensive'
-        self.assertTrue(expected_identifier_3 in environment, "Environment should contain key hasSoldHouse")
-        self.assertTrue(environment[expected_identifier_3], "Evaluation should result in true")
+        self.assertTrue(environment.contains(expected_identifier_3), "Environment should contain key hasSoldHouse")
+        self.assertTrue(environment.value(expected_identifier_3), "Evaluation should result in true")
 
     def test_eval_cyclic_value_dependency(self):
         input_string = """
@@ -358,22 +359,23 @@ class TestEvaluator(Shared):
         }
         """
         ast = self.acquire_ast(input_string)
-        evaluator = Evaluator(EnvironmentCreator, ast)
+        evaluator = Evaluator(ast)
         environment = evaluator.visit()
 
         expected_identifier_1 = 'v1'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key v1")
-        self.assertEqual(0, environment[expected_identifier_1], "Evaluation should result in 0")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key v1")
+        self.assertEqual(0, environment.value(expected_identifier_1), "Evaluation should result in 0")
         expected_identifier_2 = 'v2'
-        self.assertTrue(expected_identifier_2 in environment, "Environment should contain key v2")
-        self.assertEqual(0, environment[expected_identifier_2], "Evaluation should result in 0")
+        self.assertTrue(environment.contains(expected_identifier_2), "Environment should contain key v2")
+        self.assertEqual(0, environment.value(expected_identifier_2), "Evaluation should result in 0")
 
-        new_evaluator = evaluator.update_value(expected_identifier_2, 2)
-        self.assertTrue(expected_identifier_1 in new_evaluator, "Environment should contain key v1")
-        self.assertEqual(4, environment[expected_identifier_1], "Evaluation should result in 0")
+        environment = evaluator.visit(environment.update(expected_identifier_2, 2))
+
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key v1")
+        self.assertEqual(4, environment.value(expected_identifier_1), "Evaluation should result in 0")
         expected_identifier_2 = 'v2'
-        self.assertTrue(expected_identifier_2 in new_evaluator, "Environment should contain key v2")
-        self.assertEqual(2, environment[expected_identifier_2], "Evaluation should result in 0")
+        self.assertTrue(environment.contains(expected_identifier_2), "Environment should contain key v2")
+        self.assertEqual(2, environment.value(expected_identifier_2), "Evaluation should result in 0")
 
     def test_eval_cyclic_value_dependency_loop(self):
         input_string = """
@@ -386,29 +388,29 @@ class TestEvaluator(Shared):
         }
         """
         ast = self.acquire_ast(input_string)
-        evaluator = Evaluator(EnvironmentCreator, ast)
+        evaluator = Evaluator(ast)
         environment = evaluator.visit()
 
         expected_identifier_1 = 'v1'
-        self.assertTrue(expected_identifier_1 in environment, "Environment should contain key v1")
-        self.assertEqual(0, environment[expected_identifier_1], "Evaluation should result in 0")
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key v1")
+        self.assertEqual(0, environment.value(expected_identifier_1), "Evaluation should result in 0")
         expected_identifier_2 = 'v2'
-        self.assertTrue(expected_identifier_2 in environment, "Environment should contain key v2")
-        self.assertEqual(0, environment[expected_identifier_2], "Evaluation should result in 0")
+        self.assertTrue(environment.contains(expected_identifier_2), "Environment should contain key v2")
+        self.assertEqual(0, environment.value(expected_identifier_2), "Evaluation should result in 0")
         expected_identifier_3 = 'v3'
-        self.assertTrue(expected_identifier_3 in environment, "Environment should contain key v3")
-        self.assertEqual(0, environment[expected_identifier_3], "Evaluation should result in 0")
+        self.assertTrue(environment.contains(expected_identifier_3), "Environment should contain key v3")
+        self.assertEqual(0, environment.value(expected_identifier_3), "Evaluation should result in 0")
         expected_identifier_4 = 'v4'
-        self.assertTrue(expected_identifier_4 in environment, "Environment should contain key v4")
-        self.assertEqual(0, environment[expected_identifier_4], "Evaluation should result in 0")
+        self.assertTrue(environment.contains(expected_identifier_4), "Environment should contain key v4")
+        self.assertEqual(0, environment.value(expected_identifier_4), "Evaluation should result in 0")
         expected_identifier_5 = 'v5'
-        self.assertTrue(expected_identifier_4 in environment, "Environment should contain key v4")
-        self.assertEqual(0, environment[expected_identifier_5], "Evaluation should result in 0")
+        self.assertTrue(environment.contains(expected_identifier_5), "Environment should contain key v4")
+        self.assertEqual(0, environment.value(expected_identifier_5), "Evaluation should result in 0")
 
-        evaluator.update_value(expected_identifier_3, 2)
-        environment = evaluator.update_value(expected_identifier_5, 10)
-        self.assertEqual(4, environment[expected_identifier_1], "Evaluation should result in 4")
-        self.assertEqual(2, environment[expected_identifier_2], "Evaluation should result in 2")
-        self.assertEqual(2, environment[expected_identifier_3], "Evaluation should result in 2")
-        self.assertEqual(4, environment[expected_identifier_4], "Evaluation should result in 2")
-        self.assertEqual(10, environment[expected_identifier_5], "Evaluation should result in 2")
+        environment.update(expected_identifier_3, 2).update(expected_identifier_5, 10)
+        environment = evaluator.visit(environment)
+        self.assertEqual(4, environment.value(expected_identifier_1), "Evaluation should result in 4")
+        self.assertEqual(2, environment.value(expected_identifier_2), "Evaluation should result in 2")
+        self.assertEqual(2, environment.value(expected_identifier_3), "Evaluation should result in 2")
+        self.assertEqual(4, environment.value(expected_identifier_4), "Evaluation should result in 2")
+        self.assertEqual(10, environment.value(expected_identifier_5), "Evaluation should result in 2")

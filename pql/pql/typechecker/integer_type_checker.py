@@ -5,37 +5,37 @@ from pql.typechecker.types import is_number_type
 
 
 class IntegerTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
-    def subtraction(self, node):
+    def subtraction(self, node, args=None):
         if is_number_type(node.data_type):
             return node
         return None
 
-    def division(self, node):
+    def division(self, node, args=None):
         if is_number_type(node.data_type):
             return node
         return None
 
-    def multiplication(self, node):
+    def multiplication(self, node, args=None):
         if is_number_type(node.data_type):
             return node
         return None
 
-    def addition(self, node):
+    def addition(self, node, args=None):
         if is_number_type(node.data_type):
             return node
         return None
 
-    def greater_exclusive(self, node):
+    def greater_exclusive(self, node, args=None):
         if is_number_type(node.data_type):
             return True
         return None
 
-    def greater_inclusive(self, node):
+    def greater_inclusive(self, node, args=None):
         if is_number_type(node.data_type):
             return True
         return None
 
-    def lower_inclusive(self, node):
+    def lower_inclusive(self, node, args=None):
         if is_number_type(node.data_type):
             return True
         return None
@@ -45,32 +45,32 @@ class IntegerTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
             return True
         return None
 
-    def equality(self, node):
+    def equality(self, node, args=None):
         if is_number_type(node.data_type):
             return True
         return None
 
-    def inequality(self, node):
+    def inequality(self, node, args=None):
         if is_number_type(node.data_type):
             return True
         return None
 
-    def and_(self, node):
+    def and_(self, node, args=None):
         return None
 
-    def or_(self, node):
+    def or_(self, node, args=None):
         return None
 
-    def negation(self, node):
+    def negation(self, node, args=None):
         return None
 
-    def positive(self, node):
+    def positive(self, node, args=None):
         return node.operand
 
-    def negative(self, node):
+    def negative(self, node, args=None):
         return node.operand
 
-    def assignment(self, node):
+    def assignment(self, node, args=None):
         if node is not None and is_number_type(node.data_type):
             return node
         return None

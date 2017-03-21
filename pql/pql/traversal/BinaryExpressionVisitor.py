@@ -6,49 +6,49 @@ from abc import ABCMeta, abstractmethod
 class BinaryExpressionVisitor(metaclass=ABCMeta):
 
     @abstractmethod
-    def subtraction(self, node):
+    def subtraction(self, node, args=None):
         pass
 
     @abstractmethod
-    def division(self, node):
+    def division(self, node, args=None):
         pass
 
     @abstractmethod
-    def multiplication(self, node):
+    def multiplication(self, node, args=None):
         pass
 
     @abstractmethod
-    def addition(self, node):
+    def addition(self, node, args=None):
         pass
 
     @abstractmethod
-    def greater_exclusive(self, node):
+    def greater_exclusive(self, node, args=None):
         pass
 
     @abstractmethod
-    def greater_inclusive(self, node):
+    def greater_inclusive(self, node, args=None):
         pass
 
     @abstractmethod
-    def lower_inclusive(self, node):
+    def lower_inclusive(self, node, args=None):
         pass
 
     @abstractmethod
-    def lower_exclusive(self, node):
+    def lower_exclusive(self, node, args=None):
         pass
 
     @abstractmethod
-    def equality(self, node):
+    def equality(self, node, args=None):
         pass
 
     @abstractmethod
-    def inequality(self, node):
+    def inequality(self, node, args=None):
         pass
 
     @abstractmethod
-    def and_(self, node):
+    def and_(self, node, args=None):
         pass
 
     @abstractmethod
-    def or_(self, node):
+    def or_(self, node, args=None):
         pass

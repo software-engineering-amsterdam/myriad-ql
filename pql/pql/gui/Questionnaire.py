@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QWidget
 
-from pql.environment.environmentcreator import EnvironmentCreator
+from pql.environment.environment import Environment
 from pql.evaluator.evaluator import Evaluator
 from pql.gui.Wizard import Wizard, Page
 from pql.gui.widgets import IntegerInput, MoneyInput, BooleanInput, StringInput
@@ -16,10 +16,11 @@ from pql.traversal.TypeVisitor import TypeVisitor
 class Questionnaire(FormVisitor, TypeVisitor):
     def __init__(self, ast):
         self.wizard = Wizard()
-        self.evaluator = Evaluator(EnvironmentCreator, ast)
+        self.evaluator = Evaluator(ast)
         self.ast = ast
         self.conditional_if_list = list(tuple())
         self.conditional_if_else_list = list(tuple())
+        self.__environment = Environment()
 
     def visit(self):
         self.wizard.add_page(self.ast.apply(self))
@@ -111,20 +112,20 @@ class Questionnaire(FormVisitor, TypeVisitor):
     def assignment(self, node, parent=None):
         return self.create_container(node, (node.expression is None), parent)
 
-    def money(self, node):
+    def money(self, node, args=None):
         widget = self.numeric(float, MoneyInput)
         return widget
 
-    def integer(self, node):
+    def integer(self, node, args=None):
         widget = self.numeric(int, IntegerInput)
         return widget
 
-    def boolean(self, node):
+    def boolean(self, node, args=None):
         widget = BooleanInput()
         self.connect_triggers(widget, widget.stateChanged, bool)
         return widget
 
-    def string(self, node):
+    def string(self, node, args=None):
         widget = StringInput()
         self.connect_triggers(widget, widget.textChanged, str)
         return widget
@@ -143,14 +144,14 @@ class Questionnaire(FormVisitor, TypeVisitor):
         signal.connect(self.trigger_conditional_if_else)
 
     def update(self, widget_name, value):
-        environment = self.evaluator.update_value(widget_name, value)
-        self.update_values_in_ui(environment)
+        environment = self.evaluator.visit(self.__environment.update(widget_name, value))
+        self.update_values_in_ui(environment.items())
 
     def initial_ui(self):
-        environment = self.evaluator.visit()
-        self.update_values_in_ui(environment)
+        environment = self.evaluator.visit(self.__environment)
+        self.update_values_in_ui(environment.items())
 
-    def update_values_in_ui(self, environment):
-        for key, value in environment.items():
+    def update_values_in_ui(self, items):
+        for key, value in items:
             widget = self.wizard.findChild(QWidget, key)
             widget.set_value(value)

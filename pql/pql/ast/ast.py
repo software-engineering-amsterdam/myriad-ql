@@ -93,32 +93,32 @@ class Multiplication(BinaryOperation):
     def __init__(self, position, source, lhs, rhs):
         super(Multiplication, self).__init__('multiplication', lhs, rhs, position, source)
 
-    def apply(self, visitor):
-        return visitor.multiplication(self)
+    def apply(self, visitor, args=None):
+        return visitor.multiplication(self, args)
 
 
 class Addition(BinaryOperation):
     def __init__(self, position, source, lhs, rhs):
         super(Addition, self).__init__('addition', lhs, rhs, position, source)
 
-    def apply(self, visitor):
-        return visitor.addition(self)
+    def apply(self, visitor, args=None):
+        return visitor.addition(self, args)
 
 
 class Subtraction(BinaryOperation):
     def __init__(self, position, source, lhs, rhs):
         super(Subtraction, self).__init__('subtraction', lhs, rhs, position, source)
 
-    def apply(self, visitor):
-        return visitor.subtraction(self)
+    def apply(self, visitor, args=None):
+        return visitor.subtraction(self, args)
 
 
 class Division(BinaryOperation):
     def __init__(self, position, source, lhs, rhs):
         super(Division, self).__init__('division', lhs, rhs, position, source)
 
-    def apply(self, visitor):
-        return visitor.division(self)
+    def apply(self, visitor, args=None):
+        return visitor.division(self, args)
 
 
 class UnaryOperation(Node):
@@ -131,24 +131,24 @@ class Positive(UnaryOperation):
     def __init__(self, position, source, operand):
         super(Positive, self).__init__('positive', operand, position, source)
 
-    def apply(self, visitor):
-        return visitor.positive(self)
+    def apply(self, visitor, args=None):
+        return visitor.positive(self, args)
 
 
 class Negative(UnaryOperation):
     def __init__(self, position, source, operand):
         super(Negative, self).__init__('negative', operand, position, source)
 
-    def apply(self, visitor):
-        return visitor.negative(self)
+    def apply(self, visitor, args=None):
+        return visitor.negative(self, args)
 
 
 class Negation(UnaryOperation):
     def __init__(self, position, source, operand):
         super(Negation, self).__init__('negation', operand, position, source)
 
-    def apply(self, visitor):
-        return visitor.negation(self)
+    def apply(self, visitor, args=None):
+        return visitor.negation(self, args)
 
 
 class And(BinaryOperation):
@@ -157,8 +157,8 @@ class And(BinaryOperation):
     def __init__(self, position, source, left, right):
         super(And, self).__init__('and', left, right, position, source)
 
-    def apply(self, visitor):
-        return visitor.and_(self)
+    def apply(self, visitor, args=None):
+        return visitor.and_(self, args)
 
 
 class Or(BinaryOperation):
@@ -167,56 +167,56 @@ class Or(BinaryOperation):
     def __init__(self, position, source, left, right):
         super(Or, self).__init__('or', left, right, position, source)
 
-    def apply(self, visitor):
-        return visitor.or_(self)
+    def apply(self, visitor, args=None):
+        return visitor.or_(self, args)
 
 
 class Equality(BinaryOperation):
     def __init__(self, position, source, left, right):
         super(Equality, self).__init__('equality', left, right, position, source)
 
-    def apply(self, visitor):
-        return visitor.equality(self)
+    def apply(self, visitor, args=None):
+        return visitor.equality(self, args)
 
 
 class GreaterExclusive(BinaryOperation):
     def __init__(self, position, source, left, right):
         super(GreaterExclusive, self).__init__('greater_exclusive', left, right, position, source)
 
-    def apply(self, visitor):
-        return visitor.greater_exclusive(self)
+    def apply(self, visitor, args=None):
+        return visitor.greater_exclusive(self, args)
 
 
 class GreaterInclusive(BinaryOperation):
     def __init__(self, position, source, left, right):
         super(GreaterInclusive, self).__init__('greater_inclusive', left, right, position, source)
 
-    def apply(self, visitor):
-        return visitor.greater_inclusive(self)
+    def apply(self, visitor, args=None):
+        return visitor.greater_inclusive(self, args)
 
 
 class LowerInclusive(BinaryOperation):
     def __init__(self, position, source, left, right):
         super(LowerInclusive, self).__init__('lower_inclusive', left, right, position, source)
 
-    def apply(self, visitor):
-        return visitor.lower_inclusive(self)
+    def apply(self, visitor, args=None):
+        return visitor.lower_inclusive(self, args)
 
 
 class LowerExclusive(BinaryOperation):
     def __init__(self, position, source, left, right):
         super(LowerExclusive, self).__init__('lower_exclusive', left, right, position, source)
 
-    def apply(self, visitor):
-        return visitor.lower_exclusive(self)
+    def apply(self, visitor, args=None):
+        return visitor.lower_exclusive(self, args)
 
 
 class Inequality(BinaryOperation):
     def __init__(self, position, source, left, right):
         super(Inequality, self).__init__('inequality', left, right, position, source)
 
-    def apply(self, visitor):
-        return visitor.inequality(self)
+    def apply(self, visitor, args=None):
+        return visitor.inequality(self, args)
 
 
 class Value(Node):
@@ -230,8 +230,8 @@ class Integer(Value):
     def __init__(self, position, source, value=0):
         super(Integer, self).__init__("integer", position, source, value, DataTypes.integer)
 
-    def apply(self, visitor):
-        return visitor.integer(self)
+    def apply(self, visitor, args=None):
+        return visitor.integer(self, args)
 
     @staticmethod
     def checker():
@@ -242,8 +242,8 @@ class Boolean(Value):
     def __init__(self, position, source, value=False):
         super(Boolean, self).__init__("boolean", position, source, value, DataTypes.boolean)
 
-    def apply(self, visitor):
-        return visitor.boolean(self)
+    def apply(self, visitor, args=None):
+        return visitor.boolean(self, args)
 
     @staticmethod
     def checker():
@@ -254,8 +254,8 @@ class Money(Value):
     def __init__(self, position, source, value=0.00):
         super(Money, self).__init__("money", position, source, value, DataTypes.money)
 
-    def apply(self, visitor):
-        return visitor.money(self)
+    def apply(self, visitor, args=None):
+        return visitor.money(self, args)
 
     def checker(self):
         return MoneyTypeChecker(self)
@@ -265,8 +265,8 @@ class String(Value):
     def __init__(self, position, source, value=''):
         super(String, self).__init__("string", position, source, value, DataTypes.string)
 
-    def apply(self, visitor):
-        return visitor.string(self)
+    def apply(self, visitor, args=None):
+        return visitor.string(self, args)
 
     @staticmethod
     def checker():
@@ -278,5 +278,5 @@ class Identifier(Node):
         super(Identifier, self).__init__('identifier', position, source)
         self.name = name
 
-    def apply(self, visitor):
-        return visitor.identifier(self)
+    def apply(self, visitor, args=None):
+        return visitor.identifier(self, args)
