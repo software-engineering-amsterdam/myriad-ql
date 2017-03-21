@@ -62,7 +62,7 @@ class Evaluator(Visitor):
         return self.visit(node.left) or self.visit(node.right)
 
     def visit_variable(self, node):
-        value = self.environment.get(node.name, None)
+        value = self.environment.get(node.name)
         if value is None:
             raise UndefinedVariableError
         return value
