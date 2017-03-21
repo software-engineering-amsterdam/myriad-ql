@@ -63,7 +63,7 @@ public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<
         }
         question.getExpression().accept(this);
         symbolTable.put(identifier.getValue(), type);
-        return null;
+        return null;//TODO check me!
     }
 
     public QLType visit(Conditional conditional) {
@@ -186,6 +186,7 @@ public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<
 
         if (!(leftType.isNumeric() && rightType.isNumeric())) {
             errors.add("QLNumeric type mismatch at " + binaryExpression.getPosition() + ", " + leftType + " with " + rightType);
+            return leftType;
         }
         return QLNumberType.precedence((QLNumberType) leftType, (QLNumberType) rightType);
     }

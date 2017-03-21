@@ -41,17 +41,17 @@ public class FormVisitor extends QLBaseVisitor<ASTNode> {
         String label = ctx.label().getText();
         QLType type = (QLType) ctx.type_specifier().accept(this);
         Position position = constructPosition(ctx);
-        Expression expression = (Expression)  ctx.expr().accept(this);
-        if (!(expression == null)) {
+        if (!(ctx.expr() == null)) {
+            Expression expression = (Expression)  ctx.expr().accept(this);
             ComputedQuestion question = new ComputedQuestion(identifier, label, type, expression);
             question.setPosition(position);
+            return question;
         }
         Question question = new Question(identifier, label, type);
         question.setPosition(position);
 
         return question;
     }
-
 
 
     @Override

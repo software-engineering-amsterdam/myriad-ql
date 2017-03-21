@@ -339,8 +339,8 @@ public class EvaluateTest {
         assertThat(string.gT(undefined).isDefined()).isFalse();
         assertThat(string.gTEq(undefined).isDefined()).isFalse();
         assertThat(string.lTEq(undefined).isDefined()).isFalse();
-        assertThat( string.eq(undefined).getValue()).isFalse();
-        assertThat( string.nEq(undefined).getValue()).isTrue();
+        assertThat(string.eq(undefined).getValue()).isFalse();
+        assertThat(string.nEq(undefined).getValue()).isTrue();
 
         assertThat(boolTrue.and(undefined).isDefined()).isFalse();
         assertThat(boolTrue.or(undefined).isDefined()).isFalse();

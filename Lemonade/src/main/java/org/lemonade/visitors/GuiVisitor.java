@@ -5,14 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.lemonade.gui.*;
-import org.lemonade.gui.elements.GuiBooleanElement;
-import org.lemonade.gui.elements.GuiDateElement;
-import org.lemonade.gui.elements.GuiDecimalElement;
-import org.lemonade.gui.elements.GuiElement;
-import org.lemonade.gui.elements.GuiIntegerElement;
-import org.lemonade.gui.elements.GuiLabelElement;
-import org.lemonade.gui.elements.GuiMoneyElement;
-import org.lemonade.gui.elements.GuiStringElement;
+import org.lemonade.gui.elements.*;
 import org.lemonade.gui.expressions.binary.GuiAndBinary;
 import org.lemonade.gui.expressions.binary.GuiDivideBinary;
 import org.lemonade.gui.expressions.binary.GuiEqBinary;
@@ -27,13 +20,7 @@ import org.lemonade.gui.expressions.binary.GuiPlusBinary;
 import org.lemonade.gui.expressions.binary.GuiProductBinary;
 import org.lemonade.gui.expressions.unary.GuiBangUnary;
 import org.lemonade.gui.expressions.unary.GuiNegUnary;
-import org.lemonade.gui.values.GuiBooleanValue;
-import org.lemonade.gui.values.GuiDateValue;
-import org.lemonade.gui.values.GuiDecimalValue;
-import org.lemonade.gui.values.GuiIdentifierValue;
-import org.lemonade.gui.values.GuiIntegerValue;
-import org.lemonade.gui.values.GuiMoneyValue;
-import org.lemonade.gui.values.GuiStringValue;
+import org.lemonade.gui.values.*;
 import org.lemonade.nodes.*;
 import org.lemonade.nodes.expressions.binary.AndBinary;
 import org.lemonade.nodes.expressions.binary.DivideBinary;
@@ -101,9 +88,9 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
     @Override
     public GuiBody visit(ComputedQuestion question) {
         GuiIdentifierValue identifier = new GuiIdentifierValue(question.getIdentifier().getValue());
-        GuiElement element = question.getType().accept(this);
         GuiLabelElement labelElement = new GuiLabelElement(question.getLabel());
         GuiExpression expression = question.getExpression().accept(this);
+        GuiComputedElement element = new GuiComputedElement(new GuiUndefinedValue());
         GuiComputedQuestion guiComputedQuestion = new GuiComputedQuestion(identifier, labelElement, element, expression);
         qlGui.addQuestion(labelElement, element);
 
