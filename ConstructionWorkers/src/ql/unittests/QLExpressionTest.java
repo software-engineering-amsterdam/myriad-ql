@@ -43,8 +43,8 @@ import java.util.Map;
 
 public class QLExpressionTest {
 
-    private ExpressionEvaluator expressionEvaluator;
     private TypeChecker typeChecker;
+    private ExpressionEvaluator expressionEvaluator;
 
     private final MyInteger testInteger = new MyInteger(1, new LineNumber(1));
     private final MyInteger testInteger2 = new MyInteger(2, null);
@@ -60,10 +60,10 @@ public class QLExpressionTest {
 
     @Before
     public void setUp() throws IOException{
-        Form form = new Form(new Identifier("testID", null), new ArrayList<>(), null);
+        Form form = new Form(new Identifier("testForm", null), new ArrayList<>(), null);
 
-        MessageData messages = new MessageData();
         Map<String, Type> identifierToTypeMap = new HashMap<>();
+        MessageData messages = new MessageData();
         Context context = new Context();
 
         typeChecker= new TypeChecker(form, identifierToTypeMap, messages);
