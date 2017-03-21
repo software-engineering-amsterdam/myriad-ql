@@ -13,10 +13,13 @@ public class QLSGUIFormBuilder implements ValueReviser {
     private final Window window;
     private final StyleSheet styleSheet;
     private final PageBuilder pageBuilder;
+    private Pagination pagination;
 
     public QLSGUIFormBuilder(Window window, Form form, StyleSheet styleSheet) {
         this.window = window;
         this.styleSheet = styleSheet;
+
+        pagination = new Pagination(this, styleSheet.getPages().size());
         pageBuilder = new PageBuilder(new WidgetContainer(this), form, new CustomWidgetContainer(this));
     }
 
@@ -28,5 +31,6 @@ public class QLSGUIFormBuilder implements ValueReviser {
     public void constructFormPage(int pageNumber) {
         window.reset();
         window.addSections(pageBuilder.createSections(styleSheet.getPage(pageNumber)));
+        window.addPane(pagination.getButtonsPane());
     }
 }
