@@ -27,4 +27,8 @@ public class Window {
     public void addSections(List<Node> sectionPanes) {
         sectionPanes.forEach(questionPane::add);
     }
+
+    public void addPane(Node node) {
+        questionPane.add(node);
+    }
 }

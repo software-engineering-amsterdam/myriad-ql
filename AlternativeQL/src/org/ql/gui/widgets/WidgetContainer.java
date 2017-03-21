@@ -32,7 +32,7 @@ public class WidgetContainer implements TypeVisitor<Widget, Question> {
 
     @Override
     public Widget visitBooleanType(BooleanType booleanType, Question question) {
-        return new CheckboxWidget(valueReviser, question);
+        return new CheckBoxWidget(valueReviser, question);
     }
 
     @Override
