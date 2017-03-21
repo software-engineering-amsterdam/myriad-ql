@@ -33,4 +33,9 @@ public class StringType extends Type {
     public Value defaultValue() {
         return new StringValue("None...");
     }
+
+    @Override
+    public String toString() {
+        return "String";
+    }
 }

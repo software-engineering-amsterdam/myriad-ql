@@ -25,7 +25,7 @@ public class IntValue extends Value {
 
     @Override
     protected IntValue divide(IntValue intValue) {
-        return new IntValue(intValue.mValue / mValue);
+        return 0 != mValue ? new IntValue(intValue.mValue / mValue) : new IntValue(0);
     }
 
     @Override

@@ -25,7 +25,7 @@ public class IfStatementNode extends BlockNode {
         super.checkSemantics(symbolTable, semanticsMessages);
         mExpression.checkSemantics(symbolTable, semanticsMessages);
         if (!mExpression.getType().equals(new BooleanType())) {
-            semanticsMessages.addError("Condition must be of boolean type!");
+            semanticsMessages.addError(mExpression.sourceString() + "Condition must be of boolean type! ");
         }
         checkCyclicDependency(getUsedVariables(), symbolTable, semanticsMessages);
     }
@@ -35,7 +35,6 @@ public class IfStatementNode extends BlockNode {
         mExpression.collectUsedVariables(usedVariables);
         return usedVariables;
     }
-
 
     @Override
     public void fillSymbolTable(SymbolTable symbolTable) {

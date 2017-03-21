@@ -52,10 +52,7 @@ public abstract class BlockNode extends Node {
         for (Node child : mChildren) {
             child.collectUsedVariables(childVariables);
         }
-
         symbolTable.generateDependencies(dependencies);
-        symbolTable.generateDependencies(childVariables);
-
         for (String variableName : dependencies) {
             if (childVariables.contains(variableName)) {
                 semanticsMessages.addError("Condition depends on inner declaration: " + variableName);

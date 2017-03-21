@@ -20,4 +20,7 @@ public abstract class Type {
     public abstract void generateWidget(String label, String id, QuestionForm frame);
 
     public abstract Value defaultValue();
+
+    @Override
+    public abstract String toString();
 }

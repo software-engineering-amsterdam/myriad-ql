@@ -117,7 +117,6 @@ public abstract class Value {
     }
 
     private UnsupportedOperationException createException(String operationName) throws UnsupportedOperationException {
-        // TODO: Or return unknown value?
         return new UnsupportedOperationException("Operation '" + operationName + "' is not supported on this value");
     }
 

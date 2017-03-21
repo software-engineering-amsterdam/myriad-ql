@@ -9,7 +9,7 @@ public abstract class Message {
     }
 
     public String toString() {
-        return messagePrefix() + ": " + mMessage + "\n";
+        return messagePrefix() + mMessage + "\n";
     }
 
     public boolean isFatal() {

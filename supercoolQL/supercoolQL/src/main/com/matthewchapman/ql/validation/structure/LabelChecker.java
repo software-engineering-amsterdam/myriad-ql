@@ -20,13 +20,13 @@ import java.util.Set;
  * <p>
  * Gathers all of the questions contained within a given Form, allows checking for duplicates
  */
-public class QuestionCollection implements StatementVisitor<Void, String> {
+public class LabelChecker implements StatementVisitor<Void, String> {
 
     private final List<Question> questionList;
     private final TypeTable typeTable;
     private final ErrorLogger logger;
 
-    public QuestionCollection() {
+    public LabelChecker() {
         this.typeTable = new TypeTable();
         this.questionList = new ArrayList<>();
         this.logger = new ErrorLogger();

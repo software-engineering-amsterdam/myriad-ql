@@ -46,4 +46,9 @@ public class UnknownType extends Type {
     public boolean equals(Type other) {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Unknown";
+    }
 }

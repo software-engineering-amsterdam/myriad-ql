@@ -33,4 +33,9 @@ public class IntegerType extends Type {
     public Value defaultValue() {
         return new IntValue(0);
     }
+
+    @Override
+    public String toString() {
+        return "Integer";
+    }
 }
