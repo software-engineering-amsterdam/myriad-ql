@@ -4,15 +4,20 @@ module QLS
 
       def check(qls_ast, ql_ast)
         ql_questions = ql_ast.accept(QL::TypeChecker::QuestionCollector.new).flatten
-        ql_variables = ql_questions.map(&:variable).map(&:name)
+        ql_variable_names = ql_questions.map(&:variable).map(&:name)
 
-        qls_variables = qls_ast.accept(VariableCollector.new)
-        pp qls_variables
+        qls_variable_names = qls_ast.accept(QuestionVariableCollector.new).flatten.compact.map(&:name)
 
+        questions_placed_checker(qls_variable_names, ql_variable_names)
 
-
-        # { errors: [QuestionChecker, WidgetChecker].map { |checker| stylesheet.accept(checker.new, form) }.flatten }
+        pp ql_variable_names
+        pp qls_variable_names
       end
+
+      def questions_placed_checker(qls_variable_names, ql_variable_names)
+        (ql_variable_names - qls_variable_names).map { |error| NotificationTable.store(Notification::Error.new("#{error} of the QL program is not placed by the QLS program.")) }
+      end
+
     end
   end
 end

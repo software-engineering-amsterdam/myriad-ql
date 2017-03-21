@@ -1,6 +1,6 @@
 module QLS
   module TypeChecker
-    class VariableCollector
+    class QuestionVariableCollector
       def visit_stylesheet(stylesheet)
         stylesheet.pages.map { |page| page.accept(self) }
       end
