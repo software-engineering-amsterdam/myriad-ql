@@ -2,14 +2,18 @@ form taxOfficeExample {
   "Did you sell a house in 2010?"
     hasSoldHouse: boolean
   "Did you buy a house in 2010?"
-    hasBohasSoldHouseughtHouse: integer
-    if (true && hasSoldHouse){
-     "Did yoIF VRAAG?"
-        xx: money = hasBoughtHouse - 2 * 2
-    } else {
-        "Did you buy a house in 2015?"
-        xx: money = -hasBoughtHouse
-    }
-"Did you buy222 a house in 2010?"
-    ssss: integer = -xx
+    hasBoughtHouse: boolean
+  "Did you enter a loan?"
+    hasMaintLoan: boolean
+
+  if (hasSoldHouse) {
+    "What was the selling price?"
+      sellingPrice: money
+    "Private debts for the sold house:"
+      privateDebt: money
+    "Value residue:"
+      valueResidue: money =
+        (sellingPrice - privateDebt)
+  }
+
 }

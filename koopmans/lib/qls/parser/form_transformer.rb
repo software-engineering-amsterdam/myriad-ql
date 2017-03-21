@@ -17,7 +17,7 @@ module QLS
       rule(section: { string_literal: simple(:name), body: subtree(:body) }) { Section.new(name, body) }
 
       # question
-      rule(question: { id: simple(:name), properties: subtree(:properties) }) { Question.new(QL::AST::Variable.new(name), properties) }
+      rule(question: { id: simple(:variable), properties: subtree(:properties) }) { Question.new(variable, properties) }
 
       # types
       rule(type: 'boolean') { QL::AST::BooleanType.new }

@@ -19,9 +19,9 @@ module QLS
         end
       end
 
-      describe WidgetChecker do
+      describe WidgetTypeChecker do
         it 'detects error' do
-          messages = stylesheet_ast.accept(WidgetChecker.new, form_ast).map(&:message)
+          messages = stylesheet_ast.accept(WidgetTypeChecker.new, form_ast).map(&:message)
           expect(messages).to include('QLS::AST::SliderWidget can not be used with QL::AST::BooleanType')
           expect(messages).to include('QLS::AST::CheckboxWidget can not be used with undefined')
         end

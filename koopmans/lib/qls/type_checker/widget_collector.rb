@@ -14,20 +14,45 @@ module QLS
         section.body.map { |element| element.accept(self) }
       end
 
+      #TODO global var?
       def visit_question(question)
-        question.properties.map { |property| property.accept(self) }
+        widget = question.properties.map { |property| property.accept(self) }.compact
+        return if widget.empty?
+        { @variable_type_map[question.variable.name] => widget }
       end
 
+      #TODO global var?
       def visit_default(default)
-        # { default.type => default.properties[:widget] } if default.properties
+        widget = default.properties.map { |property| property.accept(self) }.compact
+        return if widget.empty?
+        { default.type => widget }
       end
 
-      def visit_widget(widget)
-        widget
+      def visit_slider_widget(slider_widget, _)
+        slider_widget
       end
 
-      def visit_property(_)
+      def visit_spinbox_widget(spinbox_widget, _)
+        spinbox_widget
       end
+
+      def visit_text_widget(text_widget, _)
+        text_widget
+      end
+
+      def visit_radio_widget(radio_widget, _)
+        radio_widget
+      end
+
+      def visit_checkbox_widget(checkbox_widget, _)
+        checkbox_widget
+      end
+
+      def visit_dropdown_widget(dropdown_widget, _)
+        dropdown_widget
+      end
+
+      def visit_property(_) end
     end
   end
 end

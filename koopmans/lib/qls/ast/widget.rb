@@ -1,14 +1,6 @@
 module QLS
   module AST
-    class Widget
-      include QL::AST
-
-      def accept(visitor)
-        visitor.visit_widget(self)
-      end
-    end
-
-    class SliderWidget < Widget
+    class SliderWidget
       attr_reader :minimum, :maximum
 
       def initialize(minimum, maximum)
@@ -16,24 +8,24 @@ module QLS
         @maximum = maximum
       end
 
-      def is_compatible_with
-        [IntegerType, MoneyType, DecimalType]
+      def accept(visitor, type = nil)
+        visitor.visit_slider_widget(self, type)
       end
     end
 
-    class SpinboxWidget < Widget
-      def is_compatible_with
-        [IntegerType, MoneyType, DecimalType]
+    class SpinboxWidget
+      def accept(visitor, type = nil)
+        visitor.visit_spinbox_widget(self, type)
       end
     end
 
-    class TextWidget < Widget
-      def is_compatible_with
-        [IntegerType, DateType, DecimalType, StringType, MoneyType]
+    class TextWidget
+      def accept(visitor, type = nil)
+        visitor.visit_text_widget(self, type)
       end
     end
 
-    class RadioWidget < Widget
+    class RadioWidget
       attr_reader :true_text, :false_text
 
       def initialize(true_text, false_text)
@@ -41,18 +33,18 @@ module QLS
         @false_text = false_text
       end
 
-      def is_compatible_with
-        [BooleanType]
+      def accept(visitor, type = nil)
+        visitor.visit_radio_widget(self, type)
       end
     end
 
-    class CheckboxWidget < Widget
-      def is_compatible_with
-        [BooleanType]
+    class CheckboxWidget
+      def accept(visitor, type = nil)
+        visitor.visit_checkbox_widget(self, type)
       end
     end
 
-    class DropdownWidget < Widget
+    class DropdownWidget
       attr_reader :true_text, :false_text
 
       def initialize(true_text, false_text)
@@ -60,8 +52,8 @@ module QLS
         @false_text = false_text
       end
 
-      def is_compatible_with
-        [BooleanType]
+      def accept(visitor, type = nil)
+        visitor.visit_dropdown_widget(self, type)
       end
     end
   end

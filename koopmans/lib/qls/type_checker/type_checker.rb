@@ -10,11 +10,7 @@ module QLS
         questions_placed_checker(qls_variable_names, ql_variable_names)
         questions_reference_checker(qls_variable_names, ql_variable_names)
         questions_uniqueness_checker(qls_variable_names)
-        widget_checker(qls_ast, ql_questions)
-
-
-        pp ql_variable_names
-        pp qls_variable_names
+        widget_type_checker(qls_ast, ql_questions)
       end
 
       def questions_placed_checker(qls_variable_names, ql_variable_names)
@@ -29,14 +25,21 @@ module QLS
         select_duplicates(qls_variable_names).map { |error| NotificationTable.store(Notification::Error.new("#{error} is placed multiple times")) }
       end
 
-      def widget_checker(qls_ast, ql_questions)
+      def widget_type_checker(qls_ast, ql_questions)
         ql_variable_type_map = {}
         ql_questions.each do |ql_question|
           ql_variable_type_map[ql_question.variable.name] = ql_question.type
         end
+        qls_widgets = qls_ast.accept(WidgetCollector.new, ql_variable_type_map).flatten.compact
+        invalid_widget_types?(qls_widgets)
+      end
 
-        qls_widgets = qls_ast.accept(WidgetCollector.new, ql_variable_type_map)
-        pp qls_widgets
+      def invalid_widget_types?(qls_widgets)
+        qls_widgets.each do |type_widget_map|
+          type_widget_map.each do |type, widget|
+            widget.first.accept(WidgetTypeChecker.new, type)
+          end
+        end
       end
 
       def select_duplicates(elements)
