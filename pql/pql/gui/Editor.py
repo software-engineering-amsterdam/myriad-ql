@@ -14,7 +14,7 @@ from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QStatusBar
 from PyQt5.QtWidgets import QWidget
 
-from messages.fatal_error import FatalError
+from pql.messages.fatal_error import FatalError
 from pql.gui.CodeArea import CodeArea
 from pql.dependencies.dependencieschecker import DependenciesChecker
 from pql.gui.Questionnaire import Questionnaire
