@@ -1,7 +1,6 @@
 module QLS
   module TypeChecker
     class TypeChecker
-
       def check(qls_ast, ql_ast)
         ql_questions = ql_ast.accept(QL::TypeChecker::QuestionCollector.new).flatten
         ql_variable_names = ql_questions.map(&:variable).map(&:name)
@@ -30,18 +29,8 @@ module QLS
         ql_questions.each do |ql_question|
           ql_variable_type_map[ql_question.variable.name] = ql_question.type
         end
-        qls_ast.accept(TypeWidgetMapCollector.new, ql_variable_type_map).flatten.compact
-
-        # invalid_widget_types?(qls_widgets)
+        qls_ast.accept(WidgetTypeChecker.new, ql_variable_type_map).flatten.compact
       end
-
-      # def invalid_widget_types?(qls_widgets)
-      #   qls_widgets.each do |type_widget_map|
-      #     type_widget_map.each do |type, widget|
-      #       widget.first.accept(WidgetTypeChecker.new, type)
-      #     end
-      #   end
-      # end
 
       def select_duplicates(elements)
         elements.select { |element| elements.count(element) > 1 }.uniq
