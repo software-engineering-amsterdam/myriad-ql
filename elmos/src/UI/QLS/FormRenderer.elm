@@ -253,7 +253,7 @@ dropdownWidgetRendererForValueType valueType labels =
         _ ->
             Debug.crash
                 ("It should not be possible to render a DropDown widget for "
-                    ++ (toString valueType)
+                    ++ toString valueType
                     ++ ", the typechecker should have prevented this from happening."
                 )
 
