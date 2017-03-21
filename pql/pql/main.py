@@ -17,5 +17,3 @@ if __name__ == '__main__':
 # NICE TO HAVES ---------------------------------
 # TODO: Environment een class maken en een update value methode geven $$
 # TODO: Export of values ?
-# TODO: Make all fields mandatory
-# TODO: NICE TO HAVE Dynamic types in operators ipv python operators

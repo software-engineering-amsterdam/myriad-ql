@@ -47,5 +47,5 @@ class Shared(TestCase):
         errors = self.acquire_identifiers(form_node)
         self.assertEqual(len(errors), 0, "There are multiple declarations of a field.")
         type_errors = self.check_type(form_node)
-        self.assertEqual(len(errors), 0, "There were type errors {}".format(type_errors))
+        self.assertEqual(len(type_errors), 0, "There were type errors {}".format(type_errors))
         return self.evaluate(form_node)

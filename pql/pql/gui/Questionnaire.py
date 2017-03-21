@@ -13,7 +13,6 @@ from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.TypeVisitor import TypeVisitor
 
 
-# TODO Overal waar node.parent gebruikt wordt, vervangen door de mogelijkheid om nu een argument mee te kunnen geven
 class Questionnaire(FormVisitor, TypeVisitor):
     def __init__(self, ast):
         self.wizard = Wizard()
