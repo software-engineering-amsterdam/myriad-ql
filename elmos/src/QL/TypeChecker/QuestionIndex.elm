@@ -15,7 +15,6 @@ questionIndexFromForm =
 
 questionIndexFromBlock : Block -> QuestionIndex
 questionIndexFromBlock =
-    -- We want the first occurence of a question in the index, concat gives preference to the second which is why the list is reversed
     List.foldr (questionIndexFromItem >> Dict.union) Dict.empty
 
 

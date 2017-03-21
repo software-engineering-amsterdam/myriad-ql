@@ -28,26 +28,10 @@ cyclicDependencies form =
                 |> List.map extractDependencies
                 |> toDependencyTable
     in
-        List.concatMap (asCyclicDependencies [] dependencyTable) (DictList.keys dependencyTable)
+        DictList.keys dependencyTable
+            |> List.concatMap (asCyclicDependencies [] dependencyTable)
             |> List.uniqueBy (Set.fromList >> toString)
-            |> List.map (DependencyCycle >> Error)
-
-
-asCyclicDependencies : List String -> DependencyTable -> String -> List DependencyCycle
-asCyclicDependencies visited dependencyTable currentVar =
-    if List.member currentVar visited then
-        [ visited ++ [ currentVar ] ]
-    else
-        Set.map
-            (asCyclicDependencies (visited ++ [ currentVar ]) dependencyTable)
-            (dependenciesOf currentVar dependencyTable)
-            |> Set.toList
-            |> List.concat
-
-
-dependenciesOf : String -> DependencyTable -> Set String
-dependenciesOf name table =
-    DictList.get name table |> Maybe.withDefault Set.empty
+            |> List.map (Error << DependencyCycle)
 
 
 extractDependencies : ( Id, Expression ) -> DependencyEntry
@@ -55,17 +39,37 @@ extractDependencies ( ( name, _ ), computation ) =
     ( name, Collectors.collectQuestionReferences computation |> uniqueVarNames )
 
 
+asCyclicDependencies : List String -> DependencyTable -> String -> List DependencyCycle
+asCyclicDependencies visited dependencyTable currentVar =
+    if List.member currentVar visited then
+        [ visited ++ [ currentVar ] ]
+    else
+        dependenciesOf currentVar dependencyTable
+            |> Set.map (asCyclicDependencies (visited ++ [ currentVar ]) dependencyTable)
+            |> Set.toList
+            |> List.concat
+
+
+dependenciesOf : String -> DependencyTable -> Set String
+dependenciesOf name table =
+    DictList.get name table
+        |> Maybe.withDefault Set.empty
+
+
+{-|
+Merge dependency entries.
+Dict.fromList is not sufficient due to computedFields that occur in both the if and the else clause
+-}
 toDependencyTable : List DependencyEntry -> DependencyTable
 toDependencyTable entries =
-    List.foldr (\entry result -> updateDependencyTable entry result) DictList.empty entries
-
-
-updateDependencyTable : DependencyEntry -> DependencyTable -> DependencyTable
-updateDependencyTable ( name, dependencies ) result =
-    DictList.update
-        name
-        (Maybe.withDefault Set.empty >> Set.union dependencies >> Just)
-        result
+    let
+        updateDependencyTable ( name, dependencies ) result =
+            DictList.update
+                name
+                (Maybe.withDefault Set.empty >> Set.union dependencies >> Just)
+                result
+    in
+        List.foldr updateDependencyTable DictList.empty entries
 
 
 uniqueVarNames : List Id -> Set String

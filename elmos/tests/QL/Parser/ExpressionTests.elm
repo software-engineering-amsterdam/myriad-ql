@@ -54,7 +54,15 @@ arithmeticTests =
     testWithParserAndMap expression
         removeLocactionFromExpression
         "arithmeticTests"
-        [ ( "Should parse simple add", "2+3", Just (BinaryExpression (Arithmetic Plus) (Location 0 0) (Integer (Location 0 0) 2) (Integer (Location 0 0) 3)) )
+        [ ( "Should parse simple add"
+          , "2+3"
+          , Just
+                (BinaryExpression (Arithmetic Plus)
+                    (Location 0 0)
+                    (Integer (Location 0 0) 2)
+                    (Integer (Location 0 0) 3)
+                )
+          )
         , ( "Should parse bigger add"
           , "2+3+4"
           , Just
@@ -82,7 +90,15 @@ arithmeticTests =
                     (BinaryExpression (Arithmetic Divide) (Location 0 0) (Integer (Location 0 0) 3) (Integer (Location 0 0) 4))
                 )
           )
-        , ( "Should parse variables", "x+y", Just (BinaryExpression (Arithmetic Plus) (Location 0 0) (Var ( "x", Location 0 0 )) (Var ( "y", Location 0 0 ))) )
+        , ( "Should parse variables"
+          , "x+y"
+          , Just
+                (BinaryExpression (Arithmetic Plus)
+                    (Location 0 0)
+                    (Var ( "x", Location 0 0 ))
+                    (Var ( "y", Location 0 0 ))
+                )
+          )
         ]
 
 

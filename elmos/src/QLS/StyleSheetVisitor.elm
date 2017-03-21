@@ -5,14 +5,14 @@ import QLS.AST exposing (..)
 import QL.FormVisitor as FormVisitor exposing (actionLambda)
 
 
-on : (node -> context -> context) -> FormVisitor.Order context node
+on : (node -> context -> context) -> FormVisitor.Action context node
 on =
     FormVisitor.on
 
 
 type alias Config context =
-    { onQuestion : FormVisitor.Order context Question
-    , onDefaultValueConfig : FormVisitor.Order context ( Location, ValueType, Configuration )
+    { onQuestion : FormVisitor.Action context Question
+    , onDefaultValueConfig : FormVisitor.Action context ( Location, ValueType, Configuration )
     }
 
 

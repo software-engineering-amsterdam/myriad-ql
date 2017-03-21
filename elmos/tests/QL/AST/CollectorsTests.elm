@@ -3,7 +3,7 @@ module QL.AST.CollectorsTests exposing (all)
 import Expect
 import QL.AST exposing (..)
 import Test exposing (Test, describe, test)
-import QL.AST.Collectors exposing (collectQuestionTypes)
+import QL.AST.Collectors exposing (collectTypeEnv)
 import QL.ASTTestUtil exposing (emptyLoc, loc)
 import Dict
 
@@ -11,10 +11,10 @@ import Dict
 all : Test
 all =
     describe "Collectors"
-        [ describe "collectQuestionTypes"
+        [ describe "collectTypeEnv"
             [ test "collect question types for form" <|
                 \() ->
-                    collectQuestionTypes
+                    collectTypeEnv
                         { id = ( "my form", emptyLoc )
                         , items =
                             [ IfThenElse (Boolean emptyLoc True)
