@@ -93,9 +93,9 @@ ql_ast = QL::Parser::FormTransformer.new.apply(ql_parse_tree)
 QL::TypeChecker::TypeChecker.new.check(ql_ast)
 # pp NotificationTable.index
 # ql_notifications = nil
-
-question_frames = ql_ast.accept(QL::GUI::FormBuilder.new)
-gui = QL::GUI::GUI.new(question_frames)
+form_builder = QL::GUI::FormBuilder.new
+ql_ast.accept(form_builder)
+gui = QL::GUI::GUI.new(form_builder.question_frames)
 
 # gui.render
 
