@@ -1,8 +1,11 @@
 module QL
   module TypeChecker
     class OperandsTypeEvaluator
-      def visit_form(form, collected_data)
-        @variable_type_map = collected_data
+      def initialize(variable_type_map)
+        @variable_type_map = variable_type_map
+      end
+
+      def visit_form(form)
         form.statements.map { |statement| statement.accept(self) }
       end
 

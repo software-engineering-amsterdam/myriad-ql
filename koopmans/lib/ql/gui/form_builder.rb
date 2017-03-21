@@ -7,7 +7,7 @@ module QL
         @question_frames = []
       end
 
-      def visit_form(form, _)
+      def visit_form(form)
         form.statements.each { |statement| statement.accept(self) }
       end
 
@@ -30,12 +30,12 @@ module QL
         @question_frames << QuestionFrame.new(name: name, label: label, literal_type: literal_type, widget: widget, condition: condition)
       end
 
-      def visit_computed_question(question, condition)
-        name = question.variable.name
-        label = Label.new(question.label.value)
-        literal_type, = question.type.accept(self)
+      def visit_computed_question(computed_question, condition)
+        name = computed_question.variable.name
+        label = Label.new(computed_question.label.value)
+        literal_type, = computed_question.type.accept(self)
         widget = ComputedWidget.new
-        assignment = question.assignment
+        assignment = computed_question.assignment
         @question_frames << ComputedQuestionFrame.new(name: name, label: label, literal_type: literal_type, widget: widget, condition: condition, assignment: assignment)
       end
 

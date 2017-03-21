@@ -7,7 +7,7 @@ module QL
         @questions = []
       end
 
-      def visit_form(form, _)
+      def visit_form(form)
         form.statements.each { |statement| statement.accept(self) }
       end
 
