@@ -50,10 +50,11 @@ public class LabelChecker implements StatementVisitor<Void, String> {
         return this.questionList;
     }
 
-    // hooray for O(n) complexity!
     public boolean findDuplicates() {
         Set<String> questionIDs = new HashSet<>();
         Set<String> questionTexts = new HashSet<>();
+
+        // hooray for O(n) complexity!
 
         for (Question question : questionList) {
             if (!questionIDs.add(question.getName())) {

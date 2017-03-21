@@ -28,7 +28,7 @@ public class DependencyChecker {
 
         ErrorLogger logger = new ErrorLogger();
 
-        dependencies = makeSet(expressionMap);
+        dependencies = makeDependencySet(expressionMap);
         Set<DependencyPair> closure = makeClosure(dependencies);
 
         for(DependencyPair pair : closure) {
@@ -40,7 +40,7 @@ public class DependencyChecker {
         return logger;
     }
 
-    private Set<DependencyPair> makeSet(Map<String, List<Parameter>> expressionMap) {
+    private Set<DependencyPair> makeDependencySet(Map<String, List<Parameter>> expressionMap) {
 
         Set<DependencyPair> dependencySet = new HashSet<>();
 
@@ -53,7 +53,7 @@ public class DependencyChecker {
         return dependencySet;
     }
 
-    private Set<DependencyPair> generateNewEdges(Set<DependencyPair> input) {
+    private Set<DependencyPair> generateNewPairs(Set<DependencyPair> input) {
 
         Set<DependencyPair> result = new HashSet<>();
 
@@ -72,15 +72,10 @@ public class DependencyChecker {
 
         Set<DependencyPair> closure = new HashSet<>();
         closure.addAll(input);
+        Set<DependencyPair> temp = generateNewPairs(closure);
 
-        while(true) {
-            Set<DependencyPair> temp = generateNewEdges(closure);
+        while(!temp.equals(closure)) {
             temp.addAll(closure);
-
-            if(temp.equals(closure)) {
-                break;
-            }
-
             closure = temp;
         }
 
