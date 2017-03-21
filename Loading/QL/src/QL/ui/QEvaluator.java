@@ -49,7 +49,8 @@ public class QEvaluator extends Evaluator {
 
         Value answer = getAnswer(question);
 
-        Field field = answer.getField(question.getVariable(), notifier, answer);
+//        Field field = answer.getField(question.getVariable(), notifier, answer);
+        Field field = answers.getField(question.getVariable());
 
         return new Row(question.getVariable(), new Label(question.getLabel()), field);
     }

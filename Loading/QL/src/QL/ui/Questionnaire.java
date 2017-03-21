@@ -38,7 +38,7 @@ public class Questionnaire extends Application implements Notifier {
     	form = f;
     	environment = env;
     	messages = msgs;
- 
+
         launch();
     }
 
@@ -55,7 +55,12 @@ public class Questionnaire extends Application implements Notifier {
         initGrid();
         Scene scene = new Scene(grid, 700, 350);
         primaryStage.setScene(scene);
-        
+
+        if (environment.hasEmptyFieldTable()) {
+            CollectFields collectFields = new CollectFields(this, environment);
+            collectFields.visit(form);
+        }
+
         renderQuestionnaire();
         
         primaryStage.show();
