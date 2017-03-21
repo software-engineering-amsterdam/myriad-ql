@@ -27,7 +27,10 @@ whitespaceTests =
         [ ( "Should not parse surrounding whitespace", " 1 ", Nothing )
         , ( "Should not parse whitespace before", " 1", Nothing )
         , ( "Should not parse whitespace after", "1 ", Nothing )
-        , ( "Should not parse whitespace within parens", "( 1 )", Just (ParensExpression (Location 0 0) (Integer (Location 0 0) 1)) )
+        , ( "Should not parse whitespace within parens"
+          , "( 1 )"
+          , Just (ParensExpression (Location 0 0) (Integer (Location 0 0) 1))
+          )
         , ( "Should parse whitespace within operators"
           , "1 + 2"
           , Just (BinaryExpression (Arithmetic Plus) (Location 0 0) (Integer (Location 0 0) 1) (Integer (Location 0 0) 2))
