@@ -1,16 +1,10 @@
 module QL
   module GUI
     class DropdownWidget < Widget
-      def initialize(options = nil)
+      def initialize(true_label='True', false_label='False')
         @default_value = false
-
-        @true_label = 'true'
-        @false_label = 'false'
-
-        if options
-          @true_label = options[:true_value]
-          @false_label = options[:false_value]
-        end
+        @true_label = true_label
+        @false_label = false_label
       end
 
       def render(tk_frame)

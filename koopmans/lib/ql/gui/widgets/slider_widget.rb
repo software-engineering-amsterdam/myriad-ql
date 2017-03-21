@@ -1,16 +1,10 @@
 module QL
   module GUI
     class SliderWidget < Widget
-      def initialize(options = nil)
+      def initialize(minimum=-100, maximum=100)
         @default_value = 0
-
-        @minimum = 0
-        @maximum = 100
-
-        if options
-          @minimum = options[:minimum]
-          @maximum = options[:maximum]
-        end
+        @minimum = minimum
+        @maximum = maximum
       end
 
       def render(tk_frame)

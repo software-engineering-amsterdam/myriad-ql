@@ -1,7 +1,7 @@
 module QL
   module GUI
     class TextWidget < Widget
-      def initialize(_options = nil)
+      def initialize
         @default_value = ''
       end
 
