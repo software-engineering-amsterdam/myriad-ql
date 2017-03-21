@@ -1,7 +1,7 @@
 # coding=utf-8
 from pyparsing import ParseFatalException, ParseException
 
-from ast.ast import Location
+from pql.ast.ast import Location
 
 
 class FatalError(ParseException):

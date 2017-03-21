@@ -2,26 +2,30 @@
 from collections import defaultdict
 
 from pql.messages.error import Error
+from pql.traversal.BinaryExpressionVisitor import BinaryExpressionVisitor
 from pql.traversal.FormVisitor import FormVisitor
+from pql.traversal.IdentifierVisitor import IdentifierVisitor
+from pql.traversal.TypeVisitor import TypeVisitor
+from pql.traversal.UnaryExpressionVisitor import UnaryExpressionVisitor
 
 
-class IdentifierChecker(FormVisitor):
+class IdentifierChecker(FormVisitor, BinaryExpressionVisitor, UnaryExpressionVisitor, TypeVisitor, IdentifierVisitor):
     def __init__(self, ast):
         self.__symbol_table = defaultdict(list)
+        self.__errors = list()
         self.ast = ast
 
     def visit(self):
         def build_error_list(identifiers):
-            errors = list()
             for key, value in identifiers.items():
                 if len(value) > 1:
-                    errors.append(Error("Key: {} contained multiple entries, at the following locations: {}"
+                    self.__errors.append(Error("Key: {} contained multiple entries, at the following locations: {}"
                                   .format(key, [v.location for v in value]), value[0].location))
-            return errors
-
+        self.__errors.clear()
         self.__symbol_table.clear()
         self.ast.apply(self)
-        return build_error_list(self.__symbol_table)
+        build_error_list(self.__symbol_table)
+        return self.__errors
 
     def form(self, node, args=None):
         for statement in node.statements:
@@ -33,6 +37,8 @@ class IdentifierChecker(FormVisitor):
             statement.apply(self)
 
     def conditional_if(self, node, args=None):
+        result = node.condition.apply(self)
+        self.find_unknown_identifiers(node, result)
         for statement in node.statements:
             statement.apply(self)
 
@@ -40,4 +46,72 @@ class IdentifierChecker(FormVisitor):
         self.__symbol_table[node.name.name].append(node.name)
 
     def assignment(self, node, args=None):
-        self.field(node)
+        self.field(node, args)
+        result = node.expression.apply(self)
+        self.find_unknown_identifiers(node, result)
+
+    def find_unknown_identifiers(self, node, result):
+        for key in result:
+            if key not in self.__symbol_table:
+                self.__errors.append(Error("Identifier {} was not found in assignment on location {}"
+                                           .format(key, node.location)))
+
+    def greater_inclusive(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def addition(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def and_(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def subtraction(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def lower_inclusive(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def inequality(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def lower_exclusive(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def or_(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def multiplication(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def greater_exclusive(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def division(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def equality(self, node):
+        return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def positive(self, node):
+        return node.operand.apply(self)
+
+    def negation(self, node):
+        return node.operand.apply(self)
+
+    def negative(self, node):
+        return node.operand.apply(self)
+
+    def money(self, node):
+        return []
+
+    def integer(self, node):
+        return []
+
+    def string(self, node):
+        return []
+
+    def boolean(self, node):
+        return []
+
+    def identifier(self, node):
+        return [node.name]

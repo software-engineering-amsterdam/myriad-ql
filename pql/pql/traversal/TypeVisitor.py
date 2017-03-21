@@ -16,5 +16,6 @@ class TypeVisitor(metaclass=ABCMeta):
     def boolean(self, node):
         pass
 
+    @abstractmethod
     def string(self, node):
         pass

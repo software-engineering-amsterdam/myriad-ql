@@ -401,7 +401,7 @@ class TestTypeChecker(Shared):
     def test_typecheck_field_incorrect_boolean__if_integer(self):
         input_string = """
         form taxOfficeExample {
-            if(v1){
+            if(1){
                 "q1" v1: integer = 1
             }
         }
@@ -412,7 +412,7 @@ class TestTypeChecker(Shared):
     def test_typecheck_field_incorrect_boolean__if_else_integer(self):
         input_string = """
         form taxOfficeExample {
-            if(v1){
+            if(1){
                 "q1" v1: integer = 1
             } else {
                 "q2" v2: integer = 1
@@ -425,7 +425,7 @@ class TestTypeChecker(Shared):
     def test_typecheck_field_incorrect_boolean_if_else_and_integer(self):
         input_string = """
         form taxOfficeExample {
-            if(v1 && v2){
+            if(1 && 2){
                 "q1" v1: integer = 1
             } else {
                 "q2" v2: integer = 1

@@ -4,9 +4,10 @@ from pql.traversal.BinaryExpressionVisitor import BinaryExpressionVisitor
 from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.IdentifierVisitor import IdentifierVisitor
 from pql.traversal.TypeVisitor import TypeVisitor
+from pql.traversal.UnaryExpressionVisitor import UnaryExpressionVisitor
 
 
-class DependenciesChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVisitor):
+class DependenciesChecker(FormVisitor, BinaryExpressionVisitor, UnaryExpressionVisitor, IdentifierVisitor, TypeVisitor):
     def boolean(self, node):
         return []
 
@@ -105,3 +106,12 @@ class DependenciesChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisito
 
     def equality(self, node):
         return node.lhs.apply(self) + node.rhs.apply(self)
+
+    def positive(self, node):
+        return node.operand.apply(self)
+
+    def negation(self, node):
+        return node.operand.apply(self)
+
+    def negative(self, node):
+        return node.operand.apply(self)
