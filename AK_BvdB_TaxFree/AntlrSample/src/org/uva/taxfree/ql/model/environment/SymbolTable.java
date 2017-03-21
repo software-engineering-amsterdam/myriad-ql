@@ -67,6 +67,9 @@ public class SymbolTable {
         return findDeclarations(variableId).size() > 0;
     }
 
+    // UnknownType is used to be able to finish type checking without having to question whether or not a variable exists.
+    // If an undefined identifier is queried, an error will be given stating an undefined identifier.
+    // The Undefined Type then suppresses errors cascading from the undeclared identifier, showing only the root cause
     public Type resolveType(String variableId) {
         if (contains(variableId)) {
             return findDeclaration(variableId).getType();
@@ -109,6 +112,8 @@ public class SymbolTable {
         }
     }
 
+    // We use a string of dependencies because this terminates when a cyclic dependency is found.
+    // If you REALLY want to use an ArrayList you can pass in the varname and compare it inside the if.
     public void generateDependencies(Set<String> usedVariables) {
         Set<String> dependencies = new HashSet<>(usedVariables);
         for (String variableName : usedVariables) {
@@ -141,7 +146,7 @@ public class SymbolTable {
         return visibleDeclarations;
     }
 
-    public void export(String fileName) throws IOException {
+    public void exportData(String fileName) throws IOException {
         FileWriter results = new FileWriter(fileName);
         for (Declaration declaration : mDeclarations) {
             results.write(declaration.getId() + ":" + declaration.getValue() + "\r\n");
