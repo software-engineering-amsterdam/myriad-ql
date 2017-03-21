@@ -1,8 +1,11 @@
 module QLS
   module TypeChecker
     class WidgetTypeChecker
-      def visit_stylesheet(stylesheet, variable_type_map)
+      def initialize(variable_type_map)
         @variable_type_map = variable_type_map
+      end
+
+      def visit_stylesheet(stylesheet, _)
         stylesheet.pages.each { |page| page.accept(self) }
       end
 

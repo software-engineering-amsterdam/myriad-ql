@@ -40,7 +40,7 @@ module QLS
         ql_questions.each do |ql_question|
           ql_variable_type_map[ql_question.variable.name] = ql_question.type
         end
-        qls_ast.accept(WidgetTypeChecker.new, ql_variable_type_map)
+        qls_ast.accept(WidgetTypeChecker.new(ql_variable_type_map))
       end
 
       def select_duplicates(elements)
