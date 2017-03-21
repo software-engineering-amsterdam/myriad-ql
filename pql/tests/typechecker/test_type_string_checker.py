@@ -163,10 +163,50 @@ class TestStringTypeChecker(Shared):
         self.assertEqual(len(type_checker_result), 1, "This cases is supposed to fail: following errors {}"
                          .format(type_checker_result))
 
-    def test_string_positive(self):
+    def test_string_positive_string(self):
         input_string = """
         form taxOfficeExample {
             "Value residue:" valueResidue: string = +'abc'
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertEqual(len(type_checker_result), 1, "This cases is supposed to fail: following errors {}"
+                         .format(type_checker_result))
+
+    def test_string_positive_integer(self):
+        input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: string = +2
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertEqual(len(type_checker_result), 1, "This cases is supposed to fail: following errors {}"
+                         .format(type_checker_result))
+
+    def test_string_positive_money(self):
+        input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: string = +2.00
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertEqual(len(type_checker_result), 1, "This cases is supposed to fail: following errors {}"
+                         .format(type_checker_result))
+
+    def test_string_positive_boolean(self):
+        input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: string = +true
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertEqual(len(type_checker_result), 1, "This cases is supposed to fail: following errors {}"
+                         .format(type_checker_result))
+
+    def test_string_positive_boolean_and_boolean(self):
+        input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: string = +(true && 1)
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
@@ -177,6 +217,16 @@ class TestStringTypeChecker(Shared):
         input_string = """
         form taxOfficeExample {
             "Value residue:" valueResidue: string = -'abc'
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertEqual(len(type_checker_result), 1, "This cases is supposed to fail: following errors {}"
+                         .format(type_checker_result))
+
+    def test_string_negative_string_and_money(self):
+        input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: string = -('abc' && 2.00)
         }
         """
         type_checker_result = self.apply_type_checking(input_string)
@@ -217,6 +267,16 @@ class TestStringTypeChecker(Shared):
         input_string = """
         form taxOfficeExample {
             "Value residue:" valueResidue: string = !2
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertEqual(len(type_checker_result), 1, "This cases is supposed to fail: following errors {}"
+                         .format(type_checker_result))
+
+    def test_string_negation_integer_and_boolean(self):
+        input_string = """
+        form taxOfficeExample {
+            "Value residue:" valueResidue: string = !(2 && true)
         }
         """
         type_checker_result = self.apply_type_checking(input_string)

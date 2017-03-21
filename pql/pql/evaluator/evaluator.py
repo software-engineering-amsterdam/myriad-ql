@@ -31,7 +31,7 @@ class Evaluator(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVis
         return environment
 
     def conditional_if_else(self, node, environment=None):
-        if node.condition.apply(self):
+        if node.condition.apply(self, environment):
             for statement in node.statements:
                 statement.apply(self, environment)
         else:
@@ -39,7 +39,7 @@ class Evaluator(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVis
                 statement.apply(self, environment)
 
     def conditional_if(self, node, environment=None):
-        if node.condition.apply(self):
+        if node.condition.apply(self, environment):
             for statement in node.statements:
                 statement.apply(self, environment)
 

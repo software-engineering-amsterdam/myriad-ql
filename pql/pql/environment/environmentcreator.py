@@ -5,29 +5,27 @@ from pql.traversal.FormVisitor import FormVisitor
 
 class EnvironmentCreator(FormVisitor):
     def __init__(self, ast):
-        self.__environment = Environment()
         self.ast = ast
 
     def visit(self):
-        self.__environment.clear()
-        self.ast.apply(self)
-        return self.__environment
+        return self.ast.apply(self, Environment())
 
-    def form(self, node, args=None):
+    def form(self, node, environment=None):
         for statement in node.statements:
-            statement.apply(self)
+            statement.apply(self, environment)
+        return environment
 
-    def conditional_if_else(self, node, args=None):
-        self.conditional_if(node)
+    def conditional_if_else(self, node, environment=None):
+        self.conditional_if(node, environment)
         for statement in node.else_statement_list:
-            statement.apply(self)
+            statement.apply(self, environment)
 
-    def conditional_if(self, node, args=None):
+    def conditional_if(self, node, environment=None):
         for statement in node.statements:
-            statement.apply(self)
+            statement.apply(self, environment)
 
-    def field(self, node, args=None):
-        self.__environment.update(node.name.name, node.data_type.value)
+    def field(self, node, environment=None):
+        environment.update(node.name.name, node.data_type.value)
 
-    def assignment(self, node, args=None):
-        self.field(node)
+    def assignment(self, node, environment=None):
+        self.field(node, environment)

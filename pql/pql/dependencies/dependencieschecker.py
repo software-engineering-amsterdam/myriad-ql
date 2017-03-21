@@ -8,18 +8,6 @@ from pql.traversal.UnaryExpressionVisitor import UnaryExpressionVisitor
 
 
 class DependenciesChecker(FormVisitor, BinaryExpressionVisitor, UnaryExpressionVisitor, IdentifierVisitor, TypeVisitor):
-    def boolean(self, node, args=None):
-        return []
-
-    def integer(self, node, args=None):
-        return []
-
-    def money(self, node, args=None):
-        return []
-
-    def string(self, node, args=None):
-        return []
-
     def __init__(self, ast):
         self.ast = ast
         self.errors = list()
@@ -115,3 +103,15 @@ class DependenciesChecker(FormVisitor, BinaryExpressionVisitor, UnaryExpressionV
 
     def negative(self, node, args=None):
         return node.operand.apply(self)
+
+    def boolean(self, node, args=None):
+        return []
+
+    def integer(self, node, args=None):
+        return []
+
+    def money(self, node, args=None):
+        return []
+
+    def string(self, node, args=None):
+        return []

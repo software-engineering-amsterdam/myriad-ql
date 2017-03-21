@@ -7,7 +7,6 @@ from pql.traversal.FormVisitor import FormVisitor
 
 class LabelChecker(FormVisitor):
     def __init__(self, ast):
-        self.__symbol_table = defaultdict(list)
         self.ast = ast
 
     def visit(self):
@@ -21,25 +20,25 @@ class LabelChecker(FormVisitor):
                                   .format(key, [v.location for v in nodes]), nodes[0].location))
             return alerts
 
-        self.__symbol_table.clear()
-        self.ast.apply(self)
-        return build_alert_list(self.__symbol_table)
+        result = self.ast.apply(self, defaultdict(list))
+        return build_alert_list(result)
 
-    def form(self, node, args=None):
+    def form(self, node, environment=None):
         for statement in node.statements:
-            statement.apply(self)
+            statement.apply(self, environment)
+        return environment
 
-    def conditional_if_else(self, node, args=None):
-        self.conditional_if(node)
+    def conditional_if_else(self, node, environment=None):
+        self.conditional_if(node, environment)
         for statement in node.else_statement_list:
-            statement.apply(self)
+            statement.apply(self, environment)
 
-    def conditional_if(self, node, args=None):
+    def conditional_if(self, node, environment=None):
         for statement in node.statements:
-            statement.apply(self)
+            statement.apply(self, environment)
 
-    def field(self, node, args=None):
-        self.__symbol_table[node.title].append(node.name)
+    def field(self, node, environment=None):
+        environment[node.title].append(node.name)
 
-    def assignment(self, node, args=None):
-        self.field(node)
+    def assignment(self, node, environment=None):
+        self.field(node, environment)

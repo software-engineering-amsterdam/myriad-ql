@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QWidget
 
 from pql.environment.environment import Environment
+from pql.environment.environmentcreator import EnvironmentCreator
 from pql.evaluator.evaluator import Evaluator
 from pql.gui.Wizard import Wizard, Page
 from pql.gui.widgets import IntegerInput, MoneyInput, BooleanInput, StringInput
@@ -20,12 +21,12 @@ class Questionnaire(FormVisitor, TypeVisitor):
         self.ast = ast
         self.conditional_if_list = list(tuple())
         self.conditional_if_else_list = list(tuple())
-        self.__environment = Environment()
+        self.__environment = EnvironmentCreator(self.ast).visit()
 
     def visit(self):
         self.wizard.add_page(self.ast.apply(self))
-        self.render_conditionals()
         self.initial_ui()
+        self.render_conditionals()
         return self.wizard
 
     def render_conditionals(self):
@@ -68,7 +69,7 @@ class Questionnaire(FormVisitor, TypeVisitor):
 
     def trigger_conditional_if(self):
         for if_block_container, node in self.conditional_if_list:
-            result = node.condition.apply(self.evaluator)
+            result = node.condition.apply(self.evaluator, self.__environment)
             cond = (result is not None and result)
             if_block_container.setEnabled(cond)
             if cond:
@@ -78,7 +79,7 @@ class Questionnaire(FormVisitor, TypeVisitor):
 
     def trigger_conditional_if_else(self):
         for if_container, else_container, node in self.conditional_if_else_list:
-            result = node.condition.apply(self.evaluator)
+            result = node.condition.apply(self.evaluator, self.__environment)
             cond = (result is not None and result)
             if_container.setEnabled(cond)
             else_container.setEnabled(not cond)
