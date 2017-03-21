@@ -14,6 +14,7 @@ from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QStatusBar
 from PyQt5.QtWidgets import QWidget
 
+from messages.fatal_error import FatalError
 from pql.gui.CodeArea import CodeArea
 from pql.dependencies.dependencieschecker import DependenciesChecker
 from pql.gui.Questionnaire import Questionnaire
@@ -187,6 +188,8 @@ class Editor(QMainWindow, QWidget):
     def create_ast(self, ql_str):
         try:
             return parse(ql_str)
+        except FatalError as fe:
+            self.add_message("Parsing:\n    {}".format(fe), fe.location)
         except Exception as e:
             self.add_message("Parsing:\n    {}".format(e))
 

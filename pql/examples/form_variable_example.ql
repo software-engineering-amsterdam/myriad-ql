@@ -1,4 +1,8 @@
-form string_test {
+form teststuff {
 	"q1?"
-		hasTwoA: string = 'a'
+		hasTwoA: integer = 2 * 2
+	if(true){
+		"q2?"
+			hasA: string = 'a'
+	}
 }

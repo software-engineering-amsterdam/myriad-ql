@@ -1,7 +1,8 @@
 # coding=utf-8
 from pyparsing import (Suppress, Literal, Word, alphas, alphanums, nums, opAssoc, infixNotation, OneOrMore,
-                       QuotedString, Optional, Forward, Combine, ParserElement)
+                       QuotedString, Optional, Forward, Combine, ParserElement, ParseFatalException)
 
+from messages.fatal_error import FatalError
 from pql.ast import ast
 
 
@@ -15,6 +16,9 @@ def parse(input_string):
     def flatten_unary_operators(position, source, flattened_tokens):
         type_call = flattened_tokens[0]
         return type_call(position, source, flattened_tokens[1])
+
+    def fail_value(s, loc, expr, err):
+        raise ParseFatalException(s, loc, "Undefined value at")
 
     # Packrat
     ParserElement.enablePackrat()
@@ -166,5 +170,6 @@ def parse(input_string):
     form = (lit_form + name + body)\
         .addParseAction(lambda parsed_tokens: ast.Form(*parsed_tokens))\
         .setResultsName('form')\
-        .parseWithTabs()
+        .parseWithTabs() \
+        .setFailAction(lambda s, pos, expr, err: FatalError(s, err, pos))
     return form.parseString(input_string).form
