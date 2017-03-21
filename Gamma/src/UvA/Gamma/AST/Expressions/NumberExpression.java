@@ -40,7 +40,7 @@ public class NumberExpression extends Expression {
         if (value.isInteger()) {
             return "" + value.intValue();
         } else {
-            return "" + value.doubleValue();
+            return "" + value;
         }
 
     }

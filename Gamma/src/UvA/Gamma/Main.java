@@ -35,19 +35,23 @@ public class Main extends Application {
                 parser.addErrorListener(new QLParseErrorListener());
                 ParseTree parseTree = parser.form();
                 QLVisitor visitor = new QLVisitor();
-                Form form = (Form)visitor.visit(parseTree);
-//                Form form = visitor.getForm();
 
-                Validator checker = new Validator(form);
-                checker.visit();
+                //The root element is a form, hence the result can be casted to Form
+                Form form = (Form) visitor.visit(parseTree);
+
+                Validator validator = new Validator(form);
+                // Will terminate the program with an appropriate message if the QL form is not valid
+                validator.visit();
 
                 MainScreen mainScreen = new MainScreen(form);
                 mainScreen.initUI(primaryStage);
             } catch (IOException ex) {
                 System.err.print("Invalid filepath: " + params.getUnnamed().get(0));
+                System.exit(1);
             }
         } else {
             System.err.println("No input file has been given");
+            System.exit(1);
         }
     }
 

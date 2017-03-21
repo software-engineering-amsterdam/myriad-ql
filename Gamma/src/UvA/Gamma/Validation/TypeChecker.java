@@ -11,8 +11,11 @@ import java.util.Date;
  */
 public class TypeChecker {
 
+    /*
+        Validate the new value given by the user. Empty values are always allowed (since it is the inital state)
+     */
     public boolean check(Value value, String newValue) {
-        return value.validate(newValue, this);
+        return newValue.isEmpty() || value.validate(newValue, this);
     }
 
     public boolean checkBool(String value) {

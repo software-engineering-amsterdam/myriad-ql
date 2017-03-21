@@ -26,8 +26,8 @@ public class Form implements ASTNode, Iterable<FormItem> {
         formItems.add(item);
     }
 
-    public void idChanged(FormItem changed, String newValue) {
-        formItems.forEach(item -> item.idChanged(this, changed, newValue));
+    void idChanged(FormItem changed, String newValue) {
+        formItems.parallelStream().forEach(item -> item.idChanged(this, changed, newValue));
     }
 
     @Override

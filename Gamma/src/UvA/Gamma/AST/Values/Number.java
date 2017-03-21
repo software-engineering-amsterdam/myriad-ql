@@ -5,6 +5,7 @@ import UvA.Gamma.GUI.FXMLController;
 import UvA.Gamma.Validation.TypeChecker;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 /**
  * Created by Tjarco, 14-02-17.
@@ -43,12 +44,8 @@ public class Number extends Value {
         return type == Type.DECIMAL || type == Type.INTEGER || type == Type.BOOLEAN;
     }
 
-    public double doubleValue() {
-        return value.doubleValue();
-    }
-
-    public int intValue() {
-        return value.intValue();
+    public BigInteger intValue() {
+        return value.toBigInteger();
     }
 
     public boolean isInteger() {

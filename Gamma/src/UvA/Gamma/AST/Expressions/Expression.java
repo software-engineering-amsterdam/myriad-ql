@@ -18,12 +18,12 @@ import java.util.regex.Pattern;
  * Created by Tjarco, 14-02-17.
  */
 public abstract class Expression implements ASTNode {
-    protected String expr;
-    protected SimpleStringProperty stringValueProperty;
-    protected Map<String, Value> ids;
+    private String expr;
+    SimpleStringProperty stringValueProperty;
+    Map<String, Value> ids;
     protected Value value;
 
-    public Expression(String expr) {
+    Expression(String expr) {
         this.expr = expr;
         this.stringValueProperty = new SimpleStringProperty("");
         this.ids = new HashMap<>();
@@ -74,12 +74,13 @@ public abstract class Expression implements ASTNode {
         return parsedExpr;
     }
 
-    protected void parseExpression() {
+    private void parseExpression() {
         // add the ID's to the map
         Pattern pattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9_]*");
         Matcher matcher = pattern.matcher(expr);
 
         while (matcher.find()) {
+            // Do not parse the true/false boolean constants as an identifier
             if (matcher.group().matches("^(?i)(true|false)$")) continue;
             ids.put(matcher.group(), null);
         }

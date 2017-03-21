@@ -11,6 +11,8 @@ import java.math.RoundingMode;
  */
 public class Money extends Number {
 
+    public static String CURRENCY_SYMBOL = "€";
+
     public Money(double value) {
         super(value);
     }
@@ -21,7 +23,7 @@ public class Money extends Number {
 
     @Override
     public void setValue(String value) {
-        super.setValue(value.replaceAll("€|(\\.-)", ""));
+        super.setValue(value.replaceAll(CURRENCY_SYMBOL + "|(\\.-)", ""));
     }
 
     @Override
@@ -52,8 +54,8 @@ public class Money extends Number {
     @Override
     public String toString() {
         if (this.isInteger())
-            return "€" + value.intValue() + ",-";
+            return CURRENCY_SYMBOL + value.toBigInteger() + ",-";
         else
-            return "€" + value.setScale(2, RoundingMode.HALF_UP);
+            return CURRENCY_SYMBOL + value.setScale(2, RoundingMode.HALF_UP);
     }
 }

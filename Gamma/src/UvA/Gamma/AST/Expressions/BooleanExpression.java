@@ -57,13 +57,14 @@ public class BooleanExpression extends Expression {
     @Override
     public String toString() {
         evaluate();
-        return value == null ? "" : "" + value;
+        return value == null ? "" : value.toString();
     }
 
     @Override
     public void evaluate() {
         try {
             value = evaluateBool();
+            // Setting the stringValueProperty will update the value on the UI
             stringValueProperty.set(value.toString());
         } catch (ScriptException e) {
             stringValueProperty.set("");

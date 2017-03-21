@@ -142,14 +142,6 @@ public class Condition implements FormItem {
                 elseBlockItems.stream().anyMatch(formItem -> formItem.containsId(id));
     }
 
-//    private boolean childHasId(List<FormItem> items, String id) {
-//        boolean hasId = false;
-//        for (FormItem item : items) {
-//            hasId = hasId || item.containsId(id);
-//        }
-//        return hasId;
-//    }
-
     @Override
     public boolean containsLabel(String label) {
         return thenBlockItems.stream().anyMatch(formItem -> formItem.containsLabel(label)) ||

@@ -8,7 +8,7 @@
         "Private debts for the sold house:" privateDebt:  money
         "Value residue:" valueResidue:  money = (sellingPrice - privateDebt)
     }else{
-        "Value: " elseResidue: money = (sellingPrice)
+        "10% of the selling price: " elseResidue: money = (0.1 * sellingPrice)
     }
  }
 

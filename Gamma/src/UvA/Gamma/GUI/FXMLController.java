@@ -24,10 +24,10 @@ import java.util.Stack;
 
 public class FXMLController {
     private Form form;
-    TypeChecker checker = new TypeChecker();
+    private TypeChecker checker = new TypeChecker();
 
 
-    public void addFormItem(Form form) {
+    void addFormItem(Form form) {
         rootGrid = grid;
 
         ColumnConstraints col1 = new ColumnConstraints();
@@ -50,26 +50,17 @@ public class FXMLController {
     private GridPane rootGrid;
     private Stack<GridPane> conditionStack;
 
-
-    @FXML
     public void showQuestion(Question question) {
         assert rootGrid != null;
         Text questionLabel = new Text(question.getQuestion());
         TextField input = new TextField();
 
-        input.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (question.check(checker, newValue)) {
-                input.setStyle("-fx-text-fill: green");
-                form.stream().forEach(item -> item.idChanged(form, question, newValue));
-            } else {
-                input.setStyle("-fx-text-fill: red");
-            }
-        });
+        questionOnUpdate(question, input);
         rootGrid.addRow(getRowCount(rootGrid) + 1, questionLabel, input);
     }
 
-    @FXML
     public void showBoolean(Question question) {
+        assert rootGrid != null;
         Text questionLabel = new Text(question.getQuestion());
         CheckBox input = new CheckBox();
 
@@ -80,8 +71,6 @@ public class FXMLController {
         rootGrid.addRow(getRowCount(rootGrid) + 1, questionLabel, input);
     }
 
-
-    @FXML
     public void showDateValue(Question question) {
         assert rootGrid != null;
         Text questionLabel = new Text(question.getQuestion());
@@ -105,20 +94,13 @@ public class FXMLController {
         rootGrid.addRow(getRowCount(rootGrid) + 1, label, result);
     }
 
-    public void showMoney(Question question){
+    public void showMoney(Question question) {
         assert rootGrid != null;
         Text questionLabel = new Text(question.getQuestion());
 
-        Text euroLabel = new Text("€");
+        Text euroLabel = new Text(Money.CURRENCY_SYMBOL);
         TextField input = new TextField();
-        input.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (question.check(checker, newValue)) {
-                input.setStyle("-fx-text-fill: green");
-                form.stream().forEach(item -> item.idChanged(form, question, newValue));
-            } else {
-                input.setStyle("-fx-text-fill: red");
-            }
-        });
+        questionOnUpdate(question, input);
 
         HBox box = new HBox();
         box.getChildren().addAll(euroLabel, input);
@@ -127,6 +109,9 @@ public class FXMLController {
         rootGrid.addRow(getRowCount(rootGrid) + 1, questionLabel, box);
     }
 
+    /*
+        To render a condition, we create a new Gridpane to add the children of the condtion to
+     */
     public GridPane startRenderCondition() {
         rootGrid = new GridPane();
         rootGrid.getColumnConstraints().addAll(grid.getColumnConstraints());
@@ -136,6 +121,10 @@ public class FXMLController {
         return rootGrid;
     }
 
+    /*
+        This method is called when all children of the Condition have been added. The Condition Gridpane is added to
+        the current root.
+     */
     public void stopRenderCondition() {
         GridPane pane = conditionStack.pop();
         rootGrid = conditionStack.peek();
@@ -154,5 +143,20 @@ public class FXMLController {
             }
         }
         return numRows;
+    }
+
+    private void questionOnUpdate(Question question, TextField input) {
+        assert form != null;
+        input.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+                form.stream().forEach(item -> item.idChanged(form, question, newValue));
+            }
+            if (question.check(checker, newValue)) {
+                input.setStyle("-fx-text-fill: green");
+                form.stream().forEach(item -> item.idChanged(form, question, newValue));
+            } else {
+                input.setStyle("-fx-text-fill: red");
+            }
+        });
     }
 }

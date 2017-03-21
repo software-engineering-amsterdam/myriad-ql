@@ -42,9 +42,8 @@ public class Boolean extends Value {
     @Override
     public void showQuestion(FXMLController screen, Question question) {
         screen.showBoolean(question);
-
     }
-    
+
     @Override
     public boolean validate(String value, TypeChecker typeChecker) {
         return typeChecker.checkBool(value);
