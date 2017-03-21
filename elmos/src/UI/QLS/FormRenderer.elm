@@ -236,7 +236,7 @@ radioWidgetRendererForValueType valueType labels =
         _ ->
             Debug.crash
                 ("It should not be possible to render a Radio widget for "
-                    ++ (toString valueType)
+                    ++ toString valueType
                     ++ ", the typechecker should have prevented this from happening."
                 )
 
