@@ -1,4 +1,4 @@
-module QL.TypeChecker.BadReferences exposing (badReferences)
+module QL.TypeChecker.BadReferences exposing (check)
 
 import QL.AST exposing (Form, Id, Expression)
 import Dict
@@ -8,8 +8,8 @@ import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(ReferenceT
 import QL.TypeChecker.QuestionIndex as QuestionIndex
 
 
-badReferences : Form -> List Message
-badReferences form =
+check : Form -> List Message
+check form =
     let
         ids =
             QuestionIndex.questionIndexFromForm form

@@ -71,9 +71,9 @@ public class BinaryExpressionNode extends ExpressionNode {
     }
 
     @Override
-    public void getDependencies(Set<String> dependencies) {
-        mLeft.getDependencies(dependencies);
-        mRight.getDependencies(dependencies);
+    public void collectUsedVariables(Set<String> dependencies) {
+        mLeft.collectUsedVariables(dependencies);
+        mRight.collectUsedVariables(dependencies);
     }
 
     @Override

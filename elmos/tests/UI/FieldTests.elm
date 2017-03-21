@@ -12,14 +12,14 @@ exampleForm : Form
 exampleForm =
     { id = ( "exampleForm", Location 0 0 )
     , items =
-        [ Field "Name" ( "name", Location 0 0 ) StringType
-        , ComputedField "Name with prefix" ( "nameWithPrefix", Location 0 0 ) StringType (Var ( "name", Location 0 0 ))
-        , Field "Has house" ( "hasHouse", Location 0 0 ) BooleanType
+        [ Question "Name" ( "name", Location 0 0 ) StringType
+        , ComputedQuestion "Name with prefix" ( "nameWithPrefix", Location 0 0 ) StringType (Var ( "name", Location 0 0 ))
+        , Question "Has house" ( "hasHouse", Location 0 0 ) BooleanType
         , IfThen (Var ( "hasHouse", Location 0 0 ))
-            [ Field "Price" ( "price", Location 0 0 ) IntegerType ]
+            [ Question "Price" ( "price", Location 0 0 ) IntegerType ]
         , IfThenElse (BinaryExpression (Comparison Equal) (Location 0 0) (Var ( "name", Location 0 0 )) (Str (Location 0 0) "John"))
-            [ Field "Is your name john?" ( "isJohn", Location 0 0 ) BooleanType ]
-            [ Field "Are you sure your name is not john?" ( "sure", Location 0 0 ) BooleanType ]
+            [ Question "Is your name john?" ( "isJohn", Location 0 0 ) BooleanType ]
+            [ Question "Are you sure your name is not john?" ( "sure", Location 0 0 ) BooleanType ]
         ]
     }
 

@@ -8,6 +8,7 @@ import org.uva.taxfree.ql.model.node.Node;
 import org.uva.taxfree.ql.model.types.Type;
 
 import java.util.List;
+import java.util.Set;
 
 public class DeclarationNode extends Node {
     private final String mId;
@@ -58,4 +59,8 @@ public class DeclarationNode extends Node {
         visibleIds.add(mId);
     }
 
+    @Override
+    public void collectUsedVariables(Set<String> dependencies) {
+        dependencies.add(mId);
+    }
 }

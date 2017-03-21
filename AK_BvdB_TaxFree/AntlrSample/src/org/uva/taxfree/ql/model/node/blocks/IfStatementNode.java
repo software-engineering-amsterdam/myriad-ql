@@ -7,7 +7,9 @@ import org.uva.taxfree.ql.model.node.Node;
 import org.uva.taxfree.ql.model.node.expression.ExpressionNode;
 import org.uva.taxfree.ql.model.types.BooleanType;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class IfStatementNode extends BlockNode {
     private final ExpressionNode mExpression;
@@ -24,7 +26,15 @@ public class IfStatementNode extends BlockNode {
         if (!mExpression.getType().equals(new BooleanType())) {
             semanticsMessages.addError("Condition must be of boolean type!");
         }
+        checkCyclicDependency(getUsedVariables(), symbolTable, semanticsMessages);
     }
+
+    private Set<String> getUsedVariables() {
+        Set<String> usedVariables = new HashSet<>();
+        mExpression.collectUsedVariables(usedVariables);
+        return usedVariables;
+    }
+
 
     @Override
     public void fillSymbolTable(SymbolTable symbolTable) {

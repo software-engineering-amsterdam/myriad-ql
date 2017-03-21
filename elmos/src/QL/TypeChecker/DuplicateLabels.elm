@@ -1,4 +1,4 @@
-module QL.TypeChecker.DuplicateLabels exposing (duplicateLabels)
+module QL.TypeChecker.DuplicateLabels exposing (check)
 
 import Dict exposing (Dict)
 import Dict.Extra as Dict
@@ -7,8 +7,8 @@ import QL.AST.Collectors as Collectors
 import QL.TypeChecker.Messages exposing (Message(Warning), WarningMessage(DuplicateLabels))
 
 
-duplicateLabels : Form -> List Message
-duplicateLabels form =
+check : Form -> List Message
+check form =
     Collectors.collectQuestionLabels form
         |> groupByLabel
         |> Dict.filter hasMultipleDeclarations

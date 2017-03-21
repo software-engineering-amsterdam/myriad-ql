@@ -1,4 +1,4 @@
-module QL.TypeChecker.Expressions.ConditionTypes exposing (conditionTypeErrors)
+module QL.TypeChecker.Expressions.ConditionTypes exposing (check)
 
 import QL.AST exposing (Form, FormItem(..), Expression(..), Id, ValueType(BooleanType), Location)
 import QL.AST.Collectors as Collectors exposing (TypeEnvironment)
@@ -6,8 +6,8 @@ import QL.TypeChecker.Expressions.ExpressionType exposing (getType)
 import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(InvalidConditionType))
 
 
-conditionTypeErrors : Form -> TypeEnvironment -> List Message
-conditionTypeErrors form typeEnv =
+check : Form -> TypeEnvironment -> List Message
+check form typeEnv =
     Collectors.collectConditions form
         |> List.filterMap (conditionWithType typeEnv)
         |> List.filter (\( _, conditionType ) -> isBadConditional conditionType)

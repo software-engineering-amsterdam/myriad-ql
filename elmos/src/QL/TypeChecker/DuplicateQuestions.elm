@@ -1,4 +1,4 @@
-module QL.TypeChecker.DuplicateQuestions exposing (duplicateQuestions)
+module QL.TypeChecker.DuplicateQuestions exposing (check)
 
 import QL.AST exposing (..)
 import Dict exposing (Dict)
@@ -15,8 +15,8 @@ type alias DuplicateIndex =
     Dict String (List Location)
 
 
-duplicateQuestions : Form -> List Message
-duplicateQuestions form =
+check : Form -> List Message
+check form =
     let
         {- questionIndex contains the unique values and ignores duplicates -}
         questionIds =

@@ -52,7 +52,7 @@ public class VariableLiteralNode extends LiteralNode {
     }
 
     @Override
-    public void getDependencies(Set<String> dependencies) {
+    public void collectUsedVariables(Set<String> dependencies) {
         dependencies.add(mId);
     }
 

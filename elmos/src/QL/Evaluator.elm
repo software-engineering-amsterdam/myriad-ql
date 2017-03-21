@@ -20,8 +20,8 @@ evaluate env expression =
         AST.Integer _ integer ->
             Values.Integer integer
 
-        AST.Decimal _ float ->
-            Values.Decimal float
+        AST.Decimal _ decimal ->
+            Values.Decimal decimal
 
         AST.Boolean _ boolean ->
             Values.Boolean boolean
@@ -44,17 +44,17 @@ evaluateBinaryExpression op leftValue rightValue =
                         |> Maybe.filter Numbers.isValidInt
                         |> Maybe.map Values.Integer
 
-                maybeFloat =
-                    Maybe.map2 (,) (Values.asFloat leftValue) (Values.asFloat rightValue)
-                        |> Maybe.map (\( l, r ) -> binaryForFloatArithmitic arithmetic l r)
+                maybeDecimal =
+                    Maybe.map2 (,) (Values.asDecimal leftValue) (Values.asDecimal rightValue)
+                        |> Maybe.map (\( l, r ) -> binaryForDecimalArithmitic arithmetic l r)
                         |> Maybe.filter Numbers.isValidFloat
                         |> Maybe.map Values.Decimal
             in
-                Maybe.or maybeInteger maybeFloat
+                Maybe.or maybeInteger maybeDecimal
                     |> Maybe.withDefault Values.Undefined
 
         Relation rel ->
-            Maybe.map2 (,) (Values.asFloat leftValue) (Values.asFloat rightValue)
+            Maybe.map2 (,) (Values.asDecimal leftValue) (Values.asDecimal rightValue)
                 |> Maybe.map (\( l, r ) -> Values.Boolean (applicativeForRelation rel l r))
                 |> Maybe.withDefault Values.Undefined
 
@@ -86,8 +86,8 @@ binaryForIntArithmitic op =
             (*)
 
 
-binaryForFloatArithmitic : ArithmeticOperator -> Float -> Float -> Float
-binaryForFloatArithmitic op =
+binaryForDecimalArithmitic : ArithmeticOperator -> Float -> Float -> Float
+binaryForDecimalArithmitic op =
     case op of
         Plus ->
             (+)

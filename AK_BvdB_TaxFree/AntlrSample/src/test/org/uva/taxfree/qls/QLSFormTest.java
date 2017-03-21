@@ -38,6 +38,11 @@ public class QLSFormTest extends SemanticsTester {
 
     @Override
     protected File testFile(String fileName) {
-        return new File("src\\test\\org\\uva\\taxfree\\qls\\testFiles\\qlsTestForms\\" + fileName);
+        return new File("src\\test\\org\\uva\\taxfree\\qls\\" + fileDirectory() + "\\" + fileName);
+    }
+
+    @Override
+    protected String fileDirectory() {
+        return "testFiles";
     }
 }
