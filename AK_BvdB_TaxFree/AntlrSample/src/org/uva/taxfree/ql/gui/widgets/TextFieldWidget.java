@@ -29,9 +29,8 @@ public abstract class TextFieldWidget extends Widget {
         parentPanel.add(mTextField);
     }
 
-    @Override
-    public String resolveValue() {
-        return mTextField.getValue().toString();
+    protected String currentValue() {
+        return String.valueOf(mTextField.getValue());
     }
 
     @Override

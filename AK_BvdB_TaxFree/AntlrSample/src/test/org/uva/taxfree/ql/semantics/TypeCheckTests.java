@@ -68,7 +68,7 @@ public class TypeCheckTests {
                         new MultiplyOperator(),
                         new BooleanLiteralNode(true, mEmptySourceInfo),
                         mEmptySourceInfo),
-                3
+                2
         );
     }
 

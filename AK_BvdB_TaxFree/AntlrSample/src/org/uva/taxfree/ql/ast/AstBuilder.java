@@ -16,7 +16,7 @@ import java.util.BitSet;
 public class AstBuilder {
     private final File mInputFile;
 
-    public AstBuilder(File inputFile) throws IOException {
+    public AstBuilder(File inputFile) {
         mInputFile = inputFile;
     }
 
@@ -27,7 +27,6 @@ public class AstBuilder {
         CommonTokenStream commonTokenStream = new CommonTokenStream(qlGrammarLexer);
         return new QLGrammarParser(commonTokenStream);
     }
-
 
     public FormNode generateTree() throws IOException {
         ANTLRErrorListener errorListener = new ANTLRErrorListener() {

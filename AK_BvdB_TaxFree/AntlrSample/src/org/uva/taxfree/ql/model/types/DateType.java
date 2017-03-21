@@ -5,6 +5,8 @@ import org.uva.taxfree.ql.gui.widgets.DateWidget;
 import org.uva.taxfree.ql.model.operators.BooleanOperator;
 import org.uva.taxfree.ql.model.operators.CompareOperator;
 import org.uva.taxfree.ql.model.operators.NumericOperator;
+import org.uva.taxfree.ql.model.values.StringValue;
+import org.uva.taxfree.ql.model.values.Value;
 
 public class DateType extends Type {
     @Override
@@ -28,7 +30,7 @@ public class DateType extends Type {
     }
 
     @Override
-    public String defaultValue() {
-        return "01-01-1900";
+    public Value defaultValue() {
+        return new StringValue("01-01-1900");
     }
 }

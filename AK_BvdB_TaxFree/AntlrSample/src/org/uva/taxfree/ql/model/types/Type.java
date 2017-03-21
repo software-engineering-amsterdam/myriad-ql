@@ -4,6 +4,7 @@ import org.uva.taxfree.ql.gui.QuestionForm;
 import org.uva.taxfree.ql.model.operators.BooleanOperator;
 import org.uva.taxfree.ql.model.operators.CompareOperator;
 import org.uva.taxfree.ql.model.operators.NumericOperator;
+import org.uva.taxfree.ql.model.values.Value;
 
 public abstract class Type {
     public boolean equals(Type other) {
@@ -18,5 +19,5 @@ public abstract class Type {
 
     public abstract void generateWidget(String label, String id, QuestionForm frame);
 
-    public abstract String defaultValue();
+    public abstract Value defaultValue();
 }
