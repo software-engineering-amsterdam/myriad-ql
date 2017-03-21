@@ -17,11 +17,8 @@ import qls.astnodes.sections.Section;
 import qls.astnodes.sections.StyleQuestion;
 
 public interface StyleSheetVisitor {
-
     void visit(StyleSheet styleSheet);
-
     void visit(Section section);
     void visit(DefaultStyle section);
-
     void visit(StyleQuestion question);
 }

@@ -15,7 +15,7 @@ import ql.astnodes.LineNumber;
 import qls.visitorinterfaces.StyleSheetVisitor;
 import qls.astnodes.widgets.QLSWidget;
 
-public class StyleQuestion extends AbstractSection{
+public class StyleQuestion extends AbstractSection {
 
     private final String identifierName;
     private QLSWidget widget;
@@ -27,7 +27,7 @@ public class StyleQuestion extends AbstractSection{
     }
 
     public String getName() {
-        return this.identifierName;
+        return identifierName;
     }
 
     public void setWidget(QLSWidget widget) {
@@ -35,7 +35,7 @@ public class StyleQuestion extends AbstractSection{
     }
 
     public QLSWidget getWidget() {
-        return this.widget;
+        return widget;
     }
 
     public void accept(StyleSheetVisitor visitor) {

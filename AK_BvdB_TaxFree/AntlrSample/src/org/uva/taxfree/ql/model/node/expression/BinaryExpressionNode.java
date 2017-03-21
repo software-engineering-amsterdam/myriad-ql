@@ -35,7 +35,6 @@ public class BinaryExpressionNode extends ExpressionNode {
 
     @Override
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
-        super.checkSemantics(symbolTable, semanticsMessages);
         mLeft.checkSemantics(symbolTable, semanticsMessages);
         mRight.checkSemantics(symbolTable, semanticsMessages);
         if (!mLeft.isSameType(mRight)) {

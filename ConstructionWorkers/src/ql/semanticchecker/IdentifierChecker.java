@@ -92,8 +92,6 @@ public class IdentifierChecker implements FormAndStatementVisitor<Identifier> {
         String questionIdentifierName = question.getIdentifierName();
 
         if (identifierToTypeMap.get(questionIdentifierName) != null) {
-//            TODO: decide.
-//            if (isEqual(identifierToTypeMap.get(questionIdentifierName), question.getType())) {
             if ((identifierToTypeMap.get(questionIdentifierName)).equals(question.getType())) {
                 messages.addWarning(new DuplicateIdentifierWarning(question.getLineNumber(), question.getIdentifier()));
                 return true;

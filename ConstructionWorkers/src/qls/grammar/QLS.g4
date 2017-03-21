@@ -4,8 +4,8 @@ stylesheet
     : 'stylesheet' Identifier '{' (defaultStyle | section)* '}' ;
 
 defaultStyle
-    : 'default' type widget           # defaultWithoutStyleDeclaration
-    | 'default' type '{' style+ widget '}'    # defaultWithStyleDeclaration
+    : 'default' type widget                 # defaultWithoutStyleDeclaration
+    | 'default' type '{' style+ widget '}'  # defaultWithStyleDeclaration
     ;
 
 section

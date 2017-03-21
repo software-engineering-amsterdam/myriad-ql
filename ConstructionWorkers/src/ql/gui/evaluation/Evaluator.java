@@ -37,13 +37,6 @@ public class Evaluator {
 
     public Value getValueIfStatement(IfStatement ifStatement) {
         Expression condition = ifStatement.getExpression();
-        Value conditionValue = condition.accept(expressionEvaluator);
-
-        // TODO: necessary?
-
-        if(conditionValue.undefined()) {
-            return new BooleanValue(false);
-        }
-        return conditionValue;
+        return condition.accept(expressionEvaluator);
     }
 }
