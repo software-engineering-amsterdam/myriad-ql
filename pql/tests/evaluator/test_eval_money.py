@@ -2,7 +2,7 @@
 from tests.shared import Shared
 
 
-class TestMoneyTypeChecker(Shared):
+class TestMoneyEvaluator(Shared):
     def test_money_addition_money_and_integer(self):
         input_string = """
         form taxOfficeExample {

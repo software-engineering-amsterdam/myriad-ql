@@ -2,7 +2,7 @@
 from tests.shared import Shared
 
 
-class TestStringTypeChecker(Shared):
+class TestStringEvaluator(Shared):
     def test_string_addition_string_and_string(self):
         input_string = """
         form taxOfficeExample {
