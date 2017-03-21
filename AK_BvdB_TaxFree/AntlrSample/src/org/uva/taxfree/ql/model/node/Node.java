@@ -6,6 +6,7 @@ import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 
 import java.util.List;
+import java.util.Set;
 
 public abstract class Node {
 
@@ -22,4 +23,6 @@ public abstract class Node {
     public abstract void fillQuestionForm(QuestionForm form);
 
     public abstract void generateVisibleIds(List<String> visibleIds);
+
+    public abstract void collectUsedVariables(Set<String> dependencies);
 }

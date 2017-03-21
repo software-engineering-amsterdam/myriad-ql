@@ -31,7 +31,7 @@ public abstract class LiteralNode extends ExpressionNode {
     }
 
     @Override
-    public void getDependencies(Set<String> dependencies) {
+    public void collectUsedVariables(Set<String> dependencies) {
         // Intentionally left blank
     }
 
