@@ -56,8 +56,8 @@ public class BinaryExpressionNode extends ExpressionNode {
         }
         if (!mOperator.supports(mLeft.getType(), mRight.getType())) {
             semanticsMessages.addError("Unsupported operator called:" + mLeft.getType() + " " + mOperator + " " + mRight.getType());
-        } else {
-            super.checkSemantics(symbolTable, semanticsMessages);
+        } else if (isConstant()) {
+            semanticsMessages.addWarning("Constant expression found, always evaluates to: " + this.evaluate());
         }
     }
 
