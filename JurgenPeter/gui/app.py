@@ -43,7 +43,7 @@ class App:
 
     def exit(self, _):
         self.gui.stop()
-        if self.on_exit is not None:
+        if callable(self.on_exit):
             self.on_exit(self)
 
     def show_widget(self, name):

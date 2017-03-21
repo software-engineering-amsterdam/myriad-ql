@@ -34,8 +34,8 @@ class DependencyChecker(CheckerVisitor):
         for dependency in dependencies:
             if node.name in self.known_dependencies.get(dependency, []):
                 self.error("computed question \"{}\" has circular dependency "
-                           " on computed question \"{}\"".format(node.name,
-                                                                 dependency))
+                           "on computed question \"{}\"".format(node.name,
+                                                                dependency))
 
         self.known_dependencies[node.name] = dependencies
         return [node.name]
