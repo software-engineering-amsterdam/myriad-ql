@@ -5,6 +5,7 @@
     using System.Windows.Controls;
 
     using OffByOne.Ql.Ast.Statements;
+    using OffByOne.Ql.Common.Collections;
     using OffByOne.Ql.Common.Observers.Conracts;
 
     public abstract class Widget : IObserver<AnswerInput>
@@ -14,7 +15,7 @@
         protected Widget(GuiEnvironment environment)
         {
             this.Environment = environment;
-            this.Controls = new SortedDictionary<string, Control>();
+            this.Controls = new OrderedDictionary<string, Control>();
             this.Dependencies = new SortedSet<string>();
 
             this.Environment.RegisterObserver(this);
@@ -23,11 +24,11 @@
 
         public GuiEnvironment Environment { get; }
 
-        public SortedDictionary<string, Control> Controls { get; set; }
+        public IDictionary<string, Control> Controls { get; set; }
 
         protected ISet<string> Dependencies { get; }
 
-        public void AddControls(SortedDictionary<string, Control> controls)
+        public void AddControls(IDictionary<string, Control> controls)
         {
             foreach (var control in controls)
             {

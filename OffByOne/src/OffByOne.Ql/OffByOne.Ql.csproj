@@ -138,6 +138,7 @@
     <Compile Include="Checker\Messages\UndeclaredVariableMessage.cs" />
     <Compile Include="Checker\Collectors\QuestionCollector.cs" />
     <Compile Include="Checker\SyntaxChecker.cs" />
+    <Compile Include="Common\Collections\OrderedDictionary.cs" />
     <Compile Include="Common\GlobalConstants.cs" />
     <Compile Include="Common\Observers\Conracts\IObservable.cs" />
     <Compile Include="Common\Observers\Conracts\IObserver.cs" />
