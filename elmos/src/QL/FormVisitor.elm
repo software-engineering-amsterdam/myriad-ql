@@ -6,8 +6,8 @@ import QL.AST exposing (..)
 type alias Config context =
     { onIfThen : Action context ( Expression, Block )
     , onIfThenElse : Action context ( Expression, Block, Block )
-    , onField : Action context ( Label, Id, ValueType )
-    , onComputedField : Action context ( Label, Id, ValueType, Expression )
+    , onQuestion : Action context ( Label, Id, ValueType )
+    , onComputedQuestion : Action context ( Label, Id, ValueType, Expression )
     , onExpression : Action context Expression
     }
 
@@ -41,8 +41,8 @@ defaultConfig : Config x
 defaultConfig =
     { onIfThen = Continue
     , onIfThenElse = Continue
-    , onField = Continue
-    , onComputedField = Continue
+    , onQuestion = Continue
+    , onComputedQuestion = Continue
     , onExpression = Continue
     }
 
@@ -68,14 +68,14 @@ inspectExpression config expression context =
 inspectFormItem : Config a -> FormItem -> a -> a
 inspectFormItem config formItem context =
     case formItem of
-        Field label id valueType ->
-            actionLambda config.onField
+        Question label id valueType ->
+            actionLambda config.onQuestion
                 identity
                 ( label, id, valueType )
                 context
 
-        ComputedField label id valueType computation ->
-            actionLambda config.onComputedField
+        ComputedQuestion label id valueType computation ->
+            actionLambda config.onComputedQuestion
                 (inspectExpression config computation)
                 ( label, id, valueType, computation )
                 context

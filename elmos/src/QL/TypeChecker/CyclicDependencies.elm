@@ -24,7 +24,7 @@ cyclicDependencies : Form -> List Message
 cyclicDependencies form =
     let
         dependencyTable =
-            Collectors.collectComputedFields form
+            Collectors.collectComputedQuestions form
                 |> List.map extractDependencies
                 |> toDependencyTable
     in
@@ -58,7 +58,7 @@ dependenciesOf name table =
 
 {-|
 Merge dependency entries.
-Dict.fromList is not sufficient due to computedFields that occur in both the if and the else clause
+Dict.fromList is not sufficient due to computedQuestions that occur in both the if and the else clause
 -}
 toDependencyTable : List DependencyEntry -> DependencyTable
 toDependencyTable entries =

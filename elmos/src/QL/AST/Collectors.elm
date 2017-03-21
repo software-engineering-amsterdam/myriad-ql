@@ -2,7 +2,7 @@ module QL.AST.Collectors
     exposing
         ( TypeEnvironment
         , collectConditions
-        , collectComputedFields
+        , collectComputedQuestions
         , collectDeclaredIds
         , collectTopLevelExpressions
         , collectQuestionLabels
@@ -23,8 +23,8 @@ collectTypeEnv : Form -> TypeEnvironment
 collectTypeEnv form =
     FormVisitor.inspect
         { defaultConfig
-            | onField = FormVisitor.on (\( _, ( name, _ ), valueType ) result -> Dict.insert name valueType result)
-            , onComputedField = FormVisitor.on (\( _, ( name, _ ), valueType, _ ) result -> Dict.insert name valueType result)
+            | onQuestion = FormVisitor.on (\( _, ( name, _ ), valueType ) result -> Dict.insert name valueType result)
+            , onComputedQuestion = FormVisitor.on (\( _, ( name, _ ), valueType, _ ) result -> Dict.insert name valueType result)
         }
         form
         Dict.empty
@@ -45,18 +45,18 @@ collectQuestionLabels : Form -> List ( Id, String )
 collectQuestionLabels form =
     FormVisitor.inspect
         { defaultConfig
-            | onField = FormVisitor.on (\( label, id, _ ) result -> ( id, label ) :: result)
-            , onComputedField = FormVisitor.on (\( label, id, _, _ ) result -> ( id, label ) :: result)
+            | onQuestion = FormVisitor.on (\( label, id, _ ) result -> ( id, label ) :: result)
+            , onComputedQuestion = FormVisitor.on (\( label, id, _, _ ) result -> ( id, label ) :: result)
         }
         form
         []
 
 
-collectComputedFields : Form -> List ( Id, Expression )
-collectComputedFields form =
+collectComputedQuestions : Form -> List ( Id, Expression )
+collectComputedQuestions form =
     FormVisitor.inspect
         { defaultConfig
-            | onComputedField = FormVisitor.on (\( _, id, _, computation ) result -> ( id, computation ) :: result)
+            | onComputedQuestion = FormVisitor.on (\( _, id, _, computation ) result -> ( id, computation ) :: result)
         }
         form
         []
@@ -66,8 +66,8 @@ collectDeclaredIds : Form -> List Id
 collectDeclaredIds form =
     FormVisitor.inspect
         { defaultConfig
-            | onField = FormVisitor.on (\( _, id, _ ) result -> id :: result)
-            , onComputedField = FormVisitor.on (\( _, id, _, _ ) result -> id :: result)
+            | onQuestion = FormVisitor.on (\( _, id, _ ) result -> id :: result)
+            , onComputedQuestion = FormVisitor.on (\( _, id, _, _ ) result -> id :: result)
         }
         form
         []

@@ -130,22 +130,22 @@ testBadReferences =
                         [ IfThen (Var ( "x", loc 1 1 )) [] ]
                     )
                     |> Expect.equal [ Error <| ReferenceToUndefinedQuestion ( "x", loc 1 1 ) ]
-        , test "bad reference in ComputedField" <|
+        , test "bad reference in ComputedQuestion" <|
             \() ->
                 badReferences
                     (Form
                         ( "", emptyLoc )
-                        [ ComputedField "question" ( "someId", emptyLoc ) StringType (Var ( "x", loc 1 1 )) ]
+                        [ ComputedQuestion "question" ( "someId", emptyLoc ) StringType (Var ( "x", loc 1 1 )) ]
                     )
                     |> Expect.equal [ Error <| ReferenceToUndefinedQuestion ( "x", loc 1 1 ) ]
-        , test "bad reference in ComputedField" <|
+        , test "bad reference in ComputedQuestion" <|
             \() ->
                 badReferences
                     (Form
                         ( "", emptyLoc )
                         [ IfThen (Boolean emptyLoc True)
                             [ IfThen (Boolean emptyLoc True)
-                                [ ComputedField "question" ( "someId", emptyLoc ) StringType (Var ( "x", loc 3 3 )) ]
+                                [ ComputedQuestion "question" ( "someId", emptyLoc ) StringType (Var ( "x", loc 3 3 )) ]
                             ]
                         ]
                     )

@@ -196,7 +196,7 @@ renderErrorMessage message =
             , UI.Messages.renderType conditionType
             ]
 
-        InvalidComputedFieldType identifier computedType fieldType ->
+        InvalidComputedQuestionType identifier computedType fieldType ->
             [ text "Question "
             , UI.Messages.renderId identifier
             , text " is defined as "

@@ -27,7 +27,7 @@ type Msg
 init : Form -> Model
 init form =
     { form = form
-    , env = FormUpdater.updateComputedFields form Env.empty
+    , env = FormUpdater.updateComputedQuestions form Env.empty
     }
 
 

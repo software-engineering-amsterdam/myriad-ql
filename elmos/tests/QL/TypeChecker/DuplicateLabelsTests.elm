@@ -17,8 +17,8 @@ all =
                     (Form
                         ( "", emptyLoc )
                         [ IfThenElse (Boolean emptyLoc True)
-                            [ Field "label" ( "x", loc 3 3 ) StringType ]
-                            [ Field "label" ( "y", loc 4 4 ) StringType ]
+                            [ Question "label" ( "x", loc 3 3 ) StringType ]
+                            [ Question "label" ( "y", loc 4 4 ) StringType ]
                         ]
                     )
                     |> Expect.equal [ Warning (DuplicateLabels "label" [ ( "y", loc 4 4 ), ( "x", loc 3 3 ) ]) ]
@@ -27,9 +27,9 @@ all =
                 duplicateLabels
                     (Form
                         ( "", emptyLoc )
-                        [ Field "someLabel?" ( "x", loc 3 3 ) StringType
-                        , Field "someLabel?" ( "y", loc 4 4 ) IntegerType
-                        , Field "someLabel?" ( "z", loc 5 5 ) MoneyType
+                        [ Question "someLabel?" ( "x", loc 3 3 ) StringType
+                        , Question "someLabel?" ( "y", loc 4 4 ) IntegerType
+                        , Question "someLabel?" ( "z", loc 5 5 ) MoneyType
                         ]
                     )
                     |> Expect.equal [ Warning (DuplicateLabels "someLabel?" [ ( "z", loc 5 5 ), ( "y", loc 4 4 ), ( "x", loc 3 3 ) ]) ]
@@ -38,8 +38,8 @@ all =
                 duplicateLabels
                     (Form
                         ( "", emptyLoc )
-                        [ Field "someLabel?" ( "x", loc 3 3 ) StringType
-                        , Field "OtherLabel!" ( "z", loc 5 5 ) MoneyType
+                        [ Question "someLabel?" ( "x", loc 3 3 ) StringType
+                        , Question "OtherLabel!" ( "z", loc 5 5 ) MoneyType
                         ]
                     )
                     |> Expect.equal []
@@ -48,10 +48,10 @@ all =
                 duplicateLabels
                     (Form
                         ( "", emptyLoc )
-                        [ Field "OtherLabel!" ( "x", loc 3 3 ) StringType
-                        , Field "someLabel?" ( "y", loc 4 4 ) IntegerType
-                        , Field "OtherLabel!" ( "z", loc 5 5 ) MoneyType
-                        , Field "someLabel?" ( "a", loc 6 6 ) MoneyType
+                        [ Question "OtherLabel!" ( "x", loc 3 3 ) StringType
+                        , Question "someLabel?" ( "y", loc 4 4 ) IntegerType
+                        , Question "OtherLabel!" ( "z", loc 5 5 ) MoneyType
+                        , Question "someLabel?" ( "a", loc 6 6 ) MoneyType
                         ]
                     )
                     |> Expect.equal

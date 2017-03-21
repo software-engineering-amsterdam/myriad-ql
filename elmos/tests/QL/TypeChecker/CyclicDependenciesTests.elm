@@ -11,12 +11,12 @@ import Test exposing (Test, describe, test)
 all : Test
 all =
     describe "CyclicDependencies"
-        [ test "should find cycle for a self referencing ComputedField" <|
+        [ test "should find cycle for a self referencing ComputedQuestion" <|
             \() ->
                 cyclicDependencies
                     (Form
                         ( "", emptyLoc )
-                        [ ComputedField "label" ( "x", emptyLoc ) StringType (Var ( "x", emptyLoc ))
+                        [ ComputedQuestion "label" ( "x", emptyLoc ) StringType (Var ( "x", emptyLoc ))
                         ]
                     )
                     |> Expect.equal [ Error <| DependencyCycle [ "x", "x" ] ]
@@ -25,9 +25,9 @@ all =
                 cyclicDependencies
                     (Form
                         ( "", emptyLoc )
-                        [ ComputedField "label" ( "a", emptyLoc ) StringType (Var ( "t", emptyLoc ))
-                        , ComputedField "label" ( "t", emptyLoc ) StringType (Var ( "o", emptyLoc ))
-                        , ComputedField "label" ( "o", emptyLoc ) StringType (Var ( "a", emptyLoc ))
+                        [ ComputedQuestion "label" ( "a", emptyLoc ) StringType (Var ( "t", emptyLoc ))
+                        , ComputedQuestion "label" ( "t", emptyLoc ) StringType (Var ( "o", emptyLoc ))
+                        , ComputedQuestion "label" ( "o", emptyLoc ) StringType (Var ( "a", emptyLoc ))
                         ]
                     )
                     |> Expect.equal [ Error <| DependencyCycle [ "a", "t", "o", "a" ] ]
@@ -36,7 +36,7 @@ all =
                 cyclicDependencies
                     (Form
                         ( "", emptyLoc )
-                        [ ComputedField "label"
+                        [ ComputedQuestion "label"
                             ( "x", emptyLoc )
                             StringType
                             (BinaryExpression (Comparison Equal)
@@ -44,7 +44,7 @@ all =
                                 (Var ( "y", emptyLoc ))
                                 (Var ( "p", emptyLoc ))
                             )
-                        , ComputedField "label"
+                        , ComputedQuestion "label"
                             ( "y", emptyLoc )
                             StringType
                             (BinaryExpression (Comparison Equal)
@@ -52,8 +52,8 @@ all =
                                 (Var ( "z", emptyLoc ))
                                 (Var ( "a", emptyLoc ))
                             )
-                        , ComputedField "label" ( "z", emptyLoc ) StringType (Var ( "x", emptyLoc ))
-                        , ComputedField "label" ( "p", emptyLoc ) StringType (Var ( "y", emptyLoc ))
+                        , ComputedQuestion "label" ( "z", emptyLoc ) StringType (Var ( "x", emptyLoc ))
+                        , ComputedQuestion "label" ( "p", emptyLoc ) StringType (Var ( "y", emptyLoc ))
                         ]
                     )
                     |> Expect.equal
@@ -65,9 +65,9 @@ all =
                 cyclicDependencies
                     (Form
                         ( "", emptyLoc )
-                        [ ComputedField "label" ( "x", emptyLoc ) StringType (Var ( "y", emptyLoc ))
-                        , ComputedField "label" ( "y", emptyLoc ) StringType (Var ( "a", emptyLoc ))
-                        , ComputedField "label"
+                        [ ComputedQuestion "label" ( "x", emptyLoc ) StringType (Var ( "y", emptyLoc ))
+                        , ComputedQuestion "label" ( "y", emptyLoc ) StringType (Var ( "a", emptyLoc ))
+                        , ComputedQuestion "label"
                             ( "a", emptyLoc )
                             StringType
                             (BinaryExpression (Comparison Equal)

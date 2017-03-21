@@ -2,7 +2,7 @@ module QL.TypeChecker.ExpressionsTests exposing (all)
 
 import Test exposing (Test, describe)
 import QL.TypeChecker.Expressions.ExpressionTypesTests as ExpressionTypeTests
-import QL.TypeChecker.Expressions.ComputedFieldTypesTests as ComputedFieldTypesTests
+import QL.TypeChecker.Expressions.ComputedQuestionTypesTests as ComputedQuestionTypesTests
 import QL.TypeChecker.Expressions.ConditionTypesTests as ConditionTypesTests
 
 
@@ -11,6 +11,6 @@ all =
     describe
         "Expressions"
         [ ExpressionTypeTests.all
-        , ComputedFieldTypesTests.all
+        , ComputedQuestionTypesTests.all
         , ConditionTypesTests.all
         ]

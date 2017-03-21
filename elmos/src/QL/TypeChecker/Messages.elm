@@ -14,7 +14,7 @@ type ErrorMessage
     | ComparisonExpressionTypeMismatch ComparisonOperator Location ValueType ValueType
     | RelationExpressionTypeMismatch RelationOperator Location ValueType ValueType
     | InvalidConditionType Location ValueType
-    | InvalidComputedFieldType Id ValueType ValueType
+    | InvalidComputedQuestionType Id ValueType ValueType
     | DuplicateQuestionDefinition String (List Location)
     | ReferenceToUndefinedQuestion Id
     | DependencyCycle (List String)

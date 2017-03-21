@@ -16,7 +16,7 @@ all =
             \() ->
                 conditionTypeErrors
                     (Form ( "form", emptyLoc )
-                        [ IfThen (Str emptyLoc "test") [ Field "Label" ( "t", Location 1 1 ) BooleanType ] ]
+                        [ IfThen (Str emptyLoc "test") [ Question "Label" ( "t", Location 1 1 ) BooleanType ] ]
                     )
                     Dict.empty
                     |> Expect.equal [ Error (InvalidConditionType (Location 0 0) StringType) ]
@@ -24,7 +24,7 @@ all =
             \() ->
                 conditionTypeErrors
                     (Form ( "form", emptyLoc )
-                        [ IfThen (Var ( "y", Location 0 0 )) [ Field "Label" ( "x", Location 1 1 ) BooleanType ] ]
+                        [ IfThen (Var ( "y", Location 0 0 )) [ Question "Label" ( "x", Location 1 1 ) BooleanType ] ]
                     )
                     (Dict.singleton "y" IntegerType)
                     |> Expect.equal [ Error (InvalidConditionType (Location 0 0) IntegerType) ]
