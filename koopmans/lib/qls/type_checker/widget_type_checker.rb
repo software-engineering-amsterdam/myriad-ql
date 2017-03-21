@@ -1,8 +1,8 @@
 module QLS
   module TypeChecker
     class WidgetTypeChecker
-      def visit_stylesheet(stylesheet, collected_data)
-        @variable_type_map = collected_data
+      def visit_stylesheet(stylesheet, variable_type_map)
+        @variable_type_map = variable_type_map
         stylesheet.pages.each { |page| page.accept(self) }
       end
 
@@ -24,27 +24,33 @@ module QLS
       end
 
       def visit_slider_widget(slider_widget, type)
-        check_compatibility(slider_widget, type, [QL::AST::IntegerType, QL::AST::MoneyType, QL::AST::DecimalType])
+        compatible_types = [QL::AST::IntegerType, QL::AST::MoneyType, QL::AST::DecimalType]
+        check_compatibility(slider_widget, type, compatible_types)
       end
 
       def visit_spinbox_widget(spinbox_widget, type)
-        check_compatibility(spinbox_widget, type, [QL::AST::IntegerType, QL::AST::MoneyType, QL::AST::DecimalType])
+        compatible_types = [QL::AST::IntegerType, QL::AST::MoneyType, QL::AST::DecimalType]
+        check_compatibility(spinbox_widget, type, compatible_types)
       end
 
       def visit_text_widget(text_widget, type)
-        check_compatibility(text_widget, type, [QL::AST::IntegerType, QL::AST::DateType, QL::AST::DecimalType, QL::AST::StringType, QL::AST::MoneyType])
+        compatible_types = [QL::AST::IntegerType, QL::AST::DateType, QL::AST::DecimalType, QL::AST::StringType, QL::AST::MoneyType]
+        check_compatibility(text_widget, type, compatible_types)
       end
 
       def visit_radio_widget(radio_widget, type)
-        check_compatibility(radio_widget, type, [QL::AST::BooleanType])
+        compatible_types = [QL::AST::BooleanType]
+        check_compatibility(radio_widget, type, compatible_types)
       end
 
       def visit_checkbox_widget(checkbox_widget, type)
-        check_compatibility(checkbox_widget, type, [QL::AST::BooleanType])
+        compatible_types = [QL::AST::BooleanType]
+        check_compatibility(checkbox_widget, type, compatible_types)
       end
 
       def visit_dropdown_widget(dropdown_widget, type)
-        check_compatibility(dropdown_widget, type, [QL::AST::BooleanType])
+        compatible_types = [QL::AST::BooleanType]
+        check_compatibility(dropdown_widget, type, compatible_types)
       end
 
       def visit_width(_, _) end

@@ -9,8 +9,8 @@ module QL
         @else_body = else_body
       end
 
-      def accept(visitor, condition = nil)
-        visitor.visit_if_else_statement(self, condition)
+      def accept(visitor, argument = nil)
+        visitor.visit_if_else_statement(self, argument)
       end
     end
   end

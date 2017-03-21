@@ -43,6 +43,7 @@ module QL
         questions.each do |question|
           variable_type_map[question.variable.name] = question.type
         end
+        # TODO: add init variables
         ast.accept(OperandsTypeEvaluator.new, variable_type_map)
       end
 

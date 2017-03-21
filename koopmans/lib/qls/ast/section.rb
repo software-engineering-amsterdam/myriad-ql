@@ -8,8 +8,8 @@ module QLS
         @body = body
       end
 
-      def accept(visitor, parent_default = nil)
-        visitor.visit_section(self, parent_default)
+      def accept(visitor, argument = nil)
+        visitor.visit_section(self, argument)
       end
     end
   end

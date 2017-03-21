@@ -9,8 +9,8 @@ module QL
         @statements = statements
       end
 
-      def accept(visitor, collected_data = nil)
-        visitor.visit_form(self, collected_data)
+      def accept(visitor, argument = nil)
+        visitor.visit_form(self, argument)
       end
     end
   end

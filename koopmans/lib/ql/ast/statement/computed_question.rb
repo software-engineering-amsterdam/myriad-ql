@@ -8,8 +8,8 @@ module QL
         @assignment = assignment
       end
 
-      def accept(visitor, condition = nil)
-        visitor.visit_computed_question(self, condition)
+      def accept(visitor, argument = nil)
+        visitor.visit_computed_question(self, argument)
       end
     end
   end

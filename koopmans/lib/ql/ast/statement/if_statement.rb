@@ -8,8 +8,8 @@ module QL
         @body = body
       end
 
-      def accept(visitor, condition = nil)
-        visitor.visit_if_statement(self, condition)
+      def accept(visitor, argument = nil)
+        visitor.visit_if_statement(self, argument)
       end
     end
   end

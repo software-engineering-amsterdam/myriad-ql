@@ -9,8 +9,8 @@ module QL
         @type = type
       end
 
-      def accept(visitor, condition = nil)
-        visitor.visit_question(self, condition)
+      def accept(visitor, argument = nil)
+        visitor.visit_question(self, argument)
       end
     end
   end

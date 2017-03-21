@@ -8,8 +8,8 @@ module QLS
         @maximum = maximum
       end
 
-      def accept(visitor, type = nil)
-        visitor.visit_slider_widget(self, type)
+      def accept(visitor, argument = nil)
+        visitor.visit_slider_widget(self, argument)
       end
 
       def range
@@ -26,8 +26,8 @@ module QLS
         @maximum = maximum
       end
 
-      def accept(visitor, type = nil)
-        visitor.visit_spinbox_widget(self, type)
+      def accept(visitor, argument = nil)
+        visitor.visit_spinbox_widget(self, argument)
       end
 
       def range
@@ -37,8 +37,8 @@ module QLS
     end
 
     class TextWidget
-      def accept(visitor, type = nil)
-        visitor.visit_text_widget(self, type)
+      def accept(visitor, argument = nil)
+        visitor.visit_text_widget(self, argument)
       end
     end
 
@@ -50,8 +50,8 @@ module QLS
         @false_label = false_label
       end
 
-      def accept(visitor, type = nil)
-        visitor.visit_radio_widget(self, type)
+      def accept(visitor, argument = nil)
+        visitor.visit_radio_widget(self, argument)
       end
 
       def labels
@@ -61,8 +61,8 @@ module QLS
     end
 
     class CheckboxWidget
-      def accept(visitor, type = nil)
-        visitor.visit_checkbox_widget(self, type)
+      def accept(visitor, argument = nil)
+        visitor.visit_checkbox_widget(self, argument)
       end
     end
 
@@ -74,8 +74,8 @@ module QLS
         @false_label = false_label
       end
 
-      def accept(visitor, type = nil)
-        visitor.visit_dropdown_widget(self, type)
+      def accept(visitor, argument = nil)
+        visitor.visit_dropdown_widget(self, argument)
       end
 
       def labels
