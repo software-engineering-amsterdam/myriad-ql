@@ -3,7 +3,7 @@ from abc import ABCMeta, abstractmethod
 
 
 # noinspection PyCompatibility,PyMissingOrEmptyDocstring
-class ExpressionVisitor(metaclass=ABCMeta):
+class BinaryExpressionVisitor(metaclass=ABCMeta):
 
     @abstractmethod
     def subtraction(self, node):

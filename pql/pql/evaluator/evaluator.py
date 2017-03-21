@@ -1,56 +1,69 @@
 # coding=utf-8
 import operator
 
-from pql.traversal.ExpressionVisitor import ExpressionVisitor
+from pql.traversal.BinaryExpressionVisitor import BinaryExpressionVisitor
 from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.IdentifierVisitor import IdentifierVisitor
+from pql.traversal.TypeVisitor import TypeVisitor
+from pql.traversal.UnaryExpressionVisitor import UnaryExpressionVisitor
 
 
-class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
-    def __init__(self, environment):
-        self.__environment = environment
+class Evaluator(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVisitor, UnaryExpressionVisitor):
+    def __init__(self, environment_type, ast):
+        self.__environment = environment_type(ast).visit()
+        self.ast = ast
 
-    def visit(self, pql_ast):
-        #TODO make environment receive and return environment instead of having it as instance variable
-        [form.apply(self) for form in pql_ast]
+    def visit(self, environment=None):
+        if environment is None:
+            environment = self.__environment.copy()
+        self.ast.apply(self)
+
+        while set(self.__environment.items()) ^ set(environment.items()):
+            environment = self.__environment
+            self.ast.apply(self)
+
         return self.__environment
 
-    def form(self, node):
-        [statement.apply(self) for statement in node.statements]
+    def form(self, node, args=None):
+        for statement in node.statements:
+            statement.apply(self)
 
-    def conditional_if_else(self, node):
+    def conditional_if_else(self, node, args=None):
         if node.condition.apply(self):
-            [statement.apply(self) for statement in node.statements]
+            for statement in node.statements:
+                statement.apply(self)
         else:
-            [statement.apply(self) for statement in node.else_statement_list]
+            for statement in node.else_statement_list:
+                statement.apply(self)
 
-    def conditional_if(self, node):
+    def conditional_if(self, node, args=None):
         if node.condition.apply(self):
-            [statement.apply(self) for statement in node.statements]
+            for statement in node.statements:
+                statement.apply(self)
 
-    def expression(self, node):
-        return node.apply(self)
+    def field(self, node, args=None):
+        return node.name.apply(self)
 
-    def field(self, node):
-        if node.expression is not None:
-            self.__environment[node.name.name] = node.expression.apply(self)
+    def assignment(self, node, args=None):
+        self.__environment[node.name.name] = node.expression.apply(self)
 
     def identifier(self, node):
-        if node.name in self.__environment:
-            return self.__environment[node.name]
-        else:
-            return None
+        return self.__environment[node.name]
 
-    def value(self, node):
+    def integer(self, node):
+        return node.value
+
+    def boolean(self, node):
+        return node.value
+
+    def string(self, node):
+        return node.value
+
+    def money(self, node):
         return node.value
 
     def or_(self, node):
-        lhs_result = node.lhs.apply(self)
-        rhs_result = node.rhs.apply(self)
-        if lhs_result is True or rhs_result is True:
-            return True
-        else:
-            return self.apply_operator(node, (lambda lhs, rhs: lhs or rhs), False)
+        return self.apply_operator(node, (lambda lhs, rhs: lhs or rhs))
 
     def greater_inclusive(self, node):
         return self.apply_operator(node, operator.ge)
@@ -59,13 +72,13 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
         return self.apply_operator(node, operator.lt)
 
     def and_(self, node):
-        return self.apply_operator(node, (lambda lhs, rhs: lhs and rhs), default_value=False)
+        return self.apply_operator(node, (lambda lhs, rhs: lhs and rhs))
 
     def greater_exclusive(self, node):
         return self.apply_operator(node, operator.gt)
 
     def division(self, node):
-        return self.apply_operator(node, operator.truediv)
+        return self.apply_operator(node, lambda lhs, rhs:  0.00 if (rhs == 0.00) else operator.truediv(lhs, rhs))
 
     def subtraction(self, node):
         return self.apply_operator(node, operator.sub)
@@ -85,15 +98,20 @@ class Evaluator(FormVisitor, ExpressionVisitor, IdentifierVisitor):
     def inequality(self, node):
         return self.apply_operator(node, operator.ne)
 
-    def apply_operator(self, node, operator_function, default_value=None):
+    def apply_operator(self, node, operator_function):
         lhs_result = node.lhs.apply(self)
         rhs_result = node.rhs.apply(self)
-        if lhs_result is None or rhs_result is None:
-            return default_value
-        else:
-            return operator_function(lhs_result, rhs_result)
+        return operator_function(lhs_result, rhs_result)
+
+    def positive(self, node):
+        return +node.operand.apply(self)
+
+    def negative(self, node):
+        return -node.operand.apply(self)
+
+    def negation(self, node):
+        return not node.operand.apply(self)
 
     def update_value(self, key, value):
-        #TODO If environment is passed, this can be removed
         self.__environment[key] = value
-        print(self.__environment)
+        return self.visit()
