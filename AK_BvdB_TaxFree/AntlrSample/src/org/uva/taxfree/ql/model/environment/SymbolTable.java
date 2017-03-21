@@ -94,7 +94,7 @@ public class SymbolTable {
         for (Declaration declaration : mDeclarations) {
             String label = declaration.getLabel();
             if (!processedLabels.add(label)) {
-                messageList.addWarning("Duplicate question label found: " + label);
+                messageList.addWarning(declaration.sourceString() + "Duplicate label found: " + label);
             }
         }
     }
@@ -104,7 +104,7 @@ public class SymbolTable {
         for (Declaration declaration : mDeclarations) {
             String id = declaration.getId();
             if (!processedDeclarations.add(id)) {
-                messageList.addError("Duplicate declaration found: " + id);
+                messageList.addError(declaration.sourceString() + "Duplicate declaration found: " + id);
             }
         }
     }

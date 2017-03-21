@@ -24,7 +24,7 @@ class Main {
 				 + "question Name0 widget spinbox \n"
 		 		 + "section \"Loaning\" \n"
 				 + "question Name1 \n"
-		 		 + "default integer widget checkbox \n"
+		 		 + "default boolean widget checkbox \n"
 		 		 + "default integer widget spinbox"
 				 // + "default boolean widget radio(\"Yes\", \"No\") \n"
 				 + "}";
