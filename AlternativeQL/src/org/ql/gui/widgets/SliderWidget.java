@@ -7,12 +7,13 @@ import org.ql.ast.identifier.Identifier;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.DecimalValue;
 import org.ql.evaluator.value.Value;
+import org.ql.gui.FormPane;
 import org.ql.gui.ValueReviser;
 import org.qls.ast.page.WidgetQuestion;
 
 import java.math.BigDecimal;
 
-public abstract class SliderWidget extends Widget {
+public class SliderWidget extends Widget {
     private final Slider slider;
 
     public SliderWidget(ValueReviser valueReviser, Question question) {
@@ -27,7 +28,7 @@ public abstract class SliderWidget extends Widget {
 
     @Override
     public Pane createGridPane() {
-        GridPane gridPane = new GridPane();
+        FormPane gridPane = new FormPane();
         gridPane.add(slider, 0, 0);
         return gridPane;
     }
@@ -36,11 +37,11 @@ public abstract class SliderWidget extends Widget {
         slider.setValue(extractSliderValue(value));
     }
 
-    protected double extractSliderValue(Value value) {
+    private double extractSliderValue(Value value) {
         return value.toDouble();
     }
 
-    protected Value createValue(Slider slider) {
+    private Value createValue(Slider slider) {
         return new DecimalValue(new BigDecimal(slider.getValue()));
     }
 }

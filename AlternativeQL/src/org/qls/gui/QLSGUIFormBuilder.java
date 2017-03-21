@@ -17,6 +17,7 @@ public class QLSGUIFormBuilder implements ValueReviser {
     public QLSGUIFormBuilder(Window window, Form form, StyleSheet styleSheet) {
         this.window = window;
         this.styleSheet = styleSheet;
+
         pageBuilder = new PageBuilder(new WidgetContainer(this), form, new CustomWidgetContainer(this));
     }
 

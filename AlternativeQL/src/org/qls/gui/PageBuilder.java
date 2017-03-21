@@ -3,9 +3,11 @@ package org.qls.gui;
 import javafx.scene.Node;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import org.ql.ast.form.Form;
 import org.ql.ast.statement.Question;
 import org.ql.ast.type.Type;
+import org.ql.gui.FormPane;
 import org.ql.gui.widgets.WidgetContainer;
 import org.qls.ast.page.*;
 import org.qls.ast.widget.default_widget.DefaultWidget;
@@ -37,7 +39,7 @@ public class PageBuilder implements WidgetQuestionVisitor<Node, DefaultWidgetSet
     }
 
     private TitledPane createSectionPane(Section section, DefaultWidgetSet defaultWidgets) {
-        GridPane content = new GridPane();
+        FormPane content = new FormPane();
 
         defaultWidgets.mergeWith(section.getDefaultWidgets());
 
@@ -54,7 +56,7 @@ public class PageBuilder implements WidgetQuestionVisitor<Node, DefaultWidgetSet
     }
 
     @Override
-    public Node visitCustomWidgetQuestion(CustomWidgetQuestion question, DefaultWidgetSet defaultWidgets) {
+    public Pane visitCustomWidgetQuestion(CustomWidgetQuestion question, DefaultWidgetSet defaultWidgets) {
         Question formQuestion = questionSeek.find(question.getId(), form);
         DefaultWidget defaultWidget = defaultWidgets.lookupByType(formQuestion.getType());
 
@@ -62,7 +64,7 @@ public class PageBuilder implements WidgetQuestionVisitor<Node, DefaultWidgetSet
     }
 
     @Override
-    public Node visitGenericWidgetQuestion(WidgetQuestion question, DefaultWidgetSet defaultWidgets) {
+    public Pane visitGenericWidgetQuestion(WidgetQuestion question, DefaultWidgetSet defaultWidgets) {
         Question formQuestion = questionSeek.find(question.getId(), form);
         Type questionType = formQuestion.getType();
 

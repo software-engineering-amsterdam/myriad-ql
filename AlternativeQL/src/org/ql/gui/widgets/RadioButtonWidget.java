@@ -8,17 +8,19 @@ import javafx.scene.layout.Pane;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.BooleanValue;
 import org.ql.evaluator.value.Value;
+import org.ql.gui.FormPane;
 import org.ql.gui.ValueReviser;
 import org.qls.ast.page.WidgetQuestion;
+import org.qls.ast.widget.YesNoWidget;
 
 public class RadioButtonWidget extends Widget {
-    final ToggleGroup buttonGroup = new ToggleGroup();
+    private final ToggleGroup buttonGroup = new ToggleGroup();
     private final RadioButton yesButton;
     private final RadioButton noButton;
 
-    public RadioButtonWidget(ValueReviser valueReviser, Question question, String yesText, String noText) {
-        yesButton = createRadioButton(valueReviser, question, yesText);
-        noButton = createRadioButton(valueReviser, question, noText);
+    public RadioButtonWidget(ValueReviser valueReviser, Question question, YesNoWidget yesNoWidget) {
+        yesButton = createRadioButton(valueReviser, question, yesNoWidget.getYesText());
+        noButton = createRadioButton(valueReviser, question, yesNoWidget.getNoText());
     }
 
     private RadioButton createRadioButton(ValueReviser valueReviser, Question question, String text) {
@@ -36,7 +38,7 @@ public class RadioButtonWidget extends Widget {
 
     @Override
     public Pane createGridPane() {
-        GridPane gridPane = new GridPane();
+        FormPane gridPane = new FormPane();
         gridPane.add(yesButton, 0, 1);
         gridPane.add(noButton, 0, 0);
         return gridPane;

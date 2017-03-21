@@ -8,18 +8,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 
 public class QuestionPane {
-    private final GridPane gridPane;
-    private final int WIDTH = 800;
-    private final int HEIGHT = 600;
+    private final FormPane gridPane;
 
     private int row = 0;
 
     public QuestionPane() {
-        gridPane = new GridPane();
+        gridPane = new FormPane();
         gridPane.setAlignment(Pos.TOP_LEFT);
-        gridPane.setMinWidth(WIDTH);
-        gridPane.setMinHeight(HEIGHT);
-        gridPane.setVgap(10);
     }
 
     public void add(Node pane) {
@@ -27,7 +22,7 @@ public class QuestionPane {
     }
 
     public Scene createScene() {
-        return new Scene(gridPane, WIDTH, HEIGHT);
+        return new Scene(gridPane);
     }
 
     public void reset() {
