@@ -5,6 +5,7 @@ import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.operators.Operator;
 import org.uva.taxfree.ql.model.types.Type;
+import org.uva.taxfree.ql.model.values.Value;
 
 import java.util.List;
 import java.util.Set;
@@ -22,23 +23,8 @@ public class BinaryExpressionNode extends ExpressionNode {
     }
 
     @Override
-    public String asString() {
-        return evaluate();
-    }
-
-    @Override
-    public String evaluate() {
+    public Value evaluate() {
         return mOperator.evaluate(mLeft, mRight);
-    }
-
-    @Override
-    public boolean asBoolean() {
-        return Boolean.valueOf(evaluate());
-    }
-
-    @Override
-    public int asInteger() {
-        return Integer.valueOf(evaluate());
     }
 
     @Override
@@ -56,8 +42,7 @@ public class BinaryExpressionNode extends ExpressionNode {
         }
         if (!mOperator.supports(mLeft.getType(), mRight.getType())) {
             semanticsMessages.addError("Unsupported operator called:" + mLeft.getType() + " " + mOperator + " " + mRight.getType());
-        }
-        if (isConstant()) {
+        } else if (isConstant()) {
             semanticsMessages.addWarning("Constant expression found, always evaluates to: " + this.evaluate());
         }
     }

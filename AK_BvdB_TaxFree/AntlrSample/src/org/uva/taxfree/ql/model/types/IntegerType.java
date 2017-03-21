@@ -5,6 +5,8 @@ import org.uva.taxfree.ql.gui.widgets.IntegerWidget;
 import org.uva.taxfree.ql.model.operators.BooleanOperator;
 import org.uva.taxfree.ql.model.operators.CompareOperator;
 import org.uva.taxfree.ql.model.operators.NumericOperator;
+import org.uva.taxfree.ql.model.values.IntValue;
+import org.uva.taxfree.ql.model.values.Value;
 
 public class IntegerType extends Type {
     @Override
@@ -28,7 +30,7 @@ public class IntegerType extends Type {
     }
 
     @Override
-    public String defaultValue() {
-        return "0";
+    public Value defaultValue() {
+        return new IntValue(0);
     }
 }

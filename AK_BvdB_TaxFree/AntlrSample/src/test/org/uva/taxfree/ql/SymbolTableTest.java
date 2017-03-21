@@ -8,6 +8,7 @@ import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.declarations.DeclarationNode;
 import org.uva.taxfree.ql.model.types.BooleanType;
 import org.uva.taxfree.ql.model.types.IntegerType;
+import org.uva.taxfree.ql.model.values.IntValue;
 
 import java.io.File;
 
@@ -24,7 +25,7 @@ public class SymbolTableTest extends SemanticsTester {
     public void testEvaluate() throws Exception {
         DeclarationNode boolQuestion = new DeclarationNode("did you sell a house?", "hasSoldHouse", new BooleanType(), mEmptySourceInfo);
         mSymbolTable.addDeclaration(boolQuestion);
-        Assert.assertEquals("false", mSymbolTable.resolveValue("hasSoldHouse"));
+        Assert.assertTrue(mSymbolTable.resolveValue("hasSoldHouse").equalTo(false));
     }
 
     @Test(expectedExceptions = RuntimeException.class)
@@ -48,9 +49,10 @@ public class SymbolTableTest extends SemanticsTester {
         Assert.assertFalse(mSymbolTable.contains(variableId), "empty table should not contain anything");
         mSymbolTable.addDeclaration(new DeclarationNode("newDeclaration", variableId, new IntegerType(), mEmptySourceInfo));
         Assert.assertTrue(mSymbolTable.contains(variableId), "newly added declaration should be present");
-        Assert.assertEquals(mSymbolTable.resolveValue(variableId), "0", "Expect default value");
-        mSymbolTable.updateValue(variableId, "30");
-        Assert.assertEquals(mSymbolTable.resolveValue(variableId), "30", "Expect new value");
+
+        Assert.assertTrue(mSymbolTable.resolveValue(variableId).equalTo(0));
+        mSymbolTable.updateValue(variableId, new IntValue(30));
+        Assert.assertTrue(mSymbolTable.resolveValue(variableId).equalTo(30));
     }
 
 }

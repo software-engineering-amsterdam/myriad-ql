@@ -6,6 +6,7 @@ import org.uva.taxfree.ql.model.node.declarations.CalculationNode;
 import org.uva.taxfree.ql.model.node.declarations.DeclarationNode;
 import org.uva.taxfree.ql.model.types.Type;
 import org.uva.taxfree.ql.model.types.UnknownType;
+import org.uva.taxfree.ql.model.values.Value;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -34,12 +35,12 @@ public class SymbolTable {
         mCalculations.add(calculation);
     }
 
-    public void updateValue(String variableId, String updatedValue) {
+    public void updateValue(String variableId, Value updatedValue) {
         updateDeclaration(variableId, updatedValue);
         recalculate();
     }
 
-    private void updateDeclaration(String variableId, String updatedValue) {
+    private void updateDeclaration(String variableId, Value updatedValue) {
         for (Declaration declaration : mDeclarations) {
             if (declaration.equals(variableId)) {
                 declaration.setValue(updatedValue);
@@ -53,7 +54,7 @@ public class SymbolTable {
         }
     }
 
-    public String resolveValue(String variableId) {
+    public Value resolveValue(String variableId) {
         for (Declaration declaration : mDeclarations) {
             if (declaration.equals(variableId)) {
                 return declaration.getValue();
@@ -67,7 +68,7 @@ public class SymbolTable {
     }
 
     public Type resolveType(String variableId) {
-        if (true == contains(variableId)) {
+        if (contains(variableId)) {
             return findDeclaration(variableId).getType();
         }
         return new UnknownType();

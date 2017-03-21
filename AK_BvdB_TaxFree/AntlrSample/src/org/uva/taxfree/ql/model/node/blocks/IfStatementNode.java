@@ -6,6 +6,7 @@ import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.Node;
 import org.uva.taxfree.ql.model.node.expression.ExpressionNode;
 import org.uva.taxfree.ql.model.types.BooleanType;
+import org.uva.taxfree.ql.model.values.BooleanValue;
 
 import java.util.List;
 
@@ -34,6 +35,6 @@ public class IfStatementNode extends BlockNode {
 
     @Override
     public boolean conditionTrue() {
-        return mExpression.evaluate().equals("true");
+        return mExpression.evaluate().equalsToValue(new BooleanValue(true));
     }
 }

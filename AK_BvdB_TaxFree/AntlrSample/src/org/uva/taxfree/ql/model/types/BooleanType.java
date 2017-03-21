@@ -5,6 +5,8 @@ import org.uva.taxfree.ql.gui.widgets.BooleanWidget;
 import org.uva.taxfree.ql.model.operators.BooleanOperator;
 import org.uva.taxfree.ql.model.operators.CompareOperator;
 import org.uva.taxfree.ql.model.operators.NumericOperator;
+import org.uva.taxfree.ql.model.values.BooleanValue;
+import org.uva.taxfree.ql.model.values.Value;
 
 public class BooleanType extends Type {
     @Override
@@ -28,7 +30,7 @@ public class BooleanType extends Type {
     }
 
     @Override
-    public String defaultValue() {
-        return "false";
+    public Value defaultValue() {
+        return new BooleanValue(false);
     }
 }

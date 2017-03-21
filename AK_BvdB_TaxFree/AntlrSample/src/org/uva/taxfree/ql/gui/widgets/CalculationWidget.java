@@ -3,6 +3,7 @@ package org.uva.taxfree.ql.gui.widgets;
 import org.uva.taxfree.ql.gui.FormListener;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.expression.ExpressionNode;
+import org.uva.taxfree.ql.model.values.Value;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +26,7 @@ public class CalculationWidget extends Widget {
     }
 
     @Override
-    public String resolveValue() {
+    public Value resolveValue() {
         return mExpression.evaluate();
     }
 

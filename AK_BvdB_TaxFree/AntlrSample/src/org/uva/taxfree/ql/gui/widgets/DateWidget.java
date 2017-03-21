@@ -1,5 +1,8 @@
 package org.uva.taxfree.ql.gui.widgets;
 
+import org.uva.taxfree.ql.model.values.StringValue;
+import org.uva.taxfree.ql.model.values.Value;
+
 import java.util.Date;
 
 public class DateWidget extends TextFieldWidget {
@@ -10,5 +13,10 @@ public class DateWidget extends TextFieldWidget {
     @Override
     public Object getFormatObject() {
         return new Date();
+    }
+
+    @Override
+    public Value resolveValue() {
+        return new StringValue(currentValue());
     }
 }

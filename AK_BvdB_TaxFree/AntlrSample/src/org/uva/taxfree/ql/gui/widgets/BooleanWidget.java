@@ -3,6 +3,8 @@ package org.uva.taxfree.ql.gui.widgets;
 import org.uva.taxfree.ql.gui.FormListener;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.types.BooleanType;
+import org.uva.taxfree.ql.model.values.BooleanValue;
+import org.uva.taxfree.ql.model.values.Value;
 import org.uva.taxfree.qls.QlsStyle;
 
 import javax.swing.*;
@@ -25,8 +27,8 @@ public class BooleanWidget extends Widget {
     }
 
     @Override
-    public String resolveValue() {
-        return String.valueOf(isTrue());
+    public Value resolveValue() {
+        return new BooleanValue(isTrue());
     }
 
     @Override

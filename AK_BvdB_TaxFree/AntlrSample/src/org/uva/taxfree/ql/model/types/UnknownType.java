@@ -4,6 +4,8 @@ import org.uva.taxfree.ql.gui.QuestionForm;
 import org.uva.taxfree.ql.model.operators.BooleanOperator;
 import org.uva.taxfree.ql.model.operators.CompareOperator;
 import org.uva.taxfree.ql.model.operators.NumericOperator;
+import org.uva.taxfree.ql.model.values.StringValue;
+import org.uva.taxfree.ql.model.values.Value;
 
 public class UnknownType extends Type {
     @Override
@@ -23,8 +25,8 @@ public class UnknownType extends Type {
 
 
     @Override
-    public String defaultValue() {
-        return "Invalid";
+    public Value defaultValue() {
+        return new StringValue("Invalid");
     }
 
     @Override

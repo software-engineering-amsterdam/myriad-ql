@@ -7,6 +7,7 @@ import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.expression.ExpressionNode;
 import org.uva.taxfree.ql.model.types.Type;
+import org.uva.taxfree.ql.model.values.Value;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,7 +27,7 @@ public class CalculationNode extends DeclarationNode {
         mExpression.fillSymbolTable(symbolTable);
     }
 
-    public String resolveValue() {
+    public Value resolveValue() {
         return mExpression.evaluate();
     }
 
