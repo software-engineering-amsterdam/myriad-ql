@@ -8,8 +8,8 @@ module QLS
         @properties = properties if properties
       end
 
-      def accept(visitor)
-        visitor.visit_question(self)
+      def accept(visitor, parent_default = nil)
+        visitor.visit_question(self, parent_default)
       end
     end
   end

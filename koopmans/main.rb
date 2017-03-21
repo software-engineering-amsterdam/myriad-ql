@@ -94,19 +94,25 @@ QL::TypeChecker::TypeChecker.new.check(ql_ast)
 # pp NotificationTable.index
 # ql_notifications = nil
 
-# question_frames = ql_ast.accept(QL::GUI::FormBuilder.new)
-# gui = QL::GUI::GUI.new(question_frames)
+question_frames = ql_ast.accept(QL::GUI::FormBuilder.new)
+gui = QL::GUI::GUI.new(question_frames)
+
 # gui.render
 
 qls_contents = File.read('examples/example.qls')
 # pp qls_contents
 qls_parsed = QLS::Parser::FormParser.new.parse(qls_contents)
-pp qls_parsed
+qls_parsed
 qls_ast = QLS::Parser::FormTransformer.new.apply(qls_parsed)
-pp qls_ast
+qls_ast
+'-------------------------------------'
+qls_ast.accept(QLS::GUI::StylesheetBuilder.new)
 # qls_notifications = QLS::TypeChecker::TypeChecker.check(qls_ast, ql_ast)
 # pp qls_notifications
 #
 # qls_ast = nil
 # #
 # QL::GUI::GUI.new(ql_ast, qls_ast, ql_notifications)
+
+gui.extend(QLS::GUI::GUIStylesheet)
+gui.render
