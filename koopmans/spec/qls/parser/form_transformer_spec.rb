@@ -79,7 +79,7 @@ module QLS
 
       describe 'question' do
         it 'transforms' do
-          expect(transformer.apply(question: { id: {variable: 'hasSoldHouse'}, properties: [{ width: '400' }] })).to be_a Question
+          expect(transformer.apply(question: { id: { variable: 'hasSoldHouse' }, properties: [{ width: '400' }] })).to be_a Question
         end
       end
 
@@ -91,13 +91,13 @@ module QLS
 
       describe 'page' do
         it 'transforms' do
-          expect(transformer.apply(page: { id: {variable: 'Section name'}, body: {} })).to be_a Page
+          expect(transformer.apply(page: { id: { variable: 'Section name' }, body: {} })).to be_a Page
         end
       end
 
       describe 'stylesheet' do
         it 'transforms' do
-          expect(transformer.apply(stylesheet: { id: {variable: 'Section name'}, pages: {} })).to be_a Stylesheet
+          expect(transformer.apply(stylesheet: { id: { variable: 'Section name' }, pages: {} })).to be_a Stylesheet
         end
       end
     end

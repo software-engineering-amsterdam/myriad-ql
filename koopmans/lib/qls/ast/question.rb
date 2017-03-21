@@ -4,7 +4,7 @@ module QLS
       attr_reader :variable, :properties
 
       def initialize(variable, properties)
-        @variable   = variable
+        @variable = variable
         @properties = properties if properties
       end
 

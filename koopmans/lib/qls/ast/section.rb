@@ -4,7 +4,7 @@ module QLS
       attr_reader :name, :body
 
       def initialize(name, body)
-        @name  = name
+        @name = name
         @body = body
       end
 

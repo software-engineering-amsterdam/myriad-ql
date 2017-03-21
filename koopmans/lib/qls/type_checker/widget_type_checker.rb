@@ -57,8 +57,11 @@ module QLS
       end
 
       def visit_width(_, _) end
+
       def visit_font(_, _) end
+
       def visit_fontsize(_, _) end
+
       def visit_color(_, _) end
 
       def check_compatibility(widget, type, compatible_types)
