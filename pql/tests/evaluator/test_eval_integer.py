@@ -2,7 +2,7 @@
 from tests.shared import Shared
 
 
-class TestIntegerTypeChecker(Shared):
+class TestIntegerEvaluator(Shared):
     def test_integer_addition_integer_and_integer(self):
         input_string = """
         form taxOfficeExample {

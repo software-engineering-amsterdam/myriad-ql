@@ -2,7 +2,7 @@
 from tests.shared import Shared
 
 
-class TestBooleanTypeChecker(Shared):
+class TestBooleanEvaluator(Shared):
     def test_boolean_negation_boolean(self):
         input_string = """
         form taxOfficeExample {
