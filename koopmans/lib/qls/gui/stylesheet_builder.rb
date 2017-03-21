@@ -28,7 +28,7 @@ module QLS
         @question_frame_styles[question.variable.name] = properties if properties
       end
 
-      def visit_default(_, _) end
+      def visit_default_properties(_, _) end
     end
   end
 end

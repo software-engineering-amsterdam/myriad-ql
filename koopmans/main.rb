@@ -104,13 +104,13 @@ qls_contents = File.read('examples/example.qls')
 qls_parsed = QLS::Parser::FormParser.new.parse(qls_contents)
 qls_parsed
 qls_ast = QLS::Parser::FormTransformer.new.apply(qls_parsed)
-qls_ast
+pp qls_ast
 '-------------------------------------'
 
-default_collector = QLS::GUI::DefaultCollector.new
-qls_ast.accept(default_collector)
+style_collector = QLS::GUI::StyleCollector.new
+qls_ast.accept(style_collector)
 
-stylesheet_builder = QLS::GUI::StylesheetBuilder.new(default_collector.defaults)
+stylesheet_builder = QLS::GUI::StylesheetBuilder.new(style_collector.widgets)
 qls_ast.accept(stylesheet_builder)
 question_frame_styles = stylesheet_builder.question_frame_styles
 # qls_notifications = QLS::TypeChecker::TypeChecker.check(qls_ast, ql_ast)

@@ -9,7 +9,7 @@ module QLS
       end
 
       def accept(visitor, argument = nil)
-        visitor.visit_default(self, argument)
+        visitor.visit_default_properties(self, argument)
       end
     end
   end
