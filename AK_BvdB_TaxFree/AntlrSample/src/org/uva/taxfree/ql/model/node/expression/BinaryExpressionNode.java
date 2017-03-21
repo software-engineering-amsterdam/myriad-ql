@@ -38,12 +38,12 @@ public class BinaryExpressionNode extends ExpressionNode {
         mLeft.checkSemantics(symbolTable, semanticsMessages);
         mRight.checkSemantics(symbolTable, semanticsMessages);
         if (!mLeft.isSameType(mRight)) {
-            semanticsMessages.addError("Incompatible types in expression: " + mLeft.getType() + " & " + mRight.getType());
+            semanticsMessages.addError(sourceString() + "Incompatible types in expression: " + mLeft.getType() + " & " + mRight.getType());
         } else {
             if (!mOperator.supports(mLeft.getType(), mRight.getType())) {
-                semanticsMessages.addError("Unsupported operator called:" + mLeft.getType() + " " + mOperator + " " + mRight.getType());
+                semanticsMessages.addError(sourceString() + "Unsupported operator called:" + mLeft.getType() + " " + mOperator + " " + mRight.getType());
             } else if (isConstant()) {
-                semanticsMessages.addWarning("Constant expression found, always evaluates to: " + this.evaluate());
+                semanticsMessages.addWarning(sourceString() + "Constant expression found, always evaluates to: " + evaluate());
             }
         }
     }
