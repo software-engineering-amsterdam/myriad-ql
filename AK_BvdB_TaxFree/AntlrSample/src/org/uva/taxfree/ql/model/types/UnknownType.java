@@ -4,7 +4,6 @@ import org.uva.taxfree.ql.gui.QuestionForm;
 import org.uva.taxfree.ql.model.operators.BooleanOperator;
 import org.uva.taxfree.ql.model.operators.CompareOperator;
 import org.uva.taxfree.ql.model.operators.NumericOperator;
-import org.uva.taxfree.ql.model.values.StringValue;
 import org.uva.taxfree.ql.model.values.Value;
 
 // The UnknownType enables a configurable output of sematics messages.

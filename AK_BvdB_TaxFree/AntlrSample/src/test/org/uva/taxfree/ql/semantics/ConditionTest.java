@@ -3,8 +3,6 @@ package test.org.uva.taxfree.ql.semantics;
 import org.testng.annotations.Test;
 import test.org.uva.taxfree.ql.SemanticsTester;
 
-import java.io.File;
-
 public class ConditionTest extends SemanticsTester {
 
     @Test

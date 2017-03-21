@@ -11,7 +11,6 @@ import org.uva.taxfree.ql.model.node.literal.StringLiteralNode;
 import org.uva.taxfree.ql.model.operators.*;
 import org.uva.taxfree.ql.model.values.BooleanValue;
 import org.uva.taxfree.ql.model.values.IntValue;
-import org.uva.taxfree.ql.model.values.StringValue;
 import org.uva.taxfree.ql.model.values.Value;
 import test.org.uva.taxfree.ql.SemanticsTester;
 

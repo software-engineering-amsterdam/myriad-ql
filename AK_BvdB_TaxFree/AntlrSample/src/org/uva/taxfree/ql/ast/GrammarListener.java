@@ -235,7 +235,7 @@ public class GrammarListener extends QLGrammarBaseListener {
         List<Node> thenStatementNodes = new ArrayList<>(allChildes.subList(0, splitIndex));
         List<Node> elseStatementNodes = new ArrayList<>(allChildes.subList(splitIndex, allChildes.size()));
 
-        BlockNode ifElseStatementNode = new IfElseStatementNode(popCachedCondition(), thenStatementNodes, elseStatementNodes,createSourceInfo(ctx));
+        BlockNode ifElseStatementNode = new IfElseStatementNode(popCachedCondition(), thenStatementNodes, elseStatementNodes, createSourceInfo(ctx));
         addToStack(ifElseStatementNode);
     }
 
