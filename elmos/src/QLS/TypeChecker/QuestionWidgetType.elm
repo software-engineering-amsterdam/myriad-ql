@@ -2,6 +2,7 @@ module QLS.TypeChecker.QuestionWidgetType exposing (check)
 
 import QL.AST exposing (Form, Location, Id, ValueType(..))
 import QLS.AST exposing (StyleSheet, Question, Configuration(..), Widget(..))
+import QLS.AST.Widget as Widget
 import QLS.TypeChecker.Messages exposing (Message(WidgetConfigMismatch))
 import QLS.AST.Collectors as QLSCollectors
 import Dict exposing (Dict)
@@ -22,16 +23,6 @@ check form styleSheet =
 
 invalidWidgetConfiguration : TypeEnvironment -> ( Id, Configuration ) -> Maybe Message
 invalidWidgetConfiguration typeEnv ( ( name, loc ), conf ) =
-    Maybe.map2 (,) (Dict.get name typeEnv) (configuredWidget conf)
+    Maybe.map2 (,) (Dict.get name typeEnv) (Widget.widgetFromConfiguration conf)
         |> Maybe.filter (not << WidgetCompatibility.allowedValueTypeWidgetPair)
         |> Maybe.map (\( valueType, widget ) -> WidgetConfigMismatch name loc valueType widget)
-
-
-configuredWidget : Configuration -> Maybe Widget
-configuredWidget c =
-    case c of
-        SingleConfig widget ->
-            Just widget
-
-        MultiConfig _ widgetMaybe ->
-            widgetMaybe
