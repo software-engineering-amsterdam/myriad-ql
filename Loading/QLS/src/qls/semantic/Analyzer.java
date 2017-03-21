@@ -1,24 +1,35 @@
 package qls.semantic;
 
-import java.util.Map;
-
-import QL.Faults;
-import QL.ast.type.Type;
+import QL.ReferenceTable;
+import QL.message.Message;
+import QL.ui.StyleTable;
 import qls.ast.Stylesheet;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class Analyzer {
 	
 	private final Environment environment;
 	
-	public Analyzer(Map<String, Type> variableTypes) {
-		this.environment = new Environment(variableTypes);
+	public Analyzer(ReferenceTable referenceTable) {
+		this.environment = new Environment(referenceTable);
 	}
 	
-	public Faults analyze(Stylesheet stylesheet) {
+	public StyleTable analyze(Stylesheet stylesheet) {
+		
 		VerifyQuestions verifyQuestions = new VerifyQuestions(environment);
 		verifyQuestions.visit(stylesheet);
-		
-		return environment.getFaults();
-	}
 
+		VerifyTypes verifyTypes = new VerifyTypes(environment);
+		verifyTypes.visit(stylesheet);
+
+        // TODO implement
+        return new StyleTable(new HashMap<>());
+
+    }
+	
+	public List<Message> getMessages() {
+		return environment.getMessages();
+	}
 }

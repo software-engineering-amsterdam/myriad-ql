@@ -17,13 +17,17 @@ view { identifier, env, onChange, editable } optionLabels =
                 |> Maybe.andThen Values.asBool
 
         selections =
-            [ ( selectedValue == Just True, Values.bool True )
-            , ( selectedValue == Just False, Values.bool False )
+            [ ( selectedValue == Just True, Values.Boolean True )
+            , ( selectedValue == Just False, Values.Boolean False )
             ]
     in
         div []
-            (List.zip optionLabels selections
-                |> List.map (\( optionLabel, ( isSelected, value ) ) -> renderOption editable optionLabel isSelected (onChange value))
+            (selections
+                |> List.zip optionLabels
+                |> List.map
+                    (\( optionLabel, ( isSelected, value ) ) ->
+                        renderOption editable optionLabel isSelected (onChange value)
+                    )
             )
 
 

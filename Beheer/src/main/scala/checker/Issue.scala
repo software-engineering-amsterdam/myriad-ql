@@ -1,6 +1,8 @@
 package checker
 
-sealed trait Issue
+sealed trait Issue {
+  val message: String
+}
 
 case class Error(message: String) extends Issue
 

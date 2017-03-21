@@ -27,7 +27,7 @@ public class Question extends FormElement {
 	public Type getType() {
 		return this.type;
 	}
-
+	
 	@Override
 	public <T> T accept(FormElementVisitor<T> visitor) {
 		return visitor.visit(this);

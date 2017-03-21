@@ -1,10 +1,7 @@
 package qls.semantic;
 
-import qls.ast.Page;
-import qls.ast.Question;
-import qls.ast.Section;
-import qls.ast.Stylesheet;
-import qls.ast.StylesheetVisitor;
+import QL.message.Error;
+import qls.ast.*;
 
 // you cannot place a single question multiple times.
 // all questions of the QL program are placed by the QLS program.
@@ -20,53 +17,51 @@ public class VerifyQuestions implements StylesheetVisitor {
 	@Override
 	public void visit(Stylesheet stylesheet) {
 		for (Page page : stylesheet.getPages()) {
-			visit(page);
+			page.accept(this);
 		}
 	}
 
 	@Override
 	public void visit(Page page) {
 		for (Section section : page.getSections()) {
-			visit(section);
+			section.accept(this);
 		}
-		
 	}
-	
-//	// TODO is this necessary?
-//	@Override
-//	public void visit(PageWithDefault pageWithDefault) {
-//		for (Section section : pageWithDefault.getSections()) {
-//			visit(section);
-//		}	
-//	}
 
 	@Override
 	public void visit(Section section) {
 		for (Question question : section.getQuestions()) {
-			visit(question);
+			question.accept(this);
 		}		
 	}
-	
-//	// TODO is this necessary?
-//	@Override
-//	public void visit(SectionWithDefault sectionWithDefault) {
-//		for (Question question : sectionWithDefault.getQuestions()) {
-//			visit(question);
-//		}	
-//		
-//	}
 
 	@Override
-	// TODO check the logic here instead of in the environment
 	public void visit(Question question) {
-		environment.isCovered(question.getName(), question.getLine());
+		
+		check(question.getName(), question.getLine());
+		
+		environment.setCovered(question.getName());
 	}
-	
-//	// TODO is this necessary?
-//	@Override
-//	public void visit(QuestionWithWidget questionWithDefault) {
-//		// TODO Auto-generated method stub
-//		
-//	}
+
+	@Override
+	public void visit(QuestionWithWidget question) {
+
+		check(question.getName(), question.getLine());
+
+		environment.setCovered(question.getName());
+	}
+
+	private void check(String name, int line) {
+
+		if (!environment.presentInQL(name)) {
+			environment.addMessage(new Error("The variable " + name +
+					" appears in the QLS, but does not exist in QL", line));
+		}
+
+		if (environment.isCovered(name)) {
+			environment.addMessage(new Error("The variable " + name +
+			" is already defined in the QLS", line));
+		}
+	}
 
 }

@@ -1,45 +1,30 @@
 package QL.semantic;
 
-import QL.Faults;
-import QL.ast.type.Type;
-import QL.ast.type.UnknownType;
-import QL.errorhandling.Error;
+import QL.ReferenceTable;
+import QL.message.Message;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 class Environment {
 
-	private final Map<String, Type> variableType; // Should these two be combined to label - variable/type
-	private final Faults faults;
+	private final ReferenceTable variables;
+	private final List<Message> messages;
 	
 	public Environment() {
-		variableType = new HashMap<>();
-		faults = new Faults();
+		this.variables = new ReferenceTable();
+		this.messages = new ArrayList<>();
 	}
 	
-	public Faults getFaults() {
-		return faults;
-	}
-	
-	public Map<String, Type> getVariableTypes() {
-		return variableType;
+	ReferenceTable getReferenceTable() {
+		return variables;
 	}
 
-	public void addVariableType(String variable, Type type) {
-		variableType.put(variable, type);
+    List<Message> getMessages() {
+		return messages;
 	}
-	
-	public Type getType(String variable, int line) {
-		
-		if (!variableExists(variable)) {
-	        faults.add(new Error("The variable: " + variable + " is not defined", line));
-	        return new UnknownType(line);
-		}
-		return variableType.get(variable);
-	}
-	
-	public boolean variableExists(String variable) {
-		return variableType.containsKey(variable);
-	}
+
+	void addMessage(Message m) {
+        messages.add(m);
+    }
 }

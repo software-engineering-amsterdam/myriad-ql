@@ -29,11 +29,11 @@ removeLocationFromBlock =
 removeLocationFromFormItem : FormItem -> FormItem
 removeLocationFromFormItem formItem =
     case formItem of
-        Field label id valueType ->
-            Field label (removeLocactionFromId id) valueType
+        Question label id valueType ->
+            Question label (removeLocactionFromId id) valueType
 
-        ComputedField label id valueType expr ->
-            ComputedField label (removeLocactionFromId id) valueType (removeLocactionFromExpression expr)
+        ComputedQuestion label id valueType expr ->
+            ComputedQuestion label (removeLocactionFromId id) valueType (removeLocactionFromExpression expr)
 
         IfThen expr thenBranch ->
             IfThen
@@ -68,17 +68,8 @@ removeLocactionFromExpression expr =
         ParensExpression _ inner ->
             ParensExpression emptyLoc (removeLocactionFromExpression inner)
 
-        ArithmeticExpression op _ l r ->
-            ArithmeticExpression op emptyLoc (removeLocactionFromExpression l) (removeLocactionFromExpression r)
-
-        RelationExpression op _ l r ->
-            RelationExpression op emptyLoc (removeLocactionFromExpression l) (removeLocactionFromExpression r)
-
-        LogicExpression op _ l r ->
-            LogicExpression op emptyLoc (removeLocactionFromExpression l) (removeLocactionFromExpression r)
-
-        ComparisonExpression op _ l r ->
-            ComparisonExpression op emptyLoc (removeLocactionFromExpression l) (removeLocactionFromExpression r)
+        BinaryExpression op _ l r ->
+            BinaryExpression op emptyLoc (removeLocactionFromExpression l) (removeLocactionFromExpression r)
 
 
 removeLocactionFromId : Id -> Id

@@ -2,34 +2,37 @@ package com.matthewchapman.ql.validation.structure;
 
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
-import com.matthewchapman.ql.ast.atomic.Type;
 import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
-import com.matthewchapman.ql.core.QLErrorLogger;
-import com.matthewchapman.ql.validation.visitors.QLStatementVisitor;
+import com.matthewchapman.ql.core.ErrorLogger;
+import com.matthewchapman.ql.validation.type.TypeTable;
+import com.matthewchapman.ql.validation.visitors.StatementVisitor;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by matt on 03/03/2017.
  * <p>
  * Gathers all of the questions contained within a given Form, allows checking for duplicates
  */
-public class QuestionCollection implements QLStatementVisitor<Void, String> {
+public class QuestionCollection implements StatementVisitor<Void, String> {
 
     private final List<Question> questionList;
-    private final HashMap<String, Type> typeTable;
-    private final QLErrorLogger logger;
+    private final TypeTable typeTable;
+    private final ErrorLogger logger;
 
     public QuestionCollection() {
-        this.typeTable = new HashMap<>();
+        this.typeTable = new TypeTable();
         this.questionList = new ArrayList<>();
-        this.logger = new QLErrorLogger();
+        this.logger = new ErrorLogger();
     }
 
-    public QLErrorLogger gatherQuestions(Form form) {
+    public ErrorLogger gatherQuestions(Form form) {
         for (Statement statement : form.getStatements()) {
             statement.accept(this, null);
         }
@@ -39,7 +42,7 @@ public class QuestionCollection implements QLStatementVisitor<Void, String> {
         return this.logger;
     }
 
-    public Map<String, Type> getTypeTable() {
+    public TypeTable getTypeTable() {
         return this.typeTable;
     }
 
@@ -69,7 +72,7 @@ public class QuestionCollection implements QLStatementVisitor<Void, String> {
     @Override
     public Void visit(Question question, String context) {
         questionList.add(question);
-        typeTable.put(question.getName(), question.getType());
+        typeTable.addEntry(question.getName(), question.getType());
         return null;
     }
 
@@ -98,7 +101,7 @@ public class QuestionCollection implements QLStatementVisitor<Void, String> {
     @Override
     public Void visit(CalculatedQuestion calculatedQuestion, String context) {
         questionList.add(calculatedQuestion);
-        typeTable.put(calculatedQuestion.getName(), calculatedQuestion.getType());
+        typeTable.addEntry(calculatedQuestion.getName(), calculatedQuestion.getType());
         return null;
     }
 }

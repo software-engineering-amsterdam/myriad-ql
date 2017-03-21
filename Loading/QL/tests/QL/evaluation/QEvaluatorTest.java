@@ -4,7 +4,6 @@ import QL.ast.atom.BoolAtom;
 import QL.ast.atom.IntegerAtom;
 import QL.ast.atom.StringAtom;
 import QL.ast.expression.*;
-import QL.evaluation.Evaluator;
 import QL.value.Value;
 import org.junit.jupiter.api.Test;
 

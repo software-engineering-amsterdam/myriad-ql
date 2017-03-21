@@ -1,27 +1,27 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Questionnaires.QL.AST;
+using System;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Questionnaires.AST;
+using Questionnaires.ErrorHandling;
 
 namespace Tests.QL.AST
 {
     [TestClass]
     public class Literals
     {
-        public ASTFactory astFactory;
+        public ASTBuilder astFactory;
 
         public T CreateASTNode<T>(string input) where T : INode
         {
-            var parser = astFactory.CreateParser(input);
-            return (T)astFactory.CreateQLObject(parser, ASTFactory.QLObjectType.Expression);
+            return (T)astFactory.BuildExpression(input);
         }
 
         [TestInitialize]
         public void SetupTestFactory()
         {
-            astFactory = new ASTFactory();
+            astFactory = new ASTBuilder(new Result());
         }
-        
+
         [TestMethod]
         public void StringLiteral()
         {
@@ -29,14 +29,13 @@ namespace Tests.QL.AST
             {
                 { "\"\"", "Test failure: Empty string" },
                 { "\"PieceOfText\"", "Test failure: Single word string" },
-                { "\"Piece Of Text\"", "Test failure: Multi word string" },
-                { "\"\"\"\"", "Test failure: Escape characters" }
+                { "\"Piece Of Text\"", "Test failure: Multi word string" }
             };
-            
+
             foreach (var testCase in testCases)
             {
                 Assert.AreEqual(
-                    CreateASTNode<QLString>(testCase.Key).Value,
+                    CreateASTNode<Questionnaires.QL.AST.Literals.String>(testCase.Key).Value,
                     testCase.Key, testCase.Value
                 );
             }
@@ -54,7 +53,7 @@ namespace Tests.QL.AST
             foreach (var testCase in testCases)
             {
                 Assert.AreEqual(
-                    CreateASTNode<QLBoolean>(testCase.Key).Value,
+                    CreateASTNode<Questionnaires.QL.AST.Literals.Boolean>(testCase.Key).Value,
                     Boolean.Parse(testCase.Key), testCase.Value
                 );
             }
@@ -67,13 +66,13 @@ namespace Tests.QL.AST
             {
                 { "123456", "Test failure: 123456 literal" },
                 { "0", "Test failure: 0 literal" },
-                { Int32.MaxValue.ToString(), "Test failure: Int32 max" }
+                { int.MaxValue.ToString(), "Test failure: Int32 max" }
             };
 
             foreach (var testCase in testCases)
             {
                 Assert.AreEqual(
-                    CreateASTNode<QLNumber>(testCase.Key).Value.ToString(),
+                    CreateASTNode<Questionnaires.QL.AST.Literals.Number>(testCase.Key).Value.ToString(),
                     testCase.Key, testCase.Value
                 );
             }
@@ -92,8 +91,8 @@ namespace Tests.QL.AST
             foreach (var testCase in testCases)
             {
                 Assert.AreEqual(
-                    CreateASTNode<QLMoney>(testCase.Key).Value,
-                    Decimal.Parse(testCase.Key), testCase.Value
+                    CreateASTNode<Questionnaires.QL.AST.Literals.Money>(testCase.Key).Value,
+                    decimal.Parse(testCase.Key), testCase.Value
                 );
             }
         }

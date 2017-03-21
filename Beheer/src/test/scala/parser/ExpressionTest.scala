@@ -7,18 +7,17 @@ import org.scalatest.{ Inside, Matchers, PropSpec }
 import scala.annotation.tailrec
 import scala.util.matching.Regex
 
-class ExpressionParserTest extends PropSpec with Inside with Matchers with PropertyChecks with ExpressionGenerator with ValueGenerator {
-  type NodePair = (ExpressionNode, ExpressionNode)
-  type NodeRel = Set[NodePair]
+class ExpressionParserTest extends PropSpec with Inside with Matchers with PropertyChecks with ExpressionStringGenerator {
+  private type NodePair = (ExpressionNode, ExpressionNode)
+  private type NodeRel = Set[NodePair]
   private val parser = ConcreteExpressionParser
 
   property("Integer literal scale should be 0") {
     forAll(integer) {
       num =>
         inside(parser.parseExpression(num)) {
-          case IntegerLiteral(decimal) => {
+          case IntegerLiteral(decimal) =>
             decimal.scale should be(0)
-          }
         }
     }
   }
@@ -194,7 +193,7 @@ class ExpressionParserTest extends PropSpec with Inside with Matchers with Prope
 object ConcreteExpressionParser extends ExpressionParser {
   def parseExpression(expr: String): ExpressionNode = {
     parseAll(expression, expr) match {
-      case Success(expr, _) => expr
+      case Success(e, _) => e
       case failure: NoSuccess => sys.error(s"invalid expression passed to parser; $failure")
     }
   }

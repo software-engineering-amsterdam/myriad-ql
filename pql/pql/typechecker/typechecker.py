@@ -1,137 +1,211 @@
 # coding=utf-8
-from pql.traversal.ExpressionVisitor import ExpressionVisitor
+from pql.ast.ast import Boolean
+from pql.messages.error import Error
+from pql.traversal.BinaryExpressionVisitor import BinaryExpressionVisitor
 from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.IdentifierVisitor import IdentifierVisitor
+from pql.traversal.TypeVisitor import TypeVisitor
+from pql.traversal.UnaryExpressionVisitor import UnaryExpressionVisitor
 from pql.typechecker.types import DataTypes
 
 
-class TypeChecker(FormVisitor, ExpressionVisitor, IdentifierVisitor):
-    def __init__(self, ql_identifier_check_result):
-        self.identifier_dict = ql_identifier_check_result
+class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVisitor, UnaryExpressionVisitor):
+    def __init__(self, ast, environment_type):
+        self.symbol_table = environment_type(ast).visit()
+        self.ast = ast
         self.errors = list()
 
-    def visit(self, pql_ast):
+    def visit(self):
         self.errors.clear()
-        [form.apply(self) for form in pql_ast]
+        self.ast.apply(self)
         return self.errors
 
-    def form(self, node):
+    def form(self, node, args=None):
+        for statement in node.statements:
+            statement.apply(self)
+
+    def conditional_if(self, node, args=None):
+        condition_result = node.condition.apply(self)
+        if condition_result is None or condition_result.data_type is not DataTypes.boolean:
+            self.errors.append(
+                Error("Invalid expression in a conditional statement, it expected a [DataTypes.boolean] "
+                      "expression but received [{}], at location {}"
+                      .format(condition_result, node.condition.location), node.condition.location))
         [statement.apply(self) for statement in node.statements]
 
-    def field(self, node):
-        if node.expression is not None:
-            result = node.expression.apply(self)
-            if node.data_type.data_type is DataTypes.boolean:
-                if result is not node.data_type.data_type:
-                    self.errors.append(
-                        "Expression of field [{}] did not match declared type [{}]".format(result,
-                                                                                           node.data_type.data_type))
-
-    def subtraction(self, node):
-        return self.type_detection(node, self.arithmetic_type_detection)
-
-    def division(self, node):
-        return self.type_detection(node, self.arithmetic_type_detection)
-
-    def multiplication(self, node):
-        return self.type_detection(node, self.arithmetic_type_detection)
-
-    def addition(self, node):
-        return self.type_detection(node, self.arithmetic_type_detection)
-
-    def conditional_if(self, node):
-        condition = node.condition.apply(self)
-        if condition is not DataTypes.boolean:
-            self.errors.append("Condition does not contain a boolean expression: %s" % condition)
-        [statement.apply(self) for statement in node.statements]
-
-    def conditional_if_else(self, node):
-        condition = node.condition.apply(self)
-        if condition is not DataTypes.boolean:
-            self.errors.append("Condition does not contain a boolean expression: %s" % condition)
-        [statement.apply(self) for statement in node.statements]
+    def conditional_if_else(self, node, args=None):
+        self.conditional_if(node, args)
         [statement.apply(self) for statement in node.else_statement_list]
 
+    def field(self, node, args=None):
+        return node.data_type
+
+    def assignment(self, node, args=None):
+        lhs = node.data_type.apply(self).checker()
+        expression_type = node.expression.apply(self)
+        result = lhs.assignment(expression_type)
+
+        if result is None:
+            self.errors.append(
+                Error("Expression of field [{}] did not match declared type [{}], at location: {}"
+                         .format(result, node.data_type.data_type, node.expression.location), node.expression.location))
+
+    def subtraction(self, node):
+        lhs_type = node.lhs.apply(self)
+        if lhs_type is not None:
+            lhs_checker = lhs_type.checker()
+            rhs = node.rhs.apply(self)
+            if rhs is not None:
+                return lhs_checker.subtraction(rhs)
+        return None
+
+    def division(self, node):
+        lhs_type = node.lhs.apply(self)
+        if lhs_type is not None:
+            lhs_checker = lhs_type.checker()
+            rhs = node.rhs.apply(self)
+            if rhs is not None:
+                return lhs_checker.division(rhs)
+        return None
+
+    def multiplication(self, node):
+        lhs_type = node.lhs.apply(self)
+        if lhs_type is not None:
+            lhs_checker = lhs_type.checker()
+            rhs = node.rhs.apply(self)
+            if rhs is not None:
+                return lhs_checker.multiplication(rhs)
+        return None
+
+    def addition(self, node):
+        lhs_type = node.lhs.apply(self)
+        if lhs_type is not None:
+            lhs_checker = lhs_type.checker()
+            rhs = node.rhs.apply(self)
+            if rhs is not None:
+                return lhs_checker.addition(rhs)
+        return None
+
     def greater_exclusive(self, node):
-        return self.type_detection(node, self.boolean_type_detection)
+        lhs_type = node.lhs.apply(self)
+        if lhs_type is not None:
+            lhs_checker = lhs_type.checker()
+            rhs = node.rhs.apply(self)
+            if rhs is not None:
+                result = lhs_checker.greater_exclusive(rhs)
+                if result is not None:
+                    return Boolean(0, '')
+        return None
 
     def greater_inclusive(self, node):
-        return self.type_detection(node, self.boolean_type_detection)
+        lhs_type = node.lhs.apply(self)
+        if lhs_type is not None:
+            lhs_checker = lhs_type.checker()
+            rhs = node.rhs.apply(self)
+            if rhs is not None:
+                result = lhs_checker.greater_inclusive(rhs)
+                if result is not None:
+                    return Boolean(0, '')
+        return None
 
     def lower_inclusive(self, node):
-        return self.type_detection(node, self.boolean_type_detection)
+        lhs_type = node.lhs.apply(self)
+        if lhs_type is not None:
+            lhs_checker = lhs_type.checker()
+            rhs = node.rhs.apply(self)
+            if rhs is not None:
+                result = lhs_checker.lower_inclusive(rhs)
+                if result is not None:
+                    return Boolean(0, '')
+        return None
 
     def lower_exclusive(self, node):
-        return self.type_detection(node, self.boolean_type_detection)
+        lhs_type = node.lhs.apply(self)
+        if lhs_type is not None:
+            lhs_checker = lhs_type.checker()
+            rhs = node.rhs.apply(self)
+            if rhs is not None:
+                result = lhs_checker.lower_exclusive(rhs)
+                if result is not None:
+                    return Boolean(0, '')
+        return None
 
     def equality(self, node):
-        return self.type_detection(node, self.boolean_type_detection)
+        lhs_type = node.lhs.apply(self)
+        if lhs_type is not None:
+            lhs_checker = lhs_type.checker()
+            rhs = node.rhs.apply(self)
+            if rhs is not None:
+                result = lhs_checker.equality(rhs)
+                if result is not None:
+                    return Boolean(0, '')
+        return None
 
     def inequality(self, node):
-        return self.type_detection(node, self.boolean_type_detection)
+        lhs_type = node.lhs.apply(self)
+        if lhs_type is not None:
+            lhs_checker = lhs_type.checker()
+            rhs = node.rhs.apply(self)
+            if rhs is not None:
+                result = lhs_checker.inequality(rhs)
+                if result is not None:
+                    return Boolean(0, '')
+        return None
 
     def and_(self, node):
-        return self.type_detection(node, self.boolean_type_detection, allowed_arithmetic_types=set())
+        lhs_type = node.lhs.apply(self)
+        if lhs_type is not None:
+            lhs_checker = lhs_type.checker()
+            rhs = node.rhs.apply(self)
+            if rhs is not None:
+                result = lhs_checker.and_(rhs)
+                if result is not None:
+                    return Boolean(0, '')
+        return None
 
     def or_(self, node):
-        return self.type_detection(node, self.boolean_type_detection, allowed_arithmetic_types=set())
+        lhs_type = node.lhs.apply(self)
+        if lhs_type is not None:
+            lhs_checker = lhs_type.checker()
+            rhs = node.rhs.apply(self)
+            if rhs is not None:
+                result = lhs_checker.or_(rhs)
+                if result is not None:
+                    return Boolean(0, '')
+        return None
 
     def negation(self, node):
-        if node.rhs.apply(self) is DataTypes.boolean:
-            return DataTypes.boolean
-        self.errors.append("Negation was passed a non-boolean value")
+        operand_result = node.operand.apply(self)
+        if operand_result is not None:
+            lhs_checker = operand_result.checker()
+            return lhs_checker.negation(node)
         return None
 
     def positive(self, node):
-        result = node.rhs.apply(self)
-        if result is (DataTypes.integer or DataTypes.money):
-            return result
-        self.errors.append("Positive was passed a non-numeric value")
+        operand_result = node.operand.apply(self)
+        if operand_result is not None:
+            lhs_checker = operand_result.checker()
+            return lhs_checker.positive(node)
         return None
 
     def negative(self, node):
-        result = node.rhs.apply(self)
-        if result is (DataTypes.integer or DataTypes.money):
-            return result
-        self.errors.append("Negative was passed a non-numeric value")
+        operand_result = node.operand.apply(self)
+        if operand_result is not None:
+            lhs_checker = operand_result.checker()
+            return lhs_checker.negative(node)
         return None
 
-    def arithmetic_type_detection(self, allowed_arithmetic_types, _, type_set):
-        dominant_type = None
-        if type_set.issubset(allowed_arithmetic_types):
-            if DataTypes.money in type_set:
-                dominant_type = DataTypes.money
-            else:
-                dominant_type = DataTypes.integer
-        else:
-            self.errors.append("TypeMismatch: The given leaves are of type %s, and only %s types are allowed" % (
-                type_set, allowed_arithmetic_types))
-        return dominant_type
-
-    def boolean_type_detection(self, allowed_arithmetic_types, allowed_boolean_types, type_set):
-        dominant_type = None
-        allowed_types = allowed_arithmetic_types.union(allowed_boolean_types)
-        if type_set.issubset(allowed_types):
-            if type_set.issubset(allowed_arithmetic_types):
-                dominant_type = DataTypes.boolean
-            elif type_set.issubset(allowed_boolean_types):
-                dominant_type = DataTypes.boolean
-            else:
-                self.errors.append("TypeMismatch: The given leaves are of type %s, and only %s types are allowed" % (
-                    type_set, allowed_types))
-        else:
-            self.errors.append("TypeMismatch: The given leaves are of type %s, and only %s types are allowed" % (
-                type_set, allowed_types))
-
-        return dominant_type
-
-    def type_detection(self, node, func, allowed_arithmetic_types={DataTypes.integer, DataTypes.money},
-                       allowed_boolean_types={DataTypes.boolean}):
-        type_set = {node.lhs.apply(self), node.rhs.apply(self)}
-        return func(allowed_arithmetic_types, allowed_boolean_types, type_set)
-
     def identifier(self, node):
-        return self.identifier_dict[node.name].data_type
+        return self.symbol_table[node.name]
 
-    def value(self, node):
-        return node.data_type
+    def integer(self, node):
+        return node
+
+    def money(self, node):
+        return node
+
+    def boolean(self, node):
+        return node
+
+    def string(self, node):
+        return node

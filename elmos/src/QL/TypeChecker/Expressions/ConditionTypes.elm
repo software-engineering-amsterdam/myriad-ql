@@ -1,22 +1,22 @@
-module QL.TypeChecker.Expressions.ConditionTypes exposing (conditionTypeErrors)
+module QL.TypeChecker.Expressions.ConditionTypes exposing (check)
 
 import QL.AST exposing (Form, FormItem(..), Expression(..), Id, ValueType(BooleanType), Location)
-import QL.AST.Collectors as Collectors exposing (QuestionTypes)
+import QL.AST.Collectors as Collectors exposing (TypeEnvironment)
 import QL.TypeChecker.Expressions.ExpressionType exposing (getType)
 import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(InvalidConditionType))
 
 
-conditionTypeErrors : Form -> QuestionTypes -> List Message
-conditionTypeErrors form questionTypes =
+check : Form -> TypeEnvironment -> List Message
+check form typeEnv =
     Collectors.collectConditions form
-        |> List.filterMap (conditionWithType questionTypes)
-        |> List.filter (Tuple.second >> badConditional)
-        |> List.map (\( condition, conditionType ) -> Error <| InvalidConditionType (locationOf condition) conditionType)
+        |> List.filterMap (conditionWithType typeEnv)
+        |> List.filter (\( _, conditionType ) -> isBadConditional conditionType)
+        |> List.map (\( condition, conditionType ) -> Error (InvalidConditionType (locationOf condition) conditionType))
 
 
-conditionWithType : QuestionTypes -> Expression -> Maybe ( Expression, ValueType )
-conditionWithType questionTypes condition =
-    case getType questionTypes condition of
+conditionWithType : TypeEnvironment -> Expression -> Maybe ( Expression, ValueType )
+conditionWithType typeEnv condition =
+    case getType typeEnv condition of
         Ok valueType ->
             Just ( condition, valueType )
 
@@ -24,8 +24,8 @@ conditionWithType questionTypes condition =
             Nothing
 
 
-badConditional : ValueType -> Bool
-badConditional =
+isBadConditional : ValueType -> Bool
+isBadConditional =
     (/=) BooleanType
 
 
@@ -50,14 +50,5 @@ locationOf expression =
         ParensExpression location _ ->
             location
 
-        ArithmeticExpression _ location _ _ ->
-            location
-
-        RelationExpression _ location _ _ ->
-            location
-
-        LogicExpression _ location _ _ ->
-            location
-
-        ComparisonExpression _ location _ _ ->
+        BinaryExpression _ location _ _ ->
             location

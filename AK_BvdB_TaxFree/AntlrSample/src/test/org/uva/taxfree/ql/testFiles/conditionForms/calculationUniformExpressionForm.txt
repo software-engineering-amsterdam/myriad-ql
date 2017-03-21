@@ -1,0 +1,7 @@
+form houseForm {
+    if (three == five) {
+        "Three equals five: " -> threePlusFive : integer
+    }
+    "I am five" -> five : integer
+    "I am three" -> three : integer
+}

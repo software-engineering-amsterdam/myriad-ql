@@ -6,7 +6,7 @@ import Html.Events exposing (onInput)
 import UI.Widget.Base exposing (WidgetContext)
 import QL.Environment as Environment
 import QL.Values as Values exposing (Value)
-import UI.Widget.Values as Values
+import UI.Widget.NumberParser as NumberParser
 
 
 view : WidgetContext msg -> Html msg
@@ -24,6 +24,6 @@ view { identifier, env, onChange, editable } =
             , defaultValue textValue
             , id identifier
             , disabled (not editable)
-            , onInput (Values.parseIntegerInput >> onChange)
+            , onInput (NumberParser.parseIntegerInput >> onChange)
             ]
             []

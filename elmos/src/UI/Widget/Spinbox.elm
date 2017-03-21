@@ -6,7 +6,7 @@ import Html.Events exposing (onInput)
 import UI.Widget.Base exposing (WidgetContext)
 import QL.Environment as Environment
 import QL.Values as Values exposing (Value)
-import UI.Widget.Values as Values
+import UI.Widget.NumberParser as NumberParser
 
 
 view : WidgetContext msg -> Html msg
@@ -21,8 +21,12 @@ view { identifier, env, onChange, editable } =
             , class "form-control"
             , id identifier
             , step "1"
-            , defaultValue (Maybe.withDefault "" <| Maybe.map toString currentValue)
-            , onInput (Values.parseIntegerInput >> onChange)
+            , defaultValue
+                (currentValue
+                    |> Maybe.map toString
+                    |> Maybe.withDefault ""
+                )
+            , onInput (NumberParser.parseIntegerInput >> onChange)
             , disabled (not editable)
             ]
             []

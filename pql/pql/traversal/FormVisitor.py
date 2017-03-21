@@ -5,21 +5,21 @@ from abc import ABCMeta, abstractmethod
 # noinspection PyCompatibility
 class FormVisitor(metaclass=ABCMeta):
     @abstractmethod
-    def visit(self, pql_ast):
+    def form(self, node, args=None):
         pass
 
     @abstractmethod
-    def form(self, node):
+    def field(self, node, args=None):
         pass
 
     @abstractmethod
-    def field(self, node):
+    def assignment(self, node, args=None):
         pass
 
     @abstractmethod
-    def conditional_if(self, node):
+    def conditional_if(self, node, args=None):
         pass
 
     @abstractmethod
-    def conditional_if_else(self, node):
+    def conditional_if_else(self, node, args=None):
         pass

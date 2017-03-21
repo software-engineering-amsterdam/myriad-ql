@@ -16,23 +16,23 @@ view { identifier, env, onChange, editable } values =
             Environment.getFormValue identifier env
                 |> Maybe.andThen Values.asString
     in
-        -- index of labels starts with 0, however 0 = the default option, 1 = first item, 2 = second item
         select
             [ class "form-control"
             , selectEventHandler (onChange << indexToValue values)
             , disabled (not editable)
             , id identifier
             ]
-            (renderPlaceholder
-                :: List.map
-                    (\value -> renderOption (Just value == selectedValue) value)
-                    values
-            )
+            (renderPlaceholder :: renderValues selectedValue values)
+
+
+renderValues : Maybe String -> List String -> List (Html msg)
+renderValues selectedValue =
+    List.map (\value -> renderOption (Just value == selectedValue) value)
 
 
 indexToValue : List String -> Maybe Int -> Value
 indexToValue values selectedIndex =
     selectedIndex
         |> Maybe.andThen (\index -> List.getAt (index - 1) values)
-        |> Maybe.map Values.string
-        |> Maybe.withDefault Values.undefined
+        |> Maybe.map Values.Str
+        |> Maybe.withDefault Values.Undefined

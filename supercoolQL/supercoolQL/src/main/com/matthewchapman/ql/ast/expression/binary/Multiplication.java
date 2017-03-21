@@ -1,7 +1,7 @@
 package com.matthewchapman.ql.ast.expression.binary;
 
 import com.matthewchapman.ql.ast.Expression;
-import com.matthewchapman.ql.validation.visitors.QLExpressionVisitor;
+import com.matthewchapman.ql.validation.visitors.ExpressionVisitor;
 
 /**
  * Created by matt on 24/02/2017.
@@ -22,7 +22,7 @@ public class Multiplication extends BinaryOperation {
     }
 
     @Override
-    public <T, C> T accept(QLExpressionVisitor<T, C> visitor, C context) {
+    public <T, C> T accept(ExpressionVisitor<T, C> visitor, C context) {
         return visitor.visit(this, context);
     }
 }

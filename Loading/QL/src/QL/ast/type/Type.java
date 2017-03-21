@@ -2,9 +2,6 @@ package QL.ast.type;
 
 import QL.ast.Node;
 import QL.ast.TypeVisitor;
-import QL.ui.Notifier;
-import QL.ui.field.Field;
-import QL.value.Value;
 
 public abstract class Type extends Node {
 	

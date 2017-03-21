@@ -3,12 +3,45 @@ from tkinter import BooleanVar, DoubleVar, StringVar
 from tkinter import ttk
 
 
+# We want singletons but they are broken.
 class Type(object):
     def __str__(self):
         return self.__class__.__name__
 
+    def __eq__(self, other):
+        return (issubclass(other.__class__, Type) and
+                other.__class__.__name__ == self.__class__.__name__)
 
-class Boolean(object):
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+
+class Undefined(Type):
+    def __str__(self):
+        return self.__class__.__name__
+
+    @staticmethod
+    def allowed_operations():
+        return []
+
+    @staticmethod
+    def default_value():
+        return None
+
+    @staticmethod
+    def init_variable():
+        return None
+
+    @staticmethod
+    def init_field():
+        return None
+
+
+class Boolean(Type):
+    @staticmethod
+    def allowed_operations():
+        return ['&&', '||', '!', '==', '!=']
+
     @staticmethod
     def default_value():
         return False
@@ -29,7 +62,11 @@ class Boolean(object):
                                    variable=variable)
 
 
-class Decimal(object):
+class Decimal(Type):
+    @staticmethod
+    def allowed_operations():
+        return ['+', '-', '*', '/', '<', '<=', '>', '>=', '==', '!=']
+
     @staticmethod
     def default_value():
         return 0
@@ -72,7 +109,11 @@ class Decimal(object):
             return False
 
 
-class String(object):
+class String(Type):
+    @staticmethod
+    def allowed_operations():
+        return ['==', '!=']
+
     @staticmethod
     def default_value():
         return ''

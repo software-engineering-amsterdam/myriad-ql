@@ -1,4 +1,0 @@
-form houseForm {
-    "Did you sell a house??" ->
-        hasSoldHouse  : boolean
-}

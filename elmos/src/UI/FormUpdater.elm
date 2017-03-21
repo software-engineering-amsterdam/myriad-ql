@@ -1,4 +1,4 @@
-module UI.FormUpdater exposing (updateValue)
+module UI.FormUpdater exposing (updateValue, updateComputedQuestions)
 
 import QL.AST exposing (Form, Label, ValueType, Expression, FormItem)
 import QL.Environment as Env exposing (Environment)
@@ -10,25 +10,25 @@ import UI.Field as Field exposing (Field(Computed))
 updateValue : String -> Value -> Environment -> Form -> Environment
 updateValue fieldId value env form =
     Env.withFormValue fieldId value env
-        |> updateComputedFields form
+        |> updateComputedQuestions form
 
 
-updateComputedFields : Form -> Environment -> Environment
-updateComputedFields form env =
+updateComputedQuestions : Form -> Environment -> Environment
+updateComputedQuestions form env =
     let
         newEnv =
-            activeComputedFields env form
+            activeComputedQuestions env form
                 |> List.map (Tuple.mapSecond (Evaluator.evaluate env))
                 |> List.foldr (\( identifier, value ) -> Env.withFormValue identifier value) env
     in
         if newEnv == env then
             env
         else
-            updateComputedFields form newEnv
+            updateComputedQuestions form newEnv
 
 
-activeComputedFields : Environment -> Form -> List ( String, Expression )
-activeComputedFields env form =
+activeComputedQuestions : Environment -> Form -> List ( String, Expression )
+activeComputedQuestions env form =
     Field.activeFields env form
         |> List.filterMap
             (\field ->

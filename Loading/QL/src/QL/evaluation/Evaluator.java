@@ -1,6 +1,5 @@
 package QL.evaluation;
 
-import QL.Environment;
 import QL.ast.*;
 import QL.ast.atom.BoolAtom;
 import QL.ast.atom.IntegerAtom;
@@ -10,6 +9,7 @@ import QL.ast.type.BooleanType;
 import QL.ast.type.IntegerType;
 import QL.ast.type.StringType;
 import QL.ast.type.UnknownType;
+import QL.ui.Environment;
 import QL.value.BoolValue;
 import QL.value.IntegerValue;
 import QL.value.StringValue;

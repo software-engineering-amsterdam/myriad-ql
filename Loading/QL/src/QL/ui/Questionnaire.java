@@ -1,27 +1,14 @@
 package QL.ui;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
-
-import javax.json.Json;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonWriter;
-
-import QL.Environment;
-import QL.Faults;
 import QL.ast.Form;
+import QL.message.Message;
+import QL.ui.message.MessageDialog;
 import QL.value.Value;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -31,88 +18,102 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
+
 public class Questionnaire extends Application implements Notifier {
-	
-	// TODO do not make static
+
 	private static Form form;
 	private static Environment environment;
 	private static GridPane grid;
-	private static Faults faults;
+	private static List<Message> messages;
 	
-    public void main(Form f, Environment env, Faults flts) {
+    public void main(Form f, Environment env, List<Message> msgs) {
     	form = f;
     	environment = env;
-    	faults = flts;
+    	messages = msgs;
  
         launch();
     }
-    
+
     @Override
     public void start(Stage primaryStage) {
-        
-    	if (!faults.showAndContinue()) {
-    		return;
-    	}
-    	
+
+        showMessages();
+        if (hasFatalMessage()) {
+            return;
+        }
+
         primaryStage.setTitle(form.getId());
 
         initGrid();
-        Scene scene = new Scene(grid, 500, 275);
+        Scene scene = new Scene(grid, 700, 350);
         primaryStage.setScene(scene);
         
         renderQuestionnaire();
         
         primaryStage.show();
-
     }
-    
-    private GridPane initGrid() {
+
+    private void showMessages() {
+        if (messages.isEmpty()) {
+            return;
+        }
+
+        new MessageDialog(messages);
+    }
+
+    private boolean hasFatalMessage() {
+        boolean isFatalMessage = false;
+        for (Message msg : messages) {
+            isFatalMessage = isFatalMessage || msg.isFatal();
+        }
+
+        return isFatalMessage;
+    }
+
+    private void initGrid() {
     	
         grid = new GridPane();
         grid.setAlignment(Pos.TOP_LEFT);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
-        
-        return grid;
     }
-    
-    
+
     private void renderQuestionnaire() {
     	
         renderTitle(form.getId());
         
-        List<Row> activeQuestions = createQuestions();
+        List<Row> visibleRows = createQuestions();
         
-    	renderQuestions(activeQuestions);
+    	renderQuestions(visibleRows);
     	
-        Button btn = renderButton(activeQuestions.size() + 2);
+        Button btn = renderButton(visibleRows.size() + 2);
               
-        submit(btn, activeQuestions);
+        submit(btn, visibleRows);
     }
     
-    private void submit(Button btn, List<Row> activeQuestions) {
+    private void submit(Button btn, List<Row> visibleRows) {
     	
         Text actiontarget = new Text();
-        grid.add(actiontarget, 1, activeQuestions.size() + 2);
+        grid.add(actiontarget, 1, visibleRows.size() + 2);
     	
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent e) {
-            	
-            	complete(activeQuestions, actiontarget);
-            }
-        });
+        btn.setOnAction(e -> complete(visibleRows, actiontarget));
     }
     
-    private void complete(List<Row> activeQuestions, Text actiontarget) {
+    private void complete(List<Row> visibleRows, Text actiontarget) {
         
     	actiontarget.setFill(Color.GREEN);
         actiontarget.setText("Thank you for filling in the questionnaire");
 
-        exportQuestionnaire(activeQuestions);
-    	
+        export(visibleRows);
     }
     
     private void renderTitle(String title) {
@@ -126,17 +127,16 @@ public class Questionnaire extends Application implements Notifier {
         
     	QEvaluator qVisitor = new QEvaluator(environment, this);
     	qVisitor.visit(form);
-    	return qVisitor.getActiveQuestions();
-    	
+    	return qVisitor.getVisibleRows();
     }
     
-    private void renderQuestions(List<Row> activeQuestions) {
+    private void renderQuestions(List<Row> visibleRows) {
 
     	int rowIndex = 1;
-        for (Row question : activeQuestions) {
+        for (Row question : visibleRows) {
             
-        	Label questionLabel = new Label(question.getLabel());
-            grid.add(questionLabel, 0, rowIndex);
+        	environment.applyStyle(question.getName(), question.getLabel());
+            grid.add(question.getLabel(), 0, rowIndex);
             grid.add(question.getControl(), 1, rowIndex);
             
             ++rowIndex;
@@ -156,8 +156,8 @@ public class Questionnaire extends Application implements Notifier {
     }
     
 	public void updateQuestionnaire(String name, Value newValue) {
-    	Value oldAnswer = environment.getAnswer(name);
-		if (!environment.isAnswered(name) || !(oldAnswer.equals(newValue))) {
+
+		if (!environment.isAnswered(name) || !(environment.getAnswer(name).equals(newValue))) {
 
 			environment.addAnswer(name, newValue);
 	    	grid.getChildren().clear();
@@ -166,7 +166,7 @@ public class Questionnaire extends Application implements Notifier {
 		}
 	}
 
-	private void exportQuestionnaire(List<Row> activeQuestions) {
+	private void export(List<Row> visibleRows) {
         FileChooser fileChooser = new FileChooser();
 
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
@@ -183,7 +183,7 @@ public class Questionnaire extends Application implements Notifier {
         try {
             JsonObjectBuilder questionnaire = Json.createObjectBuilder();
 
-            for (Row question : activeQuestions) {
+            for (Row question : visibleRows) {
                 questionnaire.add(question.getName(), question.getAnswer().convertToString());
             }
 
@@ -194,8 +194,7 @@ public class Questionnaire extends Application implements Notifier {
         } 
         catch (IOException ex) {
             throw new RuntimeException(
-                    "This should never happen, I know this file exists", ex);
+                    "This should never happen, this file exists", ex);
         }
 	}
-
 }

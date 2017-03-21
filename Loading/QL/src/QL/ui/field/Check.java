@@ -1,11 +1,9 @@
 package QL.ui.field;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.CheckBox;
 import QL.ui.Notifier;
 import QL.value.BoolValue;
 import QL.value.Value;
+import javafx.scene.control.CheckBox;
 
 public class Check implements Field {
 
@@ -18,15 +16,8 @@ public class Check implements Field {
 		
 		field.setSelected(value.getValue());
 		
-		field.selectedProperty().addListener(new ChangeListener<Boolean>()  {
-	           
-			@Override
-           public void changed(ObservableValue<? extends Boolean> observable,
-                               Boolean oldValue, Boolean newValue) {
-				
-				notifier.updateQuestionnaire(name, new BoolValue(newValue));
-            }
-		});
+		field.selectedProperty().addListener(
+				(observable, oldValue, newValue) -> notifier.updateQuestionnaire(name, new BoolValue(newValue)));
 	}
 	
 	@Override

@@ -1,0 +1,9 @@
+form houseForm {
+    if (False || True) {
+
+    }
+
+    "false" -> False : boolean
+    "true" -> True : boolean
+
+}

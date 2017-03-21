@@ -35,15 +35,14 @@ class Declaration(Node):
         ui.add_question(self.text, self.variable, self.conditions)
 
     def __str__(self):
-        return '(declaration, {}, {}, {})"'.format(self.text, self.variable,
-                                                   self.variable.type)
+        return '(declaration, {}, {})"'.format(self.text, self.variable)
 
 
 # ASSIGNATIONS
 class Assignation(Node):
     def __init__(self, text, variable, type, expression):
         super().__init__(variable, type)
-        self.text = text[1:-1]
+        self.text = text
         self.expression = expression
 
     def build_ui(self, ui):
@@ -51,6 +50,5 @@ class Assignation(Node):
                            self.conditions)
 
     def __str__(self):
-        return '(assignation, {}, {}, {}, {})'.format(self.text, self.variable,
-                                                      self.variable.type,
-                                                      self.expression)
+        return '(assignation, {}, {}, {})'.format(self.text, self.variable,
+                                                  self.expression)

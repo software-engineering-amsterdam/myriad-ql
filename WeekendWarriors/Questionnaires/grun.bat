@@ -1,0 +1,1 @@
+java -cp ".;%classpath%" org.antlr.v4.gui.TestRig %*

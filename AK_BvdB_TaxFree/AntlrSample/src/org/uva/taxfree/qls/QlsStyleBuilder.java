@@ -1,7 +1,7 @@
 package org.uva.taxfree.qls;
 
-import org.uva.taxfree.model.types.BooleanType;
-import org.uva.taxfree.model.types.StringType;
+import org.uva.taxfree.ql.model.types.BooleanType;
+import org.uva.taxfree.ql.model.types.StringType;
 import org.uva.taxfree.qls.styleoption.*;
 
 import java.io.File;

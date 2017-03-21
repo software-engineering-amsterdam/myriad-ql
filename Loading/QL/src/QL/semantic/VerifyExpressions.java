@@ -6,12 +6,8 @@ import QL.ast.atom.BoolAtom;
 import QL.ast.atom.IntegerAtom;
 import QL.ast.atom.StringAtom;
 import QL.ast.expression.*;
-import QL.ast.type.BooleanType;
-import QL.ast.type.IntegerType;
-import QL.ast.type.StringType;
-import QL.ast.type.Type;
-import QL.ast.type.UnknownType;
-import QL.errorhandling.Error;
+import QL.ast.type.*;
+import QL.message.Error;
 
 
 /**
@@ -19,9 +15,8 @@ import QL.errorhandling.Error;
  * <li> unreferenced variables
  * <li> invalid type operations
  * <li> whether expressions return a boolean
- *
  */
-public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<Type>, TypeVisitor {
+public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<Type>, TypeVisitor<Type> {
 
 	private final Environment environment;
 
@@ -154,8 +149,14 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 
     @Override
 	public Type visit(IdExpr id) {
-
-        return environment.getType(id.getName(), id.getLine());
+    	
+    	if (!environment.getReferenceTable().variableExists(id.getName())) {
+	        environment.addMessage(new Error("The variable: " + id.getName() +
+	        		" is not defined", id.getLine()));
+	        return new UnknownType(id.getLine());
+    	}
+    	
+        return environment.getReferenceTable().getType(id.getName());
 	}
 
 	@Override
@@ -266,10 +267,11 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
 		check(expected, rhs);
 	}
 
-    private void check(Type expected, Type current) {
-    	if (!expected.equals(current)) {
-        	environment.getFaults().add(new Error("The type " + current.getKeyWord() + " is not of the expected type: "
-    			+ expected.getKeyWord(), current.getLine()));
+    private void check(Type expected, Type actual) {
+    	if (!expected.equals(actual)) {
+        	environment.addMessage(new Error("The type " + actual.getKeyWord()
+        	+ " is not of the expected type: "
+    		+ expected.getKeyWord(), actual.getLine()));
         }
     }
 

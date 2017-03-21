@@ -1,17 +1,16 @@
 package sc.ql.model.expressions;
 
 import sc.ql.model.Expression;
-import sc.ql.model.Node;
 import sc.ql.model.visitors.ExpressionVisitor;
 
 public class NotExpression extends Expression {
-	private final Node expression;
+	private final Expression expression;
 	
-	public NotExpression(Node expression) {
+	public NotExpression(Expression expression) {
 		this.expression = expression;
 	}
 	
-	public Node getExpression() {
+	public Expression getExpression() {
 		return this.expression;
 	}
 

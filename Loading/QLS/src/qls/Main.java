@@ -1,30 +1,32 @@
 package qls;
 
-import java.util.Map;
-
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-
-import QL.Environment;
-import QL.Faults;
 import QL.QLLexer;
 import QL.QLParser;
+import QL.ReferenceTable;
 import QL.ast.Form;
-import QL.ast.type.Type;
-import QL.ui.Questionnaire;
+import QL.message.Message;
+import QL.ui.Environment;
+import QL.ui.StyleTable;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 import qls.ast.Stylesheet;
+import qls.semantic.Analyzer;
+import qls.ui.PrettyQuestionnaire;
+
+import java.util.List;
 
 
-public class Main {
+class Main {
 	public static void main(String[] args) throws Exception {
-		String tmp = "stylesheet taxOfficeExample "
-				 + "page Housing { "
-				 + "section \"Buying\" "
-				 + "question hasBoughtHouse "
-				 + "widget checkbox "
-		 		 + "section \"Loaning\" "
-				 + "question hasMaintLoan "
-				 + "default boolean widget radio(\"Yes\", \"No\") "
+		String tmp = "stylesheet taxOfficeExample \n"
+				 + "page Housing { \n"
+				 + "section \"Buying\" \n"
+				 + "question Name0 widget spinbox \n"
+		 		 + "section \"Loaning\" \n"
+				 + "question Name1 \n"
+		 		 + "default boolean widget checkbox \n"
+		 		 + "default integer widget spinbox"
+				 // + "default boolean widget radio(\"Yes\", \"No\") \n"
 				 + "}";
 		
 		ANTLRInputStream input = new ANTLRInputStream( tmp );
@@ -37,18 +39,26 @@ public class Main {
 		Stylesheet stylesheet = parser.stylesheet().result;
 		System.out.println(stylesheet);
 		
-		qls.semantic.Analyzer analyzer = new qls.semantic.Analyzer(ql());
-		
-		Faults faults = analyzer.analyze(stylesheet);
-		
-		Environment env = new Environment(ql());
-		
-		Questionnaire questionnaire = new Questionnaire();
-		questionnaire.main(createForm(), env, faults);
+		Form form = createForm();
 
+		QL.semantic.Analyzer qlAnalyzer = new QL.semantic.Analyzer();		
+		ReferenceTable referenceTable = qlAnalyzer.analyze(form);
+		
+		List<Message> messages = qlAnalyzer.getMessages();
+	
+		qls.semantic.Analyzer analyzer = new Analyzer(referenceTable);
+		
+		StyleTable styleTable = analyzer.analyze(stylesheet);
+		
+		messages.addAll(analyzer.getMessages());
+
+		PrettyQuestionnaire questionnaire = new PrettyQuestionnaire();
+		questionnaire.main(form, new Environment(referenceTable), messages, stylesheet);
 	}
 	
-	public static Form createForm() {
+
+	
+	private static Form createForm() {
 		String tmp = "form Testing { "
 				 + "Name0: \"Question0\" integer "
 				 + "Name1: \"Question1\" integer (Name0 + 2)"
@@ -70,15 +80,5 @@ public class Main {
 		return parser.form().result;
 	}
 	
-	public static Map<String, Type> ql() {
-		
-		Form form = createForm();
 
-		QL.semantic.Analyzer analyzer = new QL.semantic.Analyzer();
-		
-		// TODO pass faults QL QLS
-		Faults faults = analyzer.analyze(form);
-
-		return analyzer.getVariableTypes();
-	}
 }

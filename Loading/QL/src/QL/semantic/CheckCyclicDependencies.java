@@ -5,8 +5,7 @@ import QL.ast.atom.BoolAtom;
 import QL.ast.atom.IntegerAtom;
 import QL.ast.atom.StringAtom;
 import QL.ast.expression.*;
-import QL.ast.type.*;
-import QL.errorhandling.Error;
+import QL.message.Error;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,12 +16,13 @@ import java.util.Map;
  * <li> cyclic dependencies between the questions
  */
 public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVisitor<Void> {
-    private final Environment environment;
+
+	private final Environment environment;
     private Question current;
 
     private final Map<String, List<String>> dependencies ;
 
-    public CheckCyclicDependencies(Environment environment) {
+    CheckCyclicDependencies(Environment environment) {
         this.environment = environment;
         dependencies = new HashMap<>();
     }
@@ -56,12 +56,10 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
 
     @Override
     public void visit(Statement statement) {
-        // TODO
     }
 
     @Override
     public void visit(IfElseStatement statement) {
-        // TODO
     }
 
     @Override
@@ -209,10 +207,10 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
     private void check() {
         List<String> references = getReferences(current.getVariable());
 
-        for (String reference: references) {
+        for (String reference : references) {
             List<String> cycleReferences = getReferences(reference);
-            if (cycleReferences != null && cycleReferences.contains(current.getVariable())) {
-            	environment.getFaults().add(new Error("There is a cyclic dependency in "
+            if (!cycleReferences.isEmpty() && cycleReferences.contains(current.getVariable())) {
+            	environment.addMessage(new Error("There is a cyclic dependency in "
             			+ "the computed questions " + current.getVariable() + " and " + reference, 
             			current.getLine()));
             }
@@ -231,11 +229,12 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
         references.add(reference);
         dependencies.put(name, references);
     }
+
     private List<String> getReferences(String name){
         if (dependencies.containsKey(name)) {
             return dependencies.get(name);
         } else {
-            return null;
+            return new ArrayList<>();
         }
     }
 

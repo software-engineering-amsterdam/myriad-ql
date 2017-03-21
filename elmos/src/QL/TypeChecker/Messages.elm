@@ -1,6 +1,6 @@
 module QL.TypeChecker.Messages exposing (..)
 
-import QL.AST exposing (ValueType, Operator, Comparison, Logic, Relation, Location, Id)
+import QL.AST exposing (..)
 
 
 type Message
@@ -9,12 +9,12 @@ type Message
 
 
 type ErrorMessage
-    = ArithmeticExpressionTypeMismatch Operator Location ValueType ValueType
-    | LogicExpressionTypeMismatch Logic Location ValueType ValueType
-    | ComparisonExpressionTypeMismatch Comparison Location ValueType ValueType
-    | RelationExpressionTypeMismatch Relation Location ValueType ValueType
+    = ArithmeticExpressionTypeMismatch ArithmeticOperator Location ValueType ValueType
+    | LogicExpressionTypeMismatch LogicOperator Location ValueType ValueType
+    | ComparisonExpressionTypeMismatch ComparisonOperator Location ValueType ValueType
+    | RelationExpressionTypeMismatch RelationOperator Location ValueType ValueType
     | InvalidConditionType Location ValueType
-    | InvalidComputedFieldType Id ValueType ValueType
+    | InvalidComputedQuestionType Id ValueType ValueType
     | DuplicateQuestionDefinition String (List Location)
     | ReferenceToUndefinedQuestion Id
     | DependencyCycle (List String)

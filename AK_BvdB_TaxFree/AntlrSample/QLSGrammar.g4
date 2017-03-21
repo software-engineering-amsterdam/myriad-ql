@@ -1,7 +1,7 @@
 grammar QLSGrammar;
 
 @header {
-package org.uva.taxfree.gen;
+package org.uva.taxfree.ql.gen;
 }
 
 stylesheet : 'stylesheet ' formId=VARIABLE_LITERAL '{' page* '}';

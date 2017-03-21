@@ -1,6 +1,6 @@
 package org.uva.taxfree.qls;
 
-import org.uva.taxfree.model.types.Type;
+import org.uva.taxfree.ql.model.types.Type;
 import org.uva.taxfree.qls.styleoption.StyleOption;
 
 import javax.swing.*;

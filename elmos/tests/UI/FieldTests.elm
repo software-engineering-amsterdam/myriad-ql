@@ -12,14 +12,14 @@ exampleForm : Form
 exampleForm =
     { id = ( "exampleForm", Location 0 0 )
     , items =
-        [ Field "Name" ( "name", Location 0 0 ) StringType
-        , ComputedField "Name with prefix" ( "nameWithPrefix", Location 0 0 ) StringType (Var ( "name", Location 0 0 ))
-        , Field "Has house" ( "hasHouse", Location 0 0 ) BooleanType
+        [ Question "Name" ( "name", Location 0 0 ) StringType
+        , ComputedQuestion "Name with prefix" ( "nameWithPrefix", Location 0 0 ) StringType (Var ( "name", Location 0 0 ))
+        , Question "Has house" ( "hasHouse", Location 0 0 ) BooleanType
         , IfThen (Var ( "hasHouse", Location 0 0 ))
-            [ Field "Price" ( "price", Location 0 0 ) IntegerType ]
-        , IfThenElse (ComparisonExpression Equal (Location 0 0) (Var ( "name", Location 0 0 )) (Str (Location 0 0) "John"))
-            [ Field "Is your name john?" ( "isJohn", Location 0 0 ) BooleanType ]
-            [ Field "Are you sure your name is not john?" ( "sure", Location 0 0 ) BooleanType ]
+            [ Question "Price" ( "price", Location 0 0 ) IntegerType ]
+        , IfThenElse (BinaryExpression (Comparison Equal) (Location 0 0) (Var ( "name", Location 0 0 )) (Str (Location 0 0) "John"))
+            [ Question "Is your name john?" ( "isJohn", Location 0 0 ) BooleanType ]
+            [ Question "Are you sure your name is not john?" ( "sure", Location 0 0 ) BooleanType ]
         ]
     }
 
@@ -45,7 +45,7 @@ all =
                 let
                     env =
                         Env.empty
-                            |> Env.withFormValue "name" (Values.string "John")
+                            |> Env.withFormValue "name" (Values.Str "John")
                 in
                     Field.activeFields env exampleForm
                         |> Expect.equal
@@ -59,8 +59,8 @@ all =
                 let
                     env =
                         Env.empty
-                            |> Env.withFormValue "name" (Values.string "John")
-                            |> Env.withFormValue "hasHouse" (Values.bool True)
+                            |> Env.withFormValue "name" (Values.Str "John")
+                            |> Env.withFormValue "hasHouse" (Values.Boolean True)
                 in
                     Field.activeFields env exampleForm
                         |> Expect.equal
