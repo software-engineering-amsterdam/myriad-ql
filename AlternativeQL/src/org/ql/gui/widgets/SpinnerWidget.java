@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import org.ql.ast.statement.ComputableQuestion;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.Value;
+import org.ql.gui.FormPane;
 import org.ql.gui.ValueReviser;
 
 public abstract class SpinnerWidget<V> extends Widget {
@@ -28,7 +29,7 @@ public abstract class SpinnerWidget<V> extends Widget {
 
     @Override
     public Pane createGridPane() {
-        GridPane gridPane = new GridPane();
+        FormPane gridPane = new FormPane();
         gridPane.add(label, 0, 0);
         gridPane.add(spinner, 1, 0);
         return gridPane;

@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import org.ql.ast.statement.ComputableQuestion;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.Value;
+import org.ql.gui.FormPane;
 import org.ql.gui.ValueReviser;
 
 abstract class InputWidget extends Widget {
@@ -21,11 +22,6 @@ abstract class InputWidget extends Widget {
         textField.setOnKeyReleased(event -> valueReviser.reviseValue(question.getId(), value(textField.getText())));
     }
 
-    InputWidget(ValueReviser valueReviser, Question question, TextFormatter textFormatter) {
-        this(valueReviser, question);
-        textField.setTextFormatter(textFormatter);
-    }
-
     protected abstract Value value(String textFieldText);
 
     @Override
@@ -35,7 +31,7 @@ abstract class InputWidget extends Widget {
 
     @Override
     public Pane createGridPane() {
-        GridPane gridPane = new GridPane();
+        FormPane gridPane = new FormPane();
         gridPane.add(label, 0, 0);
         gridPane.add(textField, 1, 0);
         return gridPane;

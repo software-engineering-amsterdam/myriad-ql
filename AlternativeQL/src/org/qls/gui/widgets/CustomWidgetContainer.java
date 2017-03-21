@@ -37,17 +37,17 @@ public class CustomWidgetContainer implements WidgetVisitor<Widget, Question> {
 
     @Override
     public Widget visitDropdown(Dropdown widget, Question question) {
-        return null;
+        return new DropdownWidget(valueReviser, question, widget);
     }
 
     @Override
     public Widget visitRadio(Radio widget, Question question) {
-        return null;
+        return new RadioButtonWidget(valueReviser, question, widget);
     }
 
     @Override
     public Widget visitSlider(Slider widget, Question question) {
-        return null;
+        return new SliderWidget(valueReviser, question);
     }
 
     @Override
