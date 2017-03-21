@@ -12,8 +12,7 @@ if __name__ == '__main__':
     file_window.show()
     exit(app.exec_())
 
-# TODO: Error messages aan parser toevoegen
 # TODO: QLS
-# NICE TO HAVES ---------------------------------
 # TODO: Environment een class maken en een update value methode geven $$
+# NICE TO HAVES ---------------------------------
 # TODO: Export of values ?
