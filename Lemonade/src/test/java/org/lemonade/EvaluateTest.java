@@ -36,6 +36,9 @@ public class EvaluateTest {
     private GuiDateValue date;
     private GuiDateValue dateTwo;
 
+    private GuiStringValue string;
+    private GuiStringValue stringTwo;
+
     @Before
     public void setUp() throws ParseException {
         zero = new GuiIntegerValue(0);
@@ -59,6 +62,9 @@ public class EvaluateTest {
 
         boolTrue = new GuiBooleanValue(true);
         boolFalse = new GuiBooleanValue(false);
+
+        string = new GuiStringValue("aaa");
+        stringTwo = new GuiStringValue("abb");
     }
 
     @Test
@@ -164,6 +170,10 @@ public class EvaluateTest {
         assertThat((Boolean) date.gT(dateTwo).getValue()).isFalse();
         assertThat((Boolean) dateTwo.gT(date).getValue()).isTrue();
         assertThat((Boolean) date.gT(date).getValue()).isFalse();
+
+        assertThat((Boolean) string.gT(stringTwo).getValue()).isFalse();
+        assertThat((Boolean) stringTwo.gT(string).getValue()).isTrue();
+        assertThat((Boolean) string.gT(string).getValue()).isFalse();
     }
 
     @Test
@@ -183,6 +193,10 @@ public class EvaluateTest {
         assertThat((Boolean) date.lT(dateTwo).getValue()).isTrue();
         assertThat((Boolean) dateTwo.lT(date).getValue()).isFalse();
         assertThat((Boolean) date.lT(date).getValue()).isFalse();
+
+        assertThat((Boolean) string.lT(stringTwo).getValue()).isTrue();
+        assertThat((Boolean) stringTwo.lT(string).getValue()).isFalse();
+        assertThat((Boolean) string.lT(string).getValue()).isFalse();
     }
 
     @Test
@@ -202,6 +216,10 @@ public class EvaluateTest {
         assertThat((Boolean) date.gTEq(dateTwo).getValue()).isFalse();
         assertThat((Boolean) dateTwo.gTEq(date).getValue()).isTrue();
         assertThat((Boolean) date.gTEq(date).getValue()).isTrue();
+
+        assertThat((Boolean) string.gTEq(stringTwo).getValue()).isFalse();
+        assertThat((Boolean) stringTwo.gTEq(string).getValue()).isTrue();
+        assertThat((Boolean) string.gTEq(string).getValue()).isTrue();
     }
 
     @Test
@@ -221,6 +239,10 @@ public class EvaluateTest {
         assertThat((Boolean) date.lTEq(dateTwo).getValue()).isTrue();
         assertThat((Boolean) dateTwo.lTEq(date).getValue()).isFalse();
         assertThat((Boolean) date.lTEq(date).getValue()).isTrue();
+
+        assertThat((Boolean) string.lTEq(stringTwo).getValue()).isTrue();
+        assertThat((Boolean) stringTwo.lTEq(string).getValue()).isFalse();
+        assertThat((Boolean) string.lTEq(string).getValue()).isTrue();
     }
 
     @Test
@@ -229,12 +251,51 @@ public class EvaluateTest {
         assertThat(one.min(undefined).isDefined()).isFalse();
         assertThat(one.div(undefined).isDefined()).isFalse();
         assertThat(one.prod(undefined).isDefined()).isFalse();
+        assertThat(one.lT(undefined).isDefined()).isFalse();
+        assertThat(one.gT(undefined).isDefined()).isFalse();
+        assertThat(one.gTEq(undefined).isDefined()).isFalse();
+        assertThat(one.lTEq(undefined).isDefined()).isFalse();
+        
+        assertThat(zeroPointFive.plus(undefined).isDefined()).isFalse();
+        assertThat(zeroPointFive.min(undefined).isDefined()).isFalse();
+        assertThat(zeroPointFive.div(undefined).isDefined()).isFalse();
+        assertThat(zeroPointFive.prod(undefined).isDefined()).isFalse();
+        assertThat(zeroPointFive.lT(undefined).isDefined()).isFalse();
+        assertThat(zeroPointFive.gT(undefined).isDefined()).isFalse();
+        assertThat(zeroPointFive.gTEq(undefined).isDefined()).isFalse();
+        assertThat(zeroPointFive.lTEq(undefined).isDefined()).isFalse();
+
+        assertThat(oneFifty.plus(undefined).isDefined()).isFalse();
+        assertThat(oneFifty.min(undefined).isDefined()).isFalse();
+        assertThat(oneFifty.div(undefined).isDefined()).isFalse();
+        assertThat(oneFifty.prod(undefined).isDefined()).isFalse();
+        assertThat(oneFifty.lT(undefined).isDefined()).isFalse();
+        assertThat(oneFifty.gT(undefined).isDefined()).isFalse();
+        assertThat(oneFifty.gTEq(undefined).isDefined()).isFalse();
+        assertThat(oneFifty.lTEq(undefined).isDefined()).isFalse();
+
+        assertThat(onePointTwo.plus(undefined).isDefined()).isFalse();
+        assertThat(onePointTwo.min(undefined).isDefined()).isFalse();
+        assertThat(onePointTwo.div(undefined).isDefined()).isFalse();
+        assertThat(onePointTwo.prod(undefined).isDefined()).isFalse();
+        assertThat(onePointTwo.lT(undefined).isDefined()).isFalse();
+        assertThat(onePointTwo.gT(undefined).isDefined()).isFalse();
+        assertThat(onePointTwo.gTEq(undefined).isDefined()).isFalse();
+        assertThat(onePointTwo.lTEq(undefined).isDefined()).isFalse();
+        
         assertThat(date.lT(undefined).isDefined()).isFalse();
         assertThat(date.gT(undefined).isDefined()).isFalse();
         assertThat(date.gTEq(undefined).isDefined()).isFalse();
         assertThat(date.lTEq(undefined).isDefined()).isFalse();
+
+        assertThat(string.lT(undefined).isDefined()).isFalse();
+        assertThat(string.gT(undefined).isDefined()).isFalse();
+        assertThat(string.gTEq(undefined).isDefined()).isFalse();
+        assertThat(string.lTEq(undefined).isDefined()).isFalse();
+        
         assertThat(boolTrue.and(undefined).isDefined()).isFalse();
         assertThat(boolTrue.or(undefined).isDefined()).isFalse();
+            
     }
 
     @Test
