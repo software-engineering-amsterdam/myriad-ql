@@ -2,7 +2,9 @@ package org.lemonade.gui.values;
 
 import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 
-public class GuiStringValue extends GuiValue<String> {
+import java.util.Comparator;
+
+public class GuiStringValue extends GuiValue<String> implements Comparable<GuiStringValue>{
 
     private String value;
 
@@ -23,5 +25,10 @@ public class GuiStringValue extends GuiValue<String> {
     @Override
     public <T> T accept(GuiExpressionVisitor<T> visitor) {
         return visitor.visit(this);
+    }
+
+    @Override
+    public int compareTo(GuiStringValue o) {
+        return this.getValue().compareTo(o.getValue());
     }
 }

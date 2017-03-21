@@ -28,6 +28,11 @@ public class EvaluateTest {
     private GuiMoneyValue twoFifty;
     private GuiNumericalValue<?> onePointTwo;
 
+    private GuiBooleanValue boolTrue;
+    private GuiBooleanValue boolFalse;
+
+    private GuiUndefinedValue undefined;
+
     private GuiDateValue date;
     private GuiDateValue dateTwo;
 
@@ -49,6 +54,11 @@ public class EvaluateTest {
 
         date = new GuiDateValue(LocalDate.of(2010, 1, 1));
         dateTwo = new GuiDateValue(LocalDate.of(2012, 1, 1));
+
+        undefined = new GuiUndefinedValue();
+
+        boolTrue = new GuiBooleanValue(true);
+        boolFalse = new GuiBooleanValue(false);
     }
 
     @Test
@@ -211,6 +221,20 @@ public class EvaluateTest {
         assertThat((Boolean) date.lTEq(dateTwo).getValue()).isTrue();
         assertThat((Boolean) dateTwo.lTEq(date).getValue()).isFalse();
         assertThat((Boolean) date.lTEq(date).getValue()).isTrue();
+    }
+
+    @Test
+    public void testUndefined(){
+        assertThat(one.plus(undefined).isDefined()).isFalse();
+        assertThat(one.min(undefined).isDefined()).isFalse();
+        assertThat(one.div(undefined).isDefined()).isFalse();
+        assertThat(one.prod(undefined).isDefined()).isFalse();
+        assertThat(date.lT(undefined).isDefined()).isFalse();
+        assertThat(date.gT(undefined).isDefined()).isFalse();
+        assertThat(date.gTEq(undefined).isDefined()).isFalse();
+        assertThat(date.lTEq(undefined).isDefined()).isFalse();
+        assertThat(boolTrue.and(undefined).isDefined()).isFalse();
+        assertThat(boolTrue.or(undefined).isDefined()).isFalse();
     }
 
     @Test
