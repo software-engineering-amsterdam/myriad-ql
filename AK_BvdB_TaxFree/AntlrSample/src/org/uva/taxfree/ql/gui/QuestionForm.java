@@ -33,7 +33,7 @@ public class QuestionForm implements FormListener {
             @Override
             public void windowClosing(WindowEvent e) {
                 try {
-                    mSymbolTable.export(caption + ".txdata");
+                    mSymbolTable.exportData(caption + ".txdata");
                 } catch (IOException error) {
                     MessageWindow.showMessage("(QuestionForm.java:38): Unable to write results to file:\r\n" + error.getMessage());
                 }
