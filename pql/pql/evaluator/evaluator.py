@@ -20,7 +20,7 @@ class Evaluator(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVis
         new_environment = self.ast.apply(self, copy.deepcopy(original_environment))
 
         while set(new_environment.items()) ^ set(original_environment.items()):
-            original_environment = new_environment
+            original_environment = copy.deepcopy(new_environment)
             new_environment = self.ast.apply(self, original_environment)
 
         return new_environment
