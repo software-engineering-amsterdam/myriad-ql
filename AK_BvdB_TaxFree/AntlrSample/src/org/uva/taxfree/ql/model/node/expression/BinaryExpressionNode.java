@@ -49,7 +49,6 @@ public class BinaryExpressionNode extends ExpressionNode {
 
     @Override
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
-        super.checkSemantics(symbolTable, semanticsMessages);
         mLeft.checkSemantics(symbolTable, semanticsMessages);
         mRight.checkSemantics(symbolTable, semanticsMessages);
         if (!mLeft.isSameType(mRight)) {
@@ -57,6 +56,8 @@ public class BinaryExpressionNode extends ExpressionNode {
         }
         if (!mOperator.supports(mLeft.getType(), mRight.getType())) {
             semanticsMessages.addError("Unsupported operator called:" + mLeft.getType() + " " + mOperator + " " + mRight.getType());
+        } else {
+            super.checkSemantics(symbolTable, semanticsMessages);
         }
     }
 
