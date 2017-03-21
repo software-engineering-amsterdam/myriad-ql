@@ -54,7 +54,7 @@ module QLS
       rule(:width)     { str('width:') >> _ >> integer_literal.as(:width) }
       rule(:font)      { str('font:') >> _ >> string_literal.as(:font) }
       rule(:fontsize)  { str('fontsize:') >> _ >> integer_literal.as(:fontsize) }
-      rule(:color)     { str('color:') >> _ >> hex_value.as(:string).as(:color) }
+      rule(:color)     { str('color:') >> _ >> hex_value.as(:string_literal).as(:color) }
       rule(:hex_value) { str('#') >> (digit_hex.repeat(6, 6) | digit_hex.repeat(3, 3)) }
       rule(:digit_hex) { match('[0-9a-fA-F]') }
     end

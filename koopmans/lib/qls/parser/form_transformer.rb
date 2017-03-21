@@ -28,10 +28,10 @@ module QLS
       rule(default: { type: simple(:type), properties: subtree(:properties) }) { Default.new(type, properties) }
 
       # properties
-      rule(width: { integer_literal: simple(:value) }) { Width.new(value) }
-      rule(font: { string_literal: simple(:value) }) { Font.new(value) }
-      rule(fontsize: { integer_literal: simple(:value) }) { Fontsize.new(value) }
-      rule(color: { string_literal: simple(:value) }) { Color.new(value) }
+      rule(width: simple(:value) ) { Width.new(value) }
+      rule(font: simple(:value) ) { Font.new(value) }
+      rule(fontsize: simple(:value) ) { Fontsize.new(value) }
+      rule(color: simple(:value)) { Color.new(value) }
 
       # rule(width: { integer: simple(:value) }) { value }
       # rule(font: { string: simple(:value) }) { value }
