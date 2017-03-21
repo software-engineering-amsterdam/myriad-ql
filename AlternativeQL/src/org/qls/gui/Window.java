@@ -14,7 +14,7 @@ public class Window {
 
     public Window(Stage stage, String title) {
         stage.setTitle(title);
-        stage.setResizable(false);
+        stage.setResizable(true);
 
         questionPane = new QuestionPane();
         stage.setScene(questionPane.createScene());

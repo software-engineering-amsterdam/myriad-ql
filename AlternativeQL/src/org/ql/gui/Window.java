@@ -9,7 +9,7 @@ public class Window {
 
     public Window(Stage stage, String title) {
         stage.setTitle(title);
-        stage.setResizable(false);
+        stage.setResizable(true);
 
         mainPane = new QuestionPane();
         stage.setScene(mainPane.createScene());
