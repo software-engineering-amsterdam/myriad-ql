@@ -48,8 +48,8 @@ class FindCycles(object):
 
         # Check on circular dependency to itself.
         to_vars = []
-        comp_question_node.expression.accept(self, to_vars)
         from_var = comp_question_node.name
+        comp_question_node.expression.accept(self, to_vars)
         if from_var in to_vars:
             self.handler.add_cycle_error([[from_var, from_var]])
 

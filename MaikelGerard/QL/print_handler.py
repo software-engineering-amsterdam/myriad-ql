@@ -124,6 +124,10 @@ class PrintHandler(object):
         return str(var_node.name)
 
     @staticmethod
+    def bool_node(bool_node):
+        return str(bool_node.val)
+
+    @staticmethod
     def int_node(int_node):
         return str(int_node.val)
 

@@ -53,7 +53,8 @@ class TypeChecker(object):
         is_computed = ql_node.accept(self.is_computed_visitor)
         self.env.add_var(question_node, is_computed)
 
-    def check_widget_compatibility(self, widget_node, literal_type, widget_name):
+    def check_widget_compatibility(self, widget_node,
+                                   literal_type, widget_name):
         if not widget_node.is_compatible_type(literal_type):
             self.handler.add_incompatible_widget_type_error(
                 widget_node, widget_name, literal_type

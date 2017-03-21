@@ -6,12 +6,16 @@ class Widget(object):
         self.identifier = identifier
         self.hidden = False
 
+        self.tk_ref = None
+
     def hide(self):
         self.main.hideLabel(self.identifier)
+        self.tk_ref.grid_remove()
         self.hidden = True
 
     def show(self):
         self.main.showLabel(self.identifier)
+        self.tk_ref.grid()
         self.hidden = False
 
     def add_listener(self, tkinter_obj):
@@ -29,20 +33,13 @@ class EntryWidget(Widget):
         self.main.addEntry(self.identifier, row=row, column=1)
         self.add_listener(self.main.getEntryWidget(self.identifier))
         self.main.setEntry(identifier, '')
+        self.tk_ref = self.main.getEntryWidget(self.identifier)
 
     def get_entry(self):
         return self.main.getEntry(self.identifier)
 
     def set_entry(self, value):
         self.main.setEntry(self.identifier, value)
-
-    def hide(self):
-        super(EntryWidget, self).hide()
-        self.main.hideEntry(self.identifier)
-
-    def show(self):
-        super(EntryWidget, self).show()
-        self.main.showEntry(self.identifier)
 
 
 class NumericWidget(Widget):
@@ -51,11 +48,13 @@ class NumericWidget(Widget):
                                             question, row=row)
 
         self.main.addNumericEntry(identifier, row=row, column=1)
-        self.add_listener(self.main.getEntryWidget(identifier))
+        self.add_listener(self.main.getEntryWidget(self.identifier))
 
         # Unsupported by AppJar; do not return NumericEntry value as float.
         entry = self.main._gui__verifyItem(self.main.n_entries, identifier)
         entry.isNumeric = False
+
+        self.tk_ref = self.main.getEntryWidget(self.identifier)
 
     def get_entry(self):
         value = self.main.getEntry(self.identifier)
@@ -66,14 +65,6 @@ class NumericWidget(Widget):
     def set_entry(self, value):
         self.main.setEntry(self.identifier, value)
 
-    def hide(self):
-        super(NumericWidget, self).hide()
-        self.main.hideEntry(self.identifier)
-
-    def show(self):
-        super(NumericWidget, self).show()
-        self.main.showEntry(self.identifier)
-
 
 class SpinBoxWidget(Widget):
     def __init__(self, form_gui, identifier, question, row=0):
@@ -83,6 +74,7 @@ class SpinBoxWidget(Widget):
 
         # Set the entry's value and save the retrieval method.
         self.main.setSpinBox(identifier, 0)
+        self.tk_ref = self.main.getSpinBoxWidget(self.identifier)
 
     def get_entry(self):
         return self.main.getSpinBox(self.identifier)
@@ -91,14 +83,6 @@ class SpinBoxWidget(Widget):
         if value == '':
             value = 0
         self.main.setSpinBox(self.identifier, value)
-
-    def hide(self):
-        super(SpinBoxWidget, self).hide()
-        self.main.hideSpinBox(self.identifier)
-
-    def show(self):
-        super(SpinBoxWidget, self).show()
-        self.main.showSpinBox(self.identifier)
 
 
 class CheckBoxWidget(Widget):
@@ -112,19 +96,13 @@ class CheckBoxWidget(Widget):
         self.add_listener(self.main.getCheckBoxWidget(identifier))
         self.main.setCheckBox(identifier, ticked=False)
 
+        self.tk_ref = self.main.getCheckBoxWidget(self.identifier)
+
     def get_entry(self):
         return self.main.getCheckBox(self.identifier)
 
     def set_entry(self, value):
         self.main.setCheckBox(self.identifier, value)
-
-    def hide(self):
-        super(CheckBoxWidget, self).hide()
-        self.main.hideCheckBox(self.identifier)
-
-    def show(self):
-        super(CheckBoxWidget, self).show()
-        self.main.showCheckBox(self.identifier)
 
 
 class DateWidget(Widget):
@@ -132,22 +110,15 @@ class DateWidget(Widget):
         super(DateWidget, self).__init__(form_gui, identifier,
                                          question, row)
 
-        self.main.addDatePicker(identifier, row=row, column=1)
-        self.add_listener(self.main.getFrameWidget(identifier))
+        self.main.addDatePicker(self.identifier, row=row, column=1)
+        self.add_listener(self.main.getFrameWidget(self.identifier))
+        self.tk_ref = self.main.getFrameWidget(self.identifier)
 
     def get_entry(self):
         return self.main.getDatePicker(self.identifier)
 
     def set_entry(self, value):
         self.main.setDatePicker(self.identifier, value)
-
-    def hide(self):
-        super(DateWidget, self).hide()
-        self.main.hideFrame(self.identifier)
-
-    def show(self):
-        super(DateWidget, self).show()
-        self.main.showFrame(self.identifier)
 
 
 class ComputedLabelWidget(Widget):
@@ -159,16 +130,10 @@ class ComputedLabelWidget(Widget):
         self.main.addLabel(self.computed_identifier, row=row, column=1)
         self.main.setLabel(self.computed_identifier, '')
 
+        self.tk_ref = self.main.getLabelWidget(self.computed_identifier)
+
     def get_entry(self):
         return self.main.getLabel(self.computed_identifier)
 
     def set_entry(self, value):
-        self.main.setLabel(self.computed_identifier, value)
-
-    def hide(self):
-        super(ComputedLabelWidget, self).hide()
-        self.main.hideLabel(self.computed_identifier)
-
-    def show(self):
-        super(ComputedLabelWidget, self).show()
-        self.main.showLabel(self.computed_identifier)
+        self.main.setLabel(self.computed_identifier, str(value))
