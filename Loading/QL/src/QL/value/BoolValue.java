@@ -23,31 +23,26 @@ public class BoolValue extends Value {
 
 	@Override
     public BoolValue and(Value other) {
-		
     	return new BoolValue(value && ((BoolValue) other).getValue());
     }
 
 	@Override
 	public BoolValue or(Value other) {
-		
 		return new BoolValue(value || ((BoolValue) other).getValue());
 	}
 
 	@Override
 	public BoolValue eq(Value other) {
-
 		return new BoolValue(value.equals(((BoolValue) other).getValue()));
 	}
 
 	@Override
 	public BoolValue notEq(Value other) {
-
     	return new BoolValue(value != ((BoolValue) other).getValue());
 	}
 
 	@Override
 	public BoolValue not() {
-		
 		return new BoolValue(!value);
 	}
 

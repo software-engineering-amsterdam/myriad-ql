@@ -16,19 +16,17 @@ stylesheet returns [Stylesheet result]
  @ init {
 	$result = new ArrayList<Page>();
 }
- : ( 'page' ID '{' sections defaultWidgets '}' { $result.add(new PageWithDefault($ID.text, $sections.result, $defaultWidgets.result, $ctx.start.getLine())); }
-   | 'page' ID '{' sections '}' { $result.add(new Page($ID.text, $sections.result, $ctx.start.getLine())); }
-   )+
+ : ( 'page' ID '{' sections defaultWidgets '}' { $result.add(new Page($ID.text, $sections.result, $defaultWidgets.result, $ctx.start.getLine())); })+
+ | ( 'page' ID '{' sections '}' { $result.add(new Page($ID.text, $sections.result, new ArrayList<DefaultWidget>(), $ctx.start.getLine())); })+
  ;
  
  sections returns [List<Section> result]
  @ init {
 	$result = new ArrayList<Section>();
 }
- : ('section' STRING '{'? questions defaultWidgets '}'? { $result.add(new SectionWithDefault($STRING.text, $questions.result, $defaultWidgets.result, $ctx.start.getLine())); }
-   | 'section' STRING '{'? questions '}'? { $result.add(new Section($STRING.text, $questions.result, $ctx.start.getLine())); }
-   )+
-   ;
+ : ('section' STRING '{'? questions defaultWidgets '}'? { $result.add(new Section($STRING.text, $questions.result, $defaultWidgets.result, $ctx.start.getLine())); })+
+ | ('section' STRING '{'? questions '}'? { $result.add(new Section($STRING.text, $questions.result, new ArrayList<DefaultWidget>(), $ctx.start.getLine())); })+
+ ;
 
 questions returns [List<Question> result]
 @ init {

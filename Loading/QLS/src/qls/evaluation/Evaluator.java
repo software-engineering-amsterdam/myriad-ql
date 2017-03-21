@@ -1,36 +1,20 @@
 package qls.evaluation;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import QL.ReferenceTable;
-import QL.ast.TypeVisitor;
-import QL.ast.type.BooleanType;
-import QL.ast.type.IntegerType;
-import QL.ast.type.StringType;
 import QL.ast.type.Type;
-import QL.ast.type.UnknownType;
 import QL.ui.Environment;
 import QL.ui.Notifier;
 import QL.ui.Style;
-import QL.ui.StyleTable;
 import QL.ui.field.Field;
-import qls.ast.DefaultWidget;
-import qls.ast.Page;
-import qls.ast.PageWithDefault;
-import qls.ast.Question;
-import qls.ast.QuestionWithWidget;
-import qls.ast.Section;
-import qls.ast.SectionWithDefault;
-import qls.ast.Stylesheet;
-import qls.ast.StylesheetVisitor;
-import qls.ast.WidgetVisitor;
+import qls.ast.*;
 import qls.ast.widget.Checkbox;
 import qls.ast.widget.Radio;
 import qls.ast.widget.Spinbox;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Evaluator implements StylesheetVisitor, WidgetVisitor {
-	
+
 	private Environment environment;
 	private Notifier notifier;
 	private Map<Type, Style> defaultStyle;
@@ -53,19 +37,10 @@ public class Evaluator implements StylesheetVisitor, WidgetVisitor {
 		for (Section section : page.getSections()) {
 			section.accept(this);
 		}
-	}
-	
-	@Override
-	public void visit(PageWithDefault page) {
-		
-		for (DefaultWidget style : page.getDefaultWidgets()) {
-			
+
+		for (DefaultWidget defaultStyle : page.getDefaultWidgets()) {
+			// TODO
 		}
-		for (Section section : page.getSections()) {
-			section.accept(this);
-		}
-		
-		
 	}
 
 	@Override
@@ -73,12 +48,6 @@ public class Evaluator implements StylesheetVisitor, WidgetVisitor {
 		for (Question question : section.getQuestions()) {
 			question.accept(this);
 		}		
-	}
-	
-	@Override
-	public void visit(SectionWithDefault section) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

@@ -23,13 +23,11 @@ public class StringValue extends Value {
 
 	@Override
 	public BoolValue eq(Value other) {
-
     	return new BoolValue(value.equals(((StringValue) other).getValue()) );
 	}
 
 	@Override
 	public BoolValue notEq(Value other) {
-
 		return new BoolValue(!value.equals(((StringValue) other).getValue()) );
 	}
 		

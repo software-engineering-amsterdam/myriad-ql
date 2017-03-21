@@ -5,7 +5,7 @@ import QL.value.Value;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 
-public class Row {
+class Row {
 
 	private final String name;
 	private final Label label;

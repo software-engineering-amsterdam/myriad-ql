@@ -1,14 +1,14 @@
 package qls.semantic;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import QL.ReferenceTable;
 import QL.ast.type.Type;
 import QL.message.Error;
 import QL.message.Message;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 class Environment {
 	

@@ -45,14 +45,14 @@ public class VerifyQuestions implements StylesheetVisitor {
 
 	@Override
 	public void visit(QuestionWithWidget question) {
-		
+
 		check(question.getName(), question.getLine());
-		
+
 		environment.setCovered(question.getName());
 	}
-	
+
 	private void check(String name, int line) {
-		
+
 		if (!environment.presentInQL(name)) {
 			environment.addMessage(new Error("The variable " + name +
 					" appears in the QLS, but does not exist in QL", line));
@@ -62,18 +62,6 @@ public class VerifyQuestions implements StylesheetVisitor {
 			environment.addMessage(new Error("The variable " + name +
 			" is already defined in the QLS", line));
 		}
-	}
-
-	@Override
-	public void visit(PageWithDefault page) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void visit(SectionWithDefault section) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

@@ -1,12 +1,12 @@
 package QL.ui;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import QL.ReferenceTable;
 import QL.ast.type.Type;
 import QL.value.Value;
 import javafx.scene.control.Label;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Environment {
 
@@ -49,8 +49,7 @@ public class Environment {
 
 	}
 
-	public void applyStyle(String variable, Label label) {
-
+	void applyStyle(String variable, Label label) {
 		styleTable.applyStyle(variable, label);
 	}
 

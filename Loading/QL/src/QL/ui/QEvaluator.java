@@ -9,8 +9,6 @@ import QL.ui.field.Field;
 import QL.value.BoolValue;
 import QL.value.Value;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.List;

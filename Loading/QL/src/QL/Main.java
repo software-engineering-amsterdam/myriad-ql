@@ -1,14 +1,11 @@
 package QL;
 
-import java.util.HashMap;
-
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-
 import QL.ast.Form;
 import QL.semantic.Analyzer;
-import QL.ui.Questionnaire;
 import QL.ui.Environment;
+import QL.ui.Questionnaire;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -28,6 +25,4 @@ class Main {
 		Questionnaire questionnaire = new Questionnaire();
 		questionnaire.main(form, new Environment(referenceTable), analyzer.getMessages());
 	}
-	
-	
 }

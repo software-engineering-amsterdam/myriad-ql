@@ -39,11 +39,6 @@ public class VerifyTypes implements StylesheetVisitor {
 
     @Override
     public void visit(QuestionWithWidget question) {
-        System.out.println("VISIT QUESTION WITH WIDGET QLS");
-        System.out.println(question.getName());
-        System.out.println();
-        System.out.println();
-
         check(environment.getType(question.getName()), question.getWidget().getType());
     }
 
@@ -54,16 +49,4 @@ public class VerifyTypes implements StylesheetVisitor {
                     + expected.getKeyWord(), actual.getLine()));
         }
     }
-
-	@Override
-	public void visit(PageWithDefault page) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void visit(SectionWithDefault section) {
-		// TODO Auto-generated method stub
-		
-	}
 }

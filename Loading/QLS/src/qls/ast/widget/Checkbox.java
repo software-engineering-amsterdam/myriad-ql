@@ -2,7 +2,7 @@
 
  import QL.ast.type.BooleanType;
  import QL.ast.type.Type;
-import qls.evaluation.Evaluator;
+ import qls.evaluation.Evaluator;
 
  public class Checkbox extends Widget {
 

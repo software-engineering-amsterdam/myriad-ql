@@ -1,13 +1,13 @@
 package qls.ui;
 
-import java.util.List;
-
 import QL.ast.Form;
 import QL.message.Message;
 import QL.ui.Environment;
 import QL.ui.Questionnaire;
 import qls.ast.Stylesheet;
 import qls.evaluation.Evaluator;
+
+import java.util.List;
 
 public class PrettyQuestionnaire extends Questionnaire {
 	

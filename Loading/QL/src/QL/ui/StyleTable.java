@@ -13,7 +13,7 @@ public class StyleTable {
 	private Map<String, Style> styles;
 	
 	StyleTable(ReferenceTable variables) {
-					
+
 		styles = new HashMap<>();
 		for (String variable : variables) {
 			styles.put(variable, new Style(350, "Arial", 12, "#0000FF", variables.getType(variable)));
@@ -33,8 +33,8 @@ public class StyleTable {
 	
 	// TODO move to different class?
     private void setSettings(Label label, Style style) {
-    	label.setFont(new Font(style.getFont(), style.getFontSize()));
-    	 label.setTextFill(Color.web(style.getColor()));
+		label.setFont(new Font(style.getFont(), style.getFontSize()));
+		label.setTextFill(Color.web(style.getColor()));
     	label.setPrefWidth(style.getWidth());
     }
 }

@@ -12,5 +12,5 @@ public class DefaultStyle extends DefaultWidget {
 		this.style = style;
 	}
 	
-	
+
 }
