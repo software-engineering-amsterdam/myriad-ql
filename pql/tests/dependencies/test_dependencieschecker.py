@@ -32,7 +32,7 @@ class TestDependenciesChecker(Shared):
         form taxOfficeExample {
             "Did you sell a house in 2010?" hasSoldHouse: boolean = hasBought
             "Did you buy a house in 2010?" hasBought: boolean = hasLoan && hasSoldHouse
-            "Loan" hasLoan: boolean = hasSoldHouse
+            "Loan" hasLoan: boolean = !hasSoldHouse
         }
         """
         form_node = self.acquire_ast(input_string)
@@ -67,7 +67,7 @@ class TestDependenciesChecker(Shared):
         input_string = """
         form taxOfficeExample {
             "Did you sell a house in 2010?" hasSoldHouse: integer = hasBought
-            "Did you buy a house in 2010?" hasBought: integer = hasLoan / hasSoldHouse
+            "Did you buy a house in 2010?" hasBought: integer = +hasLoan / -hasSoldHouse
             "Loan" hasLoan: integer = hasSoldHouse
         }
         """

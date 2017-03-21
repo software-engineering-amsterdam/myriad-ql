@@ -1,8 +1,7 @@
 # coding=utf-8
 from pyparsing import (Suppress, Literal, Word, alphas, alphanums, nums, opAssoc, infixNotation, OneOrMore,
-                       QuotedString, Optional, Forward, Combine, ParserElement, ParseFatalException)
+                       QuotedString, Optional, Forward, Combine, ParserElement)
 
-from pql.messages.fatal_error import FatalError
 from pql.ast import ast
 
 
@@ -16,9 +15,6 @@ def parse(input_string):
     def flatten_unary_operators(position, source, flattened_tokens):
         type_call = flattened_tokens[0]
         return type_call(position, source, flattened_tokens[1])
-
-    def fail_value(s, loc, expr, err):
-        raise ParseFatalException(s, loc, "Undefined value at")
 
     # Packrat
     ParserElement.enablePackrat()
@@ -83,9 +79,9 @@ def parse(input_string):
 
     reserved_words = (lit_form | lit_if | lit_else | boolean | number | data_types)
 
-    name = ~reserved_words + Word(alphas, alphanums + '_').setResultsName(
-        'identifier').setParseAction(
-        lambda source, position, parsed_tokens: ast.Identifier(position, source, parsed_tokens[0]))
+    name = ~reserved_words + Word(alphas, alphanums + '_')\
+        .setResultsName('identifier')\
+        .setParseAction(lambda source, position, parsed_tokens: ast.Identifier(position, source, parsed_tokens[0]))
 
     operand_arith = (number | boolean | name | string)
 
@@ -166,11 +162,9 @@ def parse(input_string):
     body <<= lit_l_curly + OneOrMore(statement) + lit_r_curly
     body.addParseAction(lambda parsed_tokens: [parsed_tokens.asList()])
     body.setResultsName('statement_list')
-    body.setFailAction(lambda s, pos, expr, err: FatalError(s, err, pos))
 
     form = (lit_form + name + body)\
         .addParseAction(lambda parsed_tokens: ast.Form(*parsed_tokens))\
         .setResultsName('form')\
-        .parseWithTabs() \
-        .setFailAction(lambda s, pos, expr, err: FatalError(s, err, pos))
+        .parseWithTabs()
     return form.parseString(input_string).form
