@@ -19,7 +19,7 @@ class Evaluator(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVis
         self.ast.apply(self)
 
         while set(self.__environment.items()) ^ set(environment.items()):
-            environment = self.__environment
+            environment = self.__environment.copy()
             self.ast.apply(self)
 
         return self.__environment
