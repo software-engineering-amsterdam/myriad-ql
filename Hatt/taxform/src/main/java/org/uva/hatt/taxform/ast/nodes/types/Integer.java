@@ -8,6 +8,11 @@ public class Integer extends ValueType {
         super(lineNumber);
     }
 
+    @Override
+    public java.lang.String name(){
+        return "Integer";
+    }
+
     public <T> T accept(Visitor<T> visitor){
         return visitor.visit(this);
     }
