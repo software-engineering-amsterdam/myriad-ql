@@ -3,7 +3,7 @@ module QL
     class QuestionFrame
       include Callback
       attr_reader :name, :enabled, :condition
-      attr_accessor :widget
+      attr_accessor :widget, :tk_frame
 
       def initialize(args)
         @name = args[:name]
@@ -12,10 +12,12 @@ module QL
         @widget = args[:widget]
         @condition = args[:condition]
         @enabled = true
+        @tk_frame = TkFrame.new
       end
 
       def render
-        @tk_frame = TkFrame.new.grid
+        pp @tk_frame.width
+        @tk_frame.grid
         @label.render(@tk_frame)
         @widget.render(@tk_frame)
 

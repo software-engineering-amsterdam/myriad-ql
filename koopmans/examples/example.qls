@@ -10,15 +10,15 @@ stylesheet taxOfficeExample
   page Selling { 
     section "Selling" {
       question hasSoldHouse
-        widget radio("Yes", "No") 
+        widget radio("Yes", "No")
       section "You sold a house" {
         question sellingPrice
           widget text
         question privateDebt
-          widget spinbox 
+          width: 200
         question valueResidue
         default money {
-          width: 400
+          width: 1500
           font: "Arial" 
           fontsize: 14
           color: #999999

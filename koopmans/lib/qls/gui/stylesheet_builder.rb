@@ -4,9 +4,9 @@ module QLS
     class StylesheetBuilder
       attr_reader :question_frame_styles
 
-      def initialize(defaults)
+      def initialize(styles)
         @question_frame_styles = {}
-        @defaults = defaults
+        @styles = styles
       end
 
       def visit_stylesheet(stylesheet, _)
@@ -14,21 +14,27 @@ module QLS
       end
 
       def visit_page(page)
-        default = @defaults[page.object_id]
-        page.body.map { |element| element.accept(self, default) }
+        style = @styles[page.object_id]
+        page.body.map { |element| element.accept(self, style) }
       end
 
-      def visit_section(section, parent_default)
-        default = @defaults[section.object_id] || parent_default
-        section.body.map { |element| element.accept(self, default)}
+      def visit_section(section, parent_style)
+        style = merge_styles(@styles[section.object_id], parent_style)
+        section.body.map { |element| element.accept(self, style)}
       end
 
-      def visit_question(question, parent_default)
-        properties =  @defaults[question.object_id] || parent_default
-        @question_frame_styles[question.variable.name] = properties if properties
+      def visit_question(question, parent_style)
+        style = merge_styles(@styles[question.object_id], parent_style)
+        @question_frame_styles[question.variable.name] = style if style
       end
 
       def visit_default_properties(_, _) end
+
+      def merge_styles(style, parent_style)
+        style.widget = style.widget || parent_style.widget
+        style.width = style.width || parent_style.width
+        style
+      end
     end
   end
 end
