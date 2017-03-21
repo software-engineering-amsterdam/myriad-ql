@@ -1,16 +1,20 @@
 package QL.ui;
 
+import QL.ast.type.Type;
+
 public class Style {
 	private final int width;
 	private final String font;
 	private final int fontSize;
 	private final String color;
+	private final Type type;
 	
-	Style(int width, String font, int fontSize, String color) {
+	Style(int width, String font, int fontSize, String color, Type type) {
 		this.width = width;
 		this.font = font;
 		this.fontSize = fontSize;
 		this.color = color;
+		this.type = type;
 	}
 	
 	public int getWidth() {

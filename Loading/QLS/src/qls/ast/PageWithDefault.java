@@ -12,7 +12,7 @@ public class PageWithDefault extends Page {
 		
 	}
 	
-	public List<DefaultWidget> defaultWidgets() {
+	public List<DefaultWidget> getDefaultWidgets() {
 		return defaultWidgets;
 	}
 	

@@ -1,6 +1,7 @@
 package qls.ast;
 
 import QL.ast.type.Type;
+import QL.ui.Style;
 import qls.ast.widget.Widget;
 
 public class DefaultStyle extends DefaultWidget {
@@ -16,6 +17,10 @@ public class DefaultStyle extends DefaultWidget {
 		this.font = font;
 		this.fontSize = fontSize;
 		this.color = color;
+	}
+	
+	public Style getStyle() {
+		return new Style()
 	}
 	
 }

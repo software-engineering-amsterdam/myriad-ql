@@ -54,4 +54,16 @@ public class VerifyTypes implements StylesheetVisitor {
                     + expected.getKeyWord(), actual.getLine()));
         }
     }
+
+	@Override
+	public void visit(PageWithDefault page) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visit(SectionWithDefault section) {
+		// TODO Auto-generated method stub
+		
+	}
 }

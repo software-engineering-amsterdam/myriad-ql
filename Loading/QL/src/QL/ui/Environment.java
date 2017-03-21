@@ -20,12 +20,6 @@ public class Environment {
 		this.styleTable = new StyleTable(references);
     }
 
-    public Environment(ReferenceTable references, StyleTable styleTable) {
-        this.variableAnswer = new HashMap<>();
-        this.references = references;
-        this.styleTable = styleTable;
-    }
-	
 	public void addAnswer(String variable, Value answer) {
 		variableAnswer.put(variable, answer);
 	}

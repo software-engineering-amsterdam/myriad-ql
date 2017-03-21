@@ -13,12 +13,10 @@ public class StyleTable {
 	private Map<String, Style> styles;
 	
 	StyleTable(ReferenceTable variables) {
-		
-		Style defaultStyle = new Style(350, "Arial", 12, "#0000FF");
-			
+					
 		styles = new HashMap<>();
 		for (String variable : variables) {
-			styles.put(variable, defaultStyle);
+			styles.put(variable, new Style(350, "Arial", 12, "#0000FF", variables.getType(variable)));
 		}
 	}
 	

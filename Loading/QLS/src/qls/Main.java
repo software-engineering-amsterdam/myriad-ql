@@ -19,6 +19,7 @@ import QL.ui.Style;
 import QL.ui.StyleTable;
 import qls.ast.Stylesheet;
 import qls.semantic.Analyzer;
+import qls.ui.PrettyQuestionnaire;
 
 import java.util.List;
 
@@ -59,14 +60,8 @@ class Main {
 		
 		messages.addAll(analyzer.getMessages());
 
-		// TODO
-		// Evaluate the ast to create a variablename - Style map
-		// Rename DefaultStyle to Style?
-		// extend the referenceTable with the StyleTable
-
-
-		Questionnaire questionnaire = new Questionnaire();
-		questionnaire.main(form, new Environment(referenceTable, styleTable), messages);
+		PrettyQuestionnaire questionnaire = new PrettyQuestionnaire();
+		questionnaire.main(form, new Environment(referenceTable), messages, stylesheet);
 	}
 	
 
