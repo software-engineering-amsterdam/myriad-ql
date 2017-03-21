@@ -1,6 +1,12 @@
 module QL
   module TypeChecker
     class QuestionCollector
+      attr_reader :questions
+
+      def initialize
+        @questions = []
+      end
+
       def visit_form(form, _)
         form.statements.map { |statement| statement.accept(self) }
       end
@@ -10,17 +16,16 @@ module QL
       end
 
       def visit_if_else_statement(if_else_statement, _)
-        if_body_questions = if_else_statement.if_body.map { |statement| statement.accept(self) }
-        else_body_questions = if_else_statement.else_body.map { |statement| statement.accept(self) }
-        [if_body_questions, else_body_questions]
+        if_else_statement.if_body.map { |statement| statement.accept(self) }
+        if_else_statement.else_body.map { |statement| statement.accept(self) }
       end
 
       def visit_question(question, _)
-        question
+        @questions << question
       end
 
       def visit_computed_question(computed_question, _)
-        computed_question
+        @questions << computed_question
       end
     end
   end

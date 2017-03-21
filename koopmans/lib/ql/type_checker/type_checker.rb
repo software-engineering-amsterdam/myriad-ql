@@ -2,7 +2,10 @@ module QL
   module TypeChecker
     class TypeChecker
       def check(ast)
-        questions = ast.accept(QuestionCollector.new).flatten
+        question_collector = QuestionCollector.new
+        ast.accept(question_collector)
+        questions = question_collector.questions
+
         duplicate_label_checker(questions)
         duplicate_variable_checker(questions)
         undefined_variable_checker(questions, ast)
@@ -26,7 +29,9 @@ module QL
 
       def undefined_variable_checker(questions, ast)
         question_variables = questions.map(&:variable).map(&:name)
-        expression_variables = ast.accept(ExpressionVariableCollector.new).flatten.compact.map(&:name)
+        expression_variable_collector = ExpressionVariableCollector.new
+        ast.accept(expression_variable_collector)
+        expression_variables =  expression_variable_collector.variables.map(&:name)
 
         (expression_variables - question_variables).each do |undefined_variable|
           NotificationTable.store(Notification::Error.new("variable '#{undefined_variable}' is undefined"))
@@ -57,8 +62,11 @@ module QL
 
       def build_variable_dependencies_map(computed_questions)
         computed_questions.each do |computed_question|
-          assignment_variables = computed_question.accept(ExpressionVariableCollector.new).flatten.compact
-          @variable_dependencies_map[computed_question.variable.name] = assignment_variables
+          expression_variable_collector = ExpressionVariableCollector.new
+          computed_question.accept(expression_variable_collector)
+          expression_variables =  expression_variable_collector.variables
+
+          @variable_dependencies_map[computed_question.variable.name] = expression_variables
         end
       end
 
