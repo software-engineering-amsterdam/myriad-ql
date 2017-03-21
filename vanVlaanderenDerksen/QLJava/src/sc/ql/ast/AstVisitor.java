@@ -254,9 +254,6 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 		return booleanLiteral;
 	}
 	
-	/*
-	 * Helper functions
-	 */
 	private List<FormElement> getFormElements(List<QLParser.FormElementContext> elements) {
 		List<FormElement> formElements = new ArrayList<FormElement>();
 		for(QLParser.FormElementContext formElement : elements) {

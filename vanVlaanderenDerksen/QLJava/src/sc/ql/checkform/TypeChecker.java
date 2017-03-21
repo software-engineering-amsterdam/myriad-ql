@@ -8,19 +8,9 @@ import java.util.Map;
 import sc.ql.model.Form;
 import sc.ql.model.FormElement;
 import sc.ql.model.expressions.*;
-import sc.ql.model.expressions.arithmetical.Add;
-import sc.ql.model.expressions.arithmetical.Divide;
-import sc.ql.model.expressions.arithmetical.Multiply;
-import sc.ql.model.expressions.arithmetical.Substract;
+import sc.ql.model.expressions.arithmetical.*;
 import sc.ql.model.expressions.literals.*;
-import sc.ql.model.expressions.logical.And;
-import sc.ql.model.expressions.logical.Equals;
-import sc.ql.model.expressions.logical.EqualsNot;
-import sc.ql.model.expressions.logical.GreaterThen;
-import sc.ql.model.expressions.logical.GreaterThenEqual;
-import sc.ql.model.expressions.logical.LessThen;
-import sc.ql.model.expressions.logical.LessThenEqual;
-import sc.ql.model.expressions.logical.Or;
+import sc.ql.model.expressions.logical.*;
 import sc.ql.model.form_elements.*;
 import sc.ql.model.types.*;
 import sc.ql.model.visitors.*;
@@ -38,9 +28,7 @@ public class TypeChecker implements FormVisitor<List<Message>>, FormElementVisit
 	
 	@Override
 	public List<Message> visit(Form form) {
-		List<FormElement> elements = form.getFormElements();
-		
-		for(FormElement formElement : elements) {
+		for(FormElement formElement : form.getFormElements()) {
 			formElement.accept(this);
 		}
 		
@@ -49,15 +37,13 @@ public class TypeChecker implements FormVisitor<List<Message>>, FormElementVisit
 	
 	@Override
 	public Void visit(IfThenStatement statement) {
-		List<FormElement> thenElements = statement.getThenBody();
-		
 		Type type = statement.getCondition().accept(this);
 		
 		if (!type.isBooleanType()) {
 			messages.add(new Message(Message.MessageType.ERROR, "if-then condition type error", statement.getPosition()));
 		}
 		
-		for(FormElement formElement : thenElements) {
+		for(FormElement formElement : statement.getThenBody()) {
 			formElement.accept(this);
 		}
 
@@ -66,20 +52,17 @@ public class TypeChecker implements FormVisitor<List<Message>>, FormElementVisit
 	
 	@Override
 	public Void visit(IfThenElseStatement statement) {
-		List<FormElement> thenElements = statement.getThenBody();
-		List<FormElement> elseElements = statement.getElseBody();
-		
 		Type type = statement.getCondition().accept(this);
 		
 		if (type != null && !type.isBooleanType()) {
 			messages.add(new Message(Message.MessageType.ERROR, "if-then-else condition type error", statement.getPosition()));
 		}
 		
-		for(FormElement formElement : thenElements) {
+		for(FormElement formElement : statement.getThenBody()) {
 			formElement.accept(this);
 		}
 		
-		for(FormElement formElement : elseElements) {
+		for(FormElement formElement : statement.getElseBody()) {
 			formElement.accept(this);
 		}
 		
