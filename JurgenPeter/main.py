@@ -34,6 +34,31 @@ def exit_on_errors(errors):
         exit()
 
 
+def check_form(form, symboltable):
+    form_errors = []
+
+    SymbolChecker(symboltable, form_errors).check(form)
+    exit_on_errors(form_errors)
+
+    TypeChecker(symboltable, form_errors).check(form)
+    DependencyChecker(form_errors).check(form)
+    exit_on_errors(form_errors)
+
+    print_errors(form_errors)
+
+
+def check_layout(layout, symboltable):
+    layout_errors = []
+
+    QlsSymbolChecker(symboltable, layout_errors).check(layout)
+    exit_on_errors(layout_errors)
+
+    QlsTypeChecker(symboltable, layout_errors).check(layout)
+    exit_on_errors(layout_errors)
+
+    print_errors(layout_errors)
+
+
 def main():
     if len(argv) < 3:
         ErrorMessage.print("insufficient arguments given, requires input and"
@@ -49,31 +74,13 @@ def main():
 
     form = parse_ql(form_file)
 
-    form_errors = []
     symboltable = {}
-
-    SymbolChecker(symboltable, form_errors).check(form)
-    exit_on_errors(form_errors)
-
-    TypeChecker(symboltable, form_errors).check(form)
-    DependencyChecker(form_errors).check(form)
-    exit_on_errors(form_errors)
-
-    print_errors(form_errors)
+    check_form(form, symboltable)
 
     layout_file = qls_filename(form_file)
     if isfile(layout_file):
         layout = parse_qls(layout_file)
-
-        layout_errors = []
-
-        QlsSymbolChecker(symboltable, layout_errors).check(layout)
-        exit_on_errors(layout_errors)
-
-        QlsTypeChecker(symboltable, layout_errors).check(layout)
-        exit_on_errors(layout_errors)
-
-        print_errors(layout_errors)
+        check_layout(layout, symboltable)
     else:
         layout = None
         WarningMessage.print("qls filename \"{}\" does not "
