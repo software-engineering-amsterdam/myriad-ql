@@ -33,44 +33,35 @@ public class QLGui {
     // File selection elements
     private Scene selectionScene;
     private VBox errorBox;
-    private Button submitFileButton;
 
     // Questionnaire elements
     private Scene questionnaireScene;
-    private Button submitQuestionnaireButton;
     private GridPane questionsGridPane;
     private int questionsRowCount;
 
-    public QLGui(Stage stage) {
+    public QLGui(Stage stage, ButtonCallback buttonCallback) {
         this.stage = stage;
-        setUpFileSelectionScene();
+        setUpFileSelectionScene(buttonCallback);
         setUpQuestionsPane();
+
+        this.stage.setScene(selectionScene);
+        this.stage.setWidth(1000);
+        this.stage.setHeight(800);
+        this.stage.setResizable(false);
+        this.stage.show();
     }
 
     public File getFile() {
         return file;
     }
 
-    public Scene getSelectionScene() {
-        return selectionScene;
-    }
-
-    public Button getSubmitFileButton() {
-        return submitFileButton;
-    }
-
-    public Button getSubmitQuestionnaireButton() {
-        return submitQuestionnaireButton;
-    }
-
-    private void setUpFileSelectionScene() {
+    private void setUpFileSelectionScene(ButtonCallback buttonCallback) {
         stage.setTitle("Form");
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add((new FileChooser.ExtensionFilter("Select a .ql file", "*.ql")));
 
-        Label fileLabel = new Label();
-
+        final Label fileLabel = new Label();
         final Button openButton = new Button("Select a questionnaire");
         openButton.setOnAction(e -> {
             file = fileChooser.showOpenDialog(stage);
@@ -79,7 +70,12 @@ public class QLGui {
             }
         });
 
-        submitFileButton = new Button("Submit");
+        final Button submitFileButton = new Button("Submit");
+        submitFileButton.setOnAction(e -> {
+            if (file != null) {
+                buttonCallback.goToQuestionnaire();
+            }
+        });
 
         HBox hBox = new HBox();
         hBox.setSpacing(10);
@@ -104,14 +100,14 @@ public class QLGui {
         selectionScene = new Scene(anchorPane);
     }
 
-    public void setUpQuestionnaireScene() {
-        submitQuestionnaireButton = new Button("Submit form");
+    public void setUpQuestionnaireScene(ButtonCallback buttonCallback) {
+        final Button submitQuestionnaireButton = new Button("Submit form");
+        submitQuestionnaireButton.setOnAction(e -> buttonCallback.submitForm());
 
         final Button backButton = new Button("Select new questionnaire");
         backButton.setOnAction(e -> stage.setScene(selectionScene));
 
         final AnchorPane rootGroup = new AnchorPane();
-
         AnchorPane.setBottomAnchor(submitQuestionnaireButton, 10.0);
         AnchorPane.setLeftAnchor(submitQuestionnaireButton, 5.0);
         AnchorPane.setBottomAnchor(backButton, 10.0);

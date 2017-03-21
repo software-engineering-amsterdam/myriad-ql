@@ -24,32 +24,20 @@ import org.lemonade.visitors.TypeCheckVisitor;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class QLApp extends Application {
+public class QLApp extends Application implements ButtonCallback {
 
     private QLGui qlGui;
-
-    private boolean isSubmitted = false;
 
     // JavaFX initialisation method
     @Override
     public void start(final Stage primaryStage) throws Exception {
-
-        qlGui = new QLGui(primaryStage);
-        qlGui.getSubmitFileButton().setOnAction(e -> {
-            if (qlGui.getFile() != null) {
-                goToQuestionnaire();
-            }
-        });
-
-        primaryStage.setScene(qlGui.getSelectionScene());
-        primaryStage.setWidth(1000);
-        primaryStage.setHeight(800);
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        // Pass 'this' (implementation of ButtonCallback) as argument to assign callback to button
+        qlGui = new QLGui(primaryStage, this);
     }
 
     // Called on file submit
-    private void goToQuestionnaire() {
+    @Override
+    public void goToQuestionnaire() {
         GuiForm guiRoot;
 
         try {
@@ -59,11 +47,8 @@ public class QLApp extends Application {
             GuiVisitor guiVisitor = new GuiVisitor(qlGui);
             guiRoot = (GuiForm) root.accept(guiVisitor);
 
-            qlGui.setUpQuestionnaireScene();
-            qlGui.getSubmitQuestionnaireButton().setOnAction(e -> {
-                isSubmitted = true;
-                submitForm(guiRoot);
-            });
+            // Pass 'this' (implementation of ButtonCallback) as argument to assign callback to button
+            qlGui.setUpQuestionnaireScene(this);
 
             EvaluateVisitor evaluateVisitor = new EvaluateVisitor();
             qlGui.addUserInputListeners(guiRoot, evaluateVisitor);
@@ -78,8 +63,9 @@ public class QLApp extends Application {
         }
     }
 
-    // Something will happen here (evaluate visitor)
-    private void submitForm(GuiForm guiForm) {
+    // On submit, if
+    @Override
+    public void submitForm() {
         System.err.println("In submit");
     }
 
