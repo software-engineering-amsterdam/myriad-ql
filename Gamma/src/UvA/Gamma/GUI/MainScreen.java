@@ -1,9 +1,8 @@
 package UvA.Gamma.GUI;
 
 import UvA.Gamma.AST.Form;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 
@@ -18,10 +17,11 @@ public class MainScreen {
     }
 
     public void initUI(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Form.fxml"));
-        Parent root = loader.load();
-        FXMLController controller = loader.getController();
-        controller.addFormItems(form);
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("Form.fxml"));
+//        Parent root = loader.load();
+//        FXMLController controller = loader.getController();
+//        controller.addFormItems(form, stage);
+        GridPane root = new GridPane();
         stage.setTitle(form.getId());
         stage.setScene(new Scene(root));
         stage.sizeToScene();

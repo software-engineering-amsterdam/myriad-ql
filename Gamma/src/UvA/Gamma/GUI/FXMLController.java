@@ -4,7 +4,6 @@ import UvA.Gamma.AST.Computed;
 import UvA.Gamma.AST.Form;
 import UvA.Gamma.AST.FormItem;
 import UvA.Gamma.AST.Question;
-import UvA.Gamma.AST.Values.Money;
 import UvA.Gamma.Validation.TypeChecker;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -30,8 +29,9 @@ public class FXMLController {
 
     private final double VERTICAL_GAP = 10;
 
-    void addFormItems(Form form) {
+    void addFormItems(Form form, Stage stage) {
         rootGrid = grid;
+        this.stage = stage;
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setHalignment(HPos.LEFT);
         col1.setHgrow(Priority.ALWAYS);
@@ -100,7 +100,7 @@ public class FXMLController {
         assert rootGrid != null;
         Text questionLabel = new Text(question.getQuestion());
 
-        Text euroLabel = new Text(Money.CURRENCY_SYMBOL);
+        Text euroLabel = new Text("'");
         TextField input = new TextField();
         questionOnUpdate(question, input);
 
@@ -121,6 +121,7 @@ public class FXMLController {
 
         conditionStack.push(rootGrid);
         rootGrid.managedProperty().bind(rootGrid.visibleProperty());
+        rootGrid.visibleProperty().addListener((observable, oldValue, newValue) -> stage.sizeToScene());
         return rootGrid;
     }
 

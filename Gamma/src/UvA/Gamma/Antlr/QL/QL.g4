@@ -9,32 +9,28 @@ formItem: question
 
 question: STRING_LITERAL ID':' type;
 
-computed: STRING_LITERAL ID':' expression;
+computed: STRING_LITERAL ID':' type '=' '('expression')';
 
 type: BOOL #booleanType | STRING #stringType | INT #intType | DATE #dateType | DEC  #decimalType| MONEY #moneyType;
 
-condition: 'if' '('boolExpr')' '{' (formItem)* '}' (elseblock)?;
+condition: 'if' '('boolExpression')' '{' (formItem)* '}' (elseblock)?;
 
 elseblock: 'else' '{'(formItem)*'}';
 
-expression: BOOL '=' '('boolExpr')'       # booleanExpression
-          | (DEC|INT) '=' '('numExpr')'   # numberExpression
-          | MONEY '=' '('numExpr')'       # moneyExpression
-          ;
+expression: boolExpression # booleanExpression | numExpression # numberExpression;
 
-boolExpr: boolExpr op=('&&' | '||' | '==' | '!=') boolExpr
-        | numExpr op=('<' | '>' | '<=' | '>=' | '!=' | '==') numExpr
-        | '('numExpr')'
-        | '!'boolExpr
-        | ID
-        | ('true' | 'false')
+boolExpression: boolExpression op=('&&' | '||' | '==' | '!=') boolExpression        #logicalBooleanExpression
+        | numExpression op=('<' | '>' | '<=' | '>=' | '!=' | '==') numExpression    #logicalIntegerExpression
+        | '!'boolExpression                                                         #negatedBooleanExpression
+        | ID                                                                        #booleanIdentifierExpression
+        | ('true' | 'false')                                                        #booleanValueExpression
         ;
 
-numExpr: numExpr op=('*' | '/') numExpr
-       | numExpr op=('+' | '-') numExpr
-       | '('numExpr')'
-       | NUMBER
-       | ID
+numExpression: numExpression op=('*' | '/') numExpression   #multiExpression
+       | numExpression op=('+' | '-') numExpression         #addExpression
+       | '('numExpression')'                                #nestedExpression
+       | NUMBER                                             #numberValueExpression
+       | ID                                                 #identifierExpression
        ;
 
 //datatypes

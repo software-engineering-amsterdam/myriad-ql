@@ -102,22 +102,73 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumberExpression(QLParser.NumberExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code moneyExpression}
-	 * labeled alternative in {@link QLParser#expression}.
+	 * Visit a parse tree produced by the {@code logicalBooleanExpression}
+	 * labeled alternative in {@link QLParser#boolExpression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMoneyExpression(QLParser.MoneyExpressionContext ctx);
+	T visitLogicalBooleanExpression(QLParser.LogicalBooleanExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link QLParser#boolExpr}.
+	 * Visit a parse tree produced by the {@code negatedBooleanExpression}
+	 * labeled alternative in {@link QLParser#boolExpression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBoolExpr(QLParser.BoolExprContext ctx);
+	T visitNegatedBooleanExpression(QLParser.NegatedBooleanExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link QLParser#numExpr}.
+	 * Visit a parse tree produced by the {@code booleanValueExpression}
+	 * labeled alternative in {@link QLParser#boolExpression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitNumExpr(QLParser.NumExprContext ctx);
+	T visitBooleanValueExpression(QLParser.BooleanValueExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code booleanIdentifierExpression}
+	 * labeled alternative in {@link QLParser#boolExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBooleanIdentifierExpression(QLParser.BooleanIdentifierExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code logicalIntegerExpression}
+	 * labeled alternative in {@link QLParser#boolExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLogicalIntegerExpression(QLParser.LogicalIntegerExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code addExpression}
+	 * labeled alternative in {@link QLParser#numExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAddExpression(QLParser.AddExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code nestedExpression}
+	 * labeled alternative in {@link QLParser#numExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNestedExpression(QLParser.NestedExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code identifierExpression}
+	 * labeled alternative in {@link QLParser#numExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdentifierExpression(QLParser.IdentifierExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code multiExpression}
+	 * labeled alternative in {@link QLParser#numExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMultiExpression(QLParser.MultiExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code numberValueExpression}
+	 * labeled alternative in {@link QLParser#numExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumberValueExpression(QLParser.NumberValueExpressionContext ctx);
 }

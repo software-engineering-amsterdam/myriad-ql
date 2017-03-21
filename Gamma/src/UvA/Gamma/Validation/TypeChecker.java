@@ -1,6 +1,5 @@
 package UvA.Gamma.Validation;
 
-import UvA.Gamma.AST.Values.Value;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,9 +13,9 @@ public class TypeChecker {
     /*
         Validate the new value given by the user. Empty values are always allowed (since it is the inital state)
      */
-    public boolean check(Value value, String newValue) {
-        return newValue.isEmpty() || value.validate(newValue, this);
-    }
+//    public boolean check(Value value, String newValue) {
+//        return newValue.isEmpty() || value.validate(newValue, this);
+//    }
 
     public boolean checkBool(String value) {
         return value.matches("^(?i)true|false");

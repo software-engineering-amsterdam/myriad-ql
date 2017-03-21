@@ -1,7 +1,5 @@
 package UvA.Gamma.AST;
 
-import UvA.Gamma.AST.Expressions.BooleanExpression;
-import UvA.Gamma.AST.Values.Value;
 import UvA.Gamma.GUI.FXMLController;
 import UvA.Gamma.Validation.*;
 import javafx.scene.layout.GridPane;
@@ -17,14 +15,14 @@ public class Condition implements FormItem {
     private List<FormItem> thenBlockItems;
     /* can be empty if no elseBlock is specified */
     private List<FormItem> elseBlockItems;
-    private BooleanExpression expression;
+    //    private BooleanExpression expression;
     private GridPane thenBlockPane;
     private GridPane elseBlockPane;
 
-    public Condition(BooleanExpression expression) {
+    public Condition() {
         this.thenBlockItems = new ArrayList<>();
         this.elseBlockItems = new ArrayList<>();
-        this.expression = expression;
+//        this.expression = expression;
     }
 
     public void addThenBlockItem(FormItem item) {
@@ -36,17 +34,17 @@ public class Condition implements FormItem {
     }
 
     public boolean evaluateExpression() {
-        assert expression != null;
-        expression.evaluate();
-        return expression.getValue() != null && expression.getValue().getValue();
+//        assert expression != null;
+//        expression.evaluate();
+//        return expression.getValue() != null && expression.getValue().getValue();
+        return false;
     }
 
     @Override
     public void idChanged(Form root, FormItem changed, String value) {
-        assert expression != null;
         assert thenBlockPane != null;
         assert elseBlockPane != null;
-        expression.idChanged(changed.isDependencyOf(this), value);
+//        expression.idChanged(changed.isDependencyOf(this), value);
         if (evaluateExpression()) {
             thenBlockPane.setVisible(true);
             elseBlockPane.setVisible(false);
@@ -69,18 +67,18 @@ public class Condition implements FormItem {
         }
     }
 
-    @Override
-    public Value.Type validateIdentifierType(String identifier, Value.Type type) {
-        Optional<FormItem> thenItem = thenBlockItems.stream().filter(formItem -> formItem.validateIdentifierType(identifier, type) != null).findFirst();
-        Optional<FormItem> elseItem = elseBlockItems.stream().filter(formItem -> formItem.validateIdentifierType(identifier, type) != null).findFirst();
-        if (thenItem.isPresent()) {
-            return thenItem.get().validateIdentifierType(identifier, type);
-        } else if (elseItem.isPresent()) {
-            return elseItem.get().validateIdentifierType(identifier, type);
-        } else {
-            return null;
-        }
-    }
+//    @Override
+//    public Value.Type validateIdentifierType(String identifier, Value.Type type) {
+//        Optional<FormItem> thenItem = thenBlockItems.stream().filter(formItem -> formItem.validateIdentifierType(identifier, type) != null).findFirst();
+//        Optional<FormItem> elseItem = elseBlockItems.stream().filter(formItem -> formItem.validateIdentifierType(identifier, type) != null).findFirst();
+//        if (thenItem.isPresent()) {
+//            return thenItem.get().validateIdentifierType(identifier, type);
+//        } else if (elseItem.isPresent()) {
+//            return elseItem.get().validateIdentifierType(identifier, type);
+//        } else {
+//            return null;
+//        }
+//    }
 
     @Override
     public String validateRedeclaration(FormItem item) {
@@ -121,9 +119,9 @@ public class Condition implements FormItem {
 
     @Override
     public boolean isDependentOn(String id) {
-        return expression.isDependentOn(id) ||
+        return
                 thenBlockItems.stream().anyMatch(item -> item.isDependentOn(id)) ||
-                elseBlockItems.stream().anyMatch(item -> item.isDependentOn(id));
+                        elseBlockItems.stream().anyMatch(item -> item.isDependentOn(id));
     }
 
     @Override
@@ -170,6 +168,6 @@ public class Condition implements FormItem {
         StringBuilder builder = new StringBuilder();
         thenBlockItems.forEach(builder::append);
         elseBlockItems.forEach(builder::append);
-        return "<Condition>: (" + expression + ")" + builder;
+        return "<Condition>: (" + ")" + builder;
     }
 }

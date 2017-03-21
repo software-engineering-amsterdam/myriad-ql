@@ -1,6 +1,6 @@
 package UvA.Gamma.AST;
 
-import UvA.Gamma.AST.Values.Value;
+import UvA.Gamma.AST.Types.Type;
 import UvA.Gamma.GUI.FXMLController;
 import UvA.Gamma.Validation.*;
 
@@ -10,12 +10,12 @@ import UvA.Gamma.Validation.*;
 public class Question implements FormItem {
     private String question;
     private String id;
-    private Value value;
+    private Type type;
 
-    public Question(String question, String id, Value value) {
+    public Question(String question, String id, Type type) {
         this.question = question;
         this.id = id;
-        this.value = value;
+        this.type = type;
     }
 
     public String getQuestion() {
@@ -24,8 +24,9 @@ public class Question implements FormItem {
     }
 
     public boolean check(TypeChecker checker, String newValue) {
-        assert value != null;
-        return checker.check(value, newValue);
+        assert type != null;
+        return false;
+//        return checker.check(type, newValue);
     }
 
 
@@ -39,11 +40,12 @@ public class Question implements FormItem {
         return item != this && item.hasId(this.id) ? this.id : null;
     }
 
-    @Override
-    public Value.Type validateIdentifierType(String identifier, Value.Type type) {
-        assert value != null;
-        return this.id.equals(identifier) && !value.conformsToType(type) ? value.getType() : null;
-    }
+//    @Override
+//    public Value.Type validateIdentifierType(String identifier, Value.Type type) {
+//        assert type != null;
+////        return this.id.equals(identifier) && !value.conformsToType(type) ? value.getType() : null;
+//        return Value.T;
+//    }
 
     @Override
     public Pair<String> validateCyclicDependency(FormItem item) {
@@ -76,7 +78,7 @@ public class Question implements FormItem {
 
     @Override
     public void show(FXMLController screen) {
-        value.showQuestion(screen, this);
+//        value.showQuestion(screen, this);
     }
 
     @Override
@@ -97,6 +99,6 @@ public class Question implements FormItem {
 
     @Override
     public String toString() {
-        return "<Question>: " + question + " " + id + ": " + value.getType();
+        return "<Question>: " + question + " " + id + ": " + type;
     }
 }

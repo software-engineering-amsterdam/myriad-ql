@@ -1,0 +1,3 @@
+form test{
+    "test" test: boolean = (2 != 2)
+}

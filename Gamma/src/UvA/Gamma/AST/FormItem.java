@@ -1,6 +1,5 @@
 package UvA.Gamma.AST;
 
-import UvA.Gamma.AST.Values.Value;
 import UvA.Gamma.GUI.FXMLController;
 import UvA.Gamma.Validation.*;
 
@@ -16,7 +15,7 @@ public interface FormItem extends ASTNode {
             CyclicDependencyException;
 
     /* Returns the invalid type, or null if the the type is valid */
-    Value.Type validateIdentifierType(String identifier, Value.Type type);
+//    Value.Type validateIdentifierType(String identifier, Value.Type type);
 
     /* Returns the redeclared identifier, or null if the identifier is not redeclared */
     String validateRedeclaration(FormItem item);

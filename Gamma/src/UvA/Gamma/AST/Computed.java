@@ -1,7 +1,5 @@
 package UvA.Gamma.AST;
 
-import UvA.Gamma.AST.Expressions.Expression;
-import UvA.Gamma.AST.Values.Value;
 import UvA.Gamma.GUI.FXMLController;
 import UvA.Gamma.Validation.*;
 import javafx.beans.property.StringProperty;
@@ -12,12 +10,12 @@ import javafx.beans.property.StringProperty;
 public class Computed implements FormItem {
     private String label;
     private String id;
-    public Expression expression;
+//    public Expression expression;
 
-    public Computed(String label, String id, Expression expression) {
+    public Computed(String label, String id) {
         this.label = label;
         this.id = id;
-        this.expression = expression;
+//        this.expression = expression;
     }
 
     public String getLabel() {
@@ -27,25 +25,49 @@ public class Computed implements FormItem {
 
     @Override
     public void idChanged(Form root, FormItem changed, String value) {
-        assert expression != null;
-        if (expression.idChanged(changed.isDependencyOf(this), value)) {
-            root.idChanged(this, this.expression.toString());
+//        assert expression != null;
+//        if (expression.idChanged(changed.isDependencyOf(this), value)) {
+//            root.idChanged(this, this.expression.toString());
+//        }
+    }
+
+    interface Visitor {
+        void visit(Computed c);
+
+        void visit(Question q);
+
+    }
+
+    class MyValidator implements Visitor {
+
+        @Override
+        public void visit(Computed c) {
+
         }
+
+        @Override
+        public void visit(Question q) {
+
+        }
+    }
+
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 
     @Override
     public void accept(Validator validator) throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException, CyclicDependencyException {
-        assert expression != null;
-        validator.validateRedeclaration(this);
-        validator.validateCyclicDependency(this);
-        expression.accept(validator);
+//        assert expression != null;
+//        validator.validateRedeclaration(this);
+//        validator.validateCyclicDependency(this);
+//        expression.accept(validator);
     }
 
-    @Override
-    public Value.Type validateIdentifierType(String identifier, Value.Type type) {
-        assert id != null && expression != null;
-        return id.equals(identifier) && !expression.getValue().conformsToType(type) ? expression.getValue().getType() : null;
-    }
+//    @Override
+//    public Value.Type validateIdentifierType(String identifier, Value.Type type) {
+//        assert id != null && expression != null;
+//        return id.equals(identifier) && !expression.getValue().conformsToType(type) ? expression.getValue().getType() : null;
+//    }
 
     @Override
     public String validateRedeclaration(FormItem item) {
@@ -73,8 +95,9 @@ public class Computed implements FormItem {
 
     @Override
     public boolean isDependentOn(String id) {
-        assert expression != null;
-        return expression.isDependentOn(id);
+//        assert expression != null;
+//        return expression.isDependentOn(id);
+        return false;
     }
 
     @Override
@@ -95,8 +118,9 @@ public class Computed implements FormItem {
     }
 
     public StringProperty getStringValueProperty() {
-        assert expression != null;
-        return expression.getStringValueProperty();
+//        assert expression != null;
+//        return expression.getStringValueProperty();
+        return null;
     }
 
     @Override
@@ -106,6 +130,6 @@ public class Computed implements FormItem {
 
     @Override
     public String toString() {
-        return "<Computed>: " + label + " " + id + ": " + expression.getValue().getType() + " = " + expression;
+        return "";
     }
 }

@@ -3,7 +3,6 @@ package UvA.Gamma.Validation;
 import UvA.Gamma.AST.Computed;
 import UvA.Gamma.AST.Form;
 import UvA.Gamma.AST.FormItem;
-import UvA.Gamma.AST.Values.Value;
 
 /**
  * Created by Tjarco, 27-02-17.
@@ -35,15 +34,15 @@ public class Validator {
         }
     }
 
-    public void validateIdentifierType(String id, Value.Type type) throws IncompatibleTypesException {
-        for (FormItem item : form) {
-            Value.Type invalidType = item.validateIdentifierType(id, type);
-            if (invalidType != null) {
-                throw new IncompatibleTypesException("The identifier " + id + " is of the type " + invalidType +
-                        ", which does not conform to the type " + type);
-            }
-        }
-    }
+//    public void validateIdentifierType(String id, Value.Type type) throws IncompatibleTypesException {
+//        for (FormItem item : form) {
+//            Value.Type invalidType = item.validateIdentifierType(id, type);
+//            if (invalidType != null) {
+//                throw new IncompatibleTypesException("The identifier " + id + " is of the type " + invalidType +
+//                        ", which does not conform to the type " + type);
+//            }
+//        }
+//    }
 
     public void validateRedeclaration(FormItem formItem) throws IdRedeclaredException {
         for (FormItem item : form) {
