@@ -7,7 +7,8 @@ from PyQt5.QtWidgets import QWidget
 
 from pql.environment.environmentcreator import EnvironmentCreator
 from pql.evaluator.evaluator import Evaluator
-from pql.gui.Wizard import Wizard, Page
+from pql.gui.Page import Page
+from pql.gui.Wizard import Wizard
 from pql.gui.widgets import IntegerInput, MoneyInput, BooleanInput, StringInput
 from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.TypeVisitor import TypeVisitor
@@ -18,8 +19,6 @@ class Questionnaire(FormVisitor, TypeVisitor):
         self.wizard = Wizard()
         self.evaluator = Evaluator(ast)
         self.ast = ast
-        self.conditional_if_list = list(tuple())
-        self.conditional_if_else_list = list(tuple())
         self.__environment = EnvironmentCreator(self.ast).visit()
 
     def export(self):
@@ -38,8 +37,7 @@ class Questionnaire(FormVisitor, TypeVisitor):
         return self
 
     def render_conditionals(self):
-        self.trigger_conditional_if()
-        self.trigger_conditional_if_else()
+        self.wizard.trigger_conditionals(self.evaluator, self.__environment)
 
     def form(self, node, args=None):
         page = Page(node.name, self.wizard)
@@ -59,12 +57,12 @@ class Questionnaire(FormVisitor, TypeVisitor):
         if_else_layout.addWidget(if_container)
         if_else_layout.addWidget(else_container)
         if_else_container.setLayout(if_else_layout)
-        self.conditional_if_else_list.append((if_container, else_container, node))
+        parent.conditional_if_else_list.append((if_container, else_container, node))
         return if_else_container
 
     def conditional_if(self, node, parent=None):
         container = self.create_conditional_container(node.statements, parent)
-        self.conditional_if_list.append((container, node))
+        parent.conditional_if_list.append((container, node))
         return container
 
     def create_conditional_container(self, statements, parent):
@@ -74,29 +72,6 @@ class Questionnaire(FormVisitor, TypeVisitor):
             layout.addWidget(statement.apply(self, parent))
         container.setLayout(layout)
         return container
-
-    def trigger_conditional_if(self):
-        for if_block_container, node in self.conditional_if_list:
-            result = node.condition.apply(self.evaluator, self.__environment)
-            cond = (result is not None and result)
-            if_block_container.setEnabled(cond)
-            if cond:
-                if_block_container.show()
-            else:
-                if_block_container.hide()
-
-    def trigger_conditional_if_else(self):
-        for if_container, else_container, node in self.conditional_if_else_list:
-            result = node.condition.apply(self.evaluator, self.__environment)
-            cond = (result is not None and result)
-            if_container.setEnabled(cond)
-            else_container.setEnabled(not cond)
-            if cond:
-                if_container.show()
-                else_container.hide()
-            else:
-                if_container.hide()
-                else_container.show()
 
     def create_container(self, node, enabled, parent):
         container = QGroupBox(parent)
@@ -149,8 +124,7 @@ class Questionnaire(FormVisitor, TypeVisitor):
         return widget
 
     def connect_conditionals(self, signal):
-        signal.connect(self.trigger_conditional_if)
-        signal.connect(self.trigger_conditional_if_else)
+        signal.connect(self.render_conditionals)
 
     def update(self, widget_name, value):
         environment = self.evaluator.visit(self.__environment.update(widget_name, value))
