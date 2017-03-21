@@ -1,11 +1,11 @@
 package qls.semantic;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import QL.ReferenceTable;
-import QL.ast.type.Type;
 import QL.message.Message;
+import QL.ui.StyleTable;
 import qls.ast.Stylesheet;
 
 public class Analyzer {
@@ -16,10 +16,13 @@ public class Analyzer {
 		this.environment = new Environment(referenceTable);
 	}
 	
-	public void analyze(Stylesheet stylesheet) {
+	public StyleTable analyze(Stylesheet stylesheet) {
 		
 		VerifyQuestions verifyQuestions = new VerifyQuestions(environment);
 		verifyQuestions.visit(stylesheet);
+		
+		// TODO implement
+		return new StyleTable(new HashMap<>());
 		
 	}
 	

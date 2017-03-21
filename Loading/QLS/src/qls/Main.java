@@ -1,22 +1,22 @@
 package qls;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-import QL.Faults;
 import QL.QLLexer;
 import QL.QLParser;
 import QL.ReferenceTable;
 import QL.ast.Form;
-import QL.ast.type.Type;
 import QL.message.Message;
 import QL.ui.Environment;
 import QL.ui.Questionnaire;
+import QL.ui.Style;
+import QL.ui.StyleTable;
 import qls.ast.Stylesheet;
+import qls.semantic.Analyzer;
 
 
 public class Main {
@@ -49,14 +49,20 @@ public class Main {
 		
 		List<Message> messages = qlAnalyzer.getMessages();
 	
-		qls.semantic.Analyzer analyzer = new qls.semantic.Analyzer(referenceTable);
+		qls.semantic.Analyzer analyzer = new Analyzer(referenceTable);
 		
-		analyzer.analyze(stylesheet);
+		StyleTable styleTable = analyzer.analyze(stylesheet);
 		
 		messages.addAll(analyzer.getMessages());
+		
+		// TODO
+		// Evaluate the ast to create a variablename - Style map
+		// Rename DefaultStyle to Style?
+		// extend the referenceTable with the StyleTable
+		
 
 		Questionnaire questionnaire = new Questionnaire();
-		questionnaire.main(form, referenceTable, messages);
+		questionnaire.main(form, new Environment(referenceTable, styleTable), messages);
 	}
 	
 

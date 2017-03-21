@@ -1,10 +1,14 @@
 package QL;
 
+import java.util.HashMap;
+
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+
 import QL.ast.Form;
 import QL.semantic.Analyzer;
 import QL.ui.Questionnaire;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
+import QL.ui.Environment;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
@@ -29,10 +33,11 @@ public class Main {
 		Form form = parser.form().result;
 
 		Analyzer analyzer = new Analyzer();
-		ReferenceTable variables = analyzer.analyze(form);
+		ReferenceTable referenceTable = analyzer.analyze(form);
 		
 		Questionnaire questionnaire = new Questionnaire();
-		questionnaire.main(form, variables, analyzer.getMessages());
+		questionnaire.main(form, new Environment(referenceTable), analyzer.getMessages());
 	}
+	
 	
 }

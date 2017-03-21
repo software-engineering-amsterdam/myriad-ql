@@ -1,20 +1,29 @@
 package QL.ui;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import QL.ReferenceTable;
 import QL.ast.type.Type;
 import QL.value.Value;
-
-import java.util.HashMap;
-import java.util.Map;
+import javafx.scene.control.Label;
 
 public class Environment {
 
 	private final Map<String, Value> variableAnswer;
 	private final ReferenceTable variableType;
+	private final StyleTable styleTable;
 	
 	public Environment(ReferenceTable variableType) {
 		this.variableAnswer = new HashMap<>(); 
 		this.variableType = variableType;
+		this.styleTable = new StyleTable(variableType);
+	}
+	
+	public Environment(ReferenceTable variableType, StyleTable styleTable) {
+		this.variableAnswer = new HashMap<>(); 
+		this.variableType = variableType;
+		this.styleTable = styleTable;
 	}
 	
 	public void addAnswer(String variable, Value answer) {
@@ -45,4 +54,11 @@ public class Environment {
 		return variableType.getType(variable);
 		
 	}
+	
+	public void applyStyle(String variable, Label label) {
+		
+		styleTable.applyStyle(variable, label);			
+	}
+	
+
 }

@@ -8,6 +8,9 @@ import QL.evaluation.Evaluator;
 import QL.ui.field.Field;
 import QL.value.BoolValue;
 import QL.value.Value;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,21 +49,13 @@ public class QEvaluator extends Evaluator {
     
     private Row createRow(Question question) {
 
-        Value answer;
-        if (answers.isAnswered(question.getVariable())) {
-            answer = answers.getAnswer(question.getVariable());
-        }
-        else {
-            answer = question.getType().accept(this);
-        }
-
-
+        Value answer = getAnswer(question);
+             
         Field field = answer.getField(question.getVariable(), notifier, answer);
-
-
-        return new Row(question.getVariable(), question.getLabel(), field);
+        
+        return new Row(question.getVariable(), new Label(question.getLabel()), field);
     }
-
+   
     private Value getAnswer(Question question) {
 
         if (!answers.isAnswered(question.getVariable())) {

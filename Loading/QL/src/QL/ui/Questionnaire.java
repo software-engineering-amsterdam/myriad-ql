@@ -39,9 +39,9 @@ public class Questionnaire extends Application implements Notifier {
 	private static GridPane grid;
 	private static List<Message> messages;
 	
-    public void main(Form f, ReferenceTable variables, List<Message> msgs) {
+    public void main(Form f, Environment env, List<Message> msgs) {
     	form = f;
-    	environment = new Environment(variables);
+    	environment = env;
     	messages = msgs;
  
         launch();
@@ -144,8 +144,8 @@ public class Questionnaire extends Application implements Notifier {
     	int rowIndex = 1;
         for (Row question : activeQuestions) {
             
-        	Label questionLabel = new Label(question.getLabel());
-            grid.add(questionLabel, 0, rowIndex);
+        	environment.applyStyle(question.getName(), question.getLabel());
+            grid.add(question.getLabel(), 0, rowIndex);
             grid.add(question.getControl(), 1, rowIndex);
             
             ++rowIndex;
