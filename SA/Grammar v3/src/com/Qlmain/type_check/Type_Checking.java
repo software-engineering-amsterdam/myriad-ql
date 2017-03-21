@@ -1,8 +1,9 @@
 package com.Qlmain.type_check;
 
-import com.Qlmain.Exceptions.UndefinedException;
+import com.Qlmain.exceptions.UndefinedException;
 import com.Qlmain.QL.*;
-import com.Qlmain.Types_Of_Expr.Type;
+import com.Qlmain.types_Of_Expr.types.Type;
+//import com.Qlmain.types_Of_Expr.Type;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,16 +33,16 @@ public class Type_Checking {
                 Type typeEval = null;
                 try {
                    // typeEval = Expression_Type_Check.typeCheckExp(quToEvaluate.type);
-                    typeEval = quToEvaluate.type.exprVisitor();
+                    typeEval = quToEvaluate.type.exprTypeChecker();
                 } catch (UndefinedException e) {
                     System.out.println("Undefined variable in question statement starting in line " +quToEvaluate.line);
                     return false;
                 }
-                if (typeEval == Type.WRONGTYPE){
+                if (typeEval.check__wrong_type()){
                     System.out.println("Invalid type in Question \"" + quToEvaluate.text +"\" in line " + quToEvaluate.line);
                     return false;
                 } else if ( variablesAndTypes.containsKey(quToEvaluate.name) ) {
-                    System.out.println("Wrong variable \""+quToEvaluate.name+"\" in Question \"" + quToEvaluate.text +"\" in line " + quToEvaluate.line);
+                    System.out.println("Already used variable name \""+quToEvaluate.name+"\" in Question \"" + quToEvaluate.text +"\" in line " + quToEvaluate.line);
                     return false;
                 } else {
                     variablesAndTypes.put(quToEvaluate.name, typeEval);
@@ -53,13 +54,13 @@ public class Type_Checking {
                 Type ifConditionCheck;
                 try {
                     //ifConditionCheck = Expression_Type_Check.typeCheckExp(ifStToEvaluate.getIfCase());
-                    ifConditionCheck = ifStToEvaluate.getIfCase().exprVisitor();
+                    ifConditionCheck = ifStToEvaluate.getIfCase().exprTypeChecker();
                     //ifConditionCheck = ifStToEvaluate.getIfCase().exprVisitor(ifStToEvaluate.getIfCase());
                 } catch (UndefinedException e) {
                     System.out.println("Undefined variable in if case in line " + ifStToEvaluate.getIfStatementLine());
                     return false;
                 }
-                if ( !( ifConditionCheck == Type.BOOLEAN ) ) {
+                if ( !( ifConditionCheck.check__bool_type() ) ) {
                     System.out.println("Error in if case in line " + ifStToEvaluate.getIfStatementLine()+". Expected type boolean.");
                     return false;
                 }

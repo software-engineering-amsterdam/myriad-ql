@@ -6,13 +6,21 @@ form taxOfficeExample {
   "Did you enter a loan?"
     id: string
 
-  if ( true AND true ) {
+  if ( ((true AND true) OR hasSoldHouse) OR hasBoughtHouse ) {
     "What was the selling price?"
       sellingPrice: money
     "Private debts for the sold house:"
       privateDebt: money
+      if ( (sellingPrice > 1.1) AND (privateDebt == sellingPrice) ) {
+          "What was the selling price?"
+            sellingPrices: money
+          "Private debts for the sold house:"
+            privateDebts: money
+          "Value residue:"
+            valueResidues: money = (sellingPrices+1.1)*10.0 - 100.0
+        }
     "Value residue:"
-      valueResidue: money = privateDebt+1.1
+      valueResidue: money = privateDebt+11-21.3*33.3
   }
 
 }

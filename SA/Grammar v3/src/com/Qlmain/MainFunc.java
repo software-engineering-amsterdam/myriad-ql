@@ -1,18 +1,19 @@
 package com.Qlmain;
 
 import com.Qlmain.QL.*;
-import com.Qlmain.Types_Of_Expr.Expression;
+import com.Qlmain.evaluation.Evaluation;
 import com.Qlmain.antlr.QLLexer;
 import com.Qlmain.antlr.QLParser;
 //import com.Qlmain.parsing.QLVisitorBuildAST;
-import com.Qlmain.parsing.QLVisitorBuildAST_test;
+import com.Qlmain.parsing.QLVisitorBuildAST;
 import com.Qlmain.type_check.Type_Checking;
-import com.Qlmain.Exceptions.UndefinedException;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -52,60 +53,34 @@ public class MainFunc {
         parser.removeErrorListeners();
         parser.addErrorListener(ThrowingErrorListener.INSTANCE);
 
-        Form traverseResult = null;
+        Form formAST = null;
         try {
             // Specify our entry point
             QLParser.FormDeclarationContext formDeclarationContext = parser.formDeclaration();
             //QLVisitorBuildAST visitor = new QLVisitorBuildAST();
-            QLVisitorBuildAST_test visitor = new QLVisitorBuildAST_test();
-            traverseResult = (Form) visitor.visit(formDeclarationContext);
+            QLVisitorBuildAST visitor = new QLVisitorBuildAST();
+            formAST = (Form) visitor.visit(formDeclarationContext);
 
         }catch(ParseCancellationException ex){
             System.out.println(ex.getMessage());
             System.exit(1);
         }
 
-        boolean typecheckTree = new Type_Checking().Type_CheckingMethod(traverseResult);
+        boolean typecheckTree = new Type_Checking().Type_CheckingMethod(formAST);
         System.out.println("Typechecking of the tree " + typecheckTree);
 
+        Map<String, Object> firstEvaluation = new HashMap<>();
         if (typecheckTree) {
-            new Frame_Window().Custom_Frame(traverseResult);
+            new Evaluation().initialise();
+            firstEvaluation = new Evaluation().evaluateAST(formAST.getStatementList());
         }
-        /*for(Statement st :  traverseResult.getStatementList()) {
-            if (st.getClass().equals(Question.class)) {
-                Question qu = (Question) st;
-                System.out.println("Questions outside if statement: " + qu.text + " " + qu.name);
-                printTypeCheck(qu.type);
-            } else if (st.getClass().equals(IfStatement.class)) {
-                IfStatement ifst = (IfStatement) st;
-                printTypeCheck(ifst.getIfCase());
-                for (Statement quIfSt : ifst.getStatementsList()) {
-                    if (quIfSt.getClass().equals(Question.class)) {
-                        Question tempQuIfSt = (Question) quIfSt;
-                        System.out.println("Questions in if statement: " + tempQuIfSt.text + " " + tempQuIfSt.name);
-                        printTypeCheck(tempQuIfSt.type);
-                    }
-                }
-            }
-        }*/
 
-        return traverseResult;
-
-    }
-
-    private void printTypeCheck(Expression typeCheck) {
-        try {
-            System.out.println( typeCheck.exprVisitor());
-        } catch (UndefinedException e) {
-            e.printStackTrace();
+        if (typecheckTree) {
+            new Frame_Window().Custom_Frame(formAST, firstEvaluation);
         }
-        /*if (typeCheck.getLeft() == null &&  typeCheck.getRight() == null){
-            System.out.println(typeCheck.getToken());
-        }else {
-            printTypeCheck(typeCheck.getLeft());
-            System.out.println(typeCheck.getToken());
-            printTypeCheck(typeCheck.getRight());
-        }*/
+
+        return formAST;
+
     }
 
    /* private void printIfCheck(Expr typeCheck) {
