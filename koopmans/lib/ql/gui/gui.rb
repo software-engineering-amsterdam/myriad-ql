@@ -7,11 +7,12 @@ module QL
 
       def initialize(question_frames = nil)
         @question_frames = question_frames
+        @submit_button = SubmitButton.new
       end
 
       def render
         @question_frames.each(&:render)
-        @submit_button = SubmitButton.new
+        @submit_button.render
 
         reload_questions
         listen_to_questions

@@ -25,14 +25,14 @@ module QL
 
       def visit_question(question, condition)
         name = question.variable.name
-        label = question.label.value
+        label = Label.new(question.label.value)
         literal_type, widget = question.type.accept(self)
         @question_frames << QuestionFrame.new(name: name, label: label, literal_type: literal_type, widget: widget, condition: condition)
       end
 
       def visit_computed_question(question, condition)
         name = question.variable.name
-        label = question.label.value
+        label = Label.new(question.label.value)
         literal_type, = question.type.accept(self)
         widget = ComputedWidget.new
         assignment = question.assignment
