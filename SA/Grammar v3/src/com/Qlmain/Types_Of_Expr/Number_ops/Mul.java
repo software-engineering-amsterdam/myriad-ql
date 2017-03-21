@@ -1,8 +1,8 @@
-package com.Qlmain.Types_Of_Expr.Number_ops;
+package com.Qlmain.types_Of_Expr.Number_ops;
 
-import com.Qlmain.Exceptions.UndefinedException;
-import com.Qlmain.Types_Of_Expr.Expression;
-import com.Qlmain.Types_Of_Expr.Type;
+import com.Qlmain.exceptions.UndefinedException;
+import com.Qlmain.types_Of_Expr.Expression;
+import com.Qlmain.types_Of_Expr.types.Type;
 
 /**
  * Created by sotos on 15/3/2017.
@@ -15,18 +15,16 @@ public class Mul extends Expression {
         this.lhs = lhs;
         this.rhs = rhs;
     }
-    public Expression getMullhs() { return this.lhs; }
-    public Expression getMulrhs() { return this.rhs; }
 
     @Override
-    public Type exprVisitor() throws UndefinedException {
-        return new resolve_branches_numer().resolve_branches_numerical(lhs.exprVisitor(),rhs.exprVisitor());
+    public Type exprTypeChecker() throws UndefinedException {
+        return new Resolve_branches_numer().resolve_branches_numerical(lhs.exprTypeChecker(),rhs.exprTypeChecker());
     }
 
     @Override
-    public Object exprEvaluateVisitor() {
-        Object thatLhs = lhs.exprEvaluateVisitor();
-        Object thatRhs = rhs.exprEvaluateVisitor();
+    public Object Evaluator() {
+        Object thatLhs = lhs.Evaluator();
+        Object thatRhs = rhs.Evaluator();
         if (thatLhs instanceof Integer && thatRhs instanceof Integer) {
             return (int) thatLhs * (int) thatRhs;
         }else {

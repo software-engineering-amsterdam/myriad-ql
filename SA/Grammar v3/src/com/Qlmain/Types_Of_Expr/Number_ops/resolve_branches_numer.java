@@ -1,15 +1,18 @@
-package com.Qlmain.Types_Of_Expr.Number_ops;
+package com.Qlmain.types_Of_Expr.Number_ops;
 
-import com.Qlmain.Types_Of_Expr.Type;
+import com.Qlmain.types_Of_Expr.types.Type;
+import com.Qlmain.types_Of_Expr.types.Type_int;
+import com.Qlmain.types_Of_Expr.types.Type_mon;
+import com.Qlmain.types_Of_Expr.types.Type_wrongtype;
 
 /**
  * Created by sotos on 15/3/2017.
  */
-public class resolve_branches_numer {
+class Resolve_branches_numer {
 
-    public Type resolve_branches_numerical(Type lhs, Type rhs){
-        if (lhs==Type.INTEGER && rhs==Type.INTEGER) return Type.INTEGER;
-        else if (lhs==Type.MONEY && rhs==Type.MONEY) return Type.MONEY;
-        else return Type.WRONGTYPE;
+     Type resolve_branches_numerical(Type lhs, Type rhs){
+        if (lhs.check__int_type() && rhs.check__int_type()) return new Type_int();
+        else if (lhs.check__mon_type() && rhs.check__mon_type()) return new Type_mon();
+        else return new Type_wrongtype();
     }
 }

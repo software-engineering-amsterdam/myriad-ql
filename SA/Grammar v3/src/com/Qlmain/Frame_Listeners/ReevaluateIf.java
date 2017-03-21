@@ -1,14 +1,8 @@
-package com.Qlmain.Frame_Listeners;
-
-import com.Qlmain.Frame_Window;
-import com.Qlmain.QL.IfStatement;
-
-import javax.swing.*;
-import java.util.Map;
+package com.Qlmain.frame_Listeners;
 
 public class ReevaluateIf {
 
-    public ReevaluateIf() {
+    /*public ReevaluateIf() {
         Map<IfStatement, JPanel> panelsandconditions = Frame_Window.getPanelsAndConditions();
         for (IfStatement statementItem : panelsandconditions.keySet()) {
 
@@ -19,6 +13,6 @@ public class ReevaluateIf {
             }
         }
 
-    }
+    }*/
 
 }

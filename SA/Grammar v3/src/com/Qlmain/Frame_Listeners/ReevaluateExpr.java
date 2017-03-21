@@ -1,15 +1,9 @@
-package com.Qlmain.Frame_Listeners;
-
-import com.Qlmain.Frame_Window;
-import com.Qlmain.Types_Of_Expr.Expression;
-
-import javax.swing.*;
-import java.util.Map;
+package com.Qlmain.frame_Listeners;
 
 
 public class ReevaluateExpr {
 
-    public ReevaluateExpr() {
+    /*public ReevaluateExpr() {
 
         Runnable doAssist = () -> {
             Map<Expression, JTextField> textFieldWithExprToEval = Frame_Window.gettextFieldWithExprToEval();
@@ -19,5 +13,5 @@ public class ReevaluateExpr {
         };
         SwingUtilities.invokeLater(doAssist);
 
-    }
+    }*/
 }

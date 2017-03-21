@@ -1,4 +1,4 @@
-package com.Qlmain.Exceptions;
+package com.Qlmain.exceptions;
 
 /**
  * Created by sotos on 14/3/2017.

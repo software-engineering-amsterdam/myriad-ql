@@ -1,8 +1,9 @@
-package com.Qlmain.Frame_Listeners;
+package com.Qlmain.frame_Listeners;
 
 import com.Qlmain.Frame_Window;
 import com.Qlmain.QL.Question;
 import com.Qlmain.QL.Statement;
+import com.Qlmain.evaluation.Evaluation;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,16 +23,16 @@ public class Checkbox_Listener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Map<String,Object> variablesAndValues = Frame_Window.getVariablesAndValues();
+        //Map<String,Object> variablesAndValues = new Evaluation().getVariablesAndValues();
         if (checked){
-            variablesAndValues.replace(this.questionChecked.name, false);
+            new Evaluation().replaceValueInVariablesAndValues(this.questionChecked.name, false);
             checked = false;
-        }else if (!checked) {
-            variablesAndValues.replace(this.questionChecked.name, true);
+        }else {
+            new Evaluation().replaceValueInVariablesAndValues(this.questionChecked.name, true);
             checked = true;
         }
-        new ReevaluateIf();
-        for (String oh : variablesAndValues.keySet()) System.out.println("values of the list in frame " + oh + " " + variablesAndValues.get(oh));
+        new Frame_Window().RedrawIf();
+        //for (String oh : variablesAndValues.keySet()) System.out.println("values of the list in frame " + oh + " " + variablesAndValues.get(oh));
 
     }
 }

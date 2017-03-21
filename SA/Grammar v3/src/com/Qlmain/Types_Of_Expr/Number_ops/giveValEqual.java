@@ -1,32 +1,30 @@
-package com.Qlmain.Types_Of_Expr.Number_ops;
+package com.Qlmain.types_Of_Expr.Number_ops;
 
-import com.Qlmain.Exceptions.UndefinedException;
-import com.Qlmain.Types_Of_Expr.Expression;
-import com.Qlmain.Types_Of_Expr.Type;
+import com.Qlmain.exceptions.UndefinedException;
+import com.Qlmain.types_Of_Expr.Expression;
+import com.Qlmain.types_Of_Expr.types.Type;
 
 /**
  * Created by sotos on 15/3/2017.
  */
-public class giveValEqual extends Expression {
+public class GiveValEqual extends Expression {
     private Type lhs;
     private Expression rhs;
-    public giveValEqual(Type lhs, Expression rhs) {
+    public GiveValEqual(Type lhs, Expression rhs) {
         this.lhs = lhs;
         this.rhs = rhs;
     }
-    public Type getValEquallhs() { return this.lhs; }
-    public Expression getValEqualrhs() { return this.rhs; }
 
     @Override
-    public Type exprVisitor() throws UndefinedException {
-        Type evr = rhs.exprVisitor();
-        if ( evr == this.lhs) return this.lhs;
-        else return Type.WRONGTYPE;
+    public Type exprTypeChecker() throws UndefinedException {
+        Type evalr = rhs.exprTypeChecker();
+        return new Resolve_branches_numer().resolve_branches_numerical(lhs, evalr);
+
     }
 
     @Override
-    public Object exprEvaluateVisitor() {
-        System.out.println(rhs.exprEvaluateVisitor());
-        return rhs.exprEvaluateVisitor();
+    public Object Evaluator() {
+        //System.out.println(rhs.Evaluator());
+        return rhs.Evaluator();
     }
 }

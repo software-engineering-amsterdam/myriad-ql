@@ -1,17 +1,18 @@
-package com.Qlmain.Types_Of_Expr.Boolean_ops;
+package com.Qlmain.types_Of_Expr.Boolean_ops;
 
-import com.Qlmain.QL.Expr;
-import com.Qlmain.Types_Of_Expr.Type;
+import com.Qlmain.types_Of_Expr.types.Type;
+import com.Qlmain.types_Of_Expr.types.Type_bool;
+import com.Qlmain.types_Of_Expr.types.Type_wrongtype;
 
 /**
  * Created by sotos on 15/3/2017.
  */
-public class resolve_branches_bool {
+class Resolve_branches_bool {
 
-    public Type resolve_branches_boolean(Type lhs, Type rhs){
-        if (lhs == Type.BOOLEAN && rhs == Type.BOOLEAN)
-            return Type.BOOLEAN;
+     Type resolve_branches_boolean(Type lhs, Type rhs){
+        if (lhs.check__bool_type() && rhs.check__bool_type())
+            return new Type_bool();
         else
-            return Type.WRONGTYPE;
+            return new Type_wrongtype();
     }
 }

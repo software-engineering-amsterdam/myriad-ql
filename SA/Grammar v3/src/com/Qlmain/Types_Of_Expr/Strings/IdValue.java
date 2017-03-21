@@ -1,10 +1,12 @@
-package com.Qlmain.Types_Of_Expr.Strings;
+package com.Qlmain.types_Of_Expr.Strings;
 
-import com.Qlmain.Exceptions.UndefinedException;
+import com.Qlmain.evaluation.Evaluation;
+import com.Qlmain.exceptions.UndefinedException;
 import com.Qlmain.Frame_Window;
-import com.Qlmain.Types_Of_Expr.Expression;
-import com.Qlmain.Types_Of_Expr.Type;
+import com.Qlmain.types_Of_Expr.Expression;
+//import com.Qlmain.types_Of_Expr.Type;
 import com.Qlmain.type_check.Type_Checking;
+import com.Qlmain.types_Of_Expr.types.Type;
 
 import java.util.Map;
 
@@ -20,7 +22,7 @@ public class IdValue extends Expression {
     public String getIdValue() { return this.val; }
 
     @Override
-    public Type exprVisitor() throws UndefinedException {
+    public Type exprTypeChecker() throws UndefinedException {
         Map<String,Type> variablesAndTypes = Type_Checking.getVariablesAndTypes();
         if (variablesAndTypes.containsKey(this.val)) {
             return variablesAndTypes.get(this.val);
@@ -30,8 +32,8 @@ public class IdValue extends Expression {
     }
 
     @Override
-    public Object exprEvaluateVisitor() {
-        Map<String,Object> variablesAndValues = Frame_Window.getVariablesAndValues();
-        return variablesAndValues.get(val);
+    public Object Evaluator() {
+        //Map<String,Object> variablesAndValues = new Evaluation().getVariablesAndValues();
+        return new Evaluation().getTheIdValue(val);
     }
 }

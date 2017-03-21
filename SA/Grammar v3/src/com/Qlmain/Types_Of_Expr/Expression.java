@@ -1,6 +1,7 @@
-package com.Qlmain.Types_Of_Expr;
+package com.Qlmain.types_Of_Expr;
 
-import com.Qlmain.Exceptions.UndefinedException;
+import com.Qlmain.exceptions.UndefinedException;
+import com.Qlmain.types_Of_Expr.types.Type;
 
 
 public abstract class Expression {
@@ -12,6 +13,6 @@ public abstract class Expression {
    //     return a.exprVisitor(a.getAndlhs(),a.getAndrhs());
    // }
 
-    public abstract Type exprVisitor() throws UndefinedException ;
-    public abstract Object exprEvaluateVisitor();
+    public abstract Type exprTypeChecker() throws UndefinedException ;
+    public abstract Object Evaluator();
 }
