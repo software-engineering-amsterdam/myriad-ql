@@ -9,7 +9,7 @@ from ql.visitors.dependency_checker import DependencyChecker
 from qls.grammar import parse_file as parse_qls
 from qls.visitors.symbol_checker import SymbolChecker as QlsSymbolChecker
 from qls.visitors.type_checker import TypeChecker as QlsTypeChecker
-from gui.app import App
+from gui.app import QlApp, QlsApp
 from misc.messages import *
 
 
@@ -81,13 +81,15 @@ def main():
     if isfile(layout_file):
         layout = parse_qls(layout_file)
         check_layout(layout, symboltable)
+
+        QlsApp(form, layout, on_exit=lambda app:
+               export(dump_file, app.environment)).start()
+
     else:
-        layout = None
         WarningMessage.print("qls filename \"{}\" does not "
                              "exist".format(layout_file))
-
-    App(form, layout=layout, on_exit=lambda app:
-        export(dump_file, app.environment)).start()
+        QlApp(form, on_exit=lambda app:
+              export(dump_file, app.environment)).start()
 
 if __name__ == "__main__":
     main()
