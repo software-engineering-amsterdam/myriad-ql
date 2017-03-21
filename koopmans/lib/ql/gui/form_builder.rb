@@ -21,17 +21,17 @@ module QL
       def visit_question(question, condition)
         name = question.variable.name
         label = question.label.value
-        literal_type, widget_type = question.type.accept(self)
-        QuestionFrame.new(name: name, label: label, literal_type: literal_type, widget_type: widget_type, condition: condition)
+        literal_type, widget = question.type.accept(self)
+        QuestionFrame.new(name: name, label: label, literal_type: literal_type, widget: widget, condition: condition)
       end
 
       def visit_computed_question(question, condition)
         name = question.variable.name
         label = question.label.value
         literal_type, = question.type.accept(self)
-        widget_type = ComputedWidget
+        widget = ComputedWidget.new
         assignment = question.assignment
-        ComputedQuestionFrame.new(name: name, label: label, literal_type: literal_type, widget_type: widget_type, condition: condition, assignment: assignment)
+        ComputedQuestionFrame.new(name: name, label: label, literal_type: literal_type, widget: widget, condition: condition, assignment: assignment)
       end
 
       # all widgets:
@@ -43,27 +43,27 @@ module QL
       # DropdownWidget
 
       def visit_boolean_type(_)
-        [AST::BooleanLiteral, RadioWidget]
+        [AST::BooleanLiteral, CheckboxWidget.new]
       end
 
       def visit_date_type(_)
-        [AST::IntegerLiteral, TextWidget]
+        [AST::IntegerLiteral, TextWidget.new]
       end
 
       def visit_decimal_type(_)
-        [AST::IntegerLiteral, TextWidget]
+        [AST::IntegerLiteral, TextWidget.new]
       end
 
       def visit_integer_type(_)
-        [AST::IntegerLiteral, SpinboxWidget]
+        [AST::IntegerLiteral, SpinboxWidget.new]
       end
 
       def visit_money_type(_)
-        [AST::IntegerLiteral, SpinboxWidget]
+        [AST::IntegerLiteral, SpinboxWidget.new]
       end
 
       def visit_string_type(_)
-        [AST::StringLiteral, TextWidget]
+        [AST::StringLiteral, TextWidget.new]
       end
 
       # negate for condition for else body of if else statement

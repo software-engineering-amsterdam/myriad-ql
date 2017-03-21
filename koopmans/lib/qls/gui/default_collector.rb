@@ -24,27 +24,28 @@ module QLS
       end
 
       def visit_slider_widget(slider_widget, parent_id)
-        @defaults[parent_id] = slider_widget
+        @defaults[parent_id] = QL::GUI::SliderWidget.new
       end
 
       def visit_spinbox_widget(spinbox_widget, parent_id)
-        @defaults[parent_id] = spinbox_widget
+        @defaults[parent_id] = QL::GUI::SpinboxWidget.new
       end
 
       def visit_text_widget(text_widget, parent_id)
-        @defaults[parent_id] = text_widget
+        @defaults[parent_id] = QL::GUI::TextWidget.new
       end
 
       def visit_radio_widget(radio_widget, parent_id)
-        @defaults[parent_id] = radio_widget
+        options = {true_value: radio_widget.true_text.value, false_value: radio_widget.false_text.value}
+        @defaults[parent_id] = QL::GUI::RadioWidget.new(options)
       end
 
       def visit_checkbox_widget(checkbox_widget, parent_id)
-        @defaults[parent_id] = checkbox_widget
+        @defaults[parent_id] = QL::GUI::CheckboxWidget.new
       end
 
       def visit_dropdown_widget(dropdown_widget, _)
-        @defaults[parent_id] = dropdown_widget
+        @defaults[parent_id] = QL::GUI::DropdownWidget.new
       end
 
       def visit_width(width, parent_id) end

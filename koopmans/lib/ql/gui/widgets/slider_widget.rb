@@ -1,7 +1,7 @@
 module QL
   module GUI
     class SliderWidget < Widget
-      def initialize(tk_frame, options = nil)
+      def initialize(options = nil)
         @default_value = 0
 
         @minimum = 0
@@ -11,7 +11,9 @@ module QL
           @minimum = options[:minimum]
           @maximum = options[:maximum]
         end
+      end
 
+      def render(tk_frame)
         scale = TkScale.new(tk_frame).pack
         scale.from = @minimum
         scale.to = @maximum

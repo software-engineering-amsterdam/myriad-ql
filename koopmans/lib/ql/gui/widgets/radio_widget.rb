@@ -1,14 +1,16 @@
 module QL
   module GUI
     class RadioWidget < Widget
-      def initialize(tk_frame, options = nil)
+      def initialize(options = nil)
         @default_value = false
 
         if options
           @true_label = options[:true_value]
           @false_label = options[:false_value]
         end
+      end
 
+      def render(tk_frame)
         shared_variable = TkVariable.new(@default_value)
 
         radio_button = TkRadioButton.new(tk_frame).pack

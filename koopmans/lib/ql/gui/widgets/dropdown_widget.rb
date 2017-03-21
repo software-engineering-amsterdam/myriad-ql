@@ -1,7 +1,7 @@
 module QL
   module GUI
     class DropdownWidget < Widget
-      def initialize(tk_frame, options = nil)
+      def initialize(options = nil)
         @default_value = false
 
         @true_label = 'true'
@@ -11,7 +11,9 @@ module QL
           @true_label = options[:true_value]
           @false_label = options[:false_value]
         end
+      end
 
+      def render(tk_frame)
         combobox = Tk::Tile::Combobox.new(tk_frame).pack
         combobox.values = [@true_label, @false_label]
         combobox.value = @false_label

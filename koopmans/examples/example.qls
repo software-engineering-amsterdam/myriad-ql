@@ -13,7 +13,7 @@ stylesheet taxOfficeExample
         widget radio("Yes", "No") 
       section "You sold a house" {
         question sellingPrice
-          widget spinbox
+          widget text
         question privateDebt
           widget spinbox 
         question valueResidue

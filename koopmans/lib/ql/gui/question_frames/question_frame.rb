@@ -2,13 +2,14 @@ module QL
   module GUI
     class QuestionFrame
       include Callback
-      attr_reader :name, :enabled, :condition, :widget
+      attr_reader :name, :enabled, :condition
+      attr_accessor :widget
 
       def initialize(args)
         @name = args[:name]
         @label = args[:label]
         @literal_type = args[:literal_type]
-        @widget_type = args[:widget_type]
+        @widget = args[:widget]
         @condition = args[:condition]
         @enabled = true
       end
@@ -16,7 +17,7 @@ module QL
       def render
         @tk_frame = TkFrame.new.grid
         Label.new(@tk_frame, @label)
-        @widget = @widget_type.new(@tk_frame)
+        @widget.render(@tk_frame)
 
         store_default_value
         listen_to_widget

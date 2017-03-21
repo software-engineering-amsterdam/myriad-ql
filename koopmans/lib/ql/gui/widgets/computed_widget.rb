@@ -1,7 +1,7 @@
 module QL
   module GUI
     class ComputedWidget < Widget
-      def initialize(tk_frame, _options = nil)
+      def render(tk_frame)
         @variable = TkVariable.new
 
         entry = TkEntry.new(tk_frame).pack

@@ -1,7 +1,7 @@
 module QL
   module GUI
     class SpinboxWidget < Widget
-      def initialize(tk_frame, options = nil)
+      def initialize(options = nil)
         @default_value = 0
 
         @minimum = 0
@@ -11,7 +11,9 @@ module QL
           @minimum = options[:minimum]
           @maximum = options[:maximum]
         end
+      end
 
+      def render(tk_frame)
         spinbox = TkSpinbox.new(tk_frame).pack
         spinbox.from = @minimum
         spinbox.to = @maximum

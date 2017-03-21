@@ -1,9 +1,11 @@
 module QL
   module GUI
     class CheckboxWidget < Widget
-      def initialize(tk_frame, _options = nil)
+      def initialize(_options = nil)
         @default_value = false
+      end
 
+      def render(tk_frame)
         variable = TkVariable.new(@default_value)
 
         check_button = TkCheckButton.new(tk_frame).pack
