@@ -20,8 +20,7 @@ public class AstBuilderTest {
             try {
                 AstBuilder builder = new AstBuilder(file);
                 builder.generateTree();
-            } catch (UnsupportedOperationException e) {
-//                e.printStackTrace();
+            } catch (UnsupportedOperationException unusedException) {
                 passedAllTests = false;
             }
         }
@@ -38,18 +37,17 @@ public class AstBuilderTest {
 
         System.out.println("  Testing invalid forms at path: " + validFilesDir.getAbsolutePath());
         List<String> parseErrors = new ArrayList<>();
-        for (File file : validFilesDir.listFiles()) {
+        File[] files = validFilesDir.listFiles();
+        for (File file : files) {
             System.out.println("    - Input file: " + file.getName());
             try {
                 AstBuilder builder = new AstBuilder(file);
                 builder.generateTree();
-                parseErrors.add("Invalid file should not not be parsed: " + file.getName());
-            } catch (UnsupportedOperationException e) {
-                // Invalid form successfully caught
+            } catch (UnsupportedOperationException unusedException) {
+                parseErrors.add("Invalid file was successfully caught: " + file.getName());
             }
-
         }
-        if (!parseErrors.isEmpty()) {
+        if (files.length != parseErrors.size()) {
             System.out.println(parseErrors);
             throw new TestException("  Failed! Some invalid forms were parsed!:");
         } else {
