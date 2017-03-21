@@ -36,16 +36,16 @@ public class CalculationNode extends DeclarationNode {
         Set<String> dependencies = getUsedVariables();
         symbolTable.generateDependencies(dependencies);
         if (dependencies.contains(getId())) {
-            semanticsMessages.addError("Cyclic dependency error in " + getId() + ", (" + mExpression.evaluate() + ")");
+            semanticsMessages.addError(mExpression.sourceString() + "Cyclic dependency error in " + getId() + ", (" + mExpression.evaluate() + ")");
         }
         for (String dependency : dependencies) {
             if (!symbolTable.contains(dependency)) {
-                semanticsMessages.addError("Unresolved variable: " + dependency);
+                semanticsMessages.addError(mExpression.sourceString() + "Unresolved variable: " + dependency);
             }
         }
         mExpression.checkSemantics(symbolTable, semanticsMessages);
         if(mExpression.isLiteral() && mExpression.isConstant()){
-            semanticsMessages.addWarning("Constant expression found, always evaluates to: " + mExpression.evaluate());
+            semanticsMessages.addWarning(mExpression.sourceString() + "Constant expression found, always evaluates to: " + mExpression.evaluate());
         }
     }
 

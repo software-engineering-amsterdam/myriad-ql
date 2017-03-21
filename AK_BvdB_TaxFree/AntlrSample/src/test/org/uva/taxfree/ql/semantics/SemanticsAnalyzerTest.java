@@ -59,14 +59,21 @@ public class SemanticsAnalyzerTest extends SemanticsTester {
         assertSemantics("constantConditions.txt", 2, "Multiple constant conditions should display multiple warning");
     }
 
+
+    /// TODO: Would be a nice to have?
     @Test
     public void testCyclicIndirectDependency() throws Exception {
-        assertSemantics("cyclicIndirectDependency.txt", 1, "If directly depends on internals");
+        assertSemantics("cyclicIndirectDependency.txt", 0, "If directly depends on internals");
     }
 
     @Test
     public void testCyclicInnerDependency() throws Exception {
         assertSemantics("cyclicInnerDependency.txt", 1, "If indirectly depends on internals");
+    }
+
+    @Test
+    public void testInvalidError() throws Exception {
+        assertSemantics("invalidError.txt", 0, "Invalidly marked as erroneous");
     }
 
     @Test

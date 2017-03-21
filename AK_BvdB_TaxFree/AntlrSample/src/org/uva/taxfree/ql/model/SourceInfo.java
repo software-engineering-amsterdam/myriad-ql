@@ -12,4 +12,12 @@ public class SourceInfo {
         mEndLineNumber = endLineNumber;
         mEndColumn = endColumn;
     }
+
+    public String sourceString() {
+        return "(" +
+                mStartLineNumber + ":" + mStartColumn +
+                "-" +
+                mEndLineNumber + ":" + mEndColumn +
+                "): ";
+    }
 }

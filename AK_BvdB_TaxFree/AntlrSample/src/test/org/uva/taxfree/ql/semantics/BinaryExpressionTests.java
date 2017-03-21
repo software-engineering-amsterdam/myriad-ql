@@ -116,11 +116,11 @@ public class BinaryExpressionTests extends SemanticsTester {
 
 
     private void assertTrue(String leftHand, Operator operator, String rightHand) {
-        assertThat(leftHand, operator, rightHand, "true");
+        assertThat(leftHand, operator, rightHand, true);
     }
 
     private void assertFalse(String leftHand, Operator operator, String rightHand) {
-        assertThat(leftHand, operator, rightHand, "false");
+        assertThat(leftHand, operator, rightHand, false);
     }
 
     private void assertTrue(boolean leftHand, Operator operator, boolean rightHand) {
@@ -139,8 +139,8 @@ public class BinaryExpressionTests extends SemanticsTester {
         assertThat(leftHand, operator, rightHand, new BooleanValue(false));
     }
 
-    private void assertThat(String leftHand, Operator operator, String rightHand, String expected) {
-        assertThat(new StringLiteralNode(leftHand, emptySource()), operator, new StringLiteralNode(rightHand, emptySource()), new StringValue(expected));
+    private void assertThat(String leftHand, Operator operator, String rightHand, boolean expected) {
+        assertThat(new StringLiteralNode(leftHand, emptySource()), operator, new StringLiteralNode(rightHand, emptySource()), new BooleanValue(expected));
     }
 
     private void assertThat(boolean leftHand, Operator operator, boolean rightHand, boolean expected) {

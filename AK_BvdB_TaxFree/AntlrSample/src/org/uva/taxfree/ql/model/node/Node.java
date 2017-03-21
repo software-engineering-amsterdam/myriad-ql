@@ -25,4 +25,8 @@ public abstract class Node {
     public abstract void generateVisibleIds(List<String> visibleIds);
 
     public abstract void collectUsedVariables(Set<String> dependencies);
+
+    public String sourceString() {
+        return mSourceInfo.sourceString();
+    }
 }

@@ -7,6 +7,6 @@ public class WarningMessage extends Message {
 
     @Override
     protected String messagePrefix() {
-        return "Warning";
+        return "Warning at ";
     }
 }

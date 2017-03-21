@@ -1,0 +1,6 @@
+/exampleForm
+*/.gitignore
+*/__pycache__/*
+*.pyc
+*.json
+/gitlog

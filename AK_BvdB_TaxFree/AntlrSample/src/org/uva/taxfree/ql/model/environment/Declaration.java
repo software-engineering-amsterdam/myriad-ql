@@ -43,4 +43,8 @@ public class Declaration {
         return getId();
     }
 
+    protected String sourceString() {
+        return mNode.sourceString();
+    }
+
 }
