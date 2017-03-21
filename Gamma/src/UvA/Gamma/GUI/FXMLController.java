@@ -18,6 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.util.Stack;
@@ -25,11 +26,12 @@ import java.util.Stack;
 public class FXMLController {
     private Form form;
     private TypeChecker checker = new TypeChecker();
+    private Stage stage;
 
+    private final double VERTICAL_GAP = 10;
 
-    void addFormItem(Form form) {
+    void addFormItems(Form form) {
         rootGrid = grid;
-
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setHalignment(HPos.LEFT);
         col1.setHgrow(Priority.ALWAYS);
@@ -115,6 +117,7 @@ public class FXMLController {
     public GridPane startRenderCondition() {
         rootGrid = new GridPane();
         rootGrid.getColumnConstraints().addAll(grid.getColumnConstraints());
+        rootGrid.setVgap(VERTICAL_GAP);
 
         conditionStack.push(rootGrid);
         rootGrid.managedProperty().bind(rootGrid.visibleProperty());

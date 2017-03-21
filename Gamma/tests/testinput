@@ -1,15 +1,21 @@
- form Box1HouseOwning {
+/*
+    Example from the github assignment page
+*/
+form Box1HouseOwning {
   "Did you sell a house in 2010?" hasSoldHouse:  boolean
-  "Did you by a house in 2010?"  hasBoughtHouse: boolean
-  "When did you buy the house?" whenBoughtHouse: date
-  "Price the house was sold for:" sellingPrice: money
-  "Did you enter a loan for maintenance/reconstruction?" hasMaintLoan:  boolean
-   if (hasSoldHouse) {
+  "Did you buy a house in 2010?"  hasBoughtHouse: boolean
+
+  if (hasSoldHouse) {
+        "Price the house was sold for:" sellingPrice: money
+        "Did you enter a loan for maintenance/reconstruction?" hasMaintLoan:  boolean
         "Private debts for the sold house:" privateDebt:  money
         "Value residue:" valueResidue:  money = (sellingPrice - privateDebt)
-    }else{
-        "10% of the selling price: " elseResidue: money = (0.1 * sellingPrice)
-    }
+  }
+
+  if(hasBoughtHouse){
+        "When did you buy the house?" whenBoughtHouse: date
+  }
+
  }
 
 

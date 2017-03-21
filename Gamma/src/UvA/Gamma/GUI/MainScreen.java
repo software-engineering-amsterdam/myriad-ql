@@ -4,7 +4,6 @@ import UvA.Gamma.AST.Form;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 
 
@@ -12,7 +11,6 @@ import javafx.stage.Stage;
  * Created by Tjarco, 13-02-17.
  */
 public class MainScreen {
-    private Parent root;
     private Form form;
 
     public MainScreen(Form form) {
@@ -21,10 +19,9 @@ public class MainScreen {
 
     public void initUI(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Form.fxml"));
-        root = loader.load();
+        Parent root = loader.load();
         FXMLController controller = loader.getController();
-        System.out.println(controller);
-        controller.addFormItem(form);
+        controller.addFormItems(form);
         stage.setTitle(form.getId());
         stage.setScene(new Scene(root));
         stage.sizeToScene();
