@@ -56,13 +56,17 @@ public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<
     @Override
     public QLType visit(ComputedQuestion question) {
         IdentifierLiteral identifier = question.getIdentifier();
-        QLType type = question.getType();
+        QLType questionType = question.getType();
 
         if (symbolTable.containsKey(identifier.getValue())) {
-            errors.add("QLQuestion identifier: " + identifier + " found at " + question.getPosition() + " already declared.");
+            errors.add("QLComputedQuestion identifier: " + identifier + " found at " + question.getPosition() + " already declared.");
         }
-        question.getExpression().accept(this);
-        symbolTable.put(identifier.getValue(), type);
+        QLType expressionType = question.getExpression().accept(this);
+
+        if (!expressionType.isOf(questionType.getClass())) {
+            errors.add("QLComputedQuestion type mismatch at: " + question.getPosition() + " " + expressionType + " cannot be cast to " + questionType);
+        }
+        symbolTable.put(identifier.getValue(), questionType);
         return null;//TODO check me!
     }
 

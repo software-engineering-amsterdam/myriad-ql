@@ -37,22 +37,33 @@ public class FormVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitQuestion(QLParser.QuestionContext ctx) {
+        if (!(ctx.expr() == null)) {
+            return constructComputedQuestion(ctx);
+        }
+
         IdentifierLiteral identifier = (IdentifierLiteral) ctx.identifier().accept(this);
         String label = ctx.label().getText();
         QLType type = (QLType) ctx.type_specifier().accept(this);
         Position position = constructPosition(ctx);
-        if (!(ctx.expr() == null)) {
-            Expression expression = (Expression)  ctx.expr().accept(this);
-            ComputedQuestion question = new ComputedQuestion(identifier, label, type, expression);
-            question.setPosition(position);
-            return question;
-        }
+
         Question question = new Question(identifier, label, type);
         question.setPosition(position);
 
         return question;
     }
 
+    private ComputedQuestion constructComputedQuestion(QLParser.QuestionContext ctx) {
+        IdentifierLiteral identifier = (IdentifierLiteral) ctx.identifier().accept(this);
+        String label = ctx.label().getText();
+        QLType type = (QLType) ctx.type_specifier().accept(this);
+        Position position = constructPosition(ctx);
+        Expression expression = (Expression)  ctx.expr().accept(this);
+
+        ComputedQuestion question = new ComputedQuestion(identifier, label, type, expression);
+        question.setPosition(position);
+
+        return question;
+    }
 
     @Override
     public ASTNode visitConditional(QLParser.ConditionalContext ctx) {
