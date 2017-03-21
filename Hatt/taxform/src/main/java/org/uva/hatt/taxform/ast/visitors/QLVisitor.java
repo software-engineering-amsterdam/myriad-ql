@@ -145,30 +145,22 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitIdentifier(QLParser.IdentifierContext ctx) {
-        Identifier identifier = new Identifier(ctx.start.getLine(), ctx.getText());
-
-        return identifier;
+        return new Identifier(ctx.start.getLine(), ctx.getText());
     }
 
     @Override
     public ASTNode visitStringLiteral(QLParser.StringLiteralContext ctx) {
-        StringerLiteral stringerLiteral = new StringerLiteral(ctx.start.getLine(), ctx.getText());
-
-        return stringerLiteral;
+        return new StringerLiteral(ctx.start.getLine(), ctx.getText());
     }
 
     @Override
     public ASTNode visitIntegerLiteral(QLParser.IntegerLiteralContext ctx) {
-        IntegerLiteral integerLiteral = new IntegerLiteral(ctx.start.getLine(), ctx.getText());
-
-        return integerLiteral;
+        return new IntegerLiteral(ctx.start.getLine(), java.lang.Integer.parseInt(ctx.getText()));
     }
 
     @Override
     public ASTNode visitBooleanLiteral(QLParser.BooleanLiteralContext ctx) {
-        BooleanLiteral booleanLiteral = new BooleanLiteral(ctx.start.getLine(), ctx.getText());
-
-        return booleanLiteral;
+        return new BooleanLiteral(ctx.start.getLine(), java.lang.Boolean.valueOf(ctx.getText()));
     }
 
     @Override
