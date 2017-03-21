@@ -23,10 +23,10 @@ widget
     ;
 
 widgetType
-    : 'spinbox'                                                     #spinboxWidget
-    | 'slider'                                                      #sliderWidget
-    | 'text'                                                        #textWidget
-    | 'checkbox'                                                    #checkboxWidget
+    : 'spinbox'                                                     #spinbox
+    | 'slider'                                                      #slider
+    | 'text'                                                        #text
+    | 'checkbox'                                                    #checkbox
     | 'radio' '(' yes=STRING_LITERAL ',' no=STRING_LITERAL ')'      #radio
     | 'dropdown' '(' yes=STRING_LITERAL ',' no=STRING_LITERAL ')'   #dropdown
     ;

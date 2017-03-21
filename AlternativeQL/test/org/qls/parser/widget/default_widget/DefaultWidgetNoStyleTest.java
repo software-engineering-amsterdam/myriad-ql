@@ -21,8 +21,6 @@ public class DefaultWidgetNoStyleTest {
 
         assertTrue(page.getDefaultWidgets() != null);
         assertEquals(1, page.getDefaultWidgets().size());
-        assertTrue(page.getDefaultWidgets().get(0).getWidget() instanceof Radio);
-        assertTrue(page.getDefaultWidgets().get(0).getType().isBoolean());
     }
 
     @Test
@@ -37,8 +35,6 @@ public class DefaultWidgetNoStyleTest {
 
         assertTrue(page.getDefaultWidgets() != null);
         assertEquals(1, page.getDefaultWidgets().size());
-        assertTrue(page.getDefaultWidgets().get(0).getWidget() instanceof Slider);
-        assertTrue(page.getDefaultWidgets().get(0).getType().isNumeric());
     }
 
     @Test
@@ -53,8 +49,6 @@ public class DefaultWidgetNoStyleTest {
 
         assertTrue(page.getDefaultWidgets() != null);
         assertEquals(1, page.getDefaultWidgets().size());
-        assertTrue(page.getDefaultWidgets().get(0).getWidget() instanceof Spinbox);
-        assertTrue(page.getDefaultWidgets().get(0).getType().isNumeric());
     }
 
     @Test
@@ -69,8 +63,6 @@ public class DefaultWidgetNoStyleTest {
 
         assertTrue(page.getDefaultWidgets() != null);
         assertEquals(1, page.getDefaultWidgets().size());
-        assertTrue(page.getDefaultWidgets().get(0).getWidget() instanceof Text);
-        assertTrue(page.getDefaultWidgets().get(0).getType().isNumeric());
     }
 
     @Test
@@ -85,8 +77,6 @@ public class DefaultWidgetNoStyleTest {
 
         assertTrue(page.getDefaultWidgets() != null);
         assertEquals(1, page.getDefaultWidgets().size());
-        assertTrue(page.getDefaultWidgets().get(0).getWidget() instanceof Dropdown);
-        assertTrue(page.getDefaultWidgets().get(0).getType().isBoolean());
     }
 
     @Test
@@ -101,7 +91,5 @@ public class DefaultWidgetNoStyleTest {
 
         assertTrue(page.getDefaultWidgets() != null);
         assertEquals(1, page.getDefaultWidgets().size());
-        assertTrue(page.getDefaultWidgets().get(0).getWidget() instanceof Checkbox);
-        assertTrue(page.getDefaultWidgets().get(0).getType().isBoolean());
     }
 }

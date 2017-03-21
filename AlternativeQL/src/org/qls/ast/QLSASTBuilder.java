@@ -80,33 +80,33 @@ public class QLSASTBuilder extends AbstractParseTreeVisitor<Node> implements QLS
     }
 
     @Override
-    public Spinbox visitSpinboxWidget(QLSParser.SpinboxWidgetContext ctx) {
+    public Spinbox visitSpinbox(QLSParser.SpinboxContext ctx) {
         return hydrateSourceLocation(new Spinbox(), ctx);
     }
 
     @Override
-    public Slider visitSliderWidget(QLSParser.SliderWidgetContext ctx) {
+    public Slider visitSlider(QLSParser.SliderContext ctx) {
         return hydrateSourceLocation(new Slider(), ctx);
     }
 
     @Override
-    public Text visitTextWidget(QLSParser.TextWidgetContext ctx) {
+    public Text visitText(QLSParser.TextContext ctx) {
         return hydrateSourceLocation(new Text(), ctx);
     }
 
     @Override
-    public Checkbox visitCheckboxWidget(QLSParser.CheckboxWidgetContext ctx) {
+    public Checkbox visitCheckbox(QLSParser.CheckboxContext ctx) {
         return hydrateSourceLocation(new Checkbox(), ctx);
     }
 
     @Override
-    public Radio visitRadioWidget(QLSParser.RadioWidgetContext ctx) {
+    public Radio visitRadio(QLSParser.RadioContext ctx) {
         Radio radio = new Radio(unquoteString(ctx.yes.getText()), unquoteString(ctx.no.getText()));
         return hydrateSourceLocation(radio, ctx);
     }
 
     @Override
-    public Dropdown visitDropdownWidget(QLSParser.DropdownWidgetContext ctx) {
+    public Dropdown visitDropdown(QLSParser.DropdownContext ctx) {
         Dropdown dropdown = new Dropdown(unquoteString(ctx.yes.getText()), unquoteString(ctx.no.getText()));
         return hydrateSourceLocation(dropdown, ctx);
     }

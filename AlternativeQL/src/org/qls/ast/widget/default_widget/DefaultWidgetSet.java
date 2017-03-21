@@ -1,6 +1,7 @@
 package org.qls.ast.widget.default_widget;
 
 import org.ql.ast.type.Type;
+import org.qls.ast.page.CustomWidgetQuestion;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,5 +29,9 @@ public class DefaultWidgetSet {
 
     public boolean existsByType(Type type) {
         return lookupByType(type) != null;
+    }
+
+    public int size() {
+        return widgetSet.size();
     }
 }
