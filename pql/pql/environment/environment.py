@@ -1,4 +1,7 @@
 # coding=utf-8
+import json
+
+
 class Environment(object):
     def __init__(self):
         self.environment = dict()
@@ -18,3 +21,6 @@ class Environment(object):
 
     def contains(self, key):
         return key in self.environment
+
+    def __str__(self):
+        return json.dumps(self.environment, sort_keys=True, indent=4, separators=(',', ': '))

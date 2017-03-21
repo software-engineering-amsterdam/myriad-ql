@@ -5,7 +5,6 @@ from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QWidget
 
-from pql.environment.environment import Environment
 from pql.environment.environmentcreator import EnvironmentCreator
 from pql.evaluator.evaluator import Evaluator
 from pql.gui.Wizard import Wizard, Page
@@ -23,11 +22,20 @@ class Questionnaire(FormVisitor, TypeVisitor):
         self.conditional_if_else_list = list(tuple())
         self.__environment = EnvironmentCreator(self.ast).visit()
 
+    def export(self):
+        return self.__environment
+
+    def connect_finished(self, fn):
+        self.wizard.connect_finished(fn)
+
+    def show(self):
+        self.wizard.show()
+
     def visit(self):
         self.wizard.add_page(self.ast.apply(self))
         self.initial_ui()
         self.render_conditionals()
-        return self.wizard
+        return self
 
     def render_conditionals(self):
         self.trigger_conditional_if()

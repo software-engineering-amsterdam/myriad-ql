@@ -13,13 +13,13 @@ class Wizard(QWizard):
         super(Wizard, self).__init__(parent)
         self.init_ui()
 
-    def closeEvent(self, event):
-        event.accept()
-
     def init_ui(self):
         self.resize(800, 600)
         self.setWindowTitle('Leuker kunnen we het niet maken')
         self.center()
+
+    def connect_finished(self, fn):
+        self.finished.connect(fn)
 
     def center(self):
         frame_geometry = self.frameGeometry()

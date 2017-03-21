@@ -10,12 +10,13 @@ from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QListWidget
 from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QStatusBar
 from PyQt5.QtWidgets import QWidget
 
-from pql.gui.CodeArea import CodeArea
 from pql.dependencies.dependencieschecker import DependenciesChecker
+from pql.gui.CodeArea import CodeArea
 from pql.gui.Questionnaire import Questionnaire
 from pql.gui.widgets import ErrorWidget
 from pql.identifierchecker.identifierchecker import IdentifierChecker
@@ -28,6 +29,7 @@ from pql.typechecker.typechecker import TypeChecker
 class Editor(QMainWindow, QWidget):
     def __init__(self, argv, parent=None):
         super(Editor, self).__init__(parent)
+        self.form = None
         self.resize(800, 600)
         self.setWindowTitle("Editor - Leuker kunnen we het niet maken")
         self.setFocusPolicy(Qt.StrongFocus)
@@ -38,6 +40,7 @@ class Editor(QMainWindow, QWidget):
         self.toolbar = self.addToolBar("Actions")
         self.run_action = self.add_run_action()
         self.open_action = self.add_open_action()
+        self.export_action = self.add_export_action()
         self.text_editor = CodeArea()
         status_bar = self.init_status_bar()
         cursor_position = self.add_cursor_position(status_bar)
@@ -96,6 +99,14 @@ class Editor(QMainWindow, QWidget):
         self.toolbar.addAction(load_action)
         return load_action
 
+    def add_export_action(self):
+        export_action = QAction("Export", self)
+        export_action.setShortcuts(["Ctrl+E", "Cmd+E"])
+        export_action.triggered.connect(self.file_selection)
+        self.menu_file.addAction(export_action)
+        self.toolbar.addAction(export_action)
+        return export_action
+
     def add_run_action(self):
         run_action = QAction("Run", self)
         run_action.setShortcuts(["Ctrl+R", "Cmd+R"])
@@ -123,10 +134,15 @@ class Editor(QMainWindow, QWidget):
                     if type_errors:
                         self.add_messages(type_errors)
                     else:
-                        form = Questionnaire(ast).visit()
-                        form.show()
+                        self.form = Questionnaire(ast).visit()
+                        self.form.connect_finished(self.export)
+                        self.form.show()
                 else:
                     self.add_messages(dependencies_errors)
+
+    def export(self, a):
+        if a == 1:
+            QMessageBox.about(self, "Export results", "{}".format(self.form.export()))
 
     def write_contents_to_file(self, contents, file_path):
         if file_path is not None:
