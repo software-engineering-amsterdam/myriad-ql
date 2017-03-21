@@ -19,7 +19,10 @@ stylesheet taxOfficeExample {
         section "Selling" {
             question hasSoldHouse
             section "You sold a house" {
-                question sellingPrice
+                question dateSelling
+                question sellingPrice {
+                    widget spinbox
+                }
                 question privateDebt {
                     widget slider(1,10000000)
                 }
