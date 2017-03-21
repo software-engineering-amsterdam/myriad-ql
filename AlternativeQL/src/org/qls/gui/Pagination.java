@@ -7,42 +7,25 @@ import javafx.scene.layout.GridPane;
 
 public class Pagination {
     private int currentPage;
-    private int maxPage;
     private Button previousButton = new Button();
     private Button nextButton = new Button();
 
     public Pagination(QLSGUIFormBuilder qlsGUIFormBuilder, int maxPage) {
-        this.maxPage = maxPage;
-
         nextButton.setText("Next page");
-        nextButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if(!(currentPage >= maxPage)) {
-                    nextPage();
-                    qlsGUIFormBuilder.constructFormPage(currentPage);
-                }
+        nextButton.setOnAction(event -> {
+            if(currentPage < (maxPage-1)) {
+                nextPage();
+                qlsGUIFormBuilder.constructFormPage(currentPage);
             }
         });
 
         previousButton.setText("Previous page");
-        previousButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if(!(currentPage <= 0)) {
-                    previousPage();
-                    qlsGUIFormBuilder.constructFormPage(currentPage);
-                }
+        previousButton.setOnAction(event -> {
+            if(!(currentPage <= 0)) {
+                previousPage();
+                qlsGUIFormBuilder.constructFormPage(currentPage);
             }
         });
-    }
-
-    public int getMaxPage() {
-        return maxPage;
-    }
-
-    public int getCurrentPage() {
-        return currentPage;
     }
 
     public void nextPage() {
