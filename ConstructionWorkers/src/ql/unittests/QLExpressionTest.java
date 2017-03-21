@@ -43,7 +43,6 @@ import java.util.Map;
 
 public class QLExpressionTest {
 
-    private Context context = new Context();
     private ExpressionEvaluator expressionEvaluator;
     private TypeChecker typeChecker;
 
@@ -65,6 +64,7 @@ public class QLExpressionTest {
 
         MessageData messages = new MessageData();
         Map<String, Type> identifierToTypeMap = new HashMap<>();
+        Context context = new Context();
 
         typeChecker= new TypeChecker(form, identifierToTypeMap, messages);
         expressionEvaluator = new ExpressionEvaluator(context);
