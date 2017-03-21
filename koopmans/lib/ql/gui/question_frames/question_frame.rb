@@ -16,7 +16,7 @@ module QL
 
       def render
         @tk_frame = TkFrame.new.grid
-        Label.new(@tk_frame, @label)
+        @label.render(@tk_frame)
         @widget.render(@tk_frame)
 
         store_default_value

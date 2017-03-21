@@ -3,7 +3,7 @@ module QL
     class SubmitButton
       include Callback
 
-      def initialize
+      def render
         button = TkButton.new.grid
         button.text = 'Submit'
         button.command = proc { callback }
