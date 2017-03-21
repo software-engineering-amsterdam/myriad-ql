@@ -51,7 +51,8 @@ class App:
 
 class QlApp(App):
 
-    def build(self):
+    def __init__(self, form, on_exit=None):
+        super().__init__(form, on_exit)
         QlGuiBuilder(self.gui, self.update, self.exit,
                      self.widgets).build(self.form)
 
@@ -68,8 +69,6 @@ class QlsApp(App):
     def __init__(self, form, layout, on_exit=None):
         super().__init__(form, on_exit)
         self.layout = layout
-
-    def build(self):
         QlsGuiBuilder(self.gui, self.update, self.exit, self.widgets,
                       self.form).build(self.layout)
 
@@ -78,5 +77,6 @@ class QlsApp(App):
             self.environment[name] = widget.get_value()
         while ComputationUpdater(self.environment).update(self.form):
             pass
-        visible_questions = QlGuiUpdater(self, self.environment).update(self.form)
+        visible_questions = QlGuiUpdater(self,
+                                         self.environment).update(self.form)
         QlsGuiUpdater(self.gui, visible_questions).update(self.layout)
