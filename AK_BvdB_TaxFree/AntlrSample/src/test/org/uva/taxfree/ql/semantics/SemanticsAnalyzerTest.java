@@ -77,7 +77,7 @@ public class SemanticsAnalyzerTest extends SemanticsTester {
     }
 
     @Test
-    void testConstandCalculations() throws Exception {
+    void testConstantCalculations() throws Exception {
         assertSemantics("constantCalculations.txt", 3, "Mutltiple constant calculations should display multiple warning");
     }
 
