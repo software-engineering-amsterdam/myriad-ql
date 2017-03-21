@@ -11,7 +11,7 @@ module QL
     describe ComputedQuestionFrame do
       context 'render' do
         it 'stores computed value' do
-          computed_question_frame = ComputedQuestionFrame.new(name: 'hasSoldHouse', label: 'label', literal_type: IntegerLiteral, widget_type: ComputedWidget, assignment: IntegerLiteral.new(1))
+          computed_question_frame = ComputedQuestionFrame.new(name: 'hasSoldHouse', label: Label.new('label'), literal_type: IntegerLiteral, widget: ComputedWidget.new, assignment: IntegerLiteral.new(1))
           computed_question_frame.render
           computed_question_frame.compute
           stored = VariableTable.find(computed_question_frame.name)
@@ -21,8 +21,8 @@ module QL
 
       context 'computed questions that is dependent on other question' do
         it 'changes' do
-          integer_question_frame = QuestionFrame.new(name: 'sellingPrice', label: 'label', literal_type: IntegerLiteral, widget_type: SpinboxWidget)
-          computed_question_frame_with_dependency = ComputedQuestionFrame.new(name: 'hasSoldHouse', label: 'label', literal_type: IntegerLiteral, widget_type: ComputedWidget, assignment: Variable.new('sellingPrice'))
+          integer_question_frame = QuestionFrame.new(name: 'sellingPrice', label: Label.new('label'), literal_type: IntegerLiteral, widget: SpinboxWidget.new)
+          computed_question_frame_with_dependency = ComputedQuestionFrame.new(name: 'hasSoldHouse', label: Label.new('label'), literal_type: IntegerLiteral, widget: ComputedWidget.new, assignment: Variable.new('sellingPrice'))
           integer_question_frame.render
           computed_question_frame_with_dependency.render
           integer_question_frame.widget.callback(99)

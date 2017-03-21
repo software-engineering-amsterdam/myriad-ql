@@ -5,7 +5,7 @@ module QLS
 
       def initialize(variable, body)
         @variable = variable
-        @body    = body
+        @body = body
       end
 
       def accept(visitor)

@@ -30,8 +30,8 @@ module QLS
       end
 
       def questions_uniqueness_checker(qls_variable_names)
-        select_duplicates(qls_variable_names).each do
-          |error| NotificationTable.store(Notification::Error.new("#{error} is placed multiple times"))
+        select_duplicates(qls_variable_names).each do |error|
+          NotificationTable.store(Notification::Error.new("#{error} is placed multiple times"))
         end
       end
 

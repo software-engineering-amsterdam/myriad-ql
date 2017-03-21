@@ -29,8 +29,8 @@ module QLS
       rule(:section_body)               { (section | question | default_properties).repeat.as(:body) }
 
       # question
-      rule(:question)                 { (_ >> str('question') >> _ >> variable.as(:id) >> _ >> (properties_with_brackets | property?).as(:properties) >> _).as(:question) }
-      rule(:properties_with_brackets) { str('{') >> (_ >> property).repeat >> _ >> str('}') }
+      rule(:question)               { (_ >> str('question') >> _ >> variable.as(:id) >> _ >> (property_with_brackets | property?).as(:properties) >> _).as(:question) }
+      rule(:property_with_brackets) { str('{') >> (_ >> property).repeat >> _ >> str('}') }
 
       # widget
       rule(:widget)        { str('widget') >> _ >> (str('checkbox') | str('spinbox') | str('text') | slider | radio | dropdown).as(:widget) >> _ }
@@ -45,15 +45,15 @@ module QLS
       rule(:default_properties_without_brackets) { (_ >> property).repeat >> _ }
 
       # properties
-      rule(:property)   { width | font | fontsize | color | widget }
-      rule(:property?)  { property.repeat }
-      rule(:type)       { (str('boolean') | str('string') | str('integer') | str('decimal') | str('date') | str('money')).as(:type) >> _ }
-      rule(:width)      { str('width:') >> _ >> integer_literal.as(:width) }
-      rule(:font)       { str('font:') >> _ >> string_literal.as(:font) }
-      rule(:fontsize)   { str('fontsize:') >> _ >> integer_literal.as(:fontsize) }
-      rule(:color)      { str('color:') >> _ >> hex_value.as(:string_literal).as(:color) }
-      rule(:hex_value)  { str('#') >> (digit_hex.repeat(6, 6) | digit_hex.repeat(3, 3)) }
-      rule(:digit_hex)  { match('[0-9a-fA-F]') }
+      rule(:property)  { width | font | fontsize | color | widget }
+      rule(:property?) { property.repeat }
+      rule(:type)      { (str('boolean') | str('string') | str('integer') | str('decimal') | str('date') | str('money')).as(:type) >> _ }
+      rule(:width)     { str('width:') >> _ >> integer_literal.as(:width) }
+      rule(:font)      { str('font:') >> _ >> string_literal.as(:font) }
+      rule(:fontsize)  { str('fontsize:') >> _ >> integer_literal.as(:fontsize) }
+      rule(:color)     { str('color:') >> _ >> hex_value.as(:string_literal).as(:color) }
+      rule(:hex_value) { str('#') >> (digit_hex.repeat(6, 6) | digit_hex.repeat(3, 3)) }
+      rule(:digit_hex) { match('[0-9a-fA-F]') }
     end
   end
 end

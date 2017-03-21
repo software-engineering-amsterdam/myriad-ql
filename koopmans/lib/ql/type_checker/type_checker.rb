@@ -64,7 +64,7 @@ module QL
         computed_questions.each do |computed_question|
           expression_variable_collector = ExpressionVariableCollector.new
           computed_question.accept(expression_variable_collector)
-          expression_variables =  expression_variable_collector.variables
+          expression_variables = expression_variable_collector.variables
 
           @variable_dependencies_map[computed_question.variable.name] = expression_variables
         end

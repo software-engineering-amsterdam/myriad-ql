@@ -17,8 +17,8 @@ module QL
       describe 'duplicate questions' do
         it 'does detect duplicate label' do
           expect(notification_messages).to include('question with label \'Did you sell a house in 2010?\' is defined multiple times')
-
         end
+
         it 'does detect duplicate variable' do
           expect(notification_messages).to include('variable \'hasSoldHouse\' is defined multiple times')
         end
