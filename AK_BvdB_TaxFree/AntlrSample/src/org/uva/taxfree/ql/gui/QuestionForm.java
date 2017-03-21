@@ -79,6 +79,4 @@ public class QuestionForm implements FormListener {
             w.updateStyle(qlsStyle);
         }
     }
-
-
 }

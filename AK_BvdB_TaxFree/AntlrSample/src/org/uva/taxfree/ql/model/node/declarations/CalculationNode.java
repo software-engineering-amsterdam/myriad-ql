@@ -48,8 +48,7 @@ public class CalculationNode extends DeclarationNode {
             semanticsMessages.addWarning(mExpression.sourceString() + "Constant expression found, always evaluates to: " + mExpression.evaluate());
         }
     }
-
-
+    
     public Set<String> getUsedVariables() {
         Set<String> declarations = new HashSet<>();
         mExpression.collectUsedVariables(declarations);

@@ -66,7 +66,7 @@ public class BinaryExpressionNode extends ExpressionNode {
 
     @Override
     public void generateVisibleIds(List<String> visibleIds) {
-        // intentionally left blank
+        // Intentionally left blank
     }
 
     @Override

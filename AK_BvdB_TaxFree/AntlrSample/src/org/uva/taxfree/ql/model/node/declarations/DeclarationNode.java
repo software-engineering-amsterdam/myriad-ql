@@ -32,6 +32,7 @@ public class DeclarationNode extends Node {
         symbolTable.addDeclaration(this);
     }
 
+    @Override
     public void fillQuestionForm(QuestionForm frame) {
         mType.generateWidget(mLabel, mId, frame);
     }

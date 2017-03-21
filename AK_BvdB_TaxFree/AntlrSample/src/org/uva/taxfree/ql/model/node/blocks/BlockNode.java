@@ -15,7 +15,7 @@ public abstract class BlockNode extends Node {
 
     public BlockNode(List<Node> children, SourceInfo sourceInfo) {
         super(sourceInfo);
-        mChildren = children; ///< preserves the order in which the items were inserted
+        mChildren = children;
     }
 
     @Override

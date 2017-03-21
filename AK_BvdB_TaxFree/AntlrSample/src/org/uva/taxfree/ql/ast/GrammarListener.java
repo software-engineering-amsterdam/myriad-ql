@@ -48,6 +48,26 @@ public class GrammarListener extends QLGrammarBaseListener {
         return mCachedConditions.remove(mCachedConditions.size() - 1);
     }
 
+    private void createStack() {
+        mChildsStack.push(new ArrayList<>());
+    }
+
+    private List<Node> popChildStack() {
+        return mChildsStack.pop();
+    }
+
+    private void addDeclaration(DeclarationNode node) {
+        addToStack(node);
+    }
+
+    private void addToStack(Node node) {
+        mChildsStack.peek().add(node);
+    }
+
+    private void addToStack(ExpressionNode node) {
+        mCachedConditions.add(node);
+    }
+
     private SourceInfo createSourceInfo(ParserRuleContext context) {
         int startLineNumber = context.getStart().getLine();
         int startColumn = context.getStart().getCharPositionInLine();
@@ -92,18 +112,6 @@ public class GrammarListener extends QLGrammarBaseListener {
         addDeclaration(questionNode);
     }
 
-    private void addDeclaration(DeclarationNode node) {
-        addToStack(node);
-    }
-
-    private void addToStack(Node node) {
-        mChildsStack.peek().add(node);
-    }
-
-    private void addToStack(ExpressionNode node) {
-        mCachedConditions.add(node);
-    }
-
     @Override
     public void enterBooleanLiteral(QLGrammarParser.BooleanLiteralContext ctx) {
         super.enterBooleanLiteral(ctx);
@@ -142,10 +150,6 @@ public class GrammarListener extends QLGrammarBaseListener {
     public void enterIfElseStatement(QLGrammarParser.IfElseStatementContext ctx) {
         super.enterIfElseStatement(ctx);
         createStack();
-    }
-
-    private void createStack() {
-        mChildsStack.push(new ArrayList<>());
     }
 
     // Exits
@@ -220,10 +224,6 @@ public class GrammarListener extends QLGrammarBaseListener {
         super.exitIfStatement(ctx);
         BlockNode ifStatementNode = new IfStatementNode(popCachedCondition(), popChildStack(), createSourceInfo(ctx));
         addToStack(ifStatementNode);
-    }
-
-    private List<Node> popChildStack() {
-        return mChildsStack.pop();
     }
 
     @Override

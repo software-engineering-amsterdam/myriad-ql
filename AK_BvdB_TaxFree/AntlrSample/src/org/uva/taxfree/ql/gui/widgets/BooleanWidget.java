@@ -44,6 +44,7 @@ public class BooleanWidget extends Widget {
     @Override
     protected void applyStyle(JPanel panel, JLabel label, QlsStyle qlsStyle) {
         super.applyStyle(panel, label, qlsStyle);
+        // Only used for QLS
         qlsStyle.applyStyle(new BooleanType(), panel);
         qlsStyle.applyStyle(new BooleanType(), label);
         qlsStyle.applyStyle(new BooleanType(), mCheckbox);

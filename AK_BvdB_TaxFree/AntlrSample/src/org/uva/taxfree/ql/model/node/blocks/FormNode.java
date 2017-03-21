@@ -20,7 +20,6 @@ public class FormNode extends BlockNode {
         return mFormName;
     }
 
-
     @Override
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
         symbolTable.checkDuplicateDeclarations(semanticsMessages);
@@ -38,6 +37,4 @@ public class FormNode extends BlockNode {
         super.fillSymbolTable(symbolTable);
         symbolTable.addBlock(this);
     }
-
-
 }

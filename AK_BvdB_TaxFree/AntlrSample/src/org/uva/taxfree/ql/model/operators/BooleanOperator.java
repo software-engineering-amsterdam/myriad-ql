@@ -8,13 +8,10 @@ public abstract class BooleanOperator extends Operator {
     @Override
     public boolean supports(Type left, Type right) {
         return left.supports(this) && right.supports(this);
-
     }
 
     @Override
     public Type getType() {
         return new BooleanType();
     }
-
-
 }

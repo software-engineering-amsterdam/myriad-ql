@@ -56,7 +56,7 @@ public abstract class Widget {
     }
 
     protected void applyStyle(JPanel panel, JLabel label, QlsStyle qlsStyle) {
-        // TODO: make abstract
+        // Only used for QLS
     }
 
 }

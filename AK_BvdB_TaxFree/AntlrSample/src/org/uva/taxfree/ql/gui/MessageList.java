@@ -26,8 +26,7 @@ public class MessageList {
         }
         return false;
     }
-
-
+    
     public void addError(String message) {
         mMessages.add(new ErrorMessage(message));
     }

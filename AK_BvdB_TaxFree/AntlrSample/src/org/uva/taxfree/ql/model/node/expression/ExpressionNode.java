@@ -12,7 +12,6 @@ import java.util.List;
 
 public abstract class ExpressionNode extends Node {
 
-    // Private because this class is abstract and may not be initialized
     protected ExpressionNode(SourceInfo sourceInfo) {
         super(sourceInfo);
     }
