@@ -3,35 +3,31 @@ package view.widgets
 import ast.NumericType
 import values.{ NumericValue, UndefinedValue, Value }
 
-import scalafx.beans.property.DoubleProperty
+import scalafx.scene.Node
 import scalafx.scene.control.Slider
 
-class SliderWidget(min: BigDecimal, max: BigDecimal, numericType: NumericType, changeHandler: Option[Value => Unit]) extends QLWidget(changeHandler) {
-  private val selectedValue: DoubleProperty = new DoubleProperty()
+class SliderWidget(min: BigDecimal, max: BigDecimal, numericType: NumericType, protected val changeHandler: Option[Value => Unit]) extends QLWidget {
+  private val slider = new Slider()
+  slider.min = min.doubleValue
+  slider.max = max.doubleValue
 
-  selectedValue.onChange {
-    val qlValue = NumericValue.doubleToNumericValue(selectedValue.value, numericType)
+  slider.value.onChange {
+    val qlValue = NumericValue.doubleToNumericValue(slider.value.value, numericType)
     this.setValue(qlValue)
-    super.handleUpdate(qlValue)
+    changeHandler.foreach((f) => f(qlValue))
   }
-
-  override val displayNode: Slider = new Slider {
-    value <==> selectedValue
-  }
-
-  displayNode.min_=(min.doubleValue())
-  displayNode.max_=(max.doubleValue())
 
   override def setValue(newVal: Value): Unit = newVal match {
     case n: NumericValue =>
       if (n.value >= min && n.value <= max) {
-        selectedValue.value_=(n.value)
+        slider.value = n.value.doubleValue()
       } else if (n.value < min) {
-        selectedValue.value_=(min)
+        slider.value = min.doubleValue
       } else {
-        selectedValue.value_=(max)
+        slider.value = max.doubleValue
       }
-    case UndefinedValue => selectedValue.value_=(min)
+    case UndefinedValue => slider.value = min.doubleValue
     case v => sys.error(s"Incompatible value $v for Slider Widget")
   }
+  override def displayNode: Node = slider
 }

@@ -3,11 +3,14 @@ package view
 import ast._
 import checker.Issue.Issues
 import checker.{ Error, Warning }
-import model.DisplayQuestion
+import model.{ DisplayCondition, DisplayQuestion }
+import values.{ Evaluator, UndefinedValue, Value }
+import view.GUI.ObservableEnv
 import view.questions.{ BooleanQuestion, DateQuestion, NumericQuestion, StringQuestion }
-import view.style.DisplayStyle
 
 import scalafx.application.JFXApp
+import scalafx.beans.binding.{ Bindings, BooleanBinding, ObjectBinding }
+import scalafx.collections.ObservableMap
 import scalafx.geometry.Insets
 import scalafx.scene.layout.{ TilePane, VBox }
 import scalafx.scene.paint.Color
@@ -16,18 +19,34 @@ import scalafx.scene.{ Node, Scene }
 
 trait GUI extends JFXApp.PrimaryStage {
   val issues: Issues
+  val env: ObservableEnv = ObservableMap()
 
   def displayBoxes: Seq[Node]
 
-  protected def renderQuestion(question: DisplayQuestion, definedStyle: Option[QuestionStyle] = None): VBox = {
-    val style = new DisplayStyle(definedStyle)
-    question.`type` match {
-      case BooleanType => new BooleanQuestion(question, style)
-      case DateType => new DateQuestion(question, style)
-      case StringType => new StringQuestion(question, style)
-      case _: NumericType => new NumericQuestion(question, style)
+  protected def renderQuestion(question: DisplayQuestion, style: Option[QuestionStyle] = None): VBox = {
+    val questionEnvUpdater = updateEnv(question.identifier)(_)
+    val questionDisplay = question.`type` match {
+      case BooleanType => new BooleanQuestion(question, style, questionEnvUpdater)
+      case DateType => new DateQuestion(question, style, questionEnvUpdater)
+      case StringType => new StringQuestion(question, style, questionEnvUpdater)
+      case _: NumericType => new NumericQuestion(question, style, questionEnvUpdater)
     }
-  }.displayBox
+    questionDisplay.subscribeToValueBinding(valueBindingGenerator)
+    questionDisplay.displayBox.visible <== visibilityBinding(question.displayConditions)
+    questionDisplay.displayBox
+  }
+
+  def updateEnv(identifier: String)(value: Value) = {
+    println(s"Updating env, identifier: $identifier, old value: ${env.getOrElse(identifier, UndefinedValue)} value: $value")
+    env += (identifier -> value)
+    println(env.toMap)
+  }
+
+  private def valueBindingGenerator: ExpressionNode => ObjectBinding[Value] =
+    (valueExpression: ExpressionNode) => Bindings.createObjectBinding[Value](() => Evaluator(env.toMap).calculate(valueExpression), env)
+
+  private def visibilityBinding(displayConditions: Seq[DisplayCondition]): BooleanBinding =
+    Bindings.createBooleanBinding(() => Evaluator(env.toMap).display(displayConditions), env)
 
   private def issueBox = issues.map {
     case Error(message) =>
@@ -54,4 +73,8 @@ trait GUI extends JFXApp.PrimaryStage {
       children = issueBox ++ displayBoxes
     }
   }
+}
+
+object GUI {
+  type ObservableEnv = ObservableMap[String, Value]
 }
