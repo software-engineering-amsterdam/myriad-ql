@@ -1,11 +1,11 @@
 module QLS
   module AST
     class Section
-      attr_reader :name, :block
+      attr_reader :name, :body
 
-      def initialize(name, block)
+      def initialize(name, body)
         @name  = name
-        @block = block
+        @body = body
       end
 
       def accept(visitor)

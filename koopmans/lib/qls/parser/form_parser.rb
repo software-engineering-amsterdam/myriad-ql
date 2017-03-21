@@ -22,10 +22,10 @@ module QLS
       rule(:stylesheet) { _ >> (str('stylesheet') >> _ >> variable >> _ >> page.repeat.as(:pages) >> _).as(:stylesheet) }
 
       # page
-      rule(:page) { _ >> str('page') >> _ >> (variable >> _ >> str('{') >> (_ >> (section | default)).repeat.as(:block)).as(:page) >> str('}') >> _ }
+      rule(:page) { _ >> str('page') >> _ >> (variable >> _ >> str('{') >> (_ >> (section | default)).repeat.as(:body)).as(:page) >> str('}') >> _ }
 
       # section
-      rule(:section)                  { (_ >> str('section') >> _ >> string_literal >> _ >> (section_brackets | section_without_brackets).as(:block) >> _).as(:section) }
+      rule(:section)                  { (_ >> str('section') >> _ >> string_literal >> _ >> (section_brackets | section_without_brackets).as(:body) >> _).as(:section) }
       rule(:section_brackets)         { str('{') >> _ >> (section | question | default).repeat >> _ >> str('}') }
       rule(:section_without_brackets) { (question | default).repeat }
 

@@ -1,11 +1,11 @@
 module QLS
   module AST
     class Page
-      attr_reader :variable, :block
+      attr_reader :variable, :body
 
-      def initialize(variable, block)
+      def initialize(variable, body)
         @variable = variable
-        @block    = block
+        @body    = body
       end
 
       def accept(visitor)
