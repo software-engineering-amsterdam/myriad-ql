@@ -1,21 +1,21 @@
-module QL.TypeChecker.Expressions exposing (typeCheckerErrors)
+module QL.TypeChecker.Expressions exposing (check)
 
 import QL.AST exposing (Form)
 import QL.AST.Collectors as Collectors
 import QL.TypeChecker.Messages exposing (Message)
-import QL.TypeChecker.Expressions.ComputedQuestionTypes exposing (computedQuestionTypeErrors)
-import QL.TypeChecker.Expressions.ConditionTypes exposing (conditionTypeErrors)
-import QL.TypeChecker.Expressions.OperandTypes exposing (operandTypeErrors)
+import QL.TypeChecker.Expressions.ComputedQuestionTypes as ComputedQuestionTypes
+import QL.TypeChecker.Expressions.ConditionTypes as ConditionTypes
+import QL.TypeChecker.Expressions.OperandTypes as OperandTypes
 
 
-typeCheckerErrors : Form -> List Message
-typeCheckerErrors form =
+check : Form -> List Message
+check form =
     let
         typeEnv =
             Collectors.collectTypeEnv form
     in
         List.concat
-            [ operandTypeErrors form typeEnv
-            , conditionTypeErrors form typeEnv
-            , computedQuestionTypeErrors form typeEnv
+            [ OperandTypes.check form typeEnv
+            , ConditionTypes.check form typeEnv
+            , ComputedQuestionTypes.check form typeEnv
             ]

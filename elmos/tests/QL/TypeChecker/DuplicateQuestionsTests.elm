@@ -4,7 +4,7 @@ import QL.AST exposing (..)
 import QL.ASTTestUtil exposing (emptyLoc, loc)
 import Expect
 import Test exposing (Test, describe, test)
-import QL.TypeChecker.DuplicateQuestions exposing (duplicateQuestions)
+import QL.TypeChecker.DuplicateQuestions exposing (check)
 import QL.TypeChecker.Messages exposing (..)
 
 
@@ -13,7 +13,7 @@ all =
     describe "DuplicateQuestions"
         [ test "no duplicate question defintion for shared definition in ifthenelse block" <|
             \() ->
-                duplicateQuestions
+                check
                     (Form
                         ( "", emptyLoc )
                         [ IfThenElse (Boolean emptyLoc True)
@@ -24,7 +24,7 @@ all =
                     |> Expect.equal []
         , test "find duplicate ignoring type" <|
             \() ->
-                duplicateQuestions
+                check
                     (Form
                         ( "", emptyLoc )
                         [ Question "StringQuestion" ( "x", loc 3 3 ) StringType
@@ -34,7 +34,7 @@ all =
                     |> Expect.equal [ Error (DuplicateQuestionDefinition "x" [ loc 3 3, loc 4 4 ]) ]
         , test "find duplicate in if block" <|
             \() ->
-                duplicateQuestions
+                check
                     (Form
                         ( "", emptyLoc )
                         [ Question "QuestionA" ( "x", loc 3 3 ) StringType
@@ -44,7 +44,7 @@ all =
                     |> Expect.equal [ Error (DuplicateQuestionDefinition "x" [ loc 3 3, loc 4 4 ]) ]
         , test "find duplicate in ifThenElse block and merge into a single message" <|
             \() ->
-                duplicateQuestions
+                check
                     (Form
                         ( "", emptyLoc )
                         [ IfThenElse (Boolean emptyLoc True)

@@ -1,4 +1,4 @@
-module QL.TypeChecker.CyclicDependencies exposing (cyclicDependencies)
+module QL.TypeChecker.CyclicDependencies exposing (check)
 
 import DictList exposing (DictList)
 import List.Extra as List
@@ -20,8 +20,8 @@ type alias DependencyCycle =
     List String
 
 
-cyclicDependencies : Form -> List Message
-cyclicDependencies form =
+check : Form -> List Message
+check form =
     let
         dependencyTable =
             Collectors.collectComputedQuestions form

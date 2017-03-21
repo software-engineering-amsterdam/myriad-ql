@@ -6,15 +6,15 @@ import Dict
 import Expect
 import Test exposing (Test, describe, test)
 import QL.TypeChecker.Messages exposing (..)
-import QL.TypeChecker.Expressions.ComputedQuestionTypes exposing (computedQuestionTypeErrors)
+import QL.TypeChecker.Expressions.ComputedQuestionTypes exposing (check)
 
 
 all : Test
 all =
-    describe "ComputedQuestionTypes.computedQuestionTypeErrors"
+    describe "ComputedQuestionTypes.check"
         [ test "should detect incompatible type" <|
             \() ->
-                computedQuestionTypeErrors
+                check
                     (Form ( "form", emptyLoc )
                         [ ComputedQuestion "Label" ( "x", Location 1 1 ) BooleanType (Str emptyLoc "test")
                         ]
@@ -23,7 +23,7 @@ all =
                     |> Expect.equal [ Error (InvalidComputedQuestionType ( "x", Location 1 1 ) StringType BooleanType) ]
         , test "should not report an error on a Money field with an integerValue" <|
             \() ->
-                computedQuestionTypeErrors
+                check
                     (Form ( "form", emptyLoc )
                         [ ComputedQuestion "Label" ( "x", Location 1 1 ) MoneyType (Integer emptyLoc 5)
                         ]

@@ -1,4 +1,4 @@
-module QL.TypeChecker.Expressions.ComputedQuestionTypes exposing (computedQuestionTypeErrors)
+module QL.TypeChecker.Expressions.ComputedQuestionTypes exposing (check)
 
 import Dict exposing (Dict)
 import QL.TypeChecker.Expressions.ExpressionType exposing (getType)
@@ -7,8 +7,8 @@ import QL.AST.Collectors as Collectors exposing (TypeEnvironment)
 import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(InvalidComputedQuestionType))
 
 
-computedQuestionTypeErrors : Form -> TypeEnvironment -> List Message
-computedQuestionTypeErrors form typeEnv =
+check : Form -> TypeEnvironment -> List Message
+check form typeEnv =
     Collectors.collectComputedQuestions form
         |> List.filterMap (computationToType typeEnv)
         |> List.filterMap (withExpectedType typeEnv)

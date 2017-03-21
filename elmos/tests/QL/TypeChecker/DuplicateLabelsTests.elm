@@ -4,7 +4,7 @@ import QL.AST exposing (..)
 import QL.ASTTestUtil exposing (emptyLoc, loc)
 import Expect
 import Test exposing (Test, describe, test)
-import QL.TypeChecker.DuplicateLabels exposing (duplicateLabels)
+import QL.TypeChecker.DuplicateLabels exposing (check)
 import QL.TypeChecker.Messages exposing (Message(Warning), WarningMessage(DuplicateLabels))
 
 
@@ -13,7 +13,7 @@ all =
     describe "DuplicateLabels"
         [ test "should detect duplicate labels" <|
             \() ->
-                duplicateLabels
+                check
                     (Form
                         ( "", emptyLoc )
                         [ IfThenElse (Boolean emptyLoc True)
@@ -24,7 +24,7 @@ all =
                     |> Expect.equal [ Warning (DuplicateLabels "label" [ ( "y", loc 4 4 ), ( "x", loc 3 3 ) ]) ]
         , test "should detect duplicate labels with three occurrences" <|
             \() ->
-                duplicateLabels
+                check
                     (Form
                         ( "", emptyLoc )
                         [ Question "someLabel?" ( "x", loc 3 3 ) StringType
@@ -35,7 +35,7 @@ all =
                     |> Expect.equal [ Warning (DuplicateLabels "someLabel?" [ ( "z", loc 5 5 ), ( "y", loc 4 4 ), ( "x", loc 3 3 ) ]) ]
         , test "should only detect labels that are duplicated" <|
             \() ->
-                duplicateLabels
+                check
                     (Form
                         ( "", emptyLoc )
                         [ Question "someLabel?" ( "x", loc 3 3 ) StringType
@@ -45,7 +45,7 @@ all =
                     |> Expect.equal []
         , test "should detect multiple types of duplicate labels" <|
             \() ->
-                duplicateLabels
+                check
                     (Form
                         ( "", emptyLoc )
                         [ Question "OtherLabel!" ( "x", loc 3 3 ) StringType

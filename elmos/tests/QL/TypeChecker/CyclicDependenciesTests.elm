@@ -3,7 +3,7 @@ module QL.TypeChecker.CyclicDependenciesTests exposing (all)
 import Expect
 import QL.AST exposing (..)
 import QL.ASTTestUtil exposing (emptyLoc)
-import QL.TypeChecker.CyclicDependencies exposing (cyclicDependencies)
+import QL.TypeChecker.CyclicDependencies exposing (check)
 import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(DependencyCycle))
 import Test exposing (Test, describe, test)
 
@@ -13,7 +13,7 @@ all =
     describe "CyclicDependencies"
         [ test "should find cycle for a self referencing ComputedQuestion" <|
             \() ->
-                cyclicDependencies
+                check
                     (Form
                         ( "", emptyLoc )
                         [ ComputedQuestion "label" ( "x", emptyLoc ) StringType (Var ( "x", emptyLoc ))
@@ -22,7 +22,7 @@ all =
                     |> Expect.equal [ Error <| DependencyCycle [ "x", "x" ] ]
         , test "should find simple DependencyCycle between three fields and return cycle in order of references" <|
             \() ->
-                cyclicDependencies
+                check
                     (Form
                         ( "", emptyLoc )
                         [ ComputedQuestion "label" ( "a", emptyLoc ) StringType (Var ( "t", emptyLoc ))
@@ -33,7 +33,7 @@ all =
                     |> Expect.equal [ Error <| DependencyCycle [ "a", "t", "o", "a" ] ]
         , test "should find multiple DependencyCycles" <|
             \() ->
-                cyclicDependencies
+                check
                     (Form
                         ( "", emptyLoc )
                         [ ComputedQuestion "label"
@@ -62,7 +62,7 @@ all =
                         ]
         , test "should find DependencyCycle and return the first occurence of the cycle in order of the cycle" <|
             \() ->
-                cyclicDependencies
+                check
                     (Form
                         ( "", emptyLoc )
                         [ ComputedQuestion "label" ( "x", emptyLoc ) StringType (Var ( "y", emptyLoc ))
