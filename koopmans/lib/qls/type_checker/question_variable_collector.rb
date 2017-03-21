@@ -1,16 +1,22 @@
 module QLS
   module TypeChecker
     class QuestionVariableCollector
+      attr_reader :variables
+
+      def initialize
+        @variables = []
+      end
+
       def visit_stylesheet(stylesheet, _)
-        stylesheet.pages.map { |page| page.accept(self) }
+        stylesheet.pages.each { |page| page.accept(self) }
       end
 
       def visit_page(page)
-        page.body.map { |element| element.accept(self) }
+        page.body.each { |element| element.accept(self) }
       end
 
       def visit_section(section, _)
-        section.body.map { |element| element.accept(self) }
+        section.body.each { |element| element.accept(self) }
       end
 
       def visit_question(question, _)
@@ -18,7 +24,7 @@ module QLS
       end
 
       def visit_variable(variable)
-        variable
+        @variables << variable
       end
 
       def visit_default(_, _) end

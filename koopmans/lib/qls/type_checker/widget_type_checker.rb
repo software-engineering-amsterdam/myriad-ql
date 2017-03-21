@@ -3,24 +3,24 @@ module QLS
     class WidgetTypeChecker
       def visit_stylesheet(stylesheet, collected_data)
         @variable_type_map = collected_data
-        stylesheet.pages.map { |page| page.accept(self) }
+        stylesheet.pages.each { |page| page.accept(self) }
       end
 
       def visit_page(page)
-        page.body.map { |element| element.accept(self) }
+        page.body.each { |element| element.accept(self) }
       end
 
       def visit_section(section, _)
-        section.body.map { |element| element.accept(self) }
+        section.body.each { |element| element.accept(self) }
       end
 
       def visit_question(question, _)
         question_type = @variable_type_map[question.variable.name]
-        question.properties.map { |property| property.accept(self, question_type) }
+        question.properties.each { |property| property.accept(self, question_type) }
       end
 
       def visit_default(default, _)
-        default.properties.map { |property| property.accept(self, default.type) }
+        default.properties.each { |property| property.accept(self, default.type) }
       end
 
       def visit_slider_widget(slider_widget, type)
@@ -32,7 +32,7 @@ module QLS
       end
 
       def visit_text_widget(text_widget, type)
-        check_compatibility(text_widget, type, [QL::AST::IntegerType, DateType, QL::AST::DecimalType, StringType, QL::AST::MoneyType])
+        check_compatibility(text_widget, type, [QL::AST::IntegerType, QL::AST::DateType, QL::AST::DecimalType, QL::AST::StringType, QL::AST::MoneyType])
       end
 
       def visit_radio_widget(radio_widget, type)
@@ -47,7 +47,10 @@ module QLS
         check_compatibility(dropdown_widget, type, [QL::AST::BooleanType])
       end
 
-      def visit_property(_, _) end
+      def visit_width(_, _) end
+      def visit_font(_, _) end
+      def visit_fontsize(_, _) end
+      def visit_color(_, _) end
 
       def check_compatibility(widget, type, compatible_types)
         return if compatible_types.include?(type.class)

@@ -8,16 +8,16 @@ module QL
       end
 
       def visit_form(form, _)
-        form.statements.map { |statement| statement.accept(self) }
+        form.statements.each { |statement| statement.accept(self) }
       end
 
       def visit_if_statement(if_statement, _)
-        if_statement.body.map { |statement| statement.accept(self) }
+        if_statement.body.each { |statement| statement.accept(self) }
       end
 
       def visit_if_else_statement(if_else_statement, _)
-        if_else_statement.if_body.map { |statement| statement.accept(self) }
-        if_else_statement.else_body.map { |statement| statement.accept(self) }
+        if_else_statement.if_body.each { |statement| statement.accept(self) }
+        if_else_statement.else_body.each { |statement| statement.accept(self) }
       end
 
       def visit_question(question, _)
