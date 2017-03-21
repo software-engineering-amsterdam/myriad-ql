@@ -29,8 +29,8 @@ module QLS
       rule(:section_body)               { (section | question | default).repeat.as(:body) }
 
       # question
-      rule(:question)                  { (_ >> str('question') >> _ >> variable >> _ >> (properties_with_brackets | property?).as(:properties) >> _).as(:question) }
-      rule(:properties_with_brackets)  { str('{') >> (_ >> property).repeat >> _ >> str('}') }
+      rule(:question)                 { (_ >> str('question') >> _ >> variable >> _ >> (properties_with_brackets | property?).as(:properties) >> _).as(:question) }
+      rule(:properties_with_brackets) { str('{') >> (_ >> property).repeat >> _ >> str('}') }
 
       # widget
       rule(:widget)        { str('widget') >> _ >> (str('checkbox') | str('spinbox') | str('text') | slider | radio | dropdown).as(:widget) >> _ }
