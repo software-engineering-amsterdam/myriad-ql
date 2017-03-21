@@ -11,5 +11,5 @@ class TestStringTypeChecker(Shared):
         """
         environment = self.apply_evaluate(input_string)
         expected_identifier = 'valueResidue'
-        self.assertEqual(len(type_checker_result), 0, "This cases is not supposed to fail: following errors {}"
-                         .format(type_checker_result))
+        self.assertTrue(expected_identifier in environment, "Environment should contain key valueResidue")
+        self.assertEqual('abcdabc', environment[expected_identifier], "Evaluation should result in abcdabc")
