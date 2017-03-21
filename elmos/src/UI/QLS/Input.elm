@@ -1,4 +1,4 @@
-module UI.QLSInput exposing (Model, Msg, init, asStyleSheet, setForm, update, view)
+module UI.QLS.Input exposing (Model, Msg, init, asStyleSheet, setForm, update, view)
 
 import Html exposing (Html, textarea, div, text)
 import Html.Keyed exposing (node)

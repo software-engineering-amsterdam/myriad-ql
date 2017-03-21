@@ -1,4 +1,4 @@
-module UI.QLInput exposing (Model, Msg, init, asForm, update, view)
+module UI.QL.Input exposing (Model, Msg, init, asForm, update, view)
 
 import Html exposing (Html, b, div, form, pre, text, textarea)
 import Html.Attributes exposing (class, cols, defaultValue, rows, style, id)

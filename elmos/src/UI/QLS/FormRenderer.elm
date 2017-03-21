@@ -1,4 +1,4 @@
-module UI.QLSFormRenderer exposing (Model, Msg, init, update, view)
+module UI.QLS.FormRenderer exposing (Model, Msg, init, update, view)
 
 import Html exposing (Html, div, text, h3, pre, button, hr)
 import Html.Attributes exposing (class, disabled)
@@ -21,8 +21,8 @@ import QLS.AST exposing (..)
 import UI.FormUpdater as FormUpdater
 import UI.Field as Field exposing (Field(Editable, Computed))
 import UI.QLS.Pagination as Pagination exposing (Pagination)
-import UI.StyleContext as StyleContext exposing (StyleContext)
-import UI.Headings as Headings exposing (Heading)
+import UI.QLS.StyleContext as StyleContext exposing (StyleContext)
+import UI.QLS.SectionHeadings as SectionHeadings exposing (Heading)
 
 
 type alias Model =
@@ -96,7 +96,7 @@ view ({ form, env } as model) =
 
 renderPage : Environment -> List Field -> Page -> Html Msg
 renderPage env visibleFields (Page _ sections defaultValueConfigs) =
-    div [] (List.filterMap (renderSection env Headings.init visibleFields (StyleContext.init defaultValueConfigs)) sections)
+    div [] (List.filterMap (renderSection env SectionHeadings.init visibleFields (StyleContext.init defaultValueConfigs)) sections)
 
 
 renderPagination : Pagination -> Html Msg
@@ -135,7 +135,7 @@ nonEmptyList x =
 sectionFromLabelAndChildren : Heading -> String -> List (Html Msg) -> Html Msg
 sectionFromLabelAndChildren heading title children =
     div []
-        [ Headings.header heading [] [ text title ]
+        [ SectionHeadings.header heading [] [ text title ]
         , div [] children
         ]
 
@@ -144,7 +144,7 @@ renderSectionChild : Environment -> Heading -> List Field -> StyleContext -> Sec
 renderSectionChild env heading visibleFields styleContext sectionChild =
     case sectionChild of
         SubSection subSection ->
-            renderSection env (Headings.deeper heading) visibleFields styleContext subSection
+            renderSection env (SectionHeadings.deeper heading) visibleFields styleContext subSection
 
         Field (Question ( name, _ )) ->
             Field.fieldForName name visibleFields
