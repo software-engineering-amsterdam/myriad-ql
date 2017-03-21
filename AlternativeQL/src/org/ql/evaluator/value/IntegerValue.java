@@ -135,6 +135,11 @@ public class IntegerValue extends Value {
     }
 
     @Override
+    public Double toDouble() {
+        return value.doubleValue();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
