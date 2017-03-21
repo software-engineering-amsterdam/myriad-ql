@@ -22,8 +22,8 @@ module QLS
         question.properties.each { |property| property.accept(self, question_type) }
       end
 
-      def visit_default(default, _)
-        default.properties.each { |property| property.accept(self, default.type) }
+      def visit_default_properties(default_properties, _)
+        default_properties.properties.each { |property| property.accept(self, default_properties.type) }
       end
 
       def visit_slider_widget(slider_widget, type)

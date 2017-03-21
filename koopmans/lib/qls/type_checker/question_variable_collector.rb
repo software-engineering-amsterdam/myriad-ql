@@ -27,7 +27,7 @@ module QLS
         @variables << variable
       end
 
-      def visit_default(_, _) end
+      def visit_default_properties(_, _) end
     end
   end
 end
