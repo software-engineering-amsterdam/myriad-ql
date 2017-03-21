@@ -4,6 +4,7 @@ import org.lemonade.gui.elements.GuiElement;
 import org.lemonade.gui.elements.GuiLabelElement;
 import org.lemonade.gui.values.GuiIdentifierValue;
 import org.lemonade.visitors.EvaluateVisitor;
+import org.lemonade.visitors.interfaces.GuiBaseElementsVisitor;
 
 /**
  *
@@ -33,7 +34,7 @@ public class GuiQuestion extends GuiBody {
         return true;
     }
 
-    public void accept(EvaluateVisitor visitor) {
+    public void accept(GuiBaseElementsVisitor visitor) {
         visitor.visit(this);
     }
 
@@ -43,4 +44,5 @@ public class GuiQuestion extends GuiBody {
         if (!flag)
             element.clear();
     }
+
 }

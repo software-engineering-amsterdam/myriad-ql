@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
+import java.util.Collections;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -14,43 +14,32 @@ import org.lemonade.QLLexer;
 import org.lemonade.QLParser;
 import org.lemonade.QLParserErrorListener;
 import org.lemonade.exceptions.InvalidFormException;
+import org.lemonade.exceptions.TypeMismatchException;
 import org.lemonade.nodes.Form;
 import org.lemonade.visitors.EvaluateVisitor;
 import org.lemonade.visitors.FormVisitor;
 import org.lemonade.visitors.GuiVisitor;
 import org.lemonade.visitors.TypeCheckVisitor;
+import org.lemonade.visitors.WriteToJsonVisitor;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class QLApp extends Application {
+public class QLApp extends Application implements ButtonCallback {
 
     private QLGui qlGui;
-
-    private boolean isSubmitted = false;
+    private GuiForm guiRoot;
 
     // JavaFX initialisation method
     @Override
     public void start(final Stage primaryStage) throws Exception {
-
-        qlGui = new QLGui(primaryStage);
-        qlGui.getSubmitFileButton().setOnAction(e -> {
-            if (qlGui.getFile() != null) {
-                goToQuestionnaire();
-            }
-        });
-
-        primaryStage.setScene(qlGui.getSelectionScene());
-        primaryStage.setWidth(1000);
-        primaryStage.setHeight(800);
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        // Pass 'this' (implementation of ButtonCallback) as argument to assign callback to button
+        qlGui = new QLGui(primaryStage, this);
     }
 
     // Called on file submit
-    private void goToQuestionnaire() {
-        GuiForm guiRoot;
-
+    @Override
+    public void goToQuestionnaire() {
         try {
             Form root = parseFile(qlGui.getFile());
             validateForm(root);
@@ -58,30 +47,32 @@ public class QLApp extends Application {
             GuiVisitor guiVisitor = new GuiVisitor(qlGui);
             guiRoot = (GuiForm) root.accept(guiVisitor);
 
-            qlGui.setUpQuestionnaireScene();
-            qlGui.getSubmitQuestionnaireButton().setOnAction(e -> {
-                isSubmitted = true;
-                submitForm(guiRoot);
-            });
+            // Pass 'this' (implementation of ButtonCallback) as argument to assign callback to button
+            qlGui.setUpQuestionnaireScene(this);
 
             EvaluateVisitor evaluateVisitor = new EvaluateVisitor();
             qlGui.addUserInputListeners(guiRoot, evaluateVisitor);
 
             qlGui.goToQuestionnaire();
         } catch (IOException e) {
-            System.err.println("Error reading file: " + e.getMessage());
+            qlGui.addErrors("Error reading file: ", Collections.singletonList(e.getMessage()));
         } catch (InvalidFormException e) {
-            List<String> formErrors = e.getFormErrors();
-            System.err.print(formErrors);
+            qlGui.addErrors("Errors found while parsing form:", e.getFormErrors());
+        } catch (TypeMismatchException e) {
+            qlGui.addErrors("Type mismatches found in form:", e.getTypeMismatches());
         }
     }
 
-    // Something will happen here (evaluate visitor)
-    private void submitForm(GuiForm guiForm) {
-        System.err.println("In submit");
+    // Writes all answers to JSON file
+    @Override
+    public void submitForm() {
+        if (guiRoot != null) {
+            WriteToJsonVisitor jsonVisitor = new WriteToJsonVisitor();
+            guiRoot.accept(jsonVisitor);
+        }
     }
 
-    private Form parseFile(final File file) throws IOException {
+    private Form parseFile(final File file) throws IOException, InvalidFormException {
         final String contents = String.join("\n", Files.readAllLines(Paths.get(file.getPath())));
 
         ANTLRInputStream input = new ANTLRInputStream(new StringReader(contents));
@@ -93,16 +84,20 @@ public class QLApp extends Application {
         parser.addErrorListener(errorListener);
         ParseTree tree = parser.form();
 
+        if (errorListener.hasErrors()) {
+            throw new InvalidFormException(errorListener.getItems());
+        }
+
         FormVisitor visitor = new FormVisitor();
         return (Form) tree.accept(visitor);
     }
 
-    private void validateForm(Form root) throws InvalidFormException {
+    private void validateForm(Form root) throws TypeMismatchException {
         TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
         root.accept(typeCheckVisitor);
 
         if (typeCheckVisitor.hasErrors()) {
-            throw new InvalidFormException(typeCheckVisitor.getErrors());
+            throw new TypeMismatchException(typeCheckVisitor.getErrors());
         }
     }
 }

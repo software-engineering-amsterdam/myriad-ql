@@ -147,4 +147,11 @@ public abstract class GuiValue<T> implements GuiExpression {
     public int hashCode() {
         return this.getValue().hashCode();
     }
+
+    // Implemented for writing to JSON
+    @Override
+    public String toString() {
+        return getValue() != null ? getValue().toString() : "undefined";
+    }
+
 }

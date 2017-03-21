@@ -25,7 +25,6 @@ public class FormVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public Form visitForm(QLParser.FormContext ctx) {
-        System.err.println("Entering form");
         IdentifierLiteral identifier = (IdentifierLiteral) ctx.identifier().accept(this);
         List<Body> bodies = new ArrayList<>();
 
@@ -38,7 +37,6 @@ public class FormVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitQuestion(QLParser.QuestionContext ctx) {
-        System.err.println("entering question");
         IdentifierLiteral identifier = (IdentifierLiteral) ctx.identifier().accept(this);
         String label = ctx.label().getText();
         QLType type = (QLType) ctx.type_specifier().accept(this);
@@ -56,7 +54,6 @@ public class FormVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitConditional(QLParser.ConditionalContext ctx) {
-        System.err.println("entering conditional");
         Expression expression = (Expression) ctx.expr().accept(this);
         Position position = constructPosition(ctx);
 

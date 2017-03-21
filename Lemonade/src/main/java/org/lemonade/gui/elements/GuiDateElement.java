@@ -8,7 +8,7 @@ import org.lemonade.gui.values.GuiValue;
 
 import java.time.LocalDate;
 
-public class GuiDateElement implements GuiElement {
+public class GuiDateElement extends GuiElement {
 
     private GuiValue<?> value;
     private DatePicker picker;

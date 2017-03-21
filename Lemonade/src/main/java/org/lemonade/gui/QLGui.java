@@ -1,6 +1,7 @@
 package org.lemonade.gui;
 
 import java.io.File;
+import java.util.List;
 
 import org.lemonade.gui.elements.GuiElement;
 import org.lemonade.gui.elements.GuiLabelElement;
@@ -11,12 +12,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -28,44 +32,36 @@ public class QLGui {
 
     // File selection elements
     private Scene selectionScene;
-    private Button submitFileButton;
+    private VBox errorBox;
 
     // Questionnaire elements
     private Scene questionnaireScene;
-    private Button submitQuestionnaireButton;
     private GridPane questionsGridPane;
     private int questionsRowCount;
 
-    public QLGui(Stage stage) {
+    public QLGui(Stage stage, ButtonCallback buttonCallback) {
         this.stage = stage;
-        setUpFileSelectionScene();
+        setUpFileSelectionScene(buttonCallback);
         setUpQuestionsPane();
+
+        this.stage.setScene(selectionScene);
+        this.stage.setWidth(1000);
+        this.stage.setHeight(800);
+        this.stage.setResizable(false);
+        this.stage.show();
     }
 
     public File getFile() {
         return file;
     }
 
-    public Scene getSelectionScene() {
-        return selectionScene;
-    }
-
-    public Button getSubmitFileButton() {
-        return submitFileButton;
-    }
-
-    public Button getSubmitQuestionnaireButton() {
-        return submitQuestionnaireButton;
-    }
-
-    private void setUpFileSelectionScene() {
+    private void setUpFileSelectionScene(ButtonCallback buttonCallback) {
         stage.setTitle("Form");
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add((new FileChooser.ExtensionFilter("Select a .ql file", "*.ql")));
 
-        Label fileLabel = new Label();
-
+        final Label fileLabel = new Label();
         final Button openButton = new Button("Select a questionnaire");
         openButton.setOnAction(e -> {
             file = fileChooser.showOpenDialog(stage);
@@ -74,29 +70,50 @@ public class QLGui {
             }
         });
 
-        submitFileButton = new Button("Submit");
+        final Button submitFileButton = new Button("Submit");
+        submitFileButton.setOnAction(e -> {
+            if (file != null) {
+                buttonCallback.goToQuestionnaire();
+            }
+        });
 
         HBox hBox = new HBox();
         hBox.setSpacing(10);
         hBox.getChildren().addAll(openButton, submitFileButton, fileLabel);
 
+        errorBox = new VBox();
+        errorBox.setSpacing(6);
+
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(errorBox);
+        scrollPane.setPrefViewportHeight(650);
+        scrollPane.setPrefViewportWidth(950);
+
         AnchorPane anchorPane = new AnchorPane();
         AnchorPane.setBottomAnchor(hBox, 10.0);
         AnchorPane.setLeftAnchor(hBox, 5.0);
-        anchorPane.getChildren().add(hBox);
+        AnchorPane.setTopAnchor(scrollPane, 10.0);
+        AnchorPane.setLeftAnchor(scrollPane, 5.0);
+        anchorPane.getChildren().addAll(hBox, scrollPane);
         anchorPane.setPadding(new Insets(10, 10, 10, 10));
 
         selectionScene = new Scene(anchorPane);
     }
 
-    public void setUpQuestionnaireScene() {
-        submitQuestionnaireButton = new Button("Submit form");
+    public void setUpQuestionnaireScene(ButtonCallback buttonCallback) {
+        final Button submitQuestionnaireButton = new Button("Submit form");
+        submitQuestionnaireButton.setOnAction(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add((new FileChooser.ExtensionFilter("Save to .json", "*.json")));
+            fileChooser.setTitle("Save to JSON");
+            File file = fileChooser.showSaveDialog(stage);
+            buttonCallback.submitForm();
+        });
 
         final Button backButton = new Button("Select new questionnaire");
         backButton.setOnAction(e -> stage.setScene(selectionScene));
 
         final AnchorPane rootGroup = new AnchorPane();
-
         AnchorPane.setBottomAnchor(submitQuestionnaireButton, 10.0);
         AnchorPane.setLeftAnchor(submitQuestionnaireButton, 5.0);
         AnchorPane.setBottomAnchor(backButton, 10.0);
@@ -118,6 +135,17 @@ public class QLGui {
         questionsGridPane.getColumnConstraints().addAll(constraints);
 
         this.questionsRowCount = 0;
+    }
+
+    public void addErrors(String message, List<String> errors) {
+        errorBox.getChildren().clear();
+        errorBox.getChildren().add(new Label(message));
+
+        for (String item : errors) {
+            Label label = new Label(item);
+            label.setTextFill(Color.RED);
+            errorBox.getChildren().add(label);
+        }
     }
 
     public void addQuestion(GuiLabelElement labelElement, GuiElement element) {
@@ -147,5 +175,9 @@ public class QLGui {
 
     public void goToQuestionnaire() {
         this.stage.setScene(questionnaireScene);
+    }
+
+    public void writeToJson(final String json) {
+
     }
 }
