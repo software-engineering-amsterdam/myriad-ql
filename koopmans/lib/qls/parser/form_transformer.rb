@@ -28,26 +28,22 @@ module QLS
       rule(default: { type: simple(:type), properties: subtree(:properties) }) { Default.new(type, properties) }
 
       # properties
-      rule(width: simple(:value) ) { Width.new(value) }
-      rule(font: simple(:value) ) { Font.new(value) }
+      rule(width: simple(:value) )    { Width.new(value) }
+      rule(font: simple(:value) )     { Font.new(value) }
       rule(fontsize: simple(:value) ) { Fontsize.new(value) }
-      rule(color: simple(:value)) { Color.new(value) }
+      rule(color: simple(:value))     { Color.new(value) }
 
-      # rule(width: { integer: simple(:value) }) { value }
-      # rule(font: { string: simple(:value) }) { value }
-      # rule(fontsize: { integer: simple(:value) }) { value }
-      # rule(color: { string: simple(:value) }) { value }
-
+      # literals
       rule(integer_literal: simple(:value)) { QL::AST::IntegerLiteral.new(value) }
-      rule(string_literal: simple(:value)) { QL::AST::StringLiteral.new(value) }
+      rule(string_literal: simple(:value))  { QL::AST::StringLiteral.new(value) }
 
       # widgets
-      rule(widget: 'spinbox') { SpinboxWidget.new }
-      rule(widget: 'text') { TextWidget.new }
-      rule(widget: 'checkbox') { CheckboxWidget.new }
-      rule(widget: { slider: { first_value: simple(:minimum), second_value: simple(:maximum) } }) { SliderWidget.new(minimum, maximum) }
-      rule(widget: { radio: { first_value: simple(:true_value), second_value: simple(:false_value) } }) { RadioWidget.new(true_value, false_value) }
-      rule(widget: { dropdown: { first_value: { string: simple(:true_value), second_value: simple(:false_value) } } }) { DropdownWidget.new(true_value, false_value) }
+      rule(widget: 'spinbox')                                                                              { SpinboxWidget.new }
+      rule(widget: 'text')                                                                                 { TextWidget.new }
+      rule(widget: 'checkbox')                                                                             { CheckboxWidget.new }
+      rule(widget: { slider: { first_value: simple(:minimum), second_value: simple(:maximum) } })          { SliderWidget.new(minimum, maximum) }
+      rule(widget: { radio: { first_value: simple(:true_value), second_value: simple(:false_value) } })    { RadioWidget.new(true_value, false_value) }
+      rule(widget: { dropdown: { first_value: simple(:true_value), second_value: simple(:false_value) } }) { DropdownWidget.new(true_value, false_value) }
     end
   end
 end
