@@ -28,7 +28,7 @@ class TestIdentifierChecker(Shared):
         input_string = """
         form taxOfficeExample {
             "Did you sell a house in 2010?" hasSoldHouse: boolean
-            if(condition){
+            if(true){
                  "Did you sell a house in 2010?" hasSoldHouse: boolean
             }
         }
@@ -40,11 +40,11 @@ class TestIdentifierChecker(Shared):
     def test_duplicate_field_inside_if_and_else(self):
         input_string = """
         form taxOfficeExample {
-            if(condition){
+            if(true){
                  "Did you sell a house in 2010?" hasSoldHouse: boolean
             }
             else {
-            "Did you sell a house in 2010?" hasSoldHouse: boolean
+                "Did you sell a house in 2010?" hasSoldHouse: boolean
             }
         }
         """
@@ -55,11 +55,11 @@ class TestIdentifierChecker(Shared):
     def test_duplicate_field_inside_if_and_else_if(self):
         input_string = """
         form taxOfficeExample {
-            if(condition){
+            if(true){
                  "Did you sell a house in 2010?" hasSoldHouse: boolean
             }
             else {
-                if(condition) {
+                if(true) {
                     "Did you sell a house in 2010?" hasSoldHouse: boolean
                 }
             }
@@ -69,12 +69,22 @@ class TestIdentifierChecker(Shared):
         errors = self.acquire_identifiers(form_node)
         self.assertEqual(len(errors), 1, "There should be exactly 1 error")
 
-    def test_identifierchecker_not_existing_identifier(self):
+    def test_identifierchecker_not_if_existing_identifier(self):
         input_string = """
         form stufftrue {
             if(notExistingIdentifier){
                 "q2?"   hasA: string = 'a'
             }
+        }
+        """
+        form_node = self.acquire_ast(input_string)
+        errors = self.acquire_identifiers(form_node)
+        self.assertEqual(len(errors), 1, "There should be exactly 1 error")
+
+    def test_identifierchecker_assignment_not_existing_identifier(self):
+        input_string = """
+        form stufftrue {
+            "q2?"   hasA: string = q1
         }
         """
         form_node = self.acquire_ast(input_string)
