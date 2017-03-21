@@ -36,6 +36,13 @@ public class GuiComputedQuestion extends GuiBody {
         return expression;
     }
 
+    public GuiIdentifierValue getIdentifier() {
+        return identifier;
+    }
+
+    public GuiElement getElement(){
+        return valueElement;
+    }
     @Override
     public void accept(GuiBaseElementsVisitor visitor) {
         visitor.visit(this);

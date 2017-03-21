@@ -25,11 +25,10 @@ public class JsonVisitor implements GuiBaseElementsVisitor {
         formResults.put("formName", form.getIdentifier().toString());
         form.getBodies().forEach(body -> body.accept(this));
     }
-
-
+    
     @Override
     public void visit(GuiComputedQuestion question) {
-
+        formResults.put(question.getIdentifier().toString(), question.getElement().toString());
     }
 
     @Override
