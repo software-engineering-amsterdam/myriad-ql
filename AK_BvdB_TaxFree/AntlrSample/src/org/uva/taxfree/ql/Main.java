@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         File inputFile = FileSelector.select();
         if (!inputFile.exists()) {
-            if (MessageWindow.retryDialog(new ErrorMessage("No file selected...\nRetry?"))) {
+            if (MessageWindow.retryDialog(new ErrorMessage("input file: No file selected...\nRetry?"))) {
                 main(args);
             }
             return;
