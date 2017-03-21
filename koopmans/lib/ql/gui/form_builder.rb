@@ -40,7 +40,7 @@ module QL
       end
 
       def visit_boolean_type(_)
-        [AST::BooleanLiteral, CheckboxWidget.new]
+        [AST::BooleanLiteral, RadioWidget.new]
       end
 
       def visit_date_type(_)

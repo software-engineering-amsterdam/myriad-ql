@@ -24,28 +24,31 @@ module QLS
       end
 
       def visit_slider_widget(slider_widget, parent_id)
-        @defaults[parent_id] = QL::GUI::SliderWidget.new
+        minimum, maximum = slider_widget.range
+        @defaults[parent_id] = QL::GUI::SliderWidget.new(minimum, maximum)
       end
 
       def visit_spinbox_widget(spinbox_widget, parent_id)
-        @defaults[parent_id] = QL::GUI::SpinboxWidget.new
+        minimum, maximum = spinbox_widget.range
+        @defaults[parent_id] = QL::GUI::SpinboxWidget.new(minimum, maximum)
       end
 
-      def visit_text_widget(text_widget, parent_id)
+      def visit_text_widget(_, parent_id)
         @defaults[parent_id] = QL::GUI::TextWidget.new
       end
 
       def visit_radio_widget(radio_widget, parent_id)
-        options = {true_value: radio_widget.true_text.value, false_value: radio_widget.false_text.value}
-        @defaults[parent_id] = QL::GUI::RadioWidget.new(options)
+        true_label, false_label = radio_widget.labels
+        @defaults[parent_id] = QL::GUI::RadioWidget.new(true_label, false_label)
       end
 
-      def visit_checkbox_widget(checkbox_widget, parent_id)
+      def visit_checkbox_widget(_, parent_id)
         @defaults[parent_id] = QL::GUI::CheckboxWidget.new
       end
 
       def visit_dropdown_widget(dropdown_widget, _)
-        @defaults[parent_id] = QL::GUI::DropdownWidget.new
+        true_label, false_label = dropdown_widget.labels
+        @defaults[parent_id] = QL::GUI::DropdownWidget.new(true_label, false_label)
       end
 
       def visit_width(width, parent_id) end

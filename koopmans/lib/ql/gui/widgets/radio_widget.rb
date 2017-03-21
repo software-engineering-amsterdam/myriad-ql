@@ -1,13 +1,10 @@
 module QL
   module GUI
     class RadioWidget < Widget
-      def initialize(options = nil)
+      def initialize(true_label = nil, false_label = nil)
         @default_value = false
-
-        if options
-          @true_label = options[:true_value]
-          @false_label = options[:false_value]
-        end
+        @true_label = true_label || 'True'
+        @false_label = false_label || 'False'
       end
 
       def render(tk_frame)

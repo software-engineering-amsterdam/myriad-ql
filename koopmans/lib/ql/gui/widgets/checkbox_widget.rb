@@ -1,7 +1,7 @@
 module QL
   module GUI
     class CheckboxWidget < Widget
-      def initialize(_options = nil)
+      def initialize
         @default_value = false
       end
 
