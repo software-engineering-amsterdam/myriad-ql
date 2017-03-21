@@ -32,20 +32,24 @@ class TypeChecker(CheckerVisitor):
         self.visit_section(node, stylings + node.stylings)
 
     def visit_question_anchor(self, node, stylings):
-        widget_type = self.symboltable[node.name]
+        question_type = self.symboltable[node.name]
+        widget_type = self.get_widget_type(question_type, stylings)
 
-        styling_getter = StylingWidgetTypeGetter(self.symboltable[node.name])
+        if widget_type != question_type:
+            self.error("widget datatype {} for question anchor "
+                       "\"{}\" does not match question "
+                       "datatype {}".format(widget_type, node.name,
+                                            question_type))
+
+    def visit_styled_question_anchor(self, node, stylings):
+        self.visit_question_anchor(node, stylings + [node.styling])
+
+    def get_widget_type(self, datatype, stylings):
+        widget_type = datatype
+        styling_getter = StylingWidgetTypeGetter(datatype)
 
         for styling in stylings:
             if styling_getter.get(styling):
                 widget_type = styling_getter.get(styling)
 
-        if widget_type != self.symboltable[node.name]:
-            self.error("widget datatype {} for question anchor "
-                       "\"{}\" does not match question "
-                       "datatype {}".format(widget_type,
-                                            node.name,
-                                            self.symboltable[node.name]))
-
-    def visit_styled_question_anchor(self, node, stylings):
-        self.visit_question_anchor(node, stylings + [node.styling])
+        return widget_type

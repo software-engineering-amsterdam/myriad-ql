@@ -50,17 +50,7 @@ class QlsGuiBuilder(GuiBuilder):
         self.visit_question_anchor(node, stylings + [node.styling])
 
     def visit_question(self, node, stylings):
-        constructor = None
-
-        styling_getter = StylingWidgetGetter(node.datatype)
-        default_getter = DefaultWidgetGetter()
-
-        for styling in stylings:
-            if styling_getter.get(styling):
-                constructor = styling_getter.get(styling)
-
-        if constructor is None:
-            constructor = default_getter.get(node.datatype)
+        constructor = self.get_widget_constructor(node.datatype, stylings)
 
         widget = constructor(self.app, node)
         widget.set_listener(self.listener)
@@ -73,3 +63,18 @@ class QlsGuiBuilder(GuiBuilder):
     def visit_computed_question(self, node, stylings):
         self.visit_question(node, stylings)
         self.widgets[node.name].disable()
+
+    def get_widget_constructor(self, datatype, stylings):
+        constructor = None
+
+        styling_getter = StylingWidgetGetter(datatype)
+        default_getter = DefaultWidgetGetter()
+
+        for styling in stylings:
+            if styling_getter.get(styling):
+                constructor = styling_getter.get(styling)
+
+        if constructor is None:
+            constructor = default_getter.get(datatype)
+
+        return constructor
