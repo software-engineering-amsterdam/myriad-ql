@@ -9,7 +9,7 @@ public class Style {
 	private final String color;
 	private final Type type;
 	
-	Style(int width, String font, int fontSize, String color, Type type) {
+	public Style(int width, String font, int fontSize, String color, Type type) {
 		this.width = width;
 		this.font = font;
 		this.fontSize = fontSize;
@@ -31,5 +31,9 @@ public class Style {
 	
 	public String getColor() {
 		return color;
+	}
+	
+	public Type getType() {
+		return type;
 	}
 }

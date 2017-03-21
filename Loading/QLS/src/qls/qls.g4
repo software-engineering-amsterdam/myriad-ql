@@ -5,6 +5,7 @@ grammar qls;
     import qls.ast.*;
     import qls.ast.widget.*;
     import QL.ast.type.*;
+    import QL.ui.Style;
 }
 
 
@@ -55,8 +56,8 @@ defaultWidgets returns [List<DefaultWidget> result]
    'font:' font = STRING
    'fontsize:' fontSize = INT
    'color:' color =  STRING
-   widget { $result.add(new DefaultStyle($type.result, Integer.parseInt($width.text), $font.text, 
-     Integer.parseInt($fontSize.text), $color.text, $widget.result, $ctx.start.getLine())); }
+   widget { $result.add(new DefaultStyle(new Style(Integer.parseInt($width.text), $font.text, 
+     Integer.parseInt($fontSize.text), $color.text, $type.result), $widget.result, $ctx.start.getLine())); }
    )+
  ;
  

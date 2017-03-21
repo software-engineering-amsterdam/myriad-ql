@@ -31,21 +31,14 @@ import qls.ast.widget.Spinbox;
 
 public class Evaluator implements StylesheetVisitor, WidgetVisitor {
 	
-//	private StyleTable styles;
-//	private final ReferenceTable referenceTable;
 	private Environment environment;
 	private Notifier notifier;
-	private Map<Type, Style> defaultStyles;
-	
-//	public Evaluator(ReferenceTable referenceTable) {
-//		this.referenceTable = referenceTable;
-//		this.defaultStyles = new HashMap<>();
-//	}
+	private Map<Type, Style> defaultStyle;
 	
 	public Evaluator(Environment environment, Notifier notifier) {
 		this.environment = environment;
 		this.notifier = notifier;
-		this.defaultStyles = new HashMap<>();
+		this.defaultStyle = new HashMap<>();
 	}
 	
 	@Override
@@ -65,7 +58,7 @@ public class Evaluator implements StylesheetVisitor, WidgetVisitor {
 	@Override
 	public void visit(PageWithDefault page) {
 		
-		for (DefaultWidget defaultStyle : page.getDefaultWidgets()) {
+		for (DefaultWidget style : page.getDefaultWidgets()) {
 			
 		}
 		for (Section section : page.getSections()) {
