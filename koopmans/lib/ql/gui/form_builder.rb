@@ -8,19 +8,19 @@ module QL
       end
 
       def visit_form(form, _)
-        form.statements.map { |statement| statement.accept(self) }.flatten
+        form.statements.each { |statement| statement.accept(self) }
       end
 
       def visit_if_statement(if_statement, condition)
         condition = stack_conditions(condition, if_statement.condition)
-        if_statement.body.map { |statement| statement.accept(self, condition) }
+        if_statement.body.each { |statement| statement.accept(self, condition) }
       end
 
       def visit_if_else_statement(if_else_statement, condition)
         if_condition = stack_conditions(condition, if_else_statement.condition)
         else_condition = stack_conditions(condition, negate(if_else_statement.condition))
-        if_else_statement.if_body.map { |statement| statement.accept(self, if_condition) }
-        if_else_statement.else_body.map { |statement| statement.accept(self, else_condition) }
+        if_else_statement.if_body.each { |statement| statement.accept(self, if_condition) }
+        if_else_statement.else_body.each { |statement| statement.accept(self, else_condition) }
       end
 
       def visit_question(question, condition)
