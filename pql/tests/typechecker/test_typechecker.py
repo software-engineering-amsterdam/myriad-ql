@@ -435,3 +435,23 @@ class TestTypeChecker(Shared):
         type_checker_result = self.apply_type_checking(input_string)
         self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail. Errors were {}"
                          .format(type_checker_result))
+
+    def test_typecheck_field_arithmetic(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: integer = (true * (false - true)) - true + ((false / (true * true)) / false) + ((true - false) / false)
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail. Errors were {}"
+                         .format(type_checker_result))
+
+    def test_typecheck_field_arithmetic_2(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: integer = false / false / false
+        }
+        """
+        type_checker_result = self.apply_type_checking(input_string)
+        self.assertEqual(len(type_checker_result), 1, "This cases is assumed to fail. Errors were {}"
+                         .format(type_checker_result))
