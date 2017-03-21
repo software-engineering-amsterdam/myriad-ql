@@ -14,11 +14,11 @@ package qls.astnodes.styles;
 import ql.astnodes.LineNumber;
 import qls.visitorinterfaces.StyleAndWidgetVisitor;
 
-public class Color extends StyleType{
+public class Color extends StyleType {
 
     private static final String NAME = "color";
 
-    public Color(int value, LineNumber lineNumber) {
+    public Color(Integer value, LineNumber lineNumber) {
         super(NAME, Integer.toString(value), lineNumber);
     }
 

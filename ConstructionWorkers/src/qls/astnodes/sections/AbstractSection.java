@@ -15,9 +15,9 @@ import ql.astnodes.LineNumber;
 import ql.astnodes.Node;
 import qls.visitorinterfaces.StyleSheetVisitor;
 
-public abstract class AbstractSection extends Node{
+public abstract class AbstractSection extends Node {
 
-    public AbstractSection(LineNumber lineNumber) {
+    AbstractSection(LineNumber lineNumber) {
         super(lineNumber);
     }
 

@@ -16,7 +16,7 @@ public abstract class Node {
     private final LineNumber lineNumber;
 
     public Node() {
-        this.lineNumber = null;
+        lineNumber = null;
     }
 
     public Node(LineNumber lineNumber) {
