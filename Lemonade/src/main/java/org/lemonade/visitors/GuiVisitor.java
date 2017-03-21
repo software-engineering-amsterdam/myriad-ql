@@ -4,12 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lemonade.gui.GuiBody;
-import org.lemonade.gui.GuiConditional;
-import org.lemonade.gui.GuiExpression;
-import org.lemonade.gui.GuiForm;
-import org.lemonade.gui.GuiQuestion;
-import org.lemonade.gui.QLGui;
+import org.lemonade.gui.*;
 import org.lemonade.gui.elements.GuiBooleanElement;
 import org.lemonade.gui.elements.GuiDateElement;
 import org.lemonade.gui.elements.GuiDecimalElement;
@@ -105,9 +100,14 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
 
     @Override
     public GuiBody visit(ComputedQuestion question) {
+        GuiIdentifierValue identifier = new GuiIdentifierValue(question.getIdentifier().getValue());
+        GuiElement element = question.getType().accept(this);
+        GuiLabelElement labelElement = new GuiLabelElement(question.getLabel());
+        GuiExpression expression = question.getExpression().accept(this);
+        GuiComputedQuestion guiComputedQuestion = new GuiComputedQuestion(identifier, labelElement, element, expression);
+        qlGui.addQuestion(labelElement, element);
 
-
-        return null;//TODO fixme
+        return guiComputedQuestion;//TODO fixme
     }
 
     @Override

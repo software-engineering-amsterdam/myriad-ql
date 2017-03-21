@@ -1,6 +1,7 @@
 package org.lemonade.visitors;
 
 import org.json.simple.JSONObject;
+import org.lemonade.gui.GuiComputedQuestion;
 import org.lemonade.gui.GuiConditional;
 import org.lemonade.gui.GuiForm;
 import org.lemonade.gui.GuiQuestion;
@@ -19,6 +20,12 @@ public class WriteToJsonVisitor implements GuiBaseElementsVisitor {
         JSONObject json = new JSONObject();
         form.getBodies().forEach(body -> body.accept(this));
         json.put(form.getIdentifier(), formContents);
+    }
+
+
+    @Override
+    public void visit(GuiComputedQuestion question) {
+
     }
 
     @Override

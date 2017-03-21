@@ -278,7 +278,7 @@ public class EvaluateTest {
         assertThat((Boolean) boolTrue.or(boolFalse).getValue()).isTrue();
         assertThat((Boolean) boolFalse.and(boolFalse).getValue()).isFalse();
         assertThat((Boolean) boolFalse.or(boolFalse).getValue()).isFalse();
-        assertThat((Boolean) boolFalse.bang().getValue()).isTrue();
+        assertThat(boolFalse.bang().getValue()).isTrue();
         assertThat(undefined.bang().isDefined()).isFalse();
     }
 
@@ -292,8 +292,8 @@ public class EvaluateTest {
         assertThat(one.gT(undefined).isDefined()).isFalse();
         assertThat(one.gTEq(undefined).isDefined()).isFalse();
         assertThat(one.lTEq(undefined).isDefined()).isFalse();
-        assertThat((Boolean) one.eq(undefined).getValue()).isFalse();
-        assertThat((Boolean) one.nEq(undefined).getValue()).isTrue();
+        assertThat( one.eq(undefined).getValue()).isFalse();
+        assertThat(one.nEq(undefined).getValue()).isTrue();
 
         assertThat(zeroPointFive.plus(undefined).isDefined()).isFalse();
         assertThat(zeroPointFive.min(undefined).isDefined()).isFalse();
@@ -303,8 +303,8 @@ public class EvaluateTest {
         assertThat(zeroPointFive.gT(undefined).isDefined()).isFalse();
         assertThat(zeroPointFive.gTEq(undefined).isDefined()).isFalse();
         assertThat(zeroPointFive.lTEq(undefined).isDefined()).isFalse();
-        assertThat((Boolean) zeroPointFive.eq(undefined).getValue()).isFalse();
-        assertThat((Boolean) zeroPointFive.nEq(undefined).getValue()).isTrue();
+        assertThat(zeroPointFive.eq(undefined).getValue()).isFalse();
+        assertThat(zeroPointFive.nEq(undefined).getValue()).isTrue();
 
         assertThat(oneFifty.plus(undefined).isDefined()).isFalse();
         assertThat(oneFifty.min(undefined).isDefined()).isFalse();
@@ -314,8 +314,8 @@ public class EvaluateTest {
         assertThat(oneFifty.gT(undefined).isDefined()).isFalse();
         assertThat(oneFifty.gTEq(undefined).isDefined()).isFalse();
         assertThat(oneFifty.lTEq(undefined).isDefined()).isFalse();
-        assertThat((Boolean) oneFifty.eq(undefined).getValue()).isFalse();
-        assertThat((Boolean) oneFifty.nEq(undefined).getValue()).isTrue();
+        assertThat( oneFifty.eq(undefined).getValue()).isFalse();
+        assertThat( oneFifty.nEq(undefined).getValue()).isTrue();
 
         assertThat(onePointTwo.plus(undefined).isDefined()).isFalse();
         assertThat(onePointTwo.min(undefined).isDefined()).isFalse();
@@ -325,27 +325,27 @@ public class EvaluateTest {
         assertThat(onePointTwo.gT(undefined).isDefined()).isFalse();
         assertThat(onePointTwo.gTEq(undefined).isDefined()).isFalse();
         assertThat(onePointTwo.lTEq(undefined).isDefined()).isFalse();
-        assertThat((Boolean) onePointTwo.eq(undefined).getValue()).isFalse();
-        assertThat((Boolean) onePointTwo.nEq(undefined).getValue()).isTrue();
+        assertThat( onePointTwo.eq(undefined).getValue()).isFalse();
+        assertThat( onePointTwo.nEq(undefined).getValue()).isTrue();
 
         assertThat(date.lT(undefined).isDefined()).isFalse();
         assertThat(date.gT(undefined).isDefined()).isFalse();
         assertThat(date.gTEq(undefined).isDefined()).isFalse();
         assertThat(date.lTEq(undefined).isDefined()).isFalse();
-        assertThat((Boolean) date.eq(undefined).getValue()).isFalse();
-        assertThat((Boolean) date.nEq(undefined).getValue()).isTrue();
+        assertThat( date.eq(undefined).getValue()).isFalse();
+        assertThat( date.nEq(undefined).getValue()).isTrue();
 
         assertThat(string.lT(undefined).isDefined()).isFalse();
         assertThat(string.gT(undefined).isDefined()).isFalse();
         assertThat(string.gTEq(undefined).isDefined()).isFalse();
         assertThat(string.lTEq(undefined).isDefined()).isFalse();
-        assertThat((Boolean) string.eq(undefined).getValue()).isFalse();
-        assertThat((Boolean) string.nEq(undefined).getValue()).isTrue();
+        assertThat( string.eq(undefined).getValue()).isFalse();
+        assertThat( string.nEq(undefined).getValue()).isTrue();
 
         assertThat(boolTrue.and(undefined).isDefined()).isFalse();
         assertThat(boolTrue.or(undefined).isDefined()).isFalse();
-        assertThat((Boolean) boolTrue.eq(undefined).getValue()).isFalse();
-        assertThat((Boolean) boolTrue.nEq(undefined).getValue()).isTrue();
+        assertThat( boolTrue.eq(undefined).getValue()).isFalse();
+        assertThat( boolTrue.nEq(undefined).getValue()).isTrue();
 
     }
 
