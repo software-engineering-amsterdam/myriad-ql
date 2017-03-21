@@ -3,13 +3,9 @@ stylesheet taxOfficeExample
 page Housing {
     section "You sold a house" {
         question firstName
+            widget slider
         question lastName
-        default money {
-          font: "Arial"
-          fontsize: 14
-          color: #FF0000
-          widget spinbox
-        }
+        default money widget slider
     }
 }
 

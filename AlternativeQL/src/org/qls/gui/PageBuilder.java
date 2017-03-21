@@ -11,6 +11,7 @@ import org.ql.gui.widgets.Widget;
 import org.ql.gui.widgets.WidgetContainer;
 import org.qls.ast.page.*;
 import org.qls.ast.widget.default_widget.DefaultWidget;
+import org.qls.ast.widget.default_widget.DefaultWidgetNoStyle;
 import org.qls.ast.widget.default_widget.DefaultWidgetSet;
 import org.qls.gui.widgets.CustomWidgetContainer;
 
@@ -84,8 +85,9 @@ public class PageBuilder implements WidgetQuestionVisitor<Widget, DefaultWidgetS
     @Override
     public Widget visitCustomWidgetQuestion(CustomWidgetQuestion question, DefaultWidgetSet defaultWidgets) {
         Question formQuestion = findFormQuestion(question);
-        DefaultWidget defaultWidget = defaultWidgets.lookupByType(formQuestion.getType());
+        DefaultWidgetNoStyle defaultWidget = new DefaultWidgetNoStyle(formQuestion.getType(), question.getWidget());
 
+        // TODO make retrieveWidget work with Widget rather than DefaultWidget
         return customWidgetContainer.retrieveWidget(formQuestion, defaultWidget);
     }
 
