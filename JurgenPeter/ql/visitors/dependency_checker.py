@@ -25,11 +25,7 @@ class DependencyChecker(CheckerVisitor):
             self.error("computed question \"{}\" has dependency on "
                        "itself".format(node.name))
 
-        for dependency in dependencies:
-            dependencies += [indirect_dependency
-                             for indirect_dependency in
-                             self.known_dependencies.get(dependency, [])
-                             if indirect_dependency not in dependencies]
+        self.find_indirect_dependencies(dependencies)
 
         for dependency in dependencies:
             if node.name in self.known_dependencies.get(dependency, []):
@@ -56,3 +52,9 @@ class DependencyChecker(CheckerVisitor):
                 self.error("condition depends on question \"{}\" within "
                            "own scope".format(dependency))
         return scope
+
+    def find_indirect_dependencies(self, dependencies):
+        for dependency in dependencies:
+            for indirect_dependency in self.known_dependencies.get(dependency, []):
+                if indirect_dependency not in dependencies:
+                    dependencies.append(indirect_dependency)
