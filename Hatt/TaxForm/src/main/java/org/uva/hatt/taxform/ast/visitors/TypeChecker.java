@@ -116,11 +116,11 @@ public class TypeChecker implements Visitor{
 
     @Override
     public ValueType visit(Identifier identifier) {
-        if (declarations.keySet().contains(identifier.getId())) {
-            return declarations.get(identifier.getId());
-        }
-
-        exceptionHandler.addError(new UndefinedReference(identifier.getLineNumber(), identifier.getId()));
+//        if (declarations.keySet().contains(identifier.getId())) {
+//            return declarations.get(identifier.getId());
+//        }
+//
+//        exceptionHandler.addError(new UndefinedReference(identifier.getLineNumber(), identifier.getId()));
         return null;
     }
 
@@ -175,6 +175,16 @@ public class TypeChecker implements Visitor{
     @Override
     public Set<java.lang.String> visit(LessThanOrEqual lessThanOrEqual){
         return visitBinaryExpression(lessThanOrEqual);
+    }
+
+    @Override
+    public LogicalAnd visit(LogicalAnd logicalAnd) {
+        return null;
+    }
+
+    @Override
+    public LogicalOr visit(LogicalOr logicalOr) {
+        return null;
     }
 
 //    @Override

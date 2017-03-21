@@ -40,8 +40,8 @@ public interface Visitor<T> {
     T visit(GreaterThanOrEqual greaterThanOrEqual);
     T visit(LessThan lessThan);
     T visit(LessThanOrEqual lessThanOrEqual);
-//    T visit(LogicalAnd logicalAnd);
-//    T visit(LogicalOr logicalOr);
+    T visit(LogicalAnd logicalAnd);
+    T visit(LogicalOr logicalOr);
     T visit(Multiplication multiplication);
     T visit(NotEqual notEqual);
     T visit(Subtraction subtraction);
