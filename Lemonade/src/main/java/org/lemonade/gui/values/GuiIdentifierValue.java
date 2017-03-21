@@ -26,4 +26,10 @@ public class GuiIdentifierValue extends GuiValue<String> {
         return visitor.visit(this);
     }
 
+    // Implemented for writing to JSON
+    @Override
+    public String toString() {
+        return this.value;
+    }
+
 }

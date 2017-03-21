@@ -3,7 +3,6 @@ package org.lemonade.visitors;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.lemonade.gui.GuiBody;
 import org.lemonade.gui.GuiConditional;
 import org.lemonade.gui.GuiExpression;
 import org.lemonade.gui.GuiForm;
@@ -33,12 +32,10 @@ import org.lemonade.gui.values.GuiNumericalValue;
 import org.lemonade.gui.values.GuiStringValue;
 import org.lemonade.gui.values.GuiUndefinedValue;
 import org.lemonade.gui.values.GuiValue;
+import org.lemonade.visitors.interfaces.GuiBaseElementsVisitor;
 import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 
-/**
- *
- */
-public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, UpdateVisitor {
+public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, GuiBaseElementsVisitor {
 
     public Map<String, GuiValue<?>> guiEnvironment;
 
@@ -48,21 +45,16 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public void visit(final GuiForm form) {
-        System.err.println("Evaluate starts");
-        for (GuiBody body : form.getBodies()) {
-            body.accept(this);
-        }
+        form.getBodies().forEach(body -> body.accept(this));
     }
 
     @Override
     public void visit(final GuiQuestion question) {
-        System.err.println(question.getElement().getValue());
         guiEnvironment.put(question.getIdentifier().getValue(), question.getElement().getValue());
     }
 
     @Override
     public void visit(final GuiConditional conditional) {
-        System.err.println("entering condition");
         GuiValue<?> condition = (GuiValue<?>) conditional.getCondition().accept(this);
         if (condition.isDefined() && ((GuiBooleanValue) condition).getValue()) {
             conditional.isVisible(true);
@@ -88,7 +80,6 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public GuiExpression visit(final GuiEqBinary guiEqBinary) {
-        System.err.println("entering equal");
         GuiValue<?> left = (GuiValue<?>) guiEqBinary.getLeft().accept(this);
         GuiValue<?> right = (GuiValue<?>) guiEqBinary.getRight().accept(this);
         return left.eq(right);
@@ -152,7 +143,6 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public GuiExpression visit(final GuiProductBinary guiProductBinary) {
-        System.err.println("product");
         GuiValue<?> left = (GuiValue<?>) guiProductBinary.getLeft().accept(this);
         GuiValue<?> right = (GuiValue<?>) guiProductBinary.getRight().accept(this);
         return left.prod(right);

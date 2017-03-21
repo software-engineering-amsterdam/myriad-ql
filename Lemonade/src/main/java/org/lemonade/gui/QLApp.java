@@ -20,6 +20,7 @@ import org.lemonade.visitors.EvaluateVisitor;
 import org.lemonade.visitors.FormVisitor;
 import org.lemonade.visitors.GuiVisitor;
 import org.lemonade.visitors.TypeCheckVisitor;
+import org.lemonade.visitors.WriteToJsonVisitor;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -27,6 +28,7 @@ import javafx.stage.Stage;
 public class QLApp extends Application implements ButtonCallback {
 
     private QLGui qlGui;
+    private GuiForm guiRoot;
 
     // JavaFX initialisation method
     @Override
@@ -38,8 +40,6 @@ public class QLApp extends Application implements ButtonCallback {
     // Called on file submit
     @Override
     public void goToQuestionnaire() {
-        GuiForm guiRoot;
-
         try {
             Form root = parseFile(qlGui.getFile());
             validateForm(root);
@@ -63,10 +63,13 @@ public class QLApp extends Application implements ButtonCallback {
         }
     }
 
-    // On submit, if
+    // Writes all answers to JSON file
     @Override
     public void submitForm() {
-        System.err.println("In submit");
+        if (guiRoot != null) {
+            WriteToJsonVisitor jsonVisitor = new WriteToJsonVisitor();
+            guiRoot.accept(jsonVisitor);
+        }
     }
 
     private Form parseFile(final File file) throws IOException, InvalidFormException {

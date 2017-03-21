@@ -102,7 +102,13 @@ public class QLGui {
 
     public void setUpQuestionnaireScene(ButtonCallback buttonCallback) {
         final Button submitQuestionnaireButton = new Button("Submit form");
-        submitQuestionnaireButton.setOnAction(e -> buttonCallback.submitForm());
+        submitQuestionnaireButton.setOnAction(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add((new FileChooser.ExtensionFilter("Save to .json", "*.json")));
+            fileChooser.setTitle("Save to JSON");
+            File file = fileChooser.showSaveDialog(stage);
+            buttonCallback.submitForm();
+        });
 
         final Button backButton = new Button("Select new questionnaire");
         backButton.setOnAction(e -> stage.setScene(selectionScene));
@@ -169,5 +175,9 @@ public class QLGui {
 
     public void goToQuestionnaire() {
         this.stage.setScene(questionnaireScene);
+    }
+
+    public void writeToJson(final String json) {
+
     }
 }

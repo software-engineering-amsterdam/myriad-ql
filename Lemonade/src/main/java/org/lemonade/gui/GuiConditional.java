@@ -2,7 +2,7 @@ package org.lemonade.gui;
 
 import java.util.List;
 
-import org.lemonade.visitors.EvaluateVisitor;
+import org.lemonade.visitors.interfaces.GuiBaseElementsVisitor;
 
 public class GuiConditional extends GuiBody {
 
@@ -27,7 +27,7 @@ public class GuiConditional extends GuiBody {
         return true;
     }
 
-    public void accept(EvaluateVisitor visitor) {
+    public void accept(GuiBaseElementsVisitor visitor) {
         visitor.visit(this);
     }
 

@@ -140,4 +140,10 @@ public abstract class GuiValue<T> implements GuiExpression {
     public GuiValue<?> doLt(GuiStringValue that) {throw new NotSupportedException(); }
     public GuiValue<?> doGtE(GuiStringValue that) {throw new NotSupportedException(); }
     public GuiValue<?> doLtE(GuiStringValue that) {throw new NotSupportedException(); }
+
+    // Implemented for writing to JSON
+    @Override
+    public String toString() {
+        return getValue() != null ? getValue().toString() : "undefined";
+    }
 }

@@ -4,7 +4,7 @@ import org.lemonade.gui.values.GuiStringValue;
 
 import javafx.scene.control.Label;
 
-public class GuiLabelElement implements GuiElement {
+public class GuiLabelElement extends GuiElement {
 
     private GuiStringValue value;
     private Label label;

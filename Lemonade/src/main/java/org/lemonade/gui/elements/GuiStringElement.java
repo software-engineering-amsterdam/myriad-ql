@@ -6,7 +6,7 @@ import org.lemonade.gui.values.GuiValue;
 
 import javafx.scene.control.TextField;
 
-public class GuiStringElement implements GuiElement {
+public class GuiStringElement extends GuiElement {
 
     private GuiValue<?> value;
     private TextField textField;
