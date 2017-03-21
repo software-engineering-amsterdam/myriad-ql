@@ -414,3 +414,41 @@ class TestEvaluator(Shared):
         self.assertEqual(2, environment.value(expected_identifier_3), "Evaluation should result in 2")
         self.assertEqual(4, environment.value(expected_identifier_4), "Evaluation should result in 2")
         self.assertEqual(10, environment.value(expected_identifier_5), "Evaluation should result in 2")
+
+    def test_eval_cyclic_value_dependency_loop_(self):
+        input_string = """
+        form taxOfficeExample {
+            "q1" v1: integer = v2 * 2
+            "q2" v2: integer = v3
+            "q3" v3: integer = v4
+            "q4" v4: integer = v5
+            "q5" v5: integer
+
+        }
+        """
+        ast = self.acquire_ast(input_string)
+        evaluator = Evaluator(ast)
+        environment = evaluator.visit()
+
+        expected_identifier_1 = 'v1'
+        self.assertTrue(environment.contains(expected_identifier_1), "Environment should contain key v1")
+        self.assertEqual(0, environment.value(expected_identifier_1), "Evaluation should result in 0")
+        expected_identifier_2 = 'v2'
+        self.assertTrue(environment.contains(expected_identifier_2), "Environment should contain key v2")
+        self.assertEqual(0, environment.value(expected_identifier_2), "Evaluation should result in 0")
+        expected_identifier_3 = 'v3'
+        self.assertTrue(environment.contains(expected_identifier_3), "Environment should contain key v3")
+        self.assertEqual(0, environment.value(expected_identifier_3), "Evaluation should result in 0")
+        expected_identifier_4 = 'v4'
+        self.assertTrue(environment.contains(expected_identifier_4), "Environment should contain key v4")
+        self.assertEqual(0, environment.value(expected_identifier_4), "Evaluation should result in 0")
+        expected_identifier_5 = 'v5'
+        self.assertTrue(environment.contains(expected_identifier_5), "Environment should contain key v5")
+        self.assertEqual(0, environment.value(expected_identifier_5), "Evaluation should result in 0")
+
+        environment = evaluator.visit(environment.update(expected_identifier_5, 2))
+        self.assertEqual(4, environment.value(expected_identifier_1), "Evaluation should result in 4")
+        self.assertEqual(2, environment.value(expected_identifier_2), "Evaluation should result in 2")
+        self.assertEqual(2, environment.value(expected_identifier_3), "Evaluation should result in 2")
+        self.assertEqual(2, environment.value(expected_identifier_4), "Evaluation should result in 2")
+        self.assertEqual(2, environment.value(expected_identifier_5), "Evaluation should result in 2")
