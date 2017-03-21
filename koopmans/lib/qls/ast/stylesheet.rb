@@ -8,8 +8,8 @@ module QLS
         @pages    = pages
       end
 
-      def accept(visitor)
-        visitor.visit_stylesheet(self)
+      def accept(visitor, collected_data = nil)
+        visitor.visit_stylesheet(self, collected_data)
       end
     end
   end

@@ -4,17 +4,20 @@ module QLS
   module Parser
     class FormTransformer < Parslet::Transform
       include AST
+      # variable
+      rule(variable: simple(:name)) { QL::AST::Variable.new(name) }
+
       # stylesheet
-      rule(stylesheet: { variable: simple(:variable), pages: subtree(:pages) }) { Stylesheet.new(variable, pages) }
+      rule(stylesheet: { id: simple(:variable), pages: subtree(:pages) }) { Stylesheet.new(variable, pages) }
 
       # page
-      rule(page: { variable: simple(:variable), body: subtree(:body) }) { Page.new(variable, body) }
+      rule(page: { id: simple(:variable), body: subtree(:body) }) { Page.new(variable, body) }
 
       # section
       rule(section: { string_literal: simple(:name), body: subtree(:body) }) { Section.new(name, body) }
 
       # question
-      rule(question: { variable: simple(:name), properties: subtree(:properties) }) { Question.new(QL::AST::Variable.new(name), properties) }
+      rule(question: { id: simple(:name), properties: subtree(:properties) }) { Question.new(QL::AST::Variable.new(name), properties) }
 
       # types
       rule(type: 'boolean') { QL::AST::BooleanType.new }
