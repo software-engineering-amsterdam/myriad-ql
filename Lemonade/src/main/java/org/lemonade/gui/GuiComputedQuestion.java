@@ -43,12 +43,4 @@ public class GuiComputedQuestion extends GuiQuestion {
         return true;
     }
 
-    @Override
-    public void isVisible(boolean flag) {//FIXME doesnt work properly
-        valueElement.getWidget().getParent().setVisible(flag);
-        labelElement.getWidget().getParent().setVisible(flag);
-        if (!flag) {
-            valueElement.clear();
-        }
-    }
 }

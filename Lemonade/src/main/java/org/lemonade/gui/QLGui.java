@@ -136,7 +136,6 @@ public class QLGui {
         AnchorPane.setTopAnchor(questionsGridPane, 10.0);
         AnchorPane.setLeftAnchor(questionsGridPane, 5.0);
         AnchorPane.setRightAnchor(questionsGridPane, 5.0);
-
         rootGroup.getChildren().addAll(questionsGridPane, hBox);
         rootGroup.setPadding(new Insets(10, 10, 10, 10));
 
@@ -147,11 +146,11 @@ public class QLGui {
         errorBox.getChildren().clear();
         errorBox.getChildren().add(new Label(message));
 
-        for (String item : errors) {
-            Label label = new Label(item);
+        errors.forEach(error -> {
+            Label label = new Label(error);
             label.setTextFill(Color.RED);
             errorBox.getChildren().add(label);
-        }
+        });
     }
 
     public void addQuestion(GuiQuestion guiQuestion) {

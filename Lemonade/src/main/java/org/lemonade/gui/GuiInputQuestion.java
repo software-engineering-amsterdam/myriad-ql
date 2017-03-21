@@ -18,10 +18,4 @@ public class GuiInputQuestion extends GuiQuestion {
         return element;
     }
 
-    @Override
-    public void isVisible(final boolean flag) {
-        element.getWidget().getParent().setVisible(flag);
-        if (!flag)
-            element.clear();
-    }
 }

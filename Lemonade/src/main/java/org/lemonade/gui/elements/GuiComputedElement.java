@@ -1,13 +1,11 @@
 package org.lemonade.gui.elements;
 
+import org.lemonade.gui.values.GuiUndefinedValue;
 import org.lemonade.gui.values.GuiValue;
 
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 
-/**
- *
- */
 public class GuiComputedElement extends GuiElement {
     private GuiValue<?> value;
     private Label label;
@@ -34,7 +32,8 @@ public class GuiComputedElement extends GuiElement {
 
     @Override
     public void clear() {
-
+        value = new GuiUndefinedValue();
+        label.setText("");
     }
 
 }

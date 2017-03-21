@@ -55,8 +55,12 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Gui
     @Override
     public void visit(GuiComputedQuestion question) {
         GuiValue<?> computedValue = (GuiValue<?>) question.getExpression().accept(this);
-        GuiComputedElement element = question.getValueElement();
-        element.update(computedValue);
+        if (computedValue.isDefined()) {
+            question.getValueElement().update(computedValue);
+            question.isVisible(true);
+        } else {
+            question.isVisible(false);
+        }
     }
 
     @Override
