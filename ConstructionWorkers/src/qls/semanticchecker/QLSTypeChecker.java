@@ -96,27 +96,27 @@ public class QLSTypeChecker implements StyleSheetVisitor {
 
     @Override
     public void visit(StyleSheet styleSheet) {
-        for (Section section : styleSheet.getSections()) {
-            section.accept(this);
-        }
-
         for (DefaultStyle style : styleSheet.getDefaultStyle()) {
             if (!style.getWidget().isUndefined()) {
                 currentDefaultWidget = style.getWidget();
             }
         }
+
+        for (Section section : styleSheet.getSections()) {
+            section.accept(this);
+        }
     }
 
     @Override
     public void visit(Section section) {
-        for (Section subSection : section.getSections()) {
-            subSection.accept(this);
-        }
-
         for (DefaultStyle style : section.getDefaultStyles()) {
             if (!style.getWidget().isUndefined()) {
                 currentDefaultWidget = style.getWidget();
             }
+        }
+
+        for (Section subSection : section.getSections()) {
+            subSection.accept(this);
         }
 
         for (StyleQuestion question : section.getQuestions()) {
