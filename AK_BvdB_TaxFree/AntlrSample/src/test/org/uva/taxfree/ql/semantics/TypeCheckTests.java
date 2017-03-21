@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.uva.taxfree.ql.gui.MessageList;
+import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.Node;
 import org.uva.taxfree.ql.model.node.declarations.CalculationNode;
@@ -19,6 +20,7 @@ import org.uva.taxfree.ql.model.types.IntegerType;
 import org.uva.taxfree.ql.model.types.Type;
 
 public class TypeCheckTests {
+    private final SourceInfo mEmptySourceInfo = new SourceInfo(0, 0, 0, 0);
     private SymbolTable mSymbolTable;
     private MessageList mMessageList;
 
@@ -30,10 +32,11 @@ public class TypeCheckTests {
 
     @Test
     public void testCorrectTypes() throws Exception {
-        assertTypes(new BinaryExpressionNode(new IntegerLiteralNode(5),
+        assertTypes(new BinaryExpressionNode(new IntegerLiteralNode(5, mEmptySourceInfo),
                         new AddOperator(),
-                        new IntegerLiteralNode(6)),
-                0);
+                        new IntegerLiteralNode(6, mEmptySourceInfo),
+                        mEmptySourceInfo),
+                1);
 
     }
 
@@ -41,46 +44,51 @@ public class TypeCheckTests {
     public void testCalculationSemantics() throws Exception {
         assertTypes(new CalculationNode("MyCalc", "intCalculation",
                         new IntegerType(),
-                        new BinaryExpressionNode(new IntegerLiteralNode(10),
+                        new BinaryExpressionNode(new IntegerLiteralNode(10, mEmptySourceInfo),
                                 new AddOperator(),
-                                new IntegerLiteralNode(5))),
-                0);
+                                new IntegerLiteralNode(5, mEmptySourceInfo),
+                                mEmptySourceInfo),
+                        mEmptySourceInfo),
+                1);
 
     }
 
     @Test
     public void testIncorrectTypes() throws Exception {
-        assertTypes(new BinaryExpressionNode(new IntegerLiteralNode(10),
+        assertTypes(new BinaryExpressionNode(new IntegerLiteralNode(10, mEmptySourceInfo),
                         new EqualsOperator(),
-                        new BooleanLiteralNode(false)),
-                1);
+                        new BooleanLiteralNode(false, mEmptySourceInfo),
+                        mEmptySourceInfo),
+                2);
     }
 
     @Test
     public void testIncorrectTypesAndOperator() throws Exception {
-        assertTypes(new BinaryExpressionNode(new IntegerLiteralNode(12),
+        assertTypes(new BinaryExpressionNode(new IntegerLiteralNode(12, mEmptySourceInfo),
                         new MultiplyOperator(),
-                        new BooleanLiteralNode(true)),
-                2
+                        new BooleanLiteralNode(true, mEmptySourceInfo),
+                        mEmptySourceInfo),
+                3
         );
     }
 
-    public void assertTypes(Node node, int expectedErrorAmount) {
+    public void assertTypes(Node node, int expectedMessageAmount) {
         node.fillSymbolTable(mSymbolTable);
         node.checkSemantics(mSymbolTable, mMessageList);
-        Assert.assertEquals(mMessageList.messageAmount(), expectedErrorAmount, "Invalid amount of messaged received");
+        System.out.println(mMessageList);
+        Assert.assertEquals(mMessageList.messageAmount(), expectedMessageAmount, "Invalid amount of messages received");
     }
 
     @Test
     public void testTypes() throws Exception {
-        BinaryExpressionNode b = new BinaryExpressionNode(new IntegerLiteralNode(5), new GreaterThanOperator(), new IntegerLiteralNode(15));
+        BinaryExpressionNode b = new BinaryExpressionNode(new IntegerLiteralNode(5, mEmptySourceInfo), new GreaterThanOperator(), new IntegerLiteralNode(15, mEmptySourceInfo), mEmptySourceInfo);
         Type expressionType = b.getType();
         Assert.assertTrue(expressionType.equals(new BooleanType()), "Comparing ints should yield boolean");
     }
 
     @Test
     public void testBooleanTypes() throws Exception {
-        BinaryExpressionNode b = new BinaryExpressionNode(new BooleanLiteralNode(true), new EqualsOperator(), new BooleanLiteralNode(true));
+        BinaryExpressionNode b = new BinaryExpressionNode(new BooleanLiteralNode(true, mEmptySourceInfo), new EqualsOperator(), new BooleanLiteralNode(true, mEmptySourceInfo), mEmptySourceInfo);
         Type expressionType = b.getType();
         Assert.assertTrue(expressionType.equals(new BooleanType()), "Comparing booleans should yield booleans");
     }

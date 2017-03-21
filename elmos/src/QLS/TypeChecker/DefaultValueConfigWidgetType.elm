@@ -11,7 +11,11 @@ import Tuple3
 check : Form -> StyleSheet -> List Message
 check _ styleSheet =
     QLSCollectors.collectDefaultValueConfigs styleSheet
-        |> List.filterMap (\( location, vt, conf ) -> Maybe.map ((,,) location vt) (configuredWidget conf))
+        |> List.filterMap
+            (\( location, valueType, conf ) ->
+                configuredWidget conf
+                    |> Maybe.map ((,,) location valueType)
+            )
         |> List.filter (not << WidgetCompatibility.allowedValueTypeWidgetPair << Tuple3.tail)
         |> List.map asMessage
 

@@ -2,6 +2,7 @@ package org.uva.taxfree.ql.model.node.blocks;
 
 import org.uva.taxfree.ql.gui.MessageList;
 import org.uva.taxfree.ql.gui.QuestionForm;
+import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.Node;
 
@@ -10,7 +11,8 @@ import java.util.List;
 public abstract class BlockNode extends Node {
     private final List<Node> mChildren;
 
-    public BlockNode(List<Node> children) {
+    public BlockNode(List<Node> children, SourceInfo sourceInfo) {
+        super(sourceInfo);
         mChildren = children; ///< preserves the order in which the items were inserted
     }
 

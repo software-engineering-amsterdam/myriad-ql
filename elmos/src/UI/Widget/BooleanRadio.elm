@@ -22,8 +22,12 @@ view { identifier, env, onChange, editable } optionLabels =
             ]
     in
         div []
-            (List.zip optionLabels selections
-                |> List.map (\( optionLabel, ( isSelected, value ) ) -> renderOption editable optionLabel isSelected (onChange value))
+            (selections
+                |> List.zip optionLabels
+                |> List.map
+                    (\( optionLabel, ( isSelected, value ) ) ->
+                        renderOption editable optionLabel isSelected (onChange value)
+                    )
             )
 
 

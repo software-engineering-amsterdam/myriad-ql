@@ -2,7 +2,6 @@ package com.matthewchapman.ql.validation.structure;
 
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
-import com.matthewchapman.ql.ast.atomic.Type;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
@@ -14,9 +13,10 @@ import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
-import com.matthewchapman.ql.core.QLErrorLogger;
-import com.matthewchapman.ql.validation.visitors.QLExpressionVisitor;
-import com.matthewchapman.ql.validation.visitors.QLStatementVisitor;
+import com.matthewchapman.ql.core.ErrorLogger;
+import com.matthewchapman.ql.validation.type.TypeTable;
+import com.matthewchapman.ql.validation.visitors.ExpressionVisitor;
+import com.matthewchapman.ql.validation.visitors.StatementVisitor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,15 +28,15 @@ import java.util.Map;
  * <p>
  * Exists to ensure that all expressions reference parameters correctly
  */
-public class QLExpressionChecker implements QLStatementVisitor<Void, String>, QLExpressionVisitor<Void, String> {
+public class ExpressionChecker implements StatementVisitor<Void, String>, ExpressionVisitor<Void, String> {
 
-    private Map<String, Type> typeTable;
-    private QLErrorLogger logger;
-    private HashMap<String, List<Parameter>> expressionMap;
+    private TypeTable typeTable;
+    private ErrorLogger logger;
+    private Map<String, List<Parameter>> expressionMap;
 
-    public QLErrorLogger checkExpressions(Form form, Map<String, Type> typeTable) {
+    public ErrorLogger checkExpressions(Form form, TypeTable typeTable) {
         this.typeTable = typeTable;
-        this.logger = new QLErrorLogger();
+        this.logger = new ErrorLogger();
         this.expressionMap = new HashMap<>();
 
         for (Statement statement : form.getStatements()) {
@@ -52,10 +52,10 @@ public class QLExpressionChecker implements QLStatementVisitor<Void, String>, QL
         return this.expressionMap;
     }
 
-    private void checkForMissingParameters(Map<String, Type> typeTable) {
+    private void checkForMissingParameters(TypeTable typeTable) {
         for (HashMap.Entry<String, List<Parameter>> entry : expressionMap.entrySet()) {
             for (Parameter parameter : entry.getValue()) {
-                if (!typeTable.containsKey(parameter.getID())) {
+                if (!typeTable.containsEntry(parameter.getID())) {
                     logger.addError(parameter.getLine(), parameter.getColumn(), parameter.getID(), "Referenced parameter does not exist");
                 }
             }
@@ -206,7 +206,7 @@ public class QLExpressionChecker implements QLStatementVisitor<Void, String>, QL
     @Override
     public Void visit(Parameter parameter, String context) {
         //handle if statements
-        if (!typeTable.containsKey(parameter.getID())) {
+        if (!typeTable.containsEntry(parameter.getID())) {
             logger.addError(parameter.getLine(), parameter.getColumn(), parameter.getID(), "Referenced parameter does not exist");
             return null;
         }

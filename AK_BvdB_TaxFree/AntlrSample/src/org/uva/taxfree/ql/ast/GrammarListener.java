@@ -1,8 +1,10 @@
 package org.uva.taxfree.ql.ast;
 
+import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.uva.taxfree.ql.gen.QLGrammarBaseListener;
 import org.uva.taxfree.ql.gen.QLGrammarParser;
+import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.node.Node;
 import org.uva.taxfree.ql.model.node.blocks.BlockNode;
 import org.uva.taxfree.ql.model.node.blocks.FormNode;
@@ -46,6 +48,23 @@ public class GrammarListener extends QLGrammarBaseListener {
         return mCachedConditions.remove(mCachedConditions.size() - 1);
     }
 
+    private SourceInfo createSourceInfo(ParserRuleContext context) {
+        int startLineNumber = context.getStart().getLine();
+        int startColumn = context.getStart().getCharPositionInLine();
+        int endLineNumber = context.getStop().getLine();
+        int endColumn = calcEndColumn(startLineNumber, startColumn, endLineNumber, context);
+        return new SourceInfo(startLineNumber, startColumn, endLineNumber, endColumn);
+    }
+
+    private int calcEndColumn(int startLineNumber, int endLineNumber, int startColumn, ParserRuleContext context) {
+        int endColumn = context.getStop().getCharPositionInLine();
+        if (startLineNumber == endLineNumber && startColumn == endColumn) {
+            // Literals have an invalid endColumn, so we need to calculate it by ourselves
+            endColumn = startColumn + context.getText().length();
+        }
+        return endColumn;
+    }
+
     // Enters
     @Override
     public void enterForm(QLGrammarParser.FormContext ctx) {
@@ -69,7 +88,7 @@ public class GrammarListener extends QLGrammarBaseListener {
         } else {
             throw new TypeNotPresentException(varTypeText, new Throwable("This is an unsupported type for QL!"));
         }
-        DeclarationNode questionNode = new DeclarationNode(questionText, questionId, questionType);
+        DeclarationNode questionNode = new DeclarationNode(questionText, questionId, questionType, createSourceInfo(ctx));
         addDeclaration(questionNode);
     }
 
@@ -88,28 +107,28 @@ public class GrammarListener extends QLGrammarBaseListener {
     @Override
     public void enterBooleanLiteral(QLGrammarParser.BooleanLiteralContext ctx) {
         super.enterBooleanLiteral(ctx);
-        ExpressionNode booleanLiteralNode = new BooleanLiteralNode(Boolean.valueOf(ctx.getText()));
+        ExpressionNode booleanLiteralNode = new BooleanLiteralNode(Boolean.valueOf(ctx.getText()), createSourceInfo(ctx));
         addToStack(booleanLiteralNode);
     }
 
     @Override
     public void enterStringLiteral(QLGrammarParser.StringLiteralContext ctx) {
         super.enterStringLiteral(ctx);
-        ExpressionNode stringLiteralNode = new StringLiteralNode(ctx.getText());
+        ExpressionNode stringLiteralNode = new StringLiteralNode(ctx.getText(), createSourceInfo(ctx));
         addToStack(stringLiteralNode);
     }
 
     @Override
     public void enterIntegerLiteral(QLGrammarParser.IntegerLiteralContext ctx) {
         super.enterIntegerLiteral(ctx);
-        ExpressionNode integerLiteralNode = new IntegerLiteralNode(Integer.valueOf(ctx.getText()));
+        ExpressionNode integerLiteralNode = new IntegerLiteralNode(Integer.valueOf(ctx.getText()), createSourceInfo(ctx));
         addToStack(integerLiteralNode);
     }
 
     @Override
     public void enterVarNameLiteral(QLGrammarParser.VarNameLiteralContext ctx) {
         super.enterVarNameLiteral(ctx);
-        ExpressionNode varNameLiteral = new VariableLiteralNode(ctx.getText()); // TODO: VAR has no symboltable anymore!
+        ExpressionNode varNameLiteral = new VariableLiteralNode(ctx.getText(), createSourceInfo(ctx));
         addToStack(varNameLiteral);
     }
 
@@ -145,7 +164,7 @@ public class GrammarListener extends QLGrammarBaseListener {
         } else {
             throw new TypeNotPresentException(varTypeText, new Throwable("This is an unsupported type for QL!"));
         }
-        DeclarationNode calculatedNode = new CalculationNode(fieldDescription, fieldId, fieldType, popCachedCondition());
+        DeclarationNode calculatedNode = new CalculationNode(fieldDescription, fieldId, fieldType, popCachedCondition(), createSourceInfo(ctx));
         addDeclaration(calculatedNode);
     }
 
@@ -153,7 +172,8 @@ public class GrammarListener extends QLGrammarBaseListener {
     public void exitBinaryExpression(BinaryExpressionContext ctx) {
         super.exitBinaryExpression(ctx);
         Operator operator = createOperator(ctx.op);
-        ExpressionNode booleanExpressionNode = new BinaryExpressionNode(popCachedCondition(), operator, popCachedCondition());
+        ExpressionNode rightExpressionNode = popCachedCondition();
+        ExpressionNode booleanExpressionNode = new BinaryExpressionNode(popCachedCondition(), operator, rightExpressionNode, createSourceInfo(ctx));
         addToStack(booleanExpressionNode);
     }
 
@@ -172,7 +192,7 @@ public class GrammarListener extends QLGrammarBaseListener {
             case OP_SMALLEROREQUAL:
                 return new LessEqualOperator();
             case OP_BIGGER:
-                return new GreaterEqualOperator();
+                return new GreaterThanOperator();
             case OP_BIGGEROREQUAL:
                 return new GreaterEqualOperator();
             case OP_EQUALS:
@@ -191,14 +211,14 @@ public class GrammarListener extends QLGrammarBaseListener {
     @Override
     public void exitParenthesizedExpression(QLGrammarParser.ParenthesizedExpressionContext ctx) {
         super.exitParenthesizedExpression(ctx);
-        ExpressionNode parenthesizedExpressionNode = new ParenthesizedExpressionNode(popCachedCondition());
+        ExpressionNode parenthesizedExpressionNode = new ParenthesizedExpressionNode(popCachedCondition(), createSourceInfo(ctx));
         addToStack(parenthesizedExpressionNode);
     }
 
     @Override
     public void exitIfStatement(QLGrammarParser.IfStatementContext ctx) {
         super.exitIfStatement(ctx);
-        BlockNode ifStatementNode = new IfStatementNode(popCachedCondition(), popChildStack());
+        BlockNode ifStatementNode = new IfStatementNode(popCachedCondition(), popChildStack(), createSourceInfo(ctx));
         addToStack(ifStatementNode);
     }
 
@@ -215,14 +235,14 @@ public class GrammarListener extends QLGrammarBaseListener {
         List<Node> thenStatementNodes = new ArrayList<>(allChildes.subList(0, splitIndex));
         List<Node> elseStatementNodes = new ArrayList<>(allChildes.subList(splitIndex, allChildes.size()));
 
-        BlockNode ifElseStatementNode = new IfElseStatementNode(popCachedCondition(), thenStatementNodes, elseStatementNodes);
+        BlockNode ifElseStatementNode = new IfElseStatementNode(popCachedCondition(), thenStatementNodes, elseStatementNodes,createSourceInfo(ctx));
         addToStack(ifElseStatementNode);
     }
 
     @Override
     public void exitForm(QLGrammarParser.FormContext ctx) {
         super.exitForm(ctx);
-        mRootNode = new FormNode(ctx.VARIABLE_LITERAL().getText(), popChildStack());
+        mRootNode = new FormNode(ctx.VARIABLE_LITERAL().getText(), popChildStack(), createSourceInfo(ctx));
         if (!mChildsStack.isEmpty()) {
             throw new AssertionError("Stack should be empty when we finished creating our AST.");
         }

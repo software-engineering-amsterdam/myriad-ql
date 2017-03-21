@@ -3,6 +3,7 @@ package test.org.uva.taxfree.ql.ui;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.uva.taxfree.ql.gui.QuestionForm;
+import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.Node;
 import org.uva.taxfree.ql.model.node.blocks.BlockNode;
@@ -28,8 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionFormTest {
+    private final SourceInfo mEmptySource = new SourceInfo(0, 0, 0, 0);
     private final SymbolTable mSymbolTable = new SymbolTable();
-
 
     public static void main(String args[]) {
         QuestionFormTest main = new QuestionFormTest();
@@ -54,31 +55,33 @@ public class QuestionFormTest {
 
     @Test
     public void testSimpleQuestions() throws Exception {
-
-        add(new DeclarationNode("What is your name?", "userName", new StringType()));
-        add(new DeclarationNode("Did you sell a house?", "hasSoldHouse", new BooleanType()));
-        add(new DeclarationNode("Did you buy a house?", "hasBoughtHouse", new BooleanType()));
+        add(new DeclarationNode("What is your name?", "userName", new StringType(), mEmptySource));
+        add(new DeclarationNode("Did you sell a house?", "hasSoldHouse", new BooleanType(), mEmptySource));
+        add(new DeclarationNode("Did you buy a house?", "hasBoughtHouse", new BooleanType(), mEmptySource));
     }
 
     @Test
     public void testCalculatedQuestion() throws Exception {
 
-        DeclarationNode QuestionSold = new DeclarationNode("What is the value of the sold house?", "soldHouseValue", new IntegerType());
-        DeclarationNode QuestionBought = new DeclarationNode("What is the value of the bought house?", "boughtHouseValue", new IntegerType());
+        DeclarationNode QuestionSold = new DeclarationNode("What is the value of the sold house?", "soldHouseValue", new IntegerType(), mEmptySource);
+        DeclarationNode QuestionBought = new DeclarationNode("What is the value of the bought house?", "boughtHouseValue", new IntegerType(), mEmptySource);
 
         add(QuestionSold);
         add(QuestionBought);
 
-        VariableLiteralNode variableSold = new VariableLiteralNode("soldHouseValue");
-        VariableLiteralNode variableBought = new VariableLiteralNode("boughtHouseValue");
+        VariableLiteralNode variableSold = new VariableLiteralNode("soldHouseValue", mEmptySource);
+        VariableLiteralNode variableBought = new VariableLiteralNode("boughtHouseValue", mEmptySource);
 
-        BinaryExpressionNode expCalc = new BinaryExpressionNode(variableSold, new SubtractOperator(), variableBought);
-        CalculationNode intCalc = new CalculationNode("Money balance:", "moneyBalance", new IntegerType(), expCalc);
+        BinaryExpressionNode expCalc = new BinaryExpressionNode(variableSold, new SubtractOperator(), variableBought, mEmptySource);
+        CalculationNode intCalc = new CalculationNode("Money balance:", "moneyBalance", new IntegerType(), expCalc, mEmptySource);
 
-//        Assert.assertEquals(expCalc.resolveValue(), "(0-0)", "Nodes should have ability to resolveValue data");
-        Assert.assertEquals(expCalc.evaluate(), "0", "Nodes should be able to calculate the result");
         add(intCalc);
-        expCalc.evaluate();
+        add(expCalc);
+
+        mSymbolTable.updateValue("soldHouseValue", "100000");
+        mSymbolTable.updateValue("boughtHouseValue", "50000");
+
+        Assert.assertEquals(intCalc.resolveValue(), "50000", "100k - 50k = 50k");
     }
 
     @Test
@@ -87,9 +90,8 @@ public class QuestionFormTest {
         List<Node> ifQuestions = new ArrayList<>();
         ifQuestions.add(createNestedIfStatement());
         List<Node> elseQuestions = new ArrayList<>();
-        elseQuestions.add(new DeclarationNode("Am I in the else?", "isInElse", new BooleanType()));
-
-        IfElseStatementNode ifElse = new IfElseStatementNode(new BooleanLiteralNode(true), ifQuestions, elseQuestions);
+        elseQuestions.add(new DeclarationNode("Am I in the else?", "isInElse", new BooleanType(), mEmptySource));
+        IfElseStatementNode ifElse = new IfElseStatementNode(new BooleanLiteralNode(true, mEmptySource), ifQuestions, elseQuestions, mEmptySource);
         add(ifElse);
     }
 
@@ -99,68 +101,68 @@ public class QuestionFormTest {
     }
 
     private BlockNode createNestedIfStatement() {
-        DeclarationNode boolQuestion = new DeclarationNode("Do you want to see the if declarations?", "hasSoldHouse", new BooleanType());
+        DeclarationNode boolQuestion = new DeclarationNode("Do you want to see the if declarations?", "hasSoldHouse", new BooleanType(), mEmptySource);
         add(boolQuestion);
-        VariableLiteralNode soldHouseLiteral = new VariableLiteralNode("hasSoldHouse");
+        VariableLiteralNode soldHouseLiteral = new VariableLiteralNode("hasSoldHouse", mEmptySource);
         List<Node> questions = new ArrayList<>();
         questions.add(soldHouseLiteral);
-        questions.add(new DeclarationNode("Toggle me on and off by selling your house", "sellYourHouse", new StringType()));
-        IfStatementNode questionIfStatement = new IfStatementNode(soldHouseLiteral, questions);
+        questions.add(new DeclarationNode("Toggle me on and off by selling your house", "sellYourHouse", new StringType(), mEmptySource));
+        IfStatementNode questionIfStatement = new IfStatementNode(soldHouseLiteral, questions, mEmptySource);
         add(questionIfStatement);
-        add(new DeclarationNode("Am I inbetween two if's?", "isInBetween", new StringType()));
-        VariableLiteralNode condition = new VariableLiteralNode("hasSoldHouse");
+        add(new DeclarationNode("Am I inbetween two if's?", "isInBetween", new StringType(), mEmptySource));
+        VariableLiteralNode condition = new VariableLiteralNode("hasSoldHouse", mEmptySource);
 
         questions.clear();
         questions.add(condition);
-        questions.add(new DeclarationNode("Am I inside the If declarations?", "isInsideIfStatement", new BooleanType()));
-        IfStatementNode booleanIfStatementNode = new IfStatementNode(soldHouseLiteral, questions);
+        questions.add(new DeclarationNode("Am I inside the If declarations?", "isInsideIfStatement", new BooleanType(), mEmptySource));
+        IfStatementNode booleanIfStatementNode = new IfStatementNode(soldHouseLiteral, questions, mEmptySource);
         return booleanIfStatementNode;
 
     }
 
     @Test
     public void testBooleanIf() throws Exception {
-        ExpressionNode condition = new BooleanLiteralNode(true);
+        ExpressionNode condition = new BooleanLiteralNode(true, mEmptySource);
         List<Node> questions = new ArrayList<Node>() {{
-            add(new DeclarationNode("Hello, do you have a name?", "hasName", new BooleanType()));
+            add(new DeclarationNode("Hello, do you have a name?", "hasName", new BooleanType(), mEmptySource));
         }};
-        add(new IfStatementNode(condition, questions));
+        add(new IfStatementNode(condition, questions, mEmptySource));
 
         List<Node> secondQuestions = new ArrayList<Node>() {{
-            add(new BooleanLiteralNode(false));
-            add(new DeclarationNode("If you see me, something's wrong", "noName", new BooleanType()));
+            add(new BooleanLiteralNode(false, mEmptySource));
+            add(new DeclarationNode("If you see me, something's wrong", "noName", new BooleanType(), mEmptySource));
         }};
-        add(new IfStatementNode(condition, questions));
+        add(new IfStatementNode(condition, questions, mEmptySource));
 
     }
 
     @Test
     public void testConstantCondition() throws Exception {
         List<Node> questions = new ArrayList<>();
-        ExpressionNode parenthesized = new ParenthesizedExpressionNode(CalcOnePlusFive());
-        ExpressionNode cond = new BinaryExpressionNode(new IntegerLiteralNode(0), new GreaterThanOperator(), parenthesized);
+        ExpressionNode parenthesized = new ParenthesizedExpressionNode(CalcOnePlusFive(), mEmptySource);
+        ExpressionNode cond = new BinaryExpressionNode(new IntegerLiteralNode(0, mEmptySource), new GreaterThanOperator(), parenthesized, mEmptySource);
         questions.add(cond);
-        questions.add(new DeclarationNode("Do you see me?", "amIVisible?", new BooleanType()));
-        IfStatementNode ifStatement = new IfStatementNode(cond, questions);
+        questions.add(new DeclarationNode("Do you see me?", "amIVisible?", new BooleanType(), mEmptySource));
+        IfStatementNode ifStatement = new IfStatementNode(cond, questions, mEmptySource);
         add(ifStatement);
     }
 
     @Test
     public void testCalculatedLiteralField() throws Exception {
-        CalculationNode intField = new CalculationNode("I'm showing two:", "two", new IntegerType(), new IntegerLiteralNode(2));
+        CalculationNode intField = new CalculationNode("I'm showing two:", "two", new IntegerType(), new IntegerLiteralNode(2, mEmptySource), mEmptySource);
         add(intField);
     }
 
     @Test
     public void testIntFieldCalculation() throws Exception {
-        add(new CalculationNode("The result of 1 + 5:", "six", new IntegerType(), CalcOnePlusFive()));
+        add(new CalculationNode("The result of 1 + 5:", "six", new IntegerType(), CalcOnePlusFive(), mEmptySource));
     }
 
     @Test
     public void testTextFields() throws Exception {
-        add(new DeclarationNode("What is your name?", "participantName", new StringType()));
-        add(new DeclarationNode("How many cars did you buy?", "textAmount", new IntegerType()));
-        add(new DeclarationNode("What date did you buy your last car?", "lastBoughtCar", new DateType()));
+        add(new DeclarationNode("What is your name?", "participantName", new StringType(), mEmptySource));
+        add(new DeclarationNode("How many cars did you buy?", "textAmount", new IntegerType(), mEmptySource));
+        add(new DeclarationNode("What date did you buy your last car?", "lastBoughtCar", new DateType(), mEmptySource));
     }
 
     private void add(Node n) {
@@ -168,9 +170,10 @@ public class QuestionFormTest {
     }
 
     private ExpressionNode CalcOnePlusFive() {
-        ExpressionNode calc = new BinaryExpressionNode(new IntegerLiteralNode(1),
+        ExpressionNode calc = new BinaryExpressionNode(new IntegerLiteralNode(1, mEmptySource),
                 new AddOperator(),
-                new IntegerLiteralNode(5));
+                new IntegerLiteralNode(5, mEmptySource),
+                mEmptySource);
         return calc;
     }
 }

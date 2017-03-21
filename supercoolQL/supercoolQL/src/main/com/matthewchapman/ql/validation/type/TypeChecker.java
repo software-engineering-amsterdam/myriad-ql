@@ -18,31 +18,29 @@ import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
-import com.matthewchapman.ql.core.QLErrorLogger;
-import com.matthewchapman.ql.validation.visitors.QLExpressionVisitor;
-import com.matthewchapman.ql.validation.visitors.QLStatementVisitor;
-import com.matthewchapman.ql.validation.visitors.QLTypeVisitor;
-
-import java.util.Map;
+import com.matthewchapman.ql.core.ErrorLogger;
+import com.matthewchapman.ql.validation.visitors.ExpressionVisitor;
+import com.matthewchapman.ql.validation.visitors.StatementVisitor;
+import com.matthewchapman.ql.validation.visitors.TypeVisitor;
 
 /**
  * Created by matt on 03/03/2017. 222
  * <p>
  * Visitor to check expressions for validity (circular dependency, types, etc).
  */
-public class QLTypeChecker implements QLStatementVisitor<Type, String>, QLExpressionVisitor<Type, String>, QLTypeVisitor<Type, String> {
+public class TypeChecker implements StatementVisitor<Type, String>, ExpressionVisitor<Type, String>, TypeVisitor<Type, String> {
 
-    private Map<String, Type> typeTable;
-    private final QLErrorLogger logger;
+    private TypeTable typeTable;
+    private final ErrorLogger logger;
     private static final String INCOMPATIBLE_TYPE = "Incompatible parameter type in use";
     private static final String NON_BOOLEAN = "Non-boolean parameter in use";
     private static final String BOOLEAN = "boolean";
 
-    public QLTypeChecker() {
-        logger = new QLErrorLogger();
+    public TypeChecker() {
+        logger = new ErrorLogger();
     }
 
-    public QLErrorLogger checkExpressionTypes(Form form, Map<String, Type> typeTable) {
+    public ErrorLogger checkExpressionTypes(Form form, TypeTable typeTable) {
         this.typeTable = typeTable;
 
         for (Statement statement : form.getStatements()) {
@@ -131,7 +129,7 @@ public class QLTypeChecker implements QLStatementVisitor<Type, String>, QLExpres
 
     @Override
     public Type visit(Parameter parameter, String context) {
-        Type type = typeTable.get(parameter.getID());
+        Type type = typeTable.getEntryByName(parameter.getID());
         assert type != null;  //something very wrong if this happens
         return type;
     }

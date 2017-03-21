@@ -1,4 +1,12 @@
-module QL.Values exposing (Value(Str, Boolean, Integer, Decimal, Undefined), asString, asBool, asInt, asFloat, isUndefined, isValidInt, isValidFloat)
+module QL.Values
+    exposing
+        ( Value(Str, Boolean, Integer, Decimal, Undefined)
+        , asString
+        , asBool
+        , asInt
+        , asFloat
+        , isUndefined
+        )
 
 
 type Value
@@ -12,21 +20,6 @@ type Value
 isUndefined : Value -> Bool
 isUndefined =
     (==) Undefined
-
-
-isValidInt : Int -> Bool
-isValidInt =
-    not << isNanOrInfinite << toFloat
-
-
-isValidFloat : Float -> Bool
-isValidFloat =
-    not << isNanOrInfinite
-
-
-isNanOrInfinite : Float -> Bool
-isNanOrInfinite x =
-    isNaN x || isInfinite x
 
 
 asInt : Value -> Maybe Int

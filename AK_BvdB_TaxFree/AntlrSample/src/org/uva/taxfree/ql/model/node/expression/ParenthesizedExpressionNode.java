@@ -1,6 +1,7 @@
 package org.uva.taxfree.ql.model.node.expression;
 
 import org.uva.taxfree.ql.gui.MessageList;
+import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.types.Type;
 
@@ -9,8 +10,8 @@ import java.util.Set;
 public class ParenthesizedExpressionNode extends ExpressionNode {
     private final ExpressionNode mExpression;
 
-    public ParenthesizedExpressionNode(ExpressionNode expression) {
-        super();
+    public ParenthesizedExpressionNode(ExpressionNode expression, SourceInfo sourceInfo) {
+        super(sourceInfo);
         mExpression = expression;
     }
 
@@ -56,7 +57,12 @@ public class ParenthesizedExpressionNode extends ExpressionNode {
     }
 
     @Override
-    protected boolean isConstant() {
+    public boolean isConstant() {
         return mExpression.isConstant();
+    }
+
+    @Override
+    public boolean isLiteral() {
+        return mExpression.isLiteral();
     }
 }

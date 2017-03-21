@@ -4,11 +4,13 @@ import values.Value
 
 import scalafx.scene.Node
 
-trait QLWidget {
-  val changeHandler: Value => Unit
+abstract class QLWidget(changeHandler: Option[Value => Unit]) {
+  val displayNode: Node
 
   def setValue(newVal: Value): Unit
 
-  def getSFXNode: Node
+  protected def handleUpdate(newVal: Value): Unit = changeHandler match {
+    case Some(handler) => handler(newVal)
+    case None => Unit
+  }
 }
-

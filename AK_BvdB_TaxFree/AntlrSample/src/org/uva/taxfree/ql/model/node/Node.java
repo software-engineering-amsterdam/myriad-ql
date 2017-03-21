@@ -2,11 +2,19 @@ package org.uva.taxfree.ql.model.node;
 
 import org.uva.taxfree.ql.gui.MessageList;
 import org.uva.taxfree.ql.gui.QuestionForm;
+import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 
 import java.util.List;
 
 public abstract class Node {
+
+    private final SourceInfo mSourceInfo;
+
+    public Node(SourceInfo sourceInfo) {
+        mSourceInfo = sourceInfo;
+    }
+
     public abstract void fillSymbolTable(SymbolTable symbolTable);
 
     public abstract void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages);

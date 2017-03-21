@@ -8,6 +8,7 @@ form Box1HouseOwning {
         privateDebt: "Private debts for the sold house:" money
         if (sellingPrice > privateDebt) {
             valueResidue: "Value residue:" money(sellingPrice - privateDebt)
+            valueResidue2: "Value residue2:" money(valueResidue)
         }
     } else {
         eQuestion: "No house sold, boring, please explain yourself:" string

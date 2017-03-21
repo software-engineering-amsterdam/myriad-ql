@@ -2,6 +2,7 @@ package org.uva.taxfree.ql.model.node.blocks;
 
 import org.uva.taxfree.ql.gui.MessageList;
 import org.uva.taxfree.ql.gui.QuestionForm;
+import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.Node;
 import org.uva.taxfree.ql.model.node.expression.ExpressionNode;
@@ -11,8 +12,8 @@ import java.util.List;
 public class IfElseStatementNode extends IfStatementNode {
     private final List<Node> mElseChildren;
 
-    public IfElseStatementNode(ExpressionNode expressionNode, List<Node> thenStatementNodes, List<Node> elseStatementNodes) {
-        super(expressionNode, thenStatementNodes);
+    public IfElseStatementNode(ExpressionNode expressionNode, List<Node> thenStatementNodes, List<Node> elseStatementNodes, SourceInfo sourceInfo) {
+        super(expressionNode, thenStatementNodes, sourceInfo);
         mElseChildren = elseStatementNodes;
     }
 

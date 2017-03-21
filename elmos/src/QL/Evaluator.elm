@@ -4,6 +4,7 @@ import QL.AST as AST exposing (..)
 import QL.Environment as Environment exposing (Environment)
 import QL.Values as Values exposing (Value)
 import Maybe.Extra as Maybe
+import QL.Numbers as Numbers
 
 
 evaluate : Environment -> Expression -> Value
@@ -40,13 +41,13 @@ evaluateBinaryExpression op leftValue rightValue =
                 maybeInteger =
                     Maybe.map2 (,) (Values.asInt leftValue) (Values.asInt rightValue)
                         |> Maybe.map (\( l, r ) -> binaryForIntArithmitic arithmetic l r)
-                        |> Maybe.filter Values.isValidInt
+                        |> Maybe.filter Numbers.isValidInt
                         |> Maybe.map Values.Integer
 
                 maybeFloat =
                     Maybe.map2 (,) (Values.asFloat leftValue) (Values.asFloat rightValue)
                         |> Maybe.map (\( l, r ) -> binaryForFloatArithmitic arithmetic l r)
-                        |> Maybe.filter Values.isValidFloat
+                        |> Maybe.filter Numbers.isValidFloat
                         |> Maybe.map Values.Decimal
             in
                 Maybe.or maybeInteger maybeFloat

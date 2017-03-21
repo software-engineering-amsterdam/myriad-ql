@@ -3,8 +3,8 @@ package com.matthewchapman.ql.core;
 /**
  * Created by matt on 19/03/2017.
  */
-public class QLWarning extends QLError {
-    public QLWarning(int line, int column, String id, String message) {
+public class Warning extends Error {
+    public Warning(int line, int column, String id, String message) {
         super(line, column, id, message);
     }
 

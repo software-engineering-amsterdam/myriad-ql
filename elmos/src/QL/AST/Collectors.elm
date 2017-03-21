@@ -1,13 +1,13 @@
 module QL.AST.Collectors
     exposing
-        ( QuestionTypes
+        ( TypeEnvironment
         , collectConditions
         , collectComputedFields
         , collectDeclaredIds
         , collectTopLevelExpressions
         , collectQuestionLabels
         , collectQuestionReferences
-        , collectQuestionTypes
+        , collectTypeEnv
         )
 
 import QL.AST exposing (..)
@@ -15,8 +15,19 @@ import QL.FormVisitor as FormVisitor exposing (defaultConfig)
 import Dict exposing (Dict)
 
 
-type alias QuestionTypes =
+type alias TypeEnvironment =
     Dict String ValueType
+
+
+collectTypeEnv : Form -> TypeEnvironment
+collectTypeEnv form =
+    FormVisitor.inspect
+        { defaultConfig
+            | onField = FormVisitor.on (\( _, ( name, _ ), valueType ) result -> Dict.insert name valueType result)
+            , onComputedField = FormVisitor.on (\( _, ( name, _ ), valueType, _ ) result -> Dict.insert name valueType result)
+        }
+        form
+        Dict.empty
 
 
 collectConditions : Form -> List Expression
@@ -93,14 +104,3 @@ collectQuestionReferences expression =
 
         BinaryExpression _ _ exprLeft exprRight ->
             collectQuestionReferences exprLeft ++ collectQuestionReferences exprRight
-
-
-collectQuestionTypes : Form -> QuestionTypes
-collectQuestionTypes form =
-    FormVisitor.inspect
-        { defaultConfig
-            | onField = FormVisitor.on (\( _, ( name, _ ), valueType ) result -> Dict.insert name valueType result)
-            , onComputedField = FormVisitor.on (\( _, ( name, _ ), valueType, _ ) result -> Dict.insert name valueType result)
-        }
-        form
-        Dict.empty

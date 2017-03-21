@@ -1,3 +1,6 @@
+from .ql import QlAlg
+
+
 class PrettyPrint(QlAlg):
     state = []
 
@@ -5,76 +8,65 @@ class PrettyPrint(QlAlg):
         self.tabs = tabs
 
     def Literal(self, value):
-        class _anon():
-            to_string = lambda self, tabs: "Literal({})".format(str(value))
-
-        return _anon()
+        return lambda tabs: "Literal({})".format(str(value))
 
     def Form(self, name, block):
-        class _anon():
-            to_string = lambda self, tabs: "Form({}, {} \n)".format(
-                str(name), block.to_string(tabs + 1))
-        return _anon()
+        tabs = self.tabs
+        return lambda: "Form({}, {} \n)".format(
+            str(name), block(tabs+1))
 
     def Block(self, statements):
-        class _anon():
-            to_string = lambda self, tabs: "Block(\n{})".format(
-                (("\n").join([k.to_string(tabs + 1) for _, k in enumerate(statements)])))
-
-        return _anon()
+        return lambda tabs: "Block(\n{})".format(
+            (("\n").join([k(tabs + 1) for _, k in enumerate(statements)])))
 
     def Variable(self, name, datatype):
-        class _anon():
-            to_string = lambda self, tabs: "Variable(name={}, datatype={})".format(
-                str(name), datatype.to_string(tabs))
-        return _anon()
+        return lambda tabs: "Variable(name={}, datatype={})".format(
+            str(name), datatype(tabs))
 
     def RefVariable(self, name):
-        class _anon():
-            to_string = lambda self, tabs: "RefVariable(name={})".format(
-                str(name))
-        return _anon()
+        return lambda tabs: "RefVariable(name={})".format(
+            str(name))
 
     def Question(self, variable, label):
-        class _anon():
-            to_string = lambda self, tabs: add_tabs(
-                tabs) + "Question(variable={}, label='{}')".format(variable.to_string(tabs + 1), label.to_string(tabs))
-        return _anon()
+        return lambda tabs: add_tabs(
+            tabs) + "Question(variable={}, label='{}')".format(variable(tabs + 1), label(tabs))
 
     def ifThen(self, expression, block):
-        class _anon():
-            to_string = lambda self, tabs:  add_tabs(tabs) + "ifThen(expression={}, block={}".format(
-                expression.to_string(tabs + 1), block.to_string(tabs + 1)) + "\n" + add_tabs(tabs) + ")"
-        return _anon()
+        return lambda tabs:  add_tabs(tabs) + "ifThen(expression={}, block={}".format(
+            expression(tabs + 1), block(tabs + 1)) + "\n" + add_tabs(tabs) + ")"
 
     def ComputedQuestion(self, variable, label, expression):
-        class _anon():
-            to_string = lambda self, tabs: add_tabs(tabs) + "ComputedQuestion(variable={}, label='{}',".format(variable.to_string(
-                tabs + 1), label.to_string(tabs)) + "\n" + add_tabs(tabs) + "expressions={})".format(expression.to_string(tabs + 1))
-        return _anon()
+        return lambda tabs: add_tabs(tabs) + "ComputedQuestion(variable={}, label='{}',".format(variable(
+            tabs + 1), label(tabs)) + "\n" + add_tabs(tabs) + "expressions={})".format(expression(tabs + 1))
 
     def Boolean(self, value=False):
-        class _anon():
-            to_string = lambda self, tabs: "Boolean({})".format(str(value))
-        return _anon()
+        return lambda tabs: "Boolean({})".format(str(value))
+
 
     def Money(self, value=False):
-        class _anon():
-            to_string = lambda self, tabs: "Money({})".format(str(value))
-        return _anon()
+        return  lambda tabs: "Money({})".format(str(value))
+
 
     def Substraction(self, lhs, rhs):
-        class _anon():
-            to_string = lambda self, tabs: "Substraction({}, {})".format(
-                lhs.to_string(tabs + 1), rhs.to_string(tabs + 1))
-        return _anon()
+        return lambda tabs: "Substraction({}, {})".format(
+                lhs(tabs + 1), rhs(tabs + 1))
 
     def Integer(self, value):
-        class _anon():
-            to_string = lambda self, tabs: "Integer({})".format(str(value))
-        return _anon()
+       return  lambda tabs: "Integer({})".format(str(value))
 
     def String(self, value):
-        class _anon():
-            to_string = lambda self, tabs: "String({})".format(str(value))
-        return _anon()
+        return lambda tabs: "String({})".format(str(value))
+
+    def StringLiteral(self, value):
+        return lambda tabs: "StringLiteral({})".format(str(value))
+
+    def Multiplication(self, lhs, rhs):
+       return lambda tabs: "Multiplication({}, {})".format(
+                lhs(tabs + 1), rhs(tabs + 1))
+
+    def Addition(self, lhs, rhs):
+       return lambda tabs: "Addition({}, {})".format(
+                lhs(tabs + 1), rhs(tabs + 1))
+
+def add_tabs(tabs=0):
+    return '\t' * tabs

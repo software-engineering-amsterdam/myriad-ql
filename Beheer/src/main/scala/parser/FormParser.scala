@@ -2,6 +2,7 @@ package parser
 
 import java.io.{ Reader, StringReader }
 
+import ast.Form.Statements
 import ast._
 
 class FormParser extends QLParser with ExpressionParser {
@@ -20,11 +21,11 @@ class FormParser extends QLParser with ExpressionParser {
 
   private def conditional: Parser[Conditional] =
     "if" ~> parentheses(expression) ~ statements ~ opt("else" ~> statements) ^^ {
-      case expression ~ ifBlock ~ None => Conditional(expression, ifBlock)
+      case expression ~ ifBlock ~ None => Conditional(expression, ifBlock, Nil)
       case expression ~ ifBlock ~ Some(elseBlock) => Conditional(expression, ifBlock, elseBlock)
     }
 
-  private def statements: Parser[Seq[Statement]] = curlyBrackets(rep(conditional | question))
+  private def statements: Parser[Statements] = curlyBrackets(rep(conditional | question))
 
   private def form: Parser[Form] =
     "form" ~> ident ~ statements ^^ {

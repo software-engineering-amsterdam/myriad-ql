@@ -7,29 +7,29 @@ import java.util.List;
 /**
  * Created by matt on 13/03/2017.
  */
-public class QLErrorLogger {
+public class ErrorLogger {
 
-    private final List<QLError> errors;
-    private final List<QLWarning> warnings;
+    private final List<Error> errors;
+    private final List<Warning> warnings;
 
-    public QLErrorLogger() {
+    public ErrorLogger() {
         errors = new ArrayList<>();
         warnings = new ArrayList<>();
     }
 
     public void addError(int line, int column, String id, String message) {
-        errors.add(new QLError(line, column, id, message));
+        errors.add(new Error(line, column, id, message));
     }
 
     public void addWarning(int line, int column, String id, String message) {
-        warnings.add(new QLWarning(line, column, id, message));
+        warnings.add(new Warning(line, column, id, message));
     }
 
-    public void addMultipleErrors(QLErrorLogger logger) {
+    public void addMultipleErrors(ErrorLogger logger) {
         this.errors.addAll(logger.getErrors());
     }
 
-    public void addMultipleWarnings(QLErrorLogger logger) { this.warnings.addAll(logger.getWarnings());}
+    public void addMultipleWarnings(ErrorLogger logger) { this.warnings.addAll(logger.getWarnings());}
 
     public int getErrorNumber() {
         return this.errors.size();
@@ -37,11 +37,11 @@ public class QLErrorLogger {
 
     public int getWarningNumber() { return this.warnings.size(); }
 
-    private List<QLError> getErrors() {
+    private List<Error> getErrors() {
         return this.errors;
     }
 
-    private List<QLWarning> getWarnings() { return this.warnings; }
+    private List<Warning> getWarnings() { return this.warnings; }
 
     @Override
     public String toString() {
@@ -60,7 +60,7 @@ public class QLErrorLogger {
         String result = "";
         Collections.sort(this.errors);
 
-        for (QLError error : this.errors) {
+        for (Error error : this.errors) {
             result = result.concat(error.toString() + "\n");
         }
 
@@ -71,7 +71,7 @@ public class QLErrorLogger {
         String result = "";
         Collections.sort(this.warnings);
 
-        for (QLError error : this.warnings) {
+        for (Error error : this.warnings) {
             result = result.concat(error.toString() + "\n");
         }
 

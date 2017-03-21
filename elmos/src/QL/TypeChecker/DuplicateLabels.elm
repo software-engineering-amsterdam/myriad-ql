@@ -21,13 +21,13 @@ groupByLabel =
     Dict.groupBy Tuple.second
 
 
-hasMultipleDeclarations : b -> List a -> Bool
-hasMultipleDeclarations _ occurrences =
-    List.length occurrences > 1
+hasMultipleDeclarations : String -> List ( Id, String ) -> Bool
+hasMultipleDeclarations _ labels =
+    List.length labels > 1
 
 
 toDuplicateLabelMessage : String -> List ( Id, String ) -> Message
 toDuplicateLabelMessage label duplicateLabelDefinitions =
-    List.map Tuple.first duplicateLabelDefinitions
-        |> DuplicateLabels label
-        |> Warning
+    duplicateLabelDefinitions
+        |> List.map Tuple.first
+        |> (Warning << DuplicateLabels label)

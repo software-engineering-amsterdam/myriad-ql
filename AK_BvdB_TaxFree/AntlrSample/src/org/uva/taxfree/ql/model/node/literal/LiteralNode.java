@@ -1,6 +1,7 @@
 package org.uva.taxfree.ql.model.node.literal;
 
 import org.uva.taxfree.ql.gui.MessageList;
+import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.expression.ExpressionNode;
 import org.uva.taxfree.ql.model.types.Type;
@@ -9,6 +10,10 @@ import java.util.List;
 import java.util.Set;
 
 public abstract class LiteralNode extends ExpressionNode {
+
+    protected LiteralNode(SourceInfo sourceInfo) {
+        super(sourceInfo);
+    }
 
     @Override
     public String evaluate() {
@@ -41,7 +46,12 @@ public abstract class LiteralNode extends ExpressionNode {
     }
 
     @Override
-    protected boolean isConstant() {
+    public boolean isConstant() {
+        return true;
+    }
+
+    @Override
+    public boolean isLiteral() {
         return true;
     }
 }

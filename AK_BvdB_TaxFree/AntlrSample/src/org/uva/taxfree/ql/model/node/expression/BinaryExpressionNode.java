@@ -1,6 +1,7 @@
 package org.uva.taxfree.ql.model.node.expression;
 
 import org.uva.taxfree.ql.gui.MessageList;
+import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.operators.Operator;
 import org.uva.taxfree.ql.model.types.Type;
@@ -13,10 +14,11 @@ public class BinaryExpressionNode extends ExpressionNode {
     private final Operator mOperator;
     private final ExpressionNode mRight;
 
-    public BinaryExpressionNode(ExpressionNode right, Operator operator, ExpressionNode left) {
-        mRight = right;
-        mOperator = operator;
+    public BinaryExpressionNode(ExpressionNode left, Operator operator, ExpressionNode right, SourceInfo sourceInfo) {
+        super(sourceInfo);
         mLeft = left;
+        mOperator = operator;
+        mRight = right;
     }
 
     @Override
@@ -47,6 +49,7 @@ public class BinaryExpressionNode extends ExpressionNode {
 
     @Override
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
+        super.checkSemantics(symbolTable, semanticsMessages);
         mLeft.checkSemantics(symbolTable, semanticsMessages);
         mRight.checkSemantics(symbolTable, semanticsMessages);
         if (!mLeft.isSameType(mRight)) {
@@ -55,14 +58,16 @@ public class BinaryExpressionNode extends ExpressionNode {
         if (!mOperator.supports(mLeft.getType(), mRight.getType())) {
             semanticsMessages.addError("Unsupported operator called:" + mLeft.getType() + " " + mOperator + " " + mRight.getType());
         }
-        if (isConstant()) {
-            semanticsMessages.addWarning("Constant expression found, always evaluates to: " + this.evaluate());
-        }
     }
 
     @Override
-    protected boolean isConstant() {
+    public boolean isConstant() {
         return mLeft.isConstant() && mRight.isConstant();
+    }
+
+    @Override
+    public boolean isLiteral() {
+        return false;
     }
 
     @Override

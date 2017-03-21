@@ -12,13 +12,13 @@ check : Form -> StyleSheet -> List Message
 check _ styleSheet =
     QLSCollectors.collectQuestionReferences styleSheet
         |> groupByLabel
-        |> Dict.filter (\_ v -> List.length v > 1)
+        |> Dict.filter (\_ locations -> List.length locations > 1)
         |> Dict.toList
         |> List.map (uncurry DuplicatePlacedQuestion)
 
 
 groupByLabel : List ( String, Location ) -> Dict String (List Location)
-groupByLabel x =
-    x
+groupByLabel questionReference =
+    questionReference
         |> Dict.groupBy Tuple.first
-        |> Dict.map (\_ v -> List.map Tuple.second v)
+        |> Dict.map (\_ group -> List.map Tuple.second group)

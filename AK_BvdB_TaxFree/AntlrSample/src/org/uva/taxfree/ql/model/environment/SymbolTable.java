@@ -5,6 +5,7 @@ import org.uva.taxfree.ql.model.node.blocks.BlockNode;
 import org.uva.taxfree.ql.model.node.declarations.CalculationNode;
 import org.uva.taxfree.ql.model.node.declarations.DeclarationNode;
 import org.uva.taxfree.ql.model.types.Type;
+import org.uva.taxfree.ql.model.types.UnknownType;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -39,16 +40,16 @@ public class SymbolTable {
     }
 
     private void updateDeclaration(String variableId, String updatedValue) {
-        for (Declaration decl : mDeclarations) {
-            if (decl.equals(variableId)) {
-                decl.setValue(updatedValue);
+        for (Declaration declaration : mDeclarations) {
+            if (declaration.equals(variableId)) {
+                declaration.setValue(updatedValue);
             }
         }
     }
 
     private void recalculate() {
-        for (CalculationNode calc : mCalculations) {
-            updateDeclaration(calc.getId(), calc.resolveValue());
+        for (CalculationNode calculation : mCalculations) {
+            updateDeclaration(calculation.getId(), calculation.resolveValue());
         }
     }
 
@@ -65,6 +66,13 @@ public class SymbolTable {
         return findDeclarations(variableId).size() > 0;
     }
 
+    public Type resolveType(String variableId) {
+        if (true == contains(variableId)) {
+            return findDeclaration(variableId).getType();
+        }
+        return new UnknownType();
+    }
+
     private Declaration findDeclaration(String variableId) {
         assert findDeclarations(variableId).size() == 1;
         return findDeclarations(variableId).get(0);
@@ -72,16 +80,12 @@ public class SymbolTable {
 
     private List<Declaration> findDeclarations(String variableId) {
         List<Declaration> declarations = new ArrayList<>();
-        for (Declaration decl : mDeclarations) {
-            if (decl.equals(variableId)) {
-                declarations.add(decl);
+        for (Declaration declaration : mDeclarations) {
+            if (declaration.equals(variableId)) {
+                declarations.add(declaration);
             }
         }
         return declarations;
-    }
-
-    public Type resolveType(String variableId) {
-        return findDeclaration(variableId).getType();
     }
 
     public void checkDuplicateLabels(MessageList messageList) {
@@ -117,14 +121,18 @@ public class SymbolTable {
     }
 
     private void addDependencies(String usedVariable, Set<String> usedVariables) {
-        for (CalculationNode calc : mCalculations) {
-            if (calc.getId().equals(usedVariable)) {
-                usedVariables.addAll(calc.getUsedVariables());
+        for (CalculationNode calculation : mCalculations) {
+            if (calculation.getId().equals(usedVariable)) {
+                usedVariables.addAll(calculation.getUsedVariables());
             }
         }
     }
 
-    public List<String> visibleIds() {
+    public boolean isVisible(String variableId) {
+        return visibleIds().contains(variableId);
+    }
+
+    private List<String> visibleIds() {
         List<String> visibleDeclarations = new ArrayList<>();
         for (BlockNode blockNode : mBlocks) {
             blockNode.generateVisibleIds(visibleDeclarations);

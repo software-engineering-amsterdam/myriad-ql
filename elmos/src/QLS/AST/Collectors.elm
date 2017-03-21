@@ -39,17 +39,16 @@ collectQuestionReferences styleSheet =
 
 collectConfiguredQuestions : StyleSheet -> List ( Id, Configuration )
 collectConfiguredQuestions styleSheet =
-    StyleSheetVisitor.inspect
-        { defaultConfig
-            | onQuestion =
-                StyleSheetVisitor.on <|
-                    \question context ->
-                        case question of
-                            Question _ ->
-                                context
+    let
+        onQuestion question context =
+            case question of
+                Question _ ->
+                    context
 
-                            ConfiguredQuestion ref configuration ->
-                                ( ref, configuration ) :: context
-        }
-        styleSheet
-        []
+                ConfiguredQuestion ref configuration ->
+                    ( ref, configuration ) :: context
+    in
+        StyleSheetVisitor.inspect
+            { defaultConfig | onQuestion = StyleSheetVisitor.on onQuestion }
+            styleSheet
+            []

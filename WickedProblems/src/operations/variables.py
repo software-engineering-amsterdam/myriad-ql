@@ -1,228 +1,149 @@
 from .ql import QlAlg
 from .environment import Environment
 
+
 class GetVariables(QlAlg):
-    def __init__(self, environment_vars):
-        self.environment = Environment()
+
+    def __init__(self, environment):
+        self.environment = environment
 
     def Literal(self, value):
-        class _anon():
-            execute = None
-
-        return _anon()
+        return lambda: None
 
     def Form(self, name, block):
-        def _register():
-            block.execute()
-            return
-
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return block
 
     def Block(self, statements):
-        class _anon():
-            execute = lambda self: [k.execute()
-                                    for _, k in enumerate(statements)]
-        return _anon()
+        return lambda: [k() for _, k in enumerate(statements)]
 
     def Variable(self, name, datatype):
-        def _register():
-            self.environment.add_var((name, datatype.execute()))
-            return (name, datatype.execute())
+        def _statements():
+            self.environment.add_var((name, datatype()))
+            return (name, datatype())
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def RefVariable(self, name):
-        def _register():
-            self.environment.add_ref((name))
-
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return lambda: self.environment.add_ref((name))
 
     def Question(self, variable, label):
-        def _register():
-            self.environment.add_question(variable.execute(), label.execute())
-
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return lambda: self.environment.add_question(variable(), label())
 
     def ifThen(self, expression, block):
-        def _register():
-            expression.execute()
-            block.execute()
+        def _statements():
+            expression()
+            block()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def ComputedQuestion(self, variable, label, expression):
-        def _register():
+        def _statements():
+            variable()
+            label()
+            expression()
 
-            variable.execute()
-            label.execute()
-            expression.execute()
-
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def Boolean(self, value=False):
-        def _register(self):
-            return 'boolean'
-
-        class _anon():
-            execute = lambda self: _register(self)
-        return _anon()
+        return lambda: 'boolean'
 
     def UnaryNegation(self, value=False):
-        def _register(self):
-            return 'negation'
-
-        class _anon():
-            execute = lambda self: _register(self)
-        return _anon()
+        return lambda: 'negation'
 
     def Money(self, value=False):
-        def _register():
-            return 'money'
-
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return lambda: 'money'
 
     def Substraction(self, lhs, rhs):
-        def _register():
-            lhs.execute()
-            rhs.execute()
+        def _statements():
+            lhs()
+            rhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def Addition(self, lhs, rhs):
-        def _register():
-            lhs.execute()
-            rhs.execute()
+        def _statements():
+            lhs()
+            rhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def GreaterThan(self, lhs, rhs):
-        def _register():
-            lhs.execute()
-            rhs.execute()
+        def _statements():
+            lhs()
+            rhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def GreaterThanEquals(self, lhs, rhs):
-        def _register():
-            lhs.execute()
-            rhs.execute()
+        def _statements():
+            lhs()
+            rhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+       
+        return _statements
+        
 
     def LessThan(self, lhs, rhs):
-        def _register():
-            lhs.execute()
-            rhs.execute()
+        def _statements():
+            lhs()
+            rhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def LessThanEquals(self, lhs, rhs):
-        def _register():
-            lhs.execute()
-            rhs.execute()
+        def _statements():
+            lhs()
+            rhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def Equality(self, lhs, rhs):
-        def _register():
-            lhs.execute()
-            rhs.execute()
+        def _statements():
+            lhs()
+            rhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def Inequality(self, lhs, rhs):
-        def _register():
-            lhs.execute()
-            rhs.execute()
+        def _statements():
+            lhs()
+            rhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def Division(self, lhs, rhs):
-        def _register():
-            lhs.execute()
-            rhs.execute()
+        def _statements():
+            lhs()
+            rhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def Multiplication(self, lhs, rhs):
-        def _register():
-            lhs.execute()
-            rhs.execute()
+        def _statements():
+            lhs()
+            rhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def LogicalAnd(self, lhs, rhs):
-        def _register():
-            lhs.execute()
-            rhs.execute()
+        def _statements():
+            lhs()
+            rhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def LogicalOr(self, lhs, rhs):
-        def _register():
-            lhs.execute()
-            rhs.execute()
+        def _statements():
+            lhs()
+            rhs()
 
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return _statements
 
     def Integer(self, value):
-        def _register():
-            return 'integer'
-
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return lambda: 'integer'
 
     def StringLiteral(self, value):
-        def _register():
-            return value
-
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return lambda: value
 
     def String(self, value):
-        def _register():
-            return 'string'
-
-        class _anon():
-            execute = lambda self: _register()
-        return _anon()
+        return lambda: 'string'

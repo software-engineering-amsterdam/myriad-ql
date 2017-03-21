@@ -1,4 +1,4 @@
-module UI.Field exposing (Field(Editable, Computed), fieldValueType, activeFields, visibleFieldForName)
+module UI.Field exposing (Field(Editable, Computed), fieldValueType, activeFields, fieldForName)
 
 import QL.AST exposing (Form, Label, ValueType, Expression, FormItem(Field, ComputedField, IfThen, IfThenElse))
 import QL.Environment exposing (Environment)
@@ -22,10 +22,6 @@ fieldName field =
             name
 
 
-
--- TODO: rename to valueType
-
-
 fieldValueType : Field -> ValueType
 fieldValueType field =
     case field of
@@ -36,9 +32,9 @@ fieldValueType field =
             valueType
 
 
-visibleFieldForName : String -> List Field -> Maybe Field
-visibleFieldForName name visibleFields =
-    List.find (\field -> name == fieldName field) visibleFields
+fieldForName : String -> List Field -> Maybe Field
+fieldForName name =
+    List.find (\field -> name == fieldName field)
 
 
 activeFields : Environment -> Form -> List Field

@@ -1,6 +1,7 @@
 package org.uva.taxfree.ql.model.node.literal;
 
 import org.uva.taxfree.ql.gui.MessageList;
+import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.types.Type;
 
@@ -10,7 +11,8 @@ public class VariableLiteralNode extends LiteralNode {
     private SymbolTable mSymbolTable;
     private final String mId;
 
-    public VariableLiteralNode(String id) {
+    public VariableLiteralNode(String id, SourceInfo sourceInfo) {
+        super(sourceInfo);
         mId = id;
     }
 
@@ -62,7 +64,12 @@ public class VariableLiteralNode extends LiteralNode {
     }
 
     @Override
-    protected boolean isConstant() {
+    public boolean isConstant() {
+        return false;
+    }
+
+    @Override
+    public boolean isLiteral() {
         return false;
     }
 }

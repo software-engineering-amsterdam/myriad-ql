@@ -6,9 +6,9 @@ import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.gui.errors.ErrorDialogGenerator;
-import com.matthewchapman.ql.parsing.AntlrErrorListener;
-import com.matthewchapman.ql.parsing.AntlrVisitor;
-import com.matthewchapman.ql.validation.QLValidator;
+import com.matthewchapman.ql.parsing.ParseTreeErrorListener;
+import com.matthewchapman.ql.parsing.ParseTreeVisitor;
+import com.matthewchapman.ql.validation.Validator;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -20,11 +20,11 @@ import org.antlr.v4.runtime.CommonTokenStream;
  */
 public class CoreParser {
 
-    private final AntlrErrorListener errorListener;
+    private final ParseTreeErrorListener errorListener;
     private final ErrorDialogGenerator dialogGenerator;
 
     public CoreParser() {
-        errorListener = new AntlrErrorListener();
+        errorListener = new ParseTreeErrorListener();
         this.dialogGenerator = new ErrorDialogGenerator();
     }
 
@@ -41,19 +41,19 @@ public class CoreParser {
     }
 
     public Form getForm(QLParser parser) {
-        AntlrVisitor visitor = new AntlrVisitor();
+        ParseTreeVisitor visitor = new ParseTreeVisitor();
         QLParser.FormDeclarationContext formDeclarationContext = parser.formDeclaration();
         return (Form) visitor.visit(formDeclarationContext);
     }
 
     public Statement getStatement(QLParser parser) {
-        AntlrVisitor visitor = new AntlrVisitor();
+        ParseTreeVisitor visitor = new ParseTreeVisitor();
         QLParser.StatementContext statementContext = parser.statement();
         return (Statement) visitor.visit(statementContext);
     }
 
     public Expression getExpression(QLParser parser) {
-        AntlrVisitor visitor = new AntlrVisitor();
+        ParseTreeVisitor visitor = new ParseTreeVisitor();
         QLParser.ExpressionContext expressionContext = parser.expression();
         return (Expression) visitor.visit(expressionContext);
     }
@@ -73,6 +73,6 @@ public class CoreParser {
 
     boolean validateAST(Form form) {
 
-        return new QLValidator().runChecks(form);
+        return new Validator().runChecks(form);
     }
 }
