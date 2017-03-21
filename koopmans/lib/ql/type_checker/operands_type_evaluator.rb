@@ -2,7 +2,7 @@ module QL
   module TypeChecker
     class OperandsTypeEvaluator
       def visit_form(form, collected_data)
-        @variable_type = collected_data
+        @variable_type_map = collected_data
         form.statements.map { |statement| statement.accept(self) }
       end
 
@@ -106,7 +106,7 @@ module QL
       end
 
       def visit_variable(variable)
-        @variable_type[variable.name]
+        @variable_type_map[variable.name]
       end
 
       def check_if_condition(if_statement, condition_type)

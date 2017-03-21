@@ -18,10 +18,10 @@ module QLS
       rule(:variable)        { match('\w+').repeat(1).as(:variable) }
 
       # stylesheet
-      rule(:stylesheet) { _ >> (str('stylesheet') >> _ >> variable >> _ >> page.repeat.as(:pages) >> _).as(:stylesheet) }
+      rule(:stylesheet) { _ >> (str('stylesheet') >> _ >> variable.as(:id) >> _ >> page.repeat.as(:pages) >> _).as(:stylesheet) }
 
       # page
-      rule(:page)      { _ >> str('page') >> _ >> (variable >> _ >> str('{') >> _ >> page_body).as(:page) >> str('}') >> _ }
+      rule(:page)      { _ >> str('page') >> _ >> (variable.as(:id) >> _ >> str('{') >> _ >> page_body).as(:page) >> str('}') >> _ }
       rule(:page_body) { (section | default).repeat.as(:body) }
       # section
       rule(:section)                    { (_ >> str('section') >> _ >> string_literal >> _ >> (section_body_with_brackets | section_body) >> _).as(:section) }
@@ -29,7 +29,7 @@ module QLS
       rule(:section_body)               { (section | question | default).repeat.as(:body) }
 
       # question
-      rule(:question)                 { (_ >> str('question') >> _ >> variable >> _ >> (properties_with_brackets | property?).as(:properties) >> _).as(:question) }
+      rule(:question)                 { (_ >> str('question') >> _ >> variable.as(:id) >> _ >> (properties_with_brackets | property?).as(:properties) >> _).as(:question) }
       rule(:properties_with_brackets) { str('{') >> (_ >> property).repeat >> _ >> str('}') }
 
       # widget
@@ -46,7 +46,7 @@ module QLS
 
       # properties
       rule(:property)   { width | font | fontsize | color | widget }
-      rule(:property?)  { property.maybe }
+      rule(:property?)  { property.repeat }
       rule(:type)       { (str('boolean') | str('string') | str('integer') | str('decimal') | str('date') | str('money')).as(:type) >> _ }
       rule(:width)      { str('width:') >> _ >> integer_literal.as(:width) }
       rule(:font)       { str('font:') >> _ >> string_literal.as(:font) }
