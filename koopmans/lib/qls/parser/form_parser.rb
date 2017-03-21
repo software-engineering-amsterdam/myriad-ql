@@ -24,14 +24,13 @@ module QLS
       rule(:page) { _ >> str('page') >> _ >> (variable >> _ >> str('{') >> (_ >> (section | default)).repeat.as(:body)).as(:page) >> str('}') >> _ }
 
       # section
-      rule(:section)                  { (_ >> str('section') >> _ >> string_literal >> _ >> (section_brackets | section_without_brackets).as(:body) >> _).as(:section) }
-      rule(:section_brackets)         { str('{') >> _ >> (section | question | default).repeat >> _ >> str('}') }
-      rule(:section_without_brackets) { (question | default).repeat }
+      rule(:section)                    { (_ >> str('section') >> _ >> string_literal >> _ >> (section_body_with_brackets | section_body) >> _).as(:section) }
+      rule(:section_body_with_brackets) { str('{') >> _ >> section_body >> _ >> str('}') }
+      rule(:section_body)               { (section | question | default).repeat.as(:body) }
 
       # question
-      rule(:question)                  { (_ >> str('question') >> _ >> variable >> _ >> (question_brackets | question_without_brackets).as(:properties) >> _).as(:question) }
-      rule(:question_brackets)         { str('{') >> (_ >> properties).repeat >> _ >> str('}') }
-      rule(:question_without_brackets) { properties.maybe }
+      rule(:question)                  { (_ >> str('question') >> _ >> variable >> _ >> (properties_with_brackets | property?).as(:properties) >> _).as(:question) }
+      rule(:properties_with_brackets)  { str('{') >> (_ >> property).repeat >> _ >> str('}') }
 
       # widget
       rule(:widget)        { str('widget') >> _ >> (str('checkbox') | str('spinbox') | str('text') | slider | radio | dropdown).as(:widget) >> _ }
@@ -43,10 +42,11 @@ module QLS
       # default
       rule(:default)                  { str('default') >> _ >> (type.as(:type) >> (default_brackets | default_without_brackets).as(:properties)).as(:default) >> _ }
       rule(:default_brackets)         { str('{') >> default_without_brackets >> str('}') }
-      rule(:default_without_brackets) { (_ >> properties).repeat >> _ }
+      rule(:default_without_brackets) { (_ >> property).repeat >> _ }
 
       # properties
-      rule(:properties) { width | font | fontsize | color | widget }
+      rule(:property)   { width | font | fontsize | color | widget }
+      rule(:property?)  { property.maybe }
       rule(:type)       { (str('boolean') | str('string') | str('integer') | str('decimal') | str('date') | str('money')).as(:type) >> _ }
       rule(:width)      { str('width:') >> _ >> integer_literal.as(:width) }
       rule(:font)       { str('font:') >> _ >> string_literal.as(:font) }
