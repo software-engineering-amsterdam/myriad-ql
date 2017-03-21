@@ -1,4 +1,3 @@
-rename Decimal -> Float
 Rename Question -> Fields
 duplicate configuredWidget
-QLS package in UI 
+QLS package in UI

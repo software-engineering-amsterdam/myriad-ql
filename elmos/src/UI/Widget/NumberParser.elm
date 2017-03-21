@@ -1,4 +1,4 @@
-module UI.Widget.NumberParser exposing (parseIntegerInput, parseFloatInput)
+module UI.Widget.NumberParser exposing (parseIntegerInput, parseDecimalInput)
 
 import Maybe.Extra as Maybe
 import QL.Values as Values exposing (Value)
@@ -14,8 +14,8 @@ parseIntegerInput =
         >> Maybe.withDefault Values.Undefined
 
 
-parseFloatInput : String -> Value
-parseFloatInput =
+parseDecimalInput : String -> Value
+parseDecimalInput =
     String.toFloat
         >> Result.toMaybe
         >> Maybe.filter Numbers.isValidFloat

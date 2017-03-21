@@ -1,4 +1,4 @@
-module UI.Widget.Float exposing (view)
+module UI.Widget.Decimal exposing (view)
 
 import Html exposing (Html, input)
 import Html.Attributes exposing (type_, class, defaultValue, id, disabled)
@@ -14,7 +14,7 @@ view { identifier, env, onChange, editable } =
     let
         textValue =
             Environment.getFormValue identifier env
-                |> Maybe.andThen Values.asFloat
+                |> Maybe.andThen Values.asDecimal
                 |> Maybe.map toString
                 |> Maybe.withDefault ""
     in
@@ -24,6 +24,6 @@ view { identifier, env, onChange, editable } =
             , defaultValue textValue
             , id identifier
             , disabled (not editable)
-            , onInput (NumberParser.parseFloatInput >> onChange)
+            , onInput (NumberParser.parseDecimalInput >> onChange)
             ]
             []
