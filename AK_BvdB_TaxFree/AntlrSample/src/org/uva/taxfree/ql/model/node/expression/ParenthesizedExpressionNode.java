@@ -60,4 +60,9 @@ public class ParenthesizedExpressionNode extends ExpressionNode {
     public boolean isConstant() {
         return mExpression.isConstant();
     }
+
+    @Override
+    public boolean isLiteral() {
+        return mExpression.isLiteral();
+    }
 }

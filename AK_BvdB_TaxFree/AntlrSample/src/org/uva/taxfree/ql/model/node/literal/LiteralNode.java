@@ -49,4 +49,9 @@ public abstract class LiteralNode extends ExpressionNode {
     public boolean isConstant() {
         return true;
     }
+
+    @Override
+    public boolean isLiteral() {
+        return true;
+    }
 }

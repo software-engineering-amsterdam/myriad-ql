@@ -49,6 +49,7 @@ public class BinaryExpressionNode extends ExpressionNode {
 
     @Override
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
+        super.checkSemantics(symbolTable, semanticsMessages);
         mLeft.checkSemantics(symbolTable, semanticsMessages);
         mRight.checkSemantics(symbolTable, semanticsMessages);
         if (!mLeft.isSameType(mRight)) {
@@ -57,14 +58,16 @@ public class BinaryExpressionNode extends ExpressionNode {
         if (!mOperator.supports(mLeft.getType(), mRight.getType())) {
             semanticsMessages.addError("Unsupported operator called:" + mLeft.getType() + " " + mOperator + " " + mRight.getType());
         }
-        if (isConstant()) {
-            semanticsMessages.addWarning("Constant expression found, always evaluates to: " + this.evaluate());
-        }
     }
 
     @Override
     public boolean isConstant() {
         return mLeft.isConstant() && mRight.isConstant();
+    }
+
+    @Override
+    public boolean isLiteral() {
+        return false;
     }
 
     @Override
