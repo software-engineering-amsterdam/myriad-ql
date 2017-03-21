@@ -86,9 +86,8 @@ def main():
         WarningMessage.print("qls filename \"{}\" does not "
                              "exist".format(layout_file))
 
-    app = App(form, layout=layout, on_exit=lambda app: export(dump_file,
-                                                              app.environment))
-    app.start()
+    App(form, layout=layout, on_exit=lambda app:
+        export(dump_file, app.environment)).start()
 
 if __name__ == "__main__":
     main()
