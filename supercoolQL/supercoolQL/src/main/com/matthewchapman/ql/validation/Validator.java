@@ -4,7 +4,7 @@ import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.core.ErrorLogger;
 import com.matthewchapman.ql.gui.errors.ErrorDialogGenerator;
 import com.matthewchapman.ql.validation.structure.ExpressionChecker;
-import com.matthewchapman.ql.validation.structure.QuestionCollection;
+import com.matthewchapman.ql.validation.structure.LabelChecker;
 import com.matthewchapman.ql.validation.structure.cyclic.DependencyChecker;
 import com.matthewchapman.ql.validation.type.TypeChecker;
 
@@ -19,7 +19,7 @@ public class Validator {
     private static final String INTERPRETER_ERROR_BODY = "QL encountered an interpreter error";
     private static final String INTERPRETER_WARNING_TITLE = "Interpreter Warnings Found";
     private static final String INTERPRETER_WARNING_BODY = "QL encountered an interpreter warning";
-    private final QuestionCollection questionCollection;
+    private final LabelChecker labelChecker;
     private final TypeChecker typeChecker;
     private final DependencyChecker dependencyChecker;
     private final ErrorDialogGenerator dialogGenerator;
@@ -27,20 +27,18 @@ public class Validator {
 
     public Validator() {
         this.dialogGenerator = new ErrorDialogGenerator();
-        this.questionCollection = new QuestionCollection();
+        this.labelChecker = new LabelChecker();
         this.typeChecker = new TypeChecker();
         this.dependencyChecker = new DependencyChecker();
         this.expressionChecker = new ExpressionChecker();
     }
-
-    public QuestionCollection getQuestionCollection() { return this.questionCollection; }
 
     public boolean runChecks(Form astRoot) {
 
         ErrorLogger mainLogger = new ErrorLogger();
 
         //duplicate questions are ok at this point, continue to check the QL
-        ErrorLogger duplicateLog = questionCollection.gatherQuestions(astRoot);
+        ErrorLogger duplicateLog = labelChecker.gatherQuestions(astRoot);
         mainLogger.addMultipleErrors(duplicateLog);
         mainLogger.addMultipleWarnings(duplicateLog);
 
@@ -50,7 +48,7 @@ public class Validator {
         }
 
         //missing parameters are bad
-        ErrorLogger parameterLog = expressionChecker.checkExpressions(astRoot, questionCollection.getTypeTable());
+        ErrorLogger parameterLog = expressionChecker.checkExpressions(astRoot, labelChecker.getTypeTable());
         mainLogger.addMultipleErrors(parameterLog);
 
         //if we have any errors at all at this point, halt.
@@ -68,7 +66,7 @@ public class Validator {
         }
 
         //incorrect types are also bad
-        ErrorLogger typeLog = typeChecker.checkExpressionTypes(astRoot, questionCollection.getTypeTable());
+        ErrorLogger typeLog = typeChecker.checkExpressionTypes(astRoot, labelChecker.getTypeTable());
         if (typeLog.getErrorNumber() > 0) {
             dialogGenerator.generateErrorListBox(typeLog.getErrorsAsString(), INTERPRETER_ERROR_TITLE, INTERPRETER_ERROR_BODY);
             return false;

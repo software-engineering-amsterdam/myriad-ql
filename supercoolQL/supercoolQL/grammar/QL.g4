@@ -11,10 +11,10 @@ formDeclaration
 statement
     :   text=STRING ID ':' type calculatedValue? ';'    #question
     |   'if' '(' expression ')'
-                '{' statement+ '}'                      #ifStatement
+                '{' statement* '}'                      #ifStatement
     |   'if' '(' expression ')'
-                '{' ifCase+=statement '}'
-                'else' '{' elseCase+=statement '}'      #ifElseStatement
+                '{' ifCase+=statement* '}'
+                'else' '{' elseCase+=statement* '}'      #ifElseStatement
     ;
 
 expression
