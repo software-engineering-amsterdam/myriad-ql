@@ -20,8 +20,8 @@ import org.lemonade.nodes.Form;
 import org.lemonade.visitors.EvaluateVisitor;
 import org.lemonade.visitors.FormVisitor;
 import org.lemonade.visitors.GuiVisitor;
-import org.lemonade.visitors.TypeCheckVisitor;
 import org.lemonade.visitors.JsonVisitor;
+import org.lemonade.visitors.TypeCheckVisitor;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -48,13 +48,8 @@ public class QLApp extends Application implements ButtonCallback {
             GuiVisitor guiVisitor = new GuiVisitor(qlGui);
             guiRoot = (GuiForm) root.accept(guiVisitor);
 
-            // Pass 'this' (implementation of ButtonCallback) as argument to assign callback to button
-            qlGui.setUpQuestionnaireScene(this);
-
             EvaluateVisitor evaluateVisitor = new EvaluateVisitor();
             qlGui.addUserInputListeners(guiRoot, evaluateVisitor);
-
-            qlGui.goToQuestionnaire();
         } catch (IOException e) {
             qlGui.addErrors("Error reading file: ", Collections.singletonList(e.getMessage()));
         } catch (InvalidFormException e) {
@@ -76,8 +71,9 @@ public class QLApp extends Application implements ButtonCallback {
                 writer.write(jsonVisitor.getJSONString());
                 writer.flush();
                 writer.close();
+                qlGui.updateFileStatus("JSON saved to " + file.getPath(), true);
             } catch (IOException e) {
-                // TODO something here
+                qlGui.updateFileStatus("Failed to save JSON: " + e.getMessage(), false);
             }
         }
     }

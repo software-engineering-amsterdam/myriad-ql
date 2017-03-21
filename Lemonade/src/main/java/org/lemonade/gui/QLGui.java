@@ -38,11 +38,11 @@ public class QLGui {
     private Scene questionnaireScene;
     private GridPane questionsGridPane;
     private int questionsRowCount;
+    private Label fileStatusLabel;
 
     public QLGui(Stage stage, ButtonCallback buttonCallback) {
         this.stage = stage;
         setUpFileSelectionScene(buttonCallback);
-        setUpQuestionsPane();
 
         this.stage.setScene(selectionScene);
         this.stage.setWidth(1000);
@@ -69,7 +69,9 @@ public class QLGui {
         final Button submitFileButton = new Button("Submit");
         submitFileButton.setOnAction(e -> {
             if (questionnaireFile != null) {
+                setUpQuestionnaireScene(buttonCallback);
                 buttonCallback.goToQuestionnaire(questionnaireFile);
+                this.stage.setScene(questionnaireScene);
             }
         });
 
@@ -96,7 +98,15 @@ public class QLGui {
         selectionScene = new Scene(anchorPane);
     }
 
-    public void setUpQuestionnaireScene(ButtonCallback buttonCallback) {
+    private void setUpQuestionnaireScene(ButtonCallback buttonCallback) {
+        // Set up GridPane for individual questions
+        questionsGridPane = new GridPane();
+        ColumnConstraints constraints = new ColumnConstraints();
+        constraints.setPercentWidth(100);
+        questionsGridPane.getColumnConstraints().addAll(constraints);
+        this.questionsRowCount = 0;
+
+        // Set callback function for submit button
         final Button submitQuestionnaireButton = new Button("Submit form");
         submitQuestionnaireButton.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();
@@ -109,31 +119,28 @@ public class QLGui {
             }
         });
 
+        // Set callback function for back button
         final Button backButton = new Button("Select new questionnaire");
         backButton.setOnAction(e -> stage.setScene(selectionScene));
 
+        // Set container for the footer items
+        fileStatusLabel = new Label();
+        HBox hBox = new HBox();
+        hBox.setSpacing(10);
+        hBox.getChildren().addAll(submitQuestionnaireButton, backButton, fileStatusLabel);
+
+        // Combine all elements in a parent AnchorPane
         final AnchorPane rootGroup = new AnchorPane();
-        AnchorPane.setBottomAnchor(submitQuestionnaireButton, 10.0);
-        AnchorPane.setLeftAnchor(submitQuestionnaireButton, 5.0);
-        AnchorPane.setBottomAnchor(backButton, 10.0);
-        AnchorPane.setRightAnchor(backButton, 5.0);
+        AnchorPane.setBottomAnchor(hBox, 10.0);
+        AnchorPane.setLeftAnchor(hBox, 5.0);
         AnchorPane.setTopAnchor(questionsGridPane, 10.0);
         AnchorPane.setLeftAnchor(questionsGridPane, 5.0);
         AnchorPane.setRightAnchor(questionsGridPane, 5.0);
 
-        rootGroup.getChildren().addAll(questionsGridPane, backButton, submitQuestionnaireButton);
+        rootGroup.getChildren().addAll(questionsGridPane, hBox);
         rootGroup.setPadding(new Insets(10, 10, 10, 10));
 
         questionnaireScene = new Scene(rootGroup);
-    }
-
-    public void setUpQuestionsPane() {
-        questionsGridPane = new GridPane();
-        ColumnConstraints constraints = new ColumnConstraints();
-        constraints.setPercentWidth(100);
-        questionsGridPane.getColumnConstraints().addAll(constraints);
-
-        this.questionsRowCount = 0;
     }
 
     public void addErrors(String message, List<String> errors) {
@@ -172,8 +179,13 @@ public class QLGui {
         rootGroup.addEventFilter(KeyEvent.KEY_RELEASED, e -> guiRoot.accept(evaluateVisitor));
     }
 
-    public void goToQuestionnaire() {
-        this.stage.setScene(questionnaireScene);
+    public void updateFileStatus(String message, boolean successful) {
+        if (successful)
+            fileStatusLabel.setTextFill(Color.BLACK);
+        else
+            fileStatusLabel.setTextFill(Color.RED);
+
+        fileStatusLabel.setText(message);
     }
 
 }

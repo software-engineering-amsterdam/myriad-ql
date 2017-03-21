@@ -35,7 +35,7 @@ public abstract class GuiValue<T> implements GuiExpression {
     public GuiValue<Boolean> eq(GuiValue<?> that) {
         return new GuiBooleanValue(that.equals(this));
     }
-    
+
     public GuiValue<Boolean> nEq(GuiValue<?> that) {
         return new GuiBooleanValue(!that.equals(this));
     }
@@ -71,7 +71,7 @@ public abstract class GuiValue<T> implements GuiExpression {
     public GuiValue<?> gTEq(GuiValue<?> that) {
         throw new NotSupportedException();
     }
-    
+
     public GuiValue<?> add(GuiIntegerValue that) {
         throw new NotSupportedException();
     }
