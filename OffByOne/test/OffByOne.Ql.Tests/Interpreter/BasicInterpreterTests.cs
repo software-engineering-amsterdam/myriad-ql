@@ -1,6 +1,8 @@
 ﻿namespace OffByOne.Ql.Tests.Interpreter
 {
+    using System.Collections.Generic;
     using System.Globalization;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
@@ -129,6 +131,86 @@
                 form.Environment.UpdateValues("privateDebt", new MoneyValue(updatedDebt));
                 controlValue = decimal.Parse(residueControl.Text, CultureInfo.InvariantCulture);
                 Assert.Equal(expectedUpdatedResidue, controlValue);
+            });
+        }
+
+        [Fact]
+        public async Task Interpretation_ShouldMakeComputedControlsReadOnly()
+        {
+            await ThreadHelper.StartSTATask(() =>
+            {
+                var input = @"
+                form taxOfficeExample { 
+                    ""Did you sell a house in 2010?""
+                        hasSoldHouse: boolean
+                    ""Did you buy a house in 2010?""
+                        hasBoughtHouse: boolean
+                    ""Did you enter a loan?""
+                        hasMaintLoan: boolean
+    
+                    if (hasSoldHouse) {
+                        ""What was the selling price?""
+                            sellingPrice: money
+                        ""Private debts for the sold house:""
+                            privateDebt: money
+                        ""Value residue:""
+                            valueResidue: money = 
+                                (sellingPrice - privateDebt)
+                        }
+                    }
+                ";
+                var numberOfLabels = 6;
+                var numberOfEnabledControls = 5;
+
+                var form = this.GetInterpretationFromInput(input);
+                Assert.False(form.Controls["valueResidue"].IsEnabled);
+                var enabledControls = form.Controls.Where(x => x.Value.IsEnabled).ToList();
+                Assert.Equal(enabledControls.Count, numberOfEnabledControls + numberOfLabels);
+                Assert.Empty(enabledControls.Where(x => x.Key.Equals("valueResidue")).ToList());
+            });
+        }
+
+        [Fact]
+        public async Task Interpretation_ShouldPreserveQuestionOrder()
+        {
+            await ThreadHelper.StartSTATask(() =>
+            {
+                var input = @"
+                form taxOfficeExample { 
+                    ""Did you sell a house in 2010?""
+                        hasSoldHouse: boolean
+                    ""Did you buy a house in 2010?""
+                        hasBoughtHouse: boolean
+                    ""Did you enter a loan?""
+                        hasMaintLoan: boolean
+    
+                    if (hasSoldHouse) {
+                        ""What was the selling price?""
+                            sellingPrice: money
+                        ""Private debts for the sold house:""
+                            privateDebt: money
+                        ""Value residue:""
+                            valueResidue: money = 
+                                (sellingPrice - privateDebt)
+                        }
+                    }
+                ";
+
+                var questionIdentifiers = new List<string>
+                {
+                    "hasSoldHouse", "hasBoughtHouse", "hasMaintLoan",
+                    "sellingPrice", "privateDebt", "valueResidue"
+                };
+
+                var form = this.GetInterpretationFromInput(input);
+                var keys = form.Controls.Keys.ToList();
+                var lastIndex = -1;
+                foreach (var identifier in questionIdentifiers)
+                {
+                    var currentIndex = keys.IndexOf(identifier);
+                    Assert.True(lastIndex < currentIndex);
+                    lastIndex = currentIndex;
+                }
             });
         }
     }
