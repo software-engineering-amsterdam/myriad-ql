@@ -1,7 +1,7 @@
 module QLS
   module GUI
     module GUIStylesheet
-      attr_writer :stylesheet
+      attr_writer :question_frame_styles
 
       def render
         set_widgets
@@ -10,7 +10,7 @@ module QLS
 
       def set_widgets
         normal_question_frames.each do |question_frame|
-          new_widget = @stylesheet[question_frame.name]
+          new_widget = @question_frame_styles[question_frame.name]
           next if new_widget.nil?
           question_frame.widget = new_widget
         end
