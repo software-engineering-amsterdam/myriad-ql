@@ -106,7 +106,7 @@ qls_parsed
 qls_ast = QLS::Parser::FormTransformer.new.apply(qls_parsed)
 qls_ast
 '-------------------------------------'
-qls_ast.accept(QLS::GUI::StylesheetBuilder.new)
+stylesheet = qls_ast.accept(QLS::GUI::StylesheetBuilder.new)
 # qls_notifications = QLS::TypeChecker::TypeChecker.check(qls_ast, ql_ast)
 # pp qls_notifications
 #
@@ -115,4 +115,5 @@ qls_ast.accept(QLS::GUI::StylesheetBuilder.new)
 # QL::GUI::GUI.new(ql_ast, qls_ast, ql_notifications)
 
 gui.extend(QLS::GUI::GUIStylesheet)
+gui.stylesheet = stylesheet
 gui.render
