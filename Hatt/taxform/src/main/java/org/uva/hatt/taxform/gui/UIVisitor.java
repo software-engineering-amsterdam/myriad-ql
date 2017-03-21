@@ -22,7 +22,9 @@ import org.uva.hatt.taxform.ast.nodes.types.*;
 import org.uva.hatt.taxform.ast.nodes.types.String;
 import org.uva.hatt.taxform.ast.visitors.EnvironmentsTable;
 import org.uva.hatt.taxform.ast.visitors.Visitor;
+import org.uva.hatt.taxform.evaluation.Evaluator;
 import org.uva.hatt.taxform.gui.fields.*;
+import org.uva.hatt.taxform.values.BooleanValue;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,10 +34,12 @@ public class UIVisitor implements Visitor<Pane> {
     private Stage stage;
     private EnvironmentsTable environmentsTable;
     private Form form;
+    private final Evaluator evaluator;
 
     public UIVisitor(Stage stage, EnvironmentsTable environmentsTable) {
         this.stage = stage;
         this.environmentsTable = environmentsTable;
+        evaluator = new Evaluator();
     }
 
     @Override
@@ -79,14 +83,10 @@ public class UIVisitor implements Visitor<Pane> {
     @Override
     public Pane visit(IfThen node) {
         VBox vBox = new VBox();
-        java.lang.Boolean condition = null;
-        try {
-            condition = java.lang.Boolean.valueOf(node.getCondition().evaluate(environmentsTable));
-        } catch (ScriptException e) {
-            e.printStackTrace();
-        }
 
-        if (condition) {
+        BooleanValue booleanValue = (BooleanValue) evaluator.visit(node.getCondition());
+
+        if (booleanValue.isValue()) {
             List<Pane> thenStatements = node.getThenStatements().stream().map(item -> item.accept(this)).collect(Collectors.toList());
             vBox.getChildren().addAll(thenStatements);
         }
@@ -97,14 +97,10 @@ public class UIVisitor implements Visitor<Pane> {
     @Override
     public Pane visit(IfThenElse node) {
         VBox vBox = new VBox();
-        java.lang.Boolean condition = null;
-        try {
-            condition = java.lang.Boolean.valueOf(node.getCondition().evaluate(environmentsTable));
-        } catch (ScriptException e) {
-            e.printStackTrace();
-        }
 
-        if (condition) {
+        BooleanValue booleanValue = (BooleanValue) evaluator.visit(node.getCondition());
+
+        if (booleanValue.isValue()) {
             List<Pane> thenStatements = node.getThenStatements().stream().map(item -> item.accept(this)).collect(Collectors.toList());
             vBox.getChildren().addAll(thenStatements);
         } else {
@@ -176,62 +172,62 @@ public class UIVisitor implements Visitor<Pane> {
     }
 
     @Override
-    public Pane visit(Addition addition){
+    public Pane visit(Addition addition) {
         return null;
     }
 
     @Override
-    public Pane visit(Division division){
+    public Pane visit(Division division) {
         return null;
     }
 
     @Override
-    public Pane visit(Equal equal){
+    public Pane visit(Equal equal) {
         return null;
     }
 
     @Override
-    public Pane visit(GreaterThan greaterThan){
+    public Pane visit(GreaterThan greaterThan) {
         return null;
     }
 
     @Override
-    public Pane visit(GreaterThanOrEqual greaterThanOrEqual){
+    public Pane visit(GreaterThanOrEqual greaterThanOrEqual) {
         return null;
     }
 
     @Override
-    public Pane visit(LessThan lessThan){
+    public Pane visit(LessThan lessThan) {
         return null;
     }
 
     @Override
-    public Pane visit(LessThanOrEqual lessThanOrEqual){
-        return null;
-    }
-
-//    @Override
-//    public Pane visit(LogicalAnd logicalAnd){
-//        return null;
-//    }
-//
-//    @Override
-//    public Pane visit(LogicalOr){
-//        return null;
-//    }
-
-    @Override
-    public Pane visit(Multiplication multiplication){
+    public Pane visit(LessThanOrEqual lessThanOrEqual) {
         return null;
     }
 
     @Override
-    public Pane visit(NotEqual notEqual){
+    public Pane visit(LogicalAnd logicalAnd) {
         return null;
     }
 
     @Override
-    public Pane visit(Subtraction subtraction){
+    public Pane visit(LogicalOr logicalOr) {
+        return null;
+    }
+
+    @Override
+    public Pane visit(Multiplication multiplication) {
+        return null;
+    }
+
+    @Override
+    public Pane visit(NotEqual notEqual) {
+        return null;
+    }
+
+    @Override
+    public Pane visit(Subtraction subtraction) {
         return null;
     }
 }
