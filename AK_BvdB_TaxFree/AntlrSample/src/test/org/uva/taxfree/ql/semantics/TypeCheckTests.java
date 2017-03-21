@@ -50,7 +50,6 @@ public class TypeCheckTests {
                                 mEmptySourceInfo),
                         mEmptySourceInfo),
                 1);
-
     }
 
     @Test
@@ -59,7 +58,7 @@ public class TypeCheckTests {
                         new EqualsOperator(),
                         new BooleanLiteralNode(false, mEmptySourceInfo),
                         mEmptySourceInfo),
-                2);
+                1);
     }
 
     @Test
@@ -68,8 +67,7 @@ public class TypeCheckTests {
                         new MultiplyOperator(),
                         new BooleanLiteralNode(true, mEmptySourceInfo),
                         mEmptySourceInfo),
-                2
-        );
+                1);
     }
 
     public void assertTypes(Node node, int expectedMessageAmount) {
