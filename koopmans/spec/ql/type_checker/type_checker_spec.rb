@@ -47,7 +47,7 @@ module QL
         end
       end
 
-      # example ast for form with errors
+      # example form with errors
       def generate_form
         # create question
         question_variable = Variable.new('hasSoldHouse')
