@@ -22,7 +22,6 @@ import java.util.List;
 
 public class QLSRadio extends QLSWidget {
 
-    // TODO: needed?
     private String yesLabel;
     private String noLabel;
 
@@ -36,8 +35,6 @@ public class QLSRadio extends QLSWidget {
     @Override
     public List<Type> getSupportedQuestionTypes() {
         List<Type> supportedQuestionTypes = new ArrayList<>();
-        // TODO: support string type?
-        supportedQuestionTypes.add(new StringType());
         supportedQuestionTypes.add(new BooleanType());
         return supportedQuestionTypes;
     }

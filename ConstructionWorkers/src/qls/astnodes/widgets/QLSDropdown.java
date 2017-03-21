@@ -13,6 +13,7 @@ package qls.astnodes.widgets;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.types.BooleanType;
+import ql.astnodes.types.StringType;
 import ql.astnodes.types.Type;
 import qls.visitorinterfaces.StyleAndWidgetVisitor;
 
@@ -21,7 +22,6 @@ import java.util.List;
 
 public class QLSDropdown extends QLSWidget {
 
-    // TODO: needed?
     private String yesLabel;
     private String noLabel;
 
@@ -35,7 +35,6 @@ public class QLSDropdown extends QLSWidget {
     @Override
     public List<Type> getSupportedQuestionTypes() {
         List<Type> supportedQuestionTypes = new ArrayList<>();
-        // TODO: also support string type?
         supportedQuestionTypes.add(new BooleanType());
         return supportedQuestionTypes;
     }

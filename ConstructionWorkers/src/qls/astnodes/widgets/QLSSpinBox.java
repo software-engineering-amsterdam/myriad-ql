@@ -31,7 +31,6 @@ public class QLSSpinBox extends QLSWidget {
     @Override
     public List<Type> getSupportedQuestionTypes() {
         List<Type> supportedQuestionTypes = new ArrayList<>();
-        // TODO: string type is supported here. Also support string type for dropdown widget?
         supportedQuestionTypes.add(new StringType());
         supportedQuestionTypes.add(new IntegerType());
         supportedQuestionTypes.add(new MoneyType());

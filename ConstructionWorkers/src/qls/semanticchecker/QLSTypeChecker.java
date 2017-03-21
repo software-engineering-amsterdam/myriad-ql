@@ -30,14 +30,14 @@ import java.util.*;
 public class QLSTypeChecker implements StyleSheetVisitor {
 
     private final MessageData messages;
-    private final Map<String, Type> identifierMap;
+    private final Map<String, Type> identifierToTypeMap;
     private final List<StyleQuestion> qlsQuestions;
 
     private QLSWidget currentDefaultWidget = new QLSUndefinedWidget(null);
 
-    public QLSTypeChecker(MessageData messages, Map<String, Type> identifierMap, StyleSheet styleSheet) {
+    public QLSTypeChecker(MessageData messages, Map<String, Type> identifierToTypeMap, StyleSheet styleSheet) {
         this.messages = messages;
-        this.identifierMap = identifierMap;
+        this.identifierToTypeMap = identifierToTypeMap;
         this.qlsQuestions = new ArrayList<>();
 
         styleSheet.accept(this);
@@ -54,9 +54,9 @@ public class QLSTypeChecker implements StyleSheetVisitor {
             QLSWidget widget = question.getWidget();
             if (!widget.isUndefined()) {
                 List<Type> supportedTypes = widget.getSupportedQuestionTypes();
-                Type questionType = identifierMap.get(question.getName());
+                Type questionType = identifierToTypeMap.get(question.getName());
 
-                if (questionType != null && !supportedTypes.contains(questionType)) {
+                if (!supportedTypes.contains(questionType)) {
                     messages.addError(new UnsupportedWidgetTypeError(question.getLineNumber(), question.getName()));
                 }
             }
@@ -64,12 +64,11 @@ public class QLSTypeChecker implements StyleSheetVisitor {
     }
 
     private void checkDuplicateQuestionPlacement() {
-
         final Set<StyleQuestion> duplicateQuestions = new HashSet<>();
-        final Set<String> set1 = new HashSet<>();
+        final Set<String> uniqueQuestionIdentifierNames = new HashSet<>();
 
         for (StyleQuestion question : qlsQuestions) {
-            if (!set1.add(question.getName())) {
+            if (!uniqueQuestionIdentifierNames.add(question.getName())) {
                 duplicateQuestions.add(question);
             }
         }
@@ -79,17 +78,16 @@ public class QLSTypeChecker implements StyleSheetVisitor {
                 messages.addError(new DuplicateQLSQuestionPlacementError(question.getLineNumber(), question.getName()));
             }
         }
-
     }
 
     private void checkForUndefinedQuestions() {
-
         List<String> styleQuestionList = new ArrayList<>();
+
         for (StyleQuestion question : qlsQuestions) {
             styleQuestionList.add(question.getName());
         }
 
-        for (String key : identifierMap.keySet()) {
+        for (String key : identifierToTypeMap.keySet()) {
             if (!styleQuestionList.contains(key)) {
                 messages.addError(new NotAllQuestionsDefinedError(new LineNumber(1), key));
             }
@@ -98,28 +96,27 @@ public class QLSTypeChecker implements StyleSheetVisitor {
 
     @Override
     public void visit(StyleSheet styleSheet) {
-        for (DefaultStyle style : styleSheet.getDefaultStyle()) {
-            if (!style.getWidget().isUndefined()) {
-                this.currentDefaultWidget = style.getWidget();
-            }
-        }
-
         for (Section section : styleSheet.getSections()) {
             section.accept(this);
         }
 
+        for (DefaultStyle style : styleSheet.getDefaultStyle()) {
+            if (!style.getWidget().isUndefined()) {
+                currentDefaultWidget = style.getWidget();
+            }
+        }
     }
 
     @Override
     public void visit(Section section) {
-        for (DefaultStyle style : section.getDefaultStyles()) {
-            if (!style.getWidget().isUndefined()) {
-                this.currentDefaultWidget = style.getWidget();
-            }
-        }
-
         for (Section subSection : section.getSections()) {
             subSection.accept(this);
+        }
+
+        for (DefaultStyle style : section.getDefaultStyles()) {
+            if (!style.getWidget().isUndefined()) {
+                currentDefaultWidget = style.getWidget();
+            }
         }
 
         for (StyleQuestion question : section.getQuestions()) {
@@ -135,7 +132,7 @@ public class QLSTypeChecker implements StyleSheetVisitor {
     @Override
     public void visit(StyleQuestion question) {
         qlsQuestions.add(question);
-        if (identifierMap.get(question.getName()) == null) {
+        if (identifierToTypeMap.get(question.getName()) == null) {
             messages.addError(new UndefinedQuestionReferenceError(question.getLineNumber(), question.getName()));
         }
 
@@ -143,12 +140,11 @@ public class QLSTypeChecker implements StyleSheetVisitor {
 
         if (widget.isUndefined()) {
             List<Type> supportedTypes = currentDefaultWidget.getSupportedQuestionTypes();
-            Type questionType = identifierMap.get(question.getName());
+            Type questionType = identifierToTypeMap.get(question.getName());
 
-            if (questionType != null && !supportedTypes.contains(questionType)) {
+            if (!supportedTypes.contains(questionType)) {
                 messages.addError(new UnsupportedWidgetTypeError(question.getLineNumber(), question.getName()));
             }
         }
-
     }
 }

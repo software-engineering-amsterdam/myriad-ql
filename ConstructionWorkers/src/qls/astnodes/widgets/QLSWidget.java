@@ -23,11 +23,6 @@ public abstract class QLSWidget extends Node {
 
     JLabel widgetLabel;
 
-    // TODO: why is there an empty constructor?
-    public QLSWidget() {
-
-    }
-
     public QLSWidget(LineNumber lineNumber) {
         super(lineNumber);
         widgetLabel = new JLabel();

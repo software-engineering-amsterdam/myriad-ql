@@ -22,11 +22,6 @@ import java.util.List;
 
 public class QLSCheckBox extends QLSWidget {
 
-    // TODO: why is there an empty constructor?
-    public QLSCheckBox() {
-
-    }
-
     public QLSCheckBox(String label, LineNumber lineNumber) {
         super(lineNumber);
         widgetLabel.setText(label);
@@ -35,8 +30,6 @@ public class QLSCheckBox extends QLSWidget {
     @Override
     public List<Type> getSupportedQuestionTypes() {
         List<Type> supportedQuestionTypes = new ArrayList<>();
-        // TODO: support string type?
-        supportedQuestionTypes.add(new StringType());
         supportedQuestionTypes.add(new BooleanType());
         return supportedQuestionTypes;
     }

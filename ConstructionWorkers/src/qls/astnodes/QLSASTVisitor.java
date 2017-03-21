@@ -59,18 +59,18 @@ public class QLSASTVisitor extends QLSBaseVisitor<Node> {
             sections.add(section);
         }
 
-        List<StyleQuestion> questions = new ArrayList<>();
-
-        for (QLSParser.QuestionContext questionContext : ctx.question()) {
-            StyleQuestion question = (StyleQuestion) questionContext.accept(this);
-            questions.add(question);
-        }
-
         List<DefaultStyle> defaultStyles = new ArrayList<>();
 
         for (QLSParser.DefaultStyleContext defaultStyleContext : ctx.defaultStyle()) {
             DefaultStyle defaultStyle = (DefaultStyle) defaultStyleContext.accept(this);
             defaultStyles.add(defaultStyle);
+        }
+
+        List<StyleQuestion> questions = new ArrayList<>();
+
+        for (QLSParser.QuestionContext questionContext : ctx.question()) {
+            StyleQuestion question = (StyleQuestion) questionContext.accept(this);
+            questions.add(question);
         }
 
         return new Section(name, sections, defaultStyles, questions, getLineNumber(ctx));
