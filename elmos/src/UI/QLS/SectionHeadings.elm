@@ -1,4 +1,4 @@
-module UI.Headings exposing (Heading, init, deeper, header)
+module UI.QLS.SectionHeadings exposing (Heading, init, deeper, header)
 
 import Html exposing (Html, Attribute, node)
 

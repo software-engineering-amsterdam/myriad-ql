@@ -1,11 +1,11 @@
-module UI.QLSApp exposing (Model, Msg, init, update, view)
+module UI.QLS.App exposing (Model, Msg, init, update, view)
 
 import Html exposing (Html, div, text, h3, ul, li, a)
 import Html.Events exposing (onClick)
 import Html.Attributes exposing (class, attribute)
-import UI.QLSFormRenderer as FormRenderer
-import UI.QLInput as QLInput
-import UI.QLSInput as QLSInput
+import UI.QL.Input as QLInput
+import UI.QLS.Input as QLSInput
+import UI.QLS.FormRenderer as FormRenderer
 
 
 type Tab

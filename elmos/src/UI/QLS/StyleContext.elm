@@ -1,4 +1,4 @@
-module UI.StyleContext exposing (..)
+module UI.QLS.StyleContext exposing (..)
 
 import QLS.AST exposing (..)
 import QL.AST exposing (ValueType(..))

@@ -1,4 +1,4 @@
-module QL.TypeChecker.Expressions.ComputedFieldTypesTests exposing (all)
+module QL.TypeChecker.Expressions.ComputedQuestionTypesTests exposing (all)
 
 import QL.AST exposing (..)
 import QL.ASTTestUtil exposing (emptyLoc)
@@ -6,26 +6,26 @@ import Dict
 import Expect
 import Test exposing (Test, describe, test)
 import QL.TypeChecker.Messages exposing (..)
-import QL.TypeChecker.Expressions.ComputedFieldTypes exposing (computedFieldTypeErrors)
+import QL.TypeChecker.Expressions.ComputedQuestionTypes exposing (check)
 
 
 all : Test
 all =
-    describe "ComputedFieldTypes.computedFieldTypeErrors"
+    describe "ComputedQuestionTypes.check"
         [ test "should detect incompatible type" <|
             \() ->
-                computedFieldTypeErrors
+                check
                     (Form ( "form", emptyLoc )
-                        [ ComputedField "Label" ( "x", Location 1 1 ) BooleanType (Str emptyLoc "test")
+                        [ ComputedQuestion "Label" ( "x", Location 1 1 ) BooleanType (Str emptyLoc "test")
                         ]
                     )
                     (Dict.singleton "x" BooleanType)
-                    |> Expect.equal [ Error (InvalidComputedFieldType ( "x", Location 1 1 ) StringType BooleanType) ]
+                    |> Expect.equal [ Error (InvalidComputedQuestionType ( "x", Location 1 1 ) StringType BooleanType) ]
         , test "should not report an error on a Money field with an integerValue" <|
             \() ->
-                computedFieldTypeErrors
+                check
                     (Form ( "form", emptyLoc )
-                        [ ComputedField "Label" ( "x", Location 1 1 ) MoneyType (Integer emptyLoc 5)
+                        [ ComputedQuestion "Label" ( "x", Location 1 1 ) MoneyType (Integer emptyLoc 5)
                         ]
                     )
                     (Dict.singleton "x" MoneyType)

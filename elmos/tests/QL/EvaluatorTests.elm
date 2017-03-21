@@ -143,12 +143,12 @@ all =
                 asExpression "1 < 2"
                     |> Maybe.map (Evaluator.evaluate sampleData)
                     |> Expect.equal (Just (Values.Boolean True))
-        , test "less than with ascending values for which the rhs is a float" <|
+        , test "less than with ascending values for which the rhs is a decimal" <|
             \() ->
                 asExpression "1 < 2.0"
                     |> Maybe.map (Evaluator.evaluate sampleData)
                     |> Expect.equal (Just (Values.Boolean True))
-        , test "less than with ascending values for which the lhs is a float" <|
+        , test "less than with ascending values for which the lhs is a decimal" <|
             \() ->
                 asExpression "1.0 < 2"
                     |> Maybe.map (Evaluator.evaluate sampleData)

@@ -1,19 +1,19 @@
-module QL.TypeChecker.Expressions.ComputedFieldTypes exposing (computedFieldTypeErrors)
+module QL.TypeChecker.Expressions.ComputedQuestionTypes exposing (check)
 
 import Dict exposing (Dict)
 import QL.TypeChecker.Expressions.ExpressionType exposing (getType)
 import QL.AST exposing (Form, FormItem(..), Expression(..), Id, ValueType(MoneyType, IntegerType), Location)
 import QL.AST.Collectors as Collectors exposing (TypeEnvironment)
-import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(InvalidComputedFieldType))
+import QL.TypeChecker.Messages exposing (Message(Error), ErrorMessage(InvalidComputedQuestionType))
 
 
-computedFieldTypeErrors : Form -> TypeEnvironment -> List Message
-computedFieldTypeErrors form typeEnv =
-    Collectors.collectComputedFields form
+check : Form -> TypeEnvironment -> List Message
+check form typeEnv =
+    Collectors.collectComputedQuestions form
         |> List.filterMap (computationToType typeEnv)
         |> List.filterMap (withExpectedType typeEnv)
-        |> List.filter badComputedField
-        |> List.map (\( id, actualType, expectedType ) -> Error (InvalidComputedFieldType id actualType expectedType))
+        |> List.filter badComputedQuestion
+        |> List.map (\( id, actualType, expectedType ) -> Error (InvalidComputedQuestionType id actualType expectedType))
 
 
 computationToType : TypeEnvironment -> ( Id, Expression ) -> Maybe ( Id, ValueType )
@@ -32,8 +32,8 @@ withExpectedType typeEnv ( ( name, _ ) as id, actualType ) =
         |> Maybe.map (\expectedType -> ( id, actualType, expectedType ))
 
 
-badComputedField : ( Id, ValueType, ValueType ) -> Bool
-badComputedField ( _, computationType, fieldType ) =
+badComputedQuestion : ( Id, ValueType, ValueType ) -> Bool
+badComputedQuestion ( _, computationType, fieldType ) =
     case ( computationType, fieldType ) of
         ( IntegerType, MoneyType ) ->
             False

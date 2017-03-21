@@ -1,11 +1,11 @@
-module UI.QLFormRenderer exposing (Model, Msg, init, update, view, visibleFieldWidgetConfig)
+module UI.QL.FormRenderer exposing (Model, Msg, init, update, view, visibleFieldWidgetConfig)
 
 import Html exposing (Html, div, text, h3, pre)
 import Html.Attributes exposing (class)
 import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
 import UI.Widget.String as StringWidget
-import UI.Widget.Float as FloatWidget
+import UI.Widget.Decimal as DecimalWidget
 import UI.Widget.Base as BaseWidget exposing (WidgetContext)
 import QL.Environment as Env exposing (Environment)
 import QL.Values exposing (Value)
@@ -27,7 +27,7 @@ type Msg
 init : Form -> Model
 init form =
     { form = form
-    , env = FormUpdater.updateComputedFields form Env.empty
+    , env = FormUpdater.updateComputedQuestions form Env.empty
     }
 
 
@@ -72,7 +72,7 @@ viewField env field =
                 IntegerWidget.view
 
             MoneyType ->
-                FloatWidget.view
+                DecimalWidget.view
 
 
 visibleFieldWidgetConfig : Environment -> Field -> WidgetContext Msg

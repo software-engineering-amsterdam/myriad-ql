@@ -32,22 +32,22 @@ formItem =
             choice
                 [ ifThenElse
                 , ifThen
-                , computedField
+                , computedQuestion
                 , field
                 ]
 
 
 field : Parser s FormItem
 field =
-    succeed Field
+    succeed Question
         <*> quotedString
         <*> (whitespace1 *> identifier)
         <*> (trimmed (string ":") *> valueType)
 
 
-computedField : Parser s FormItem
-computedField =
-    succeed ComputedField
+computedQuestion : Parser s FormItem
+computedQuestion =
+    succeed ComputedQuestion
         <*> quotedString
         <*> (whitespace1 *> identifier)
         <*> (trimmed (string ":") *> valueType)

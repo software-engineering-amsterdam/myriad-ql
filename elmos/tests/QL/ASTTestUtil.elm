@@ -29,11 +29,11 @@ removeLocationFromBlock =
 removeLocationFromFormItem : FormItem -> FormItem
 removeLocationFromFormItem formItem =
     case formItem of
-        Field label id valueType ->
-            Field label (removeLocactionFromId id) valueType
+        Question label id valueType ->
+            Question label (removeLocactionFromId id) valueType
 
-        ComputedField label id valueType expr ->
-            ComputedField label (removeLocactionFromId id) valueType (removeLocactionFromExpression expr)
+        ComputedQuestion label id valueType expr ->
+            ComputedQuestion label (removeLocactionFromId id) valueType (removeLocactionFromExpression expr)
 
         IfThen expr thenBranch ->
             IfThen

@@ -1,4 +1,4 @@
-module UI.QLSFormRenderer exposing (Model, Msg, init, update, view)
+module UI.QLS.FormRenderer exposing (Model, Msg, init, update, view)
 
 import Html exposing (Html, div, text, h3, pre, button, hr)
 import Html.Attributes exposing (class, disabled)
@@ -10,7 +10,7 @@ import UI.Widget.StringRadio as StringRadioWidget
 import UI.Widget.Boolean as BooleanWidget
 import UI.Widget.Integer as IntegerWidget
 import UI.Widget.String as StringWidget
-import UI.Widget.Float as FloatWidget
+import UI.Widget.Decimal as DecimalWidget
 import UI.Widget.Slider as SliderWidget
 import UI.Widget.Spinbox as SpinboxWidget
 import UI.Widget.Base as BaseWidget exposing (WidgetContext)
@@ -21,9 +21,8 @@ import QLS.AST exposing (..)
 import UI.FormUpdater as FormUpdater
 import UI.Field as Field exposing (Field(Editable, Computed))
 import UI.QLS.Pagination as Pagination exposing (Pagination)
-import UI.StyleContext as StyleContext exposing (StyleContext)
-import UI.Headings as Headings exposing (Heading)
-import UI.QLFormRenderer
+import UI.QLS.StyleContext as StyleContext exposing (StyleContext)
+import UI.QLS.SectionHeadings as SectionHeadings exposing (Heading)
 
 
 type alias Model =
@@ -45,7 +44,7 @@ init form styleSheet =
     { form = form
     , styleSheet = styleSheet
     , pagination = Pagination.init styleSheet.pages
-    , env = FormUpdater.updateComputedFields form Env.empty
+    , env = FormUpdater.updateComputedQuestions form Env.empty
     }
 
 
@@ -97,7 +96,7 @@ view ({ form, env } as model) =
 
 renderPage : Environment -> List Field -> Page -> Html Msg
 renderPage env visibleFields (Page _ sections defaultValueConfigs) =
-    div [] (List.filterMap (renderSection env Headings.init visibleFields (StyleContext.init defaultValueConfigs)) sections)
+    div [] (List.filterMap (renderSection env SectionHeadings.init visibleFields (StyleContext.init defaultValueConfigs)) sections)
 
 
 renderPagination : Pagination -> Html Msg
@@ -136,7 +135,7 @@ nonEmptyList x =
 sectionFromLabelAndChildren : Heading -> String -> List (Html Msg) -> Html Msg
 sectionFromLabelAndChildren heading title children =
     div []
-        [ Headings.header heading [] [ text title ]
+        [ SectionHeadings.header heading [] [ text title ]
         , div [] children
         ]
 
@@ -145,7 +144,7 @@ renderSectionChild : Environment -> Heading -> List Field -> StyleContext -> Sec
 renderSectionChild env heading visibleFields styleContext sectionChild =
     case sectionChild of
         SubSection subSection ->
-            renderSection env (Headings.deeper heading) visibleFields styleContext subSection
+            renderSection env (SectionHeadings.deeper heading) visibleFields styleContext subSection
 
         Field (Question ( name, _ )) ->
             Field.fieldForName name visibleFields
@@ -190,7 +189,7 @@ viewField valueType env field ( maybeWidget, styles ) =
                         IntegerWidget.view
 
                     MoneyType ->
-                        FloatWidget.view
+                        DecimalWidget.view
 
 
 asRenderable : Widget -> ValueType -> (WidgetContext Msg -> Html Msg)
@@ -237,7 +236,7 @@ radioWidgetRendererForValueType valueType labels =
         _ ->
             Debug.crash
                 ("It should not be possible to render a Radio widget for "
-                    ++ (toString valueType)
+                    ++ toString valueType
                     ++ ", the typechecker should have prevented this from happening."
                 )
 
@@ -254,7 +253,7 @@ dropdownWidgetRendererForValueType valueType labels =
         _ ->
             Debug.crash
                 ("It should not be possible to render a DropDown widget for "
-                    ++ (toString valueType)
+                    ++ toString valueType
                     ++ ", the typechecker should have prevented this from happening."
                 )
 
@@ -272,16 +271,28 @@ textWidgetRendererForValueType valueType =
             IntegerWidget.view
 
         MoneyType ->
-            FloatWidget.view
+            DecimalWidget.view
 
 
 visibleFieldWidgetConfig : Environment -> List Style -> Field -> WidgetContext Msg
 visibleFieldWidgetConfig env styles field =
-    let
-        config =
-            UI.QLFormRenderer.visibleFieldWidgetConfig env field
-    in
-        { config | style = List.map styleAsPair styles }
+    case field of
+        Editable label identifier _ ->
+            widgetContext label identifier env True styles
+
+        Computed label identifier _ _ ->
+            widgetContext label identifier env False styles
+
+
+widgetContext : String -> String -> Environment -> Bool -> List Style -> WidgetContext Msg
+widgetContext label identifier env editable styles =
+    { identifier = identifier
+    , label = label
+    , env = env
+    , onChange = OnFieldChange identifier
+    , editable = editable
+    , style = List.map styleAsPair styles
+    }
 
 
 styleAsPair : Style -> ( String, String )
