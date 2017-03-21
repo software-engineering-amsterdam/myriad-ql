@@ -24,7 +24,6 @@ public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<
     Map<String, QLType> symbolTable;
     private List<String> errors;
 
-
     public List<String> getErrors() {
         return errors;
     }
@@ -58,6 +57,7 @@ public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<
         IdentifierLiteral identifier = question.getIdentifier();
         QLType questionType = question.getType();
 
+        findCycle(identifier.getValue(), question.getExpression());
         if (symbolTable.containsKey(identifier.getValue())) {
             errors.add("QLComputedQuestion identifier: " + identifier + " found at " + question.getPosition() + " already declared.");
         }
@@ -67,7 +67,7 @@ public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<
             errors.add("QLComputedQuestion type mismatch at: " + question.getPosition() + " " + expressionType + " cannot be cast to " + questionType);
         }
         symbolTable.put(identifier.getValue(), questionType);
-        return null;//TODO check me!
+        return null;
     }
 
     public QLType visit(Conditional conditional) {
@@ -245,5 +245,12 @@ public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<
     @Override
     public QLType visit(final QLStringType qlStringType) {
         return qlStringType;
+    }
+
+    private void findCycle(String identifier, Expression expression) {
+        CycleDetector cycleDetector = new CycleDetector(identifier);
+        if (expression.accept(cycleDetector)) {
+            errors.add(cycleDetector.getError());
+        }
     }
 }
