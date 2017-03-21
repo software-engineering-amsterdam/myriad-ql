@@ -1,7 +1,7 @@
 package org.ql.gui;
 
 import javafx.stage.Stage;
-import org.ql.gui.elements.Element;
+import org.ql.gui.widgets.Widget;
 
 public class Window {
 
@@ -9,17 +9,17 @@ public class Window {
 
     public Window(Stage stage, String title) {
         stage.setTitle(title);
-        stage.setResizable(false);
+        stage.setResizable(true);
 
         mainPane = new QuestionPane();
         stage.setScene(mainPane.createScene());
     }
 
-    public void resetStage() {
+    public void reset() {
         mainPane.reset();
     }
 
-    public void attachElementToPane(Element question) {
-        question.attachToPane(mainPane);
+    public void attachWidget(Widget widget) {
+        mainPane.add(widget.createGridPane());
     }
 }

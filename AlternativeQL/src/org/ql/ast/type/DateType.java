@@ -13,7 +13,7 @@ public class DateType extends Type {
     }
 
     @Override
-    public boolean isCompatibleWith(Type type) {
+    public boolean isCompatibleWith(TypeCompatibility type) {
         return type.isCompatibleWith(this);
     }
 

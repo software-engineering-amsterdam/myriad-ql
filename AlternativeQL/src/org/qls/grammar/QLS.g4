@@ -5,11 +5,11 @@ stylesheet
     ;
 
 page
-    :   'page' id=identifier '{' (section | defaultWidget)* '}'
+    :   'page' id=identifier '{' section* defaultWidget* '}'
     ;
 
 section
-    :   'section' name=STRING_LITERAL '{' (question | section | defaultWidget)* '}'
+    :   'section' name=STRING_LITERAL '{' question* section* defaultWidget* '}'
     |   'section' name=STRING_LITERAL (question | section | defaultWidget)
     ;
 
@@ -23,12 +23,12 @@ widget
     ;
 
 widgetType
-    : 'spinbox'                                                     #spinboxWidget
-    | 'slider'                                                      #sliderWidget
-    | 'text'                                                        #textWidget
-    | 'checkbox'                                                    #checkboxWidget
-    | 'radio' '(' yes=STRING_LITERAL ',' no=STRING_LITERAL ')'      #radioWidget
-    | 'dropdown' '(' yes=STRING_LITERAL ',' no=STRING_LITERAL ')'   #dropdownWidget
+    : 'spinbox'                                                     #spinbox
+    | 'slider'                                                      #slider
+    | 'text'                                                        #text
+    | 'checkbox'                                                    #checkbox
+    | 'radio' '(' yes=STRING_LITERAL ',' no=STRING_LITERAL ')'      #radio
+    | 'dropdown' '(' yes=STRING_LITERAL ',' no=STRING_LITERAL ')'   #dropdown
     ;
 
 defaultWidget
@@ -36,10 +36,11 @@ defaultWidget
     | 'default' type '{' styleRule+ widget '}'  #defaultWithStyle
     ;
 
-styleRule // TODO: Color - Hexadecimal
-    : 'width' ':'  INTEGER_LITERAL      #widthRule
+styleRule
+    : 'width' ':' INTEGER_LITERAL       #widthRule
     | 'font' ':' STRING_LITERAL         #fontRule
     | 'fontsize' ':' INTEGER_LITERAL    #fontSizeRule
+    | 'color' ':' COLOR_LITERAL         #colorRule
     ;
 
 // TODO: duplicates with QL grammar: extract in separate file?
@@ -61,6 +62,7 @@ LINE_COMMENT : '//' ~[\r\n]* -> channel(HIDDEN);
 // literal
 STRING_LITERAL : '"' (ESCAPE_QUOTE | ~ ["\\])* '"';
 INTEGER_LITERAL : [0-9]+;
+COLOR_LITERAL : '#' HEX HEX HEX HEX HEX HEX ;
 
 // names
 ID : [a-zA-Z][a-zA-Z0-9_]+;

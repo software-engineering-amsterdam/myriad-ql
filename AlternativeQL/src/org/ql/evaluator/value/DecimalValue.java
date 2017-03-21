@@ -1,6 +1,7 @@
 package org.ql.evaluator.value;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class DecimalValue extends Value {
 
@@ -67,17 +68,17 @@ public class DecimalValue extends Value {
 
     @Override
     public Value notEqual(DecimalValue comparable) {
-        return new BooleanValue(comparable.value.equals(value.floatValue()));
+        return new BooleanValue(comparable.value.floatValue() != value.floatValue());
     }
 
     @Override
-    public Value product(Value comparable) {
-        return comparable.product(this);
+    public Value product(Value multiplicand) {
+        return multiplicand.product(this);
     }
 
     @Override
-    public Value product(DecimalValue comparable) {
-        return new DecimalValue(new BigDecimal(comparable.value.floatValue() * value.floatValue()));
+    public Value product(DecimalValue multiplier) {
+        return new DecimalValue(multiplier.value.multiply(value));
     }
 
     @Override
@@ -91,40 +92,45 @@ public class DecimalValue extends Value {
     }
 
     @Override
-    public Value subtraction(Value subtraction) {
-        return subtraction.subtraction(this);
+    public Value subtraction(Value subtrahend) {
+        return subtrahend.subtraction(this);
     }
 
     @Override
-    public Value subtraction(DecimalValue subtraction) {
-        return new DecimalValue(new BigDecimal(subtraction.value.floatValue() - value.floatValue()));
+    public Value subtraction(DecimalValue minuend) {
+        return new DecimalValue(minuend.value.subtract(value));
     }
 
-    public Value division(Value division) {
-        return division.division(this);
+    public Value division(Value divisor) {
+        return divisor.division(this);
     }
 
-    public Value division(DecimalValue division) {
+    public Value division(DecimalValue dividend) {
         if (value.floatValue() == 0) {
             return new UnknownValue();
         }
 
-        return new DecimalValue(new BigDecimal(division.value.floatValue() / value.floatValue()));
+        return new DecimalValue(dividend.value.divide(value, RoundingMode.UNNECESSARY));
     }
 
     @Override
-    public Value addition(Value addition) {
-        return addition.addition(this);
+    public Value addition(Value augend) {
+        return augend.addition(this);
     }
 
     @Override
-    public Value addition(DecimalValue addition) {
-        return new DecimalValue(new BigDecimal(addition.value.floatValue() + value.floatValue()));
+    public Value addition(DecimalValue addend) {
+        return new DecimalValue(addend.value.add(value));
     }
 
     @Override
     public BigDecimal getPlainValue() {
         return value;
+    }
+
+    @Override
+    public Double toDouble() {
+        return value.doubleValue();
     }
 
     @Override
@@ -136,6 +142,11 @@ public class DecimalValue extends Value {
 
         return value != null ? value.equals(that.value) : that.value == null;
 
+    }
+
+    @Override
+    public String toString() {
+        return value.toPlainString();
     }
 
     @Override

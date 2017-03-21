@@ -1,6 +1,6 @@
 package org.ql.evaluator;
 
-import org.ql.ast.Identifier;
+import org.ql.ast.identifier.Identifier;
 import org.ql.evaluator.value.UnknownValue;
 import org.ql.evaluator.value.Value;
 
@@ -21,7 +21,7 @@ public class ValueTable {
         return values.get(id.toString());
     }
 
-    public boolean isDeclared(Identifier id) {
+    private boolean isDeclared(Identifier id) {
         return values.containsKey(id.toString());
     }
 

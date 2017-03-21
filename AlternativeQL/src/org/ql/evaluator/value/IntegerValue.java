@@ -70,13 +70,13 @@ public class IntegerValue extends Value {
     }
 
     @Override
-    public Value product(Value comparable) {
-        return comparable.product(this);
+    public Value product(Value multiplicand) {
+        return multiplicand.product(this);
     }
 
     @Override
-    public Value product(IntegerValue comparable) {
-        return new IntegerValue(comparable.value * value);
+    public Value product(IntegerValue multiplier) {
+        return new IntegerValue(multiplier.value * value);
     }
 
     @Override
@@ -90,43 +90,53 @@ public class IntegerValue extends Value {
     }
 
     @Override
-    public Value subtraction(Value subtraction) {
-        return subtraction.subtraction(this);
+    public Value subtraction(Value subtrahend) {
+        return subtrahend.subtraction(this);
     }
 
     @Override
-    public Value subtraction(IntegerValue comparable) {
-        return new IntegerValue(comparable.value - value);
+    public Value subtraction(IntegerValue minuend) {
+        return new IntegerValue(minuend.value - value);
     }
 
     @Override
-    public Value division(Value division) {
-        return division.division(this);
+    public Value division(Value divisor) {
+        return divisor.division(this);
     }
 
     @Override
-    public Value division(IntegerValue comparable) {
+    public Value division(IntegerValue dividend) {
 
         if (value == 0) {
             return new UnknownValue();
         }
 
-        return new IntegerValue(comparable.value / value);
+        return new IntegerValue(dividend.value / value);
     }
 
     @Override
-    public Value addition(Value addition) {
-        return addition.addition(this);
+    public Value addition(Value augend) {
+        return augend.addition(this);
     }
 
     @Override
-    public Value addition(IntegerValue comparable) {
-        return new IntegerValue(comparable.value + value);
+    public Value addition(IntegerValue addend) {
+        return new IntegerValue(addend.value + value);
     }
 
     @Override
     public Integer getPlainValue() {
         return value;
+    }
+
+    @Override
+    public Integer toInteger() {
+        return value;
+    }
+
+    @Override
+    public Double toDouble() {
+        return value.doubleValue();
     }
 
     @Override
@@ -138,6 +148,11 @@ public class IntegerValue extends Value {
 
         return value != null ? value.equals(that.value) : that.value == null;
 
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
     }
 
     @Override
