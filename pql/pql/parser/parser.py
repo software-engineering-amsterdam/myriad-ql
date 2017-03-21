@@ -2,7 +2,7 @@
 from pyparsing import (Suppress, Literal, Word, alphas, alphanums, nums, opAssoc, infixNotation, OneOrMore,
                        QuotedString, Optional, Forward, Combine, ParserElement, ParseFatalException)
 
-from messages.fatal_error import FatalError
+from pql.messages.fatal_error import FatalError
 from pql.ast import ast
 
 
