@@ -10,7 +10,7 @@ import org.qls.ast.page.*;
 import org.qls.typechecker.issues.errors.UnusedQuestion;
 import org.qls.typechecker.issues.errors.DuplicateQuestion;
 import org.qls.typechecker.issues.errors.UndefinedQuestion;
-import org.qls.typechecker.issues.errors.UnsupportedWidgetForQLQuestionType;
+import org.qls.typechecker.issues.errors.InconsistentWidgetWithQuestionType;
 
 import java.util.List;
 
@@ -63,8 +63,8 @@ public class QLSQuestionVisitor implements WidgetQuestionVisitor<Void, SymbolTab
     }
 
     private void checkForQuestionWidgetTypeInconsistency(CustomWidgetQuestion question, SymbolTable symbolTable) {
-        if (!isWidgetTypeSupportedForQuestion(question, symbolTable)) {
-            issuesStorage.addError(new UnsupportedWidgetForQLQuestionType(question));
+        if (symbolTable.isDeclared(question.getIdentifier()) && !isWidgetTypeSupportedForQuestion(question, symbolTable)) {
+            issuesStorage.addError(new InconsistentWidgetWithQuestionType(question));
         }
     }
 

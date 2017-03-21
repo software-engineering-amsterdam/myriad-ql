@@ -4,11 +4,11 @@ import org.ql.ast.Node;
 import org.ql.typechecker.issues.Issue;
 import org.qls.ast.page.CustomWidgetQuestion;
 
-public class UnsupportedWidgetForQLQuestionType extends Issue {
+public class InconsistentWidgetWithQuestionType extends Issue {
 
     private final CustomWidgetQuestion question;
 
-    public UnsupportedWidgetForQLQuestionType(CustomWidgetQuestion question) {
+    public InconsistentWidgetWithQuestionType(CustomWidgetQuestion question) {
         this.question = question;
     }
 
