@@ -11,7 +11,7 @@ import org.uva.taxfree.ql.model.node.literal.StringLiteralNode;
 import org.uva.taxfree.ql.model.operators.*;
 import test.org.uva.taxfree.ql.SemanticsTester;
 
-public class CalculationTest extends SemanticsTester {
+public class BinaryExpressionTests extends SemanticsTester {
 
     @Test
     public void testGreaterEqualOperator() throws Exception {
@@ -103,7 +103,7 @@ public class CalculationTest extends SemanticsTester {
     }
 
     private void assertFalse(String leftHand, Operator operator, String rightHand) {
-        assertThat(leftHand, operator, rightHand, "true");
+        assertThat(leftHand, operator, rightHand, "false");
     }
 
     private void assertTrue(boolean leftHand, Operator operator, boolean rightHand) {
@@ -139,7 +139,6 @@ public class CalculationTest extends SemanticsTester {
         System.out.println(expression.evaluate());
         Assert.assertEquals(expression.evaluate(), expectedResult);
     }
-
 
     private SourceInfo emptySource() {
         return new SourceInfo(0, 0, 0, 0);
