@@ -34,6 +34,8 @@
 # IntelliJ
 /out/
 
+/target
+
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
@@ -47,7 +49,7 @@ crashlytics-build.properties
 fabric.properties
 
 ### Intellij Patch ###
-# Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
+# Comment Reason: https://github.com/joeblau/gitignore.io/issuesStorage/186#issuecomment-215987721
 
 # *.iml
 # modules.xml

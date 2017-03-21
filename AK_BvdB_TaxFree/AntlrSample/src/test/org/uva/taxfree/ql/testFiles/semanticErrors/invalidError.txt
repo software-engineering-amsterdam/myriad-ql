@@ -1,0 +1,8 @@
+// Sample file to identify a bug where a dependency error was thrown because of the three + five in the expression
+form houseForm {
+    if (three == five) {
+        "Three equals five: " -> threePlusFive : integer = three + five
+    }
+    "I am five" -> five : integer
+    "I am three" -> three : integer
+}

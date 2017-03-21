@@ -1,0 +1,25 @@
+AK_BvdB_TaxFree/AntlrSample/log.err
+AK_BvdB_TaxFree/AntlrSample/.idea/dictionaries/Gebruiker.xml
+
+WeekendWarriors/Questionnaires/Questionnaires/bin/
+WeekendWarriors/Questionnaires/Questionnaires/obj/
+WeekendWarriors/Questionnaires/Questionnaires/Java/
+WeekendWarriors/Questionnaires/Tests/bin/
+WeekendWarriors/Questionnaires/Tests/obj/
+WeekendWarriors/Questionnaires/Questionnaires/input.txt
+WeekendWarriors/Questionnaires/Questionnaires/Generated/
+
+# plz
+.vscode/
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+WeekendWarriors/Questionnaires/Questionnaires/QLS/Generated/
+WeekendWarriors/Questionnaires/Questionnaires/QL/Generated/

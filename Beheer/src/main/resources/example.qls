@@ -1,0 +1,51 @@
+stylesheet taxOfficeExample {
+    page Foo {
+        section "Bar"
+            question enterMoney
+        }
+    page Housing {
+        section "Buying"
+            question hasBoughtHouse {
+                widget checkbox
+            }
+        section "Loaning" {
+            question hasMaintLoan {
+                widget dropdown("Yes", "No")
+            }
+        }
+    }
+
+    page Selling {
+        section "Selling" {
+            question hasSoldHouse
+            section "You sold a house" {
+                question dateSelling
+                question sellingPrice {
+                    widget spinbox
+                }
+                question privateDebt {
+                    widget slider(1,10000000)
+                }
+                question valueResidue
+                question valueResidue2 {
+                    widget slider(0,20000000)
+                }
+                default money {
+                    width: 400
+                    font: "Arial"
+                    fontsize: 14
+                    color: #999999
+                }
+            }
+
+            default boolean {
+                widget checkbox
+            }
+        }
+    }
+    page Else {
+        section "else" {
+            question eQuestion
+        }
+    }
+}

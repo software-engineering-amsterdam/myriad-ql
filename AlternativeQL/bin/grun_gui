@@ -1,0 +1,4 @@
+#!/bin/bash
+cd target/classes
+grun org.ql.grammar.QLParser form ../../drafts/ExampleForm.aql -gui
+cd ..

@@ -1,16 +1,19 @@
-#!/usr/bin/python
+# coding=utf-8
+from sys import argv
+from sys import exit
 
-import sys, os, io
+from PyQt5.QtWidgets import QApplication
+from pql.gui.Editor import Editor
+
 
 if __name__ == '__main__':
+    app = QApplication(argv)
+    file_window = Editor(argv)
+    file_window.show()
+    exit(app.exec_())
 
-    try:
-        ql = io.open(sys.argv[1], "r")
-    except IndexError:
-        print(" ".join(["Usage: python pql.py", str(os.path.join("path", "to", "your", "file"))]))
-        sys.exit(0)
-    except FileNotFoundError:
-        print("The given file could not be found.")
-        sys.exit(0)
-
-    print(ql.read())
+# TODO: Error messages aan parser toevoegen
+# TODO: QLS
+# NICE TO HAVES ---------------------------------
+# TODO: Environment een class maken en een update value methode geven $$
+# TODO: Export of values ?

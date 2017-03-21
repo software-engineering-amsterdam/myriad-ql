@@ -1,0 +1,9 @@
+# Scala ignores
+target
+# SBT ignores
+project/project
+
+
+# Intellij specific ignores.
+.idea
+# dingen

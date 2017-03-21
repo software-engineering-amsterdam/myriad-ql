@@ -1,0 +1,11 @@
+package ast;
+
+public class Statement {
+	
+	private boolean value;
+	
+	public Statement() {
+		
+	}
+	
+}

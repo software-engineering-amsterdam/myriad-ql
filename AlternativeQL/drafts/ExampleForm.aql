@@ -1,0 +1,32 @@
+form TestForm {
+    string firstName: "Enter your first name";
+    string lastName: "Enter your first name";
+    boolean areYouSure: "Are you sure?" = false;
+
+    if (areYouSure) {
+        string fullName: "This is your full name" = firstName + lastName;
+    }
+}
+
+/*
+form ExampleForm {
+
+    if (hasSoldHouse) {
+        boolean hasSoldHouse: "Did you sell a house in 2010?";
+    }
+
+    boolean hasSoldHouse: "Did you sell a house in 2010?";
+    boolean hasBoughtHouse: "Did you buy a house in 2010?";
+    boolean hasMaintLoan:  "Did you enter a loan?";
+
+    if (hasSoldHouse) {
+        money sellingPrice: "What was the selling price?";
+        //money privateDebt: "Private debts for the sold house:";
+        //money valueResidue: "Value residue:" = (3.343*2 / sellingPrice * privateDebt);
+    } else {
+        boolean sellingPrice: "What was the selling price again?";
+    }
+
+}
+
+*/

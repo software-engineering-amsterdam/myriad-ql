@@ -1,0 +1,112 @@
+﻿<Window x:Class="Questionnaires.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Questionnaires"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="768" Width="1024">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="150"/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="InputQL" TextWrapping="Wrap" Grid.Row="0" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" xml:space="preserve" >
+form Box1HouseOwning { 
+    intQ1: "Int question 1" int
+    intQ2: "Int question 2" int(intQ1)
+    moneyQ1: "Money question 1" money
+    moneyQ2: "Money question 2" money(moneyQ1)
+    boolQ1: "Boolean question 1" boolean
+    boolQ2: "Boolean question 2" boolean(boolQ1)
+    boolQ3: "Boolean question 3" boolean(boolQ2)
+    boolQ4: "Boolean question 4" boolean
+    boolQ5: "Boolean question 5" boolean
+    boolQ6: "Boolean question 6" boolean
+    boolQ7: "Boolean question 7" boolean
+    stringQ1: "Stringquestion 1" string
+    stringQ2: "Stringquestion 2" string(stringQ1)
+}     
+        </TextBox>
+        <TextBox x:Name="InputQLS" TextWrapping="Wrap" Grid.Row="0" Grid.Column="1"  AcceptsReturn="True" VerticalScrollBarVisibility="Auto" xml:space="preserve" > 
+ 
+
+stylesheet taxOfficeExample 
+{
+ page Housing 
+ {
+  default boolean { widget dropdown }
+  section "Buying"
+  {
+   question boolQ1
+   question intQ1
+   question intQ2         
+   question stringQ1
+   question stringQ2
+   question boolQ2
+   {
+    widget checkbox
+   }
+   question boolQ3
+   {
+    widget radio
+   }
+   question moneyQ1
+   {
+    widget slider
+   }
+   question moneyQ2
+  } 
+ }
+ page Bla
+ {
+   default boolean
+   {
+     width: 100
+     font: "Courier New" 
+     fontsize: 12
+     color: #ff3300
+     widget radio 
+   }
+   section "BlaSection1"
+   {
+     question boolQ4
+   }
+   section "BlaSection2"
+   {
+      default boolean 
+      { 
+        width: 400
+        font: "Arial Black" 
+        fontsize: 20
+        color: #ff0099
+        widget dropdown 
+      }
+      question boolQ5
+   }
+   section "BlaSection3"
+   {
+      default boolean 
+      {
+        width: 400
+        font: "Comic Sans MS" 
+        fontsize: 28
+        color: #009999
+        widget checkbox 
+      }
+      question boolQ6
+      question boolQ7
+   }
+ }
+}
+        
+        </TextBox>
+        <Button x:Name="Interpret" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Width="70" Content="Interpret!" Click="Interpret_Click"/>
+        <TextBlock x:Name="Output" TextWrapping="Wrap" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">output</TextBlock>
+    </Grid>
+</Window>

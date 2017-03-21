@@ -89,3 +89,10 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# host folder
+host/**
+
+#
+.DS_Store
+backup/**
