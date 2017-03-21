@@ -27,7 +27,6 @@ class QuestionFinder(Visitor):
             self.visit(element)
 
     def visit_ifelse_conditional(self, node):
-        for element in node.ifbody:
-            self.visit(element)
+        self.visit_if_conditional(node)
         for element in node.elsebody:
             self.visit(element)

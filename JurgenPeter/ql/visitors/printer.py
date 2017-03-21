@@ -26,9 +26,8 @@ class Printer(Visitor):
             "\n".join([self.visit(element) for element in node.ifbody]))
 
     def visit_ifelse_conditional(self, node):
-        return "if {} [\n{}\n]\nelse [\n{}\n]".format(
-            self.visit(node.condition),
-            "\n".join([self.visit(element) for element in node.ifbody]),
+        return "{}\nelse [\n{}\n]".format(
+            self.visit_if_conditional(node),
             "\n".join([self.visit(element) for element in node.elsebody]))
 
     def visit_plusop(self, node):

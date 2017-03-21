@@ -20,11 +20,10 @@ class GuiUpdater(Visitor):
         condition = self.evaluator.evaluate(node.condition)
         for element in node.ifbody:
             self.visit(element, (visible and condition))
+        return condition
 
     def visit_ifelse_conditional(self, node, visible):
-        condition = self.evaluator.evaluate(node.condition)
-        for element in node.ifbody:
-            self.visit(element, (visible and condition))
+        condition = self.visit_if_conditional(node, visible)
         for element in node.elsebody:
             self.visit(element, not (visible and condition))
 
