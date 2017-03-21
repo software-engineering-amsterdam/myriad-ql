@@ -13,7 +13,7 @@ import com.matthewchapman.ql.environment.values.BooleanValue;
 import com.matthewchapman.ql.environment.values.IntegerValue;
 import com.matthewchapman.ql.environment.values.StringValue;
 import com.matthewchapman.ql.environment.values.Value;
-import com.matthewchapman.ql.validation.visitors.ExpressionVisitor;
+import com.matthewchapman.ql.visitors.ExpressionVisitor;
 
 /**
  * Created by matt on 20/03/2017.
@@ -23,13 +23,13 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
     private ValueTable valueTable;
 
     public ExpressionEvaluator() {
-        valueTable = new ValueTable();
+
     }
 
     public Value evaluateExpression(String id, Expression expression, ValueTable valueTable) {
         this.valueTable = valueTable;
         Value value = expression.accept(this, id);
-        this.valueTable.addValue(id, value);
+        this.valueTable.addOrUpdateValue(id, value);
         return value;
     }
 

@@ -1,7 +1,7 @@
 package com.matthewchapman.ql.validation.structure.cyclic;
 
 import com.matthewchapman.ql.ast.expression.Parameter;
-import com.matthewchapman.ql.core.ErrorLogger;
+import com.matthewchapman.ql.app.ErrorLogger;
 
 import java.util.HashSet;
 import java.util.List;

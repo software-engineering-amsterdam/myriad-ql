@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.core;
+package com.matthewchapman.ql.app;
 
 import com.matthewchapman.antlr.QLLexer;
 import com.matthewchapman.antlr.QLParser;
@@ -15,15 +15,15 @@ import org.antlr.v4.runtime.CommonTokenStream;
 /**
  * Created by matt on 24/02/2017.
  * <p>
- * Contains core parsing logic, including building the QL AST from Antlr and handling type checking
+ * Contains app parsing logic, including building the QL AST from Antlr and handling type checking
  * before UI generation.
  */
-public class CoreParser {
+public class ASTBuilder {
 
     private final ParseTreeErrorListener errorListener;
     private final ErrorDialogGenerator dialogGenerator;
 
-    public CoreParser() {
+    public ASTBuilder() {
         errorListener = new ParseTreeErrorListener();
         this.dialogGenerator = new ErrorDialogGenerator();
     }

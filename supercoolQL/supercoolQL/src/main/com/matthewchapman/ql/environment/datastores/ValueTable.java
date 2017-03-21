@@ -17,8 +17,10 @@ public class ValueTable extends Observable {
         values = new HashMap<>();
     }
 
-    public void addValue(String name, Value value) {
+    public void addOrUpdateValue(String name, Value value) {
         values.put(name, value);
+        setChanged();
+        notifyObservers();
     }
 
     public Value getValueByID(String name) {

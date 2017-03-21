@@ -1,7 +1,7 @@
 package com.matthewchapman.ql.ast.expression;
 
 import com.matthewchapman.antlr.QLParser;
-import com.matthewchapman.ql.core.CoreParser;
+import com.matthewchapman.ql.app.ASTBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,18 +12,18 @@ import static org.junit.Assert.assertEquals;
  */
 public class ParameterTest {
 
-    private CoreParser coreParser;
+    private ASTBuilder ASTBuilder;
 
     @Before
     public void setUp() {
-        coreParser = new CoreParser();
+        ASTBuilder = new ASTBuilder();
     }
 
     @Test
     public void checkParameterParse() {
         final String EXPECTED_RESULT = "testParameter";
-        QLParser parser = coreParser.getQlParser("testParameter");
-        Parameter parameter = (Parameter) coreParser.getExpression(parser);
+        QLParser parser = ASTBuilder.getQlParser("testParameter");
+        Parameter parameter = (Parameter) ASTBuilder.getExpression(parser);
 
         assertEquals(EXPECTED_RESULT, parameter.getID());
     }

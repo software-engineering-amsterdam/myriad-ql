@@ -33,6 +33,14 @@ public class ErrorDialogGenerator {
         alert.showAndWait();
     }
 
+    public void generateSimpleError(String content, String title, String headerText) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
     private GridPane getGridPane(String content, String labelText) {
         Label label = new Label(labelText);
 

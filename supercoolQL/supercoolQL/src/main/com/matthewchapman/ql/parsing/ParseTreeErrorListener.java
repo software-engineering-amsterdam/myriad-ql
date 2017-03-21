@@ -1,6 +1,6 @@
 package com.matthewchapman.ql.parsing;
 
-import com.matthewchapman.ql.core.ErrorLogger;
+import com.matthewchapman.ql.app.ErrorLogger;
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;

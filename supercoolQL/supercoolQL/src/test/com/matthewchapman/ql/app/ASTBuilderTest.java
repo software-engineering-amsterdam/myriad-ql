@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.core;
+package com.matthewchapman.ql.app;
 
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
@@ -6,7 +6,7 @@ import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
-import com.matthewchapman.ql.validation.visitors.StatementVisitor;
+import com.matthewchapman.ql.visitors.StatementVisitor;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,9 +17,9 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by matt on 02/03/2017.
  */
-public class CoreParserTest implements StatementVisitor<Void, String> {
+public class ASTBuilderTest implements StatementVisitor<Void, String> {
 
-    private final CoreParser parser = new CoreParser();
+    private final ASTBuilder parser = new ASTBuilder();
     private String testInput;
     private int questionsCount = 0;
     private int ifStatementCount = 0;

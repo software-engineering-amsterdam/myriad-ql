@@ -1,7 +1,7 @@
 package com.matthewchapman.ql.ast.expression.binary;
 
 import com.matthewchapman.antlr.QLParser;
-import com.matthewchapman.ql.core.CoreParser;
+import com.matthewchapman.ql.app.ASTBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,18 +12,18 @@ import static org.junit.Assert.assertEquals;
  */
 public class AdditionTest {
 
-    private CoreParser coreParser;
+    private ASTBuilder ASTBuilder;
 
     @Before
     public void setUp() {
-        coreParser = new CoreParser();
+        ASTBuilder = new ASTBuilder();
     }
 
     @Test
     public void checkAdditionParse() {
         final String EXPECTED_RESULT = "(1 + 2)";
-        QLParser parser = coreParser.getQlParser("1+2");
-        Addition expression = (Addition) coreParser.getExpression(parser);
+        QLParser parser = ASTBuilder.getQlParser("1+2");
+        Addition expression = (Addition) ASTBuilder.getExpression(parser);
 
         assertEquals(EXPECTED_RESULT, expression.toString());
     }
@@ -31,8 +31,8 @@ public class AdditionTest {
     @Test
     public void checkAdditionNestedParse() {
         final String EXPECTED_RESULT = "((1 + 2) + 3)";
-        QLParser parser = coreParser.getQlParser("1+2+3");
-        Addition expression = (Addition) coreParser.getExpression(parser);
+        QLParser parser = ASTBuilder.getQlParser("1+2+3");
+        Addition expression = (Addition) ASTBuilder.getExpression(parser);
 
         assertEquals(EXPECTED_RESULT, expression.toString());
     }

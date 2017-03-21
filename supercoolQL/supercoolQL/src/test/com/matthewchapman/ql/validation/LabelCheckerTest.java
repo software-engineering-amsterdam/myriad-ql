@@ -1,8 +1,8 @@
 package com.matthewchapman.ql.validation;
 
 import com.matthewchapman.ql.ast.Form;
-import com.matthewchapman.ql.core.CoreParser;
-import com.matthewchapman.ql.core.FileReader;
+import com.matthewchapman.ql.app.ASTBuilder;
+import com.matthewchapman.ql.app.FileReader;
 import com.matthewchapman.ql.validation.structure.LabelChecker;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +21,7 @@ public class LabelCheckerTest {
 
     @Before
     public void setUp() {
-        CoreParser parser = new CoreParser();
+        ASTBuilder parser = new ASTBuilder();
         FileReader reader = new FileReader();
         String testInput = reader.readFile(new File("res/test.txt"));
         form = parser.buildQLAST(testInput);

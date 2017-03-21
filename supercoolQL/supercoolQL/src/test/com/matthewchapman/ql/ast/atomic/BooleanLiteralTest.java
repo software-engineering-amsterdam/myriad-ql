@@ -2,7 +2,7 @@ package com.matthewchapman.ql.ast.atomic;
 
 import com.matthewchapman.antlr.QLParser;
 import com.matthewchapman.ql.ast.expression.literal.BooleanLiteral;
-import com.matthewchapman.ql.core.CoreParser;
+import com.matthewchapman.ql.app.ASTBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,18 +13,18 @@ import static org.junit.Assert.assertEquals;
  */
 public class BooleanLiteralTest {
 
-    private CoreParser coreParser;
+    private ASTBuilder ASTBuilder;
 
     @Before
     public void setUp() {
-        coreParser = new CoreParser();
+        ASTBuilder = new ASTBuilder();
     }
 
     @Test
     public void checkTrueBooleanLiteralParse() {
         final String EXPECTED_RESULT = "true";
-        QLParser parser = coreParser.getQlParser("TRUE");
-        BooleanLiteral expression = (BooleanLiteral) coreParser.getExpression(parser);
+        QLParser parser = ASTBuilder.getQlParser("TRUE");
+        BooleanLiteral expression = (BooleanLiteral) ASTBuilder.getExpression(parser);
 
         assertEquals(EXPECTED_RESULT, expression.toString());
     }
@@ -32,8 +32,8 @@ public class BooleanLiteralTest {
     @Test
     public void checkFalseBooleanLiteralParse() {
         final String EXPECTED_RESULT = "false";
-        QLParser parser = coreParser.getQlParser("FALSE");
-        BooleanLiteral expression = (BooleanLiteral) coreParser.getExpression(parser);
+        QLParser parser = ASTBuilder.getQlParser("FALSE");
+        BooleanLiteral expression = (BooleanLiteral) ASTBuilder.getExpression(parser);
 
         assertEquals(EXPECTED_RESULT, expression.toString());
     }

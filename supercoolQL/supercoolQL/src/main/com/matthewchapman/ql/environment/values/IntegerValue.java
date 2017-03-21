@@ -11,6 +11,8 @@ public class IntegerValue extends Value {
         this.value = input;
     }
 
+    @Override
+    public String toString() { return Integer.toString(this.value); }
 
     @Override
     public Integer getValue() {

@@ -1,5 +1,6 @@
 package com.matthewchapman.ql.environment;
 
+import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.atomic.type.BooleanType;
@@ -15,12 +16,9 @@ import com.matthewchapman.ql.environment.datastores.ConditionTable;
 import com.matthewchapman.ql.environment.datastores.ExpressionTable;
 import com.matthewchapman.ql.environment.datastores.QuestionTable;
 import com.matthewchapman.ql.environment.datastores.ValueTable;
-import com.matthewchapman.ql.environment.values.BooleanValue;
-import com.matthewchapman.ql.environment.values.IntegerValue;
-import com.matthewchapman.ql.environment.values.NullValue;
-import com.matthewchapman.ql.environment.values.StringValue;
-import com.matthewchapman.ql.validation.visitors.StatementVisitor;
-import com.matthewchapman.ql.validation.visitors.TypeVisitor;
+import com.matthewchapman.ql.environment.values.*;
+import com.matthewchapman.ql.visitors.StatementVisitor;
+import com.matthewchapman.ql.visitors.TypeVisitor;
 
 import java.util.List;
 
@@ -34,7 +32,7 @@ public class FormEnvironment implements StatementVisitor<Void, String>, TypeVisi
     private final QuestionTable questions;
     private final ValueTable values;
 
-    public FormEnvironment(Form ast) {
+    public FormEnvironment(Form ast, ValueTableObserver con) {
         expressions = new ExpressionTable();
         conditions = new ConditionTable();
         questions = new QuestionTable();
@@ -43,9 +41,17 @@ public class FormEnvironment implements StatementVisitor<Void, String>, TypeVisi
         for(Statement statement : ast.getStatements()) {
             statement.accept(this, null);
         }
+
+        values.addObserver(con);
     }
 
     public List<Question> getQuestionsAsList() { return this.questions.getQuestionsAsList(); }
+
+    public List<Expression> getExpressionsAsList() { return this.expressions.getExpressionsAsList(); }
+
+    public void updateValueByName(String name, Value value) { values.addOrUpdateValue(name, value);}
+
+    public Value getValueByName(String name) { return values.getValueByID(name); }
 
     @Override
     public Void visit(Question question, String context) {
@@ -88,25 +94,25 @@ public class FormEnvironment implements StatementVisitor<Void, String>, TypeVisi
 
     @Override
     public Void visit(BooleanType booleanType, String context) {
-        values.addValue(context, new BooleanValue(false));
+        values.addOrUpdateValue(context, new BooleanValue(false));
         return null;
     }
 
     @Override
     public Void visit(IntegerType integerType, String context) {
-        values.addValue(context, new IntegerValue(0));
+        values.addOrUpdateValue(context, new IntegerValue(0));
         return null;
     }
 
     @Override
     public Void visit(StringType stringType, String context) {
-        values.addValue(context, new StringValue(""));
+        values.addOrUpdateValue(context, new StringValue(""));
         return null;
     }
 
     @Override
     public Void visit(ErrorType errorType, String context) {
-        values.addValue(context, new NullValue());
+        values.addOrUpdateValue(context, new NullValue());
         return null;
     }
 }

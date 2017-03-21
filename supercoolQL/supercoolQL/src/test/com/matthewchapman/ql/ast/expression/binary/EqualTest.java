@@ -1,7 +1,7 @@
 package com.matthewchapman.ql.ast.expression.binary;
 
 import com.matthewchapman.antlr.QLParser;
-import com.matthewchapman.ql.core.CoreParser;
+import com.matthewchapman.ql.app.ASTBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,18 +11,18 @@ import static org.junit.Assert.assertEquals;
  * Created by matt on 15/03/2017.
  */
 public class EqualTest {
-    private CoreParser coreParser;
+    private ASTBuilder ASTBuilder;
 
     @Before
     public void setUp() {
-        coreParser = new CoreParser();
+        ASTBuilder = new ASTBuilder();
     }
 
     @Test
     public void checkEqualParse() {
         final String EXPECTED_RESULT = "(1 == 2)";
-        QLParser parser = coreParser.getQlParser("1==2");
-        Equal expression = (Equal) coreParser.getExpression(parser);
+        QLParser parser = ASTBuilder.getQlParser("1==2");
+        Equal expression = (Equal) ASTBuilder.getExpression(parser);
 
         assertEquals(EXPECTED_RESULT, expression.toString());
     }
@@ -30,8 +30,8 @@ public class EqualTest {
     @Test
     public void checkEqualNestedParse() {
         final String EXPECTED_RESULT = "((1 == 2) == 3)";
-        QLParser parser = coreParser.getQlParser("1==2==3");
-        Equal expression = (Equal) coreParser.getExpression(parser);
+        QLParser parser = ASTBuilder.getQlParser("1==2==3");
+        Equal expression = (Equal) ASTBuilder.getExpression(parser);
 
         assertEquals(EXPECTED_RESULT, expression.toString());
     }

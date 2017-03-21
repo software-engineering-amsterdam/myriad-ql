@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.core;
+package com.matthewchapman.ql.app;
 
 import com.matthewchapman.ql.gui.errors.ErrorDialogGenerator;
 import java.io.*;

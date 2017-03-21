@@ -6,10 +6,10 @@ import java.util.Observer;
 /**
  * Created by matt on 20/03/2017.
  */
-public class FormEnvironmentController implements Observer {
+public class ValueTableObserver implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-
+        System.out.println("change!");
     }
 }

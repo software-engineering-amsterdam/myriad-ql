@@ -2,7 +2,7 @@ package com.matthewchapman.ql.ast.statement;
 
 import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.atomic.Type;
-import com.matthewchapman.ql.validation.visitors.StatementVisitor;
+import com.matthewchapman.ql.visitors.StatementVisitor;
 
 /**
  * Created by matt on 20/02/2017.
@@ -23,6 +23,7 @@ public class Question extends Statement {
         this.setLine(line);
     }
 
+    @Override
     public String getName() {
         return this.name;
     }

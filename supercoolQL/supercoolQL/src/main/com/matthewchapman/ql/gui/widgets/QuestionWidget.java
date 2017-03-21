@@ -1,6 +1,7 @@
 package com.matthewchapman.ql.gui.widgets;
 
 import com.matthewchapman.ql.ast.statement.Question;
+import com.matthewchapman.ql.environment.values.Value;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
@@ -15,7 +16,7 @@ import javafx.scene.layout.Priority;
  */
 public class QuestionWidget extends GridPane {
 
-    public QuestionWidget(Question question) {
+    public QuestionWidget(Question question, Value value) {
 
         this.setPadding(new Insets(5));
         this.setHgap(5);
@@ -32,10 +33,12 @@ public class QuestionWidget extends GridPane {
 
         if("boolean".equals(question.getType().toString())) {
             CheckBox answer = new CheckBox();
+            answer.setSelected(Boolean.valueOf(value.toString()));
             this.add(answer, 1, 0);
             GridPane.setHalignment(answer, HPos.LEFT);
         } else {
             TextField answer = new TextField();
+            answer.setText(value.toString());
             this.add(answer, 1, 0);
             GridPane.setHalignment(answer, HPos.LEFT);
         }

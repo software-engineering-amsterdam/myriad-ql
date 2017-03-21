@@ -2,8 +2,8 @@ package com.matthewchapman.ql.validation.structure;
 
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.atomic.type.BooleanType;
-import com.matthewchapman.ql.core.CoreParser;
-import com.matthewchapman.ql.core.ErrorLogger;
+import com.matthewchapman.ql.app.ASTBuilder;
+import com.matthewchapman.ql.app.ErrorLogger;
 import com.matthewchapman.ql.validation.type.TypeTable;
 import org.junit.Test;
 
@@ -20,7 +20,7 @@ public class ExpressionCheckerTest {
         int EXPECTED_ERRORS = 1;
 
         ExpressionChecker checker = new ExpressionChecker();
-        CoreParser parser = new CoreParser();
+        ASTBuilder parser = new ASTBuilder();
         Form form = parser.getForm(parser.getQlParser("form test { if (parameter1) { \"Test\" testquestion:boolean; } if (testquestion2) { \"anothertest\" anothertest:boolean; } }"));
         TypeTable typeTable = new TypeTable();
         typeTable.addEntry("testquestion2", new BooleanType());

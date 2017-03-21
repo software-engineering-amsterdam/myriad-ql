@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.core;
+package com.matthewchapman.ql.app;
 
 import java.util.ArrayList;
 import java.util.Collections;

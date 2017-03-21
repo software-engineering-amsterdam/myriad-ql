@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.core;
+package com.matthewchapman.ql.app;
 
 /**
  * Created by matt on 19/03/2017.

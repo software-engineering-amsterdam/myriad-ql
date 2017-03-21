@@ -2,7 +2,7 @@ package com.matthewchapman.ql.ast.atomic;
 
 import com.matthewchapman.antlr.QLParser;
 import com.matthewchapman.ql.ast.expression.literal.StringLiteral;
-import com.matthewchapman.ql.core.CoreParser;
+import com.matthewchapman.ql.app.ASTBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,18 +13,18 @@ import static org.junit.Assert.assertEquals;
  */
 public class StringLiteralTest {
 
-    private CoreParser coreParser;
+    private ASTBuilder ASTBuilder;
 
     @Before
     public void setUp() {
-        coreParser = new CoreParser();
+        ASTBuilder = new ASTBuilder();
     }
 
     @Test
     public void checkStringLiteralParse() {
         final String EXPECTED_RESULT = "\"testLiteral\"";
-        QLParser parser = coreParser.getQlParser("\"testLiteral\"");
-        StringLiteral expression = (StringLiteral) coreParser.getExpression(parser);
+        QLParser parser = ASTBuilder.getQlParser("\"testLiteral\"");
+        StringLiteral expression = (StringLiteral) ASTBuilder.getExpression(parser);
 
         assertEquals(EXPECTED_RESULT, expression.getValue());
     }

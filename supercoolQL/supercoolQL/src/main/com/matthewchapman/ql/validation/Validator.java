@@ -1,7 +1,7 @@
 package com.matthewchapman.ql.validation;
 
 import com.matthewchapman.ql.ast.Form;
-import com.matthewchapman.ql.core.ErrorLogger;
+import com.matthewchapman.ql.app.ErrorLogger;
 import com.matthewchapman.ql.gui.errors.ErrorDialogGenerator;
 import com.matthewchapman.ql.validation.structure.ExpressionChecker;
 import com.matthewchapman.ql.validation.structure.LabelChecker;

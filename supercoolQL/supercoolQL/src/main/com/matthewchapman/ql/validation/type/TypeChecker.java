@@ -18,10 +18,10 @@ import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
-import com.matthewchapman.ql.core.ErrorLogger;
-import com.matthewchapman.ql.validation.visitors.ExpressionVisitor;
-import com.matthewchapman.ql.validation.visitors.StatementVisitor;
-import com.matthewchapman.ql.validation.visitors.TypeVisitor;
+import com.matthewchapman.ql.app.ErrorLogger;
+import com.matthewchapman.ql.visitors.ExpressionVisitor;
+import com.matthewchapman.ql.visitors.StatementVisitor;
+import com.matthewchapman.ql.visitors.TypeVisitor;
 
 /**
  * Created by matt on 03/03/2017. 222

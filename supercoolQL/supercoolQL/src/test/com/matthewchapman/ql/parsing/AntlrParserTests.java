@@ -9,7 +9,7 @@ import com.matthewchapman.ql.ast.expression.binary.Subtraction;
 import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
-import com.matthewchapman.ql.core.CoreParser;
+import com.matthewchapman.ql.app.ASTBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,18 +21,18 @@ import static org.junit.Assert.assertTrue;
  */
 public class AntlrParserTests {
 
-    private CoreParser coreParser;
+    private ASTBuilder ASTBuilder;
 
     @Before
     public void setUp() {
-        coreParser = new CoreParser();
+        ASTBuilder = new ASTBuilder();
     }
 
     @Test
     public void testFormDeclarationRule() {
         final String EXPECTED_NAME = "testForm";
 
-        Form form = coreParser.getForm(coreParser.getQlParser("form testForm {}"));
+        Form form = ASTBuilder.getForm(ASTBuilder.getQlParser("form testForm {}"));
 
         assertEquals(EXPECTED_NAME, form.getName());
     }
@@ -44,9 +44,9 @@ public class AntlrParserTests {
         final String EXPECTED_TEXT = "Test Question";
         final String EXPECTED_TYPE = "boolean";
 
-        QLParser parser = coreParser.getQlParser("\"Test Question\" testQuestion:boolean;");
+        QLParser parser = ASTBuilder.getQlParser("\"Test Question\" testQuestion:boolean;");
 
-        Question question = (Question) coreParser.getStatement(parser);
+        Question question = (Question) ASTBuilder.getStatement(parser);
 
         assertEquals(EXPECTED_NAME, question.getName());
         assertEquals(EXPECTED_TEXT, question.getText());
@@ -58,9 +58,9 @@ public class AntlrParserTests {
 
         final String EXPECTED_CONDITION = "ifCase";
 
-        QLParser parser = coreParser.getQlParser("if ( ifCase ) { \"Test Question\" testQuestion:boolean; }");
+        QLParser parser = ASTBuilder.getQlParser("if ( ifCase ) { \"Test Question\" testQuestion:boolean; }");
 
-        IfStatement ifStatement = (IfStatement) coreParser.getStatement(parser);
+        IfStatement ifStatement = (IfStatement) ASTBuilder.getStatement(parser);
         Parameter condition = (Parameter) ifStatement.getCondition();
 
         assertEquals(EXPECTED_CONDITION, condition.getID());
@@ -73,8 +73,8 @@ public class AntlrParserTests {
         final String EXPECTED_RIGHT_NAME = "test2";
         final String EXPECTED_EXPRESSION = "(test1 + test2)";
 
-        QLParser parser = coreParser.getQlParser("test1 + test2");
-        Addition expression = (Addition) coreParser.getExpression(parser);
+        QLParser parser = ASTBuilder.getQlParser("test1 + test2");
+        Addition expression = (Addition) ASTBuilder.getExpression(parser);
 
         assertEquals(EXPECTED_LEFT_NAME, expression.getLeft().toString());
         assertEquals(EXPECTED_RIGHT_NAME, expression.getRight().toString());
@@ -86,8 +86,8 @@ public class AntlrParserTests {
     @Test
     public void testCalculatedValueRule() {
 
-        QLParser parser = coreParser.getQlParser("\"Test Question\" testQuestion:integer = test1 - test2;");
-        CalculatedQuestion question = (CalculatedQuestion) coreParser.getStatement(parser);
+        QLParser parser = ASTBuilder.getQlParser("\"Test Question\" testQuestion:integer = test1 - test2;");
+        CalculatedQuestion question = (CalculatedQuestion) ASTBuilder.getStatement(parser);
 
         assertTrue(question.getType() instanceof IntegerType);
         assertTrue(question.getCalculation() instanceof Subtraction);
