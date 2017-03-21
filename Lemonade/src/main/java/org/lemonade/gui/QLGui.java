@@ -43,7 +43,6 @@ public class QLGui {
     public QLGui(Stage stage, ButtonCallback buttonCallback) {
         this.stage = stage;
         setUpFileSelectionScene(buttonCallback);
-        setUpQuestionsPane();
 
         this.stage.setScene(selectionScene);
         this.stage.setWidth(1000);
@@ -70,7 +69,9 @@ public class QLGui {
         final Button submitFileButton = new Button("Submit");
         submitFileButton.setOnAction(e -> {
             if (questionnaireFile != null) {
+                setUpQuestionnaireScene(buttonCallback);
                 buttonCallback.goToQuestionnaire(questionnaireFile);
+                this.stage.setScene(questionnaireScene);
             }
         });
 
@@ -97,7 +98,15 @@ public class QLGui {
         selectionScene = new Scene(anchorPane);
     }
 
-    public void setUpQuestionnaireScene(ButtonCallback buttonCallback) {
+    private void setUpQuestionnaireScene(ButtonCallback buttonCallback) {
+        // Set up GridPane for individual questions
+        questionsGridPane = new GridPane();
+        ColumnConstraints constraints = new ColumnConstraints();
+        constraints.setPercentWidth(100);
+        questionsGridPane.getColumnConstraints().addAll(constraints);
+        this.questionsRowCount = 0;
+
+        // Set callback function for submit button
         final Button submitQuestionnaireButton = new Button("Submit form");
         submitQuestionnaireButton.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();
@@ -110,14 +119,17 @@ public class QLGui {
             }
         });
 
+        // Set callback function for back button
         final Button backButton = new Button("Select new questionnaire");
         backButton.setOnAction(e -> stage.setScene(selectionScene));
 
+        // Set container for the footer items
         fileStatusLabel = new Label();
         HBox hBox = new HBox();
         hBox.setSpacing(10);
         hBox.getChildren().addAll(submitQuestionnaireButton, backButton, fileStatusLabel);
 
+        // Combine all elements in a parent AnchorPane
         final AnchorPane rootGroup = new AnchorPane();
         AnchorPane.setBottomAnchor(hBox, 10.0);
         AnchorPane.setLeftAnchor(hBox, 5.0);
@@ -129,15 +141,6 @@ public class QLGui {
         rootGroup.setPadding(new Insets(10, 10, 10, 10));
 
         questionnaireScene = new Scene(rootGroup);
-    }
-
-    public void setUpQuestionsPane() {
-        questionsGridPane = new GridPane();
-        ColumnConstraints constraints = new ColumnConstraints();
-        constraints.setPercentWidth(100);
-        questionsGridPane.getColumnConstraints().addAll(constraints);
-
-        this.questionsRowCount = 0;
     }
 
     public void addErrors(String message, List<String> errors) {
@@ -178,15 +181,11 @@ public class QLGui {
 
     public void updateFileStatus(String message, boolean successful) {
         if (successful)
-            fileStatusLabel.setTextFill(Color.GREEN);
+            fileStatusLabel.setTextFill(Color.BLACK);
         else
             fileStatusLabel.setTextFill(Color.RED);
 
         fileStatusLabel.setText(message);
-    }
-
-    public void goToQuestionnaire() {
-        this.stage.setScene(questionnaireScene);
     }
 
 }

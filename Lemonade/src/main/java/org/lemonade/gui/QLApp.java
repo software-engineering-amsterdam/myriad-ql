@@ -48,13 +48,8 @@ public class QLApp extends Application implements ButtonCallback {
             GuiVisitor guiVisitor = new GuiVisitor(qlGui);
             guiRoot = (GuiForm) root.accept(guiVisitor);
 
-            // Pass 'this' (implementation of ButtonCallback) as argument to assign callback to button
-            qlGui.setUpQuestionnaireScene(this);
-
             EvaluateVisitor evaluateVisitor = new EvaluateVisitor();
             qlGui.addUserInputListeners(guiRoot, evaluateVisitor);
-
-            qlGui.goToQuestionnaire();
         } catch (IOException e) {
             qlGui.addErrors("Error reading file: ", Collections.singletonList(e.getMessage()));
         } catch (InvalidFormException e) {
