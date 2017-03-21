@@ -1,5 +1,7 @@
 package org.lemonade.visitors;
 
+import com.cedarsoftware.util.io.JsonWriter;
+
 import org.json.simple.JSONObject;
 import org.lemonade.gui.GuiComputedQuestion;
 import org.lemonade.gui.GuiConditional;
@@ -9,17 +11,18 @@ import org.lemonade.visitors.interfaces.GuiBaseElementsVisitor;
 
 public class WriteToJsonVisitor implements GuiBaseElementsVisitor {
 
+    private JSONObject rootJSON;
     private JSONObject formContents;
 
     public WriteToJsonVisitor() {
+        rootJSON = new JSONObject();
         formContents = new JSONObject();
     }
 
     @Override
     public void visit(final GuiForm form) {
-        JSONObject json = new JSONObject();
         form.getBodies().forEach(body -> body.accept(this));
-        json.put(form.getIdentifier(), formContents);
+        rootJSON.put(form.getIdentifier(), formContents);
     }
 
 
@@ -37,4 +40,9 @@ public class WriteToJsonVisitor implements GuiBaseElementsVisitor {
     public void visit(final GuiConditional conditional) {
 
     }
+
+    public String getJSONString() {
+        return JsonWriter.formatJson(rootJSON.toString());
+    }
+
 }

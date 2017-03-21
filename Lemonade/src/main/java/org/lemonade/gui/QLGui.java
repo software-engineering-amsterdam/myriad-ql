@@ -28,7 +28,7 @@ public class QLGui {
 
     // Gui wide elements
     private Stage stage;
-    private File file;
+    private File questionnaireFile;
 
     // File selection elements
     private Scene selectionScene;
@@ -51,10 +51,6 @@ public class QLGui {
         this.stage.show();
     }
 
-    public File getFile() {
-        return file;
-    }
-
     private void setUpFileSelectionScene(ButtonCallback buttonCallback) {
         stage.setTitle("Form");
 
@@ -64,16 +60,16 @@ public class QLGui {
         final Label fileLabel = new Label();
         final Button openButton = new Button("Select a questionnaire");
         openButton.setOnAction(e -> {
-            file = fileChooser.showOpenDialog(stage);
-            if (file != null) {
-                fileLabel.setText(file.getPath());
+            questionnaireFile = fileChooser.showOpenDialog(stage);
+            if (questionnaireFile != null) {
+                fileLabel.setText(questionnaireFile.getPath());
             }
         });
 
         final Button submitFileButton = new Button("Submit");
         submitFileButton.setOnAction(e -> {
-            if (file != null) {
-                buttonCallback.goToQuestionnaire();
+            if (questionnaireFile != null) {
+                buttonCallback.goToQuestionnaire(questionnaireFile);
             }
         });
 
@@ -104,10 +100,13 @@ public class QLGui {
         final Button submitQuestionnaireButton = new Button("Submit form");
         submitQuestionnaireButton.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.getExtensionFilters().add((new FileChooser.ExtensionFilter("Save to .json", "*.json")));
+            fileChooser.getExtensionFilters().add((new FileChooser.ExtensionFilter(".json", "*.json")));
             fileChooser.setTitle("Save to JSON");
+
             File file = fileChooser.showSaveDialog(stage);
-            buttonCallback.submitForm();
+            if (file != null) {
+                buttonCallback.submitForm(file);
+            }
         });
 
         final Button backButton = new Button("Select new questionnaire");
@@ -177,7 +176,4 @@ public class QLGui {
         this.stage.setScene(questionnaireScene);
     }
 
-    public void writeToJson(final String json) {
-
-    }
 }

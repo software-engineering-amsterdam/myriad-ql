@@ -1,9 +1,12 @@
 package org.lemonade.gui;
 
+import java.io.File;
+import java.io.IOException;
+
 public interface ButtonCallback {
 
-    void goToQuestionnaire();
+    void goToQuestionnaire(File file);
 
-    void submitForm();
+    void submitForm(File file);
 
 }

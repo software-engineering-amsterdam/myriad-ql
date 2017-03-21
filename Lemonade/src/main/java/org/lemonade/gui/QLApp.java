@@ -1,6 +1,7 @@
 package org.lemonade.gui;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Files;
@@ -39,9 +40,9 @@ public class QLApp extends Application implements ButtonCallback {
 
     // Called on file submit
     @Override
-    public void goToQuestionnaire() {
+    public void goToQuestionnaire(File file) {
         try {
-            Form root = parseFile(qlGui.getFile());
+            Form root = parseFile(file);
             validateForm(root);
 
             GuiVisitor guiVisitor = new GuiVisitor(qlGui);
@@ -65,10 +66,19 @@ public class QLApp extends Application implements ButtonCallback {
 
     // Writes all answers to JSON file
     @Override
-    public void submitForm() {
+    public void submitForm(File file) {
         if (guiRoot != null) {
             WriteToJsonVisitor jsonVisitor = new WriteToJsonVisitor();
             guiRoot.accept(jsonVisitor);
+
+            try {
+                FileWriter writer = new FileWriter(file);
+                writer.write(jsonVisitor.getJSONString());
+                writer.flush();
+                writer.close();
+            } catch (IOException e) {
+                // TODO something here
+            }
         }
     }
 
