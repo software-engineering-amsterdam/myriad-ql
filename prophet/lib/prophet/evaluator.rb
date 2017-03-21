@@ -11,7 +11,7 @@ module Prophet
       ast.select do |node|
         Ast::Question === node && node.value
       end.each do |question|
-        context[question.identifier.name.to_s] = question.value.eval(context)
+        context[question.identifier.name.to_s] = question.value.visit(Visitors::ExpressionEvaluator.new(context))
       end
     end
 
