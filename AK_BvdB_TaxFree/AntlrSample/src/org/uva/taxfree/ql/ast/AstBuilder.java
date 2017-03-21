@@ -6,6 +6,7 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.uva.taxfree.ql.gen.QLGrammarLexer;
 import org.uva.taxfree.ql.gen.QLGrammarParser;
+import org.uva.taxfree.ql.gui.MessageList;
 import org.uva.taxfree.ql.model.node.blocks.FormNode;
 
 import java.io.File;
@@ -20,38 +21,43 @@ public class AstBuilder {
         mInputFile = inputFile;
     }
 
-    public FormNode generateTree() throws IOException {
-        ANTLRErrorListener errorListener = new ANTLRErrorListener() {
-            @Override
-            public void syntaxError(Recognizer<?, ?> recognizer, Object o, int line, int column, String message, RecognitionException e) {
-                throw new UnsupportedOperationException(e);
-            }
+    public FormNode generateTree(MessageList semanticsMessages) throws IOException, UnsupportedOperationException {
+        try {
+            ANTLRErrorListener errorListener = new ANTLRErrorListener() {
+                @Override
+                public void syntaxError(Recognizer<?, ?> recognizer, Object o, int line, int column, String message, RecognitionException e) {
+                    semanticsMessages.addError("(" + line + ":" + column + "):" + e);
+                    throw new UnsupportedOperationException(e);
+                }
 
-            @Override
-            public void reportAmbiguity(Parser parser, DFA dfa, int line, int column, boolean b, BitSet bitSet, ATNConfigSet atnConfigSet) {
+                @Override
+                public void reportAmbiguity(Parser parser, DFA dfa, int line, int column, boolean b, BitSet bitSet, ATNConfigSet atnConfigSet) {
 
-            }
+                }
 
-            @Override
-            public void reportAttemptingFullContext(Parser parser, DFA dfa, int i, int i1, BitSet bitSet, ATNConfigSet atnConfigSet) {
+                @Override
+                public void reportAttemptingFullContext(Parser parser, DFA dfa, int i, int i1, BitSet bitSet, ATNConfigSet atnConfigSet) {
 
-            }
+                }
 
-            @Override
-            public void reportContextSensitivity(Parser parser, DFA dfa, int i, int i1, int i2, ATNConfigSet atnConfigSet) {
+                @Override
+                public void reportContextSensitivity(Parser parser, DFA dfa, int i, int i1, int i2, ATNConfigSet atnConfigSet) {
 
-            }
-        };
-        QLGrammarParser parser = createGrammarParser(mInputFile);
-        parser.addErrorListener(errorListener);
-        parser.addErrorListener(errorListener);
+                }
+            };
+            QLGrammarParser parser = createGrammarParser(mInputFile);
+            parser.addErrorListener(errorListener);
+            parser.addErrorListener(errorListener);
 
-        QLGrammarParser.FormContext formContext = parser.form();
+            QLGrammarParser.FormContext formContext = parser.form();
 
-        ParseTreeWalker walker = new ParseTreeWalker();
-        GrammarListener listener = new GrammarListener();
-        walker.walk(listener, formContext);
-        return listener.getAst();
+            ParseTreeWalker walker = new ParseTreeWalker();
+            GrammarListener listener = new GrammarListener();
+            walker.walk(listener, formContext);
+            return listener.getAst();
+        } catch (UnsupportedOperationException e) {
+            return null;
+        }
     }
 
     private QLGrammarParser createGrammarParser(File inputFile) throws IOException {

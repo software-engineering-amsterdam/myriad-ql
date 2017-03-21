@@ -19,9 +19,18 @@ public class Main {
         }
 
         AstBuilder builder = new AstBuilder(inputFile);
-        FormNode ast = builder.generateTree();
-        SymbolTable symbolTable = new SymbolTable();
         MessageList semanticsMessages = new MessageList();
+        FormNode ast = builder.generateTree(semanticsMessages);
+
+        if (semanticsMessages.hasMessages()) {
+            MessageWindow.showMessages(semanticsMessages);
+        }
+
+        if (semanticsMessages.fatalErrors()) {
+            System.exit(1);
+        }
+
+        SymbolTable symbolTable = new SymbolTable();
         ast.fillSymbolTable(symbolTable);
         ast.checkSemantics(symbolTable, semanticsMessages);
 
@@ -29,11 +38,12 @@ public class Main {
             MessageWindow.showMessages(semanticsMessages);
         }
 
-        if (!semanticsMessages.fatalErrors()) {
-            QuestionForm taxForm = new QuestionForm(ast.toString(), symbolTable);
-            ast.fillQuestionForm(taxForm);
-            taxForm.show();
+        if (semanticsMessages.fatalErrors()) {
+            System.exit(2);
         }
+        QuestionForm taxForm = new QuestionForm(ast.toString(), symbolTable);
+        ast.fillQuestionForm(taxForm);
+        taxForm.show();
     }
 }
 

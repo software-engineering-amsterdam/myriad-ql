@@ -12,8 +12,8 @@ import java.io.IOException;
 public abstract class SemanticsTester {
     protected void assertSemantics(String fileName, int expectedErrorAmount, String description) throws IOException {
         boolean expectedValid = 0 == expectedErrorAmount;
-        FormNode ast = createAst(fileName);
         MessageList semanticsMessages = new MessageList();
+        FormNode ast = createAst(fileName, semanticsMessages);
         SymbolTable symbolTable = new SymbolTable();
         ast.fillSymbolTable(symbolTable);
         ast.checkSemantics(symbolTable, semanticsMessages);
@@ -22,9 +22,9 @@ public abstract class SemanticsTester {
         Assert.assertEquals(semanticsMessages.messageAmount(), expectedErrorAmount, "Invalid error amount");
     }
 
-    private FormNode createAst(String fileName) throws IOException {
+    private FormNode createAst(String fileName, MessageList semanticsMessages) throws IOException {
         AstBuilder builder = new AstBuilder(testFile(fileName));
-        return builder.generateTree();
+        return builder.generateTree(semanticsMessages);
     }
 
     protected abstract String fileDirectory();
