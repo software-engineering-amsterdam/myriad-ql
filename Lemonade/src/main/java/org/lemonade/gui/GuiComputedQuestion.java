@@ -4,28 +4,20 @@ import org.lemonade.gui.elements.GuiComputedElement;
 import org.lemonade.gui.elements.GuiElement;
 import org.lemonade.gui.elements.GuiLabelElement;
 import org.lemonade.gui.values.GuiIdentifierValue;
-import org.lemonade.visitors.EvaluateVisitor;
 import org.lemonade.visitors.interfaces.GuiBaseElementsVisitor;
 
 /**
  *
  */
-public class GuiComputedQuestion extends GuiBody {
+public class GuiComputedQuestion extends GuiQuestion {
 
-    private GuiIdentifierValue identifier;
-    private GuiLabelElement labelElement;
     private GuiComputedElement valueElement;
     private GuiExpression expression;
 
     public GuiComputedQuestion(GuiIdentifierValue identifier, GuiLabelElement labelElement, GuiComputedElement valueElement, GuiExpression expression) {
-        this.identifier = identifier;
-        this.labelElement = labelElement;
+        super(identifier, labelElement);
         this.valueElement = valueElement;
         this.expression = expression;
-    }
-
-    public GuiLabelElement getLabelElement() {
-        return labelElement;
     }
 
     public GuiComputedElement getValueElement() {
@@ -36,13 +28,11 @@ public class GuiComputedQuestion extends GuiBody {
         return expression;
     }
 
-    public GuiIdentifierValue getIdentifier() {
-        return identifier;
-    }
-
-    public GuiElement getElement(){
+    @Override
+    public GuiComputedElement getElement() {
         return valueElement;
     }
+
     @Override
     public void accept(GuiBaseElementsVisitor visitor) {
         visitor.visit(this);

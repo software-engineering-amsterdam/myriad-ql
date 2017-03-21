@@ -6,7 +6,7 @@ import org.lemonade.gui.values.GuiMoneyValue;
 import org.lemonade.gui.values.GuiUndefinedValue;
 import org.lemonade.gui.values.GuiValue;
 
-public class GuiMoneyElement extends GuiElement implements GuiMutableElement {
+public class GuiMoneyElement extends GuiMutableElement {
 
     private GuiValue<?> value;
     private TextField textField;

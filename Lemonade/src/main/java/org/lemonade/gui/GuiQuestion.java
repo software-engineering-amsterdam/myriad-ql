@@ -1,22 +1,18 @@
 package org.lemonade.gui;
 
+import org.lemonade.gui.elements.GuiElement;
 import org.lemonade.gui.elements.GuiLabelElement;
-import org.lemonade.gui.elements.GuiMutableElement;
 import org.lemonade.gui.values.GuiIdentifierValue;
 import org.lemonade.visitors.interfaces.GuiBaseElementsVisitor;
 
-
-
-public class GuiQuestion extends GuiBody {
+public abstract class GuiQuestion extends GuiBody {
 
     private GuiIdentifierValue identifier;
-    private GuiLabelElement labelElement;
-    private GuiMutableElement element;
+    GuiLabelElement labelElement;
 
-    public GuiQuestion(GuiIdentifierValue identifier, GuiLabelElement labelElement, GuiMutableElement element) {
+    public GuiQuestion(GuiIdentifierValue identifier, GuiLabelElement labelElement) {
         this.identifier = identifier;
         this.labelElement = labelElement;
-        this.element = element;
     }
 
     public GuiIdentifierValue getIdentifier() {
@@ -25,10 +21,6 @@ public class GuiQuestion extends GuiBody {
 
     public GuiLabelElement getLabelElement() {
         return labelElement;
-    }
-
-    public GuiMutableElement getElement() {
-        return element;
     }
 
     @Override
@@ -40,11 +32,8 @@ public class GuiQuestion extends GuiBody {
         visitor.visit(this);
     }
 
-    @Override
-    public void isVisible(final boolean flag) {
-        element.getWidget().getParent().setVisible(flag);
-        if (!flag)
-            element.clear();
-    }
+    public abstract GuiElement getElement();
+
+    public abstract void isVisible(boolean flag);
 
 }

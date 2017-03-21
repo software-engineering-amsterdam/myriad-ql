@@ -78,11 +78,11 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiMutableE
         GuiIdentifierValue identifier = new GuiIdentifierValue(question.getIdentifier().getValue());
         GuiMutableElement element = question.getType().accept(this);
         GuiLabelElement labelElement = new GuiLabelElement(question.getLabel());
-        GuiQuestion guiQuestion = new GuiQuestion(identifier, labelElement, element);
+        GuiInputQuestion guiInputQuestion = new GuiInputQuestion(identifier, labelElement, element);
 
-        qlGui.addQuestion(guiQuestion);
+        qlGui.addQuestion(guiInputQuestion);
 
-        return guiQuestion;
+        return guiInputQuestion;
     }
 
     @Override

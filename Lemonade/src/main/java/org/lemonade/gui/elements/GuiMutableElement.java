@@ -1,7 +1,7 @@
 package org.lemonade.gui.elements;
 
-public interface GuiMutableElement extends GuiWidgetElement {
+public abstract class GuiMutableElement extends GuiElement {
 
-    void update();
+    public abstract void update();
 
 }
