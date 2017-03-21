@@ -1,10 +1,10 @@
 module QL
   module GUI
     class SpinboxWidget < Widget
-      def initialize(minimum=-100, maximum=100)
+      def initialize(minimum = nil, maximum = nil)
         @default_value = 0
-        @minimum = minimum
-        @maximum = maximum
+        @minimum = minimum || -100
+        @maximum = maximum || 100
       end
 
       def render(tk_frame)
