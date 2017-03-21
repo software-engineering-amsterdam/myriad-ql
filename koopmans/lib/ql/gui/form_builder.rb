@@ -1,6 +1,12 @@
 module QL
   module GUI
     class FormBuilder
+      attr_reader :question_frames
+
+      def initialize
+        @question_frames = []
+      end
+
       def visit_form(form, _)
         form.statements.map { |statement| statement.accept(self) }.flatten
       end
@@ -13,16 +19,15 @@ module QL
       def visit_if_else_statement(if_else_statement, condition)
         if_condition = stack_conditions(condition, if_else_statement.condition)
         else_condition = stack_conditions(condition, negate(if_else_statement.condition))
-        if_body_questions = if_else_statement.if_body.map { |statement| statement.accept(self, if_condition) }
-        else_body_questions = if_else_statement.else_body.map { |statement| statement.accept(self, else_condition) }
-        [if_body_questions, else_body_questions]
+        if_else_statement.if_body.map { |statement| statement.accept(self, if_condition) }
+        if_else_statement.else_body.map { |statement| statement.accept(self, else_condition) }
       end
 
       def visit_question(question, condition)
         name = question.variable.name
         label = question.label.value
         literal_type, widget = question.type.accept(self)
-        QuestionFrame.new(name: name, label: label, literal_type: literal_type, widget: widget, condition: condition)
+        @question_frames << QuestionFrame.new(name: name, label: label, literal_type: literal_type, widget: widget, condition: condition)
       end
 
       def visit_computed_question(question, condition)
@@ -31,16 +36,8 @@ module QL
         literal_type, = question.type.accept(self)
         widget = ComputedWidget.new
         assignment = question.assignment
-        ComputedQuestionFrame.new(name: name, label: label, literal_type: literal_type, widget: widget, condition: condition, assignment: assignment)
+        @question_frames << ComputedQuestionFrame.new(name: name, label: label, literal_type: literal_type, widget: widget, condition: condition, assignment: assignment)
       end
-
-      # all widgets:
-      # TextWidget
-      # SpinboxWidget
-      # SliderWidget
-      # RadioWidget
-      # CheckboxWidget
-      # DropdownWidget
 
       def visit_boolean_type(_)
         [AST::BooleanLiteral, CheckboxWidget.new]
