@@ -86,14 +86,14 @@ module QLS
 
       describe 'default' do
         it 'parses' do
-          expect(form_parser.default).to parse('default money {
+          expect(form_parser.default_properties).to parse('default money {
             width: 400
             font: "Arial"
             fontsize: 14
             color: #999999
             widget spinbox
           }')
-          expect(form_parser.default).to parse('default boolean widget radio("Yes", "No")')
+          expect(form_parser.default_properties).to parse('default boolean widget radio("Yes", "No")')
         end
       end
 

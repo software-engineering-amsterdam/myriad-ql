@@ -1,6 +1,6 @@
 module QLS
   module AST
-    class Default
+    class DefaultProperties
       attr_reader :type, :properties
 
       def initialize(type, properties)

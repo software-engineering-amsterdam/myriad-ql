@@ -22,11 +22,11 @@ module QLS
 
       # page
       rule(:page)      { _ >> str('page') >> _ >> (variable.as(:id) >> _ >> str('{') >> _ >> page_body).as(:page) >> str('}') >> _ }
-      rule(:page_body) { (section | default).repeat.as(:body) }
+      rule(:page_body) { (section | default_properties).repeat.as(:body) }
       # section
       rule(:section)                    { (_ >> str('section') >> _ >> string_literal >> _ >> (section_body_with_brackets | section_body) >> _).as(:section) }
       rule(:section_body_with_brackets) { str('{') >> _ >> section_body >> _ >> str('}') }
-      rule(:section_body)               { (section | question | default).repeat.as(:body) }
+      rule(:section_body)               { (section | question | default_properties).repeat.as(:body) }
 
       # question
       rule(:question)                 { (_ >> str('question') >> _ >> variable.as(:id) >> _ >> (properties_with_brackets | property?).as(:properties) >> _).as(:question) }
@@ -40,9 +40,9 @@ module QLS
       rule(:slider)        { str('slider') >> str('(') >> _ >> widget_values.as(:slider) >> _ >> str(')') }
 
       # default
-      rule(:default)                  { str('default') >> _ >> (type.as(:type) >> (default_brackets | default_without_brackets).as(:properties)).as(:default) >> _ }
-      rule(:default_brackets)         { str('{') >> default_without_brackets >> str('}') }
-      rule(:default_without_brackets) { (_ >> property).repeat >> _ }
+      rule(:default_properties)                  { str('default') >> _ >> (type.as(:type) >> (default_properties_brackets | default_properties_without_brackets).as(:properties)).as(:default_properties) >> _ }
+      rule(:default_properties_brackets)         { str('{') >> default_properties_without_brackets >> str('}') }
+      rule(:default_properties_without_brackets) { (_ >> property).repeat >> _ }
 
       # properties
       rule(:property)   { width | font | fontsize | color | widget }

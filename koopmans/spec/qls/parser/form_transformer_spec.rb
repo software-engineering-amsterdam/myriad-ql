@@ -72,7 +72,7 @@ module QLS
       describe 'default properties' do
         context 'boolean default' do
           it 'transforms' do
-            expect(transformer.apply(default: { type: 'boolean', properties: [{ width: '400' }] })).to be_a Default
+            expect(transformer.apply(default_properties: { type: 'boolean', properties: [{ width: '400' }] })).to be_a DefaultProperties
           end
         end
       end

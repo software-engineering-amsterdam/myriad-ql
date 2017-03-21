@@ -28,7 +28,7 @@ module QLS
       rule(type: 'date')    { QL::AST::DateType.new }
 
       # default type properties
-      rule(default: { type: simple(:type), properties: subtree(:properties) }) { Default.new(type, properties) }
+      rule(default_properties: { type: simple(:type), properties: subtree(:properties) }) { DefaultProperties.new(type, properties) }
 
       # properties
       rule(width: simple(:value) )    { Width.new(value) }
