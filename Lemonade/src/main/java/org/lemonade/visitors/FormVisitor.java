@@ -166,6 +166,7 @@ public class FormVisitor extends QLBaseVisitor<ASTNode> {
             case QLParser.MINUS:
                 expr = new MinusBinary(left, right);
                 expr.setPosition(position);
+                return expr;
             default:
                 throw new IllegalArgumentException();//TODO change type of error
         }

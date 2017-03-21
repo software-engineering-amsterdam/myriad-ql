@@ -241,4 +241,13 @@ public class GuiUndefinedValue extends GuiValue<Void> {
     public GuiValue<?> doOr(GuiBooleanValue that) {
         return this;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof GuiUndefinedValue)) {
+            return false;
+        }
+        GuiUndefinedValue that = (GuiUndefinedValue) obj;
+        return this.getValue() == that.getValue();
+    }
 }
