@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from misc.visitor import CheckerVisitor
 from ql.visitors.dependency_finder import DependencyFinder
 
@@ -5,7 +7,7 @@ from ql.visitors.dependency_finder import DependencyFinder
 class DependencyChecker(CheckerVisitor):
 
     def __init__(self, errors=[]):
-        self.known_dependencies = {}
+        self.known_dependencies = defaultdict(list)
         self.errors = errors
 
     def check(self, node):
@@ -28,7 +30,7 @@ class DependencyChecker(CheckerVisitor):
         self.find_indirect_dependencies(dependencies)
 
         for dependency in dependencies:
-            if node.name in self.known_dependencies.get(dependency, []):
+            if node.name in self.known_dependencies[dependency]:
                 self.error("computed question \"{}\" has circular dependency "
                            "on computed question \"{}\"".format(node.name,
                                                                 dependency))
@@ -55,6 +57,6 @@ class DependencyChecker(CheckerVisitor):
 
     def find_indirect_dependencies(self, dependencies):
         for dependency in dependencies:
-            for indirect_dependency in self.known_dependencies.get(dependency, []):
+            for indirect_dependency in self.known_dependencies[dependency]:
                 if indirect_dependency not in dependencies:
                     dependencies.append(indirect_dependency)
