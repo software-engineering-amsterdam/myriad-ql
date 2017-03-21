@@ -21,7 +21,6 @@ import org.uva.taxfree.ql.model.operators.AddOperator;
 import org.uva.taxfree.ql.model.operators.GreaterThanOperator;
 import org.uva.taxfree.ql.model.operators.SubtractOperator;
 import org.uva.taxfree.ql.model.types.BooleanType;
-import org.uva.taxfree.ql.model.types.DateType;
 import org.uva.taxfree.ql.model.types.IntegerType;
 import org.uva.taxfree.ql.model.types.StringType;
 
@@ -162,7 +161,6 @@ public class QuestionFormTest {
     public void testTextFields() throws Exception {
         add(new DeclarationNode("What is your name?", "participantName", new StringType(), mEmptySource));
         add(new DeclarationNode("How many cars did you buy?", "textAmount", new IntegerType(), mEmptySource));
-        add(new DeclarationNode("What date did you buy your last car?", "lastBoughtCar", new DateType(), mEmptySource));
     }
 
     private void add(Node n) {

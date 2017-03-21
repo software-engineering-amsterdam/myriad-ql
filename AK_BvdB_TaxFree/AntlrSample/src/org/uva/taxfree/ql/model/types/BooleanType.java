@@ -31,4 +31,9 @@ public class BooleanType extends Type {
     public String defaultValue() {
         return "false";
     }
+
+    @Override
+    public String toString() {
+        return "Boolean";
+    }
 }
