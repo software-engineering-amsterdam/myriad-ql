@@ -33,17 +33,17 @@ public class SemanticsAnalyzerTest extends SemanticsTester {
 
     @Test
     public void testUndefinedDeclarationSingle() throws Exception {
-        assertSemantics("undefinedDeclarationSingle.txt", 2, "Undefined declaration should throw an error");
+        assertSemantics("undefinedDeclarationSingle.txt", 1, "Undefined declaration should throw an error");
     }
 
     @Test
     public void testUndefinedDeclarationMultiple() throws Exception {
-        assertSemantics("undefinedDeclarationMultiple.txt", 4, "Multiple conditions with same variable trigger multiple errors");
+        assertSemantics("undefinedDeclarationMultiple.txt", 2, "Multiple conditions with same variable trigger multiple errors");
     }
 
     @Test
     public void testUndefinedDeclarations() throws Exception {
-        assertSemantics("undefinedDeclarations.txt", 22, "Undefined declarations");
+        assertSemantics("undefinedDeclarations.txt", 11, "Undefined declarations");
     }
 
     @Test
@@ -68,7 +68,7 @@ public class SemanticsAnalyzerTest extends SemanticsTester {
 
     @Test
     void testConstandCalculations() throws Exception {
-        assertSemantics("constantCalculations.txt", 2, "Mutltiple constant calculation should display multiple warning");
+        assertSemantics("constantCalculations.txt", 3, "Mutltiple constant calculations should display multiple warning");
     }
 
 
