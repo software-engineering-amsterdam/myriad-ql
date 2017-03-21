@@ -8,7 +8,7 @@ import scalafx.scene.Node
 import scalafx.scene.control.TextField
 
 class NumericTextWidget(
-  width: Double,
+    width: Double,
     numberType: NumericType,
     protected val changeHandler: Option[Value => Unit]
 ) extends QLWidget {

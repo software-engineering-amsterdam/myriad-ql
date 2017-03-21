@@ -7,7 +7,7 @@ import scalafx.scene.Node
 import scalafx.scene.control.ChoiceBox
 
 class DropDownWidget(
-  trueText: String,
+    trueText: String,
     falseText: String,
     width: Double,
     protected val changeHandler: Option[Value => Unit]

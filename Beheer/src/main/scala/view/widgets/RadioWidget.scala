@@ -7,7 +7,7 @@ import scalafx.scene.control.{ RadioButton, ToggleGroup }
 import scalafx.scene.layout.HBox
 
 class RadioWidget(
-  trueText: String,
+    trueText: String,
     falseText: String,
     protected val changeHandler: Option[Value => Unit]
 ) extends QLWidget {

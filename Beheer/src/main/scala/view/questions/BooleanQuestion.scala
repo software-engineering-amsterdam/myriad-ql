@@ -6,7 +6,7 @@ import values.Value
 import view.widgets.{ CheckboxWidget, DropDownWidget, QLWidget, RadioWidget }
 
 class BooleanQuestion(
-  protected val question: DisplayQuestion,
+    protected val question: DisplayQuestion,
     protected val questionStyle: Option[QuestionStyle],
     protected val updateEnv: Value => Unit
 ) extends GUIQuestion {

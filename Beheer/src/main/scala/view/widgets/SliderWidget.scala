@@ -7,7 +7,7 @@ import scalafx.scene.Node
 import scalafx.scene.control.Slider
 
 class SliderWidget(
-  min: BigDecimal,
+    min: BigDecimal,
     max: BigDecimal,
     numericType: NumericType,
     protected val changeHandler: Option[Value => Unit]

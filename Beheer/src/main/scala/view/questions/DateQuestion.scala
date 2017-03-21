@@ -8,7 +8,7 @@ import view.widgets.{ DateWidget, QLWidget }
 import scala.language.implicitConversions
 
 class DateQuestion(
-  protected val question: DisplayQuestion,
+    protected val question: DisplayQuestion,
     protected val questionStyle: Option[QuestionStyle],
     protected val updateEnv: Value => Unit
 ) extends GUIQuestion {
