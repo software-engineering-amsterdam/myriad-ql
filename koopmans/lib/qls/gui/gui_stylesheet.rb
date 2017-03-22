@@ -24,7 +24,7 @@ module QLS
 
       def apply_width(question_frame, width)
         return unless width
-        question_frame.tk_frame.width = width
+        question_frame.tk_frame.padx = width/2
       end
 
       def normal_question_frames

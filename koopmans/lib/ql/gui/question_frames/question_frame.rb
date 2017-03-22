@@ -16,7 +16,6 @@ module QL
       end
 
       def render
-        pp @tk_frame.width
         @tk_frame.grid
         @label.render(@tk_frame)
         @widget.render(@tk_frame)
