@@ -58,13 +58,8 @@ module QLS
         @styles[parent_id].widget = QL::GUI::DropdownWidget.new(true_label, false_label)
       end
 
-      def try_visit_widget_options(widget)
-        return unless widget.widget_options
-        widget.widget_options.accept(self)
-      end
-
       def visit_widget_options(widget_options)
-        return unless widget_options
+        return unless widget_options.first_value && widget_options.second_value
         [widget_options.first_value.value, widget_options.second_value.value]
       end
 
@@ -75,6 +70,11 @@ module QLS
       def visit_font(width, parent_id) end
       def visit_fontsize(width, parent_id) end
       def visit_color(width, parent_id) end
+
+      def try_visit_widget_options(widget)
+        return unless widget.widget_options
+        widget.widget_options.accept(self)
+      end
     end
   end
 end
