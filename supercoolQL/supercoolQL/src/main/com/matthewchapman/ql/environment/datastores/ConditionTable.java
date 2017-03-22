@@ -20,7 +20,4 @@ public class ConditionTable {
         conditions.put(name, expression);
     }
 
-    public Expression getConditionByID(String name) {
-        return conditions.get(name);
-    }
 }

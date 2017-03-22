@@ -2,9 +2,7 @@ package com.matthewchapman.ql.environment.datastores;
 
 import com.matthewchapman.ql.ast.Expression;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,11 +20,4 @@ public class ExpressionTable {
         expressions.put(name, expression);
     }
 
-    public Expression getExpressionByID(String name) {
-        return expressions.get(name);
-    }
-
-    public List<Expression> getExpressionsAsList() {
-        return new ArrayList<>(expressions.values());
-    }
 }

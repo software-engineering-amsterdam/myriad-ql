@@ -1,6 +1,7 @@
 package com.matthewchapman.ql.app;
 
 import com.matthewchapman.ql.ast.Form;
+import com.matthewchapman.ql.environment.FormEnvironmentFactory;
 import com.matthewchapman.ql.gui.GUIHandler;
 import com.matthewchapman.ql.parsing.ASTBuilder;
 import javafx.application.Application;
@@ -46,7 +47,7 @@ public class Launcher extends Application {
     }
 
     private void handOffToGUI(Stage stage, Form form) {
-        new GUIHandler(form, stage);
+        new GUIHandler(stage, new FormEnvironmentFactory().getFormEnvironment(form));
     }
 
     private String processInputFile(File file) {

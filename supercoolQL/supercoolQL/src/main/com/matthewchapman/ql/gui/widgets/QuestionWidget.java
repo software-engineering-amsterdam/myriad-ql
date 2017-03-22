@@ -2,10 +2,6 @@ package com.matthewchapman.ql.gui.widgets;
 
 import com.matthewchapman.ql.ast.atomic.Type;
 import com.matthewchapman.ql.ast.statement.Question;
-import com.matthewchapman.ql.environment.observers.QuestionInputObserver;
-import com.matthewchapman.ql.environment.values.BooleanValue;
-import com.matthewchapman.ql.environment.values.IntegerValue;
-import com.matthewchapman.ql.environment.values.StringValue;
 import com.matthewchapman.ql.environment.values.Value;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -26,14 +22,13 @@ public class QuestionWidget extends GridPane {
     private Type returnType;
     private String label;
 
-    public QuestionWidget(Question question, Value value, QuestionInputObserver observer) {
+    public QuestionWidget(Question question, Value value) {
         this.id = question.getName();
         this.returnType = question.getType();
         this.label = question.getText();
-        this.populateWidget(value, observer);
     }
 
-    private void populateWidget(Value value, QuestionInputObserver observer) {
+    private void populateWidget(Value value) {
 
         this.setPadding(new Insets(5));
         this.setHgap(5);
@@ -48,39 +43,50 @@ public class QuestionWidget extends GridPane {
         this.add(label, 0, 0);
         GridPane.setHalignment(label, HPos.RIGHT);
 
-        if ("boolean".equals(this.returnType.toString())) {
-            CheckBox answer = new CheckBox();
-
-            answer.setOnMouseClicked( event -> {
-                observer.updateValue(this.id, new BooleanValue(answer.isSelected()));
-            });
-
-            answer.setSelected(Boolean.valueOf(value.toString()));
-            this.add(answer, 1, 0);
-            GridPane.setHalignment(answer, HPos.LEFT);
+        if("boolean".equals(returnType.toString())) {
+            makeBooleanField(value);
+        } else if ("string".equals(returnType.toString())) {
+            makeStringField(value);
         } else {
-
-            if("string".equals(returnType.toString())) {
-                TextField answer = new TextField();
-
-                answer.setOnKeyPressed(event -> {
-                    if (event.getCode() == KeyCode.ENTER) observer.updateValue(this.id, new StringValue(answer.getText()));
-                });
-
-                answer.setText(value.toString());
-                this.add(answer, 1, 0);
-                GridPane.setHalignment(answer, HPos.LEFT);
-            } else {
-                TextField answer = new TextField();
-
-                answer.setOnKeyPressed(event -> {
-                    if (event.getCode() == KeyCode.ENTER) observer.updateValue(this.id, new IntegerValue(Integer.parseInt(answer.getText())));
-                });
-
-                answer.setText(value.toString());
-                this.add(answer, 1, 0);
-                GridPane.setHalignment(answer, HPos.LEFT);
-            }
+            makeIntegerField(value);
         }
+
+    }
+
+    private void makeBooleanField(Value value) {
+        CheckBox answer = new CheckBox();
+        answer.setOnMouseClicked(event -> {
+
+        });
+
+        answer.setSelected(Boolean.valueOf(value.toString()));
+        this.add(answer, 1, 0);
+        GridPane.setHalignment(answer, HPos.LEFT);
+    }
+
+    private void makeStringField(Value value) {
+        TextField answer = new TextField();
+        answer.setOnKeyPressed(event -> {
+            if(event.getCode() == KeyCode.ENTER) {
+                //do stuff on enter
+            }
+        });
+
+        answer.setText(value.getValue().toString());
+        this.add(answer, 1, 0);
+        GridPane.setHalignment(answer, HPos.LEFT);
+    }
+
+    private void makeIntegerField(Value value) {
+        TextField answer = new TextField();
+        answer.setOnKeyPressed(event -> {
+            if(event.getCode() == KeyCode.ENTER) {
+                //do stuff on enter
+            }
+        });
+
+        answer.setText(value.getValue().toString());
+        this.add(answer, 1, 0);
+        GridPane.setHalignment(answer, HPos.LEFT);
     }
 }
