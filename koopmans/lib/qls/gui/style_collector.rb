@@ -5,7 +5,7 @@ module QLS
 
       def initialize
         @styles = {}
-     end
+      end
 
       def visit_stylesheet(stylesheet, _)
         stylesheet.pages.map { |page| page.accept(self) }

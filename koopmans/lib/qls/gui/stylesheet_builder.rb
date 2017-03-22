@@ -20,7 +20,7 @@ module QLS
 
       def visit_section(section, parent_style)
         style = merge_styles(@styles[section.object_id], parent_style)
-        section.body.map { |element| element.accept(self, style)}
+        section.body.map { |element| element.accept(self, style) }
       end
 
       def visit_question(question, parent_style)
