@@ -50,11 +50,6 @@ module QLS
 
       # widget options
       rule(widget_options: { first_value: simple(:first_value), second_value: simple(:second_value) }) { WidgetOptions.new(first_value, second_value) }
-
-      # # rule(widget: { spinbox: { first_value: simple(:minimum), second_value: simple(:maximum) } })          { SpinboxWidget.new(minimum, maximum) }
-      # rule(widget: { slider: { first_value: simple(:minimum), second_value: simple(:maximum) } })          { SliderWidget.new(minimum, maximum) }
-      # rule(widget: { radio: { first_value: simple(:true_value), second_value: simple(:false_value) } })    { RadioWidget.new(true_value, false_value) }
-      # rule(widget: { dropdown: { first_value: simple(:true_value), second_value: simple(:false_value) } }) { DropdownWidget.new(true_value, false_value) }
     end
   end
 end
