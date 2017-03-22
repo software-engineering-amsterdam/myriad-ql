@@ -1,5 +1,18 @@
 module QLS
   module AST
+    class WidgetOptions
+      attr_reader :first_value, :second_value
+
+      def initialize(first_value, second_value)
+        @first_value = first_value
+        @second_value = second_value
+      end
+
+      # def accept(visitor)
+      #   visitor.visit_widget_options(self)
+      # end
+    end
+
     class SliderWidget
       attr_reader :minimum, :maximum
 
@@ -19,11 +32,10 @@ module QLS
     end
 
     class SpinboxWidget
-      attr_reader :minimum, :maximum
+      attr_reader :options
 
-      def initialize(minimum = nil, maximum = nil)
-        @minimum = minimum
-        @maximum = maximum
+      def initialize(options = nil)
+        @options = options
       end
 
       def accept(visitor, argument = nil)
@@ -31,8 +43,7 @@ module QLS
       end
 
       def range
-        return unless @minimum && @maximum
-        [@minimum.value, @maximum.value]
+        [@option.first_value.value, @option.second_value.value]
       end
     end
 
