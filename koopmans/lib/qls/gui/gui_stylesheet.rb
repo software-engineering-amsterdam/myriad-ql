@@ -10,10 +10,10 @@ module QLS
 
       def apply_styles
         normal_question_frames.each do |question_frame|
-          new_style = @question_frame_styles[question_frame.name]
-          next if new_style.nil?
-          apply_widget(question_frame, new_style.widget)
-          apply_width(question_frame, new_style.width)
+          style = @question_frame_styles[question_frame.name]
+          next unless style
+          apply_widget(question_frame, style.widget)
+          apply_width(question_frame, style.width)
         end
       end
 
@@ -24,7 +24,7 @@ module QLS
 
       def apply_width(question_frame, width)
         return unless width
-        question_frame.tk_frame.width = width
+        question_frame.tk_frame.padx = width/2
       end
 
       def normal_question_frames
