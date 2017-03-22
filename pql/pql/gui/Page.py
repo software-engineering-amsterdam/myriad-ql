@@ -33,21 +33,18 @@ class Page(QWizardPage, QMainWindow):
         for if_block_container, node in self.conditional_if_list:
             result = node.condition.apply(evaluator, environment)
             cond = (result is not None and result)
-            if_block_container.setEnabled(cond)
-            if cond:
-                if_block_container.show()
-            else:
-                if_block_container.hide()
+            self.toggle_container(if_block_container, cond)
 
     def trigger_conditional_if_else(self, evaluator, environment):
         for if_container, else_container, node in self.conditional_if_else_list:
             result = node.condition.apply(evaluator, environment)
             cond = (result is not None and result)
-            if_container.setEnabled(cond)
-            else_container.setEnabled(not cond)
-            if cond:
-                if_container.show()
-                else_container.hide()
-            else:
-                if_container.hide()
-                else_container.show()
+            self.toggle_container(if_container, cond)
+            self.toggle_container(else_container, not cond)
+
+    def toggle_container(self, container, enabled):
+        container.setEnabled(enabled)
+        if enabled:
+            container.show()
+        else:
+            container.hide()

@@ -28,12 +28,13 @@ class DependenciesChecker(FormVisitor, BinaryExpressionVisitor, UnaryExpressionV
 
     def conditional_if_else(self, node, local_properties=None):
         self.conditional_if(node, local_properties.copy())
-        self.conditional(local_properties.copy(), node.else_statement_list)
+        self.conditional(node, local_properties.copy(), node.else_statement_list)
 
     def conditional_if(self, node, local_properties=None):
-        self.conditional(local_properties.copy(), node.statements)
+        self.conditional(node, local_properties.copy(), node.statements)
 
-    def conditional(self, local_properties, statements):
+    def conditional(self, node, local_properties, statements):
+        self.errors.extend(self.bad_references_in_expression(node.condition,  local_properties))
         for statement in statements:
             result = statement.apply(self, local_properties)
             if result is not None:
@@ -44,17 +45,17 @@ class DependenciesChecker(FormVisitor, BinaryExpressionVisitor, UnaryExpressionV
         return node.name.name, node.name
 
     def assignment(self, node, scope_properties=None):
-        bad_reference = []
-        children = node.expression.apply(self)
+        self.errors.extend(self.bad_references_in_expression(node.expression, scope_properties))
+        return node.name.name, node.name
+
+    def bad_references_in_expression(self, expression, scope_properties):
+        errors = list()
+        children = expression.apply(self)
         for child in children:
             if child.name not in scope_properties:
-                bad_reference.append(child)
-        if len(bad_reference) > 0:
-            self.errors.append(Error("Field at {} had the following references that were not resolvable: {} "
-                               .format(node.location,
-                                       ["{}: {}".format(ref.name, ref.location) for ref in bad_reference]),
-                                     bad_reference[0].location))
-        return node.name.name, node.name
+                errors.append(Error("Expression at {} had a reference [{}] that was not resolvable at location {} "
+                                         .format(expression.location, child.name, child.location), child.location))
+        return errors
 
     def identifier(self, node, args=None):
         return [node]

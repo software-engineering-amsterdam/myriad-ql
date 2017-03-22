@@ -112,24 +112,47 @@ class Editor(QMainWindow, QWidget):
         self.write_contents_to_file(contents, self.file_path)
         ast = self.create_ast(contents)
         if ast is not None:
-            identifier_errors = self.check_ids(ast)
-            if identifier_errors:
-                self.add_messages(identifier_errors)
-            else:
-                label_warnings = self.check_labels(ast)
-                if label_warnings:
-                    self.add_messages(label_warnings)
-                dependencies_errors = self.check_dependencies(ast)
-                if not dependencies_errors:
-                    type_errors = self.check_type(ast)
-                    if type_errors:
-                        self.add_messages(type_errors)
-                    else:
-                        self.form = Questionnaire(ast).visit()
-                        self.form.connect_finished(self.export)
-                        self.form.show()
-                else:
-                    self.add_messages(dependencies_errors)
+            if self.has_no_errors(ast):
+                self.apply_label_checking(ast)
+                self.show_form(ast)
+
+    def has_no_errors(self, ast):
+        if not self.has_identifier_errors(ast):
+            if not self.has_dependency_errors(ast):
+                if not self.has_type_errors(ast):
+                    return False
+        return True
+
+    def has_identifier_errors(self, ast):
+        identifier_errors = self.check_ids(ast)
+        if identifier_errors:
+            self.add_messages(identifier_errors)
+            return True
+        return False
+
+    def has_dependency_errors(self, ast):
+        dependencies_errors = self.check_dependencies(ast)
+        if dependencies_errors:
+            self.add_messages(dependencies_errors)
+            return True
+        return False
+
+    def apply_label_checking(self, ast):
+        label_warnings = self.check_labels(ast)
+        if label_warnings:
+            self.add_messages(label_warnings)
+
+    def has_type_errors(self, ast):
+        type_errors = self.check_type(ast)
+        if type_errors:
+            self.add_messages(type_errors)
+            return True
+        return False
+
+    def show_form(self, ast):
+        self.form = Questionnaire(ast).visit()
+        self.form.connect_finished(self.export)
+        self.form.show()
 
     def export(self, a):
         if a == 1:

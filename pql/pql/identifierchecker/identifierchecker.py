@@ -54,7 +54,7 @@ class IdentifierChecker(FormVisitor, BinaryExpressionVisitor, UnaryExpressionVis
         for key in result:
             if key not in self.__symbol_table:
                 self.__errors.append(Error("Identifier {} was not found in assignment on location {}"
-                                           .format(key, node.location)))
+                                           .format(key, node.location), node.location))
 
     def greater_inclusive(self, node, args=None):
         return node.lhs.apply(self) + node.rhs.apply(self)

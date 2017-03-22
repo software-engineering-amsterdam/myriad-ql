@@ -94,7 +94,7 @@ class Questionnaire(FormVisitor, TypeVisitor):
         return self.create_container(node, True, parent)
 
     def assignment(self, node, parent=None):
-        return self.create_container(node, (node.expression is None), parent)
+        return self.create_container(node, False, parent)
 
     def money(self, node, args=None):
         widget = self.numeric(float, MoneyInput)
