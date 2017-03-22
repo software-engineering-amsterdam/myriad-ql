@@ -112,16 +112,12 @@ class Editor(QMainWindow, QWidget):
         self.write_contents_to_file(contents, self.file_path)
         ast = self.create_ast(contents)
         if ast is not None:
-            if self.has_no_errors(ast):
+            if not self.has_errors(ast):
                 self.apply_label_checking(ast)
                 self.show_form(ast)
 
-    def has_no_errors(self, ast):
-        if not self.has_identifier_errors(ast):
-            if not self.has_dependency_errors(ast):
-                if not self.has_type_errors(ast):
-                    return False
-        return True
+    def has_errors(self, ast):
+        return self.has_identifier_errors(ast) or self.has_dependency_errors(ast) or self.has_type_errors(ast)
 
     def has_identifier_errors(self, ast):
         identifier_errors = self.check_ids(ast)

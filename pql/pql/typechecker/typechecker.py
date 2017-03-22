@@ -47,7 +47,7 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
 
         if result is None:
             self.errors.append(
-                Error("Expression of field [{}] did not match declared type [{}], at location: {}"
+                Error("Expression result [{}] did not match declared type [{}], at location: {}"
                          .format(result, node.data_type.data_type, node.expression.location), node.expression.location))
 
     def subtraction(self, node, args=None):
