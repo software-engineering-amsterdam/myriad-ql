@@ -8,90 +8,52 @@ module QLS
         @second_value = second_value
       end
 
-      # def accept(visitor)
-      #   visitor.visit_widget_options(self)
-      # end
+      def accept(visitor)
+        visitor.visit_widget_options(self)
+      end
     end
 
-    class SliderWidget
-      attr_reader :minimum, :maximum
+    class Widget
+      attr_reader :widget_options
 
-      def initialize(minimum = nil, maximum = nil)
-        @minimum = minimum
-        @maximum = maximum
+      def initialize(widget_options = nil)
+        @widget_options = widget_options
       end
+    end
 
+    class SliderWidget < Widget
       def accept(visitor, argument = nil)
         visitor.visit_slider_widget(self, argument)
       end
-
-      def range
-        return unless @minimum && @maximum
-        [@minimum.value, @maximum.value]
-      end
     end
 
-    class SpinboxWidget
-      attr_reader :options
-
-      def initialize(options = nil)
-        @options = options
-      end
-
+    class SpinboxWidget < Widget
       def accept(visitor, argument = nil)
         visitor.visit_spinbox_widget(self, argument)
       end
-
-      def range
-        [@option.first_value.value, @option.second_value.value]
-      end
     end
 
-    class TextWidget
+    class TextWidget < Widget
       def accept(visitor, argument = nil)
         visitor.visit_text_widget(self, argument)
       end
     end
 
-    class RadioWidget
-      attr_reader :true_label, :false_label
-
-      def initialize(true_label = nil, false_label = nil)
-        @true_label  = true_label
-        @false_label = false_label
-      end
-
+    class RadioWidget < Widget
       def accept(visitor, argument = nil)
         visitor.visit_radio_widget(self, argument)
       end
-
-      def labels
-        return unless @true_label && @false_label
-        [@true_label.value, @false_label.value]
-      end
     end
 
-    class CheckboxWidget
+    class CheckboxWidget < Widget
       def accept(visitor, argument = nil)
         visitor.visit_checkbox_widget(self, argument)
       end
     end
 
-    class DropdownWidget
-      attr_reader :true_label, :false_label
-
-      def initialize(true_label = nil, false_label = nil)
-        @true_label  = true_label
-        @false_label = false_label
-      end
-
+    class DropdownWidget < Widget
       def accept(visitor, argument = nil)
         visitor.visit_dropdown_widget(self, argument)
-      end
-
-      def labels
-        return unless @true_label && @false_label
-        [@true_label.value, @false_label.value]
       end
     end
   end
