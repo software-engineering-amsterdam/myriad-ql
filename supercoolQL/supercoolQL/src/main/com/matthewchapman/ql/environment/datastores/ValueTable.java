@@ -4,12 +4,11 @@ import com.matthewchapman.ql.environment.values.Value;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Observable;
 
 /**
  * Created by matt on 20/03/2017.
  */
-public class ValueTable extends Observable {
+public class ValueTable {
 
     private final Map<String, Value> values;
 
@@ -17,12 +16,11 @@ public class ValueTable extends Observable {
         values = new HashMap<>();
     }
 
-    public void addValue(String name, Value value) {
+    public void addOrUpdateValue(String name, Value value) {
         values.put(name, value);
     }
 
     public Value getValueByID(String name) {
         return values.get(name);
     }
-
 }

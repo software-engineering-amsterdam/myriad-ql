@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.validation.visitors;
+package com.matthewchapman.ql.visitors;
 
 import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
@@ -10,7 +10,6 @@ import com.matthewchapman.ql.ast.statement.Question;
  */
 public interface StatementVisitor<T, C> {
 
-    //Statement
     T visit(Question question, C context);
 
     T visit(IfStatement ifStatement, C context);
@@ -18,5 +17,4 @@ public interface StatementVisitor<T, C> {
     T visit(IfElseStatement ifElseStatement, C context);
 
     T visit(CalculatedQuestion calculatedQuestion, C context);
-
 }

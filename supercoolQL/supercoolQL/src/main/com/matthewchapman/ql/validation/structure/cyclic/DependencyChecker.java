@@ -1,7 +1,7 @@
 package com.matthewchapman.ql.validation.structure.cyclic;
 
 import com.matthewchapman.ql.ast.expression.Parameter;
-import com.matthewchapman.ql.core.ErrorLogger;
+import com.matthewchapman.ql.errorhandling.ErrorLogger;
 
 import java.util.HashSet;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.Set;
  * Created by matt on 13/03/2017.
  * <p>
  * Provides circular dependency checking
- *
+ * <p>
  * Thanks to Theodore & Yoan for the basic algorithm for closure generation
  */
 public class DependencyChecker {
@@ -28,10 +28,10 @@ public class DependencyChecker {
 
         ErrorLogger logger = new ErrorLogger();
 
-        dependencies = makeSet(expressionMap);
+        dependencies = makeDependencySet(expressionMap);
         Set<DependencyPair> closure = makeClosure(dependencies);
 
-        for(DependencyPair pair : closure) {
+        for (DependencyPair pair : closure) {
             if (pair.isReflexive()) {
                 logger.addError(expressionMap.get(pair.getStart()).get(0).getLine(), expressionMap.get(pair.getStart()).get(0).getColumn(), pair.getStart(), "Circular reference found");
             }
@@ -40,12 +40,12 @@ public class DependencyChecker {
         return logger;
     }
 
-    private Set<DependencyPair> makeSet(Map<String, List<Parameter>> expressionMap) {
+    private Set<DependencyPair> makeDependencySet(Map<String, List<Parameter>> expressionMap) {
 
         Set<DependencyPair> dependencySet = new HashSet<>();
 
         for (Map.Entry<String, List<Parameter>> entry : expressionMap.entrySet()) {
-            for(Parameter parameter : entry.getValue()) {
+            for (Parameter parameter : entry.getValue()) {
                 dependencySet.add(new DependencyPair(entry.getKey(), parameter.getID()));
             }
         }
@@ -53,13 +53,13 @@ public class DependencyChecker {
         return dependencySet;
     }
 
-    private Set<DependencyPair> generateNewEdges(Set<DependencyPair> input) {
+    private Set<DependencyPair> generateNewPairs(Set<DependencyPair> input) {
 
         Set<DependencyPair> result = new HashSet<>();
 
-        for(DependencyPair pair1 : input) {
-            for(DependencyPair pair2 : input) {
-                if(pair1.isTransitive(pair2)) {
+        for (DependencyPair pair1 : input) {
+            for (DependencyPair pair2 : input) {
+                if (pair1.isTransitive(pair2)) {
                     result.add(new DependencyPair(pair1.getEnd(), pair2.getStart()));
                 }
             }
@@ -72,15 +72,10 @@ public class DependencyChecker {
 
         Set<DependencyPair> closure = new HashSet<>();
         closure.addAll(input);
+        Set<DependencyPair> temp = generateNewPairs(closure);
 
-        while(true) {
-            Set<DependencyPair> temp = generateNewEdges(closure);
+        while (!temp.equals(closure)) {
             temp.addAll(closure);
-
-            if(temp.equals(closure)) {
-                break;
-            }
-
             closure = temp;
         }
 

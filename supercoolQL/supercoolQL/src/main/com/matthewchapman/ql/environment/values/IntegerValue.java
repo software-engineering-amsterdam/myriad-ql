@@ -11,6 +11,10 @@ public class IntegerValue extends Value {
         this.value = input;
     }
 
+    @Override
+    public String toString() {
+        return Integer.toString(this.value);
+    }
 
     @Override
     public Integer getValue() {
@@ -23,7 +27,9 @@ public class IntegerValue extends Value {
     }
 
     @Override
-    public Value add(Value value) { return value.add(this); }
+    public Value add(Value value) {
+        return value.add(this);
+    }
 
     @Override
     public Value subtract(IntegerValue value) {
@@ -31,7 +37,9 @@ public class IntegerValue extends Value {
     }
 
     @Override
-    public Value subtract(Value value) { return value.subtract(this); }
+    public Value subtract(Value value) {
+        return value.subtract(this);
+    }
 
     @Override
     public Value divide(IntegerValue value) {
@@ -44,7 +52,9 @@ public class IntegerValue extends Value {
     }
 
     @Override
-    public Value divide(Value value) { return value.divide(this); }
+    public Value divide(Value value) {
+        return value.divide(this);
+    }
 
     @Override
     public Value multiply(IntegerValue value) {
@@ -52,7 +62,9 @@ public class IntegerValue extends Value {
     }
 
     @Override
-    public Value multiply(Value value) { return value.multiply(this); }
+    public Value multiply(Value value) {
+        return value.multiply(this);
+    }
 
     @Override
     public Value equalTo(IntegerValue value) {
@@ -60,7 +72,9 @@ public class IntegerValue extends Value {
     }
 
     @Override
-    public Value equalTo(Value value) { return value.equalTo(value); }
+    public Value equalTo(Value value) {
+        return value.equalTo(value);
+    }
 
     @Override
     public Value notEqualTo(IntegerValue value) {
@@ -68,7 +82,9 @@ public class IntegerValue extends Value {
     }
 
     @Override
-    public Value notEqualTo(Value value) { return value.notEqualTo(this); }
+    public Value notEqualTo(Value value) {
+        return value.notEqualTo(this);
+    }
 
     @Override
     public Value greaterThan(IntegerValue value) {
@@ -76,7 +92,9 @@ public class IntegerValue extends Value {
     }
 
     @Override
-    public Value greaterThan(Value value) { return value.greaterThan(this); }
+    public Value greaterThan(Value value) {
+        return value.greaterThan(this);
+    }
 
     @Override
     public Value greaterThanEqualTo(IntegerValue value) {
@@ -84,7 +102,9 @@ public class IntegerValue extends Value {
     }
 
     @Override
-    public Value greaterThanEqualTo(Value value) { return value.greaterThanEqualTo(this); }
+    public Value greaterThanEqualTo(Value value) {
+        return value.greaterThanEqualTo(this);
+    }
 
     @Override
     public Value lessThan(IntegerValue value) {
@@ -92,7 +112,9 @@ public class IntegerValue extends Value {
     }
 
     @Override
-    public Value lessThan(Value value) { return value.lessThan(this); }
+    public Value lessThan(Value value) {
+        return value.lessThan(this);
+    }
 
     @Override
     public Value lessThanEqualTo(IntegerValue value) {
@@ -100,7 +122,9 @@ public class IntegerValue extends Value {
     }
 
     @Override
-    public Value lessThanEqualTo(Value value) { return value.lessThanEqualTo(this); }
+    public Value lessThanEqualTo(Value value) {
+        return value.lessThanEqualTo(this);
+    }
 
     @Override
     public Value negate(IntegerValue value) {
@@ -108,5 +132,7 @@ public class IntegerValue extends Value {
     }
 
     @Override
-    public Value negate(Value value) { return value.negate(this); }
+    public Value negate(Value value) {
+        return value.negate(this);
+    }
 }

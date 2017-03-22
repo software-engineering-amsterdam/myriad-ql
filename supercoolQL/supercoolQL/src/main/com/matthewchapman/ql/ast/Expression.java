@@ -1,6 +1,6 @@
 package com.matthewchapman.ql.ast;
 
-import com.matthewchapman.ql.validation.visitors.ExpressionVisitor;
+import com.matthewchapman.ql.visitors.ExpressionVisitor;
 
 /**
  * Created by matt on 24/02/2017.
@@ -21,5 +21,4 @@ public abstract class Expression extends TreeNode {
     }
 
     public abstract <T, C> T accept(ExpressionVisitor<T, C> visitor, C context);
-
 }

@@ -1,7 +1,7 @@
 package com.matthewchapman.ql.ast.atomic;
 
 import com.matthewchapman.ql.ast.TreeNode;
-import com.matthewchapman.ql.validation.visitors.TypeVisitor;
+import com.matthewchapman.ql.visitors.TypeVisitor;
 
 /**
  * Created by matt on 21/02/2017.

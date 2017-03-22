@@ -22,9 +22,7 @@ public class QuestionTable {
         questions.put(name, question);
     }
 
-    public Question getQuestionByID(String name) {
-        return questions.get(name);
+    public List<Question> getQuestionsAsList() {
+        return new ArrayList<>(questions.values());
     }
-
-    public List<Question> getQuestionsAsList() { return new ArrayList<>(questions.values()); }
 }

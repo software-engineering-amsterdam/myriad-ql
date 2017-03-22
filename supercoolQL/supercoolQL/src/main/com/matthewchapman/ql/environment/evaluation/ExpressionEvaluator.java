@@ -8,12 +8,13 @@ import com.matthewchapman.ql.ast.expression.literal.BooleanLiteral;
 import com.matthewchapman.ql.ast.expression.literal.IntegerLiteral;
 import com.matthewchapman.ql.ast.expression.literal.StringLiteral;
 import com.matthewchapman.ql.ast.expression.unary.Negation;
+import com.matthewchapman.ql.environment.FormEnvironment;
 import com.matthewchapman.ql.environment.datastores.ValueTable;
 import com.matthewchapman.ql.environment.values.BooleanValue;
 import com.matthewchapman.ql.environment.values.IntegerValue;
 import com.matthewchapman.ql.environment.values.StringValue;
 import com.matthewchapman.ql.environment.values.Value;
-import com.matthewchapman.ql.validation.visitors.ExpressionVisitor;
+import com.matthewchapman.ql.visitors.ExpressionVisitor;
 
 /**
  * Created by matt on 20/03/2017.
@@ -22,22 +23,20 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
 
     private ValueTable valueTable;
 
-    public ExpressionEvaluator() {
-        valueTable = new ValueTable();
-    }
-
-    public Value evaluateExpression(String id, Expression expression, ValueTable valueTable) {
+    public void evaluateExpression(String id, Expression expression, ValueTable valueTable) {
         this.valueTable = valueTable;
         Value value = expression.accept(this, id);
-        this.valueTable.addValue(id, value);
-        return value;
+        this.valueTable.addOrUpdateValue(id, value);
+    }
+
+    public void evaluateAll(FormEnvironment env) {
+
     }
 
     @Override
     public Value visit(Addition addition, String context) {
         Value left = addition.getLeft().accept(this, context);
         Value right = addition.getRight().accept(this, context);
-
         return left.add(right);
     }
 
@@ -45,7 +44,6 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
     public Value visit(Division division, String context) {
         Value left = division.getLeft().accept(this, context);
         Value right = division.getRight().accept(this, context);
-
         return left.divide(right);
     }
 
@@ -53,7 +51,6 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
     public Value visit(Equal equal, String context) {
         Value left = equal.getLeft().accept(this, context);
         Value right = equal.getRight().accept(this, context);
-
         return left.equalTo(right);
     }
 
@@ -61,7 +58,6 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
     public Value visit(GreaterThan greaterThan, String context) {
         Value left = greaterThan.getLeft().accept(this, context);
         Value right = greaterThan.getRight().accept(this, context);
-
         return left.greaterThan(right);
     }
 
@@ -69,7 +65,6 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
     public Value visit(GreaterThanEqualTo greaterThanEqualTo, String context) {
         Value left = greaterThanEqualTo.getLeft().accept(this, context);
         Value right = greaterThanEqualTo.getRight().accept(this, context);
-
         return left.greaterThanEqualTo(right);
     }
 
@@ -77,7 +72,6 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
     public Value visit(LessThan lessThan, String context) {
         Value left = lessThan.getLeft().accept(this, context);
         Value right = lessThan.getRight().accept(this, context);
-
         return left.lessThan(right);
     }
 
@@ -85,7 +79,6 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
     public Value visit(LessThanEqualTo lessThanEqualTo, String context) {
         Value left = lessThanEqualTo.getLeft().accept(this, context);
         Value right = lessThanEqualTo.getRight().accept(this, context);
-
         return left.lessThanEqualTo(right);
     }
 
@@ -93,7 +86,6 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
     public Value visit(LogicalAnd logicalAnd, String context) {
         Value left = logicalAnd.getLeft().accept(this, context);
         Value right = logicalAnd.getRight().accept(this, context);
-
         return left.logicalAnd(right);
     }
 
@@ -101,7 +93,6 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
     public Value visit(LogicalOr logicalOr, String context) {
         Value left = logicalOr.getLeft().accept(this, context);
         Value right = logicalOr.getRight().accept(this, context);
-
         return left.logicalOr(right);
     }
 
@@ -109,7 +100,6 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
     public Value visit(Multiplication multiplication, String context) {
         Value left = multiplication.getLeft().accept(this, context);
         Value right = multiplication.getRight().accept(this, context);
-
         return left.multiply(right);
     }
 
@@ -117,7 +107,6 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
     public Value visit(NotEqual notEqual, String context) {
         Value left = notEqual.getLeft().accept(this, context);
         Value right = notEqual.getRight().accept(this, context);
-
         return left.notEqualTo(right);
     }
 
@@ -125,7 +114,6 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
     public Value visit(Subtraction subtraction, String context) {
         Value left = subtraction.getLeft().accept(this, context);
         Value right = subtraction.getRight().accept(this, context);
-
         return left.subtract(right);
     }
 

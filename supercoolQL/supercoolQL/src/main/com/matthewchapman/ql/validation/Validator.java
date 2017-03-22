@@ -1,7 +1,7 @@
 package com.matthewchapman.ql.validation;
 
 import com.matthewchapman.ql.ast.Form;
-import com.matthewchapman.ql.core.ErrorLogger;
+import com.matthewchapman.ql.errorhandling.ErrorLogger;
 import com.matthewchapman.ql.gui.errors.ErrorDialogGenerator;
 import com.matthewchapman.ql.validation.structure.ExpressionChecker;
 import com.matthewchapman.ql.validation.structure.LabelChecker;
@@ -43,7 +43,7 @@ public class Validator {
         mainLogger.addMultipleWarnings(duplicateLog);
 
         //output any warnings we have
-        if(mainLogger.getWarningNumber() > 0) {
+        if (mainLogger.getWarningNumber() > 0) {
             dialogGenerator.generateWarningListBox(mainLogger.getWarningsAsString(), INTERPRETER_WARNING_TITLE, INTERPRETER_WARNING_BODY);
         }
 

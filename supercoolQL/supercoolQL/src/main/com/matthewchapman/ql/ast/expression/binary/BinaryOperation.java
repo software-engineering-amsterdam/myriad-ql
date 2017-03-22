@@ -22,5 +22,4 @@ public abstract class BinaryOperation extends Expression {
     public Expression getRight() {
         return this.right;
     }
-
 }

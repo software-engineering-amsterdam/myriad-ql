@@ -5,7 +5,7 @@ package com.matthewchapman.ql.environment.values;
  */
 public class NullValue extends Value {
 
-    public final Void value;
+    private final Void value;
 
     public NullValue() {
         this.value = null;

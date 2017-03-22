@@ -1,4 +1,4 @@
-package com.matthewchapman.ql.validation.visitors;
+package com.matthewchapman.ql.visitors;
 
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;

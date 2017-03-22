@@ -20,8 +20,4 @@ public class ExpressionTable {
         expressions.put(name, expression);
     }
 
-    public Expression getExpressionByID(String name) {
-        return expressions.get(name);
-    }
-
 }

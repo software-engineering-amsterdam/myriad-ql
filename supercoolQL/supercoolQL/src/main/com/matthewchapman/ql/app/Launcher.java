@@ -1,7 +1,9 @@
-package com.matthewchapman.ql.core;
+package com.matthewchapman.ql.app;
 
 import com.matthewchapman.ql.ast.Form;
-import com.matthewchapman.ql.environment.FormEnvironment;
+import com.matthewchapman.ql.environment.FormEnvironmentFactory;
+import com.matthewchapman.ql.gui.GUIHandler;
+import com.matthewchapman.ql.parsing.ASTBuilder;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -32,17 +34,20 @@ public class Launcher extends Application {
 
         String fileContents = processInputFile(file);
 
-        if(fileContents != null) {
-            CoreParser parser = new CoreParser();
+        if (fileContents != null) {
+            ASTBuilder parser = new ASTBuilder();
             Form form = parser.buildQLAST(fileContents);
 
             if (form == null) {
                 Platform.exit();
             } else if (parser.validateAST(form)) {
-                FormEnvironment env = new FormEnvironment(form);
-                new GUICreator().generateFormUI(primaryStage, env);
+                handOffToGUI(primaryStage, form);
             }
         }
+    }
+
+    private void handOffToGUI(Stage stage, Form form) {
+        new GUIHandler(stage, new FormEnvironmentFactory().getFormEnvironment(form));
     }
 
     private String processInputFile(File file) {
@@ -53,6 +58,7 @@ public class Launcher extends Application {
             alert.setHeaderText("No file selected");
             alert.setContentText("Please select a valid QL file to continue.");
             alert.showAndWait();
+            Platform.exit();
         } else {
             FileReader reader = new FileReader();
             fileContents = reader.readFile(file);
