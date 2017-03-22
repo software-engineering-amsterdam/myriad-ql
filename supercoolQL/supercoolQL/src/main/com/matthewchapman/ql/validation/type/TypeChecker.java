@@ -22,6 +22,7 @@ import com.matthewchapman.ql.errorhandling.ErrorLogger;
 import com.matthewchapman.ql.visitors.ExpressionVisitor;
 import com.matthewchapman.ql.visitors.StatementVisitor;
 import com.matthewchapman.ql.visitors.TypeVisitor;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by matt on 03/03/2017. 222
@@ -62,6 +63,7 @@ public class TypeChecker implements StatementVisitor<Type, String>, ExpressionVi
         return left;
     }
 
+    @NotNull
     private Type verifyBooleanExpression(BinaryOperation operation) {
         Type left = operation.getLeft().accept(this, null);
         Type right = operation.getRight().accept(this, null);
@@ -83,6 +85,10 @@ public class TypeChecker implements StatementVisitor<Type, String>, ExpressionVi
     public Type visit(IfStatement ifStatement, String context) {
         Type type = ifStatement.getCondition().accept(this, null);
 
+        for (Statement statement : ifStatement.getIfCaseStatements()) {
+            statement.accept(this, null);
+        }
+
         if (!BOOLEAN.equals(type.toString())) {
             logger.addError(ifStatement.getLine(), ifStatement.getColumn(), "If Statement", NON_BOOLEAN);
             return new ErrorType();
@@ -93,6 +99,14 @@ public class TypeChecker implements StatementVisitor<Type, String>, ExpressionVi
     @Override
     public Type visit(IfElseStatement ifElseStatement, String context) {
         Type type = ifElseStatement.getCondition().accept(this, null);
+
+        for(Statement statement : ifElseStatement.getIfCaseStatements()) {
+            statement.accept(this, null);
+        }
+
+        for(Statement statement : ifElseStatement.getElseCaseStatements()) {
+            statement.accept(this, null);
+        }
 
         if (!BOOLEAN.equals(type.toString())) {
             logger.addError(ifElseStatement.getLine(), ifElseStatement.getColumn(), "If-Else Statement", NON_BOOLEAN);

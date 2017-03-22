@@ -19,6 +19,7 @@ import java.util.Set;
  * Created by matt on 03/03/2017.
  * <p>
  * Gathers all of the questions contained within a given Form, allows checking for duplicates
+ * Also builds the TypeTable object for later use
  */
 public class LabelChecker implements StatementVisitor<Void, String> {
 
