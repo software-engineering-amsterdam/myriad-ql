@@ -68,7 +68,9 @@ module QLS
       end
 
       def visit_font(width, parent_id) end
+
       def visit_fontsize(width, parent_id) end
+
       def visit_color(width, parent_id) end
 
       def try_visit_widget_options(widget)

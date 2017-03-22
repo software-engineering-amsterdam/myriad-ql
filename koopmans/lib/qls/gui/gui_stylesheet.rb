@@ -11,7 +11,7 @@ module QLS
       def apply_styles
         normal_question_frames.each do |question_frame|
           new_style = @question_frame_styles[question_frame.name]
-          next if new_style.nil?
+          next unless new_style
           apply_widget(question_frame, new_style.widget)
           apply_width(question_frame, new_style.width)
         end
