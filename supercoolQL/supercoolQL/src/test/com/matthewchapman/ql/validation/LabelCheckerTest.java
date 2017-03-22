@@ -1,8 +1,8 @@
 package com.matthewchapman.ql.validation;
 
+import com.matthewchapman.ql.app.FileReader;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.parsing.ASTBuilder;
-import com.matthewchapman.ql.app.FileReader;
 import com.matthewchapman.ql.validation.structure.LabelChecker;
 import org.junit.Before;
 import org.junit.Test;

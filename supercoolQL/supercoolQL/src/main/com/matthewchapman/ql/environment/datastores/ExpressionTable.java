@@ -26,6 +26,7 @@ public class ExpressionTable {
         return expressions.get(name);
     }
 
-    public List<Expression> getExpressionsAsList() { return new ArrayList<>(expressions.values()); }
-
+    public List<Expression> getExpressionsAsList() {
+        return new ArrayList<>(expressions.values());
+    }
 }

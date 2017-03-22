@@ -35,7 +35,7 @@ public class Launcher extends Application {
 
         String fileContents = processInputFile(file);
 
-        if(fileContents != null) {
+        if (fileContents != null) {
             ASTBuilder parser = new ASTBuilder();
             Form form = parser.buildQLAST(fileContents);
 

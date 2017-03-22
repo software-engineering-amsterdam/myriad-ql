@@ -43,7 +43,7 @@ public class Validator {
         mainLogger.addMultipleWarnings(duplicateLog);
 
         //output any warnings we have
-        if(mainLogger.getWarningNumber() > 0) {
+        if (mainLogger.getWarningNumber() > 0) {
             dialogGenerator.generateWarningListBox(mainLogger.getWarningsAsString(), INTERPRETER_WARNING_TITLE, INTERPRETER_WARNING_BODY);
         }
 

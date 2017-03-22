@@ -1,5 +1,7 @@
 package com.matthewchapman.ql.errorhandling;
 
+import org.jetbrains.annotations.Contract;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,19 +31,27 @@ public class ErrorLogger {
         this.errors.addAll(logger.getErrors());
     }
 
-    public void addMultipleWarnings(ErrorLogger logger) { this.warnings.addAll(logger.getWarnings());}
+    public void addMultipleWarnings(ErrorLogger logger) {
+        this.warnings.addAll(logger.getWarnings());
+    }
 
     public int getErrorNumber() {
         return this.errors.size();
     }
 
-    public int getWarningNumber() { return this.warnings.size(); }
+    public int getWarningNumber() {
+        return this.warnings.size();
+    }
 
+    @Contract(pure = true)
     private List<Error> getErrors() {
         return this.errors;
     }
 
-    private List<Warning> getWarnings() { return this.warnings; }
+    @Contract(pure = true)
+    private List<Warning> getWarnings() {
+        return this.warnings;
+    }
 
     @Override
     public String toString() {

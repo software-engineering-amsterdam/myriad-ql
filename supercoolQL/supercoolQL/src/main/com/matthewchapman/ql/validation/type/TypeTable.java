@@ -28,5 +28,7 @@ public class TypeTable {
         return this.table.containsKey(name);
     }
 
-    public int size() { return this.table.size(); }
+    public int size() {
+        return this.table.size();
+    }
 }

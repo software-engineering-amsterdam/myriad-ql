@@ -45,5 +45,4 @@ public class Question extends Statement {
     public <T, C> T accept(StatementVisitor<T, C> visitor, C context) {
         return visitor.visit(this, context);
     }
-
 }

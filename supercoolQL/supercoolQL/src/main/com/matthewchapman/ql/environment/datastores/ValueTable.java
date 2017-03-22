@@ -26,5 +26,4 @@ public class ValueTable extends Observable {
     public Value getValueByID(String name) {
         return values.get(name);
     }
-
 }

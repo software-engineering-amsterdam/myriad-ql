@@ -31,11 +31,11 @@ import org.jetbrains.annotations.NotNull;
  */
 public class TypeChecker implements StatementVisitor<Type, String>, ExpressionVisitor<Type, String>, TypeVisitor<Type, String> {
 
-    private TypeTable typeTable;
-    private final ErrorLogger logger;
     private static final String INCOMPATIBLE_TYPE = "Incompatible parameter type in use";
     private static final String NON_BOOLEAN = "Non-boolean parameter in use";
     private static final String BOOLEAN = "boolean";
+    private final ErrorLogger logger;
+    private TypeTable typeTable;
 
     public TypeChecker() {
         logger = new ErrorLogger();
@@ -100,11 +100,11 @@ public class TypeChecker implements StatementVisitor<Type, String>, ExpressionVi
     public Type visit(IfElseStatement ifElseStatement, String context) {
         Type type = ifElseStatement.getCondition().accept(this, null);
 
-        for(Statement statement : ifElseStatement.getIfCaseStatements()) {
+        for (Statement statement : ifElseStatement.getIfCaseStatements()) {
             statement.accept(this, null);
         }
 
-        for(Statement statement : ifElseStatement.getElseCaseStatements()) {
+        for (Statement statement : ifElseStatement.getElseCaseStatements()) {
             statement.accept(this, null);
         }
 

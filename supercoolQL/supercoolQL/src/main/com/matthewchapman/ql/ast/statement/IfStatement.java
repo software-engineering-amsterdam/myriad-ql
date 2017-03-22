@@ -43,9 +43,7 @@ public class IfStatement extends Statement {
     }
 
     private void addStatements(List<Statement> statements) {
-        for (Statement s : statements) {
-            this.ifCaseStatements.add(s);
-        }
+        this.ifCaseStatements.addAll(statements);
     }
 
     public List<Statement> getIfCaseStatements() {
@@ -62,6 +60,7 @@ public class IfStatement extends Statement {
     }
 
     @Override
-    public String getName() { return this.name; }
-
+    public String getName() {
+        return this.name;
+    }
 }

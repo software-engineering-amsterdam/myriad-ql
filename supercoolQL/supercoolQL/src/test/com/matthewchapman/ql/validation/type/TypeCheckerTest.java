@@ -4,8 +4,8 @@ import com.matthewchapman.antlr.QLParser;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.atomic.type.BooleanType;
 import com.matthewchapman.ql.ast.atomic.type.IntegerType;
-import com.matthewchapman.ql.parsing.ASTBuilder;
 import com.matthewchapman.ql.errorhandling.ErrorLogger;
+import com.matthewchapman.ql.parsing.ASTBuilder;
 import org.junit.Before;
 import org.junit.Test;
 

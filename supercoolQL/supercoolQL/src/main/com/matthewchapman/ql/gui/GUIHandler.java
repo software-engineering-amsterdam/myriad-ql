@@ -1,8 +1,8 @@
 package com.matthewchapman.ql.gui;
 
 import com.matthewchapman.ql.environment.FormEnvironment;
-import com.matthewchapman.ql.environment.observers.ValueTableObserver;
 import com.matthewchapman.ql.environment.evaluation.ExpressionEvaluator;
+import com.matthewchapman.ql.environment.observers.ValueTableObserver;
 import javafx.stage.Stage;
 
 /**

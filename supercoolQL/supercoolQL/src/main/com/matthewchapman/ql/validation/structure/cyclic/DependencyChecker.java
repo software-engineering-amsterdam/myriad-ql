@@ -12,7 +12,7 @@ import java.util.Set;
  * Created by matt on 13/03/2017.
  * <p>
  * Provides circular dependency checking
- *
+ * <p>
  * Thanks to Theodore & Yoan for the basic algorithm for closure generation
  */
 public class DependencyChecker {
@@ -31,7 +31,7 @@ public class DependencyChecker {
         dependencies = makeDependencySet(expressionMap);
         Set<DependencyPair> closure = makeClosure(dependencies);
 
-        for(DependencyPair pair : closure) {
+        for (DependencyPair pair : closure) {
             if (pair.isReflexive()) {
                 logger.addError(expressionMap.get(pair.getStart()).get(0).getLine(), expressionMap.get(pair.getStart()).get(0).getColumn(), pair.getStart(), "Circular reference found");
             }
@@ -45,7 +45,7 @@ public class DependencyChecker {
         Set<DependencyPair> dependencySet = new HashSet<>();
 
         for (Map.Entry<String, List<Parameter>> entry : expressionMap.entrySet()) {
-            for(Parameter parameter : entry.getValue()) {
+            for (Parameter parameter : entry.getValue()) {
                 dependencySet.add(new DependencyPair(entry.getKey(), parameter.getID()));
             }
         }
@@ -57,9 +57,9 @@ public class DependencyChecker {
 
         Set<DependencyPair> result = new HashSet<>();
 
-        for(DependencyPair pair1 : input) {
-            for(DependencyPair pair2 : input) {
-                if(pair1.isTransitive(pair2)) {
+        for (DependencyPair pair1 : input) {
+            for (DependencyPair pair2 : input) {
+                if (pair1.isTransitive(pair2)) {
                     result.add(new DependencyPair(pair1.getEnd(), pair2.getStart()));
                 }
             }
@@ -74,7 +74,7 @@ public class DependencyChecker {
         closure.addAll(input);
         Set<DependencyPair> temp = generateNewPairs(closure);
 
-        while(!temp.equals(closure)) {
+        while (!temp.equals(closure)) {
             temp.addAll(closure);
             closure = temp;
         }

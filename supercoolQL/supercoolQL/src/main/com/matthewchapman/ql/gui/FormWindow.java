@@ -15,7 +15,6 @@ public class FormWindow extends VBox {
         for (Question question : environment.getQuestionsAsList()) {
             this.getChildren().add(new QuestionWidget(question, environment.getValueByName(question.getName())));
         }
-
         return this;
     }
 }

@@ -31,5 +31,4 @@ public class BooleanLiteral extends Expression {
     public <T, C> T accept(ExpressionVisitor<T, C> visitor, C context) {
         return visitor.visit(this, context);
     }
-
 }

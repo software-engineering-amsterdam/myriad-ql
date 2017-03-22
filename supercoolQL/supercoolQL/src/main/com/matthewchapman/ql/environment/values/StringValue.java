@@ -12,7 +12,9 @@ public class StringValue extends Value {
     }
 
     @Override
-    public String toString() { return this.value; }
+    public String toString() {
+        return this.value;
+    }
 
     @Override
     public String getValue() {
@@ -25,11 +27,17 @@ public class StringValue extends Value {
     }
 
     @Override
-    public Value equalTo(Value value) { return value.equalTo(this); }
+    public Value equalTo(Value value) {
+        return value.equalTo(this);
+    }
 
     @Override
-    public Value notEqualTo(StringValue value) { return new BooleanValue(!this.value.equals(value.getValue())); }
+    public Value notEqualTo(StringValue value) {
+        return new BooleanValue(!this.value.equals(value.getValue()));
+    }
 
     @Override
-    public Value notEqualTo(Value value) { return value.notEqualTo(this); }
+    public Value notEqualTo(Value value) {
+        return value.notEqualTo(this);
+    }
 }

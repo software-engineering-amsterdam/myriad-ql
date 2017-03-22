@@ -59,6 +59,4 @@ public class ErrorDialogGenerator {
         expContent.add(textArea, 0, 1);
         return expContent;
     }
-
-
 }

@@ -25,5 +25,4 @@ public class Addition extends BinaryOperation {
     public <T, C> T accept(ExpressionVisitor<T, C> visitor, C context) {
         return visitor.visit(this, context);
     }
-
 }

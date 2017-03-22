@@ -70,7 +70,6 @@ public class ASTBuilder {
     }
 
     public boolean validateAST(Form form) {
-
         return new Validator().runChecks(form);
     }
 }

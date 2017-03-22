@@ -23,7 +23,9 @@ public class BooleanValue extends Value {
     }
 
     @Override
-    public Value equalTo(Value value) { return value.equalTo(this); }
+    public Value equalTo(Value value) {
+        return value.equalTo(this);
+    }
 
     @Override
     public Value notEqualTo(BooleanValue value) {
@@ -31,7 +33,9 @@ public class BooleanValue extends Value {
     }
 
     @Override
-    public Value notEqualTo(Value value) { return value.notEqualTo(this); }
+    public Value notEqualTo(Value value) {
+        return value.notEqualTo(this);
+    }
 
     @Override
     public Value logicalAnd(BooleanValue value) {
@@ -39,7 +43,9 @@ public class BooleanValue extends Value {
     }
 
     @Override
-    public Value logicalAnd(Value value) { return value.logicalAnd(this); }
+    public Value logicalAnd(Value value) {
+        return value.logicalAnd(this);
+    }
 
     @Override
     public Value logicalOr(BooleanValue value) {
@@ -47,7 +53,9 @@ public class BooleanValue extends Value {
     }
 
     @Override
-    public Value logicalOr(Value value) { return value.logicalOr(this); }
+    public Value logicalOr(Value value) {
+        return value.logicalOr(this);
+    }
 
     @Override
     public Value negate(BooleanValue value) {
@@ -55,5 +63,7 @@ public class BooleanValue extends Value {
     }
 
     @Override
-    public Value negate(Value value) { return value.negate(this); }
+    public Value negate(Value value) {
+        return value.negate(this);
+    }
 }

@@ -39,20 +39,28 @@ public class FormEnvironment implements StatementVisitor<Void, String>, TypeVisi
         questions = new QuestionTable();
         values = new ValueTable();
 
-        for(Statement statement : ast.getStatements()) {
+        for (Statement statement : ast.getStatements()) {
             statement.accept(this, null);
         }
 
         values.addObserver(observer);
     }
 
-    public List<Question> getQuestionsAsList() { return this.questions.getQuestionsAsList(); }
+    public List<Question> getQuestionsAsList() {
+        return this.questions.getQuestionsAsList();
+    }
 
-    public List<Expression> getExpressionsAsList() { return this.expressions.getExpressionsAsList(); }
+    public List<Expression> getExpressionsAsList() {
+        return this.expressions.getExpressionsAsList();
+    }
 
-    public void updateValueByName(String name, Value value) { values.addOrUpdateValue(name, value);}
+    public void updateValueByName(String name, Value value) {
+        values.addOrUpdateValue(name, value);
+    }
 
-    public Value getValueByName(String name) { return values.getValueByID(name); }
+    public Value getValueByName(String name) {
+        return values.getValueByID(name);
+    }
 
     @Override
     public Void visit(Question question, String context) {
@@ -86,7 +94,7 @@ public class FormEnvironment implements StatementVisitor<Void, String>, TypeVisi
             statement.accept(this, context);
         }
 
-        for(Statement statement : ifElseStatement.getElseCaseStatements()) {
+        for (Statement statement : ifElseStatement.getElseCaseStatements()) {
             conditions.addCondition(statement.getName(), new Negation(ifElseStatement.getCondition(), 0, 0));
             statement.accept(this, context);
         }

@@ -1,7 +1,10 @@
 package com.matthewchapman.ql.app;
 
 import com.matthewchapman.ql.gui.errors.ErrorDialogGenerator;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

@@ -10,13 +10,18 @@ class DependencyPair {
     private final String start;
     private final String end;
 
-    public DependencyPair(String start, String end) {
+    DependencyPair(String start, String end) {
         this.start = start;
         this.end = end;
     }
 
-    public String getStart() { return this.start; }
-    public String getEnd() { return this.end; }
+    String getStart() {
+        return this.start;
+    }
+
+    String getEnd() {
+        return this.end;
+    }
 
     @Override
     public String toString() {
@@ -43,11 +48,11 @@ class DependencyPair {
         return Objects.equals(this.start, input.getStart()) && Objects.equals(this.end, input.getEnd());
     }
 
-    public boolean isReflexive() {
+    boolean isReflexive() {
         return this.start.equals(this.end);
     }
 
-    public boolean isTransitive(DependencyPair input) {
+    boolean isTransitive(DependencyPair input) {
         return this.end.equals(input.getStart());
     }
 }

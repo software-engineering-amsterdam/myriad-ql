@@ -1,5 +1,7 @@
 package com.matthewchapman.ql.errorhandling;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 
 /**
@@ -19,10 +21,21 @@ public class Error implements Comparable<Error> {
         this.id = id;
     }
 
-    public int getLine() { return this.line; }
-    public int getColumn() { return this.column; }
-    public String getId() { return this.id; }
-    public String getMessage() { return this.message; }
+    public int getLine() {
+        return this.line;
+    }
+
+    public int getColumn() {
+        return this.column;
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public String getMessage() {
+        return this.message;
+    }
 
     @Override
     public String toString() {
@@ -30,7 +43,7 @@ public class Error implements Comparable<Error> {
     }
 
     @Override
-    public int compareTo(Error o) {
+    public int compareTo(@NotNull Error o) {
         return this.line - o.line;
     }
 

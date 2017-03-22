@@ -31,7 +31,7 @@ public class QuestionWidget extends GridPane {
         this.add(label, 0, 0);
         GridPane.setHalignment(label, HPos.RIGHT);
 
-        if("boolean".equals(question.getType().toString())) {
+        if ("boolean".equals(question.getType().toString())) {
             CheckBox answer = new CheckBox();
             answer.setSelected(Boolean.valueOf(value.toString()));
             this.add(answer, 1, 0);
@@ -42,7 +42,5 @@ public class QuestionWidget extends GridPane {
             this.add(answer, 1, 0);
             GridPane.setHalignment(answer, HPos.LEFT);
         }
-
     }
-
 }

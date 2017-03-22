@@ -55,20 +55,17 @@ public class LabelChecker implements StatementVisitor<Void, String> {
         Set<String> questionIDs = new HashSet<>();
         Set<String> questionTexts = new HashSet<>();
 
-        // hooray for O(n) complexity!
-
         for (Question question : questionList) {
             if (!questionIDs.add(question.getName())) {
                 logger.addError(question.getLine(), question.getColumn(), question.getName(), "Question with this ID already defined");
             }
 
-            if(!questionTexts.add(question.getText())) {
+            if (!questionTexts.add(question.getText())) {
                 logger.addWarning(question.getLine(), question.getColumn(), question.getName(), "Question with this label already defined");
             }
         }
 
         return logger.getErrorNumber() > 0;
-
     }
 
     @Override
