@@ -33,13 +33,13 @@ module QLS
       rule(:property_with_brackets) { str('{') >> (_ >> property).repeat >> _ >> str('}') }
 
       # widget
-      rule(:widget)        { str('widget') >> _ >> (str('checkbox') | str('text') | spinbox  | slider | radio | dropdown).as(:widget) >> _ }
-      rule(:widget_options) { literal.as(:first_value) >> _ >> str(',') >> _ >> literal.as(:second_value) }
+      rule(:widget)          { str('widget') >> _ >> (str('checkbox') | str('text') | spinbox | slider | radio | dropdown).as(:widget) >> _ }
+      rule(:widget_options)  { literal.as(:first_value) >> _ >> str(',') >> _ >> literal.as(:second_value) }
       rule(:widget_options?) { (_ >> str('(') >> _ >> widget_options.as(:widget_options) >> _ >> str(')') >> _).maybe }
-      rule(:spinbox)       { str('spinbox') >> widget_options?.as(:spinbox) }
-      rule(:radio)         { str('radio') >> widget_options?.as(:radio) }
-      rule(:dropdown)      { str('dropdown') >> widget_options?.as(:dropdown) }
-      rule(:slider)        { str('slider') >> widget_options?.as(:slider) }
+      rule(:spinbox)         { str('spinbox') >> widget_options?.as(:spinbox) }
+      rule(:radio)           { str('radio') >> widget_options?.as(:radio) }
+      rule(:dropdown)        { str('dropdown') >> widget_options?.as(:dropdown) }
+      rule(:slider)          { str('slider') >> widget_options?.as(:slider) }
 
       # default
       rule(:default_properties)                  { str('default') >> _ >> (type.as(:type) >> (default_properties_brackets | default_properties_without_brackets).as(:properties)).as(:default_properties) >> _ }
