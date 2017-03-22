@@ -16,24 +16,25 @@ import com.matthewchapman.ql.environment.datastores.ConditionTable;
 import com.matthewchapman.ql.environment.datastores.ExpressionTable;
 import com.matthewchapman.ql.environment.datastores.QuestionTable;
 import com.matthewchapman.ql.environment.datastores.ValueTable;
-import com.matthewchapman.ql.environment.observers.ValueTableObserver;
 import com.matthewchapman.ql.environment.values.*;
+import com.matthewchapman.ql.gui.GUIHandler;
 import com.matthewchapman.ql.visitors.StatementVisitor;
 import com.matthewchapman.ql.visitors.TypeVisitor;
 
 import java.util.List;
+import java.util.Observable;
 
 /**
  * Created by matt on 20/03/2017.
  */
-public class FormEnvironment implements StatementVisitor<Void, String>, TypeVisitor<Void, String> {
+public class FormEnvironment extends Observable implements StatementVisitor<Void, String>, TypeVisitor<Void, String> {
 
     private final ExpressionTable expressions;
     private final ConditionTable conditions;
     private final QuestionTable questions;
     private final ValueTable values;
 
-    public FormEnvironment(Form ast, ValueTableObserver observer) {
+    public FormEnvironment(Form ast, GUIHandler handler) {
         expressions = new ExpressionTable();
         conditions = new ConditionTable();
         questions = new QuestionTable();
@@ -43,8 +44,10 @@ public class FormEnvironment implements StatementVisitor<Void, String>, TypeVisi
             statement.accept(this, null);
         }
 
-        values.addObserver(observer);
+        this.addObserver(handler);
     }
+
+    public ValueTable getValueTable() { return this.values; }
 
     public List<Question> getQuestionsAsList() {
         return this.questions.getQuestionsAsList();
@@ -56,11 +59,19 @@ public class FormEnvironment implements StatementVisitor<Void, String>, TypeVisi
 
     public void updateValueByName(String name, Value value) {
         values.addOrUpdateValue(name, value);
+        setChanged();
+        notifyObservers();
     }
 
     public Value getValueByName(String name) {
         return values.getValueByID(name);
     }
+
+    public Expression getExpressionByName(String name) { return expressions.getExpressionByID(name); }
+
+    /*
+    VISITOR METHODS FOR POPULATION OF ENVIRONMENT
+     */
 
     @Override
     public Void visit(Question question, String context) {

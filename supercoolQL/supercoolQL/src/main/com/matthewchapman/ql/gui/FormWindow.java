@@ -2,6 +2,7 @@ package com.matthewchapman.ql.gui;
 
 import com.matthewchapman.ql.ast.statement.Question;
 import com.matthewchapman.ql.environment.FormEnvironment;
+import com.matthewchapman.ql.environment.observers.QuestionInputObserver;
 import com.matthewchapman.ql.gui.widgets.QuestionWidget;
 import javafx.scene.layout.VBox;
 
@@ -10,11 +11,20 @@ import javafx.scene.layout.VBox;
  */
 public class FormWindow extends VBox {
 
-    public FormWindow makeForm(FormEnvironment environment) {
+    private FormEnvironment env;
+    private QuestionInputObserver updater;
 
-        for (Question question : environment.getQuestionsAsList()) {
-            this.getChildren().add(new QuestionWidget(question, environment.getValueByName(question.getName())));
+    public FormWindow(FormEnvironment env, QuestionInputObserver observer) {
+        this.env = env;
+        this.updater = observer;
+    }
+
+    public void updateLayout() {
+
+        this.getChildren().removeAll();
+
+        for (Question question : env.getQuestionsAsList()) {
+            this.getChildren().add(new QuestionWidget(question, env.getValueByName(question.getName()), this.updater));
         }
-        return this;
     }
 }

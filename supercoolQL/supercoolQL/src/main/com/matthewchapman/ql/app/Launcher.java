@@ -1,8 +1,6 @@
 package com.matthewchapman.ql.app;
 
 import com.matthewchapman.ql.ast.Form;
-import com.matthewchapman.ql.environment.FormEnvironment;
-import com.matthewchapman.ql.environment.observers.ValueTableObserver;
 import com.matthewchapman.ql.gui.GUIHandler;
 import com.matthewchapman.ql.parsing.ASTBuilder;
 import javafx.application.Application;
@@ -48,9 +46,7 @@ public class Launcher extends Application {
     }
 
     private void handOffToGUI(Stage stage, Form form) {
-        ValueTableObserver controller = new ValueTableObserver();
-        FormEnvironment env = new FormEnvironment(form, controller);
-        new GUIHandler(env, controller, stage);
+        new GUIHandler(form, stage);
     }
 
     private String processInputFile(File file) {
