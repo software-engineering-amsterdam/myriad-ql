@@ -12,8 +12,8 @@ from misc.messages import *
 
 
 def export(filename, dictionary):
-    with open(filename, "w") as fp:
-        dump(dictionary, fp)
+    with open(filename, "w") as pointer:
+        dump(dictionary, pointer)
 
 
 def qls_filename(ql_filename):
@@ -38,17 +38,17 @@ def validate_arguments():
         exit()
 
     form_file = argv[1]
-    dump_file = argv[2]
+    json_file = argv[2]
 
     if not isfile(form_file):
         ErrorMessage.print("file {} does not exist".format(form_file))
         exit()
 
-    return form_file, dump_file
+    return form_file, json_file
 
 
 def main():
-    form_file, dump_file = validate_arguments()
+    form_file, json_file = validate_arguments()
 
     form = parse_ql(form_file)
 
@@ -72,13 +72,13 @@ def main():
         exit_on_critcal_error(errors)
 
         QlsApp(form, layout, on_exit=lambda app:
-               export(dump_file, app.environment)).start()
+               export(json_file, app.environment)).start()
 
     else:
         WarningMessage.print("qls filename \"{}\" does not "
                              "exist".format(layout_file))
         QlApp(form, on_exit=lambda app:
-              export(dump_file, app.environment)).start()
+              export(json_file, app.environment)).start()
 
 if __name__ == "__main__":
     main()
