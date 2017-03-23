@@ -8,7 +8,6 @@ import com.matthewchapman.ql.ast.expression.literal.BooleanLiteral;
 import com.matthewchapman.ql.ast.expression.literal.IntegerLiteral;
 import com.matthewchapman.ql.ast.expression.literal.StringLiteral;
 import com.matthewchapman.ql.ast.expression.unary.Negation;
-import com.matthewchapman.ql.environment.FormEnvironment;
 import com.matthewchapman.ql.environment.datastores.ValueTable;
 import com.matthewchapman.ql.environment.values.BooleanValue;
 import com.matthewchapman.ql.environment.values.IntegerValue;
@@ -23,14 +22,10 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
 
     private ValueTable valueTable;
 
-    public void evaluateExpression(String id, Expression expression, ValueTable valueTable) {
+    public Value evaluateExpression(String id, Expression expression, ValueTable valueTable) {
         this.valueTable = valueTable;
         Value value = expression.accept(this, id);
-        this.valueTable.addOrUpdateValue(id, value);
-    }
-
-    public void evaluateAll(FormEnvironment env) {
-
+        return value;
     }
 
     @Override

@@ -20,4 +20,12 @@ public class ConditionTable {
         conditions.put(name, expression);
     }
 
+    public boolean questionHasCondition(String name) {
+        return conditions.containsKey(name);
+    }
+
+    public Expression getConditionByID(String name) {
+        return conditions.get(name);
+    }
+
 }
