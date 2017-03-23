@@ -5,21 +5,18 @@ form
     ;
 
 statement
-    :   type id=identifier ':' text=questionLabel value? ';'     #question
+    :   type id=identifier ':' text=questionLabel '=' expression ';' #computableQuestion
+    |   type id=identifier ':' text=questionLabel ';'                #blankQuestion
     |   'if' '(' expression ')' '{'
-                (thenStatements+=statement)* '}'                 #ifThen
+                (thenStatements+=statement)* '}'                     #ifThen
     |   'if' '(' expression ')' '{'
             (thenStatements+=statement)* '}'
         ('else' '{'
-            (elseStatements+=statement)* '}')?                   #ifThenElse
+            (elseStatements+=statement)* '}')?                       #ifThenElse
     ;
 
 questionLabel
     : STRING_LITERAL
-    ;
-
-value
-    :   '=' expression
     ;
 
 expression

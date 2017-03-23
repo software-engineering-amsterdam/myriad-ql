@@ -1,29 +1,24 @@
 stylesheet taxOfficeExample
+
 page Housing {
-section "Buying"
-  question hasBoughtHouse
-    widget checkbox
-section "Loaning"
-  question hasMaintLoan
+    section "You sold a house" {
+        question firstName
+            widget slider
+        question lastName
+        default money widget slider
+    }
 }
 
-page Selling {
-section "Selling" {
-  question hasSoldHouse
-    widget radio("Yes", "No")
-  section "You sold a house" {
-    question sellingPrice
-      widget spinbox
-    question privateDebt
-      widget spinbox
-    question valueResidue
-    default money {
-      width: 400
-      font: "Arial"
-      fontsize: 14
-      widget spinbox
+
+page AnotherPage {
+    section "AnotherSection" {
+        question areYouSure
+        question fullName
+        default money {
+          font: "Arial"
+          fontsize: 14
+          color: #FF0000
+          widget spinbox
+        }
     }
-  }
-}
-default boolean widget radio("Yes", "No")
 }

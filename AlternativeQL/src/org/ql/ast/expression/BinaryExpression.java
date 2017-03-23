@@ -1,7 +1,5 @@
 package org.ql.ast.expression;
 
-import org.ql.ast.Expression;
-
 public abstract class BinaryExpression extends Expression {
     private final Expression left;
     private final Expression right;

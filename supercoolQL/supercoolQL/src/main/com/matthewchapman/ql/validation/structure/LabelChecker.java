@@ -6,9 +6,9 @@ import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
-import com.matthewchapman.ql.core.ErrorLogger;
+import com.matthewchapman.ql.errorhandling.ErrorLogger;
 import com.matthewchapman.ql.validation.type.TypeTable;
-import com.matthewchapman.ql.validation.visitors.StatementVisitor;
+import com.matthewchapman.ql.visitors.StatementVisitor;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,6 +19,7 @@ import java.util.Set;
  * Created by matt on 03/03/2017.
  * <p>
  * Gathers all of the questions contained within a given Form, allows checking for duplicates
+ * Also builds the TypeTable object for later use
  */
 public class LabelChecker implements StatementVisitor<Void, String> {
 
@@ -50,7 +51,6 @@ public class LabelChecker implements StatementVisitor<Void, String> {
         return this.questionList;
     }
 
-    // hooray for O(n) complexity!
     public boolean findDuplicates() {
         Set<String> questionIDs = new HashSet<>();
         Set<String> questionTexts = new HashSet<>();
@@ -60,13 +60,12 @@ public class LabelChecker implements StatementVisitor<Void, String> {
                 logger.addError(question.getLine(), question.getColumn(), question.getName(), "Question with this ID already defined");
             }
 
-            if(!questionTexts.add(question.getText())) {
+            if (!questionTexts.add(question.getText())) {
                 logger.addWarning(question.getLine(), question.getColumn(), question.getName(), "Question with this label already defined");
             }
         }
 
         return logger.getErrorNumber() > 0;
-
     }
 
     @Override

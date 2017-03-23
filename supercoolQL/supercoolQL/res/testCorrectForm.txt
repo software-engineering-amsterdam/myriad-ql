@@ -13,7 +13,7 @@ form correctTestForm {
 		"Question 4"
 		question4:boolean;
         "Question 7"
-        question7:integer = 12 + 34;
+        question7:integer = 12 + question1;
     }
 	else
     {

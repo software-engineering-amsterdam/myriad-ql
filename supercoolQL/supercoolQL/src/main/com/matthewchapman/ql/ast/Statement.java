@@ -1,6 +1,6 @@
 package com.matthewchapman.ql.ast;
 
-import com.matthewchapman.ql.validation.visitors.StatementVisitor;
+import com.matthewchapman.ql.visitors.StatementVisitor;
 
 /**
  * Created by matt on 21/02/2017.
@@ -9,8 +9,6 @@ import com.matthewchapman.ql.validation.visitors.StatementVisitor;
  * to allow derived classes to be visited.
  */
 public abstract class Statement extends TreeNode {
-
-    private String id;
 
     @Override
     public int getLine() {
@@ -24,5 +22,5 @@ public abstract class Statement extends TreeNode {
 
     public abstract <T, C> T accept(StatementVisitor<T, C> visitor, C context);
 
-    public String getName() { return id; }
+    public abstract String getName();
 }

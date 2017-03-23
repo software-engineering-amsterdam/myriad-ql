@@ -7,7 +7,7 @@ public class IntegerType extends NumberType {
     }
 
     @Override
-    public boolean isCompatibleWith(Type type) {
+    public boolean isCompatibleWith(TypeCompatibility type) {
         return type.isCompatibleWith(this);
     }
 

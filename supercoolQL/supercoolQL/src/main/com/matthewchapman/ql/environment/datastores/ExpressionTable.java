@@ -20,8 +20,12 @@ public class ExpressionTable {
         expressions.put(name, expression);
     }
 
-    public Expression getExpressionByID(String name) {
-        return expressions.get(name);
+    public Expression getExpressionByName(String name) {
+        return this.expressions.get(name);
+    }
+
+    public boolean questionHasExpression(String name) {
+        return this.expressions.containsKey(name);
     }
 
 }

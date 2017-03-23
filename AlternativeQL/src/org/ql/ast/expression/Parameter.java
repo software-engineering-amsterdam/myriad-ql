@@ -1,7 +1,6 @@
 package org.ql.ast.expression;
 
-import org.ql.ast.Expression;
-import org.ql.ast.Identifier;
+import org.ql.ast.identifier.Identifier;
 
 public class Parameter extends Expression {
     private final Identifier id;

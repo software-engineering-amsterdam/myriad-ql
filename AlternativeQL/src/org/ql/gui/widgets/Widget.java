@@ -1,16 +1,11 @@
 package org.ql.gui.widgets;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.scene.layout.Pane;
+import org.ql.evaluator.value.Value;
 
-public abstract class Widget<E extends Event, V> {
+public abstract class Widget {
 
-    public abstract void setInputValue(V value);
-
-    public abstract V getInputValue();
-
-    public abstract void addEventHandler(EventHandler<E> eventHandler);
+    public abstract void updateWidgetValue(Value value);
 
     public abstract Pane createGridPane();
 }

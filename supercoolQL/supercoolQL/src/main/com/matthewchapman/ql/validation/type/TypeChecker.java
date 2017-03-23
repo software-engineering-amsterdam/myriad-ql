@@ -18,10 +18,11 @@ import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
-import com.matthewchapman.ql.core.ErrorLogger;
-import com.matthewchapman.ql.validation.visitors.ExpressionVisitor;
-import com.matthewchapman.ql.validation.visitors.StatementVisitor;
-import com.matthewchapman.ql.validation.visitors.TypeVisitor;
+import com.matthewchapman.ql.errorhandling.ErrorLogger;
+import com.matthewchapman.ql.visitors.ExpressionVisitor;
+import com.matthewchapman.ql.visitors.StatementVisitor;
+import com.matthewchapman.ql.visitors.TypeVisitor;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by matt on 03/03/2017. 222
@@ -30,11 +31,11 @@ import com.matthewchapman.ql.validation.visitors.TypeVisitor;
  */
 public class TypeChecker implements StatementVisitor<Type, String>, ExpressionVisitor<Type, String>, TypeVisitor<Type, String> {
 
-    private TypeTable typeTable;
-    private final ErrorLogger logger;
     private static final String INCOMPATIBLE_TYPE = "Incompatible parameter type in use";
     private static final String NON_BOOLEAN = "Non-boolean parameter in use";
     private static final String BOOLEAN = "boolean";
+    private final ErrorLogger logger;
+    private TypeTable typeTable;
 
     public TypeChecker() {
         logger = new ErrorLogger();
@@ -62,6 +63,7 @@ public class TypeChecker implements StatementVisitor<Type, String>, ExpressionVi
         return left;
     }
 
+    @NotNull
     private Type verifyBooleanExpression(BinaryOperation operation) {
         Type left = operation.getLeft().accept(this, null);
         Type right = operation.getRight().accept(this, null);
@@ -83,6 +85,10 @@ public class TypeChecker implements StatementVisitor<Type, String>, ExpressionVi
     public Type visit(IfStatement ifStatement, String context) {
         Type type = ifStatement.getCondition().accept(this, null);
 
+        for (Statement statement : ifStatement.getIfCaseStatements()) {
+            statement.accept(this, null);
+        }
+
         if (!BOOLEAN.equals(type.toString())) {
             logger.addError(ifStatement.getLine(), ifStatement.getColumn(), "If Statement", NON_BOOLEAN);
             return new ErrorType();
@@ -93,6 +99,14 @@ public class TypeChecker implements StatementVisitor<Type, String>, ExpressionVi
     @Override
     public Type visit(IfElseStatement ifElseStatement, String context) {
         Type type = ifElseStatement.getCondition().accept(this, null);
+
+        for (Statement statement : ifElseStatement.getIfCaseStatements()) {
+            statement.accept(this, null);
+        }
+
+        for (Statement statement : ifElseStatement.getElseCaseStatements()) {
+            statement.accept(this, null);
+        }
 
         if (!BOOLEAN.equals(type.toString())) {
             logger.addError(ifElseStatement.getLine(), ifElseStatement.getColumn(), "If-Else Statement", NON_BOOLEAN);
@@ -161,32 +175,38 @@ public class TypeChecker implements StatementVisitor<Type, String>, ExpressionVi
 
     @Override
     public Type visit(Equal equal, String context) {
-        return verifyTypeCorrectness(equal);
+        verifyTypeCorrectness(equal);
+        return new BooleanType();
     }
 
     @Override
     public Type visit(NotEqual notEqual, String context) {
-        return verifyTypeCorrectness(notEqual);
+        verifyTypeCorrectness(notEqual);
+        return new BooleanType();
     }
 
     @Override
     public Type visit(GreaterThan greaterThan, String context) {
-        return verifyTypeCorrectness(greaterThan);
+        verifyTypeCorrectness(greaterThan);
+        return new BooleanType();
     }
 
     @Override
     public Type visit(GreaterThanEqualTo greaterThanEqualTo, String context) {
-        return verifyTypeCorrectness(greaterThanEqualTo);
+        verifyTypeCorrectness(greaterThanEqualTo);
+        return new BooleanType();
     }
 
     @Override
     public Type visit(LessThan lessThan, String context) {
-        return verifyTypeCorrectness(lessThan);
+        verifyTypeCorrectness(lessThan);
+        return new BooleanType();
     }
 
     @Override
     public Type visit(LessThanEqualTo lessThanEqualTo, String context) {
-        return verifyTypeCorrectness(lessThanEqualTo);
+        verifyTypeCorrectness(lessThanEqualTo);
+        return new BooleanType();
     }
 
     @Override
