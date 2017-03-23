@@ -1,9 +1,13 @@
 package com.matthewchapman.ql.environment;
 
+import com.matthewchapman.ql.ast.statement.Question;
 import com.matthewchapman.ql.environment.datastores.ConditionTable;
 import com.matthewchapman.ql.environment.datastores.ExpressionTable;
 import com.matthewchapman.ql.environment.datastores.QuestionTable;
 import com.matthewchapman.ql.environment.datastores.ValueTable;
+import com.matthewchapman.ql.environment.values.Value;
+
+import java.util.List;
 
 /**
  * Created by matt on 20/03/2017.
@@ -22,9 +26,10 @@ public class FormEnvironment {
         this.values = values;
     }
 
-    public ExpressionTable getExpressions() { return this.expressions; }
-    public ConditionTable getConditions() { return this.conditions; }
-    public QuestionTable getQuestions() { return this.questions; }
+    public List<Question> getQuestionsAsList() { return this.questions.getQuestionsAsList(); }
+
+    public Value getValueByName(String name) { return this.values.getValueByID(name); }
+
     public ValueTable getValues() { return this.values; }
 
 }
