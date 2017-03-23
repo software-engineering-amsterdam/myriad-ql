@@ -58,6 +58,11 @@ public class GUIHandler {
             BooleanValue conditionValue = (BooleanValue) evaluator.evaluateExpression(name, environment.getConditionByName(question.getName()), environment.getValues());
             widget.setVisible(conditionValue.getValue());
         }
+
+        if(environment.questionIsCalculated(name))
+        {
+            widget.setEditable(false);
+        }
         return widget;
     }
 

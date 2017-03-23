@@ -29,7 +29,7 @@ public class BooleanQuestionWidget extends QuestionWidget {
     }
 
     @Override
-    void setEditable(boolean value) {
+    public void setEditable(boolean value) {
         answer.setDisable(value);
     }
 

@@ -36,7 +36,7 @@ public class IntegerQuestionWidget extends QuestionWidget {
     }
 
     @Override
-    void setEditable(boolean value) {
+    public void setEditable(boolean value) {
         answer.setEditable(value);
         answer.setDisable(value);
     }

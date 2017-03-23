@@ -36,6 +36,8 @@ public class FormEnvironment {
 
     public boolean questionHasCondition(String name) { return this.conditions.questionHasCondition(name); }
 
+    public boolean questionIsCalculated(String name) { return this.expressions.questionHasExpression(name); }
+
     public ValueTable getValues() { return this.values; }
 
     public void addOrUpdateValue(String id, Value value) {
