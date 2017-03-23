@@ -20,6 +20,7 @@ class App:
         self.gui.setSticky("new")
         self.gui.setBg("white")
         self.gui.bindKey("<KeyPress>", self.update)
+        self.build()
 
     def build(self):
         pass
@@ -51,8 +52,7 @@ class App:
 
 class QlApp(App):
 
-    def __init__(self, form, on_exit=None):
-        super().__init__(form, on_exit)
+    def build(self):
         QlGuiBuilder(self.gui, self.update, self.exit,
                      self.widgets).build(self.form)
 
@@ -67,8 +67,10 @@ class QlApp(App):
 class QlsApp(App):
 
     def __init__(self, form, layout, on_exit=None):
-        super().__init__(form, on_exit)
         self.layout = layout
+        super().__init__(form, on_exit)
+
+    def build(self):
         QlsGuiBuilder(self.gui, self.update, self.exit, self.widgets,
                       self.form).build(self.layout)
 
