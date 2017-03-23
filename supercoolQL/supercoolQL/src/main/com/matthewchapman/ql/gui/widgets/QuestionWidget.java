@@ -2,7 +2,6 @@ package com.matthewchapman.ql.gui.widgets;
 
 import com.matthewchapman.ql.ast.atomic.Type;
 import com.matthewchapman.ql.ast.statement.Question;
-import com.matthewchapman.ql.environment.values.Value;
 import com.matthewchapman.ql.gui.QuestionChangeObserver;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -22,7 +21,7 @@ public abstract class QuestionWidget extends GridPane {
     private String label;
     private QuestionChangeObserver observer;
 
-    QuestionWidget(Question question, Value value, QuestionChangeObserver observer) {
+    QuestionWidget(Question question, QuestionChangeObserver observer) {
         this.id = question.getName();
         this.returnType = question.getType();
         this.label = question.getText();

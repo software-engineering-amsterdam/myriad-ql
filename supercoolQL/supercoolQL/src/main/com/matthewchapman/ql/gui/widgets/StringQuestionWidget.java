@@ -14,10 +14,10 @@ import javafx.scene.layout.GridPane;
  */
 public class StringQuestionWidget extends QuestionWidget {
 
-    TextField answer;
+    private TextField answer;
 
     public StringQuestionWidget(Question question, Value value, QuestionChangeObserver observer) {
-        super(question, value, observer);
+        super(question, observer);
 
         answer = new TextField();
         answer.setOnKeyPressed(event -> {

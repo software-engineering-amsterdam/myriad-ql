@@ -30,9 +30,9 @@ public class FormEnvironment {
 
     public List<Question> getQuestionsAsList() { return this.questions.getQuestionsAsList(); }
 
-    public Value getValueByName(String name) { return this.values.getValueByID(name); }
+    public Value getValueByID(String name) { return this.values.getValueByID(name); }
 
-    public Expression getConditionByName(String name) { return this.conditions.getConditionByID(name); }
+    public Expression getConditionByID(String name) { return this.conditions.getConditionByID(name); }
 
     public boolean questionHasCondition(String name) { return this.conditions.questionHasCondition(name); }
 

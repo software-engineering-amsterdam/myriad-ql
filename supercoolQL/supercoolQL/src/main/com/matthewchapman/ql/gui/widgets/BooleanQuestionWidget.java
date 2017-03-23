@@ -13,15 +13,13 @@ import javafx.scene.layout.GridPane;
  */
 public class BooleanQuestionWidget extends QuestionWidget {
 
-    CheckBox answer;
+    private CheckBox answer;
 
     public BooleanQuestionWidget(Question question, Value value, QuestionChangeObserver observer) {
-        super(question, value, observer);
+        super(question, observer);
 
         answer = new CheckBox();
-        answer.setOnMouseClicked(event -> {
-            observer.notifyQuestionChanged(super.getQuestionID(), new BooleanValue(answer.isSelected()));
-        });
+        answer.setOnMouseClicked(event -> observer.notifyQuestionChanged(super.getQuestionID(), new BooleanValue(answer.isSelected())));
 
         answer.setSelected(Boolean.valueOf(value.toString()));
         this.add(answer, 1, 0);
