@@ -26,6 +26,7 @@ public class IntegerQuestionWidget extends QuestionWidget {
                     observer.notifyQuestionChanged(super.getQuestionID(), new IntegerValue(Integer.parseInt(answer.getText())));
                 } catch (NumberFormatException e) {
                     System.err.println("text inserted when there should be a number");
+                    answer.setText("0");
                 }
             }
         });

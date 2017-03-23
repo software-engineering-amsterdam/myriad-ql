@@ -55,7 +55,7 @@ public class GUIHandler {
         QuestionWidget widget = factory.getQuestionWidget(question, value, this.questionChangeObserver);
 
         if(environment.questionHasCondition(question.getName())) {
-            BooleanValue conditionValue = (BooleanValue) evaluator.evaluateExpression(name, environment.getConditionByName(question.getName()), environment.getValues());
+            BooleanValue conditionValue = (BooleanValue) evaluator.evaluateExpression(name, environment.getConditionByName(name), environment.getValues());
             widget.setVisible(conditionValue.getValue());
         }
 

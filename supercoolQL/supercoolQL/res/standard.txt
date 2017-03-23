@@ -16,4 +16,9 @@ form taxOfficeExample {
         (sellingPrice - privateDebt);
   }
 
+  if (hasBoughtHouse && sellingPrice > 12) {
+    "it works!"
+    questionworks:string;
+  }
+
 }

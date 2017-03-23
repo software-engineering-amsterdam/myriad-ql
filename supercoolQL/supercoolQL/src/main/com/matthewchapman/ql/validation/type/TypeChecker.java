@@ -175,32 +175,38 @@ public class TypeChecker implements StatementVisitor<Type, String>, ExpressionVi
 
     @Override
     public Type visit(Equal equal, String context) {
-        return verifyTypeCorrectness(equal);
+        verifyTypeCorrectness(equal);
+        return new BooleanType();
     }
 
     @Override
     public Type visit(NotEqual notEqual, String context) {
-        return verifyTypeCorrectness(notEqual);
+        verifyTypeCorrectness(notEqual);
+        return new BooleanType();
     }
 
     @Override
     public Type visit(GreaterThan greaterThan, String context) {
-        return verifyTypeCorrectness(greaterThan);
+        verifyTypeCorrectness(greaterThan);
+        return new BooleanType();
     }
 
     @Override
     public Type visit(GreaterThanEqualTo greaterThanEqualTo, String context) {
-        return verifyTypeCorrectness(greaterThanEqualTo);
+        verifyTypeCorrectness(greaterThanEqualTo);
+        return new BooleanType();
     }
 
     @Override
     public Type visit(LessThan lessThan, String context) {
-        return verifyTypeCorrectness(lessThan);
+        verifyTypeCorrectness(lessThan);
+        return new BooleanType();
     }
 
     @Override
     public Type visit(LessThanEqualTo lessThanEqualTo, String context) {
-        return verifyTypeCorrectness(lessThanEqualTo);
+        verifyTypeCorrectness(lessThanEqualTo);
+        return new BooleanType();
     }
 
     @Override

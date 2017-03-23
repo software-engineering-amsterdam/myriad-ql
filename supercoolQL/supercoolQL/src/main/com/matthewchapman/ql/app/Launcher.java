@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 
@@ -43,6 +44,8 @@ public class Launcher extends Application {
             } else if (parser.validateAST(form)) {
                 handOffToGUI(primaryStage, form);
             }
+        } else {
+            Platform.exit();
         }
     }
 
@@ -50,20 +53,21 @@ public class Launcher extends Application {
         new GUIHandler(stage, new FormEnvironmentFactory().getFormEnvironment(form));
     }
 
+    @Nullable
     private String processInputFile(File file) {
-        String fileContents = "";
+
         if (file == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Quitting");
             alert.setHeaderText("No file selected");
             alert.setContentText("Please select a valid QL file to continue.");
             alert.showAndWait();
-            Platform.exit();
+            return null;
         } else {
             FileReader reader = new FileReader();
-            fileContents = reader.readFile(file);
+            return reader.readFile(file);
         }
-        return fileContents;
+
     }
 
     private File getFileSelection(Stage primaryStage) {
