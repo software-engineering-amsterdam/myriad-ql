@@ -14,10 +14,12 @@ import javafx.scene.layout.GridPane;
  */
 public class IntegerQuestionWidget extends QuestionWidget {
 
+    TextField answer;
+
     public IntegerQuestionWidget(Question question, Value value, QuestionChangeObserver observer) {
         super(question, value, observer);
 
-        TextField answer = new TextField();
+        answer = new TextField();
         answer.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ENTER) {
                 try {
@@ -32,4 +34,11 @@ public class IntegerQuestionWidget extends QuestionWidget {
         this.add(answer, 1, 0);
         GridPane.setHalignment(answer, HPos.LEFT);
     }
+
+    @Override
+    void setEditable(boolean value) {
+        answer.setEditable(value);
+        answer.setDisable(value);
+    }
+
 }

@@ -27,6 +27,8 @@ public abstract class QuestionWidget extends GridPane {
         this.label = question.getText();
         this.observer = observer;
 
+        this.setId(id);
+
         this.setPadding(new Insets(5));
         this.setHgap(5);
         this.setVgap(5);
@@ -42,4 +44,7 @@ public abstract class QuestionWidget extends GridPane {
     }
 
     public String getQuestionID() { return this.id; }
+
+    abstract void setEditable(boolean value);
+
 }

@@ -13,10 +13,12 @@ import javafx.scene.layout.GridPane;
  */
 public class BooleanQuestionWidget extends QuestionWidget {
 
+    CheckBox answer;
+
     public BooleanQuestionWidget(Question question, Value value, QuestionChangeObserver observer) {
         super(question, value, observer);
 
-        CheckBox answer = new CheckBox();
+        answer = new CheckBox();
         answer.setOnMouseClicked(event -> {
             observer.notifyQuestionChanged(super.getQuestionID(), new BooleanValue(answer.isSelected()));
         });
@@ -24,6 +26,11 @@ public class BooleanQuestionWidget extends QuestionWidget {
         answer.setSelected(Boolean.valueOf(value.toString()));
         this.add(answer, 1, 0);
         GridPane.setHalignment(answer, HPos.LEFT);
+    }
+
+    @Override
+    void setEditable(boolean value) {
+        answer.setDisable(value);
     }
 
 }
