@@ -30,11 +30,8 @@ public class GUIEvaluator {
         valueTable.declare(identifier, newValue);
     }
 
-    public void refreshValues(Form form) {
-        questionEvaluator.updateValueTable(form, valueTable);
-    }
-
     public List<Question> evaluateQuestions(Form form) {
+        questionEvaluator.updateValueTable(form, valueTable);
         return conditionEvaluator.visitForm(form, valueTable);
     }
 

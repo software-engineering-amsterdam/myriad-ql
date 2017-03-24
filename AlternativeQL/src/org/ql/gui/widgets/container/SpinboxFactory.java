@@ -1,4 +1,4 @@
-package org.qls.gui.widgets;
+package org.ql.gui.widgets.container;
 
 import org.ql.ast.statement.Question;
 import org.ql.ast.type.*;

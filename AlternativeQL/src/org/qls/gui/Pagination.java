@@ -1,38 +1,37 @@
 package org.qls.gui;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
 public class Pagination {
-    private int currentPage;
-    private Button previousButton;
-    private Button nextButton;
-    private int maxPage;
+    private final Button previousButton;
+    private final Button nextButton;
+    private final int maxPage;
 
-    public Pagination(QLSGUIFormBuilder qlsGUIFormBuilder, int maxPage) {
+    private int currentPage;
+
+    public Pagination(QLSGUIFormBuilder formBuilder, int maxPage) {
         this.maxPage = maxPage;
 
         nextButton = createButton("Next page", event -> {
-            if(hasReachedLastPage()) {
-                nextPage();
-                performPageAction(qlsGUIFormBuilder);
+            if (hasReachedLastPage()) {
+                next();
+                formBuilder.constructFormPage();
+                reviseButtonDisability();
             }
         });
 
         previousButton = createButton("Previous page", event -> {
-            if(hasReachedBottomPage()) {
-                previousPage();
-                performPageAction(qlsGUIFormBuilder);
+            if (hasReachedBottomPage()) {
+                previous();
+                formBuilder.constructFormPage();
+                reviseButtonDisability();
             }
         });
 
-        checkButtonActivity();
-    }
-
-    private void performPageAction(QLSGUIFormBuilder qlsGUIFormBuilder) {
-        qlsGUIFormBuilder.constructFormPage(currentPage);
-        checkButtonActivity();
+        reviseButtonDisability();
     }
 
     private boolean hasReachedBottomPage() {
@@ -43,29 +42,33 @@ public class Pagination {
         return currentPage < (maxPage-1);
     }
 
-    private Button createButton(String text, EventHandler event) {
+    private Button createButton(String text, EventHandler<ActionEvent> event) {
         Button button = new Button(text);
         button.setOnAction(event);
         return button;
     }
 
-    private void checkButtonActivity() {
+    private void reviseButtonDisability() {
         nextButton.setDisable(currentPage == (maxPage-1));
         previousButton.setDisable(currentPage == 0);
     }
 
-    public void nextPage() {
+    private void next() {
         currentPage++;
     }
 
-    public void previousPage() {
+    private void previous() {
         currentPage--;
     }
 
-    public GridPane getButtonsPane() {
+    GridPane getButtonsPane() {
         GridPane gridPane = new GridPane();
         gridPane.add(previousButton, 0, 0);
         gridPane.add(nextButton, 1, 0);
         return gridPane;
+    }
+
+    int getCurrentPage() {
+        return currentPage;
     }
 }

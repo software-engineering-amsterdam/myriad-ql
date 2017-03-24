@@ -3,17 +3,15 @@ package org.ql.gui.widgets;
 
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.BooleanValue;
 import org.ql.evaluator.value.Value;
 import org.ql.gui.FormPane;
 import org.ql.gui.ValueReviser;
-import org.qls.ast.page.WidgetQuestion;
 import org.qls.ast.widget.YesNoWidget;
 
-public class RadioButtonWidget extends Widget {
+public class RadioButtonWidget extends GUIWidget {
     private final ToggleGroup buttonGroup = new ToggleGroup();
     private final RadioButton yesButton;
     private final RadioButton noButton;
