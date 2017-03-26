@@ -209,3 +209,11 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
 
     def string(self, node, args=None):
         return node
+
+# Voeg undefined type toe
+# Maak dict van data_type -> typechecker
+# Gebruik dict om typechecker op te halen van het type
+# Undefined typechecker returned altijd het nieuwe undefined type
+# Door het gebruik van undefined kunnen al die is not None checks eruit
+# Als typechecker niet meer in AST zit kan je weer object types returnen
+# Profit
