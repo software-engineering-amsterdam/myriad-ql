@@ -9,7 +9,7 @@ public class QuestionChangeObserver {
 
     private final GUIHandler handler;
 
-    public QuestionChangeObserver(GUIHandler handler) {
+    QuestionChangeObserver(GUIHandler handler) {
         this.handler = handler;
     }
 

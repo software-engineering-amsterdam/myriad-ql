@@ -9,6 +9,7 @@ import com.matthewchapman.ql.gui.widgets.QuestionWidget;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by matt on 15/03/2017.
@@ -25,6 +26,7 @@ public class GUIHandler {
         this.stage = stage;
         this.evaluator = new ExpressionEvaluator();
         this.questionChangeObserver = new QuestionChangeObserver(this);
+        stage.setTitle(environment.getFormName());
         drawUI();
     }
 
@@ -34,6 +36,15 @@ public class GUIHandler {
     }
 
     private void drawUI() {
+        stage.setResizable(true);
+        Scene scene = getScene();
+        stage.setScene(scene);
+        stage.show();
+        stage.setResizable(false);
+    }
+
+    @NotNull
+    private Scene getScene() {
         VBox box = new VBox();
 
         QuestionWidgetFactory factory = new QuestionWidgetFactory();
@@ -43,19 +54,17 @@ public class GUIHandler {
             box.getChildren().add(getQuestionWidget(factory, question));
         }
 
-        Scene scene = new Scene(box);
-        stage.setScene(scene);
-        stage.show();
+        return new Scene(box);
     }
 
     private QuestionWidget getQuestionWidget(QuestionWidgetFactory factory, Question question) {
         String name = question.getName();
-        Value value = environment.getValueByName(name);
+        Value value = environment.getValueByID(name);
 
         QuestionWidget widget = factory.getQuestionWidget(question, value, this.questionChangeObserver);
 
-        if(environment.questionHasCondition(question.getName())) {
-            BooleanValue conditionValue = (BooleanValue) evaluator.evaluateExpression(name, environment.getConditionByName(name), environment.getValues());
+        if(environment.questionHasCondition(name)) {
+            BooleanValue conditionValue = (BooleanValue) evaluator.evaluateExpression(name, environment.getConditionByID(name), environment.getValues());
             widget.setVisible(conditionValue.getValue());
         }
 

@@ -10,7 +10,7 @@ import com.matthewchapman.ql.gui.widgets.StringQuestionWidget;
 /**
  * Created by matt on 22/03/2017.
  */
-public class QuestionWidgetFactory {
+class QuestionWidgetFactory {
 
     public QuestionWidget getQuestionWidget(Question question, Value value, QuestionChangeObserver observer) {
 

@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * Created by matt on 13/03/2017.
  */
-public class Error implements Comparable<Error> {
+class Error implements Comparable<Error> {
 
     private final String message;
     private final int line;
@@ -21,19 +21,19 @@ public class Error implements Comparable<Error> {
         this.id = id;
     }
 
-    public int getLine() {
+    int getLine() {
         return this.line;
     }
 
-    public int getColumn() {
+    int getColumn() {
         return this.column;
     }
 
-    public String getId() {
+    String getId() {
         return this.id;
     }
 
-    public String getMessage() {
+    String getMessage() {
         return this.message;
     }
 
