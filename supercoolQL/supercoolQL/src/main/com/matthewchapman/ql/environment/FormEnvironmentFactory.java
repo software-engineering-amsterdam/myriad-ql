@@ -43,7 +43,7 @@ public class FormEnvironmentFactory implements StatementVisitor<Void, String>, T
             statement.accept(this, null);
         }
 
-        return new FormEnvironment(expressions, conditions, questions, values);
+        return new FormEnvironment(expressions, conditions, questions, values, ast.getName());
     }
 
     @Override

@@ -13,7 +13,7 @@ import javafx.scene.layout.GridPane;
  */
 public class BooleanQuestionWidget extends QuestionWidget {
 
-    private CheckBox answer;
+    private final CheckBox answer;
 
     public BooleanQuestionWidget(Question question, Value value, QuestionChangeObserver observer) {
         super(question, observer);

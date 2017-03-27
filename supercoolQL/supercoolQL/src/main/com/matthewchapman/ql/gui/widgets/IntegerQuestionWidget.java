@@ -14,7 +14,7 @@ import javafx.scene.layout.GridPane;
  */
 public class IntegerQuestionWidget extends QuestionWidget {
 
-    private TextField answer;
+    private final TextField answer;
 
     public IntegerQuestionWidget(Question question, Value value, QuestionChangeObserver observer) {
         super(question, observer);

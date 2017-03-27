@@ -26,6 +26,7 @@ public class GUIHandler {
         this.stage = stage;
         this.evaluator = new ExpressionEvaluator();
         this.questionChangeObserver = new QuestionChangeObserver(this);
+        stage.setTitle(environment.getFormName());
         drawUI();
     }
 
@@ -35,9 +36,11 @@ public class GUIHandler {
     }
 
     private void drawUI() {
+        stage.setResizable(true);
         Scene scene = getScene();
         stage.setScene(scene);
         stage.show();
+        stage.setResizable(false);
     }
 
     @NotNull

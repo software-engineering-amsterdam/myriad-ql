@@ -8,7 +8,7 @@ import org.antlr.v4.runtime.Recognizer;
 /**
  * Created by matt on 24/02/2017.
  */
-public class ParseTreeErrorListener extends BaseErrorListener {
+class ParseTreeErrorListener extends BaseErrorListener {
 
     private final ErrorLogger logger;
 

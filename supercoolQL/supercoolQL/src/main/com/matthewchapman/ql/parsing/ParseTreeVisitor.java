@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Created by matt on 24/02/2017.
  */
-public class ParseTreeVisitor extends QLBaseVisitor<TreeNode> {
+class ParseTreeVisitor extends QLBaseVisitor<TreeNode> {
 
     @Override
     public TreeNode visitFormDeclaration(QLParser.FormDeclarationContext ctx) {
