@@ -17,6 +17,7 @@ public class QlsGrammarListener extends QLSGrammarBaseListener {
     private final List<StyleOption> mCachedStyleOptions;
 
     public QlsGrammarListener() {
+        mPages = new ArrayList<>();
         mCachedSections = new ArrayList<>();
         mCachedQuestionStyles = new ArrayList<>();
         mCachedStyleOptions = new ArrayList<>();
@@ -112,7 +113,7 @@ public class QlsGrammarListener extends QLSGrammarBaseListener {
     @Override
     public void exitPage(QLSGrammarParser.PageContext ctx) {
         super.exitPage(ctx);
-        Page page = new Page(ctx.VARIABLE_LITERAL().getText(), popCachedSections());
+        Page page = new Page(ctx.VARIABLE_LITERAL().getText(), popCachedSections(), createSourceInfo(ctx));
         mPages.add(page);
     }
 }
