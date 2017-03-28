@@ -5,6 +5,8 @@ import org.uva.taxfree.ql.gen.QLSGrammarBaseListener;
 import org.uva.taxfree.ql.gen.QLSGrammarParser;
 import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.qls.styleoption.*;
+import org.uva.taxfree.qls.styleoption.widget.SliderWidget;
+import org.uva.taxfree.qls.styleoption.widget.SpinboxWidget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ public class QlsGrammarListener extends QLSGrammarBaseListener {
     private final List<Section> mCachedSections;
     private final List<QuestionStyle> mCachedQuestionStyles;
     private final List<StyleOption> mCachedStyleOptions;
+    private StyleOption mCachedWidgetStyleOption;
 
     public QlsGrammarListener() {
         mPages = new ArrayList<>();
@@ -65,10 +68,15 @@ public class QlsGrammarListener extends QLSGrammarBaseListener {
 
     // Enters
     @Override
-    public void enterWidgetStyle(QLSGrammarParser.WidgetStyleContext ctx) {
-        super.enterWidgetStyle(ctx);
-        // TODO
-//        addStyleOption(new WidgetStyleOption());
+    public void enterSpinboxWidget(QLSGrammarParser.SpinboxWidgetContext ctx) {
+        super.enterSpinboxWidget(ctx);
+        mCachedWidgetStyleOption = new SpinboxWidget(createSourceInfo(ctx));
+    }
+
+    @Override
+    public void enterSliderWidget(QLSGrammarParser.SliderWidgetContext ctx) {
+        super.enterSliderWidget(ctx);
+        mCachedWidgetStyleOption = new SliderWidget(createSourceInfo(ctx));
     }
 
     @Override
@@ -96,6 +104,12 @@ public class QlsGrammarListener extends QLSGrammarBaseListener {
     }
 
     // Exits
+    @Override
+    public void exitWidgetStyle(QLSGrammarParser.WidgetStyleContext ctx) {
+        super.exitWidgetStyle(ctx);
+        addStyleOption(mCachedWidgetStyleOption);
+    }
+
     @Override
     public void exitQuestion(QLSGrammarParser.QuestionContext ctx) {
         super.exitQuestion(ctx);
