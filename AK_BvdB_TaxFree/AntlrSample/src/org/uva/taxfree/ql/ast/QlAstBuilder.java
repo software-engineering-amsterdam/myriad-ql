@@ -34,8 +34,6 @@ import java.util.List;
 import java.util.Stack;
 
 import static org.uva.taxfree.ql.gen.QLGrammarParser.*;
-import static org.uva.taxfree.ql.gen.QLGrammarParser.OP_LOGICAL_AND;
-import static org.uva.taxfree.ql.gen.QLGrammarParser.OP_LOGICAL_OR;
 
 public class QlAstBuilder extends QLGrammarBaseListener{
 

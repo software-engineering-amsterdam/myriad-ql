@@ -4,6 +4,10 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.uva.taxfree.ql.gen.QLSGrammarBaseListener;
 import org.uva.taxfree.ql.gen.QLSGrammarParser;
 import org.uva.taxfree.ql.model.SourceInfo;
+import org.uva.taxfree.ql.model.types.BooleanType;
+import org.uva.taxfree.ql.model.types.IntegerType;
+import org.uva.taxfree.ql.model.types.StringType;
+import org.uva.taxfree.ql.model.types.Type;
 import org.uva.taxfree.qls.styleoption.*;
 import org.uva.taxfree.qls.styleoption.widget.*;
 
@@ -14,6 +18,7 @@ public class QlsGrammarListener extends QLSGrammarBaseListener {
 
     private final List<Page> mPages;
     private final List<Section> mCachedSections;
+    private final List<DefaultStyle> mCachedDefaultStyles;
     private final List<QuestionStyle> mCachedQuestionStyles;
     private final List<StyleOption> mCachedStyleOptions;
     private StyleOption mCachedWidgetStyleOption;
@@ -21,6 +26,7 @@ public class QlsGrammarListener extends QLSGrammarBaseListener {
     public QlsGrammarListener() {
         mPages = new ArrayList<>();
         mCachedSections = new ArrayList<>();
+        mCachedDefaultStyles = new ArrayList<>();
         mCachedQuestionStyles = new ArrayList<>();
         mCachedStyleOptions = new ArrayList<>();
     }
@@ -43,6 +49,12 @@ public class QlsGrammarListener extends QLSGrammarBaseListener {
         List<QuestionStyle> cachedQuestionStyles = new ArrayList<>(mCachedQuestionStyles);
         mCachedQuestionStyles.clear();
         return cachedQuestionStyles;
+    }
+
+    private List<DefaultStyle> popCachedDefaultStyles() {
+        List<DefaultStyle> cachedDefaultStyles = new ArrayList<>(mCachedDefaultStyles);
+        mCachedDefaultStyles.clear();
+        return cachedDefaultStyles;
     }
 
     private List<Section> popCachedSections() {
@@ -145,6 +157,24 @@ public class QlsGrammarListener extends QLSGrammarBaseListener {
     }
 
     @Override
+    public void exitDefaultStyle(QLSGrammarParser.DefaultStyleContext ctx) {
+        super.exitDefaultStyle(ctx);
+        String varTypeText = ctx.varType().getText();
+        Type type;
+        if ("boolean".equals(varTypeText)) {
+            type = new BooleanType();
+        } else if ("string".equals(varTypeText)) {
+            type = new StringType();
+        } else if ("integer".equals(varTypeText)) {
+            type = new IntegerType();
+        } else {
+            throw new TypeNotPresentException(varTypeText, new Throwable("This is an unsupported type for QLS!"));
+        }
+
+        mCachedDefaultStyles.add(new DefaultStyle(type, popCachedStyles(), createSourceInfo(ctx)));
+    }
+
+    @Override
     public void exitSection(QLSGrammarParser.SectionContext ctx) {
         super.exitSection(ctx);
         Section section = new Section(ctx.STRING_LITERAL().getText(), popCachedQuestionStyles(), createSourceInfo(ctx));
@@ -156,9 +186,5 @@ public class QlsGrammarListener extends QLSGrammarBaseListener {
         super.exitPage(ctx);
         Page page = new Page(ctx.VARIABLE_LITERAL().getText(), popCachedSections(), popCachedDefaultStyles(), createSourceInfo(ctx));
         mPages.add(page);
-    }
-
-    private List<DefaultStyle> popCachedDefaultStyles() {
-        return new ArrayList<>(); //TODO
     }
 }
