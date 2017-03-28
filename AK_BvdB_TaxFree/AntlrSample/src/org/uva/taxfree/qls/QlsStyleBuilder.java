@@ -1,5 +1,6 @@
 package org.uva.taxfree.qls;
 
+import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.types.BooleanType;
 import org.uva.taxfree.ql.model.types.StringType;
 import org.uva.taxfree.qls.styleoption.*;
@@ -23,14 +24,14 @@ public class QlsStyleBuilder {
         booleanStyleOptions.add(new FontSizeStyleOption(20));
         booleanStyleOptions.add(new ColorStyleOption("#FFFF00"));
         booleanStyleOptions.add(new BackgroundColorStyleOption("#CCCC"));
-        qlsStyle.addVariableStyleDeclaration(new BooleanType(), booleanStyleOptions);
+        qlsStyle.addVariableStyleDeclaration(new BooleanType(), booleanStyleOptions, new SourceInfo(0, 0, 0, 0));
 
         List<StyleOption> stringStyleOptions = new ArrayList<>();
         stringStyleOptions.add(new FontStyleOption("Arial"));
         stringStyleOptions.add(new FontSizeStyleOption(14));
         stringStyleOptions.add(new ColorStyleOption("#00FFFF"));
         stringStyleOptions.add(new BackgroundColorStyleOption("#FFAA00"));
-        qlsStyle.addVariableStyleDeclaration(new StringType(), stringStyleOptions);
+        qlsStyle.addVariableStyleDeclaration(new StringType(), stringStyleOptions, new SourceInfo(0, 0, 0, 0));
         return qlsStyle;
     }
 }
