@@ -59,4 +59,8 @@ public abstract class Widget {
         // Only used for QLS
     }
 
+    public int compareTo(Widget widget) {
+        return mId.compareTo(widget.mId);
+    }
+
 }
