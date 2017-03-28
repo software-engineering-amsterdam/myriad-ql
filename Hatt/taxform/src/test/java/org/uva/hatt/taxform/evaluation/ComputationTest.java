@@ -7,7 +7,6 @@ import org.uva.hatt.taxform.ast.nodes.expressions.binary.Addition;
 import org.uva.hatt.taxform.ast.nodes.expressions.binary.Division;
 import org.uva.hatt.taxform.ast.nodes.expressions.binary.Multiplication;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.IntegerLiteral;
-import org.uva.hatt.taxform.ast.visitors.EnvironmentsTable;
 import org.uva.hatt.taxform.values.IntegerValue;
 
 import static org.junit.Assert.assertEquals;

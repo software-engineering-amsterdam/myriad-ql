@@ -17,8 +17,8 @@ import org.uva.hatt.taxform.ast.nodes.types.Integer;
 import org.uva.hatt.taxform.ast.nodes.types.String;
 import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.DuplicateDeclaration;
 import org.uva.hatt.taxform.ast.visitors.exceptionHandler.ExceptionHandler;
-import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.TypeMismatch;
-import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.UndefinedReference;
+//import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.TypeMismatch;
+//import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.UndefinedReference;
 import org.uva.hatt.taxform.ast.visitors.exceptionHandler.warning.DuplicateLabel;
 
 import java.util.*;
@@ -81,7 +81,7 @@ public class TypeChecker implements Visitor{
 
         if(!type.isBoolean())
         {
-            exceptionHandler.addError(new TypeMismatch(node.getLineNumber(), type.name()));
+//            exceptionHandler.addError(new TypeMismatch(node.getLineNumber(), type.name()));
         }
 
         node.getCondition().accept(this);

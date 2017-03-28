@@ -2,7 +2,7 @@ package org.uva.hatt.taxform.gui;
 
 import javafx.scene.layout.VBox;
 import org.uva.hatt.taxform.ast.nodes.Form;
-import org.uva.hatt.taxform.ast.visitors.EnvironmentsTable;
+import org.uva.hatt.taxform.evaluation.EnvironmentsTable;
 import org.uva.hatt.taxform.gui.fields.Field;
 
 import java.util.ArrayList;

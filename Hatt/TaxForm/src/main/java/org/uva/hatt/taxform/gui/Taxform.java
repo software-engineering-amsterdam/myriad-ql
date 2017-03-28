@@ -13,7 +13,7 @@ import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.uva.hatt.taxform.ast.ASTGenerator;
 import org.uva.hatt.taxform.ast.nodes.Form;
-import org.uva.hatt.taxform.ast.visitors.EnvironmentsTable;
+import org.uva.hatt.taxform.evaluation.EnvironmentsTable;
 import org.uva.hatt.taxform.ast.visitors.QLVisitor;
 import org.uva.hatt.taxform.ast.visitors.Visitor;
 

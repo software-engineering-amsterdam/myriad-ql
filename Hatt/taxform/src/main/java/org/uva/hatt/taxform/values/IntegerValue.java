@@ -79,6 +79,10 @@ public class IntegerValue extends Value<Integer> {
 
     @Override
     public Value subtract(Value val) {
+        if (val.isUndefined()) {
+            return new Undefined();
+        }
+
         IntegerValue integerValue = (IntegerValue) val;
         return new IntegerValue(value - integerValue.getValue());
     }

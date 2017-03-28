@@ -3,7 +3,7 @@ package org.uva.hatt.taxform.gui.fields;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
-import org.uva.hatt.taxform.ast.visitors.EnvironmentsTable;
+import org.uva.hatt.taxform.evaluation.EnvironmentsTable;
 import org.uva.hatt.taxform.gui.ChangeListener;
 import org.uva.hatt.taxform.values.BooleanValue;
 import org.uva.hatt.taxform.values.Value;
