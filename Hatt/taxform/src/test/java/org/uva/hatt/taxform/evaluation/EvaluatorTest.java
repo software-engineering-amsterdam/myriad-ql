@@ -125,8 +125,6 @@ public class EvaluatorTest {
         assertEquals(false, value.isValue());
     }
 
-    // end
-
     @Test
     public void testGreaterThanTrue() throws Exception {
         GreaterThan lessThan = new GreaterThan(1, new IntegerLiteral(1, 6), new IntegerLiteral(1, 2));
