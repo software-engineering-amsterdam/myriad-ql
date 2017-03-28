@@ -14,8 +14,7 @@ public class QuestionStyle extends StyleDeclaration {
         mQuestionId = questionId;
     }
 
-    public String getId() {
-        // TODO: Remove getter! (used in checking semantics)
+    protected String getId() {
         return mQuestionId;
     }
 }

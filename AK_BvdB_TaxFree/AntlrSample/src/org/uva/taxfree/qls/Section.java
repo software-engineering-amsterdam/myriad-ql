@@ -29,7 +29,9 @@ public class Section {
 
     protected Set<String> getUsedVariables() {
         Set<String> usedVariables = new HashSet<>();
-        usedVariables.addAll(mQuestions);
+        for (QuestionStyle questionStyle : mQuestionStyles) {
+            usedVariables.add(questionStyle.getId());
+        }
         return usedVariables;
     }
 }
