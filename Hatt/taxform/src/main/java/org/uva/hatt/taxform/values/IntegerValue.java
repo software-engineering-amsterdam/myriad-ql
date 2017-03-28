@@ -21,6 +21,11 @@ public class IntegerValue extends Value {
     @Override
     public Value divide(Value val) {
         IntegerValue integerValue = (IntegerValue) val;
+
+        if (integerValue.getValue() == 0) {
+            return new IntegerValue(0);
+        }
+
         return new IntegerValue(value / integerValue.getValue());
     }
 
