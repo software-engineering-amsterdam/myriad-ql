@@ -5,6 +5,8 @@ import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import org.uva.hatt.taxform.ast.visitors.EnvironmentsTable;
 import org.uva.hatt.taxform.gui.ChangeListener;
+import org.uva.hatt.taxform.values.StringValue;
+import org.uva.hatt.taxform.values.Value;
 
 public class QLTextField extends Field {
 
@@ -28,7 +30,7 @@ public class QLTextField extends Field {
 
     @Override
     public void update(EnvironmentsTable environmentsTable) {
-        environmentsTable.add(getIdentifier(), textField.getText());
+        environmentsTable.add(getIdentifier(), new StringValue(textField.getText()));
     }
 
     @Override
@@ -37,7 +39,9 @@ public class QLTextField extends Field {
     }
 
     @Override
-    public void setValue(String value) {
-        textField.setText(value);
+    public void setValue(Value value) {
+        if (value != null) {
+            textField.setText(String.valueOf(value.getValue()));
+        }
     }
 }

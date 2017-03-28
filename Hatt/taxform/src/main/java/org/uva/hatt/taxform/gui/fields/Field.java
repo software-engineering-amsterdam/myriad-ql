@@ -6,6 +6,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import org.uva.hatt.taxform.ast.visitors.EnvironmentsTable;
 import org.uva.hatt.taxform.gui.ChangeListener;
+import org.uva.hatt.taxform.values.Value;
 
 public abstract class Field extends Pane{
 
@@ -16,7 +17,7 @@ public abstract class Field extends Pane{
 
     public abstract void update(EnvironmentsTable environmentsTable);
 
-    public abstract void setValue(String value);
+    public abstract void setValue(Value value);
 
     protected abstract void addField(ObservableList<Node> nodes);
 

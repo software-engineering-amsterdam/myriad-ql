@@ -5,6 +5,8 @@ import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import org.uva.hatt.taxform.ast.visitors.EnvironmentsTable;
 import org.uva.hatt.taxform.gui.ChangeListener;
+import org.uva.hatt.taxform.values.BooleanValue;
+import org.uva.hatt.taxform.values.Value;
 
 public class QLCheckBox extends Field {
 
@@ -28,7 +30,7 @@ public class QLCheckBox extends Field {
 
     @Override
     public void update(EnvironmentsTable environmentsTable) {
-        environmentsTable.add(getIdentifier(), String.valueOf(checkBox.isSelected()));
+        environmentsTable.add(getIdentifier(), new BooleanValue(checkBox.isSelected()));
     }
 
     @Override
@@ -37,7 +39,9 @@ public class QLCheckBox extends Field {
     }
 
     @Override
-    public void setValue(String value) {
-
+    public void setValue(Value value) {
+        if (value != null) {
+            checkBox.setSelected((Boolean) value.getValue());
+        }
     }
 }
