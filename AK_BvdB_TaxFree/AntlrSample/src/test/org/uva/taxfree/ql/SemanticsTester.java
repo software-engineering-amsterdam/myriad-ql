@@ -10,13 +10,15 @@ import java.io.File;
 import java.io.IOException;
 
 public abstract class SemanticsTester {
+    private SymbolTable mSymbolTable;
+
     protected void assertSemantics(String fileName, int expectedErrorAmount, String description) throws IOException {
         boolean expectedValid = 0 == expectedErrorAmount;
         MessageList semanticsMessages = new MessageList();
         FormNode ast = createAst(fileName, semanticsMessages);
-        SymbolTable symbolTable = new SymbolTable();
-        ast.fillSymbolTable(symbolTable);
-        ast.checkSemantics(symbolTable, semanticsMessages);
+        mSymbolTable = new SymbolTable();
+        ast.fillSymbolTable(mSymbolTable);
+        ast.checkSemantics(mSymbolTable, semanticsMessages);
         System.out.println(semanticsMessages);
         Assert.assertEquals(!semanticsMessages.hasMessages(), expectedValid, "Expecting errors: " + description);
         Assert.assertEquals(semanticsMessages.messageAmount(), expectedErrorAmount, "Invalid error amount");
@@ -35,5 +37,10 @@ public abstract class SemanticsTester {
 
     protected File testFile(String fileName) {
         return new File(basePath() + fileDirectory() + "\\" + fileName);
+    }
+
+
+    protected SymbolTable getSymbolTable() {
+        return mSymbolTable;
     }
 }
