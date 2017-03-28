@@ -14,6 +14,11 @@ public class IntegerValue extends Value<Integer> {
     }
 
     @Override
+    public boolean isUndefined() {
+        return false;
+    }
+
+    @Override
     public Value add(Value val) {
         IntegerValue integerValue = (IntegerValue) val;
         return new IntegerValue(value + integerValue.getValue());

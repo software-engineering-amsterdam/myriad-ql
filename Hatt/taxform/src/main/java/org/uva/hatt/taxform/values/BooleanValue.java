@@ -14,6 +14,11 @@ public class BooleanValue extends Value<Boolean> {
     }
 
     @Override
+    public boolean isUndefined() {
+        return false;
+    }
+
+    @Override
     public BooleanValue equal(Value val) {
         BooleanValue booleanValue = ((BooleanValue) val);
         return new BooleanValue(value == booleanValue.getValue());

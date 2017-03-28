@@ -8,8 +8,14 @@ public class StringValue extends Value<String> {
         this.value = value;
     }
 
+    @Override
     public String getValue() {
         return value;
+    }
+
+    @Override
+    public boolean isUndefined() {
+        return false;
     }
 
     @Override

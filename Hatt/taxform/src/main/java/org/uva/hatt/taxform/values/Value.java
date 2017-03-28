@@ -4,52 +4,54 @@ public abstract class Value<T> {
 
     public abstract T getValue();
 
+    public abstract boolean isUndefined();
+
     public Value add(Value val) {
-        return null;
+        return new Undefined();
     }
 
     public Value divide(Value val) {
-        return null;
+        return new Undefined();
     }
 
     public Value equal(Value val) {
-        return null;
+        return new Undefined();
     }
 
     public Value greaterThan(Value val) {
-        return null;
+        return new Undefined();
     }
 
     public Value greaterThanOrEqual(Value val) {
-        return null;
+        return new Undefined();
     }
 
     public Value lessThan(Value val) {
-        return null;
+        return new Undefined();
     }
 
     public Value lessThanOrEqual(Value val) {
-        return null;
+        return new Undefined();
     }
 
     public Value and(Value val) {
-        return null;
+        return new Undefined();
     }
 
     public Value or(Value val) {
-        return null;
+        return new Undefined();
     }
 
     public Value multiply(Value val) {
-        return null;
+        return new Undefined();
     }
 
     public Value notEqual(Value val) {
-        return null;
+        return new Undefined();
     }
 
     public Value subtract(Value val) {
-        return null;
+        return new Undefined();
     }
 
 }
