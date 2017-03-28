@@ -74,17 +74,21 @@ public class QuestionForm implements FormListener {
         }
     }
 
-    public void applyStyle(QlsStyle qlsStyle) {
-        for (Widget w : mWidgets) {
-            w.updateStyle(qlsStyle);
-        }
-    }
-
     private void generatePanelContent() {
         mWidgetPanel.removeAll();
         for (Widget widget : mWidgets) {
             widget.callOnUpdate(this);
-            widget.registerToPanel(mWidgetPanel);
+            registerWidget(widget);
         }
+        registerToPanel(mWidgetPanel);
     }
+
+    protected void registerWidget(Widget widget) {
+        widget.registerToPanel(mWidgetPanel);
+    }
+
+    protected void registerToPanel(JPanel panel) {
+        // intentionally left blank
+    }
+
 }
