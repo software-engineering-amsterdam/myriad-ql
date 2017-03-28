@@ -8,10 +8,12 @@ import org.uva.taxfree.ql.model.node.blocks.FormNode;
 import java.io.File;
 import java.io.IOException;
 
-public class QlAstBuilder extends AntlrBuilder {
+public class QlAstBuilder {
+
+    private final AntlrBuilder mBuilder;
 
     public QlAstBuilder(File inputFile) {
-        super(inputFile);
+        mBuilder = new AntlrBuilder(inputFile);
     }
 
     public FormNode generateAst(MessageList semanticsMessages) {
@@ -25,8 +27,8 @@ public class QlAstBuilder extends AntlrBuilder {
             }
             QlGrammarListener listener = new QlGrammarListener();
 
-            parser.addErrorListener(createErrorListener());
-            walkParseTree(listener, parser.form());
+            parser.addErrorListener(mBuilder.createErrorListener());
+            mBuilder.walkParseTree(listener, parser.form());
             return listener.getAst();
         } catch (UnsupportedOperationException e) {
             semanticsMessages.addError(e.getMessage());
@@ -35,7 +37,7 @@ public class QlAstBuilder extends AntlrBuilder {
     }
 
     private QLGrammarParser createGrammarParser() throws IOException {
-        QLGrammarLexer qlGrammarLexer = new QLGrammarLexer(createInputStream());
-        return new QLGrammarParser(createTokenStream(qlGrammarLexer));
+        QLGrammarLexer qlGrammarLexer = new QLGrammarLexer(mBuilder.createInputStream());
+        return new QLGrammarParser(mBuilder.createTokenStream(qlGrammarLexer));
     }
 }
