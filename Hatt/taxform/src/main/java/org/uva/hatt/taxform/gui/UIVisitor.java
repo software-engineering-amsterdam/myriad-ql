@@ -85,11 +85,15 @@ public class UIVisitor implements Visitor<Pane> {
     public Pane visit(IfThen node) {
         VBox vBox = new VBox();
 
-        BooleanValue booleanValue = (BooleanValue) evaluator.visit(node.getCondition());
+        Value value = evaluator.visit(node.getCondition());
 
-        if (booleanValue.getValue()) {
-            List<Pane> thenStatements = node.getThenStatements().stream().map(item -> item.accept(this)).collect(Collectors.toList());
-            vBox.getChildren().addAll(thenStatements);
+        if (!value.isUndefined()) {
+            BooleanValue booleanValue = (BooleanValue) value;
+
+            if (booleanValue.getValue()) {
+                List<Pane> thenStatements = node.getThenStatements().stream().map(item -> item.accept(this)).collect(Collectors.toList());
+                vBox.getChildren().addAll(thenStatements);
+            }
         }
 
         return vBox;
@@ -99,14 +103,18 @@ public class UIVisitor implements Visitor<Pane> {
     public Pane visit(IfThenElse node) {
         VBox vBox = new VBox();
 
-        BooleanValue booleanValue = (BooleanValue) evaluator.visit(node.getCondition());
+        Value value = evaluator.visit(node.getCondition());
 
-        if (booleanValue.getValue()) {
-            List<Pane> thenStatements = node.getThenStatements().stream().map(item -> item.accept(this)).collect(Collectors.toList());
-            vBox.getChildren().addAll(thenStatements);
-        } else {
-            List<Pane> elseStatements = node.getElseStatements().stream().map(item -> item.accept(this)).collect(Collectors.toList());
-            vBox.getChildren().addAll(elseStatements);
+        if (!value.isUndefined()) {
+            BooleanValue booleanValue = (BooleanValue) value;
+
+            if (booleanValue.getValue()) {
+                List<Pane> thenStatements = node.getThenStatements().stream().map(item -> item.accept(this)).collect(Collectors.toList());
+                vBox.getChildren().addAll(thenStatements);
+            } else {
+                List<Pane> elseStatements = node.getElseStatements().stream().map(item -> item.accept(this)).collect(Collectors.toList());
+                vBox.getChildren().addAll(elseStatements);
+            }
         }
 
         return vBox;
