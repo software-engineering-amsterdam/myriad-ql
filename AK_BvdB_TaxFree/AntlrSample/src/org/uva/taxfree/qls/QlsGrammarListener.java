@@ -11,6 +11,7 @@ import java.util.List;
 
 public class QlsGrammarListener extends QLSGrammarBaseListener {
 
+    private final List<Page> mPages;
     private final List<Section> mCachedSections;
     private final List<QuestionStyle> mCachedQuestionStyles;
     private final List<StyleOption> mCachedStyleOptions;
@@ -35,6 +36,12 @@ public class QlsGrammarListener extends QLSGrammarBaseListener {
         List<QuestionStyle> cachedQuestionStyles = new ArrayList<>(mCachedQuestionStyles);
         mCachedQuestionStyles.clear();
         return cachedQuestionStyles;
+    }
+
+    private List<Section> popCachedSections() {
+        List<Section> cachedSections = new ArrayList<>(mCachedSections);
+        mCachedSections.clear();
+        return cachedSections;
     }
 
     private SourceInfo createSourceInfo(ParserRuleContext context) {
@@ -100,5 +107,12 @@ public class QlsGrammarListener extends QLSGrammarBaseListener {
         super.exitSection(ctx);
         Section section = new Section(ctx.STRING_LITERAL().getText(), popCachedQuestionStyles(), createSourceInfo(ctx));
         mCachedSections.add(section);
+    }
+
+    @Override
+    public void exitPage(QLSGrammarParser.PageContext ctx) {
+        super.exitPage(ctx);
+        Page page = new Page(ctx.VARIABLE_LITERAL().getText(), popCachedSections());
+        mPages.add(page);
     }
 }
