@@ -1,34 +1,31 @@
 package org.uva.taxfree.qls;
 
 import org.uva.taxfree.ql.gui.MessageList;
+import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.types.Type;
 import org.uva.taxfree.qls.styleoption.StyleOption;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class QlsStyle {
-    private final Map<String, List<StyleOption>> mQuestionStyles;
-    private final List<StyleDeclaration> mStyleDeclarations;
-    private final Map<String, List<String>> mSections;
+    private final List<Section> mSections;
+    private final List<DefaultStyle> mDefaultStyleDeclarations;
 
     public QlsStyle() {
-        mQuestionStyles = new HashMap<>();
-        mSections = new HashMap<>();
-        mStyleDeclarations = new ArrayList<>();
+        mSections = new ArrayList<>();
+        mDefaultStyleDeclarations = new ArrayList<>();
     }
 
 
-    public void addVariableStyleDeclaration(Type variableType, List<StyleOption> styleOptions) {
-        mStyleDeclarations.add(new StyleDeclaration(variableType, styleOptions));
+    public void addVariableStyleDeclaration(Type variableType, List<StyleOption> styleOptions, SourceInfo sourceInfo) {
+        mDefaultStyleDeclarations.add(new DefaultStyle(variableType, styleOptions, sourceInfo));
     }
 
     public void applyStyle(Type type, JComponent component) {
-        for (StyleDeclaration declaration : mStyleDeclarations) {
+        for (StyleDeclaration declaration : mDefaultStyleDeclarations) {
             if (declaration.equals(type)) {
                 declaration.applyStyle(component);
             }
@@ -36,16 +33,22 @@ public class QlsStyle {
     }
 
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
-        checkDuplicateStyles(semanticsMessages);
+        checkDefaultStyles(semanticsMessages);
+        checkUndeclaredIdentifiers(symbolTable, semanticsMessages);
     }
 
-    private void checkDuplicateStyles(MessageList semanticsMessages) {
+    private void checkDefaultStyles(MessageList semanticsMessages) {
         List<Type> processedTypes = new ArrayList<>();
-        for (StyleDeclaration declaration : mStyleDeclarations) {
+        for (DefaultStyle declaration : mDefaultStyleDeclarations) {
             if (declaration.isOneOf(processedTypes)) {
-                semanticsMessages.addError(declaration.sourceInfo() + "Duplicate declaration");
+                semanticsMessages.addError(declaration.sourceInfo() + "Duplicate type declaration");
             }
         }
     }
 
+    private void checkUndeclaredIdentifiers(SymbolTable symbolTable, MessageList semanticsMessages) {
+        for (Section section : mSections) {
+            section.checkSemantics(symbolTable, semanticsMessages);
+        }
+    }
 }
