@@ -17,6 +17,7 @@ import org.uva.hatt.taxform.ast.nodes.types.*;
 import org.uva.hatt.taxform.ast.nodes.types.Boolean;
 import org.uva.hatt.taxform.ast.nodes.types.Integer;
 import org.uva.hatt.taxform.ast.nodes.types.String;
+import org.uva.hatt.taxform.ast.visitors.EnvironmentsTable;
 import org.uva.hatt.taxform.ast.visitors.Visitor;
 import org.uva.hatt.taxform.values.BooleanValue;
 import org.uva.hatt.taxform.values.IntegerValue;
@@ -24,6 +25,13 @@ import org.uva.hatt.taxform.values.StringValue;
 import org.uva.hatt.taxform.values.Value;
 
 public class Evaluator implements Visitor<Value>{
+
+    private final EnvironmentsTable environmentsTable;
+
+    public Evaluator(EnvironmentsTable environmentsTable) {
+        this.environmentsTable = environmentsTable;
+    }
+
     @Override
     public Value visit(Form node) {
         return null;
@@ -86,8 +94,7 @@ public class Evaluator implements Visitor<Value>{
 
     @Override
     public Value visit(Identifier identifier) {
-        // find in environment table
-        return null;
+        return environmentsTable.find(identifier.getValue());
     }
 
     @Override

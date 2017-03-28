@@ -1,17 +1,19 @@
 package org.uva.hatt.taxform.ast.visitors;
 
+import org.uva.hatt.taxform.values.Value;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class EnvironmentsTable {
 
-    private final Map<String, String> values = new HashMap<>();
+    private final Map<String, Value> values = new HashMap<>();
 
-    public String add(String id, String value) {
+    public Value add(String id, Value value) {
         return values.put(id, value);
     }
 
-    public String find(String id) {
+    public Value find(String id) {
         return values.get(id);
     }
 
