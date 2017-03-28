@@ -8,7 +8,9 @@ import org.uva.taxfree.qls.styleoption.StyleOption;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class QlsStyle {
     private final List<Section> mSections;
@@ -35,13 +37,14 @@ public class QlsStyle {
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
         checkDefaultStyles(semanticsMessages);
         checkUndeclaredIdentifiers(symbolTable, semanticsMessages);
+        checkMissingIdentifiers(symbolTable, semanticsMessages);
     }
 
     private void checkDefaultStyles(MessageList semanticsMessages) {
         List<Type> processedTypes = new ArrayList<>();
         for (DefaultStyle declaration : mDefaultStyleDeclarations) {
             if (declaration.isOneOf(processedTypes)) {
-                semanticsMessages.addError(declaration.sourceInfo() + "Duplicate type declaration");
+                semanticsMessages.addError(declaration.sourceInfo() + "Duplicate type declaration.");
             }
         }
     }
@@ -50,5 +53,21 @@ public class QlsStyle {
         for (Section section : mSections) {
             section.checkSemantics(symbolTable, semanticsMessages);
         }
+    }
+
+    private void checkMissingIdentifiers(SymbolTable symbolTable, MessageList semanticsMessages) {
+        Set<String> missingVariables = symbolTable.getUsedVariables();
+        missingVariables.removeAll(getUsedVariables());
+        for (String variable : missingVariables) {
+            semanticsMessages.addError("Question is not assigned to section: " + variable);
+        }
+    }
+
+    private Set<String> getUsedVariables() {
+        Set<String> usedVariables = new HashSet<>();
+        for (Section section : mSections) {
+            usedVariables.addAll(section.getUsedVariables());
+        }
+        return usedVariables;
     }
 }

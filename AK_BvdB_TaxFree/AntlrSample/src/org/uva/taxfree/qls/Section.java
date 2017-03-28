@@ -4,7 +4,9 @@ import org.uva.taxfree.ql.gui.MessageList;
 import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Section {
     private final String mName;
@@ -23,5 +25,11 @@ public class Section {
                 semanticsMessages.addWarning("Undeclared identifier, section: " + mName + ", question: " + question);
             }
         }
+    }
+
+    protected Set<String> getUsedVariables() {
+        Set<String> usedVariables = new HashSet<>();
+        usedVariables.addAll(mQuestions);
+        return usedVariables;
     }
 }
