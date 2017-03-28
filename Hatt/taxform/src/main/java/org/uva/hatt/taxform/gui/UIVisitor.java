@@ -25,6 +25,7 @@ import org.uva.hatt.taxform.ast.visitors.Visitor;
 import org.uva.hatt.taxform.evaluation.Evaluator;
 import org.uva.hatt.taxform.gui.fields.*;
 import org.uva.hatt.taxform.values.BooleanValue;
+import org.uva.hatt.taxform.values.Value;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,7 +40,7 @@ public class UIVisitor implements Visitor<Pane> {
     public UIVisitor(Stage stage, EnvironmentsTable environmentsTable) {
         this.stage = stage;
         this.environmentsTable = environmentsTable;
-        evaluator = new Evaluator();
+        evaluator = new Evaluator(environmentsTable);
     }
 
     @Override
@@ -66,7 +67,7 @@ public class UIVisitor implements Visitor<Pane> {
         widget.setIdentifier(node.getValue());
         widget.setLabel(node.getQuestion());
 
-        java.lang.String value = environmentsTable.find(node.getValue());
+        Value value = environmentsTable.find(node.getValue());
         widget.setValue(value);
 
         Question question = new Question(environmentsTable, this, form);
@@ -86,7 +87,7 @@ public class UIVisitor implements Visitor<Pane> {
 
         BooleanValue booleanValue = (BooleanValue) evaluator.visit(node.getCondition());
 
-        if (booleanValue.isValue()) {
+        if (booleanValue.getValue()) {
             List<Pane> thenStatements = node.getThenStatements().stream().map(item -> item.accept(this)).collect(Collectors.toList());
             vBox.getChildren().addAll(thenStatements);
         }
@@ -100,7 +101,7 @@ public class UIVisitor implements Visitor<Pane> {
 
         BooleanValue booleanValue = (BooleanValue) evaluator.visit(node.getCondition());
 
-        if (booleanValue.isValue()) {
+        if (booleanValue.getValue()) {
             List<Pane> thenStatements = node.getThenStatements().stream().map(item -> item.accept(this)).collect(Collectors.toList());
             vBox.getChildren().addAll(thenStatements);
         } else {
