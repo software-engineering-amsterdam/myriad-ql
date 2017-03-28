@@ -77,8 +77,18 @@ public class UIVisitor implements Visitor<Pane> {
     }
 
     @Override
-    public Pane visit(ComputedQuestion computedQuestion) {
-        return null;
+    public Pane visit(ComputedQuestion node) {
+        Field widget = (Field) node.getType().accept(this);
+        widget.setIdentifier(node.getValue());
+        widget.setLabel(node.getQuestion());
+
+        Value value = evaluator.visit(node.getComputedValue());
+        widget.setValue(value);
+
+        Question question = new Question(environmentsTable, this, form);
+        question.addField(widget);
+
+        return question;
     }
 
     @Override
