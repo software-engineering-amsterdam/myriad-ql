@@ -34,4 +34,12 @@ public class Section {
         }
         return usedVariables;
     }
+
+    public String getName() {
+        return mName;
+    }
+
+    protected boolean contains(String variableId) {
+        return getUsedVariables().contains(variableId);
+    }
 }

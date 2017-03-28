@@ -48,7 +48,8 @@ public class Main {
             QlsStyleBuilder qlsStyleBuilder = new QlsStyleBuilder(qlsFile);
             QlsStyle qlsStyle = qlsStyleBuilder.generateStyle();
             qlsStyle.checkSemantics(symbolTable, semanticsMessages);
-            taxForm.applyStyle(qlsStyle);
+            QlsForm qls = new QlsForm(ast.toString(), symbolTable, qlsStyle);
+            taxForm = qls;
         }
         taxForm.show();
     }
@@ -60,11 +61,7 @@ public class Main {
     }
 
     private static File createStyleFile(File inputFile) {
-        String qlsFile = FileUtility.replaceExtension(inputFile.getName(), ".qls");
+        String qlsFile = FileUtility.replaceExtension(inputFile.getAbsolutePath(), ".qls");
         return new File(qlsFile);
     }
 }
-
-
-
-

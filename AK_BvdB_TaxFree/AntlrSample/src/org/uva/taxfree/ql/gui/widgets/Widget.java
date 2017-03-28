@@ -56,11 +56,11 @@ public abstract class Widget {
     }
 
     protected void applyStyle(JPanel panel, JLabel label, QlsStyle qlsStyle) {
-        // Only used for QLS
+        // Intentionally left blank
     }
 
-    public int compareTo(Widget widget) {
-        return mId.compareTo(widget.mId);
+    public String getId() {
+        return mId;
     }
 
 }

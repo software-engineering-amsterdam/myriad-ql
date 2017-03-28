@@ -1,73 +1,58 @@
 package org.uva.taxfree.qls;
 
 import org.uva.taxfree.ql.gui.MessageList;
-import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.types.Type;
-import org.uva.taxfree.qls.styleoption.StyleOption;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class QlsStyle {
-    private final List<Section> mSections;
-    private final List<DefaultStyle> mDefaultStyleDeclarations;
+    private final List<Page> mPages;
 
-    public QlsStyle() {
-        mSections = new ArrayList<>();
-        mDefaultStyleDeclarations = new ArrayList<>();
-    }
-
-
-    public void addVariableStyleDeclaration(Type variableType, List<StyleOption> styleOptions, SourceInfo sourceInfo) {
-        mDefaultStyleDeclarations.add(new DefaultStyle(variableType, styleOptions, sourceInfo));
+    public QlsStyle(List<Page> pages) {
+        mPages = pages;
     }
 
     public void applyStyle(Type type, JComponent component) {
-        for (StyleDeclaration declaration : mDefaultStyleDeclarations) {
-            if (declaration.equals(type)) {
-                declaration.applyStyle(component);
+        for (Page page : mPages) {
+            if (page.contains(component.getName())) {
+                page.applyStyle(type, component);
             }
         }
     }
 
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
-        checkDefaultStyles(semanticsMessages);
-        checkUndeclaredIdentifiers(symbolTable, semanticsMessages);
-        checkMissingIdentifiers(symbolTable, semanticsMessages);
+        for (Page page : mPages) {
+            page.checkSemantics(symbolTable, semanticsMessages);
+        }
     }
 
-    private void checkDefaultStyles(MessageList semanticsMessages) {
-        List<Type> processedTypes = new ArrayList<>();
-        for (DefaultStyle declaration : mDefaultStyleDeclarations) {
-            if (declaration.isOneOf(processedTypes)) {
-                semanticsMessages.addError(declaration.sourceInfo() + "Duplicate type declaration.");
+
+    public List<String> getPageNames() {
+        List<String> pageNames = new ArrayList<>();
+        for (Page page : mPages) {
+            pageNames.add(page.getName());
+        }
+        return pageNames;
+    }
+
+    public List<String> getSectionNames(String pageName) {
+        for (Page page : mPages) {
+            if (pageName.equals(page.getName())) {
+                return page.getSectionNames();
             }
         }
+        throw new RuntimeException("Unknown page queried: " + pageName);
     }
 
-    private void checkUndeclaredIdentifiers(SymbolTable symbolTable, MessageList semanticsMessages) {
-        for (Section section : mSections) {
-            section.checkSemantics(symbolTable, semanticsMessages);
+    public String getSectionName(String variableId) {
+        for (Page page : mPages) {
+            if (page.contains(variableId)) {
+                return page.getSectionName(variableId);
+            }
         }
-    }
-
-    private void checkMissingIdentifiers(SymbolTable symbolTable, MessageList semanticsMessages) {
-        Set<String> missingVariables = symbolTable.getUsedVariables();
-        missingVariables.removeAll(getUsedVariables());
-        for (String variable : missingVariables) {
-            semanticsMessages.addError("Question is not assigned to section: " + variable);
-        }
-    }
-
-    private Set<String> getUsedVariables() {
-        Set<String> usedVariables = new HashSet<>();
-        for (Section section : mSections) {
-            usedVariables.addAll(section.getUsedVariables());
-        }
-        return usedVariables;
+        throw new RuntimeException("Unknown variable id queried: " + variableId);
     }
 }

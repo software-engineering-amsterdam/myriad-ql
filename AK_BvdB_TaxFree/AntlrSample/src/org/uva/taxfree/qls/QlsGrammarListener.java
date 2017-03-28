@@ -154,7 +154,11 @@ public class QlsGrammarListener extends QLSGrammarBaseListener {
     @Override
     public void exitPage(QLSGrammarParser.PageContext ctx) {
         super.exitPage(ctx);
-        Page page = new Page(ctx.VARIABLE_LITERAL().getText(), popCachedSections(), createSourceInfo(ctx));
+        Page page = new Page(ctx.VARIABLE_LITERAL().getText(), popCachedSections(), popCachedDefaultStyles(), createSourceInfo(ctx));
         mPages.add(page);
+    }
+
+    private List<DefaultStyle> popCachedDefaultStyles() {
+        return new ArrayList<>(); //TODO
     }
 }
