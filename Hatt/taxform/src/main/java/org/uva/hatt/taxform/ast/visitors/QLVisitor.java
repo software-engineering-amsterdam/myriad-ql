@@ -41,7 +41,7 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
     @Override
     public ASTNode visitQuestion(QLParser.QuestionContext ctx) {
         return new Question(ctx.start.getLine(),
-                ctx.StringLiteral().getText(),
+                getFormattedString(ctx.StringLiteral().getText()),
                 ctx.Identifier().getText(),
                 (ValueType) visit(ctx.valueType())
         );
@@ -50,7 +50,7 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
     @Override
     public ASTNode visitComputedQuestion(QLParser.ComputedQuestionContext ctx) {
         return new ComputedQuestion(ctx.start.getLine(),
-                ctx.StringLiteral().getText(),
+                getFormattedString(ctx.StringLiteral().getText()),
                 ctx.Identifier().getText(),
                 (ValueType) visit(ctx.valueType()),
                 (Expression) visit(ctx.expression())
@@ -150,7 +150,7 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitStringLiteral(QLParser.StringLiteralContext ctx) {
-        return new StringerLiteral(ctx.start.getLine(), ctx.getText());
+        return new StringerLiteral(ctx.start.getLine(), getFormattedString(ctx.getText()));
     }
 
     @Override
@@ -182,4 +182,9 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
     public ASTNode visitMoney(QLParser.MoneyContext ctx) {
         return new Money(ctx.start.getLine());
     }
+
+    private java.lang.String getFormattedString(java.lang.String string) {
+        return string.substring(1, string.length() - 1);
+    }
+
 }
