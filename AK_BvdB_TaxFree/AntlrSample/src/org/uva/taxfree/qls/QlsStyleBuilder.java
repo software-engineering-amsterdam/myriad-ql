@@ -18,19 +18,20 @@ public class QlsStyleBuilder {
 
     public QlsStyle generateStyle() {
         // TODO parse and generate the styles.
+        SourceInfo tmpSourceInfo = new SourceInfo(0, 0, 0, 0);
         QlsStyle qlsStyle = new QlsStyle();
         List<StyleOption> booleanStyleOptions = new ArrayList<>();
-        booleanStyleOptions.add(new FontStyleOption("Arial"));
-        booleanStyleOptions.add(new FontSizeStyleOption(20));
-        booleanStyleOptions.add(new ColorStyleOption("#FFFF00"));
-        booleanStyleOptions.add(new BackgroundColorStyleOption("#CCCC"));
+        booleanStyleOptions.add(new FontStyleOption("Arial", tmpSourceInfo));
+        booleanStyleOptions.add(new FontSizeStyleOption(20, tmpSourceInfo));
+        booleanStyleOptions.add(new ColorStyleOption("#FFFF00", tmpSourceInfo));
+        booleanStyleOptions.add(new BackgroundColorStyleOption("#CCCC", tmpSourceInfo));
         qlsStyle.addVariableStyleDeclaration(new BooleanType(), booleanStyleOptions, new SourceInfo(0, 0, 0, 0));
 
         List<StyleOption> stringStyleOptions = new ArrayList<>();
-        stringStyleOptions.add(new FontStyleOption("Arial"));
-        stringStyleOptions.add(new FontSizeStyleOption(14));
-        stringStyleOptions.add(new ColorStyleOption("#00FFFF"));
-        stringStyleOptions.add(new BackgroundColorStyleOption("#FFAA00"));
+        stringStyleOptions.add(new FontStyleOption("Arial", tmpSourceInfo));
+        stringStyleOptions.add(new FontSizeStyleOption(14, tmpSourceInfo));
+        stringStyleOptions.add(new ColorStyleOption("#00FFFF", tmpSourceInfo));
+        stringStyleOptions.add(new BackgroundColorStyleOption("#FFAA00", tmpSourceInfo));
         qlsStyle.addVariableStyleDeclaration(new StringType(), stringStyleOptions, new SourceInfo(0, 0, 0, 0));
         return qlsStyle;
     }
