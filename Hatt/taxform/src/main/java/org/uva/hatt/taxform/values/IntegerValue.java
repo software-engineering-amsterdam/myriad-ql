@@ -1,6 +1,6 @@
 package org.uva.hatt.taxform.values;
 
-public class IntegerValue extends Value {
+public class IntegerValue extends Value<Integer> {
 
     private final int value;
 
@@ -8,7 +8,8 @@ public class IntegerValue extends Value {
         this.value = value;
     }
 
-    public int getValue() {
+    @Override
+    public Integer getValue() {
         return value;
     }
 

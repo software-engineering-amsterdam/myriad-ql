@@ -1,6 +1,6 @@
 package org.uva.hatt.taxform.values;
 
-public class StringValue extends Value {
+public class StringValue extends Value<String> {
 
     private final String value;
 
