@@ -7,6 +7,7 @@ import org.uva.hatt.taxform.ast.nodes.expressions.binary.Addition;
 import org.uva.hatt.taxform.ast.nodes.expressions.binary.Division;
 import org.uva.hatt.taxform.ast.nodes.expressions.binary.Multiplication;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.IntegerLiteral;
+import org.uva.hatt.taxform.ast.visitors.EnvironmentsTable;
 import org.uva.hatt.taxform.values.IntegerValue;
 
 import static org.junit.Assert.assertEquals;
@@ -17,7 +18,7 @@ public class ComputationTest {
 
     @Before
     public void setUp() throws Exception {
-        evaluator = new Evaluator();
+        evaluator = new Evaluator(new EnvironmentsTable());
     }
 
     @Test
@@ -29,7 +30,7 @@ public class ComputationTest {
         Addition addition = new Addition(1, three, multiplication);
         IntegerValue value = (IntegerValue) evaluator.visit(addition);
 
-        assertEquals(15, value.getValue());
+        assertEquals(new Integer(15), value.getValue());
     }
 
     @Test
@@ -41,7 +42,7 @@ public class ComputationTest {
         Addition addition = new Addition(1, two, division);
         IntegerValue value = (IntegerValue) evaluator.visit(addition);
 
-        assertEquals(4, value.getValue());
+        assertEquals(new Integer(4), value.getValue());
     }
 
     @Test
@@ -53,7 +54,7 @@ public class ComputationTest {
         Multiplication addition = new Multiplication(1, division, three);
         IntegerValue value = (IntegerValue) evaluator.visit(addition);
 
-        assertEquals(18, value.getValue());
+        assertEquals(new Integer(18), value.getValue());
     }
 
     @Test
@@ -68,7 +69,7 @@ public class ComputationTest {
 
         IntegerValue value = (IntegerValue) evaluator.visit(multiplication);
 
-        assertEquals(18, value.getValue());
+        assertEquals(new Integer(18), value.getValue());
     }
 
     @Test
@@ -77,6 +78,6 @@ public class ComputationTest {
         Division division = new Division(1, new IntegerLiteral(1, 6), new IntegerLiteral(1, 0));
         IntegerValue value = (IntegerValue) evaluator.visit(division);
 
-        assertEquals(0, value.getValue());
+        assertEquals(new Integer(0), value.getValue());
     }
 }

@@ -6,6 +6,7 @@ import org.uva.hatt.taxform.ast.nodes.expressions.binary.*;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.IntegerLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.StringerLiteral;
+import org.uva.hatt.taxform.ast.visitors.EnvironmentsTable;
 import org.uva.hatt.taxform.values.BooleanValue;
 import org.uva.hatt.taxform.values.IntegerValue;
 import org.uva.hatt.taxform.values.StringValue;
@@ -18,7 +19,7 @@ public class EvaluatorTest {
 
     @Before
     public void setUp() throws Exception {
-        evaluator = new Evaluator();
+        evaluator = new Evaluator(new EnvironmentsTable());
     }
 
     @Test
@@ -34,7 +35,7 @@ public class EvaluatorTest {
         IntegerLiteral integerLiteral = new IntegerLiteral(1, 1);
         IntegerValue integerValue = (IntegerValue) evaluator.visit(integerLiteral);
 
-        assertEquals(integerLiteral.getValue(), integerValue.getValue());
+        assertEquals(integerLiteral.getValue(), (int) integerValue.getValue());
     }
 
     @Test
@@ -42,7 +43,7 @@ public class EvaluatorTest {
         BooleanLiteral booleanLiteral = new BooleanLiteral(1, true);
         BooleanValue booleanValue = (BooleanValue) evaluator.visit(booleanLiteral);
 
-        assertEquals(booleanLiteral.isValue(), booleanValue.isValue());
+        assertEquals(booleanLiteral.isValue(), booleanValue.getValue());
     }
 
     @Test
@@ -50,7 +51,7 @@ public class EvaluatorTest {
         Addition addition = new Addition(1, new IntegerLiteral(1, 6), new IntegerLiteral(1, 2));
         IntegerValue value = (IntegerValue) evaluator.visit(addition);
 
-        assertEquals(8, value.getValue());
+        assertEquals(new Integer(8), value.getValue());
     }
 
     @Test
@@ -74,7 +75,7 @@ public class EvaluatorTest {
         Division division = new Division(1, new IntegerLiteral(1, 6), new IntegerLiteral(1, 2));
         IntegerValue value = (IntegerValue) evaluator.visit(division);
 
-        assertEquals(3, value.getValue());
+        assertEquals(new Integer(3), value.getValue());
     }
 
     @Test
@@ -82,7 +83,7 @@ public class EvaluatorTest {
         Equal equal = new Equal(1, new BooleanLiteral(1, true), new BooleanLiteral(1, true));
         BooleanValue value = (BooleanValue) evaluator.visit(equal);
 
-        assertEquals(true, value.isValue());
+        assertEquals(true, value.getValue());
     }
 
     @Test
@@ -90,7 +91,7 @@ public class EvaluatorTest {
         Equal equal = new Equal(1, new BooleanLiteral(1, true), new BooleanLiteral(1, false));
         BooleanValue value = (BooleanValue) evaluator.visit(equal);
 
-        assertEquals(false, value.isValue());
+        assertEquals(false, value.getValue());
     }
 
     @Test
@@ -98,7 +99,7 @@ public class EvaluatorTest {
         Equal equal = new Equal(1, new IntegerLiteral(1, 1), new IntegerLiteral(1, 1));
         BooleanValue value = (BooleanValue) evaluator.visit(equal);
 
-        assertEquals(true, value.isValue());
+        assertEquals(true, value.getValue());
     }
 
     @Test
@@ -106,7 +107,7 @@ public class EvaluatorTest {
         Equal equal = new Equal(1, new IntegerLiteral(1, 1), new IntegerLiteral(1, 2));
         BooleanValue value = (BooleanValue) evaluator.visit(equal);
 
-        assertEquals(false, value.isValue());
+        assertEquals(false, value.getValue());
     }
 
     @Test
@@ -114,7 +115,7 @@ public class EvaluatorTest {
         Equal equal = new Equal(1, new StringerLiteral(1, "a"), new StringerLiteral(1, "a"));
         BooleanValue value = (BooleanValue) evaluator.visit(equal);
 
-        assertEquals(true, value.isValue());
+        assertEquals(true, value.getValue());
     }
 
     @Test
@@ -122,7 +123,7 @@ public class EvaluatorTest {
         Equal equal = new Equal(1, new StringerLiteral(1, "a"), new StringerLiteral(1, "b"));
         BooleanValue value = (BooleanValue) evaluator.visit(equal);
 
-        assertEquals(false, value.isValue());
+        assertEquals(false, value.getValue());
     }
 
     @Test
@@ -130,7 +131,7 @@ public class EvaluatorTest {
         GreaterThan lessThan = new GreaterThan(1, new IntegerLiteral(1, 6), new IntegerLiteral(1, 2));
         BooleanValue value = (BooleanValue) evaluator.visit(lessThan);
 
-        assertEquals(true, value.isValue());
+        assertEquals(true, value.getValue());
     }
 
     @Test
@@ -138,7 +139,7 @@ public class EvaluatorTest {
         GreaterThan lessThan = new GreaterThan(1, new IntegerLiteral(1, 2), new IntegerLiteral(1, 6));
         BooleanValue value = (BooleanValue) evaluator.visit(lessThan);
 
-        assertEquals(false, value.isValue());
+        assertEquals(false, value.getValue());
     }
 
     @Test
@@ -146,7 +147,7 @@ public class EvaluatorTest {
         GreaterThanOrEqual lessThan = new GreaterThanOrEqual(1, new IntegerLiteral(1, 6), new IntegerLiteral(1, 2));
         BooleanValue value = (BooleanValue) evaluator.visit(lessThan);
 
-        assertEquals(true, value.isValue());
+        assertEquals(true, value.getValue());
     }
 
     @Test
@@ -154,7 +155,7 @@ public class EvaluatorTest {
         GreaterThanOrEqual lessThan = new GreaterThanOrEqual(1, new IntegerLiteral(1, 6), new IntegerLiteral(1, 6));
         BooleanValue value = (BooleanValue) evaluator.visit(lessThan);
 
-        assertEquals(true, value.isValue());
+        assertEquals(true, value.getValue());
     }
 
     @Test
@@ -162,7 +163,7 @@ public class EvaluatorTest {
         GreaterThanOrEqual lessThan = new GreaterThanOrEqual(1, new IntegerLiteral(1, 2), new IntegerLiteral(1, 6));
         BooleanValue value = (BooleanValue) evaluator.visit(lessThan);
 
-        assertEquals(false, value.isValue());
+        assertEquals(false, value.getValue());
     }
 
     @Test
@@ -170,7 +171,7 @@ public class EvaluatorTest {
         LessThan lessThan = new LessThan(1, new IntegerLiteral(1, 2), new IntegerLiteral(1, 6));
         BooleanValue value = (BooleanValue) evaluator.visit(lessThan);
 
-        assertEquals(true, value.isValue());
+        assertEquals(true, value.getValue());
     }
 
     @Test
@@ -178,7 +179,7 @@ public class EvaluatorTest {
         LessThan lessThan = new LessThan(1, new IntegerLiteral(1, 6), new IntegerLiteral(1, 2));
         BooleanValue value = (BooleanValue) evaluator.visit(lessThan);
 
-        assertEquals(false, value.isValue());
+        assertEquals(false, value.getValue());
     }
 
     @Test
@@ -186,7 +187,7 @@ public class EvaluatorTest {
         LessThanOrEqual lessThan = new LessThanOrEqual(1, new IntegerLiteral(1, 2), new IntegerLiteral(1, 6));
         BooleanValue value = (BooleanValue) evaluator.visit(lessThan);
 
-        assertEquals(true, value.isValue());
+        assertEquals(true, value.getValue());
     }
 
     @Test
@@ -194,7 +195,7 @@ public class EvaluatorTest {
         LessThanOrEqual lessThan = new LessThanOrEqual(1, new IntegerLiteral(1, 6), new IntegerLiteral(1, 6));
         BooleanValue value = (BooleanValue) evaluator.visit(lessThan);
 
-        assertEquals(true, value.isValue());
+        assertEquals(true, value.getValue());
     }
 
     @Test
@@ -202,7 +203,7 @@ public class EvaluatorTest {
         LessThanOrEqual lessThan = new LessThanOrEqual(1, new IntegerLiteral(1, 6), new IntegerLiteral(1, 2));
         BooleanValue value = (BooleanValue) evaluator.visit(lessThan);
 
-        assertEquals(false, value.isValue());
+        assertEquals(false, value.getValue());
     }
 
     @Test
@@ -210,7 +211,7 @@ public class EvaluatorTest {
         LogicalAnd logicalAnd = new LogicalAnd(1, new BooleanLiteral(1, true), new BooleanLiteral(1, true));
         BooleanValue value = (BooleanValue) evaluator.visit(logicalAnd);
 
-        assertEquals(true, value.isValue());
+        assertEquals(true, value.getValue());
     }
 
     @Test
@@ -218,7 +219,7 @@ public class EvaluatorTest {
         LogicalAnd logicalAnd = new LogicalAnd(1, new BooleanLiteral(1, true), new BooleanLiteral(1, false));
         BooleanValue value = (BooleanValue) evaluator.visit(logicalAnd);
 
-        assertEquals(false, value.isValue());
+        assertEquals(false, value.getValue());
     }
 
     @Test
@@ -226,7 +227,7 @@ public class EvaluatorTest {
         LogicalOr logicalOr = new LogicalOr(1, new BooleanLiteral(1, true), new BooleanLiteral(1, true));
         BooleanValue value = (BooleanValue) evaluator.visit(logicalOr);
 
-        assertEquals(true, value.isValue());
+        assertEquals(true, value.getValue());
     }
 
     @Test
@@ -234,7 +235,7 @@ public class EvaluatorTest {
         LogicalOr logicalOr = new LogicalOr(1, new BooleanLiteral(1, false), new BooleanLiteral(1, false));
         BooleanValue value = (BooleanValue) evaluator.visit(logicalOr);
 
-        assertEquals(false, value.isValue());
+        assertEquals(false, value.getValue());
     }
 
     @Test
@@ -242,7 +243,7 @@ public class EvaluatorTest {
         LogicalOr logicalOr = new LogicalOr(1, new BooleanLiteral(1, true), new BooleanLiteral(1, false));
         BooleanValue value = (BooleanValue) evaluator.visit(logicalOr);
 
-        assertEquals(true, value.isValue());
+        assertEquals(true, value.getValue());
     }
 
     @Test
@@ -250,7 +251,7 @@ public class EvaluatorTest {
         LogicalOr logicalOr = new LogicalOr(1, new BooleanLiteral(1, false), new BooleanLiteral(1, true));
         BooleanValue value = (BooleanValue) evaluator.visit(logicalOr);
 
-        assertEquals(true, value.isValue());
+        assertEquals(true, value.getValue());
     }
 
     @Test
@@ -258,7 +259,7 @@ public class EvaluatorTest {
         Multiplication multiplication = new Multiplication(1, new IntegerLiteral(1, 6), new IntegerLiteral(1, 2));
         IntegerValue value = (IntegerValue) evaluator.visit(multiplication);
 
-        assertEquals(12, value.getValue());
+        assertEquals(new Integer(12), value.getValue());
     }
 
     @Test
@@ -266,7 +267,7 @@ public class EvaluatorTest {
         NotEqual notEqual = new NotEqual(1, new BooleanLiteral(1, true), new BooleanLiteral(1, false));
         BooleanValue value = (BooleanValue) evaluator.visit(notEqual);
 
-        assertEquals(true, value.isValue());
+        assertEquals(true, value.getValue());
     }
 
     @Test
@@ -274,7 +275,7 @@ public class EvaluatorTest {
         NotEqual notEqual = new NotEqual(1, new BooleanLiteral(1, true), new BooleanLiteral(1, true));
         BooleanValue value = (BooleanValue) evaluator.visit(notEqual);
 
-        assertEquals(false, value.isValue());
+        assertEquals(false, value.getValue());
     }
 
     @Test
@@ -282,7 +283,7 @@ public class EvaluatorTest {
         NotEqual notEqual = new NotEqual(1, new IntegerLiteral(1, 1), new IntegerLiteral(1, 2));
         BooleanValue value = (BooleanValue) evaluator.visit(notEqual);
 
-        assertEquals(true, value.isValue());
+        assertEquals(true, value.getValue());
     }
 
     @Test
@@ -290,7 +291,7 @@ public class EvaluatorTest {
         NotEqual notEqual = new NotEqual(1, new IntegerLiteral(1, 1), new IntegerLiteral(1, 1));
         BooleanValue value = (BooleanValue) evaluator.visit(notEqual);
 
-        assertEquals(false, value.isValue());
+        assertEquals(false, value.getValue());
     }
 
     @Test
@@ -298,7 +299,7 @@ public class EvaluatorTest {
         NotEqual notEqual = new NotEqual(1, new StringerLiteral(1, "a"), new StringerLiteral(1, "b"));
         BooleanValue value = (BooleanValue) evaluator.visit(notEqual);
 
-        assertEquals(true, value.isValue());
+        assertEquals(true, value.getValue());
     }
 
     @Test
@@ -306,7 +307,7 @@ public class EvaluatorTest {
         NotEqual notEqual = new NotEqual(1, new StringerLiteral(1, "a"), new StringerLiteral(1, "a"));
         BooleanValue value = (BooleanValue) evaluator.visit(notEqual);
 
-        assertEquals(false, value.isValue());
+        assertEquals(false, value.getValue());
     }
 
     @Test
@@ -314,7 +315,7 @@ public class EvaluatorTest {
         Subtraction subtraction = new Subtraction(1, new IntegerLiteral(1, 6), new IntegerLiteral(1, 2));
         IntegerValue value = (IntegerValue) evaluator.visit(subtraction);
 
-        assertEquals(4, value.getValue());
+        assertEquals(new Integer(4), value.getValue());
     }
 
 }
