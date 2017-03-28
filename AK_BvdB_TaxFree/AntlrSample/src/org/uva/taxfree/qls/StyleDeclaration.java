@@ -1,5 +1,6 @@
 package org.uva.taxfree.qls;
 
+import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.types.Type;
 import org.uva.taxfree.qls.styleoption.StyleOption;
 
@@ -9,6 +10,7 @@ import java.util.List;
 public class StyleDeclaration {
     private final List<StyleOption> mStyleOptions;
     private final Type mType;
+    private SourceInfo mSourceInfo;
 
     public StyleDeclaration(Type type, List<StyleOption> styleOptions) {
         mStyleOptions = styleOptions;
@@ -19,5 +21,13 @@ public class StyleDeclaration {
         for (StyleOption styleOption : mStyleOptions) {
             styleOption.applyStyle(component);
         }
+    }
+
+    public boolean isOneOf(List<Type> types) {
+        return types.contains(mType);
+    }
+
+    public String sourceInfo() {
+        return mSourceInfo.sourceString();
     }
 }

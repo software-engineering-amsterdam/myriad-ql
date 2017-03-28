@@ -1,5 +1,7 @@
 package org.uva.taxfree.qls;
 
+import org.uva.taxfree.ql.gui.MessageList;
+import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.types.Type;
 import org.uva.taxfree.qls.styleoption.StyleOption;
 
@@ -32,4 +34,18 @@ public class QlsStyle {
             }
         }
     }
+
+    public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
+        checkDuplicateStyles(semanticsMessages);
+    }
+
+    private void checkDuplicateStyles(MessageList semanticsMessages) {
+        List<Type> processedTypes = new ArrayList<>();
+        for (StyleDeclaration declaration : mStyleDeclarations) {
+            if (declaration.isOneOf(processedTypes)) {
+                semanticsMessages.addError(declaration.sourceInfo() + "Duplicate declaration");
+            }
+        }
+    }
+
 }

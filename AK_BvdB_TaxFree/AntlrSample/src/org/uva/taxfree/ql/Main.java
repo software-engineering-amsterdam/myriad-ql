@@ -4,6 +4,7 @@ import org.uva.taxfree.ql.ast.AstBuilder;
 import org.uva.taxfree.ql.gui.*;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.blocks.FormNode;
+import org.uva.taxfree.ql.util.FileUtility;
 import org.uva.taxfree.qls.QlsStyle;
 import org.uva.taxfree.qls.QlsStyleBuilder;
 
@@ -46,6 +47,7 @@ public class Main {
         if (qlsFile.exists()) {
             QlsStyleBuilder qlsStyleBuilder = new QlsStyleBuilder(qlsFile);
             QlsStyle qlsStyle = qlsStyleBuilder.generateStyle();
+            qlsStyle.checkSemantics(symbolTable, semanticsMessages);
             taxForm.applyStyle(qlsStyle);
         }
         taxForm.show();
@@ -58,16 +60,8 @@ public class Main {
     }
 
     private static File createStyleFile(File inputFile) {
-        return new File(replaceExtension(inputFile.getName()));
-    }
-
-    private static String replaceExtension(String fileName) {
-        String extension = ".qls";
-        int dotPos = fileName.indexOf(".");
-        if (-1 != dotPos) {
-            fileName = fileName.substring(0, dotPos);
-        }
-        return fileName + extension;
+        String qlsFile = FileUtility.replaceExtension(inputFile.getName(), ".qls");
+        return new File(qlsFile);
     }
 }
 
