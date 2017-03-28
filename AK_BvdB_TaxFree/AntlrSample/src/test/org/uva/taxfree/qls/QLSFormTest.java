@@ -2,7 +2,7 @@ package test.org.uva.taxfree.qls;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.uva.taxfree.ql.ast.AstBuilder;
+import org.uva.taxfree.ql.ast.QlAstBuilder;
 import org.uva.taxfree.ql.gui.MessageList;
 import org.uva.taxfree.ql.gui.QuestionForm;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
@@ -30,8 +30,8 @@ public class QLSFormTest extends SemanticsTester {
 
     public void executeMain() throws IOException {
         // Generate AST
-        AstBuilder builder = new AstBuilder(testFile("SimpleForm.txfrm"));
-        FormNode ast = builder.generateTree(new MessageList());
+        QlAstBuilder builder = new QlAstBuilder(testFile("SimpleForm.txfrm"));
+        FormNode ast = builder.generateAst(new MessageList());
         SymbolTable symbolTable = new SymbolTable();
         ast.fillSymbolTable(symbolTable);
         // Create form

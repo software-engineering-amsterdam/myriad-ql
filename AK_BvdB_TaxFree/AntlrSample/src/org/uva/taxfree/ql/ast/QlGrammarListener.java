@@ -31,12 +31,12 @@ import java.util.Stack;
 
 import static org.uva.taxfree.ql.gen.QLGrammarParser.*;
 
-public class GrammarListener extends QLGrammarBaseListener {
+public class QlGrammarListener extends QLGrammarBaseListener {
     private final List<ExpressionNode> mCachedConditions = new ArrayList<>();
     private final Stack<List<Node>> mChildsStack = new Stack<>();
     private FormNode mRootNode;
 
-    public GrammarListener() {
+    public QlGrammarListener() {
 
     }
 

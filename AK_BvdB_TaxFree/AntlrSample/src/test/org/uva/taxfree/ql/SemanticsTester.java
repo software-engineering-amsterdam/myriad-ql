@@ -1,7 +1,7 @@
 package test.org.uva.taxfree.ql;
 
 import org.testng.Assert;
-import org.uva.taxfree.ql.ast.AstBuilder;
+import org.uva.taxfree.ql.ast.QlAstBuilder;
 import org.uva.taxfree.ql.gui.MessageList;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.blocks.FormNode;
@@ -25,8 +25,8 @@ public abstract class SemanticsTester {
     }
 
     private FormNode createAst(String fileName, MessageList semanticsMessages) throws IOException {
-        AstBuilder builder = new AstBuilder(testFile(fileName));
-        return builder.generateTree(semanticsMessages);
+        QlAstBuilder builder = new QlAstBuilder(testFile(fileName));
+        return builder.generateAst(semanticsMessages);
     }
 
     protected abstract String fileDirectory();

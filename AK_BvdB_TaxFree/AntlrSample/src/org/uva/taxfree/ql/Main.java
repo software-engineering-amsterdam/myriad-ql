@@ -1,6 +1,6 @@
 package org.uva.taxfree.ql;
 
-import org.uva.taxfree.ql.ast.AstBuilder;
+import org.uva.taxfree.ql.ast.QlAstBuilder;
 import org.uva.taxfree.ql.gui.*;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.blocks.FormNode;
@@ -20,9 +20,9 @@ public class Main {
             return;
         }
 
-        AstBuilder builder = new AstBuilder(inputFile);
+        QlAstBuilder builder = new QlAstBuilder(inputFile);
         MessageList semanticsMessages = new MessageList();
-        FormNode ast = builder.generateTree(semanticsMessages);
+        FormNode ast = builder.generateAst(semanticsMessages);
 
         checkMessages(semanticsMessages);
 
