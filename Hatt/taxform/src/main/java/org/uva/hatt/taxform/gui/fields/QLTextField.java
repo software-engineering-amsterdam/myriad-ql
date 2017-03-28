@@ -40,7 +40,7 @@ public class QLTextField extends Field {
 
     @Override
     public void setValue(Value value) {
-        if (value != null) {
+        if (value.getValue() != null) {
             textField.setText(String.valueOf(value.getValue()));
         }
     }
