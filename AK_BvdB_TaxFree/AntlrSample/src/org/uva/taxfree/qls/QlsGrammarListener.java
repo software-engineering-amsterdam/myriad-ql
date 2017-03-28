@@ -5,8 +5,7 @@ import org.uva.taxfree.ql.gen.QLSGrammarBaseListener;
 import org.uva.taxfree.ql.gen.QLSGrammarParser;
 import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.qls.styleoption.*;
-import org.uva.taxfree.qls.styleoption.widget.SliderWidget;
-import org.uva.taxfree.qls.styleoption.widget.SpinboxWidget;
+import org.uva.taxfree.qls.styleoption.widget.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +27,10 @@ public class QlsGrammarListener extends QLSGrammarBaseListener {
 
     private void addStyleOption(StyleOption styleOption) {
         mCachedStyleOptions.add(styleOption);
+    }
+
+    private void cacheWidgetStyle(WidgetStyleOption widgetStyleOption) {
+        mCachedWidgetStyleOption = widgetStyleOption;
     }
 
     private List<StyleOption> popCachedStyles() {
@@ -68,15 +71,39 @@ public class QlsGrammarListener extends QLSGrammarBaseListener {
 
     // Enters
     @Override
-    public void enterSpinboxWidget(QLSGrammarParser.SpinboxWidgetContext ctx) {
-        super.enterSpinboxWidget(ctx);
-        mCachedWidgetStyleOption = new SpinboxWidget(createSourceInfo(ctx));
+    public void enterCheckboxWidget(QLSGrammarParser.CheckboxWidgetContext ctx) {
+        super.enterCheckboxWidget(ctx);
+        cacheWidgetStyle(new CheckboxWidget(createSourceInfo(ctx)));
+    }
+
+    @Override
+    public void enterDropdownWidget(QLSGrammarParser.DropdownWidgetContext ctx) {
+        super.enterDropdownWidget(ctx);
+        cacheWidgetStyle(new DropdownWidget(ctx.textTrue.getText(), ctx.textFalse.getText(), createSourceInfo(ctx)));
+    }
+
+    @Override
+    public void enterRadioWidget(QLSGrammarParser.RadioWidgetContext ctx) {
+        super.enterRadioWidget(ctx);
+        cacheWidgetStyle(new RadioWidget(ctx.textTrue.getText(), ctx.textFalse.getText(), createSourceInfo(ctx)));
     }
 
     @Override
     public void enterSliderWidget(QLSGrammarParser.SliderWidgetContext ctx) {
         super.enterSliderWidget(ctx);
-        mCachedWidgetStyleOption = new SliderWidget(createSourceInfo(ctx));
+        cacheWidgetStyle(new SliderWidget(createSourceInfo(ctx)));
+    }
+
+    @Override
+    public void enterSpinboxWidget(QLSGrammarParser.SpinboxWidgetContext ctx) {
+        super.enterSpinboxWidget(ctx);
+        cacheWidgetStyle(new SpinboxWidget(createSourceInfo(ctx)));
+    }
+
+    @Override
+    public void enterTextWidget(QLSGrammarParser.TextWidgetContext ctx) {
+        super.enterTextWidget(ctx);
+        cacheWidgetStyle(new TextWidget(createSourceInfo(ctx)));
     }
 
     @Override
