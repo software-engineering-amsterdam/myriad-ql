@@ -1,5 +1,6 @@
 package org.uva.hatt.taxform.ast.visitors;
 
+import org.uva.hatt.taxform.values.Undefined;
 import org.uva.hatt.taxform.values.Value;
 
 import java.util.HashMap;
@@ -14,11 +15,11 @@ public class EnvironmentsTable {
     }
 
     public Value find(String id) {
-        return values.get(id);
-    }
+        if (!values.containsKey(id)) {
+            return new Undefined();
+        }
 
-    public boolean contains(String id) {
-        return values.containsKey(id);
+        return values.get(id);
     }
 
     public int size() {
