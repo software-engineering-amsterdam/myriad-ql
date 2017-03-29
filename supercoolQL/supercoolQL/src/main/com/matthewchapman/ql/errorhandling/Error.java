@@ -6,6 +6,8 @@ import java.util.Objects;
 
 /**
  * Created by matt on 13/03/2017.
+ *
+ * Error implementation
  */
 class Error implements Comparable<Error> {
 

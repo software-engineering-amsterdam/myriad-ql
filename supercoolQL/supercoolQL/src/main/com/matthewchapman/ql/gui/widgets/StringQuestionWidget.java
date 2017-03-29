@@ -17,7 +17,7 @@ public class StringQuestionWidget extends QuestionWidget {
     private final TextField answer;
 
     public StringQuestionWidget(Question question, Value value, QuestionChangeObserver observer) {
-        super(question, observer);
+        super(question);
 
         answer = new TextField();
         answer.setOnKeyPressed(event -> {
@@ -32,8 +32,8 @@ public class StringQuestionWidget extends QuestionWidget {
     }
 
     @Override
-    public void setEditable(boolean value) {
-        answer.setEditable(value);
-        answer.setDisable(value);
+    public void setCalculated() {
+        answer.setEditable(false);
+        answer.setDisable(false);
     }
 }

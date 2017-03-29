@@ -10,13 +10,15 @@ import javafx.scene.layout.GridPane;
 
 /**
  * Created by matt on 22/03/2017.
+ *
+ * Concrete widget for boolean questions
  */
 public class BooleanQuestionWidget extends QuestionWidget {
 
     private final CheckBox answer;
 
     public BooleanQuestionWidget(Question question, Value value, QuestionChangeObserver observer) {
-        super(question, observer);
+        super(question);
 
         answer = new CheckBox();
         answer.setOnMouseClicked(event -> observer.notifyQuestionChanged(super.getQuestionID(), new BooleanValue(answer.isSelected())));
@@ -27,8 +29,8 @@ public class BooleanQuestionWidget extends QuestionWidget {
     }
 
     @Override
-    public void setEditable(boolean value) {
-        answer.setDisable(value);
+    public void setCalculated() {
+        answer.setDisable(true);
     }
 
 }

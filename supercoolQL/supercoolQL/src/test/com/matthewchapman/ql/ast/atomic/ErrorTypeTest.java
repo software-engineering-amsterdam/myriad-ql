@@ -11,6 +11,8 @@ import static org.junit.Assert.assertFalse;
 
 /**
  * Created by matt on 15/03/2017.
+ *
+ * Tests implementation of ErrorType
  */
 public class ErrorTypeTest {
 

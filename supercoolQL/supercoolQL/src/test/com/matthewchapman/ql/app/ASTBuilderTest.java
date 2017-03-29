@@ -17,6 +17,8 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by matt on 02/03/2017.
+ *
+ * Tests building of ASTs
  */
 public class ASTBuilderTest implements StatementVisitor<Void, String> {
 

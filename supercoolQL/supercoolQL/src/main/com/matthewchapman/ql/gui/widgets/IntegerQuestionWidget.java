@@ -17,7 +17,7 @@ public class IntegerQuestionWidget extends QuestionWidget {
     private final TextField answer;
 
     public IntegerQuestionWidget(Question question, Value value, QuestionChangeObserver observer) {
-        super(question, observer);
+        super(question);
 
         answer = new TextField();
         answer.setOnKeyPressed(event -> {
@@ -25,7 +25,6 @@ public class IntegerQuestionWidget extends QuestionWidget {
                 try {
                     observer.notifyQuestionChanged(super.getQuestionID(), new IntegerValue(Integer.parseInt(answer.getText())));
                 } catch (NumberFormatException e) {
-                    System.err.println("text inserted when there should be a number");
                     answer.setText("0");
                 }
             }
@@ -37,9 +36,9 @@ public class IntegerQuestionWidget extends QuestionWidget {
     }
 
     @Override
-    public void setEditable(boolean value) {
-        answer.setEditable(value);
-        answer.setDisable(value);
+    public void setCalculated() {
+        answer.setEditable(false);
+        answer.setDisable(false);
     }
 
 }

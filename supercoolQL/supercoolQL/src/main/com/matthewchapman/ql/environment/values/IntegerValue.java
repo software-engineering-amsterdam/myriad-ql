@@ -3,7 +3,7 @@ package com.matthewchapman.ql.environment.values;
 /**
  * Created by matt on 18/03/2017.
  */
-public class IntegerValue extends Value {
+public class IntegerValue implements Value {
 
     private final int value;
 
@@ -11,6 +11,10 @@ public class IntegerValue extends Value {
         this.value = input;
     }
 
+    @Override
+    public String getTypeAsString() {
+        return "INTEGER";
+    }
     @Override
     public String toString() {
         return Integer.toString(this.value);
@@ -67,18 +71,13 @@ public class IntegerValue extends Value {
     }
 
     @Override
-    public Value equalTo(IntegerValue value) {
-        return new BooleanValue(this.value == value.getValue());
-    }
-
-    @Override
     public Value equalTo(Value value) {
-        return value.equalTo(value);
+        return new BooleanValue(value.getValue().equals(this.value));
     }
 
     @Override
     public Value notEqualTo(IntegerValue value) {
-        return new BooleanValue(this.value != value.getValue());
+        return new BooleanValue(value.getValue() != this.value);
     }
 
     @Override

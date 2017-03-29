@@ -1,7 +1,6 @@
 package com.matthewchapman.ql.gui.widgets;
 
 import com.matthewchapman.ql.ast.statement.Question;
-import com.matthewchapman.ql.gui.QuestionChangeObserver;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -17,7 +16,7 @@ public abstract class QuestionWidget extends GridPane {
 
     private final String id;
 
-    QuestionWidget(Question question, QuestionChangeObserver observer) {
+    QuestionWidget(Question question) {
         this.id = question.getName();
         this.setId(id);
         this.setPadding(new Insets(5));
@@ -37,6 +36,6 @@ public abstract class QuestionWidget extends GridPane {
 
     String getQuestionID() { return this.id; }
 
-    public abstract void setEditable(boolean value);
+    public abstract void setCalculated();
 
 }

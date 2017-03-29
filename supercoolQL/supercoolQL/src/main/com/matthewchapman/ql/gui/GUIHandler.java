@@ -70,7 +70,7 @@ public class GUIHandler {
 
         if(environment.questionIsCalculated(name))
         {
-            widget.setEditable(false);
+            widget.setCalculated();
         }
         return widget;
     }
