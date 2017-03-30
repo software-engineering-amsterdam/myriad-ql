@@ -60,6 +60,8 @@ def main():
     print_errors(errors)
     exit_on_critcal_error(errors)
 
+    exit_function = lambda app: export(json_file, app.environment)
+
     layout_file = qls_filename(form_file)
 
     if isfile(layout_file):
@@ -71,14 +73,12 @@ def main():
         print_errors(errors)
         exit_on_critcal_error(errors)
 
-        QlsApp(form, layout, on_exit=lambda app:
-               export(json_file, app.environment)).start()
+        QlsApp(form, layout, on_exit=exit_function).start()
 
     else:
         WarningMessage.print("qls filename \"{}\" does not "
                              "exist".format(layout_file))
-        QlApp(form, on_exit=lambda app:
-              export(json_file, app.environment)).start()
+        QlApp(form, on_exit=exit_function).start()
 
 if __name__ == "__main__":
     main()
