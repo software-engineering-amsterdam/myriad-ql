@@ -2,9 +2,9 @@ from unittest import TestCase, main
 
 from ql.grammar import parse_string
 from ql.datatypes import *
-from ql.visitors.symbol_checker import SymbolChecker
-from ql.visitors.type_checker import TypeChecker
-from ql.visitors.dependency_checker import DependencyChecker
+from ql.traversals.symbol_checker import SymbolChecker
+from ql.traversals.type_checker import TypeChecker
+from ql.traversals.dependency_checker import DependencyChecker
 
 
 class TestSymbolChecker(TestCase):

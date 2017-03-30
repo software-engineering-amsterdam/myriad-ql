@@ -2,8 +2,8 @@ from unittest import TestCase, main
 
 from ql.datatypes import *
 from qls.grammar import parse_string
-from qls.visitors.symbol_checker import SymbolChecker
-from qls.visitors.type_checker import TypeChecker
+from qls.traversals.symbol_checker import SymbolChecker
+from qls.traversals.type_checker import TypeChecker
 
 
 class TestSymbolChecker(TestCase):

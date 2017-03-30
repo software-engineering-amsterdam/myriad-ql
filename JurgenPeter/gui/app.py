@@ -1,10 +1,10 @@
 from appJar import gui
 
-from gui.visitors.ql_gui_builder import QlGuiBuilder
-from gui.visitors.qls_gui_builder import QlsGuiBuilder
-from gui.visitors.computation_updater import ComputationUpdater
-from gui.visitors.ql_gui_updater import QlGuiUpdater
-from gui.visitors.qls_gui_updater import QlsGuiUpdater
+from gui.traversals.ql_gui_builder import QlGuiBuilder
+from gui.traversals.qls_gui_builder import QlsGuiBuilder
+from gui.traversals.computation_updater import ComputationUpdater
+from gui.traversals.ql_gui_updater import QlGuiUpdater
+from gui.traversals.qls_gui_updater import QlsGuiUpdater
 
 
 class App:

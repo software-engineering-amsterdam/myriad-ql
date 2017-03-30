@@ -1,5 +1,5 @@
-from qls.visitors.symbol_checker import SymbolChecker as QlsSymbolChecker
-from qls.visitors.type_checker import TypeChecker as QlsTypeChecker
+from qls.traversals.symbol_checker import SymbolChecker as QlsSymbolChecker
+from qls.traversals.type_checker import TypeChecker as QlsTypeChecker
 
 
 def check(layout, symboltable, errors=[]):
