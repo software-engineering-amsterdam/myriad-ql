@@ -68,11 +68,6 @@ form exampleForm {
     - [x] Make all tests return Error objects
     - [x] Halt on bad error - don't throw exception!
     - [x] Output in GUI
-- [ ] GUI generation
+- [x] GUI generation
 - [x] Unit tests
-
-# ToDo
-
-- [ ] Finish adding line/column metadata to AST nodes
-    - [ ] Clean up line/column inheritance from TreeNode
     

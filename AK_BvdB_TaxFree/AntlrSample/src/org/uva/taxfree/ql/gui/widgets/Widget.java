@@ -56,7 +56,11 @@ public abstract class Widget {
     }
 
     protected void applyStyle(JPanel panel, JLabel label, QlsStyle qlsStyle) {
-        // Only used for QLS
+        // Intentionally left blank
+    }
+
+    public String getId() {
+        return mId;
     }
 
 }

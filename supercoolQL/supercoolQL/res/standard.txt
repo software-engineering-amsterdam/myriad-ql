@@ -13,12 +13,7 @@ form taxOfficeExample {
       privateDebt: integer;
     "Value residue:"
       valueResidue: integer =
-        (sellingPrice - privateDebt);
-  }
-
-  if (hasBoughtHouse && sellingPrice > 12) {
-    "it works!"
-    questionworks:string;
+        (sellingPrice * privateDebt);
   }
 
 }

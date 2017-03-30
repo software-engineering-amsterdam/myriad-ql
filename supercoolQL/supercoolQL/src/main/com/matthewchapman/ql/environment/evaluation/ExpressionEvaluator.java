@@ -24,8 +24,7 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
 
     public Value evaluateExpression(String id, Expression expression, ValueTable valueTable) {
         this.valueTable = valueTable;
-        Value value = expression.accept(this, id);
-        return value;
+        return expression.accept(this, id);
     }
 
     @Override

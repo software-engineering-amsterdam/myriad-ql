@@ -55,16 +55,16 @@ public class QuestionForm implements FormListener {
         mFrame.setPreferredSize(new Dimension(640, 480));
         mFrame.pack();
         mFrame.setLocationRelativeTo(null);
+        generatePanelContent();
         updateForm();
     }
 
     public void addWidget(Widget widget) {
-        widget.registerToPanel(mWidgetPanel);
-        widget.callOnUpdate(this);
         mWidgets.add(widget);
     }
 
     public void updateForm() {
+
         for (Widget widget : mWidgets) {
             widget.updateValues(mSymbolTable);
         }
@@ -74,9 +74,21 @@ public class QuestionForm implements FormListener {
         }
     }
 
-    public void applyStyle(QlsStyle qlsStyle) {
-        for (Widget w : mWidgets) {
-            w.updateStyle(qlsStyle);
+    private void generatePanelContent() {
+        mWidgetPanel.removeAll();
+        for (Widget widget : mWidgets) {
+            widget.callOnUpdate(this);
+            registerWidget(widget);
         }
+        registerToPanel(mWidgetPanel);
     }
+
+    protected void registerWidget(Widget widget) {
+        widget.registerToPanel(mWidgetPanel);
+    }
+
+    protected void registerToPanel(JPanel panel) {
+        // intentionally left blank
+    }
+
 }

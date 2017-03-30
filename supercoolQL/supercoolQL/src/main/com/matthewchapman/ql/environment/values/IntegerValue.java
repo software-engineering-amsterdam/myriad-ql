@@ -128,7 +128,7 @@ public class IntegerValue extends Value {
 
     @Override
     public Value negate(IntegerValue value) {
-        return new IntegerValue(-this.value);
+        return new IntegerValue(-value.getValue());
     }
 
     @Override

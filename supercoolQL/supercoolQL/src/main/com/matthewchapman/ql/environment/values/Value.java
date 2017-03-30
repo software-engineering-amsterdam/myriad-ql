@@ -13,7 +13,7 @@ public abstract class Value {
         throw new InvalidOperationException(value);
     }
 
-    public Value add(IntegerValue value) {
+    Value add(IntegerValue value) {
         throw new InvalidOperationException(value);
     }
 
@@ -29,7 +29,7 @@ public abstract class Value {
         throw new InvalidOperationException(value);
     }
 
-    public Value subtract(IntegerValue value) {
+    Value subtract(IntegerValue value) {
         throw new InvalidOperationException(value);
     }
 
@@ -37,7 +37,7 @@ public abstract class Value {
         throw new InvalidOperationException(value);
     }
 
-    public Value divide(IntegerValue value) {
+    Value divide(IntegerValue value) {
         throw new InvalidOperationException(value);
     }
 
@@ -45,7 +45,7 @@ public abstract class Value {
         throw new InvalidOperationException(value);
     }
 
-    public Value multiply(IntegerValue value) {
+    Value multiply(IntegerValue value) {
         throw new InvalidOperationException(value);
     }
 
@@ -57,11 +57,11 @@ public abstract class Value {
         throw new InvalidOperationException(value);
     }
 
-    public Value equalTo(StringValue value) {
+    Value equalTo(StringValue value) {
         throw new InvalidOperationException(value);
     }
 
-    public Value equalTo(BooleanValue value) {
+    Value equalTo(BooleanValue value) {
         throw new InvalidOperationException(value);
     }
 
@@ -69,15 +69,15 @@ public abstract class Value {
         throw new InvalidOperationException(value);
     }
 
-    public Value notEqualTo(IntegerValue value) {
+    Value notEqualTo(IntegerValue value) {
         throw new InvalidOperationException(value);
     }
 
-    public Value notEqualTo(StringValue value) {
+    Value notEqualTo(StringValue value) {
         throw new InvalidOperationException(value);
     }
 
-    public Value notEqualTo(BooleanValue value) {
+    Value notEqualTo(BooleanValue value) {
         throw new InvalidOperationException(value);
     }
 
@@ -85,7 +85,7 @@ public abstract class Value {
         throw new InvalidOperationException(value);
     }
 
-    public Value greaterThan(IntegerValue value) {
+    Value greaterThan(IntegerValue value) {
         throw new InvalidOperationException(value);
     }
 
@@ -101,7 +101,7 @@ public abstract class Value {
         throw new InvalidOperationException(value);
     }
 
-    public Value greaterThanEqualTo(IntegerValue value) {
+    Value greaterThanEqualTo(IntegerValue value) {
         throw new InvalidOperationException(value);
     }
 
@@ -117,7 +117,7 @@ public abstract class Value {
         throw new InvalidOperationException(value);
     }
 
-    public Value lessThan(IntegerValue value) {
+    Value lessThan(IntegerValue value) {
         throw new InvalidOperationException(value);
     }
 
@@ -133,7 +133,7 @@ public abstract class Value {
         throw new InvalidOperationException(value);
     }
 
-    public Value lessThanEqualTo(IntegerValue value) {
+    Value lessThanEqualTo(IntegerValue value) {
         throw new InvalidOperationException(value);
     }
 
@@ -157,7 +157,7 @@ public abstract class Value {
         throw new InvalidOperationException(value);
     }
 
-    public Value logicalAnd(BooleanValue value) {
+    Value logicalAnd(BooleanValue value) {
         throw new InvalidOperationException(value);
     }
 
@@ -173,7 +173,7 @@ public abstract class Value {
         throw new InvalidOperationException(value);
     }
 
-    public Value logicalOr(BooleanValue value) {
+    Value logicalOr(BooleanValue value) {
         throw new InvalidOperationException(value);
     }
 
@@ -181,7 +181,7 @@ public abstract class Value {
         throw new InvalidOperationException(value);
     }
 
-    public Value negate(IntegerValue value) {
+    Value negate(IntegerValue value) {
         throw new InvalidOperationException(value);
     }
 
@@ -189,7 +189,7 @@ public abstract class Value {
         throw new InvalidOperationException(value);
     }
 
-    public Value negate(BooleanValue value) {
+    Value negate(BooleanValue value) {
         throw new InvalidOperationException(value);
     }
 

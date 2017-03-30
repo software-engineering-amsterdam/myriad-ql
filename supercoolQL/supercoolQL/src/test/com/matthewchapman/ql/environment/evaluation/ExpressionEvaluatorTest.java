@@ -34,10 +34,11 @@ public class ExpressionEvaluatorTest {
         ValueTable values = new ValueTable();
 
         ExpressionEvaluator eval = new ExpressionEvaluator();
-        eval.evaluateExpression("test1", test1, values);
-        eval.evaluateExpression("test2", test2, values);
-        eval.evaluateExpression("test3", test3, values);
-        eval.evaluateExpression("test4", test4, values);
+
+        values.addOrUpdateValue("test1", eval.evaluateExpression("test1", test1, values));
+        values.addOrUpdateValue("test2", eval.evaluateExpression("test2", test2, values));
+        values.addOrUpdateValue("test3", eval.evaluateExpression("test3", test3, values));
+        values.addOrUpdateValue("test4", eval.evaluateExpression("test4", test4, values));
 
         assertNotNull(values.getValueByID("test1"));
         assertNotNull(values.getValueByID("test2"));

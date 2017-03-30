@@ -20,25 +20,29 @@ public class FormEnvironment {
     private final ConditionTable conditions;
     private final QuestionTable questions;
     private final ValueTable values;
+    private final String formName;
 
-    FormEnvironment(ExpressionTable expressions, ConditionTable conditions, QuestionTable questions, ValueTable values) {
+    FormEnvironment(ExpressionTable expressions, ConditionTable conditions, QuestionTable questions, ValueTable values, String formName) {
         this.expressions = expressions;
         this.conditions = conditions;
         this.questions = questions;
         this.values = values;
+        this.formName = formName;
     }
 
     public List<Question> getQuestionsAsList() { return this.questions.getQuestionsAsList(); }
 
-    public Value getValueByName(String name) { return this.values.getValueByID(name); }
+    public Value getValueByID(String name) { return this.values.getValueByID(name); }
 
-    public Expression getConditionByName(String name) { return this.conditions.getConditionByID(name); }
+    public Expression getConditionByID(String name) { return this.conditions.getConditionByID(name); }
 
     public boolean questionHasCondition(String name) { return this.conditions.questionHasCondition(name); }
 
     public boolean questionIsCalculated(String name) { return this.expressions.questionHasExpression(name); }
 
     public ValueTable getValues() { return this.values; }
+
+    public String getFormName() { return this.formName; }
 
     public void addOrUpdateValue(String id, Value value) {
         this.values.addOrUpdateValue(id, value);

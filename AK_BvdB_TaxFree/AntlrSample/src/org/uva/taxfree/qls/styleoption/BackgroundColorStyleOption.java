@@ -1,12 +1,15 @@
 package org.uva.taxfree.qls.styleoption;
 
+import org.uva.taxfree.ql.model.SourceInfo;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class BackgroundColorStyleOption extends StyleOption {
     private final String mColorValue;
 
-    public BackgroundColorStyleOption(String colorValue) {
+    public BackgroundColorStyleOption(String colorValue, SourceInfo sourceInfo) {
+        super(sourceInfo);
         mColorValue = colorValue;
     }
 
