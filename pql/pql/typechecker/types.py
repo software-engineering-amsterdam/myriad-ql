@@ -7,6 +7,7 @@ class DataTypes(Enum):
     money = "money"
     integer = "integer"
     string = "string"
+    none = "none"
 
 
 def is_number_type(node_data_type):

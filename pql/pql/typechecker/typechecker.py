@@ -1,5 +1,4 @@
 # coding=utf-8
-from pql.ast.ast import Boolean
 from pql.messages.error import Error
 from pql.traversal.BinaryExpressionVisitor import BinaryExpressionVisitor
 from pql.traversal.FormVisitor import FormVisitor
@@ -7,6 +6,7 @@ from pql.traversal.IdentifierVisitor import IdentifierVisitor
 from pql.traversal.TypeVisitor import TypeVisitor
 from pql.traversal.UnaryExpressionVisitor import UnaryExpressionVisitor
 from pql.typechecker.types import DataTypes
+from pql.typechecker.typecheckers import checker_of_data_type
 
 
 class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeVisitor, UnaryExpressionVisitor):
@@ -26,7 +26,7 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
 
     def conditional_if(self, node, args=None):
         condition_result = node.condition.apply(self)
-        if condition_result is None or condition_result.data_type is not DataTypes.boolean:
+        if condition_result.data_type is not DataTypes.boolean:
             self.errors.append(
                 Error("Invalid expression in a conditional statement, it expected a [DataTypes.boolean] "
                       "expression but received [{}], at location {}"
@@ -41,159 +41,102 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
         return node.data_type
 
     def assignment(self, node, args=None):
-        lhs = node.data_type.apply(self).checker()
+        lhs = node.data_type.apply(self)
+        lhs_checker = checker_of_data_type[lhs.data_type]
         expression_type = node.expression.apply(self)
-        result = lhs.assignment(expression_type)
+        result = lhs_checker.assignment(expression_type)
 
-        if result is None:
+        if result.data_type is DataTypes.none:
             self.errors.append(
                 Error("Expression result [{}] did not match declared type [{}], at location: {}"
                          .format(result, node.data_type.data_type, node.expression.location), node.expression.location))
 
     def subtraction(self, node, args=None):
         lhs_type = node.lhs.apply(self)
-        if lhs_type is not None:
-            lhs_checker = lhs_type.checker()
-            rhs = node.rhs.apply(self)
-            if rhs is not None:
-                return lhs_checker.subtraction(rhs)
-        return None
+        lhs_checker = checker_of_data_type[lhs_type.data_type]
+        rhs = node.rhs.apply(self)
+        return lhs_checker.subtraction(rhs)
 
     def division(self, node, args=None):
         lhs_type = node.lhs.apply(self)
-        if lhs_type is not None:
-            lhs_checker = lhs_type.checker()
-            rhs = node.rhs.apply(self)
-            if rhs is not None:
-                return lhs_checker.division(rhs)
-        return None
+        lhs_checker = checker_of_data_type[lhs_type.data_type]
+        rhs = node.rhs.apply(self)
+        return lhs_checker.division(rhs)
 
     def multiplication(self, node, args=None):
         lhs_type = node.lhs.apply(self)
-        if lhs_type is not None:
-            lhs_checker = lhs_type.checker()
-            rhs = node.rhs.apply(self)
-            if rhs is not None:
-                return lhs_checker.multiplication(rhs)
-        return None
+        lhs_checker = checker_of_data_type[lhs_type.data_type]
+        rhs = node.rhs.apply(self)
+        return lhs_checker.multiplication(rhs)
 
     def addition(self, node, args=None):
         lhs_type = node.lhs.apply(self)
-        if lhs_type is not None:
-            lhs_checker = lhs_type.checker()
-            rhs = node.rhs.apply(self)
-            if rhs is not None:
-                return lhs_checker.addition(rhs)
-        return None
+        lhs_checker = checker_of_data_type[lhs_type.data_type]
+        rhs = node.rhs.apply(self)
+        return lhs_checker.addition(rhs)
 
     def greater_exclusive(self, node, args=None):
         lhs_type = node.lhs.apply(self)
-        if lhs_type is not None:
-            lhs_checker = lhs_type.checker()
-            rhs = node.rhs.apply(self)
-            if rhs is not None:
-                result = lhs_checker.greater_exclusive(rhs)
-                if result is not None:
-                    return Boolean(0, '')
-        return None
+        lhs_checker = checker_of_data_type[lhs_type.data_type]
+        rhs = node.rhs.apply(self)
+        return lhs_checker.greater_exclusive(rhs)
 
     def greater_inclusive(self, node, args=None):
         lhs_type = node.lhs.apply(self)
-        if lhs_type is not None:
-            lhs_checker = lhs_type.checker()
-            rhs = node.rhs.apply(self)
-            if rhs is not None:
-                result = lhs_checker.greater_inclusive(rhs)
-                if result is not None:
-                    return Boolean(0, '')
-        return None
+        lhs_checker = checker_of_data_type[lhs_type.data_type]
+        rhs = node.rhs.apply(self)
+        return lhs_checker.greater_inclusive(rhs)
 
     def lower_inclusive(self, node, args=None):
         lhs_type = node.lhs.apply(self)
-        if lhs_type is not None:
-            lhs_checker = lhs_type.checker()
-            rhs = node.rhs.apply(self)
-            if rhs is not None:
-                result = lhs_checker.lower_inclusive(rhs)
-                if result is not None:
-                    return Boolean(0, '')
-        return None
+        lhs_checker = checker_of_data_type[lhs_type.data_type]
+        rhs = node.rhs.apply(self)
+        return lhs_checker.lower_inclusive(rhs)
 
     def lower_exclusive(self, node, args=None):
         lhs_type = node.lhs.apply(self)
-        if lhs_type is not None:
-            lhs_checker = lhs_type.checker()
-            rhs = node.rhs.apply(self)
-            if rhs is not None:
-                result = lhs_checker.lower_exclusive(rhs)
-                if result is not None:
-                    return Boolean(0, '')
-        return None
+        lhs_checker = checker_of_data_type[lhs_type.data_type]
+        rhs = node.rhs.apply(self)
+        return lhs_checker.lower_exclusive(rhs)
 
     def equality(self, node, args=None):
         lhs_type = node.lhs.apply(self)
-        if lhs_type is not None:
-            lhs_checker = lhs_type.checker()
-            rhs = node.rhs.apply(self)
-            if rhs is not None:
-                result = lhs_checker.equality(rhs)
-                if result is not None:
-                    return Boolean(0, '')
-        return None
+        lhs_checker = checker_of_data_type[lhs_type.data_type]
+        rhs = node.rhs.apply(self)
+        return lhs_checker.equality(rhs)
 
     def inequality(self, node, args=None):
         lhs_type = node.lhs.apply(self)
-        if lhs_type is not None:
-            lhs_checker = lhs_type.checker()
-            rhs = node.rhs.apply(self)
-            if rhs is not None:
-                result = lhs_checker.inequality(rhs)
-                if result is not None:
-                    return Boolean(0, '')
-        return None
+        lhs_checker = checker_of_data_type[lhs_type.data_type]
+        rhs = node.rhs.apply(self)
+        return lhs_checker.inequality(rhs)
 
     def and_(self, node, args=None):
         lhs_type = node.lhs.apply(self)
-        if lhs_type is not None:
-            lhs_checker = lhs_type.checker()
-            rhs = node.rhs.apply(self)
-            if rhs is not None:
-                result = lhs_checker.and_(rhs)
-                if result is not None:
-                    return Boolean(0, '')
-        return None
+        lhs_checker = checker_of_data_type[lhs_type.data_type]
+        rhs = node.rhs.apply(self)
+        return lhs_checker.and_(rhs)
 
     def or_(self, node, args=None):
         lhs_type = node.lhs.apply(self)
-        if lhs_type is not None:
-            lhs_checker = lhs_type.checker()
-            rhs = node.rhs.apply(self)
-            if rhs is not None:
-                result = lhs_checker.or_(rhs)
-                if result is not None:
-                    return Boolean(0, '')
-        return None
+        lhs_checker = checker_of_data_type[lhs_type.data_type]
+        rhs = node.rhs.apply(self)
+        return lhs_checker.or_(rhs)
 
     def negation(self, node, args=None):
         operand_result = node.operand.apply(self)
-        if operand_result is not None:
-            lhs_checker = operand_result.checker()
-            return lhs_checker.negation(node)
-        return None
+        lhs_checker = checker_of_data_type[operand_result.data_type]
+        return lhs_checker.negation(node)
 
     def positive(self, node, args=None):
         operand_result = node.operand.apply(self)
-        if operand_result is not None:
-            lhs_checker = operand_result.checker()
-            return lhs_checker.positive(node)
-        return None
+        lhs_checker = checker_of_data_type[operand_result.data_type]
+        return lhs_checker.positive(node)
 
     def negative(self, node, args=None):
         operand_result = node.operand.apply(self)
-        if operand_result is not None:
-            lhs_checker = operand_result.checker()
-            return lhs_checker.negative(node)
-        return None
+        lhs_checker = checker_of_data_type[operand_result.data_type]
+        return lhs_checker.negative(node)
 
     def identifier(self, node, args=None):
         return self.symbol_table[node.name]
@@ -209,11 +152,3 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
 
     def string(self, node, args=None):
         return node
-
-# Voeg undefined type toe
-# Maak dict van data_type -> typechecker
-# Gebruik dict om typechecker op te halen van het type
-# Undefined typechecker returned altijd het nieuwe undefined type
-# Door het gebruik van undefined kunnen al die is not None checks eruit
-# Als typechecker niet meer in AST zit kan je weer object types returnen
-# Profit

@@ -1,60 +1,38 @@
 # coding=utf-8
 from pql.traversal.BinaryExpressionVisitor import BinaryExpressionVisitor
 from pql.traversal.UnaryExpressionVisitor import UnaryExpressionVisitor
-from pql.typechecker.types import is_number_type
 from pql.typechecker.none_type import NoneType
-from pql.ast.ast import Money, Boolean
 
 
-class MoneyTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
+class NoneTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
     def subtraction(self, node, args=None):
-        if is_number_type(node.data_type):
-            return Money()
         return NoneType()
 
     def division(self, node, args=None):
-        if is_number_type(node.data_type):
-            return Money()
         return NoneType()
 
     def multiplication(self, node, args=None):
-        if is_number_type(node.data_type):
-            return Money()
         return NoneType()
 
     def addition(self, node, args=None):
-        if is_number_type(node.data_type):
-            return Money()
         return NoneType()
 
     def greater_exclusive(self, node, args=None):
-        if is_number_type(node.data_type):
-            return Boolean()
         return NoneType()
 
     def greater_inclusive(self, node, args=None):
-        if is_number_type(node.data_type):
-            return Boolean()
         return NoneType()
 
     def lower_inclusive(self, node, args=None):
-        if is_number_type(node.data_type):
-            return Boolean()
         return NoneType()
 
-    def lower_exclusive(self, node):
-        if is_number_type(node.data_type):
-            return Boolean()
+    def lower_exclusive(self, node, args=None):
         return NoneType()
 
     def equality(self, node, args=None):
-        if is_number_type(node.data_type):
-            return Boolean()
         return NoneType()
 
     def inequality(self, node, args=None):
-        if is_number_type(node.data_type):
-            return Boolean()
         return NoneType()
 
     def and_(self, node, args=None):
@@ -67,12 +45,10 @@ class MoneyTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
         return NoneType()
 
     def positive(self, node, args=None):
-        return node.operand
+        return NoneType()
 
     def negative(self, node, args=None):
-        return node.operand
+        return NoneType()
 
     def assignment(self, node, args=None):
-        if node is not None and is_number_type(node.data_type):
-            return Money()
         return NoneType()
