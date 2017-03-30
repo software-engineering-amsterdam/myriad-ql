@@ -42,7 +42,7 @@ class MoneyTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
             return Boolean()
         return NoneType()
 
-    def lower_exclusive(self, node):
+    def lower_exclusive(self, node, args=None):
         if is_number_type(node.data_type):
             return Boolean()
         return NoneType()
@@ -73,6 +73,6 @@ class MoneyTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
         return node.operand
 
     def assignment(self, node, args=None):
-        if node is not None and is_number_type(node.data_type):
+        if is_number_type(node.data_type):
             return Money()
         return NoneType()

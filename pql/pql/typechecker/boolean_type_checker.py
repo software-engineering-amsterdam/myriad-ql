@@ -1,9 +1,9 @@
 # coding=utf-8
+from pql.ast.ast import Boolean
 from pql.traversal.BinaryExpressionVisitor import BinaryExpressionVisitor
 from pql.traversal.UnaryExpressionVisitor import UnaryExpressionVisitor
-from pql.ast.ast import Boolean
-from pql.typechecker.types import DataTypes
 from pql.typechecker.none_type import NoneType
+from pql.typechecker.types import DataTypes
 
 
 class BooleanTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
@@ -57,6 +57,6 @@ class BooleanTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
         return NoneType()
 
     def assignment(self, node, args=None):
-        if node is not None and node.data_type is DataTypes.boolean:
+        if node.data_type is DataTypes.boolean:
             return Boolean()
         return NoneType()

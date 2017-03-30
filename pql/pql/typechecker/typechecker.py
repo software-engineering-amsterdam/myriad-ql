@@ -5,7 +5,7 @@ from pql.traversal.FormVisitor import FormVisitor
 from pql.traversal.IdentifierVisitor import IdentifierVisitor
 from pql.traversal.TypeVisitor import TypeVisitor
 from pql.traversal.UnaryExpressionVisitor import UnaryExpressionVisitor
-from pql.typechecker.types import DataTypes
+from pql.typechecker.types import DataTypes, is_number_type
 from pql.typechecker.typecheckers import checker_of_data_type
 
 
@@ -46,7 +46,9 @@ class TypeChecker(FormVisitor, BinaryExpressionVisitor, IdentifierVisitor, TypeV
         expression_type = node.expression.apply(self)
         result = lhs_checker.assignment(expression_type)
 
-        if result.data_type is DataTypes.none:
+        if is_number_type(result.data_type) and is_number_type(node.data_type.data_type):
+            pass
+        elif result.data_type is not node.data_type.data_type:
             self.errors.append(
                 Error("Expression result [{}] did not match declared type [{}], at location: {}"
                          .format(result, node.data_type.data_type, node.expression.location), node.expression.location))

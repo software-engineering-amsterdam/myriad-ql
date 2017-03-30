@@ -19,6 +19,7 @@ class StringTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
     def addition(self, node, args=None):
         if node.data_type is DataTypes.string:
             return node
+        return NoneType()
 
     def greater_exclusive(self, node, args=None):
         if node.data_type is DataTypes.string:
@@ -62,6 +63,6 @@ class StringTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
         return NoneType()
 
     def assignment(self, node, args=None):
-        if node is not None and (node.data_type is DataTypes.string):
+        if node.data_type is DataTypes.string:
             return node
         return NoneType()

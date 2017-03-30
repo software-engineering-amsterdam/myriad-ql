@@ -73,6 +73,6 @@ class IntegerTypeChecker(BinaryExpressionVisitor, UnaryExpressionVisitor):
         return node.operand
 
     def assignment(self, node, args=None):
-        if node is not None and is_number_type(node.data_type):
+        if is_number_type(node.data_type):
             return node
         return NoneType()
