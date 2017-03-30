@@ -32,15 +32,15 @@ class Page(QWizardPage, QMainWindow):
     def trigger_conditional_if(self, evaluator, environment):
         for if_block_container, node in self.conditional_if_list:
             result = node.condition.apply(evaluator, environment)
-            cond = (result is not None and result)
-            self.toggle_container(if_block_container, cond)
+            enabled = (result is not None and result)
+            self.toggle_container(if_block_container, enabled)
 
     def trigger_conditional_if_else(self, evaluator, environment):
         for if_container, else_container, node in self.conditional_if_else_list:
             result = node.condition.apply(evaluator, environment)
-            cond = (result is not None and result)
-            self.toggle_container(if_container, cond)
-            self.toggle_container(else_container, not cond)
+            enabled = (result is not None and result)
+            self.toggle_container(if_container, enabled)
+            self.toggle_container(else_container, not enabled)
 
     def toggle_container(self, container, enabled):
         container.setEnabled(enabled)
