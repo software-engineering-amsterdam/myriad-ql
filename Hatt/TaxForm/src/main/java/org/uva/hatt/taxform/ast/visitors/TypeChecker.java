@@ -17,8 +17,9 @@ import org.uva.hatt.taxform.ast.nodes.types.Integer;
 import org.uva.hatt.taxform.ast.nodes.types.String;
 import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.DuplicateDeclaration;
 import org.uva.hatt.taxform.ast.visitors.exceptionHandler.ExceptionHandler;
-//import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.TypeMismatch;
-//import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.UndefinedReference;
+import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.InvalidOperandsTypeToOperator;
+import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.TypeMismatch;
+import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.UndefinedReference;
 import org.uva.hatt.taxform.ast.visitors.exceptionHandler.warning.DuplicateLabel;
 
 import java.util.*;
@@ -66,7 +67,7 @@ public class TypeChecker implements Visitor{
     @Override
     public IfThen visit(IfThen node) {
         Expression expression = node.getCondition();
-        Object type = expression.accept(this);
+        validateIfCondition(expression, node.getLineNumber());
 
         node.getCondition().accept(this);
 
@@ -77,18 +78,23 @@ public class TypeChecker implements Visitor{
     @Override
     public IfThenElse visit(IfThenElse node){
         Expression expression = node.getCondition();
-        ValueType type = (ValueType) expression.accept(this);
-
-        if(!type.isBoolean())
-        {
-//            exceptionHandler.addError(new TypeMismatch(node.getLineNumber(), type.name()));
-        }
+        validateIfCondition(expression, node.getLineNumber());
 
         node.getCondition().accept(this);
 
         node.getThenStatements().forEach(item -> item.accept(this));
         node.getElseStatements().forEach(item -> item.accept(this));
         return null;
+    }
+
+    private void validateIfCondition(Expression expression, int line)
+    {
+        ValueType type = (ValueType) expression.accept(this);
+
+        if(!type.isBoolean())
+        {
+            exceptionHandler.addError(new TypeMismatch(line, type.name()));
+        }
     }
 
     @Override
@@ -128,27 +134,27 @@ public class TypeChecker implements Visitor{
 
     @Override
     public ValueType visit(Identifier identifier) {
-//        if (declarations.keySet().contains(identifier.getId())) {
-//            return declarations.get(identifier.getId());
-//        }
-//
-//        exceptionHandler.addError(new UndefinedReference(identifier.getLineNumber(), identifier.getId()));
-        return null;
+        if (declarations.keySet().contains(identifier.getValue())) {
+            return declarations.get(identifier.getValue());
+        }
+
+        exceptionHandler.addError(new UndefinedReference(identifier.getLineNumber(), identifier.getValue()));
+        return new Unknown();
     }
 
     @Override
-    public StringerLiteral visit(StringerLiteral stringerLiteral) {
-        return null;
+    public ValueType visit(StringerLiteral stringerLiteral) {
+        return new String(0);
     }
 
     @Override
-    public IntegerLiteral visit(IntegerLiteral integerLiteral) {
-        return null;
+    public ValueType visit(IntegerLiteral integerLiteral) {
+        return new Integer(0);
     }
 
     @Override
-    public BooleanLiteral visit(BooleanLiteral booleanLiteral) {
-        return null;
+    public ValueType visit(BooleanLiteral booleanLiteral) {
+        return new Boolean(0);
     }
 
     @Override
@@ -156,88 +162,150 @@ public class TypeChecker implements Visitor{
 
     @Override
     public ValueType visit(Addition addition){
-
-        return new Integer(1);
-        //return visitBinaryExpression(addition);
+        return validateNumericType(addition, "Addition");
     }
 
     @Override
     public ValueType visit(Division division){
-        return new Boolean(1);
-        //return visitBinaryExpression(division);
+        return validateNumericType(division, "Division");
     }
 
     @Override
     public ValueType visit(Equal equal){
-        return new Boolean(1);
-        //return visitBinaryExpression(equal);
+        ValueType expectedType = new String(0);
+
+        if (!validateBinaryExpression(equal, expectedType).equals(new Unknown())) {
+            return new Boolean(0);
+        }
+
+        ValueType type = validateNumericType(equal, "Equal");
+
+        if (type.equals(new Unknown()))
+        {
+            return type;
+        }
+        return new Boolean(0);
     }
 
     @Override
     public ValueType visit(GreaterThan greaterThan){
-        return new Boolean(1);
-        //return visitBinaryExpression(greaterThan);
+        ValueType type = validateNumericType(greaterThan, "Greater than");
+
+        if (type.equals(new Unknown()))
+        {
+            return type;
+        }
+        return new Boolean(0);
     }
 
     @Override
     public ValueType visit(GreaterThanOrEqual greaterThanOrEqual){
-        return new Boolean(1);
-        //return visitBinaryExpression(greaterThanOrEqual);
+        ValueType type = validateNumericType(greaterThanOrEqual, "Greater than or equal");
+
+        if (type.equals(new Unknown()))
+        {
+            return type;
+        }
+        return new Boolean(0);
     }
 
     @Override
     public ValueType visit(LessThan lessThan){
-        return new Boolean(1);
-        //return visitBinaryExpression(lessThan);
+        ValueType type = validateNumericType(lessThan, "Less than");
+
+        if (type.equals(new Unknown()))
+        {
+            return type;
+        }
+        return new Boolean(0);
     }
 
     @Override
     public ValueType visit(LessThanOrEqual lessThanOrEqual){
-        return new Boolean(1);
-        //return visitBinaryExpression(lessThanOrEqual);
+        ValueType type = validateNumericType(lessThanOrEqual, "Less than or equal");
+
+        if (type.equals(new Unknown()))
+        {
+            return type;
+        }
+        return new Boolean(0);
     }
 
     @Override
-    public LogicalAnd visit(LogicalAnd logicalAnd) {
-        return null;
+    public ValueType visit(LogicalAnd logicalAnd) {
+        ValueType expectedType = new Boolean(0);
+
+        if (!validateBinaryExpression(logicalAnd, expectedType).equals(new Unknown())) {
+            return expectedType;
+        }
+
+        exceptionHandler.addError(new InvalidOperandsTypeToOperator(logicalAnd.getLineNumber(), "Logical AND"));
+        return new Unknown();
     }
 
     @Override
-    public LogicalOr visit(LogicalOr logicalOr) {
-        return null;
+    public ValueType visit(LogicalOr logicalOr) {
+        ValueType expectedType = new Boolean(0);
+
+        if (!validateBinaryExpression(logicalOr, expectedType).equals(new Unknown())) {
+            return expectedType;
+        }
+
+        exceptionHandler.addError(new InvalidOperandsTypeToOperator(logicalOr.getLineNumber(), "Logical OR"));
+        return new Unknown();
     }
-
-//    @Override
-//    public Set<java.lang.String> visit(LogicalAnd logicalAnd){
-//
-//    }
-
-//    @Override
-//    public Set<java.lang.String> visit(LogicalOr){
-//
-//    }
 
     @Override
     public ValueType visit(Multiplication multiplication){
-        return new Boolean(1);
-        //return visitBinaryExpression(multiplication);
+        return validateNumericType(multiplication, "Multiplication");
     }
 
     @Override
     public ValueType visit(NotEqual notEqual){
-        return new Boolean(1);
-        //return visitBinaryExpression(notEqual);
+        ValueType expectedType = new String(0);
+
+        if (!validateBinaryExpression(notEqual, expectedType).equals(new Unknown())) {
+            return new Boolean(0);
+        }
+
+        ValueType type = validateNumericType(notEqual, "Not equal");
+
+        if (type.equals(new Unknown()))
+        {
+            return type;
+        }
+        return new Boolean(0);
     }
 
     @Override
     public ValueType visit(Subtraction subtraction){
-        return new Boolean(1);
-        //return visitBinaryExpression(subtraction);
+        return validateNumericType(subtraction, "Subtraction");
     }
 
-    private ValueType visitBinaryExpression(BooleanExpression expression){
-        ValueType lhsType = (ValueType)expression.getLhs().accept(this);
-        ValueType rhsType = (ValueType) expression.getRhs().accept(this);
-        return lhsType;
+    private ValueType validateNumericType(BooleanExpression expression, java.lang.String operationName){
+
+        if (!validateBinaryExpression(expression, new Integer(0)).equals(new Unknown())) {
+            return new Integer(0);
+        }
+        if (!validateBinaryExpression(expression, new Money(0)).equals(new Unknown())) {
+            return new Money(0);
+        }
+
+        exceptionHandler.addError(new InvalidOperandsTypeToOperator(expression.getLineNumber(), operationName));
+
+        return new Unknown();
+    }
+
+    private ValueType validateBinaryExpression(BooleanExpression expression, ValueType expectedType){
+        ValueType leftType = (ValueType) expression.getLhs().accept(this);
+        ValueType rightType = (ValueType) expression.getRhs().accept(this);
+
+        if (leftType.name().equals(rightType.name())) {
+            if (leftType.name().equals(expectedType.name())) {
+                return leftType;
+            }
+        }
+
+        return new Unknown();
     }
 }
