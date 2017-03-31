@@ -5,7 +5,7 @@ module Prophet
 
     class TextLiteral < Literal
       def associated_type
-        Type.new('text')
+        TextType.new
       end
 
       def eval(context)
@@ -15,7 +15,7 @@ module Prophet
 
     class NumberLiteral < Literal
       def associated_type
-        Type.new('number')
+        NumberType.new
       end
 
       def eval(context)
@@ -25,7 +25,7 @@ module Prophet
 
     class BoolLiteral < Literal
       def associated_type
-        Type.new('bool')
+        BoolType.new
       end
 
       def eval(context)

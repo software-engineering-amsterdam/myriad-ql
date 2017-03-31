@@ -4,7 +4,7 @@ module Prophet
       def check
         ast.select_by_type(:question_with_value).each do |question|
           expression_type = question.value.visit(Visitors::ExpressionType.new(type_mapping))
-          if expression_type == Ast::Type.new('undefined')
+          if expression_type == Ast::UndefinedType.new
             puts mismatch_error_formatter(question)
           elsif expression_type != question.type
             puts invalid_error_formatter(question, expression_type)
@@ -21,7 +21,7 @@ module Prophet
       def invalid_error_formatter(question, expression_type)
         "Value attached to question `#{question.identifier.name}` evaluates " \
         "to a type different than declared type (`#{expression_type.name}` " \
-        "vs `#{question.type.name}`, defined on " \
+        "instead of `#{question.type.name}`, defined on " \
         "#{question.line_and_column.join(':')})"
       end
 

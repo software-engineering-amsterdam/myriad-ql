@@ -4,6 +4,10 @@ module Prophet
     rule(number: simple(:x)) { Ast::NumberLiteral.new(x) }
     rule(bool: simple(:x)) { Ast::BoolLiteral.new(x) }
 
+    rule(type: 'text') { Ast::TextType.new }
+    rule(type: 'number') { Ast::NumberType.new }
+    rule(type: 'bool') { Ast::BoolType.new }
+
     rule(identifier: simple(:identifier)) { Ast::Identifier.new(identifier) }
 
     rule(left: subtree(:left), operator: '*', right: subtree(:right)) { Ast::Multiplication.new(left, right) }

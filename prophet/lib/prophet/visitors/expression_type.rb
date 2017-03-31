@@ -3,7 +3,7 @@ module Prophet
     class ExpressionType
       def initialize(type_mapping)
         @type_mapping = type_mapping
-        @fallback = Ast::Type.new('undefined')
+        @fallback = Ast::UndefinedType.new
       end
 
       def visit_binary_expression(node)

@@ -4,9 +4,9 @@ module Prophet
       def check
         ast.select_by_type(:if_statement, :if_else_statement).each do |if_statement|
           expression_type = if_statement.condition.visit(Visitors::ExpressionType.new(type_mapping))
-          if expression_type == Ast::Type.new('undefined')
+          if expression_type == Ast::UndefinedType.new
             puts mismatch_error_formatter(if_statement)
-          elsif expression_type != Ast::Type.new('bool')
+          elsif expression_type != Ast::BoolType.new
             puts invalid_error_formatter(if_statement, expression_type)
           end
         end
