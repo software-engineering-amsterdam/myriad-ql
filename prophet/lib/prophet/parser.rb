@@ -33,9 +33,9 @@ module Prophet
 
     rule(:if_statement) { (str('if') >> space >> expression.as(:condition) >> block.as(:true_branch) >> (str('else') >> space >> block.as(:false_branch)).maybe >> str('end')).as(:if_statement) >> space? }
 
-    rule(:question) { (text >> type >> identifier >> (hashrocket >> expression.as(:value)).maybe).as(:question) }
+    rule(:question) { (text >> type.as(:type) >> identifier.as(:identifier) >> (hashrocket >> expression.as(:value)).maybe).as(:question) }
 
-    rule(:form) { (str('form') >> space >> identifier >> block.as(:body) >> str('end')).as(:form) >> space? }
+    rule(:form) { (str('form') >> space >> identifier.as(:identifier) >> block.as(:body) >> str('end')).as(:form) >> space? }
 
     root :form
   end
