@@ -16,9 +16,7 @@ public class Boolean extends ValueType {
     }
 
     @Override
-    public boolean isBoolean(){
-        return true;
-    }
+    public java.lang.Boolean isBoolean(){ return true; }
 
     public <T> T accept(Visitor<T> visitor){
         return visitor.visit(this);

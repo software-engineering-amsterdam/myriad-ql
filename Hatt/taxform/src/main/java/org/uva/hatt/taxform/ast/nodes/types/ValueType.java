@@ -14,9 +14,8 @@ public abstract class ValueType extends ASTNode {
     public java.lang.String name(){
         return "Unknown";
     }
-    public boolean isBoolean(){
-        return false;
-    }
+
+    public java.lang.Boolean isBoolean(){ return false; }
 
     public <T> T accept(Visitor<T> visitor){
         return visitor.visit(this);
