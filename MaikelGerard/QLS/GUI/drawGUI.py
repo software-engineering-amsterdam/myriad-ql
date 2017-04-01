@@ -26,7 +26,7 @@ class DrawGUI(QLDrawGUI):
         self.show()
 
     def style_sheet_node(self, style_sheet_node):
-        self.main.startPagedWindow("Dit is vet leuk")
+        self.main.startPagedWindow("Don't forget to save your input!")
         style_sheet_node.body.accept(self)
         self.main.stopPagedWindow()
 
