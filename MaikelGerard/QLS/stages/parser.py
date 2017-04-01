@@ -59,8 +59,8 @@ class Parser(QLParser):
                            self.PROP_FONTSIZE ^ self.PROP_COLOR)
 
         # Create the grammar incrementally to simplify unit test creation.
-        self.widget_type = self.define_widget_type()
-        self.property_type = self.define_property_type()
+        self.widget_type = self.WIDGET + self.WIDGET_TYPES
+        self.property_type = self.PROPERTIES
         self.default = self.define_default()
         self.question = self.define_question()
         self.section = self.define_section()
@@ -88,12 +88,6 @@ class Parser(QLParser):
         self.PROP_FONT.setParseAction(self.create_node(AST.FontNode))
         self.PROP_FONTSIZE.setParseAction(self.create_node(AST.FontSizeNode))
         self.PROP_COLOR.setParseAction(self.create_node(AST.ColorNode))
-
-    def define_widget_type(self):
-        return self.WIDGET + self.WIDGET_TYPES
-
-    def define_property_type(self):
-        return self.PROPERTIES
 
     def define_default(self):
         header = self.DEFAULT + self.LITERAL_TYPES
