@@ -55,10 +55,12 @@ class QLSQuestionnaire(Questionnaire):
         self.qls_env = QLSEnvironment(self.handler)
 
     def validate(self):
-        # First validate QL.
+        # First, validate the QL form.
         super(QLSQuestionnaire, self).validate()
-        QLSTypeChecker(self.qls_ast, self.qls_env, self.ql_env, self.handler)\
-            .start_traversal()
+
+        QLSTypeChecker(
+            self.qls_ast, self.qls_env, self.qls_ast, self.ql_env, self.handler
+        ).start_traversal()
         self.handler.print_errors()
 
         DetermineWidgetType(self.qls_ast, self.qls_env, self.ql_env)\
