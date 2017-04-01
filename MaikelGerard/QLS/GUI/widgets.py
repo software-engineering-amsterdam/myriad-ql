@@ -74,7 +74,7 @@ class ComputedLabelWidget(QLComputed, Widget):
         super(ComputedLabelWidget, self).__init__(
             form_gui, identifier, question, row
         )
-        self.tk_ref = self.main.getLabelWidget(self.identifier)
+        self.tk_ref = self.main.getLabelWidget(self.computed_identifier)
 
 
 class SliderWidget(Widget):
@@ -82,11 +82,13 @@ class SliderWidget(Widget):
         super(SliderWidget, self).__init__(
             form_gui, identifier, question, row=row
         )
-        self.tk_ref = self.main.getScaleWidget(self.identifier)
+
         self.main.addScale(self.identifier, row=row, column=1)
         self.main.setScaleRange(self.identifier, 0, 100000, curr=None)
-        self.main.showScaleIntervals(identifier, 25000)
-        self.main.showScaleValue(identifier, show=True)
+        self.main.showScaleIntervals(self.identifier, 25000)
+        self.main.showScaleValue(self.identifier, show=True)
+
+        self.tk_ref = self.main.getScaleWidget(self.identifier)
         self.add_listener(self.tk_ref)
 
     def get_entry(self):
