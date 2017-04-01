@@ -1,19 +1,8 @@
-# -*- coding: utf-8 -*-
 from QL.GUI.drawGUI import DrawGUI as QLDrawGUI
 
 from QL.undefined import Undefined
 from QLS.GUI.determine_widget_class import DetermineWidgetClass
 import QLS.GUI.widgets as widgets
-
-"""
-Quick rundown of what we probably need to do:
-- Traverse QLS ast, to add formatting, frames etc.
-- When at QLS questions, retrieve the QL question and call the
-  parent(?) to create the appropriate GUI widget.
-- After the widgets are created, use the parent's methods to update the
-  GUI. What do we do when all Questions in a section are hidden? Hide the
-  section as well? How are we going to do that?
-"""
 
 
 class DrawGUI(QLDrawGUI):
@@ -50,10 +39,6 @@ class DrawGUI(QLDrawGUI):
     def section_with_defaults_node(self, section_node):
         self.section_node(section_node)
 
-    def apply_styling(self, identifier, styling):
-        if styling != Undefined:
-            styling.accept(self, self.widgets[identifier])
-
     def question_node(self, question_node):
         # Create a frame around the question to improve interface.
         self.main.startFrame("@frame_" + question_node.name)
@@ -65,8 +50,6 @@ class DrawGUI(QLDrawGUI):
 
         widget_class = ql_node.accept(self.determine_class)
         self.add_widget(widget_class, identifier, question)
-
-        # widget_class = self.define_widget_class(ql_node, styling)
 
         styling = self.qls_env.get_styling(identifier)
         self.apply_styling(identifier, styling)
@@ -84,13 +67,16 @@ class DrawGUI(QLDrawGUI):
         widget_class = ql_node.accept(self.determine_class)
         if widget_class != widgets.ComputedLabelWidget:
             widget_class = question_node.type.accept(self.determine_class)
-
         self.add_widget(widget_class, identifier, question)
 
         styling = self.qls_env.get_styling(identifier)
         self.apply_styling(identifier, styling)
 
         self.main.stopFrame()
+
+    def apply_styling(self, identifier, styling):
+        if styling != Undefined:
+            styling.accept(self, self.widgets[identifier])
 
     def default_node(self, _, widget):
         pass
