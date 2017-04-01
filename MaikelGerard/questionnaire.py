@@ -26,7 +26,6 @@ class Questionnaire(object):
         self.ql_ast = Parser().parse(file_contents)
         self.handler = ErrorHandler()
         self.ql_env = Environment(self.handler)
-        self.validate()
 
     def validate(self):
         InitEnvironment(self.ql_ast, self.ql_env, self.handler)\
@@ -38,7 +37,7 @@ class Questionnaire(object):
         FindCycles(self.ql_ast, self.handler).start_traversal()
         self.handler.print_errors()
 
-    def draw(self):
+    def show_gui(self):
         DrawGUI(self.ql_ast, self.ql_env).start_traversal()
 
     def print_form(self):
@@ -52,19 +51,20 @@ class QLSQuestionnaire(Questionnaire):
             file_contents = ql_contents.read()
 
         self.qls_ast = QLSParser().parse(file_contents)
-        self.qls_env = QLSEnvironment(self.handler)
         self.handler = QLSErrorHandler()
-        self.validate_stylesheet()
+        self.qls_env = QLSEnvironment(self.handler)
 
-        DetermineWidgetType(self.qls_ast, self.qls_env, self.ql_env)\
-            .start_traversal()
-
-    def validate_stylesheet(self):
+    def validate(self):
+        # First validate QL.
+        super(QLSQuestionnaire, self).validate()
         QLSTypeChecker(self.qls_ast, self.qls_env, self.ql_env, self.handler)\
             .start_traversal()
         self.handler.print_errors()
 
-    def draw(self):
+        DetermineWidgetType(self.qls_ast, self.qls_env, self.ql_env)\
+            .start_traversal()
+
+    def show_gui(self):
         QLSDrawGUI(self.qls_ast, self.qls_env, self.ql_ast, self.ql_env)\
             .start_traversal()
 
@@ -92,9 +92,10 @@ if __name__ == '__main__':
         main = QLSQuestionnaire(ql_file, stylesheet_file)
     else:
         main = Questionnaire(ql_file)
+    main.validate()
 
     main.print_form()
     if stylesheet_file:
         main.print_stylesheet()
 
-    main.draw()
+    main.show_gui()
