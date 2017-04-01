@@ -82,7 +82,7 @@ class Parser(QLParser):
         PROP_WIDTH.setParseAction(self.create_node(AST.WidthNode))
         PROP_HEIGHT = self.HEIGHT + self.COLON + self.INTEGER
         PROP_HEIGHT.setParseAction(self.create_node(AST.HeightNode))
-        PROP_FONT = self.FONT + self.COLON + self.QUESTION_STRING
+        PROP_FONT = self.FONT + self.COLON + self.QUOTED_STRING
         PROP_FONT.setParseAction(self.create_node(AST.FontNode))
         PROP_FONTSIZE = self.FONTSIZE + self.COLON + self.INTEGER
         PROP_FONTSIZE.setParseAction(self.create_node(AST.FontSizeNode))
@@ -119,7 +119,7 @@ class Parser(QLParser):
         with_defaults = pp.Forward()
         without_defaults = pp.Forward()
 
-        header = self.SECTION + self.QUESTION_STRING
+        header = self.SECTION + self.QUOTED_STRING
         body = pp.Group(
             pp.OneOrMore(self.question ^ with_defaults ^ without_defaults)
         ).setParseAction(self.create_node(QLAST.BlockNode))

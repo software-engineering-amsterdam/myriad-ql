@@ -170,7 +170,7 @@ class DefaultNode(Node):
 
 
 class DefaultWithPropsNode(DefaultNode):
-    def __init__(self, var_type, props, widget_type, line, col):
+    def __init__(self, var_type, props, widget_type, line=0, col=0):
         super(DefaultWithPropsNode, self).__init__(var_type, widget_type,
                                                    line, col)
         self.props = props

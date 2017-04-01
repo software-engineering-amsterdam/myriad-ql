@@ -33,7 +33,7 @@ class Parser(object):
 
     # Special literal types that are not parsed into AST nodes.
     NAME = pp.Word(pp.alphas, pp.alphanums + "_")
-    QUESTION_STRING = pp.QuotedString('"')
+    QUOTED_STRING = pp.QuotedString('"')
 
     def __init__(self):
         # Enable caching of parsing logic.
@@ -87,10 +87,8 @@ class Parser(object):
         return datetime.datetime.strptime(tokens[0], "%d-%m-%Y").date()
 
     def create_node(self, ast_class):
-        """
-        Create a certain AST node. The tokens that are passed by the
-        PyParsing library and the location information are used as arguments.
-        """
+        # Create a certain AST node. The tokens that are passed by the
+        # PyParsing library and the location information are used as arguments.
         def create_args(src, loc, tokens):
             line, col = self.get_line_loc_info(src, loc)
             args = tokens.asList()
@@ -146,7 +144,7 @@ class Parser(object):
         def create_question_grammar():
             # Use this function to prevent double parseActions, as the question
             # grammar is re-used in the comp_question grammar definition.
-            return self.QUESTION_STRING + self.NAME +\
+            return self.QUOTED_STRING + self.NAME + \
                    self.COLON + self.TYPE_NAMES
 
         question = create_question_grammar()
