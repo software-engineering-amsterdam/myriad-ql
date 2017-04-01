@@ -118,9 +118,21 @@ class TestTypeChecker(unittest.TestCase):
                 }
             }
         """
+        qls_stylesheet_bad3 = """
+            stylesheet taxOfficeExample {
+                page Housing {
+                    section "Buying" {
+                        question hasSoldHouse widget checkbox
+                        question hasBoughtHouse widget checkbox
+                        question hasBoughtHouse widget checkbox
+                    }
+                }
+            }
+        """
         self.check_form(ql_form_good, qls_stylesheet_good, 0, 0)
         self.check_form(ql_form_good, qls_stylesheet_bad1, 0, 1)
         self.check_form(ql_form_good, qls_stylesheet_bad2, 0, 1)
+        self.check_form(ql_form_good, qls_stylesheet_bad3, 0, 1)
 
     def test_stylesheet_ql_names(self):
         ql_form_good = """
