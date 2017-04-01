@@ -33,8 +33,6 @@ class TestTypeChecker(unittest.TestCase):
             qls_ast, self.qls_env, self.ql_env, self.qls_handler
         ).start_traversal()
 
-        print(self.qls_handler.error_list)
-
         # Determine whether the typechecker result is as expected.
         correct_warnings = self.qls_handler.warn_count == num_warnings
         correct_errors = self.qls_handler.error_count == num_errors
