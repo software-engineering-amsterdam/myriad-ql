@@ -42,11 +42,11 @@ class Parser(object):
         # Add parse actions to create AST nodes from parse results.
         self.parse_literal_type_nodes()
         self.parse_literal_nodes()
-        self.TYPE_NAMES = (self.BOOLEAN_TYPE ^ self.INTEGER_TYPE ^
-                           self.DECIMAL_TYPE ^ self.STRING_TYPE ^
-                           self.DATE_TYPE)
-        self.TYPES = (self.BOOLEAN ^ self.INTEGER ^ self.DECIMAL ^
-                      self.STRING ^ self.DATE ^ self.VARIABLE)
+        self.LITERAL_TYPES = (self.BOOLEAN_TYPE ^ self.INTEGER_TYPE ^
+                              self.DECIMAL_TYPE ^ self.STRING_TYPE ^
+                              self.DATE_TYPE)
+        self.LITERALS = (self.BOOLEAN ^ self.INTEGER ^ self.DECIMAL ^
+                         self.STRING ^ self.DATE ^ self.VARIABLE)
 
         # Create the grammar incrementally to simplify unit test creation.
         self.expression = self.define_expression()
@@ -130,7 +130,7 @@ class Parser(object):
         infix_or = create_operator('||', AST.OrNode)
 
         # Define the expression parser, including precedence.
-        return pp.infixNotation(self.TYPES, [
+        return pp.infixNotation(self.LITERALS, [
             (unary_ops, 1, pp.opAssoc.RIGHT, self.create_monop_node),
             (arithmetic_level1, 2, pp.opAssoc.LEFT, self.create_binops),
             (arithmetic_level2, 2, pp.opAssoc.LEFT, self.create_binops),
@@ -145,7 +145,7 @@ class Parser(object):
             # Use this function to prevent double parseActions, as the question
             # grammar is re-used in the comp_question grammar definition.
             return self.QUOTED_STRING + self.NAME + \
-                   self.COLON + self.TYPE_NAMES
+                   self.COLON + self.LITERAL_TYPES
 
         question = create_question_grammar()
         question.setParseAction(self.create_node(AST.QuestionNode))

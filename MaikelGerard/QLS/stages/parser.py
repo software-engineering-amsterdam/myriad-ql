@@ -17,13 +17,20 @@ class Parser(QLParser):
     # Add parsing logic for the color value literal.
     COLOR_VALUE = pp.Regex("#[a-fA-F\d]{6}")
 
-    # Define the style property names and widget type names.
+    # Define the style properties.
     WIDTH = pp.Keyword("width").suppress()
     HEIGHT = pp.Keyword("height").suppress()
     FONT = pp.Keyword("font").suppress()
     FONTSIZE = pp.Keyword("fontsize").suppress()
     COLOR = pp.Keyword("color").suppress()
 
+    PROP_WIDTH = WIDTH + QLParser.COLON + QLParser.INTEGER
+    PROP_HEIGHT = HEIGHT + QLParser.COLON + QLParser.INTEGER
+    PROP_FONT = FONT + QLParser.COLON + QLParser.QUOTED_STRING
+    PROP_FONTSIZE = FONTSIZE + QLParser.COLON + QLParser.INTEGER
+    PROP_COLOR = COLOR + QLParser.COLON + COLOR_VALUE
+
+    # Define the widget type names.
     SLIDER = pp.Keyword("slider").suppress()
     SPINBOX = pp.Keyword("spinbox").suppress()
     TEXT = pp.Keyword("text").suppress()
@@ -40,15 +47,16 @@ class Parser(QLParser):
         self.parse_literal_type_nodes()
         self.parse_literal_nodes()
         self.parse_widget_type_nodes()
+        self.parse_property_nodes()
 
-        self.TYPE_NAMES = (self.BOOLEAN_TYPE ^ self.INTEGER_TYPE ^
-                           self.DECIMAL_TYPE ^ self.STRING_TYPE ^
-                           self.DATE_TYPE)
-        self.TYPES = (self.BOOLEAN ^ self.INTEGER ^ self.DECIMAL ^ self.DATE ^
-                      self.STRING ^ self.VARIABLE ^ self.COLOR_VALUE)
+        self.LITERAL_TYPES = (self.BOOLEAN_TYPE ^ self.INTEGER_TYPE ^
+                              self.DECIMAL_TYPE ^ self.STRING_TYPE ^
+                              self.DATE_TYPE)
         self.WIDGET_TYPES = (self.SLIDER ^ self.SPINBOX ^ self.TEXT ^
                              self.NUMERIC ^ self.RADIO ^ self.CHECKBOX ^
                              self.DROPDOWN)
+        self.PROPERTIES = (self.PROP_WIDTH ^ self.PROP_HEIGHT ^ self.PROP_FONT ^
+                           self.PROP_FONTSIZE ^ self.PROP_COLOR)
 
         # Create the grammar incrementally to simplify unit test creation.
         self.widget_type = self.define_widget_type()
@@ -74,25 +82,21 @@ class Parser(QLParser):
         self.CHECKBOX.setParseAction(self.create_node(AST.CheckboxNode))
         self.DROPDOWN.setParseAction(self.create_node(AST.DropdownNode))
 
+    def parse_property_nodes(self):
+        self.PROP_WIDTH.setParseAction(self.create_node(AST.WidthNode))
+        self.PROP_HEIGHT.setParseAction(self.create_node(AST.HeightNode))
+        self.PROP_FONT.setParseAction(self.create_node(AST.FontNode))
+        self.PROP_FONTSIZE.setParseAction(self.create_node(AST.FontSizeNode))
+        self.PROP_COLOR.setParseAction(self.create_node(AST.ColorNode))
+
     def define_widget_type(self):
         return self.WIDGET + self.WIDGET_TYPES
 
     def define_property_type(self):
-        PROP_WIDTH = self.WIDTH + self.COLON + self.INTEGER
-        PROP_WIDTH.setParseAction(self.create_node(AST.WidthNode))
-        PROP_HEIGHT = self.HEIGHT + self.COLON + self.INTEGER
-        PROP_HEIGHT.setParseAction(self.create_node(AST.HeightNode))
-        PROP_FONT = self.FONT + self.COLON + self.QUOTED_STRING
-        PROP_FONT.setParseAction(self.create_node(AST.FontNode))
-        PROP_FONTSIZE = self.FONTSIZE + self.COLON + self.INTEGER
-        PROP_FONTSIZE.setParseAction(self.create_node(AST.FontSizeNode))
-        PROP_COLOR = self.COLOR + self.COLON + self.COLOR_VALUE
-        PROP_COLOR.setParseAction(self.create_node(AST.ColorNode))
-
-        return PROP_WIDTH ^ PROP_HEIGHT ^ PROP_FONT ^ PROP_FONTSIZE ^ PROP_COLOR
+        return self.PROPERTIES
 
     def define_default(self):
-        header = self.DEFAULT + self.TYPE_NAMES
+        header = self.DEFAULT + self.LITERAL_TYPES
         props = pp.Group(
             pp.OneOrMore(self.property_type)
         ).setParseAction(self.create_node(QLAST.BlockNode))
