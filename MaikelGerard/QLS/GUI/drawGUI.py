@@ -127,6 +127,9 @@ class DrawGUI(QLDrawGUI):
     def dropdown_node(self, _):
         return Widgets.DropDownWidget
 
+    def date_input_node(self, _):
+        return Widgets.DateWidget
+
     def width_node(self, width_node, widget):
         widget.set_width(width_node.val)
 

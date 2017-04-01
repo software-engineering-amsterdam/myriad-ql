@@ -30,7 +30,7 @@ class TestTypeChecker(unittest.TestCase):
 
         qls_ast = self.qls_parser.parse(qls_stylesheet)
         TypeChecker(
-            qls_ast, self.qls_env, self.ql_env, self.qls_handler
+            qls_ast, self.qls_env, ql_ast, self.ql_env, self.qls_handler
         ).start_traversal()
 
         # Determine whether the typechecker result is as expected.
@@ -121,6 +121,36 @@ class TestTypeChecker(unittest.TestCase):
         self.check_form(ql_form_good, qls_stylesheet_good, 0, 0)
         self.check_form(ql_form_good, qls_stylesheet_bad1, 0, 1)
         self.check_form(ql_form_good, qls_stylesheet_bad2, 0, 1)
+
+    def test_stylesheet_ql_names(self):
+        ql_form_good = """
+            form taxOfficeExample {
+                "Did you sell a house in 2010?" hasSoldHouse: boolean
+                "Did you buy a house in 2010?" hasBoughtHouse: boolean
+            }
+        """
+        qls_stylesheet_good = """
+            stylesheet taxOfficeExample {
+                page Housing {
+                    section "Buying" {
+                        question hasSoldHouse widget checkbox
+                        question hasBoughtHouse widget checkbox
+                    }
+                }
+            }
+        """
+        qls_stylesheet_bad = """
+            stylesheet WronglyNamed {
+                page Housing {
+                    section "Buying" {
+                        question hasSoldHouse widget checkbox
+                        question hasBoughtHouse widget checkbox
+                    }
+                }
+            }
+        """
+        self.check_form(ql_form_good, qls_stylesheet_good, 0, 0)
+        self.check_form(ql_form_good, qls_stylesheet_bad, 0, 1)
 
 if __name__ == '__main__':
     unittest.main()

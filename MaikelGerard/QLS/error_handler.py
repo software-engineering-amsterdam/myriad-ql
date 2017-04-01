@@ -6,6 +6,12 @@ class ErrorHandler(QLErrorHandler):
     def __init__(self):
         super(ErrorHandler, self).__init__()
 
+    def add_incompat_stylsheet_name_error(self, stylesheet_node, ql_name):
+        message = "Stylesheet name '{}' is not equal to "
+        message += "the name of the ql form '{}'"
+        message = message.format(stylesheet_node.name, ql_name)
+        self.add_error(stylesheet_node, message)
+
     def add_question_not_in_ql_error(self, question_node):
         message = "Question '{}' defined in QLS and not in QL"
         message = message.format(question_node.name)

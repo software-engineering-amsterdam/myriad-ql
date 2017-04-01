@@ -2,9 +2,10 @@ from QLS.stages.determine_is_computed import DetermineIsComputed
 
 
 class TypeChecker(object):
-    def __init__(self, qls_ast, qls_env, ql_env, error_handler):
+    def __init__(self, qls_ast, qls_env, ql_ast, ql_env, error_handler):
         self.ast = qls_ast
         self.env = qls_env
+        self.ql_ast = ql_ast
         self.ql_env = ql_env
         self.handler = error_handler
         self.is_computed_visitor = DetermineIsComputed()
@@ -19,6 +20,9 @@ class TypeChecker(object):
                 self.handler.add_question_not_in_qls_error(var)
 
     def style_sheet_node(self, style_sheet_node):
+        if self.ql_ast.name != style_sheet_node.name:
+            self.handler.add_incompat_stylsheet_name_error(style_sheet_node,
+                                                           self.ql_ast.name)
         style_sheet_node.body.accept(self)
 
     def page_node(self, page_node):

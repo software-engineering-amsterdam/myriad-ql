@@ -3,6 +3,7 @@ from QL.GUI.widgets import SpinBoxWidget as QLSpinBox
 from QL.GUI.widgets import EntryWidget as QLEntry
 from QL.GUI.widgets import NumericWidget as QLNumeric
 from QL.GUI.widgets import ComputedLabelWidget as QLComputed
+from QL.GUI.widgets import DateWidget as QLDate
 from QL.GUI.widgets import Widget as QLWidget
 
 
@@ -60,6 +61,12 @@ class CheckBoxWidget(QLCheckBox, Widget):
             form_gui, identifier, question, row
         )
         self.tk_ref = self.main.getCheckBoxWidget(self.identifier)
+
+
+class DateWidget(QLDate, Widget):
+    def __init__(self, form_gui, identifier, question, row):
+        super(DateWidget, self).__init__(form_gui, identifier, question, row)
+        self.tk_ref = self.main.getFrameWidget(self.identifier)
 
 
 class ComputedLabelWidget(QLComputed, Widget):
