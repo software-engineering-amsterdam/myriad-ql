@@ -16,15 +16,14 @@ class Environment(object):
     def get_vars(self):
         return self.variables.keys()
 
-    def add_var(self, question_node, is_computed):
+    def add_var(self, question_node):
         var_name = question_node.name
 
         if var_name in self.variables:
             self.error_handler.add_duplicate_question_error(question_node)
             return False
         self.variables[var_name] = {
-            "node": question_node, "styling": Undefined,
-            "is_computed": is_computed
+            "node": question_node, "styling": Undefined
         }
         return True
 
@@ -38,6 +37,3 @@ class Environment(object):
         assert identifier in self.variables, \
             "Var name '{}' not in the environment!".format(identifier)
         self.variables[identifier]["styling"] = styling
-
-    def is_computed(self, identifier):
-        return self.variables[identifier]["is_computed"]

@@ -2,7 +2,8 @@
 from QL.GUI.drawGUI import DrawGUI as QLDrawGUI
 
 from QL.undefined import Undefined
-import QLS.GUI.widgets as Widgets
+from QLS.GUI.determine_widget_class import DetermineWidgetClass
+import QLS.GUI.widgets as widgets
 
 """
 Quick rundown of what we probably need to do:
@@ -20,6 +21,7 @@ class DrawGUI(QLDrawGUI):
         super(DrawGUI, self).__init__(ql_ast, ql_env)
         self.qls_ast = qls_ast
         self.qls_env = qls_env
+        self.determine_class = DetermineWidgetClass(self.qls_env, self)
 
     def start_traversal(self):
         self.qls_ast.accept(self)
@@ -48,18 +50,6 @@ class DrawGUI(QLDrawGUI):
     def section_with_defaults_node(self, section_node):
         self.section_node(section_node)
 
-    def define_widget_class(self, ql_node, styling):
-        identifier = ql_node.name
-
-        if self.qls_env.is_computed(identifier):
-            return Widgets.ComputedLabelWidget
-        elif styling == Undefined:
-            return ql_node.type.accept(self)
-        elif styling != None:
-            return styling.widget_type.accept(self)
-        else:
-            assert False
-
     def apply_styling(self, identifier, styling):
         if styling != Undefined:
             styling.accept(self, self.widgets[identifier])
@@ -73,10 +63,12 @@ class DrawGUI(QLDrawGUI):
         identifier = ql_node.name
         question = ql_node.question
 
-        styling = self.qls_env.get_styling(identifier)
-        widget_class = self.define_widget_class(ql_node, styling)
+        widget_class = ql_node.accept(self.determine_class)
         self.add_widget(widget_class, identifier, question)
 
+        # widget_class = self.define_widget_class(ql_node, styling)
+
+        styling = self.qls_env.get_styling(identifier)
         self.apply_styling(identifier, styling)
         self.main.stopFrame()
 
@@ -89,10 +81,10 @@ class DrawGUI(QLDrawGUI):
         identifier = ql_node.name
         question = ql_node.question
 
-        if self.qls_env.is_computed(identifier):
-            widget_class = Widgets.ComputedLabelWidget
-        else:
-            widget_class = question_node.type.accept(self)
+        widget_class = ql_node.accept(self.determine_class)
+        if widget_class != widgets.ComputedLabelWidget:
+            widget_class = question_node.type.accept(self.determine_class)
+
         self.add_widget(widget_class, identifier, question)
 
         styling = self.qls_env.get_styling(identifier)
@@ -106,41 +98,22 @@ class DrawGUI(QLDrawGUI):
     def default_with_props_node(self, default_node, widget):
         default_node.props.accept(self, widget)
 
-    def slider_node(self, _):
-        return Widgets.SliderWidget
-
-    def spinbox_node(self, _):
-        return Widgets.SpinBoxWidget
-
-    def text_node(self, _):
-        return Widgets.EntryWidget
-
-    def numeric_node(self, _):
-        return Widgets.NumericWidget
-
-    def radio_node(self, _):
-        return Widgets.RadioButtonWidget
-
-    def checkbox_node(self, _):
-        return Widgets.CheckBoxWidget
-
-    def dropdown_node(self, _):
-        return Widgets.DropDownWidget
-
-    def date_input_node(self, _):
-        return Widgets.DateWidget
-
-    def width_node(self, width_node, widget):
+    @staticmethod
+    def width_node(width_node, widget):
         widget.set_width(width_node.val)
 
-    def height_node(self, height_node, widget):
+    @staticmethod
+    def height_node(height_node, widget):
         widget.set_height(height_node.val)
 
-    def font_node(self, font_node, widget):
+    @staticmethod
+    def font_node(font_node, widget):
         widget.set_font_family(font_node.val)
 
-    def fontsize_node(self, fontsize_node, widget):
+    @staticmethod
+    def fontsize_node(fontsize_node, widget):
         widget.set_font_size(fontsize_node.val)
 
-    def color_node(self, color_node, widget):
+    @staticmethod
+    def color_node(color_node, widget):
         widget.set_font_color(color_node.val)
