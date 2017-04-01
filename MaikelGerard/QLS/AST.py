@@ -1,5 +1,6 @@
 from QL.AST import Node
-from QL.AST import BoolTypeNode, IntTypeNode, DecimalTypeNode, StringTypeNode
+from QL.AST import BoolTypeNode, IntTypeNode, DecimalTypeNode,\
+                   StringTypeNode, DateTypeNode
 
 
 class StylesheetNode(Node):
@@ -151,12 +152,22 @@ class DropdownNode(WidgetNode):
 
     @staticmethod
     def is_compatible_type(literal_type):
-        # TODO: Not sure if we want date in here?
-        return literal_type in [BoolTypeNode(), StringTypeNode(), IntTypeNode(),
-                                DecimalTypeNode()]
+        return literal_type == BoolTypeNode()
 
     def accept(self, visitor, *args):
         return visitor.dropdown_node(self, *args)
+
+
+class DateInputNode(WidgetNode):
+    def __init__(self, line=0, col=0):
+        super(DateInputNode, self).__init__(line, col)
+
+    @staticmethod
+    def is_compatible_type(literal_type):
+        return literal_type == DateTypeNode()
+
+    def accept(self, visitor, *args):
+        return visitor.date_input_node(self, *args)
 
 
 class DefaultNode(Node):

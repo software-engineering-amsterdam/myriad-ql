@@ -71,6 +71,10 @@ class PrintHandler(qlPrintHandler):
         self.add_indent(indent)
         self.output += "widget dropdown\n"
 
+    def date_input_node(self, _, indent):
+        self.add_indent(indent)
+        self.output += "widget date\n"
+
     def default_node(self, default_node, indent):
         self.add_indent(indent)
         self.output += "default {}:\n".format(default_node.type.accept(self))

@@ -81,6 +81,9 @@ class TypeChecker(object):
     def dropdown_node(self, dropdown_node, literal_type):
         self.check_widget_compatibility(dropdown_node, literal_type, "dropdown")
 
+    def date_input_node(self, date_input_node, literal_type):
+        self.check_widget_compatibility(date_input_node, literal_type, "date")
+
     def default_node(self, default_node):
         default_node.widget_type.accept(self, default_node.type)
 

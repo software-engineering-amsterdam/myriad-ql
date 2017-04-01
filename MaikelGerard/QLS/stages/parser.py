@@ -38,6 +38,7 @@ class Parser(QLParser):
     RADIO = pp.Keyword("radio").suppress()
     CHECKBOX = pp.Keyword("checkbox").suppress()
     DROPDOWN = pp.Keyword("dropdown").suppress()
+    DATE_INPUT = pp.Keyword("date").suppress()
 
     def __init__(self):
         # Enable caching of parsing logic.
@@ -54,7 +55,7 @@ class Parser(QLParser):
                               self.DATE_TYPE)
         self.WIDGET_TYPES = (self.SLIDER ^ self.SPINBOX ^ self.TEXT ^
                              self.NUMERIC ^ self.RADIO ^ self.CHECKBOX ^
-                             self.DROPDOWN)
+                             self.DROPDOWN ^ self.DATE_INPUT)
         self.PROPERTIES = (self.PROP_WIDTH ^ self.PROP_HEIGHT ^ self.PROP_FONT ^
                            self.PROP_FONTSIZE ^ self.PROP_COLOR)
 
@@ -81,6 +82,7 @@ class Parser(QLParser):
         self.RADIO.setParseAction(self.create_node(AST.RadioNode))
         self.CHECKBOX.setParseAction(self.create_node(AST.CheckboxNode))
         self.DROPDOWN.setParseAction(self.create_node(AST.DropdownNode))
+        self.DATE_INPUT.setParseAction(self.create_node(AST.DateInputNode))
 
     def parse_property_nodes(self):
         self.PROP_WIDTH.setParseAction(self.create_node(AST.WidthNode))

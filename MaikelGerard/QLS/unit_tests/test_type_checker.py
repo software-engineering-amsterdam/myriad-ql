@@ -60,7 +60,7 @@ class TestTypeChecker(unittest.TestCase):
                         question hasBoughtHouse widget slider
                         question whatIsPI widget numeric
                         question favColor widget text
-                        question birthDate
+                        question birthDate widget date
                     }
                 }
             }
