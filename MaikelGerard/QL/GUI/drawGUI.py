@@ -23,17 +23,17 @@ class DrawGUI(object):
         self.update_computed_variables = UpdateComputedVars(ast, env)
         self.set_draw_state = EvaluateDrawState(self.widgets, ast, env)
 
-    def show(self):
-        self.ast.accept(self.update_computed_variables)
-        self.update_variables()
-
-        self.set_draw_state.start_traversal()
-        self.add_buttons()
-        self.main.go()
-
     def start_traversal(self):
         self.ast.accept(self)
         self.show()
+
+    def show(self):
+        self.update_variables()
+        self.ast.accept(self.update_computed_variables)
+        self.set_draw_state.start_traversal()
+
+        self.add_buttons()
+        self.main.go()
 
     def redraw(self, _):
         self.update_variables()

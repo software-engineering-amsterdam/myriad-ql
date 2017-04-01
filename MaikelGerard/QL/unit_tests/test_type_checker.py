@@ -7,7 +7,6 @@ import QL.AST as AST
 import unittest
 
 
-# TODO: Tests with Money not included as we do not parse it into AST nodes.
 # TODO: Add tests for Date-type.
 class TestTypeChecker(unittest.TestCase):
     parser = Parser()
