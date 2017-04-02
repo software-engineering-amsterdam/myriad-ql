@@ -97,30 +97,28 @@ public class Evaluator implements StylesheetVisitor, WidgetVisitor, DefaultVisit
 	@Override
 	public void visit(Question question) {
 		
-		currentQuestion = question.getName();
-		
-		for (DefaultWidget def : defaults) {
-			def.accept(this);
-			if (environment.isStyled(currentQuestion)) {
-				break;
-			}
-		}
+		saveQuestionStyle(question.getName());
 	}
 
-	@Override // TODO extract question generic code
+	@Override 
 	public void visit(QuestionWithWidget question) {
+				
+		saveQuestionStyle(question.getName());
 		
-		currentQuestion = question.getName();
+		// Override default widget
+		environment.add(question.getName(), question.getWidget().accept(this));	
+	}
+	
+	private void saveQuestionStyle(String question) {
+		
+		currentQuestion = question;
 		
 		for (DefaultWidget def : defaults) {
 			def.accept(this);
-			if (environment.isStyled(currentQuestion)) {
+			if (environment.isStyled(question)) {
 				break;
 			}
 		}
-		
-		// Replace default widget
-		environment.add(question.getName(), question.getWidget().accept(this));	
 	}
 
 	@Override

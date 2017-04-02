@@ -24,7 +24,7 @@ class Main {
 				 + "width: 400 "
 				 + "font: \"Arial\" "
 				 + "fontsize: 14 "
-				 + "color: \"#00FFFF\" "
+				 + "color: \"#FFFFFF\" "
 				 + "widget spinbox"
 				 + "} "
 		 		 + "default boolean widget checkbox \n"
