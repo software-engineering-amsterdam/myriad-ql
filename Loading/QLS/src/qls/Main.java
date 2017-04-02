@@ -20,6 +20,13 @@ class Main {
 	public static void main(String[] args) throws Exception {
 		String tmp = "stylesheet taxOfficeExample \n"
 				 + "page Housing { \n"
+				 + "default integer { "
+				 + "width: 400 "
+				 + "font: \"Arial\" "
+				 + "fontsize: 14 "
+				 + "color: \"#00FFFF\" "
+				 + "widget spinbox"
+				 + "} "
 		 		 + "default boolean widget checkbox \n"
 		 		 + "default integer widget spinbox \n"
 				 + "section \"Buying\" \n"

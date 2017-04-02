@@ -53,13 +53,14 @@ defaultWidgets returns [List<DefaultWidget> result]
 	$result = new ArrayList<DefaultWidget>();
 }
  : ('default' type widget { $result.add(new DefaultWidget($type.result, $widget.result, $ctx.start.getLine())); }
- | 'default' type 
+ | 'default' type '{'
    'width:' width = INT
-   'font:' font = STRING
+   'font:' font = str
    'fontsize:' fontSize = INT
-   'color:' color =  STRING
-   widget { $result.add(new DefaultStyle(new Style(Integer.parseInt($width.text), $font.text, 
-     Integer.parseInt($fontSize.text), $color.text, $type.result), $widget.result, $ctx.start.getLine())); }
+   'color:' color =  str
+   widget { $result.add(new DefaultStyle(new Style(Integer.parseInt($width.text), $font.result, 
+     Integer.parseInt($fontSize.text), $color.result, $type.result), $widget.result, $ctx.start.getLine())); }
+   '}'
    )+
  ;
  
@@ -68,38 +69,11 @@ defaultWidgets returns [List<DefaultWidget> result]
  | 'integer' { $result = new IntegerType($ctx.start.getLine()); }
  | 'string'  { $result = new StringType($ctx.start.getLine()); }
  ;
- 
- 
-// TODO defaultType has many commandline arguments  
-//defaultType returns [List<DefaultType> result]
-//@ init {
-//	$result = new ArrayList<DefaultType>();
-//}
-//: 'default' ID 
-//  'width:' width = INT
-//  'font:' font = STRING
-//  'fontsize:' fontSize = INT
-//  'color:' color =  STRING
-//  widget { $result.add(new DefaultType($ID.text, Integer.parseInt($width.text), $font.text, 
-//  	Integer.parseInt($fontSize.text), $color.text, $widget.result, $ctx.start.getLine())); };
-//  	
-  
-
-// TODO you can specify the default width / font multiple times 
-//defOptions returns [List<Option> result]
-//: 'width:' INT { $result.add(new Width(Integer.parseInt($INT.text)); }
-//  'font:' STRING { $result.add(new Font($STRING.text); }
-//  'fontsize:' STRING { $result.add(new FontSize($STRING.text)); }
-//  'color:' INT { $result.add(new Color(Integer.parseInt($INT.text))); };
-
-//
-//defaultWidget returns [DefaultWidget result]
-//@ init {
-//	$result = new ArrayList<DefaultWidget>();
-//}
-//: 'default' type widget { $result.add(new DefaultWidget(type, widget)); };
 
 // TODO copied from QL.g4 : can we insert it?
+str returns [String result]
+ : STRING { $result = $STRING.text.substring(1, $STRING.text.length()-1); }
+ ;
 
 ID : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 
