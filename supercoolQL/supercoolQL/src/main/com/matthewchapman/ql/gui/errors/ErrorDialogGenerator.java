@@ -12,9 +12,13 @@ import javafx.scene.layout.Priority;
  *
  * Generates GUI error boxes
  */
-public class ErrorDialogGenerator {
+public final class ErrorDialogGenerator {
 
-    public void generateErrorListBox(String content, String title, String headerText) {
+    private ErrorDialogGenerator() {
+
+    }
+
+    public static void generateErrorListBox(String content, String title, String headerText) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(headerText);
@@ -25,7 +29,7 @@ public class ErrorDialogGenerator {
         Platform.exit();
     }
 
-    public void generateWarningListBox(String content, String title, String headerText) {
+    public static void generateWarningListBox(String content, String title, String headerText) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
         alert.setHeaderText(headerText);
@@ -35,7 +39,7 @@ public class ErrorDialogGenerator {
         alert.showAndWait();
     }
 
-    private GridPane getGridPane(String content, String labelText) {
+    private static GridPane getGridPane(String content, String labelText) {
         Label label = new Label(labelText);
 
         TextArea textArea = new TextArea(content);

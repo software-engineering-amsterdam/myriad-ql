@@ -19,11 +19,9 @@ import org.antlr.v4.runtime.CommonTokenStream;
 public class ASTBuilder {
 
     private final ParseTreeErrorListener errorListener;
-    private final ErrorDialogGenerator dialogGenerator;
 
     public ASTBuilder() {
         errorListener = new ParseTreeErrorListener();
-        this.dialogGenerator = new ErrorDialogGenerator();
     }
 
     public Form buildQLAST(String input) {
@@ -31,7 +29,7 @@ public class ASTBuilder {
         Form form = getForm(parser);
 
         if (errorListener.getLogger().getErrorNumber() > 0) {
-            dialogGenerator.generateErrorListBox(errorListener.getLogger().toString(), "Parser Error", "QL encountered an parsing error");
+            ErrorDialogGenerator.generateErrorListBox(errorListener.getLogger().toString(), "Parser Error", "QL encountered an parsing error");
             return null;
         } else {
             return form;
