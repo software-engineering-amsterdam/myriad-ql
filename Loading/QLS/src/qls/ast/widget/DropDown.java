@@ -7,18 +7,26 @@ import qls.evaluation.Evaluator;
 
 public class DropDown extends Widget{
 	
-	private final String yes;
-	private final String no;
+	private final String trueText;
+	private final String falseText;
 	
 	public DropDown(String yes, String no, int line) {
 		super(line);
-		this.yes = yes;
-		this.no = no;
+		this.trueText = yes;
+		this.falseText = no;
 	}
 
 	@Override
 	public Type getType() {
 		return new BooleanType(1);
+	}
+	
+	public String getTrueText() {
+		return trueText;
+	}
+	
+	public String getFalseText() {
+		return falseText;
 	}
 	
 	@Override

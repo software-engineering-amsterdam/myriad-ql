@@ -11,17 +11,17 @@ public class Slide implements Field {
 	
     public Slide(String name, Notifier notifier, IntegerValue value) {
 		
-		this.field = new Slider(0, 5, 1);
+		this.field = new Slider(0, 5, value.getValue());
 		field.setId(name);
         
-        field.setShowTickMarks(true);
         field.setShowTickLabels(true);
         field.setMajorTickUnit(1);
-        field.setMinorTickCount(1);
         field.setBlockIncrement(1);
 		
-		field.valueProperty().addListener(
-				(observable, oldValue, newValue) -> notifier.updateQuestionnaire(name, new IntegerValue(newValue.intValue())));
+        field.valueProperty().addListener((obs, oldValue, newValue) -> { 
+        	field.setValue(newValue.intValue()); 
+        	notifier.updateQuestionnaire(name, new IntegerValue(newValue.intValue())); 
+        });
 	}
 	
 	@Override

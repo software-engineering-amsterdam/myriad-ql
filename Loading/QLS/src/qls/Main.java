@@ -24,9 +24,9 @@ class Main {
 		 		 + "default integer widget spinbox \n"
 				 + "section \"Buying\" \n"
 				 + "default boolean widget radio(\"Yes\", \"No\") \n"
-				 + "question Name0 widget numberfield \n"
+				 + "question Name0 widget slider \n"
 		 		 + "section \"Loaning\" \n"
-				 + "question Name1 widget numberfield \n"
+				 + "question Name1 widget spinbox \n"
 				 + "}";
 		
 		ANTLRInputStream input = new ANTLRInputStream( tmp );
@@ -59,7 +59,7 @@ class Main {
 	private static Form createForm() {
 		String tmp = "form Testing { "
 				 + "Name0: \"How much did your house cost?\" integer "
-				 + "Name1: \"You have to pay\" integer (Name0 + 2)"
+				 + "Name1: \"You have to pay\" integer"
 				 + "}";
 
 		ANTLRInputStream input = new ANTLRInputStream( tmp );

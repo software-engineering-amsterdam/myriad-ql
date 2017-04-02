@@ -7,14 +7,23 @@ import qls.evaluation.Evaluator;
 
 public class Radio extends Widget {
 	
-	private final String checked;
-	private final String unchecked;
+	private final String trueText;
+	private final String falseText;
 	
-	public Radio(String checked, String unchecked, int line) {
+	public Radio(String trueText, String falseText, int line) {
 		super(line);
-		this.checked = checked;
-		this.unchecked = unchecked;
+		this.trueText = trueText;
+		this.falseText = falseText;
 	}
+	
+	public String getTrueText() {
+		return trueText;
+	}
+	
+	public String getFalseText() {
+		return falseText;
+	}
+	
 
 	@Override
 	public Type getType() {

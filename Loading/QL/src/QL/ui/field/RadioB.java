@@ -10,17 +10,17 @@ public class RadioB implements Field {
 	
 	private final RadioButton field;
 	
-	public RadioB(String name, Notifier notifier, BoolValue value) {
+	public RadioB(String name, String trueText, String falseText, Notifier notifier, BoolValue value) {
 		
 		this.field = new RadioButton();
 		
 		final ToggleGroup group = new ToggleGroup();
 
-		RadioButton rb1 = new RadioButton("Yes");
+		RadioButton rb1 = new RadioButton(trueText);
 		rb1.setToggleGroup(group);
 
 
-		RadioButton rb2 = new RadioButton("No");
+		RadioButton rb2 = new RadioButton(falseText);
 		rb2.setToggleGroup(group);
 		
 		field.setId(name);

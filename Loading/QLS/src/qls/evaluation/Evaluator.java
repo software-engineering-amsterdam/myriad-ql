@@ -15,7 +15,6 @@ import QL.ui.field.Text;
 import QL.value.BoolValue;
 import QL.value.IntegerValue;
 import QL.value.StringValue;
-import javafx.scene.control.RadioButton;
 import qls.ast.DefaultStyle;
 import qls.ast.DefaultVisitor;
 import qls.ast.DefaultWidget;
@@ -30,9 +29,9 @@ import qls.ast.widget.Checkbox;
 import qls.ast.widget.DropDown;
 import qls.ast.widget.NumberField;
 import qls.ast.widget.Radio;
+import qls.ast.widget.Slider;
 import qls.ast.widget.Spinbox;
 import qls.ast.widget.TextField;
-import qls.ast.widget.Slider;
 
 public class Evaluator implements StylesheetVisitor, WidgetVisitor, DefaultVisitor {
 
@@ -131,7 +130,7 @@ public class Evaluator implements StylesheetVisitor, WidgetVisitor, DefaultVisit
 
 	@Override
 	public Field visit(Radio radio) {
-		return new RadioB(currentQuestion, notifier, new BoolValue());
+		return new RadioB(currentQuestion, radio.getTrueText(), radio.getFalseText(), notifier, new BoolValue());
 	}
 
 	@Override
@@ -146,7 +145,7 @@ public class Evaluator implements StylesheetVisitor, WidgetVisitor, DefaultVisit
 	
 	@Override
 	public Field visit(DropDown dropDown) {
-		return new DropDownMenu(currentQuestion, notifier, new BoolValue());
+		return new DropDownMenu(currentQuestion, dropDown.getTrueText(), dropDown.getFalseText(), notifier, new BoolValue());
 	}
 
 	@Override

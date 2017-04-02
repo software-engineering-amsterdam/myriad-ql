@@ -14,13 +14,13 @@ public class DropDownMenu implements Field {
 	private final MenuItem yes;
 	private final MenuItem no;
 
-	public DropDownMenu(String name, Notifier notifier, BoolValue value) {
+	public DropDownMenu(String name, String trueText, String falseText, Notifier notifier, BoolValue value) {
 	
 		this.field = new MenuButton();
 		
 		MenuButton m = new MenuButton();
-		yes = new MenuItem("Yes");
-		no = new MenuItem("No");
+		yes = new MenuItem(trueText);
+		no = new MenuItem(falseText);
 		m.getItems().addAll(yes, no);
 		
 		field.setId(name);
