@@ -10,35 +10,39 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Environment {
-
-	private final Map<String, Value> variableAnswer;
+	
+	// TODO change name
+	private final Map<String, Value> computedQuestions;
 	private final ReferenceTable references;
 	private final StyleTable styleTable;
-	private Map<String, Field> fieldTable;
+	// TODO change name
+	private final Map<String, Field> fieldTable;
 	
 	public Environment(ReferenceTable references) {
-		this.variableAnswer = new HashMap<>(); 
+		this.computedQuestions = new HashMap<>(); 
 		this.references = references;
-		this.styleTable = new StyleTable(references);
+		this.styleTable = new StyleTable();
 		this.fieldTable = new HashMap<>();
     }
-
+	
+	public void addDefaults() {
+		styleTable.addDefaults(references);
+	}
+	
 	public void addAnswer(String variable, Value answer) {
-		variableAnswer.put(variable, answer);
+		computedQuestions.put(variable, answer);
 	}
 
 	public Value getAnswer(String variable) {
-		
-		if (!variableAnswer.containsKey(variable)) {
-			throw new AssertionError("The answer of variable " + variable + " is requested, " +
-					"but is not answered");
-		}
-		
-		return variableAnswer.get(variable);
+		return computedQuestions.get(variable);
 	}
 
 	public boolean isAnswered(String variable) {
-		return variableAnswer.containsKey(variable);
+		return computedQuestions.containsKey(variable);
+	}
+	
+	public boolean isStyled(String variable) {
+		return styleTable.isStyled(variable) && fieldTable.containsKey(variable);
 	}
 	
 	public Type getType(String variable) {
@@ -49,13 +53,19 @@ public class Environment {
 		}
 		
 		return references.getType(variable);
-
 	}
 
 	void applyStyle(String variable, Label label) {
 		styleTable.applyStyle(variable, label);
 	}
+	
+	public void add(String variable, Field field) {
+		fieldTable.put(variable, field);
+	}
 
+	public void add(String variable, Style style) {
+		styleTable.add(variable, style);
+	}
 
 	void addField(String name, Field field) {
 		fieldTable.put(name, field);

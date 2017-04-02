@@ -1,28 +1,53 @@
 package qls.evaluation;
 
-import QL.ast.type.Type;
+import java.util.Stack;
+
 import QL.ui.Environment;
 import QL.ui.Notifier;
-import QL.ui.Style;
+import QL.ui.field.Check;
+import QL.ui.field.DropDownMenu;
 import QL.ui.field.Field;
-import qls.ast.*;
+import QL.ui.field.Number;
+import QL.ui.field.RadioB;
+import QL.ui.field.Slide;
+import QL.ui.field.SpinBox;
+import QL.ui.field.Text;
+import QL.value.BoolValue;
+import QL.value.IntegerValue;
+import QL.value.StringValue;
+import javafx.scene.control.RadioButton;
+import qls.ast.DefaultStyle;
+import qls.ast.DefaultVisitor;
+import qls.ast.DefaultWidget;
+import qls.ast.Page;
+import qls.ast.Question;
+import qls.ast.QuestionWithWidget;
+import qls.ast.Section;
+import qls.ast.Stylesheet;
+import qls.ast.StylesheetVisitor;
+import qls.ast.WidgetVisitor;
 import qls.ast.widget.Checkbox;
+import qls.ast.widget.DropDown;
+import qls.ast.widget.NumberField;
 import qls.ast.widget.Radio;
 import qls.ast.widget.Spinbox;
+import qls.ast.widget.TextField;
+import qls.ast.widget.Slider;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class Evaluator implements StylesheetVisitor, WidgetVisitor {
+public class Evaluator implements StylesheetVisitor, WidgetVisitor, DefaultVisitor {
 
 	private Environment environment;
 	private Notifier notifier;
-	private Map<Type, Style> defaultStyle;
+	
+	private Stack<DefaultWidget> defaults;
+	private String currentQuestion;
 	
 	public Evaluator(Environment environment, Notifier notifier) {
+		
 		this.environment = environment;
 		this.notifier = notifier;
-		this.defaultStyle = new HashMap<>();
+		this.defaults = new Stack<DefaultWidget>();
+		currentQuestion = "";
 	}
 	
 	@Override
@@ -33,78 +58,121 @@ public class Evaluator implements StylesheetVisitor, WidgetVisitor {
 	}
 
 	@Override
+	// TODO combined method for page and section
 	public void visit(Page page) {
-		for (Section section : page.getSections()) {
-			section.accept(this);
+		
+		// Push on stack
+		for (DefaultWidget def : page.getDefaultWidgets()) {
+			defaults.push(def);
 		}
-
-		for (DefaultWidget defaultStyle : page.getDefaultWidgets()) {
-			// TODO
+		
+		for (Section section : page.getSections()) {	
+			section.accept(this);	
+		}
+		
+		// Pop off stack
+		for (int i = 0; i < page.getDefaultWidgets().size(); ++i) {
+			defaults.pop();
 		}
 	}
+	
 
 	@Override
 	public void visit(Section section) {
+		
+		// Push on stack
+		for (DefaultWidget def : section.getDefaultWidgets()) {
+			defaults.push(def);
+		}
+		
 		for (Question question : section.getQuestions()) {
 			question.accept(this);
-		}		
+		}	
+		
+		// Pop off stack
+		for (int i = 0; i < section.getDefaultWidgets().size(); ++i) {
+			defaults.pop();
+		}
 	}
 
 	@Override
 	public void visit(Question question) {
 		
-//		referenceTable.getType(question.getName()).accept(this);
-//		styles.put(question.getName(), new Style())
+		currentQuestion = question.getName();
 		
+		for (DefaultWidget def : defaults) {
+			def.accept(this);
+			if (environment.isStyled(currentQuestion)) {
+				break;
+			}
+		}
+	}
+
+	@Override // TODO extract question generic code
+	public void visit(QuestionWithWidget question) {
+		
+		currentQuestion = question.getName();
+		
+		for (DefaultWidget def : defaults) {
+			def.accept(this);
+			if (environment.isStyled(currentQuestion)) {
+				break;
+			}
+		}
+		
+		// Replace default widget
+		environment.add(question.getName(), question.getWidget().accept(this));	
 	}
 
 	@Override
 	public Field visit(Checkbox checkbox) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Check(currentQuestion, notifier, new BoolValue());
 	}
 
 	@Override
 	public Field visit(Radio radio) {
-		// TODO Auto-generated method stub
-		return null;
+		return new RadioB(currentQuestion, notifier, new BoolValue());
 	}
 
 	@Override
 	public Field visit(Spinbox spinbox) {
-		// TODO Auto-generated method stub
-		return null;
+		return new SpinBox(currentQuestion, notifier, new IntegerValue());
+	}
+	
+	@Override 
+	public Field visit(Slider slide) {
+		return new Slide(currentQuestion, notifier, new IntegerValue());
+	}
+	
+	@Override
+	public Field visit(DropDown dropDown) {
+		return new DropDownMenu(currentQuestion, notifier, new BoolValue());
 	}
 
 	@Override
-	public void visit(QuestionWithWidget questionWithDefault) {
-		// TODO Auto-generated method stub
-		
+	public Field visit(NumberField numberField) {
+		return new Number(currentQuestion, notifier, new IntegerValue());
+	}
+
+	@Override
+	public Field visit(TextField textField) {
+		return new Text(currentQuestion, notifier, new StringValue());
 	}
 	
-//	@Override
-//	public void visit(QuestionWithWidget questionWithDefault) {
-//		questionWithDefault.getWidget().accept(this);
-//		
-//	}
-//
-//	@Override
-//	public Field visit(Checkbox checkbox) {
-//		checkbox.accept(this);
-//	}
-//
-//	@Override
-//	public Field visit(Radio radio) {
-//		radio.accept(this);
-//	}
-//
-//	@Override
-//	public Field visit(Spinbox spinbox) {
-//		spinbox.accept(this);
-//	}
+	@Override
+	public void visit(DefaultStyle defaultStyle) {		
+		
+		if (environment.getType(currentQuestion).equals(defaultStyle.getType())) {
+			environment.add(currentQuestion, defaultStyle.getStyle());
+		}	
+	}
 
-
-
-
+	@Override
+	public void visit(DefaultWidget defaultWidget) {
+		
+		if (environment.getType(currentQuestion).equals(defaultWidget.getType())) {
+			environment.add(currentQuestion, defaultWidget.getWidget().accept(this));
+		}
+	}
 
 }

@@ -12,5 +12,12 @@ public class DefaultStyle extends DefaultWidget {
 		this.style = style;
 	}
 	
-
+	public Style getStyle() {
+		return style;
+	}
+	
+	public void accept(DefaultVisitor v) {
+		v.visit(this);	
+	}
+	
 }

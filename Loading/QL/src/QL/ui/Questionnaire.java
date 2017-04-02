@@ -35,17 +35,43 @@ public class Questionnaire extends Application implements Notifier {
 	private static List<Message> messages;
 	
     public void main(Form f, Environment env, List<Message> msgs) {
+    	
     	form = f;
     	environment = env;
     	messages = msgs;
+    	
+    	environment.addDefaults();
 
         launch();
     }
-
+    
+    // TODO rename
+    protected void main(Form f, Environment env, List<Message> msgs, Stage primaryStage) {
+    	
+    	form = f;
+    	environment = env;
+    	messages = msgs;
+    	
+    	environment.addDefaults();
+    	
+    	// TODO add controls to variables without default values
+    	
+    	run(primaryStage);
+    }
+    
     @Override
     public void start(Stage primaryStage) {
 
-        showMessages();
+        CollectFields collectFields = new CollectFields(this, environment);
+        collectFields.visit(form);
+    	
+    	run(primaryStage);
+    }
+   
+    
+    private void run(Stage primaryStage) {
+        
+    	showMessages();
         if (hasFatalMessage()) {
             return;
         }
@@ -55,11 +81,6 @@ public class Questionnaire extends Application implements Notifier {
         initGrid();
         Scene scene = new Scene(grid, 700, 350);
         primaryStage.setScene(scene);
-
-        if (environment.hasEmptyFieldTable()) {
-            CollectFields collectFields = new CollectFields(this, environment);
-            collectFields.visit(form);
-        }
 
         renderQuestionnaire();
         
@@ -138,11 +159,11 @@ public class Questionnaire extends Application implements Notifier {
     private void renderQuestions(List<Row> visibleRows) {
 
     	int rowIndex = 1;
-        for (Row question : visibleRows) {
+        for (Row row : visibleRows) {
             
-        	environment.applyStyle(question.getName(), question.getLabel());
-            grid.add(question.getLabel(), 0, rowIndex);
-            grid.add(question.getControl(), 1, rowIndex);
+        	environment.applyStyle(row.getName(), row.getLabel());
+            grid.add(row.getLabel(), 0, rowIndex);
+            grid.add(row.getControl(), 1, rowIndex);
             
             ++rowIndex;
         }

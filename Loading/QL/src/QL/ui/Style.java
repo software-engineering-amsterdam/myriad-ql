@@ -1,6 +1,7 @@
 package QL.ui;
 
 import QL.ast.type.Type;
+import QL.ui.field.Field;
 
 public class Style {
 	private final int width;

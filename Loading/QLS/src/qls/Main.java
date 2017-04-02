@@ -1,32 +1,32 @@
 package qls;
 
+import java.util.List;
+
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+
 import QL.QLLexer;
 import QL.QLParser;
 import QL.ReferenceTable;
 import QL.ast.Form;
 import QL.message.Message;
 import QL.ui.Environment;
-import QL.ui.StyleTable;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
 import qls.ast.Stylesheet;
 import qls.semantic.Analyzer;
 import qls.ui.PrettyQuestionnaire;
-
-import java.util.List;
 
 
 class Main {
 	public static void main(String[] args) throws Exception {
 		String tmp = "stylesheet taxOfficeExample \n"
 				 + "page Housing { \n"
-				 + "section \"Buying\" \n"
-				 + "question Name0 widget spinbox \n"
-		 		 + "section \"Loaning\" \n"
-				 + "question Name1 \n"
 		 		 + "default boolean widget checkbox \n"
-		 		 + "default integer widget spinbox"
-				 // + "default boolean widget radio(\"Yes\", \"No\") \n"
+		 		 + "default integer widget spinbox \n"
+				 + "section \"Buying\" \n"
+				 + "default boolean widget radio(\"Yes\", \"No\") \n"
+				 + "question Name0 widget numberfield \n"
+		 		 + "section \"Loaning\" \n"
+				 + "question Name1 widget numberfield \n"
 				 + "}";
 		
 		ANTLRInputStream input = new ANTLRInputStream( tmp );
@@ -46,11 +46,9 @@ class Main {
 		
 		List<Message> messages = qlAnalyzer.getMessages();
 	
-		qls.semantic.Analyzer analyzer = new Analyzer(referenceTable);
+		qls.semantic.Analyzer analyzer = new Analyzer(referenceTable, messages);
 		
-		StyleTable styleTable = analyzer.analyze(stylesheet);
-		
-		messages.addAll(analyzer.getMessages());
+		analyzer.analyze(stylesheet);
 
 		PrettyQuestionnaire questionnaire = new PrettyQuestionnaire();
 		questionnaire.main(form, new Environment(referenceTable), messages, stylesheet);
@@ -60,14 +58,8 @@ class Main {
 	
 	private static Form createForm() {
 		String tmp = "form Testing { "
-				 + "Name0: \"Question0\" integer "
-				 + "Name1: \"Question1\" integer (Name0 + 2)"
-				 + "if (Name0 < 5) {"
-				 + "if (Name0 == 4) {"
-		 		 + "Name2: \"Question2\" boolean"
-				 + "} else { "
-				 + "Name9: \"Question9\" boolean } } "
-				 + "Name3: \"Question3\" string "
+				 + "Name0: \"How much did your house cost?\" integer "
+				 + "Name1: \"You have to pay\" integer (Name0 + 2)"
 				 + "}";
 
 		ANTLRInputStream input = new ANTLRInputStream( tmp );

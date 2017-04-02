@@ -12,7 +12,7 @@ import java.io.InputStream;
 
 class Main {
 	public static void main(String[] args) throws Exception {
-		InputStream src = new FileInputStream("assets/questionnaire.ql");
+		InputStream src = new FileInputStream("../assets/questionnaire.ql");
 		ANTLRInputStream input = new ANTLRInputStream(src);
 		QLLexer lexer = new QLLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);

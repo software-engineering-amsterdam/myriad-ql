@@ -16,14 +16,14 @@ class Environment {
 	private final ReferenceTable referenceTable;
 	private final List<Message> messages;
 	
-	public Environment(ReferenceTable referenceTable) {
+	public Environment(ReferenceTable referenceTable, List<Message> messages) {
 		
 		this.variableCovered = new HashMap<>();	
 		this.referenceTable = referenceTable;
 		for (String name : referenceTable) {
 			variableCovered.put(name, false);
 		}
-		this.messages = new ArrayList<>(); // TODO move to analyzing part
+		this.messages = messages; // TODO move to analyzing part
 	}
 	
 	public List<Message> getMessages() {

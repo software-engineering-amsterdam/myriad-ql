@@ -17,6 +17,10 @@ public class Section extends Node {
 		this.defaultWidgets = defaultWidgets;
 	}
 	
+	public String getName() {
+		return name;
+	}
+	
 	public List<Question> getQuestions() {
 		return questions;
 	}
@@ -24,6 +28,7 @@ public class Section extends Node {
 	public List<DefaultWidget> getDefaultWidgets() {
 		return defaultWidgets;
 	}
+	
 	
 	public void accept(StylesheetVisitor v) {
 		v.visit(this);

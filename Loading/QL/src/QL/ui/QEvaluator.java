@@ -7,7 +7,9 @@ import QL.ast.Statement;
 import QL.evaluation.Evaluator;
 import QL.ui.field.Field;
 import QL.value.BoolValue;
+import QL.value.IntegerValue;
 import QL.value.Value;
+import QL.ui.field.Number;
 import javafx.scene.control.Label;
 
 import java.util.ArrayList;
@@ -17,12 +19,12 @@ import java.util.List;
 public class QEvaluator extends Evaluator {
 
 	private final List<Row> visibleRows;
-    private final Environment answers;
+    private final Environment environment;
     private final Notifier notifier;
 
-	public QEvaluator(Environment answers, Notifier notifier) {
-		super(answers);
-		this.answers = answers;
+	public QEvaluator(Environment environment, Notifier notifier) {
+		super(environment);
+		this.environment = environment;
 		this.visibleRows = new ArrayList<>();
 		this.notifier = notifier;
 	}
@@ -40,28 +42,34 @@ public class QEvaluator extends Evaluator {
     @Override
     public void visit(ComputedQuestion question) {
         Value value = question.getComputedQuestion().accept(this);
-        answers.addAnswer(question.getVariable(), value);
+        environment.addAnswer(question.getVariable(), value);
 
         visibleRows.add(createRow(question));
     }
 
     private Row createRow(Question question) {
 
-        Value answer = getAnswer(question);
+        Field field = environment.getField(question.getVariable());
 
-//        Field field = answer.getField(question.getVariable(), notifier, answer);
-        Field field = answers.getField(question.getVariable());
-
+        return new Row(question.getVariable(), new Label(question.getLabel()), field);
+    }
+    
+    // TODO only works for number fields
+    private Row createRow(ComputedQuestion question) {
+    	
+        Field field = new Number(question.getVariable(), notifier, 
+        		(IntegerValue) getAnswer(question));
+        
         return new Row(question.getVariable(), new Label(question.getLabel()), field);
     }
 
     private Value getAnswer(Question question) {
 
-        if (!answers.isAnswered(question.getVariable())) {
+        if (!environment.isAnswered(question.getVariable())) {
             return getDefaultAnswer(question);
         }
 
-        return answers.getAnswer(question.getVariable());
+        return environment.getAnswer(question.getVariable());
     }
 
     private Value getDefaultAnswer(Question question) {

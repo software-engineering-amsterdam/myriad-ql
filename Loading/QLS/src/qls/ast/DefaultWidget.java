@@ -15,6 +15,10 @@ public class DefaultWidget extends Node {
 		this.widget = widget;
 	}
 
+	public void accept(DefaultVisitor v) {
+		v.visit(this);	
+	}
+
 	public Type getType() {
 		return type;
 	}

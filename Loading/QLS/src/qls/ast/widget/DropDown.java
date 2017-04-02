@@ -1,19 +1,24 @@
 package qls.ast.widget;
 
-import QL.ast.type.IntegerType;
+import QL.ast.type.BooleanType;
 import QL.ast.type.Type;
 import QL.ui.field.Field;
 import qls.evaluation.Evaluator;
 
-public class Spinbox extends Widget {
-
-	public Spinbox(int line) {
+public class DropDown extends Widget{
+	
+	private final String yes;
+	private final String no;
+	
+	public DropDown(String yes, String no, int line) {
 		super(line);
+		this.yes = yes;
+		this.no = no;
 	}
 
 	@Override
 	public Type getType() {
-		return new IntegerType(1);
+		return new BooleanType(1);
 	}
 	
 	@Override

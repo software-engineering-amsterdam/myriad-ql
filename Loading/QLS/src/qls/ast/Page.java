@@ -20,6 +20,11 @@ public class Page extends Node {
 	public void accept(StylesheetVisitor v) {
 		v.visit(this);
 	}
+	
+	
+	public String getName() {
+		return name;
+	}
 
 	public List<Section> getSections() {
 		return sections;

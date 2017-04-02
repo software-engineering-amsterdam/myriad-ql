@@ -12,16 +12,27 @@ public class StyleTable {
 	
 	private Map<String, Style> styles;
 	
-	StyleTable(ReferenceTable variables) {
-
+// TODO static default style?
+// TODO Remove type from style?
+//	private static Style = new Style(350, "Arial", 12, "#0000FF", 
+//			variables.getType(variable)
+	
+	StyleTable() {
 		styles = new HashMap<>();
+	}
+	
+	public void addDefaults(ReferenceTable variables) {
 		for (String variable : variables) {
-			styles.put(variable, new Style(350, "Arial", 12, "#0000FF", variables.getType(variable)));
+			if (!isStyled(variable)) {
+				styles.put(variable, new Style(350, "Arial", 12, "#0000FF", 
+						variables.getType(variable)));
+			}
 		}
 	}
 	
-	public StyleTable(Map<String, Style> styles) {
-		this.styles = styles;
+	// TODO inversion of control??
+	void add(String name, Style style) {
+		styles.put(name, style);
 	}
 	
 	void applyStyle(String name, Label label) {
@@ -29,6 +40,10 @@ public class StyleTable {
 			throw new RuntimeException("The style of variable " + name + " is undefined.");
 		}
 		setSettings(label, styles.get(name));
+	}
+	
+	public boolean isStyled(String variable) {
+		return styles.containsKey(variable);
 	}
 	
 	// TODO move to different class?
