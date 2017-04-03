@@ -72,14 +72,6 @@ export class ASTBuilder {
         return data;
     }
 
-    and_test(data) {
-        return data;
-    }
-
-    not_test(data) {
-        return data;
-    }
-
     operator(data) {
         return data;
     }
