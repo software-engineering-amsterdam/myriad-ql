@@ -33,7 +33,7 @@ class Main {
 				 + "default boolean widget dropdown(\"Yes\", \"No\") \n"
 				 + "question Name0 \n"
 		 		 + "section \"Loaning\" \n"
-				 + "question Name1 \n"
+				 + "question Name2 \n"
 				 + "}";
 		
 		ANTLRInputStream input = new ANTLRInputStream( tmp );

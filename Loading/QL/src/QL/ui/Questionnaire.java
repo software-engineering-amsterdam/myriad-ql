@@ -59,17 +59,17 @@ public class Questionnaire extends Application implements Notifier {
 
         CollectFields collectFields = new CollectFields(this, environment);
         collectFields.visit(form);
+        
+    	showMessages(messages);
+        if (hasFatalMessage(messages)) {
+            return;
+        }
     	
     	run(primaryStage);
     }
    
     
     private void run(Stage primaryStage) {
-        
-    	showMessages();
-        if (hasFatalMessage()) {
-            return;
-        }
 
         primaryStage.setTitle(form.getId());
 
@@ -82,7 +82,7 @@ public class Questionnaire extends Application implements Notifier {
         primaryStage.show();
     }
 
-    private void showMessages() {
+    protected void showMessages(List<Message> messages) {
         if (messages.isEmpty()) {
             return;
         }
@@ -90,7 +90,7 @@ public class Questionnaire extends Application implements Notifier {
         new MessageDialog(messages);
     }
 
-    private boolean hasFatalMessage() {
+    protected boolean hasFatalMessage(List<Message> messages) {
         boolean isFatalMessage = false;
         for (Message msg : messages) {
             isFatalMessage = isFatalMessage || msg.isFatal();

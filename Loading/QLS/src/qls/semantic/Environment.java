@@ -31,7 +31,7 @@ class Environment {
 	}
 	
 	boolean isPresentQLS(String name) {
-		return questionsQL.get(name);
+		return questionsQL.containsKey(name) && questionsQL.get(name);
 	}
 	
 	void setPresentQLS(String name) {

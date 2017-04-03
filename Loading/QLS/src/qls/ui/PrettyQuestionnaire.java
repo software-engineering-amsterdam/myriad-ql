@@ -30,6 +30,11 @@ public class PrettyQuestionnaire extends Questionnaire {
     @Override
     public void start(Stage primaryStage) {
     	
+    	showMessages(messages);
+        if (hasFatalMessage(messages)) {
+            return;
+        }
+    	
 		Evaluator evaluator = new Evaluator(environment, this);
 		stylesheet.accept(evaluator);
     	
