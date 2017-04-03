@@ -11,6 +11,8 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by matt on 17/03/2017.
+ *
+ * Tests Expression checker
  */
 public class ExpressionCheckerTest {
 

@@ -9,14 +9,14 @@ import com.matthewchapman.ql.ast.expression.literal.IntegerLiteral;
 import com.matthewchapman.ql.ast.expression.literal.StringLiteral;
 import com.matthewchapman.ql.ast.expression.unary.Negation;
 import com.matthewchapman.ql.environment.datastores.ValueTable;
-import com.matthewchapman.ql.environment.values.BooleanValue;
-import com.matthewchapman.ql.environment.values.IntegerValue;
-import com.matthewchapman.ql.environment.values.StringValue;
-import com.matthewchapman.ql.environment.values.Value;
+import com.matthewchapman.ql.environment.values.*;
+import com.matthewchapman.ql.errorhandling.InvalidOperationException;
 import com.matthewchapman.ql.visitors.ExpressionVisitor;
 
 /**
  * Created by matt on 20/03/2017.
+ *
+ * Uses the visitor pattern to evaluate given expressions
  */
 public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
 
@@ -24,7 +24,11 @@ public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
 
     public Value evaluateExpression(String id, Expression expression, ValueTable valueTable) {
         this.valueTable = valueTable;
-        return expression.accept(this, id);
+        try {
+            return expression.accept(this, id);
+        } catch (InvalidOperationException e) {
+            return new NullValue();
+        }
     }
 
     @Override

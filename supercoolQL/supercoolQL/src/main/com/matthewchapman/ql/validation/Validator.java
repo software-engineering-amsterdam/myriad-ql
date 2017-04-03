@@ -22,11 +22,9 @@ public class Validator {
     private final LabelChecker labelChecker;
     private final TypeChecker typeChecker;
     private final DependencyChecker dependencyChecker;
-    private final ErrorDialogGenerator dialogGenerator;
     private final ExpressionChecker expressionChecker;
 
     public Validator() {
-        this.dialogGenerator = new ErrorDialogGenerator();
         this.labelChecker = new LabelChecker();
         this.typeChecker = new TypeChecker();
         this.dependencyChecker = new DependencyChecker();
@@ -44,7 +42,7 @@ public class Validator {
 
         //output any warnings we have
         if (mainLogger.getWarningNumber() > 0) {
-            dialogGenerator.generateWarningListBox(mainLogger.getWarningsAsString(), INTERPRETER_WARNING_TITLE, INTERPRETER_WARNING_BODY);
+            ErrorDialogGenerator.generateWarningListBox(mainLogger.getWarningsAsString(), INTERPRETER_WARNING_TITLE, INTERPRETER_WARNING_BODY);
         }
 
         //missing parameters are bad
@@ -53,7 +51,7 @@ public class Validator {
 
         //if we have any errors at all at this point, halt.
         if (mainLogger.getErrorNumber() > 0) {
-            dialogGenerator.generateErrorListBox(mainLogger.getErrorsAsString(), INTERPRETER_ERROR_TITLE, INTERPRETER_ERROR_BODY);
+            ErrorDialogGenerator.generateErrorListBox(mainLogger.getErrorsAsString(), INTERPRETER_ERROR_TITLE, INTERPRETER_ERROR_BODY);
             return false;
         }
 
@@ -61,14 +59,14 @@ public class Validator {
         ErrorLogger dependencyLog = dependencyChecker.checkForCircularDependencies(expressionChecker.getExpressionMap());
         if (dependencyLog.getErrorNumber() > 0) {
             mainLogger.addMultipleErrors(dependencyLog);
-            dialogGenerator.generateErrorListBox(mainLogger.getErrorsAsString(), INTERPRETER_ERROR_TITLE, INTERPRETER_ERROR_BODY);
+            ErrorDialogGenerator.generateErrorListBox(mainLogger.getErrorsAsString(), INTERPRETER_ERROR_TITLE, INTERPRETER_ERROR_BODY);
             return false;
         }
 
         //incorrect types are also bad
         ErrorLogger typeLog = typeChecker.checkExpressionTypes(astRoot, labelChecker.getTypeTable());
         if (typeLog.getErrorNumber() > 0) {
-            dialogGenerator.generateErrorListBox(typeLog.getErrorsAsString(), INTERPRETER_ERROR_TITLE, INTERPRETER_ERROR_BODY);
+            ErrorDialogGenerator.generateErrorListBox(typeLog.getErrorsAsString(), INTERPRETER_ERROR_TITLE, INTERPRETER_ERROR_BODY);
             return false;
         }
 

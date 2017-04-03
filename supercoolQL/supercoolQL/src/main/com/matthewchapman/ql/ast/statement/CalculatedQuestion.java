@@ -6,6 +6,8 @@ import com.matthewchapman.ql.visitors.StatementVisitor;
 
 /**
  * Created by matt on 08/03/2017.
+ *
+ * Extends question with additional calculation property
  */
 public class CalculatedQuestion extends Question {
 

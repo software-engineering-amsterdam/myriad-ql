@@ -9,6 +9,8 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by matt on 15/03/2017.
+ *
+ * Tests parse of addition expressions
  */
 public class AdditionTest {
 

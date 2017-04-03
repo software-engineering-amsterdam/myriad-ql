@@ -17,6 +17,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Created by matt on 15/03/2017.
+ * Tests generation of ASTs via Antlr
  */
 public class AntlrParserTests {
 

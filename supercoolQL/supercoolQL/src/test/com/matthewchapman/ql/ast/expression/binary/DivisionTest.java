@@ -9,6 +9,8 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by matt on 15/03/2017.
+ *
+ * Tests parsing of Division objects
  */
 public class DivisionTest {
     private ASTBuilder ASTBuilder;

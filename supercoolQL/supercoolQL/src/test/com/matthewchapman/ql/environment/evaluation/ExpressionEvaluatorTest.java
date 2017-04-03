@@ -16,6 +16,8 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by matt on 21/03/2017.
+ *
+ * Tests for correct expression evaluation
  */
 public class ExpressionEvaluatorTest {
 
@@ -26,11 +28,13 @@ public class ExpressionEvaluatorTest {
         final int RESULT_2 = 120;
         final boolean RESULT_3 = true;
         final boolean RESULT_4 = true;
+        final boolean RESULT_5 = true;
 
         Expression test1 = new Addition(new IntegerLiteral("12", 0, 0), new IntegerLiteral("12", 0, 0), 0, 0);
         Expression test2 = new Multiplication(new IntegerLiteral("12", 0, 0), new IntegerLiteral("10", 0, 0), 0, 0);
         Expression test3 = new LogicalAnd(new BooleanLiteral("true", 0, 0), new BooleanLiteral("true", 0, 0), 0, 0);
         Expression test4 = new Equal(new StringLiteral("test", 0, 0), new StringLiteral("test", 0, 0), 0, 0);
+        Expression test5 = new Equal(new IntegerLiteral("12", 0, 0), new IntegerLiteral("12",0,0), 0, 0);
         ValueTable values = new ValueTable();
 
         ExpressionEvaluator eval = new ExpressionEvaluator();
@@ -39,16 +43,18 @@ public class ExpressionEvaluatorTest {
         values.addOrUpdateValue("test2", eval.evaluateExpression("test2", test2, values));
         values.addOrUpdateValue("test3", eval.evaluateExpression("test3", test3, values));
         values.addOrUpdateValue("test4", eval.evaluateExpression("test4", test4, values));
+        values.addOrUpdateValue("test5", eval.evaluateExpression("test5", test5, values));
 
         assertNotNull(values.getValueByID("test1"));
         assertNotNull(values.getValueByID("test2"));
         assertNotNull(values.getValueByID("test3"));
         assertNotNull(values.getValueByID("test4"));
+        assertNotNull(values.getValueByID("test5"));
 
         assertEquals(RESULT_1, values.getValueByID("test1").getValue());
         assertEquals(RESULT_2, values.getValueByID("test2").getValue());
         assertEquals(RESULT_3, values.getValueByID("test3").getValue());
         assertEquals(RESULT_4, values.getValueByID("test4").getValue());
+        assertEquals(RESULT_5, values.getValueByID("test5").getValue());
     }
-
 }

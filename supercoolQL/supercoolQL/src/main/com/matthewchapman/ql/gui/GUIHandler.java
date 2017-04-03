@@ -33,6 +33,7 @@ public class GUIHandler {
     void onQuestionChange(String id, Value value) {
         this.environment.addOrUpdateValue(id, value);
         drawUI();
+        setFocus(id);
     }
 
     private void drawUI() {
@@ -41,6 +42,12 @@ public class GUIHandler {
         stage.setScene(scene);
         stage.show();
         stage.setResizable(false);
+    }
+
+    private void setFocus(String identifier) {
+        Scene scene = this.stage.getScene();
+        QuestionWidget widget = (QuestionWidget) scene.lookup("#" + identifier);
+        widget.setFocus();
     }
 
     @NotNull
@@ -70,7 +77,7 @@ public class GUIHandler {
 
         if(environment.questionIsCalculated(name))
         {
-            widget.setEditable(false);
+            widget.setCalculated();
         }
         return widget;
     }

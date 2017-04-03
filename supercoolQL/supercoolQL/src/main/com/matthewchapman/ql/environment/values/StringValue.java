@@ -3,12 +3,17 @@ package com.matthewchapman.ql.environment.values;
 /**
  * Created by matt on 18/03/2017.
  */
-public class StringValue extends Value {
+public class StringValue implements Value {
 
     private final String value;
 
     public StringValue(String input) {
         this.value = input;
+    }
+
+    @Override
+    public String getTypeAsString() {
+        return "STRING";
     }
 
     @Override
@@ -22,13 +27,8 @@ public class StringValue extends Value {
     }
 
     @Override
-    public Value equalTo(StringValue value) {
-        return new BooleanValue(this.value.equals(value.getValue()));
-    }
-
-    @Override
     public Value equalTo(Value value) {
-        return value.equalTo(this);
+        return new BooleanValue(this.value.equals(value.getValue()));
     }
 
     @Override

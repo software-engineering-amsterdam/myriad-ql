@@ -26,7 +26,7 @@ public class FileReader {
             }
         } catch (IOException e) {
             Logger.getAnonymousLogger().log(Level.SEVERE, "Exception", e);
-            new ErrorDialogGenerator().generateErrorListBox(e.getMessage(), "File Read Error", "There was an error reading the input file");
+            ErrorDialogGenerator.generateErrorListBox(e.getMessage(), "File Read Error", "There was an error reading the input file");
             return null;
         }
         return fileContents;

@@ -5,6 +5,8 @@ import com.matthewchapman.ql.visitors.TypeVisitor;
 
 /**
  * Created by matt on 13/03/2017.
+ *
+ * Exceptional value for types
  */
 public class ErrorType extends Type {
 

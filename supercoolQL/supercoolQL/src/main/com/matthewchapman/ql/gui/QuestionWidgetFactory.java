@@ -12,17 +12,13 @@ import com.matthewchapman.ql.gui.widgets.StringQuestionWidget;
  */
 class QuestionWidgetFactory {
 
-    public QuestionWidget getQuestionWidget(Question question, Value value, QuestionChangeObserver observer) {
-
-        switch(question.getType().toString()) {
-            case "boolean":
-                return new BooleanQuestionWidget(question, value, observer);
-            case "string":
-                return new StringQuestionWidget(question, value, observer);
-            case "integer":
-                return new IntegerQuestionWidget(question, value, observer);
-            default:
-                throw new RuntimeException();
+    QuestionWidget getQuestionWidget(Question question, Value value, QuestionChangeObserver observer) {
+        if("BOOLEAN".equals(value.getTypeAsString())) {
+            return new BooleanQuestionWidget(question, value, observer);
+        } else if ("STRING".equals(value.getTypeAsString())) {
+            return new StringQuestionWidget(question, value, observer);
+        } else {
+            return new IntegerQuestionWidget(question, value, observer);
         }
     }
 }

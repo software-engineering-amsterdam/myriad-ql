@@ -2,14 +2,21 @@ package com.matthewchapman.ql.environment.values;
 
 /**
  * Created by matt on 18/03/2017.
+ *
+ * Concrete implementation of boolean values
  */
 
-public class BooleanValue extends Value {
+public class BooleanValue implements Value {
 
     private final boolean value;
 
     public BooleanValue(boolean input) {
         this.value = input;
+    }
+
+    @Override
+    public String getTypeAsString() {
+        return "BOOLEAN";
     }
 
     @Override
@@ -23,13 +30,8 @@ public class BooleanValue extends Value {
     }
 
     @Override
-    public Value equalTo(BooleanValue value) {
-        return new BooleanValue(this.value == value.getValue());
-    }
-
-    @Override
     public Value equalTo(Value value) {
-        return value.equalTo(this);
+        return new BooleanValue(value.getValue().equals(this.value));
     }
 
     @Override
