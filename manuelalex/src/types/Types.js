@@ -19,6 +19,10 @@ export class Type {
     toString(){
         return this.constructor.name;
     }
+
+    getType(){
+        return this.constructor;
+    }
 }
 
 export class QLMoney extends Type {

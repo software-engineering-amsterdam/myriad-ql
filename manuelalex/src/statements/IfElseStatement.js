@@ -16,6 +16,11 @@ export class IfElseStatement extends IfStatement {
         return this.elseBody;
     }
 
+
+    accept(visitor){
+        visitor.visitIfElseStatement(this);
+    }
+
     render(visitor, view){
         visitor.renderIfElseStatement(this, view);
     }

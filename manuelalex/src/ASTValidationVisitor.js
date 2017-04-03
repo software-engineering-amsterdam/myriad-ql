@@ -88,60 +88,54 @@ export class ASTValidationVisitor {
         ifstatement.condition.accept(this);
     }
 
+    visitIfElseStatement(ifelsestatement) {
+        ifelsestatement.condition.accept(this);
+    }
 
 
-    visitPrefixExpression(condition){
-        if(!(condition.expression.accept(this) instanceof QLBoolean)){
-            this.errors.push(`Invalid expression. The prefix operator ${condition.prefix} can not be applied to ${condition.expression.name}, because it is not a boolean`);
+    visitPrefixExpression(prefixcondition){
+        if(!(prefixcondition.expression.accept(this) instanceof QLBoolean)){
+            this.errors.push(`Invalid expression. The prefix operator ${prefixcondition.prefix} can not be applied to ${prefixcondition.expression.name}, because it is not a boolean`);
         }
         condition.expression.accept(this);
     }
 
-    visitExpression(condition) {
+    visitExpression(expression) {
+        const leftHandType = expression.leftHand.accept(this);
+        const rightHandType = expression.rightHand.accept(this);
+        const operator = expression.operator;
 
-        //
-        //    condition.leftHand.accept(this);
-        //
-        // // if(condition.rightHand != undefined){
-        // //     condition.rightHand.accept(this);
-        // // }
-
-
-        condition.leftHand.accept(this);
-        condition.rightHand.accept(this);
-
-        // if(condition.leftHand instanceof Expression){
-        //     condition.leftHand.accept(this);
-        // }
-        //
-        // if(condition.rightHand instanceof Expression){
-        //     condition.rightHand.accept(this);
-        // }
-
-        if (condition.operator === undefined){
-            //condition.leftHand.accept(this);
-        } else {
-            //Todo: add prefix operator !
-
-            this.validateOperator(condition, ['||', '&&', '=='], QLBoolean.name);
-            this.validateOperator(condition, ['<', '>', '>=', '<=', '!=', '==', '*', '/', '+', '-'], QLMoney.name);
-            this.validateOperator(condition, ['<', '>', '>=', '<=', '!=', '=='], QLString.name);
-            this.validateOperator(condition, ['<', '>', '>=', '<=', '!=', '==', '*', '/', '+', '-'], QLNumber.name);
-            this.validateOperator(condition, ['<', '>', '>=', '<=', '!=', '=='], QLDate.name);
+        console.log(leftHandType);
+        if(leftHandType.getType() !== rightHandType.getType()){
+            this.errors.push(`Invalid expression. The operator ${operator} can not be applied 
+                            to ${expression.leftHand.toString()} [type: ${leftHandType.toString()}] 
+                            and ${expression.rightHand.toString()}[type: ${rightHandType.toString()}]`);
         }
+
+        // this.validateOperator(leftHand, rightHand, operator, ['||', '&&', '=='], QLBoolean);
+        // this.validateOperator(leftHand, rightHand, operator, ['<', '>', '>=', '<=', '!=', '==', '*', '/', '+', '-'], QLMoney);
+        // this.validateOperator(leftHand, rightHand, operator, ['<', '>', '>=', '<=', '!=', '=='], QLString);
+        // this.validateOperator(leftHand, rightHand, operator, ['<', '>', '>=', '<=', '!=', '==', '*', '/', '+', '-'], QLNumber);
+        // this.validateOperator(leftHand, rightHand, operator, ['<', '>', '>=', '<=', '!=', '=='], QLDate);
+
+        // if(operator.includes('<', '>', '>=', '<=', '!=', '==', '&&', '||')){
+        //     return new QLBoolean();
+        // } else {
+        //     return leftHandType;
+        // }
+        return expression.getType();
     }
 
     visitProperty(property) {
         return this.memoryState.getType(property.name);
     }
 
-    validateOperator(condition, validOperators, validType) {
-        const typeLeftHand = this.memoryState.getType(condition.leftHand);
-        const typeRightHand = this.memoryState.getType(condition.rightHand);
+    validateOperator(leftHand, rightHand, operator, validOperators, validType) {
 
-        if (validOperators.includes(condition.operator)) {
-            if (typeLeftHand.constructor.name !== validType || typeRightHand.constructor.name !== validType) {
-                this.errors.push(`Invalid expression. The operator ${condition.operator} can not be applied to ${condition.leftHand} [type: ${typeLeftHand}] and ${condition.rightHand}[type:${typeRightHand}]`);
+
+        if (validOperators.includes(operator)) {
+            if (!(leftHand instanceof validType) || !(rightHand instanceof validType)) {
+                this.errors.push(`Invalid expression. The operator ${operator} can not be applied to ${leftHand.name} [type: ${leftHand.name}] and ${rightHand.name}[type: ${rightHand.name}]`);
             }
         }
     }

@@ -1,7 +1,7 @@
 /**
  * Created by Manuel on 13/02/2017.
  */
-
+import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from '../types/Types';
 export class Expression {
 
     constructor(leftHand, operator, rightHand, location){
@@ -35,9 +35,23 @@ export class Expression {
         return visitor.evaluateExpression(this, memoryState);
     }
 
+    toString(){
+        return this.getLeftHand().toString() + " " + this.getOperator() + " " + this.getRightHand().toString();
+    }
 
     _throwError(errorText = ''){
         throw new Error(`Error at ${this.location}: ${errorText.toString()}`);
+    }
+
+
+    getType(){
+        console.log(this.operator);
+        if(['<', '>', '>=', '<=', '!=', '==', '&&', '||'].includes(this.operator)){
+            return new QLBoolean();
+        } else {
+            return new QLMoney;
+        }
+
     }
 }
 
@@ -63,6 +77,14 @@ export class PrefixExpression {
 
     evaluate(visitor, memoryState){
         return visitor.evaluatePrefixExpression(this, memoryState);
+    }
+
+    toString(){
+        return this.getPrefix() + this.getExpression().toString();
+    }
+
+    getTypeName(){
+        return this.leftHand.getTypeName();
     }
 
 }

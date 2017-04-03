@@ -24,4 +24,8 @@ export class Property {
     accept(visitor) {
         return visitor.visitProperty(this);
     }
+
+    toString(){
+        return this.getName();
+    }
 }
