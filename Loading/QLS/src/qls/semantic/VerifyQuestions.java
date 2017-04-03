@@ -16,21 +16,21 @@ public class VerifyQuestions implements StylesheetVisitor {
 	
 	@Override
 	public void visit(Stylesheet stylesheet) {
-		for (Page page : stylesheet.getPages()) {
+		for (Page page : stylesheet) {
 			page.accept(this);
 		}
 	}
 
 	@Override
 	public void visit(Page page) {
-		for (Section section : page.getSections()) {
+		for (Section section : page) {
 			section.accept(this);
 		}
 	}
 
 	@Override
 	public void visit(Section section) {
-		for (Question question : section.getQuestions()) {
+		for (Question question : section) {
 			question.accept(this);
 		}		
 	}

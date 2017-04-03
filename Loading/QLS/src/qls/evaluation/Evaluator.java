@@ -1,5 +1,6 @@
 package qls.evaluation;
 
+import java.util.List;
 import java.util.Stack;
 
 import QL.ui.Environment;
@@ -44,7 +45,7 @@ public class Evaluator implements StylesheetVisitor, WidgetVisitor, DefaultVisit
 	
 	@Override
 	public void visit(Stylesheet stylesheet) {
-		for (Page page : stylesheet.getPages()) {
+		for (Page page : stylesheet) {
 			page.accept(this);
 		}
 	}
@@ -53,36 +54,42 @@ public class Evaluator implements StylesheetVisitor, WidgetVisitor, DefaultVisit
 	// TODO combined method for page and section
 	public void visit(Page page) {
 
-		for (DefaultWidget def : page.getDefaultWidgets()) {
-			defaults.push(def);
-		}
+		addToStack(page.getDefaultWidgets());
 		
-		for (Section section : page.getSections()) {	
+		for (Section section : page) {	
 			section.accept(this);	
 		}
 
-		for (int i = 0; i < page.getDefaultWidgets().size(); ++i) {
-			defaults.pop();
-		}
+		removeFromStack(page.getDefaultWidgets().size());
 	}
 	
 
 	@Override
 	public void visit(Section section) {
 
-		for (DefaultWidget def : section.getDefaultWidgets()) {
-			defaults.push(def);
-		}
+		addToStack(section.getDefaultWidgets());
 		
-		for (Question question : section.getQuestions()) {
+		for (Question question : section) {
 			question.accept(this);
 		}	
 
-		for (int i = 0; i < section.getDefaultWidgets().size(); ++i) {
+		removeFromStack(section.getDefaultWidgets().size());
+	}
+	
+	private void addToStack(List<DefaultWidget> defaultElements) {
+		
+		for (DefaultWidget def : defaultElements) {
+			defaults.push(def);
+		}
+	}
+	
+	private void removeFromStack(int nrElements) {
+		
+		for (int i = 0; i < nrElements; ++i) {
 			defaults.pop();
 		}
 	}
-
+	
 	@Override
 	public void visit(Question question) {
 		saveQuestionStyle(question.getName());

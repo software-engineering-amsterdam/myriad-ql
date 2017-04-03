@@ -10,22 +10,22 @@ grammar qls;
 
 
 stylesheet returns [Stylesheet result] 
- : 'stylesheet' ID pages { $result = new Stylesheet($ID.text, $pages.result, $ctx.start.getLine()); };
+ : 'stylesheet' ID pages { $result = new Stylesheet($pages.result, $ctx.start.getLine()); };
  
  pages returns [List<Page> result]
  @ init {
 	$result = new ArrayList<Page>();
 }
- : ( 'page' ID '{' defaultWidgets sections  '}' { $result.add(new Page($ID.text, $sections.result, $defaultWidgets.result, $ctx.start.getLine())); })+
- | ( 'page' ID '{' sections '}' { $result.add(new Page($ID.text, $sections.result, new ArrayList<DefaultWidget>(), $ctx.start.getLine())); })+
+ : ( 'page' ID '{' defaultWidgets sections  '}' { $result.add(new Page($sections.result, $defaultWidgets.result, $ctx.start.getLine())); })+
+ | ( 'page' ID '{' sections '}' { $result.add(new Page($sections.result, new ArrayList<DefaultWidget>(), $ctx.start.getLine())); })+
  ;
  
  sections returns [List<Section> result]
  @ init {
 	$result = new ArrayList<Section>();
 }
- : ('section' STRING '{'? defaultWidgets questions  '}'? { $result.add(new Section($STRING.text, $questions.result, $defaultWidgets.result, $ctx.start.getLine())); }
- |  'section' STRING '{'? questions '}'? { $result.add(new Section($STRING.text, $questions.result, new ArrayList<DefaultWidget>(), $ctx.start.getLine())); })+
+ : ('section' STRING '{'? defaultWidgets questions  '}'? { $result.add(new Section($questions.result, $defaultWidgets.result, $ctx.start.getLine())); }
+ |  'section' STRING '{'? questions '}'? { $result.add(new Section($questions.result, new ArrayList<DefaultWidget>(), $ctx.start.getLine())); })+
  ;
 
 questions returns [List<Question> result]

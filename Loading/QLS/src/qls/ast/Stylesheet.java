@@ -2,15 +2,15 @@ package qls.ast;
 
 import QL.ast.Node;
 
+import java.util.Iterator;
 import java.util.List;
 
-public class Stylesheet extends Node {
+public class Stylesheet extends Node implements Iterable<Page> {
 
     private final List<Page> pages;
 
-	public Stylesheet(String name, List<Page> pages, int line) {
+	public Stylesheet(List<Page> pages, int line) {
 		super(line);
-        String name1 = name;
 		this.pages = pages;
 	}
 	
@@ -18,8 +18,11 @@ public class Stylesheet extends Node {
 		v.visit(this);
 	}
 
-	public List<Page> getPages() {
-		return pages;
+	@Override
+	public Iterator<Page> iterator() {
+		return pages.iterator();
 	}
+
+	
 
 }
