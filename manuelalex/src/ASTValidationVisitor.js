@@ -16,11 +16,11 @@ export class ASTValidationVisitor {
         this.labels = [];
     }
 
-    getMemoryState(){
+    getMemoryState() {
         return this.memoryState;
     }
 
-    visitAST(ast){
+    visitAST(ast) {
         this.visitForm(ast.getProgram());
         this.visitStatements(ast.getStatements());
     }
@@ -59,19 +59,23 @@ export class ASTValidationVisitor {
      * Check duplicate question declarations with different types
      * @param question
      */
-    checkDuplicateDeclarations(question){
-        const memoryElement = this.memoryState.getElement(question.getPropertyName());
+    checkDuplicateDeclarations(question) {
+        const propertyName = question.getPropertyName();
+        const memoryElement = this.memoryState.getElement(propertyName);
+
         const propertyInMemory = memoryElement !== undefined;
-        if(propertyInMemory && question.getPropertyType() !== memoryElement.getType() ){
+
+        // TODO check if error should be thrown with a duplicate declaration with the same type
+        if (propertyInMemory && question.getPropertyType() !== memoryElement.getType()) {
             this.warnings.push(`Property "${question.getPropertyType()}" is being used with multiple types`);
         }
     }
 
-    checkDuplicateLabels(statement){
+    checkDuplicateLabels(statement) {
         const localLabel = statement.getLabel();
         const label = find(this.labels, (label) => label.contains(localLabel));
 
-        if(label){
+        if (label) {
             this.warnings.push(`Label "${localLabel.getValue()}" is being used multiple times`);
         } else {
             this.labels.push(statement.getLabel());
@@ -93,8 +97,8 @@ export class ASTValidationVisitor {
     }
 
 
-    visitPrefixExpression(prefixcondition){
-        if(!(prefixcondition.expression.accept(this) instanceof QLBoolean)){
+    visitPrefixExpression(prefixcondition) {
+        if (!(prefixcondition.expression.accept(this) instanceof QLBoolean)) {
             this.errors.push(`Invalid expression. The prefix operator ${prefixcondition.prefix} can not be applied to ${prefixcondition.expression.name}, because it is not a boolean`);
         }
         condition.expression.accept(this);
@@ -106,7 +110,7 @@ export class ASTValidationVisitor {
         const operator = expression.operator;
 
         console.log(leftHandType);
-        if(leftHandType.getType() !== rightHandType.getType()){
+        if (leftHandType.getType() !== rightHandType.getType()) {
             this.errors.push(`Invalid expression. The operator ${operator} can not be applied 
                             to ${expression.leftHand.toString()} [type: ${leftHandType.toString()}] 
                             and ${expression.rightHand.toString()}[type: ${rightHandType.toString()}]`);
@@ -131,8 +135,6 @@ export class ASTValidationVisitor {
     }
 
     validateOperator(leftHand, rightHand, operator, validOperators, validType) {
-
-
         if (validOperators.includes(operator)) {
             if (!(leftHand instanceof validType) || !(rightHand instanceof validType)) {
                 this.errors.push(`Invalid expression. The operator ${operator} can not be applied to ${leftHand.name} [type: ${leftHand.name}] and ${rightHand.name}[type: ${rightHand.name}]`);
@@ -140,7 +142,7 @@ export class ASTValidationVisitor {
         }
     }
 
-    hasDetectedErrors(){
-        return this.errors.length > 0;
+    hasDetectedErrors() {
+        return !!this.errors.length;
     }
 }

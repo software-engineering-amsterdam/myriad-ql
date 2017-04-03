@@ -1,37 +1,40 @@
-import nearley                            from 'nearley';
-import {ASTBuilder}                       from './ast/ASTBuilder.js';
+import nearley  from 'nearley';
+import {ASTBuilder} from './ast/ASTBuilder.js';
 import  './grammar.js';
 
 /**
- * To build the grammar: npm run parse
- * (Building the grammar is not yet supported due to us requiring the PostProcessor inside the grammar, need to find a solution)
+ * To build the grammar.js: npm run parse
  * @type {Parser}
  */
 export class Parser {
 
     constructor() {
-        /* Due to the nature of the nearly module, we have to assing our ASTBuilder to the window scope so we can reference it in the generated parser 'grammar.js' */
+        /* Due to the nature of the nearly module, we have to assign our ASTBuilder to the window scope
+         * so we can reference it in the generated parser 'grammar.js' */
         window.ASTBuilder = new ASTBuilder();
     }
 
     parse(parseString = '') {
         const parser = this._createParser();
         let result = [];
-        const errors = [];
+        let errors = [];
         try {
-            /* Remove all line breaks from the parse string */
-            parseString = parseString.replace(/(\r\n|\n|\r)/gm, '');
+            parseString = this._removeLineBreaks(parseString);
             result = parser.feed(parseString).results;
         } catch (parseError) {
             errors.push(`Error at character ${parseError.offset}`);
         }
 
         if (result.length > 1) {
-            errors.push(`Ambiguous parsing: ${result.length} options. Choosing the first parsing`);
+            errors.push(`Ambiguous parsing: ${result.length} options. Choosing the first parsin.`);
             [result] = result;
         }
-
         return { result, errors, parseString };
+    }
+
+
+    _removeLineBreaks(string) {
+        return string.replace(/(\r\n|\n|\r)/gm, '');
     }
 
     /**
