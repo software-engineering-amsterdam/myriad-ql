@@ -10,7 +10,7 @@ import {Router}         from 'arva-js/core/Router.js';
 
 import {QLController}   from './controllers/QLController.js';
 
-import './famous.css!';
+import './res/famous.css!';
 
 export class Program {
     constructor() {
@@ -64,7 +64,7 @@ export class Program {
     getView(controllerName, method){
         const currentController = this.getController(controllerName);
         if(currentController){
-            return currentController.getView(method);
+            return currentController.getViewForMethod(method);
         } else {
             throw new Error(`No controller found with controller name ${controllerName}`);
         }

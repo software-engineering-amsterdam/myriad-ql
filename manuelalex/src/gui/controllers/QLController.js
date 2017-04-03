@@ -15,10 +15,6 @@ export class QLController extends Controller {
         return this.views;
     }
 
-    getView(method = ''){
-        return this.views[method];
-    }
-
     getViewForMethod(method = '') {
         return this.views[method];
     }
