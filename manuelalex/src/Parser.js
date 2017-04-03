@@ -1,6 +1,6 @@
 import nearley  from 'nearley';
 import {ASTBuilder} from './ast/ASTBuilder.js';
-import  './grammar/grammar.js';
+import './grammar/grammar.js';
 
 /**
  * To build the grammar.js: npm run parse
@@ -8,14 +8,8 @@ import  './grammar/grammar.js';
  */
 export class Parser {
 
-    constructor() {
-        /* Due to the nature of the nearly module, we have to assign our ASTBuilder to the window scope
-         * so we can reference it in the generated parser 'grammar.js' */
-        window.ASTBuilder = new ASTBuilder();
-    }
-
-    parse(parseString = '') {
-        const parser = this._createParser();
+    parse(parseString = '', generatedParser = null) {
+        const parser = generatedParser || this.createParser(null, null);
         let result = [];
         let errors = [];
         try {
@@ -42,14 +36,21 @@ export class Parser {
      * @returns {Parser}
      * @private
      */
-    _createParser() {
-        /* Grammar is defined on the window scope by grammar.js due to the nature of the nearley module */
-        return new nearley.Parser(grammar.ParserRules, grammar.ParserStart);
+    createParser(importedNearley = null, grammar = null) {
+
+
+        if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+            return new importedNearley.Parser(grammar.ParserRules, grammar.ParserStart);
+        } else {
+            /* Due to the nature of the nearly module, we have to assign our ASTBuilder to the window scope
+             * so we can reference it in the generated parser 'grammar.js' */
+            window.ASTBuilder = new ASTBuilder();
+
+            /* Grammar is defined on the window scope by grammar.js due to the nature of the nearley module */
+            return new (importedNearley || nearley).Parser((grammar || window.grammar).ParserRules, (grammar || window.grammar).ParserStart);
+        }
     }
 }
-
-
-
 
 
 
