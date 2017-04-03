@@ -11,15 +11,14 @@ import java.util.Map;
 
 public class Environment {
 	
-	// TODO change name
-	private final Map<String, Value> computedQuestions;
+	private final Map<String, Value> answers;
 	private final ReferenceTable references;
 	private final StyleTable styleTable;
 	// TODO change name
 	private final Map<String, Field> fieldTable;
 	
 	public Environment(ReferenceTable references) {
-		this.computedQuestions = new HashMap<>(); 
+		this.answers = new HashMap<>(); 
 		this.references = references;
 		this.styleTable = new StyleTable();
 		this.fieldTable = new HashMap<>();
@@ -30,15 +29,15 @@ public class Environment {
 	}
 	
 	public void addAnswer(String variable, Value answer) {
-		computedQuestions.put(variable, answer);
+		answers.put(variable, answer);
 	}
 
 	public Value getAnswer(String variable) {
-		return computedQuestions.get(variable);
+		return answers.get(variable);
 	}
 
 	public boolean isAnswered(String variable) {
-		return computedQuestions.containsKey(variable);
+		return answers.containsKey(variable);
 	}
 	
 	public boolean isStyled(String variable) {

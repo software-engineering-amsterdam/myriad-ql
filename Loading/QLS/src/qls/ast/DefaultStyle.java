@@ -1,14 +1,15 @@
 package qls.ast;
 
 import QL.ui.Style;
+import QL.ast.type.Type;
 import qls.ast.widget.Widget;
 
 public class DefaultStyle extends DefaultWidget {
 	
 	private final Style style;
 	
-	public DefaultStyle(Style style, Widget widget, int line) {
-		super(style.getType(), widget, line);
+	public DefaultStyle(Type type, Style style, Widget widget, int line) {
+		super(type, widget, line);
 		this.style = style;
 	}
 	

@@ -12,25 +12,19 @@ public class StyleTable {
 	
 	private Map<String, Style> styles;
 	
-// TODO static default style?
-// TODO Remove type from style?
-//	private static Style = new Style(350, "Arial", 12, "#0000FF", 
-//			variables.getType(variable)
-	
 	StyleTable() {
 		styles = new HashMap<>();
 	}
 	
-	public void addDefaults(ReferenceTable variables) {
+	void addDefaults(ReferenceTable variables) {		
+		Style defaultStyle = new Style(350, "Arial", 12, "#0000FF");
 		for (String variable : variables) {
 			if (!isStyled(variable)) {
-				styles.put(variable, new Style(350, "Arial", 12, "#0000FF", 
-						variables.getType(variable)));
+				styles.put(variable, defaultStyle);
 			}
 		}
 	}
 	
-	// TODO inversion of control??
 	void add(String name, Style style) {
 		styles.put(name, style);
 	}
@@ -39,15 +33,14 @@ public class StyleTable {
 		if (!styles.containsKey(name)) {
 			throw new RuntimeException("The style of variable " + name + " is undefined.");
 		}
-		setSettings(label, styles.get(name));
+		style(label, styles.get(name));
 	}
 	
 	public boolean isStyled(String variable) {
 		return styles.containsKey(variable);
 	}
 	
-	// TODO move to different class?
-    private void setSettings(Label label, Style style) {
+    private void style(Label label, Style style) {
 		label.setFont(new Font(style.getFont(), style.getFontSize()));
 		label.setTextFill(Color.web(style.getColor()));
     	label.setPrefWidth(style.getWidth());

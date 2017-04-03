@@ -58,8 +58,8 @@ defaultWidgets returns [List<DefaultWidget> result]
    'font:' font = str
    'fontsize:' fontSize = INT
    'color:' color =  str
-   widget { $result.add(new DefaultStyle(new Style(Integer.parseInt($width.text), $font.result, 
-     Integer.parseInt($fontSize.text), $color.result, $type.result), $widget.result, $ctx.start.getLine())); }
+   widget { $result.add(new DefaultStyle($type.result, new Style(Integer.parseInt($width.text), $font.result, 
+     Integer.parseInt($fontSize.text), $color.result), $widget.result, $ctx.start.getLine())); }
    '}'
    )+
  ;
@@ -70,7 +70,6 @@ defaultWidgets returns [List<DefaultWidget> result]
  | 'string'  { $result = new StringType($ctx.start.getLine()); }
  ;
 
-// TODO copied from QL.g4 : can we insert it?
 str returns [String result]
  : STRING { $result = $STRING.text.substring(1, $STRING.text.length()-1); }
  ;

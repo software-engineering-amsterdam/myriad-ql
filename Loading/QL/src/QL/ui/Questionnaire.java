@@ -34,29 +34,24 @@ public class Questionnaire extends Application implements Notifier {
 	private static GridPane grid;
 	private static List<Message> messages;
 	
-    public void main(Form f, Environment env, List<Message> msgs) {
+    public void main(Form form, Environment env, List<Message> messages) {
     	
-    	form = f;
-    	environment = env;
-    	messages = msgs;
-    	
-    	environment.addDefaults();
-
+    	init(form, env, messages);
         launch();
     }
     
-    // TODO rename
-    protected void main(Form f, Environment env, List<Message> msgs, Stage primaryStage) {
+    protected void main(Form form, Environment env, List<Message> messages, Stage primaryStage) {
+    	
+    	init(form, env, messages);
+    	run(primaryStage);
+    }
+    
+    private void init(Form f, Environment env, List<Message> msgs) {   	
     	
     	form = f;
     	environment = env;
-    	messages = msgs;
-    	
     	environment.addDefaults();
-    	
-    	// TODO add controls to variables without default values
-    	
-    	run(primaryStage);
+    	messages = msgs;   	
     }
     
     @Override
