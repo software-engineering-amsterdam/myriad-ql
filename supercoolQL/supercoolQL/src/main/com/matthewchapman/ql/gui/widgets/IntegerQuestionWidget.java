@@ -41,4 +41,9 @@ public class IntegerQuestionWidget extends QuestionWidget {
         answer.setDisable(false);
     }
 
+    @Override
+    public void setFocus() {
+        this.answer.requestFocus();
+    }
+
 }

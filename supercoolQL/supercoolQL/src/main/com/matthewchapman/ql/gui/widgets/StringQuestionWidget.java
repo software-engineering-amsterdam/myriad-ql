@@ -36,4 +36,9 @@ public class StringQuestionWidget extends QuestionWidget {
         answer.setEditable(false);
         answer.setDisable(false);
     }
+
+    @Override
+    public void setFocus() {
+        this.answer.requestFocus();
+    }
 }

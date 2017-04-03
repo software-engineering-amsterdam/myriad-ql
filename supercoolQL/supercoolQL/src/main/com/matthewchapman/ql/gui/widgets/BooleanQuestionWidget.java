@@ -33,4 +33,9 @@ public class BooleanQuestionWidget extends QuestionWidget {
         answer.setDisable(true);
     }
 
+    @Override
+    public void setFocus() {
+        this.answer.requestFocus();
+    }
+
 }

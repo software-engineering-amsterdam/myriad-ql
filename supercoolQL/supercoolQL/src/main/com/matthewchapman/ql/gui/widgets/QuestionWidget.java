@@ -38,4 +38,6 @@ public abstract class QuestionWidget extends GridPane {
 
     public abstract void setCalculated();
 
+    public abstract void setFocus();
+
 }

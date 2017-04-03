@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.util.logging.Logger;
 
 /**
  * Created by matt on 20/02/2017.
@@ -19,6 +20,8 @@ import java.io.File;
  * Main "Launcher" class for the application. Provides entry point & debug logic.
  */
 public class Launcher extends Application {
+
+    private static final Logger LOGGER = Logger.getLogger(Launcher.class.getName());
 
     public static void main(String[] args) {
         launch(args);
@@ -42,9 +45,11 @@ public class Launcher extends Application {
             if (form == null) {
                 Platform.exit();
             } else if (parser.validateAST(form)) {
+                LOGGER.info("AST Validated, handing off to UI");
                 handOffToGUI(primaryStage, form);
             }
         } else {
+            LOGGER.info("Closing: no file selected");
             Platform.exit();
         }
     }
