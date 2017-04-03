@@ -38,4 +38,9 @@ public class StringValue extends Value {
 	public String convertToString() {
     	return this.value;
     }
+
+	@Override
+	public boolean equals(Value other) {
+		return value.equals(((StringValue) other).getValue());
+	}
 }

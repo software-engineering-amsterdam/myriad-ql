@@ -20,13 +20,11 @@ public class QEvaluator extends Evaluator {
 
 	private final List<Row> visibleRows;
     private final Environment environment;
-    private final Notifier notifier;
 
-	public QEvaluator(Environment environment, Notifier notifier) {
+	public QEvaluator(Environment environment) {
 		super(environment);
 		this.environment = environment;
 		this.visibleRows = new ArrayList<>();
-		this.notifier = notifier;
 	}
 	
 	List<Row> getVisibleRows() {

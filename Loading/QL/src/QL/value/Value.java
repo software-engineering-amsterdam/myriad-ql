@@ -7,6 +7,7 @@ public abstract class Value {
 
 	public abstract Field getField(String name, Notifier notifier, Value value);
 	public abstract String convertToString();
+	public abstract boolean equals(Value other);
 	
 	// Binary Operators
 	public Value add(Value other) { return null; }

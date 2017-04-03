@@ -46,11 +46,7 @@ public class Number implements Field {
 
 	@Override
 	public void setValue(Value value) {
-		
-		String newValue = Integer.toString(((IntegerValue) value).getValue());
-		if (!newValue.equals(field.getText())) {
-			field.setText(newValue);
-		}		
+		field.setText(Integer.toString(((IntegerValue) value).getValue()));	
 	}
 	
 }

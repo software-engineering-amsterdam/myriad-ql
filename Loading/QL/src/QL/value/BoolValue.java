@@ -53,4 +53,8 @@ public class BoolValue extends Value {
     public String convertToString() {
     	return this.value.toString();
 	}
+
+	public boolean equals(Value other) {
+		return value.equals(((BoolValue) other).getValue());
+	}
 }

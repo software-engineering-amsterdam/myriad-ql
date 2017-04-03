@@ -94,5 +94,10 @@ public class IntegerValue extends Value {
     public String convertToString() {
     	return this.value.toString();
 	}
+
+	@Override
+	public boolean equals(Value other) {
+		return value.equals(((IntegerValue) other).getValue());
+	}
 	
 }

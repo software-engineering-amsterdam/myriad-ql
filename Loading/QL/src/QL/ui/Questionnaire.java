@@ -151,7 +151,7 @@ public class Questionnaire extends Application implements Notifier {
     
     private List<Row> createQuestions() {
         
-    	QEvaluator qVisitor = new QEvaluator(environment, this);
+    	QEvaluator qVisitor = new QEvaluator(environment);
     	qVisitor.visit(form);
     	return qVisitor.getVisibleRows();
     }
@@ -181,7 +181,7 @@ public class Questionnaire extends Application implements Notifier {
     }
     
 	public void updateQuestionnaire(String name, Value newValue) {
-
+		
 		if (!environment.isAnswered(name) || !(environment.getAnswer(name).equals(newValue))) {
 
 			environment.addAnswer(name, newValue);
