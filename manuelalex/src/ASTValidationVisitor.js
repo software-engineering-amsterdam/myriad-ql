@@ -109,14 +109,26 @@ export class ASTValidationVisitor {
         const rightHandType = expression.rightHand.accept(this);
         const operator = expression.operator;
 
-        console.log(leftHandType);
+
         if (leftHandType.getType() !== rightHandType.getType()) {
             this.errors.push(`Invalid expression. The operator ${operator} can not be applied 
                             to ${expression.leftHand.toString()} [type: ${leftHandType.toString()}] 
                             and ${expression.rightHand.toString()}[type: ${rightHandType.toString()}]`);
         }
 
-        // this.validateOperator(leftHand, rightHand, operator, ['||', '&&', '=='], QLBoolean);
+
+        if(operator == "*"){
+            console.log("afjlhalsdkjafsdlkfadjfadslkdfsajlfadsjsadfl;kajsl");
+        }
+
+        if(leftHandType.getType() == QLBoolean && operator == "*"){
+            this.errors.push(`Invalid expression. The operator ${operator} can not be applied 
+                            to ${expression.leftHand.toString()} [type: ${leftHandType.toString()}] 
+                            and ${expression.rightHand.toString()}[type: ${rightHandType.toString()}]`);
+        }
+
+
+        //this.validateOperator(leftHand, rightHand, operator, ['||', '&&', '=='], QLBoolean);
         // this.validateOperator(leftHand, rightHand, operator, ['<', '>', '>=', '<=', '!=', '==', '*', '/', '+', '-'], QLMoney);
         // this.validateOperator(leftHand, rightHand, operator, ['<', '>', '>=', '<=', '!=', '=='], QLString);
         // this.validateOperator(leftHand, rightHand, operator, ['<', '>', '>=', '<=', '!=', '==', '*', '/', '+', '-'], QLNumber);
