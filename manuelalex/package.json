@@ -4,7 +4,7 @@
   "description": "Software Construction - QL & QSL",
   "main": "index.js",
   "scripts": {
-    "parse": "nearleyc src/grammar.ne -o src/grammar.js && node scripts/addImportsToGenerator.js",
+    "parse": "nearleyc src/grammar/grammar.ne -o src/grammar/grammar.js && node scripts/addImportsToGenerator.js",
     "test": "mocha --compilers js:babel-core/register --recursive --timeout 15000",
     "build": "jspm build src/main.js www/bundle.js",
     "watch": "jspm build src/main.js www/bundle.js -wid"

@@ -11,7 +11,7 @@ import {IfStatement} from '../statements/IFStatement.js';
 import {IfElseStatement} from '../statements/IfElseStatement.js';
 import {Expression, PrefixExpression} from '../expressions/Expression.js';
 import {Allocation} from '../allocation/Allocation.js';
-import {PlusOperator, MinOperator, DivideOperator, MultiplyOperator} from '../operator/Operators.js';
+import {PlusOperator, MinOperator, DivideOperator, MultiplyOperator} from '../operators/Operators.js';
 import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from '../types/Types.js';
 import {Property} from '../types/Property.js';
 import {Numbers} from '../types/Numbers.js';
@@ -127,7 +127,6 @@ export class ASTBuilder {
     numbers(data, location){
         return new Numbers(data, location);
     }
-
 
     toString(data) {
         return data.join().split(',').join('');

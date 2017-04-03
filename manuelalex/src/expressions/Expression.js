@@ -36,17 +36,12 @@ export class Expression {
     }
 
     toString(){
-        return this.getLeftHand().toString() + " " + this.getOperator() + " " + this.getRightHand().toString();
+        return `${this.getLeftHand().toString()} ${this.getOperator()} ${this.getRightHand().toString()}`;
     }
-
-    _throwError(errorText = ''){
-        throw new Error(`Error at ${this.location}: ${errorText.toString()}`);
-    }
-
 
     getType(){
-        console.log(this.operator);
-        if(['<', '>', '>=', '<=', '!=', '==', '&&', '||'].includes(this.operator)){
+        // todo return also the other types
+        if(['<', '>', '>=', '<=', '!=', '==', '&&', '||'].includes(this.getOperator())){
             return new QLBoolean();
         } else {
             return new QLMoney;

@@ -25,6 +25,7 @@ let dependencyVisitor = new ASTDependencyVisitor();
 dependencyVisitor.visitAST(ast);
 console.log("dependency visitor graph:" + dependencyVisitor.graph);
 
+// Maybe make a new class for allocation the memory state
 let visitor = new ASTValidationVisitor();
 visitor.visitAST(ast);
 

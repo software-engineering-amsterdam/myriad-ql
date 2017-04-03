@@ -24,5 +24,9 @@ export class EvaluationVisitor {
         const value = memoryState.getValue(property.getName()) || undefined;
         return eval(value);
     }
+
+    evaluateNumbers(){
+
+    }
 }
 

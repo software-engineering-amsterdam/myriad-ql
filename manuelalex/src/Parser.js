@@ -1,6 +1,6 @@
 import nearley  from 'nearley';
 import {ASTBuilder} from './ast/ASTBuilder.js';
-import  './grammar.js';
+import  './grammar/grammar.js';
 
 /**
  * To build the grammar.js: npm run parse

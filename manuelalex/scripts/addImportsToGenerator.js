@@ -5,8 +5,8 @@
 
 let fs = require('fs');
 
-const imports = `import {ASTBuilder as Builder} from './ast/ASTBuilder.js'; var ASTBuilder = new Builder();\n`;
-const fileString = './src/grammar.js';
+const imports = `import {ASTBuilder as Builder} from 'src/ast/ASTBuilder.js';  var ASTBuilder = new Builder();\n`;
+const fileString = './src/grammar/grammar.js';
 
 fs.readFile(fileString, 'utf8', function (err,data) {
     if (err) {
