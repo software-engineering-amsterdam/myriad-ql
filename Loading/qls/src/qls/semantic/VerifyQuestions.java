@@ -6,8 +6,8 @@ import qls.ast.*;
 
 /** VerifyQuestions checks if
  * <li> questions are not placed multiple times
- * <li> all questions of the QL program are placed in the QLS program
- * <li> there is no reference to questions that are not in the QL program
+ * <li> all questions of the ql program are placed in the QLS program
+ * <li> there is no reference to questions that are not in the ql program
  *
  */
 public class VerifyQuestions implements StylesheetVisitor {
