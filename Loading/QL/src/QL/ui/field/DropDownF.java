@@ -3,60 +3,58 @@ package QL.ui.field;
 import QL.ui.Notifier;
 import QL.value.BoolValue;
 import QL.value.Value;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 
 public class DropDownF implements Field {
 
-	private final MenuButton field;
-	private final MenuItem yes;
-	private final MenuItem no;
+	private final ComboBox<String> field;
+	private String trueText;
+	private String falseText;
 
-	public DropDownF(String name, String trueText, String falseText, Notifier notifier, BoolValue value) {
-					
-		String activeText = trueText;
-		if (!value.getValue()) {
-			activeText = falseText;
-		}
+	public DropDownF(String name, String trueText, String falseText, Notifier notifier, BoolValue value) {				
+				
+		this.trueText = trueText;
+		this.falseText = falseText;
 		
-		this.field = new MenuButton(activeText);
-		
-		yes = new MenuItem(trueText);
-		no = new MenuItem(falseText);
-		field.getItems().addAll(yes, no);
+		ObservableList<String> options = 
+			    FXCollections.observableArrayList(
+			        trueText,
+			        falseText
+			    );
+		this.field = new ComboBox<String>(options);
 		
 		field.setId(name);
 		
-		yes.setOnAction(event -> {
-            yes.setVisible(true);
-            no.setVisible(false);
-            notifier.updateQuestionnaire(name, new BoolValue(true));
-        });
+	    field.valueProperty().addListener((observable, oldValue, newValue) -> {	    	
+            notifier.updateQuestionnaire(name, new BoolValue(currentValue(newValue)));
+	    });
 		
-		no.setOnAction(event -> {
-            yes.setVisible(false);
-            no.setVisible(true);
-            notifier.updateQuestionnaire(name, new BoolValue(false));
-        });
+	}
+	
+	private boolean currentValue(String selectedText) {
+		return selectedText.equals(trueText);
 	}
 	
 	@Override
 	public Value getAnswer() {
-		return new BoolValue(yes.isVisible());
+		return new BoolValue(currentValue(field.getValue()));
 	}
 	
 	
 	@Override
-	public MenuButton getField() {
+	public ComboBox<String> getField() {
 		return field;
 	}
 
 	@Override
 	public void setValue(Value value) {
-		// TODO implement
 		
+		if (((BoolValue) value).getValue()) {
+			field.setValue(trueText);
+		} else {
+			field.setValue(falseText);	
+		}	
 	}
-
 }

@@ -31,7 +31,7 @@ public class VerifyQuestions implements FormVisitor {
 	@Override
 	public void visit(Block block) {
 
-		for (BlockItem blockItem : block.getBlockItems()) {
+		for (BlockItem blockItem : block) {
 			blockItem.accept(this);
 		}
 	}

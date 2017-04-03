@@ -31,7 +31,7 @@ public class Evaluator implements FormVisitor, QL.ast.ExpressionVisitor<Value>, 
     @Override
     public void visit(Block block) {
 
-        for (BlockItem blockItem : block.getBlockItems()) {
+        for (BlockItem blockItem : block) {
             blockItem.accept(this);
         }
     }
