@@ -5,12 +5,12 @@ import java.util.List;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-import QL.QLLexer;
-import QL.QLParser;
-import QL.ReferenceTable;
-import QL.ast.Form;
-import QL.message.Message;
-import QL.ui.Environment;
+import ql.QLLexer;
+import ql.QLParser;
+import ql.ReferenceTable;
+import ql.ast.Form;
+import ql.message.Message;
+import ql.ui.Environment;
 import qls.ast.Stylesheet;
 import qls.semantic.Analyzer;
 import qls.ui.PrettyQuestionnaire;
@@ -34,6 +34,7 @@ class Main {
 				 + "question Name0 \n"
 		 		 + "section \"Loaning\" \n"
 				 + "question Name2 \n"
+				 + "question Name1 widget checkbox\n"
 				 + "}";
 		
 		ANTLRInputStream input = new ANTLRInputStream( tmp );
@@ -47,7 +48,7 @@ class Main {
 		
 		Form form = createForm();
 
-		QL.semantic.Analyzer qlAnalyzer = new QL.semantic.Analyzer();		
+		ql.semantic.Analyzer qlAnalyzer = new ql.semantic.Analyzer();
 		ReferenceTable referenceTable = qlAnalyzer.analyze(form);
 		
 		List<Message> messages = qlAnalyzer.getMessages();
