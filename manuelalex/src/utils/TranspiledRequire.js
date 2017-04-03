@@ -21,7 +21,9 @@ function transpiledRequire(path = '', parentPath = '') {
      * calls to require() use our transpiledRequire() method instead. This enables us
      * to have babelified ES6 modules that also import other such modules. */
     let oldMakeRequireFunction = internalModule.makeRequireFunction;
-    internalModule.makeRequireFunction = function () {return hookedMakeRequireFunction(parentPath);};
+    internalModule.makeRequireFunction = internalModule.secondMakeRequireFunction =  function () {
+        return hookedMakeRequireFunction.bind(this,parentPath);
+    };
 
     /* Compile our code into a nodejs module */
     let result = requireFromString(code, parentPath);
