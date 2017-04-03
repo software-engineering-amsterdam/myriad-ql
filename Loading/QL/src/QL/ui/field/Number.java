@@ -20,7 +20,7 @@ public class Number implements Field {
 		
     	field.textProperty().addListener((observable, oldValue, newValue) -> {
 
-            if (!newValue.matches("\\d*")) {
+            if (!newValue.matches("-?\\d*")) {
                 field.setText(newValue.replaceAll("[^\\d]", ""));
             } else if (!newValue.isEmpty()) {
                 notifier.updateQuestionnaire(name, new IntegerValue(Integer.parseInt(newValue)));
@@ -42,6 +42,15 @@ public class Number implements Field {
 	@Override 
 	public TextField getField() {
 		return field;
+	}
+
+	@Override
+	public void setValue(Value value) {
+		
+		String newValue = Integer.toString(((IntegerValue) value).getValue());
+		if (!newValue.equals(field.getText())) {
+			field.setText(newValue);
+		}		
 	}
 	
 }

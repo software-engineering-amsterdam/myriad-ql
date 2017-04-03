@@ -31,4 +31,10 @@ public class Check implements Field {
 		return field;
 	}
 
+	@Override
+	public void setValue(Value value) {
+		field.setSelected(((BoolValue) value).getValue()); 
+		
+	}
+
 }

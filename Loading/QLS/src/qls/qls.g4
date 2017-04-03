@@ -40,12 +40,12 @@ questions returns [List<Question> result]
 
 widget returns [Widget result]
  : 'widget' 'checkbox' { $result = new Checkbox($ctx.start.getLine()); }
- | 'widget' 'radio(' param1 = STRING ',' param2 = STRING ')' { $result = new Radio($param1.text, $param2.text, $ctx.start.getLine()); }
+ | 'widget' 'radio(' param1 = str ',' param2 = str ')' { $result = new Radio($param1.result, $param2.result, $ctx.start.getLine()); }
  | 'widget' 'spinbox' { $result = new Spinbox($ctx.start.getLine()); }
  | 'widget' 'slider' { $result = new Slider($ctx.start.getLine()); }
  | 'widget' 'numberfield' { $result = new NumberField($ctx.start.getLine()); }
  | 'widget' 'textfield' { $result = new TextField($ctx.start.getLine()); }
- | 'widget' 'dropdown(' param1 = STRING ',' param2 = STRING ')' { $result = new DropDown($param1.text, $param2.text, $ctx.start.getLine()); }
+ | 'widget' 'dropdown(' param1 = str ',' param2 = str ')' { $result = new DropDown($param1.result, $param2.result, $ctx.start.getLine()); }
  ;
   
 defaultWidgets returns [List<DefaultWidget> result]

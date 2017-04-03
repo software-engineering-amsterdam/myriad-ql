@@ -33,6 +33,12 @@ public class Text implements Field {
 	public TextField getField() {
 		return field;
 	}
+
+	@Override
+	public void setValue(Value value) {
+		field.setText(((StringValue) value).getValue());
+		
+	}
 	
 
 }

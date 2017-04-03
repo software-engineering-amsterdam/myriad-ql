@@ -11,23 +11,29 @@ import javafx.scene.control.MenuItem;
 public class DropDownMenu implements Field {
 
 	private final MenuButton field;
-	private final MenuItem yes;
-	private final MenuItem no;
+	private MenuItem yes;
+	private MenuItem no;
 
 	public DropDownMenu(String name, String trueText, String falseText, Notifier notifier, BoolValue value) {
-	
-		this.field = new MenuButton();
+					
+		String activeText = trueText;
+		if (!value.getValue()) {
+			activeText = falseText;
+		}
 		
-		MenuButton m = new MenuButton();
+		this.field = new MenuButton(activeText);
+		
 		yes = new MenuItem(trueText);
 		no = new MenuItem(falseText);
-		m.getItems().addAll(yes, no);
+		field.getItems().addAll(yes, no);
 		
 		field.setId(name);
 		
 		yes.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
 		    public void handle(ActionEvent event) {
+		    	yes.setVisible(true);
+		    	no.setVisible(false);
 		        notifier.updateQuestionnaire(name, new BoolValue(true));
 		    }
 		});
@@ -35,6 +41,8 @@ public class DropDownMenu implements Field {
 		no.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
 		    public void handle(ActionEvent event) {
+		    	yes.setVisible(false);
+		    	no.setVisible(true);
 		        notifier.updateQuestionnaire(name, new BoolValue(false));
 		    }
 		});	
@@ -49,6 +57,12 @@ public class DropDownMenu implements Field {
 	@Override
 	public MenuButton getField() {
 		return field;
+	}
+
+	@Override
+	public void setValue(Value value) {
+		// TODO implement
+		
 	}
 
 }

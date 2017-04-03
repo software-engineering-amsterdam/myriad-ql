@@ -8,6 +8,8 @@ public interface Field {
 	
 	Value getAnswer();
 	
+	void setValue(Value value);
+	
 	Control getField();
 	
 }

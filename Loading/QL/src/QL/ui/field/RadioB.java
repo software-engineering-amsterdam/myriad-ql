@@ -12,25 +12,18 @@ public class RadioB implements Field {
 	
 	public RadioB(String name, String trueText, String falseText, Notifier notifier, BoolValue value) {
 		
-		this.field = new RadioButton();
-		
 		final ToggleGroup group = new ToggleGroup();
-
-		RadioButton rb1 = new RadioButton(trueText);
-		rb1.setToggleGroup(group);
-
+		
+		this.field = new RadioButton(trueText);
+		field.setToggleGroup(group);
 
 		RadioButton rb2 = new RadioButton(falseText);
 		rb2.setToggleGroup(group);
 		
 		field.setId(name);
 		
-		// TODO refactor
-		if (value.getValue()) {
-			rb1.setSelected(true);
-		} else {
-			rb2.setSelected(true);
-		}
+		field.setSelected(value.getValue());
+		rb2.setSelected(!value.getValue());
 		
 		field.selectedProperty().addListener(
 				(observable, oldValue, newValue) -> notifier.updateQuestionnaire(name, new BoolValue(newValue)));
@@ -45,5 +38,11 @@ public class RadioB implements Field {
 	@Override
 	public RadioButton getField() {
 		return field;
+	}
+
+	@Override
+	public void setValue(Value value) {
+		// TODO Auto-generated method stub
+		
 	}
 }

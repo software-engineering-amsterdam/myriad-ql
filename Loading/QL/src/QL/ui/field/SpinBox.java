@@ -37,5 +37,11 @@ public class SpinBox implements Field {
 	public Spinner<Integer> getField() {
 		return field;
 	}
+
+	@Override
+	public void setValue(Value value) {
+		field.getValueFactory().setValue(((IntegerValue) value).getValue());
+		
+	}
 	
 }

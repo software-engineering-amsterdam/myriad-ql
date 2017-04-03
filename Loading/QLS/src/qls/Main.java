@@ -24,16 +24,16 @@ class Main {
 				 + "width: 400 "
 				 + "font: \"Arial\" "
 				 + "fontsize: 14 "
-				 + "color: \"#FFFFFF\" "
+				 + "color: \"#000000\" "
 				 + "widget spinbox"
 				 + "} "
 		 		 + "default boolean widget checkbox \n"
 		 		 + "default integer widget spinbox \n"
 				 + "section \"Buying\" \n"
-				 + "default boolean widget radio(\"Yes\", \"No\") \n"
-				 + "question Name0 widget slider \n"
+				 + "default boolean widget dropdown(\"Yes\", \"No\") \n"
+				 + "question Name0 \n"
 		 		 + "section \"Loaning\" \n"
-				 + "question Name1 widget spinbox \n"
+				 + "question Name1 \n"
 				 + "}";
 		
 		ANTLRInputStream input = new ANTLRInputStream( tmp );
@@ -65,8 +65,8 @@ class Main {
 	
 	private static Form createForm() {
 		String tmp = "form Testing { "
-				 + "Name0: \"How much did your house cost?\" integer "
-				 + "Name1: \"You have to pay\" integer"
+				 + "Name0: \"How much did your house cost?\" boolean "
+				 + "Name1: \"You have to pay\" boolean"
 				 + "}";
 
 		ANTLRInputStream input = new ANTLRInputStream( tmp );

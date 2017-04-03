@@ -34,4 +34,10 @@ public class Slide implements Field {
 	public Slider getField() {
 		return field;
 	}
+
+	@Override
+	public void setValue(Value value) {
+		field.setValue(((IntegerValue) value).getValue()); 
+		
+	}
 }

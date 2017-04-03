@@ -41,6 +41,7 @@ public class QEvaluator extends Evaluator {
     
     @Override
     public void visit(ComputedQuestion question) {
+    	
         Value value = question.getComputedQuestion().accept(this);
         environment.addAnswer(question.getVariable(), value);
 
@@ -54,11 +55,11 @@ public class QEvaluator extends Evaluator {
         return new Row(question.getVariable(), new Label(question.getLabel()), field);
     }
     
-    // TODO only works for number fields
     private Row createRow(ComputedQuestion question) {
     	
-        Field field = new Number(question.getVariable(), notifier, 
-        		(IntegerValue) getAnswer(question));
+    	Field field = environment.getField(question.getVariable());
+    	
+    	field.setValue(getAnswer(question));
         
         return new Row(question.getVariable(), new Label(question.getLabel()), field);
     }
