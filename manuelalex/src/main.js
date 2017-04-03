@@ -9,10 +9,10 @@ import {ASTDependencyVisitor} from './ASTDependencyVisitor.js';
 import {GUI}                                     from './gui/Gui.js';
 import {AST}                                     from './ast/AST.js';
 
-import {test1, test2, test3, test4, test5, test6}       from './test/TestStrings.js';
+import {test1, test2, test3, test4, test5, test6, test7}       from './test/TestStrings.js';
 
 let parser = new Parser();
-let { result, errors, parseString } = parser.parse(test6);
+let { result, errors, parseString } = parser.parse(test7);
 
 if (errors.length) {
     let gui = new GUI(null, null);

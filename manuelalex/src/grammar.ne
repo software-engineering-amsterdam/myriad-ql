@@ -31,7 +31,7 @@ factor  -> digits
        | propertyName
        | "(" expression ")"    {% (data)=> data[1] %}
 
-digits -> [0-9]:+   {% (data)=> Number(data[0]) %}
+digits -> [0-9]:+   {% ASTBuilder.digits %}
 
 propertyName -> [A-Za-z0-9]:+    {% ASTBuilder.property %}
 propertyType -> "boolean"        {% ASTBuilder.boolean %}

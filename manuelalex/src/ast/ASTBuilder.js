@@ -14,6 +14,7 @@ import {Allocation} from '../allocation/Allocation.js';
 import {PlusOperator, MinOperator, DivideOperator, MultiplyOperator} from '../operator/Operators.js';
 import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from '../types/Types.js';
 import {Property} from '../types/Property.js';
+import {Numbers} from '../types/Numbers.js';
 import {Label} from '../Label.js';
 
 export class ASTBuilder {
@@ -55,7 +56,7 @@ export class ASTBuilder {
         return new Expression(_.flattenDeep(data[0])[0], data[2][0], _.flattenDeep(data[4])[0], location);
     }
 
-    factor(data, location, reject) {
+    factor(data) {
         if (data.length > 1) {
             return data[1];
         } else {
@@ -121,8 +122,12 @@ export class ASTBuilder {
 
     property(data, location) {
         return new Property(data[0].join(""), location);
-
     }
+
+    numbers(data, location){
+        return new Numbers(data, location);
+    }
+
 
     toString(data) {
         return data.join().split(',').join('');
