@@ -17,12 +17,12 @@ public class Analyzer {
 	public void analyze(Stylesheet stylesheet) {
 		
 		VerifyQuestions verifyQuestions = new VerifyQuestions(environment);
-		verifyQuestions.visit(stylesheet);
+		stylesheet.accept(verifyQuestions);
 		
 		environment.checkCoverage();
 
 		VerifyTypes verifyTypes = new VerifyTypes(environment);
-		verifyTypes.visit(stylesheet);
+		stylesheet.accept(verifyTypes);
     }
 	
 }

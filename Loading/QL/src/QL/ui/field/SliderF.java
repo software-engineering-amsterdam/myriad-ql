@@ -5,11 +5,11 @@ import QL.value.IntegerValue;
 import QL.value.Value;
 import javafx.scene.control.Slider;
 
-public class Slide implements Field {
+public class SliderF implements Field {
 	
 	private final Slider field;
 	
-    public Slide(String name, Notifier notifier, IntegerValue value) {
+    public SliderF(String name, Notifier notifier, IntegerValue value) {
 		
 		this.field = new Slider(0, 5, value.getValue());
 		field.setId(name);

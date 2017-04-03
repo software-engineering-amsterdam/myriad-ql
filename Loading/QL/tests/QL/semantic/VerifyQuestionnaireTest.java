@@ -42,29 +42,29 @@ class VerifyQuestionnaireTest {
 
         assertEquals(false, analyzer.getMessages().isEmpty());
         assertEquals(1, analyzer.getMessages().size());
-        assertEquals("Warning: The question: \"Question\" exists twice in the questionnaire on line 2", analyzer.getMessages().get(0).getBody());
+        assertEquals("Warning: The question: Question exists twice in the questionnaire on line 2", analyzer.getMessages().get(0).getBody());
     }
 
     @Test
-    public void duplicateVariable() throws IOException {
-        Form form = createForm("QL/tests/assets/duplicatevariable.ql");
+    public void duplicateNames() throws IOException {
+        Form form = createForm("QL/tests/assets/duplicatenames.ql");
         Analyzer analyzer = new Analyzer();
         analyzer.analyze(form);
 
         assertEquals(false, analyzer.getMessages().isEmpty());
         assertEquals(1, analyzer.getMessages().size());
-        assertEquals("Error: The variable Name0 cannot be added, because it is already defined on line 2", analyzer.getMessages().get(0).getBody());
+        assertEquals("Error: The question Name0 cannot be added, because it is already defined on line 2", analyzer.getMessages().get(0).getBody());
     }
 
     @Test
-    public void unreferencedVariable() throws IOException {
+    public void unreferencedName() throws IOException {
         Form form = createForm("QL/tests/assets/unreferenced.ql");
         Analyzer analyzer = new Analyzer();
         analyzer.analyze(form);
 
         assertEquals(false, analyzer.getMessages().isEmpty());
         assertEquals(2, analyzer.getMessages().size());
-        assertEquals("Error: The variable: Name3 is not defined on line 5", analyzer.getMessages().get(0).getBody());
+        assertEquals("Error: The question: Name3 is not defined on line 5", analyzer.getMessages().get(0).getBody());
     }
 
 

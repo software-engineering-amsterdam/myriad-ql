@@ -5,11 +5,11 @@ import QL.value.IntegerValue;
 import QL.value.Value;
 import javafx.scene.control.TextField;
 
-public class Number implements Field {
+public class NumberF implements Field {
 	
 	private final TextField field;
 	
-	public Number(String name, Notifier notifier, IntegerValue value) {
+	public NumberF(String name, Notifier notifier, IntegerValue value) {
 		this.field = new TextField();
 		
 		field.setId(name);

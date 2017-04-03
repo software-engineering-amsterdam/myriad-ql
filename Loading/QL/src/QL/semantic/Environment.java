@@ -8,16 +8,16 @@ import java.util.List;
 
 class Environment {
 
-	private final ReferenceTable variables;
+	private final ReferenceTable names;
 	private final List<Message> messages;
 	
 	public Environment() {
-		this.variables = new ReferenceTable();
+		this.names = new ReferenceTable();
 		this.messages = new ArrayList<>();
 	}
 	
 	ReferenceTable getReferenceTable() {
-		return variables;
+		return names;
 	}
 
     List<Message> getMessages() {

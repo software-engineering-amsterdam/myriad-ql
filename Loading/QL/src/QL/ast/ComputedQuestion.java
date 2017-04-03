@@ -7,8 +7,8 @@ public class ComputedQuestion extends Question {
 
 	private final Expression computedQuestion;
 
-	public ComputedQuestion(String variable, String label, Type type, Expression computedQuestion, int line) {
-		super(variable, label, type, line);
+	public ComputedQuestion(String name, String label, Type type, Expression computedQuestion, int line) {
+		super(name, label, type, line);
 		this.computedQuestion = computedQuestion;
 	}
 

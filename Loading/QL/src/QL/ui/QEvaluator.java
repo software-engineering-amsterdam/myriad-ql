@@ -7,9 +7,7 @@ import QL.ast.Statement;
 import QL.evaluation.Evaluator;
 import QL.ui.field.Field;
 import QL.value.BoolValue;
-import QL.value.IntegerValue;
 import QL.value.Value;
-import QL.ui.field.Number;
 import javafx.scene.control.Label;
 
 import java.util.ArrayList;
@@ -41,34 +39,34 @@ public class QEvaluator extends Evaluator {
     public void visit(ComputedQuestion question) {
     	
         Value value = question.getComputedQuestion().accept(this);
-        environment.addAnswer(question.getVariable(), value);
+        environment.addAnswer(question.getName(), value);
 
         visibleRows.add(createRow(question));
     }
 
     private Row createRow(Question question) {
 
-        Field field = environment.getField(question.getVariable());
+        Field field = environment.getField(question.getName());
 
-        return new Row(question.getVariable(), new Label(question.getLabel()), field);
+        return new Row(question.getName(), new Label(question.getLabel()), field);
     }
     
     private Row createRow(ComputedQuestion question) {
     	
-    	Field field = environment.getField(question.getVariable());
+    	Field field = environment.getField(question.getName());
     	
     	field.setValue(getAnswer(question));
         
-        return new Row(question.getVariable(), new Label(question.getLabel()), field);
+        return new Row(question.getName(), new Label(question.getLabel()), field);
     }
 
     private Value getAnswer(Question question) {
 
-        if (!environment.isAnswered(question.getVariable())) {
+        if (!environment.isAnswered(question.getName())) {
             return getDefaultAnswer(question);
         }
 
-        return environment.getAnswer(question.getVariable());
+        return environment.getAnswer(question.getName());
     }
 
     private Value getDefaultAnswer(Question question) {

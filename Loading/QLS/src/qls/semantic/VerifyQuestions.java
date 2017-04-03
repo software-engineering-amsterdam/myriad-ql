@@ -40,7 +40,7 @@ public class VerifyQuestions implements StylesheetVisitor {
 		
 		check(question.getName(), question.getLine());
 		
-		environment.setCovered(question.getName());
+		environment.setPresentQLS(question.getName());
 	}
 
 	@Override
@@ -48,18 +48,18 @@ public class VerifyQuestions implements StylesheetVisitor {
 
 		check(question.getName(), question.getLine());
 
-		environment.setCovered(question.getName());
+		environment.setPresentQLS(question.getName());
 	}
 
 	private void check(String name, int line) {
 
-		if (!environment.presentInQL(name)) {
-			environment.addMessage(new Error("The variable " + name +
+		if (!environment.isPresentQL(name)) {
+			environment.addMessage(new Error("The question " + name +
 					" appears in the QLS, but does not exist in QL", line));
 		}
 
-		if (environment.isCovered(name)) {
-			environment.addMessage(new Error("The variable " + name +
+		if (environment.isPresentQLS(name)) {
+			environment.addMessage(new Error("The question " + name +
 			" is already defined in the QLS", line));
 		}
 	}

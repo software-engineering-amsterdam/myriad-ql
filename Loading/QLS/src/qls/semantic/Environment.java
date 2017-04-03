@@ -5,49 +5,44 @@ import QL.ast.type.Type;
 import QL.message.Error;
 import QL.message.Message;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 class Environment {
 	
-	private final Map<String, Boolean> variableCovered;
+	private final Map<String, Boolean> questionsQL;
 	private final ReferenceTable referenceTable;
 	private final List<Message> messages;
 	
 	public Environment(ReferenceTable referenceTable, List<Message> messages) {
 		
-		this.variableCovered = new HashMap<>();	
+		this.questionsQL = new HashMap<>();
 		this.referenceTable = referenceTable;
 		for (String name : referenceTable) {
-			variableCovered.put(name, false);
+			questionsQL.put(name, false);
 		}
 		this.messages = messages; // TODO move to analyzing part
 	}
-	
-	public List<Message> getMessages() {
-		return messages;
-	}
-	
-	public boolean presentInQL(String name) {
+
+	boolean isPresentQL(String name) {
 		
-		return variableCovered.containsKey(name);
+		return questionsQL.containsKey(name);
 	}
 	
-	public boolean isCovered(String name) {
-		return variableCovered.get(name);
+	boolean isPresentQLS(String name) {
+		return questionsQL.get(name);
 	}
 	
-	public void setCovered(String name) {
-		variableCovered.replace(name, true);
+	void setPresentQLS(String name) {
+		questionsQL.replace(name, true);
 	}
 	
 	// TODO fault without line number
-	public void checkCoverage() {
-		for (String name : variableCovered.keySet()) {
-			if (!variableCovered.get(name)) {
-				messages.add(new Error("The variable " + name + 
+	void checkCoverage() {
+		for (String name : questionsQL.keySet()) {
+			if (!questionsQL.get(name)) {
+				messages.add(new Error("The question " + name +
 						" is not defined in QLS", 0));
 			}
 		}
@@ -57,7 +52,7 @@ class Environment {
 		return referenceTable.getType(name);
 	}
 
-	public void addMessage(Message m) {
+	void addMessage(Message m) {
 		messages.add(m);
 	}
 }

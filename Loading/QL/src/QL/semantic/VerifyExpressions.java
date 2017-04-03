@@ -12,7 +12,7 @@ import QL.message.Error;
 
 /**
  * VerifyExpressions checks for
- * <li> unreferenced variables
+ * <li> unreferenced questions
  * <li> invalid type operations
  * <li> whether expressions return a boolean
  */
@@ -150,8 +150,8 @@ public class VerifyExpressions implements FormVisitor, QL.ast.ExpressionVisitor<
     @Override
 	public Type visit(IdExpr id) {
     	
-    	if (!environment.getReferenceTable().variableExists(id.getName())) {
-	        environment.addMessage(new Error("The variable: " + id.getName() +
+    	if (!environment.getReferenceTable().nameExists(id.getName())) {
+	        environment.addMessage(new Error("The question: " + id.getName() +
 	        		" is not defined", id.getLine()));
 	        return new UnknownType(id.getLine());
     	}

@@ -5,12 +5,12 @@ import QL.ast.type.Type;
 import QL.ui.field.Field;
 import qls.evaluation.Evaluator;
 
-public class Radio extends Widget {
+public class RadioButton extends Widget {
 	
 	private final String trueText;
 	private final String falseText;
 	
-	public Radio(String trueText, String falseText, int line) {
+	public RadioButton(String trueText, String falseText, int line) {
 		super(line);
 		this.trueText = trueText;
 		this.falseText = falseText;

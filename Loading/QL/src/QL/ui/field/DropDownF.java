@@ -8,13 +8,13 @@ import javafx.event.EventHandler;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 
-public class DropDownMenu implements Field {
+public class DropDownF implements Field {
 
 	private final MenuButton field;
-	private MenuItem yes;
-	private MenuItem no;
+	private final MenuItem yes;
+	private final MenuItem no;
 
-	public DropDownMenu(String name, String trueText, String falseText, Notifier notifier, BoolValue value) {
+	public DropDownF(String name, String trueText, String falseText, Notifier notifier, BoolValue value) {
 					
 		String activeText = trueText;
 		if (!value.getValue()) {
@@ -29,23 +29,17 @@ public class DropDownMenu implements Field {
 		
 		field.setId(name);
 		
-		yes.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override
-		    public void handle(ActionEvent event) {
-		    	yes.setVisible(true);
-		    	no.setVisible(false);
-		        notifier.updateQuestionnaire(name, new BoolValue(true));
-		    }
-		});
+		yes.setOnAction(event -> {
+            yes.setVisible(true);
+            no.setVisible(false);
+            notifier.updateQuestionnaire(name, new BoolValue(true));
+        });
 		
-		no.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override
-		    public void handle(ActionEvent event) {
-		    	yes.setVisible(false);
-		    	no.setVisible(true);
-		        notifier.updateQuestionnaire(name, new BoolValue(false));
-		    }
-		});	
+		no.setOnAction(event -> {
+            yes.setVisible(false);
+            no.setVisible(true);
+            notifier.updateQuestionnaire(name, new BoolValue(false));
+        });
 	}
 	
 	@Override

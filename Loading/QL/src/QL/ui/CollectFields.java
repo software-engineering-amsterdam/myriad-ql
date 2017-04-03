@@ -5,21 +5,18 @@ import QL.ast.type.BooleanType;
 import QL.ast.type.IntegerType;
 import QL.ast.type.StringType;
 import QL.ast.type.UnknownType;
-import QL.ui.field.Check;
+import QL.ui.field.CheckBoxF;
 import QL.ui.field.Field;
-import QL.ui.field.Number;
-import QL.ui.field.Text;
+import QL.ui.field.NumberF;
+import QL.ui.field.TextF;
 import QL.value.BoolValue;
 import QL.value.IntegerValue;
 import QL.value.StringValue;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class CollectFields implements FormVisitor, TypeVisitor<Field> {
     private final Notifier notifier;
     private String current;
-    private Environment environment;
+    private final Environment environment;
 
     CollectFields(Notifier notifier, Environment environment) {
         this.notifier = notifier;
@@ -46,7 +43,7 @@ public class CollectFields implements FormVisitor, TypeVisitor<Field> {
 
     @Override
     public void visit(Question question) {
-        current = question.getVariable();
+        current = question.getName();
         Field field = question.getType().accept(this);
         environment.addField(current, field);
     }
@@ -64,24 +61,24 @@ public class CollectFields implements FormVisitor, TypeVisitor<Field> {
 
     @Override
     public void visit(ComputedQuestion question) {
-        current = question.getVariable();
+        current = question.getName();
         Field field = question.getType().accept(this);
         environment.addField(current, field);
     }
 
     @Override
     public Field visit(BooleanType type) {
-        return new Check(current, notifier, new BoolValue());
+        return new CheckBoxF(current, notifier, new BoolValue());
     }
 
     @Override
     public Field visit(IntegerType type) {
-        return new Number(current, notifier, new IntegerValue());
+        return new NumberF(current, notifier, new IntegerValue());
     }
 
     @Override
     public Field visit(StringType type) {
-        return new Text(current, notifier, new StringValue());
+        return new TextF(current, notifier, new StringValue());
     }
 
     @Override

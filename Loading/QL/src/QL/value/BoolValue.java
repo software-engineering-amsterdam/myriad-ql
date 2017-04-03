@@ -1,9 +1,5 @@
 package QL.value;
 
-import QL.ui.Notifier;
-import QL.ui.field.Check;
-import QL.ui.field.Field;
-
 public class BoolValue extends Value {
 
 	private final Boolean value;
@@ -15,11 +11,6 @@ public class BoolValue extends Value {
     public BoolValue() {
     	this.value = false;
     }
-
-	@Override
-	public Field getField(String name, Notifier notifier, Value value) {
-		return new Check(name, notifier, (BoolValue) value);
-	}
 
 	@Override
     public BoolValue and(Value other) {

@@ -5,7 +5,7 @@ import QL.ast.Node;
 import java.util.List;
 
 public class Section extends Node {
-	
+
 	private final String name;
 	private final List<Question> questions;
 	private final List<DefaultWidget> defaultWidgets;
@@ -16,11 +16,7 @@ public class Section extends Node {
 		this.questions = questions;
 		this.defaultWidgets = defaultWidgets;
 	}
-	
-	public String getName() {
-		return name;
-	}
-	
+
 	public List<Question> getQuestions() {
 		return questions;
 	}

@@ -5,13 +5,12 @@ import QL.ast.Node;
 import java.util.List;
 
 public class Stylesheet extends Node {
-	
-	private final String name;
-	private final List<Page> pages;
+
+    private final List<Page> pages;
 
 	public Stylesheet(String name, List<Page> pages, int line) {
 		super(line);
-		this.name = name;
+        String name1 = name;
 		this.pages = pages;
 	}
 	

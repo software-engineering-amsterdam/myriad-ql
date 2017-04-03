@@ -5,9 +5,9 @@
 import QL.ui.field.Field;
 import qls.evaluation.Evaluator;
 
- public class Checkbox extends Widget {
+ public class CheckBox extends Widget {
 
-	public Checkbox(int line) {
+	public CheckBox(int line) {
 		super(line);
 	}
 

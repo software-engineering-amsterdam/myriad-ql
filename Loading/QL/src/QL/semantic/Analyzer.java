@@ -16,7 +16,7 @@ public class Analyzer {
 
     public ReferenceTable analyze(Form form) {
         VerifyQuestions verifyQuestions = new VerifyQuestions(environment);
-        verifyQuestions.visit(form);
+        form.accept(verifyQuestions);
 
         VerifyExpressions verifyExpressions = new VerifyExpressions(environment);
         verifyExpressions.visit(form);

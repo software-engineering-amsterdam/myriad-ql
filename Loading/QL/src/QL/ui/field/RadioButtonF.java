@@ -6,11 +6,11 @@ import QL.value.Value;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 
-public class RadioB implements Field {
+public class RadioButtonF implements Field {
 	
 	private final RadioButton field;
 	
-	public RadioB(String name, String trueText, String falseText, Notifier notifier, BoolValue value) {
+	public RadioButtonF(String name, String trueText, String falseText, Notifier notifier, BoolValue value) {
 		
 		final ToggleGroup group = new ToggleGroup();
 		

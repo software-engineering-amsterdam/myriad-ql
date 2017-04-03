@@ -5,11 +5,11 @@ import QL.value.StringValue;
 import QL.value.Value;
 import javafx.scene.control.TextField;
 
-public class Text implements Field {
+public class TextF implements Field {
 	
 	private final TextField field;
 	
-	public Text(String name, Notifier notifier, StringValue value) {
+	public TextF(String name, Notifier notifier, StringValue value) {
 		this.field = new TextField();
 		
 		field.setId(name);

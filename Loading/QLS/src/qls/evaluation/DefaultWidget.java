@@ -3,10 +3,10 @@ package qls.evaluation;
 import QL.ast.type.Type;
 import qls.ast.widget.Widget;
 
-public class DefaultWidget {
+class DefaultWidget {
 	
-	public Widget widget;
-	public Type type;
+	private final Widget widget;
+	private final Type type;
 	
 	DefaultWidget(Widget widget, Type type) {
 		this.widget = widget;

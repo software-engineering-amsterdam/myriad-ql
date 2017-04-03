@@ -14,16 +14,16 @@ public class ReferenceTable implements Iterable<String> {
 		references = new HashMap<>();
 	}
 
-	public void addReference(String variable, Type type) {
-		references.put(variable, type);
+	public void addReference(String name, Type type) {
+		references.put(name, type);
 	}
 
-	public Type getType(String variable) {
-		return references.get(variable);
+	public Type getType(String name) {
+		return references.get(name);
 	}
 	
-	public boolean variableExists(String variable) {
-		return references.containsKey(variable);
+	public boolean nameExists(String name) {
+		return references.containsKey(name);
 	}
 	
 	public Iterator<String> iterator() {		

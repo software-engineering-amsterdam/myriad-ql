@@ -8,36 +8,36 @@ import javafx.scene.text.Font;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StyleTable {
+class StyleTable {
 	
-	private Map<String, Style> styles;
-	
+	private final Map<String, Style> styles;
+
 	StyleTable() {
 		styles = new HashMap<>();
 	}
 	
-	void addDefaults(ReferenceTable variables) {		
+	void addDefaults(ReferenceTable names) {
 		Style defaultStyle = new Style(350, "Arial", 12, "#0000FF");
-		for (String variable : variables) {
-			if (!isStyled(variable)) {
-				styles.put(variable, defaultStyle);
+		for (String name : names) {
+			if (!isStyled(name)) {
+				styles.put(name, defaultStyle);
 			}
 		}
 	}
-	
+
 	void add(String name, Style style) {
 		styles.put(name, style);
 	}
 	
 	void applyStyle(String name, Label label) {
 		if (!styles.containsKey(name)) {
-			throw new RuntimeException("The style of variable " + name + " is undefined.");
+				throw new RuntimeException("The style of question " + name + " is undefined.");
 		}
 		style(label, styles.get(name));
 	}
 	
-	public boolean isStyled(String variable) {
-		return styles.containsKey(variable);
+	boolean isStyled(String question) {
+		return styles.containsKey(question);
 	}
 	
     private void style(Label label, Style style) {

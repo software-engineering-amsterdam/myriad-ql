@@ -18,63 +18,55 @@ public class Environment {
 	private final Map<String, Field> fieldTable;
 	
 	public Environment(ReferenceTable references) {
-		this.answers = new HashMap<>(); 
+		this.answers = new HashMap<>();
 		this.references = references;
 		this.styleTable = new StyleTable();
 		this.fieldTable = new HashMap<>();
     }
 	
-	public void addDefaults() {
+	void addDefaults() {
 		styleTable.addDefaults(references);
 	}
 	
-	public void addAnswer(String variable, Value answer) {
-		answers.put(variable, answer);
+	public void addAnswer(String name, Value answer) {
+		answers.put(name, answer);
 	}
 
-	public Value getAnswer(String variable) {
-		return answers.get(variable);
+	public Value getAnswer(String name) {
+		return answers.get(name);
 	}
 
-	public boolean isAnswered(String variable) {
-		return answers.containsKey(variable);
+	public boolean isAnswered(String name) {
+		return answers.containsKey(name);
 	}
 	
-	public boolean isStyled(String variable) {
-		return styleTable.isStyled(variable) && fieldTable.containsKey(variable);
+	public boolean isStyled(String name) {
+		return styleTable.isStyled(name) && fieldTable.containsKey(name);
 	}
 	
-	public Type getType(String variable) {
+	public Type getType(String name) {
 		
-		if (!references.variableExists(variable)) {
-			throw new AssertionError("The variable " + variable + " is evaluated, " +
+		if (!references.nameExists(name)) {
+			throw new AssertionError("The question " + name + " is evaluated, " +
 					"but not checked by the typechecker");
 		}
 		
-		return references.getType(variable);
+		return references.getType(name);
 	}
 
-	void applyStyle(String variable, Label label) {
-		styleTable.applyStyle(variable, label);
-	}
-	
-	public void add(String variable, Field field) {
-		fieldTable.put(variable, field);
+	void applyStyle(String name, Label label) {
+		styleTable.applyStyle(name, label);
 	}
 
-	public void add(String variable, Style style) {
-		styleTable.add(variable, style);
+	public void addStyle(String name, Style style) {
+		styleTable.add(name, style);
 	}
 
-	void addField(String name, Field field) {
+	public void addField(String name, Field field) {
 		fieldTable.put(name, field);
 	}
 
-	boolean hasEmptyFieldTable() {
-		return fieldTable.isEmpty();
-	}
-
-	public Field getField(String variable) {
-		return fieldTable.get(variable);
+	public Field getField(String name) {
+		return fieldTable.get(name);
 	}
 }

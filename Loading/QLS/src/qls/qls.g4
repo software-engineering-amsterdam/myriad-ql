@@ -39,9 +39,9 @@ questions returns [List<Question> result]
 
 
 widget returns [Widget result]
- : 'widget' 'checkbox' { $result = new Checkbox($ctx.start.getLine()); }
- | 'widget' 'radio(' param1 = str ',' param2 = str ')' { $result = new Radio($param1.result, $param2.result, $ctx.start.getLine()); }
- | 'widget' 'spinbox' { $result = new Spinbox($ctx.start.getLine()); }
+ : 'widget' 'checkbox' { $result = new CheckBox($ctx.start.getLine()); }
+ | 'widget' 'radio(' param1 = str ',' param2 = str ')' { $result = new RadioButton($param1.result, $param2.result, $ctx.start.getLine()); }
+ | 'widget' 'spinbox' { $result = new SpinBox($ctx.start.getLine()); }
  | 'widget' 'slider' { $result = new Slider($ctx.start.getLine()); }
  | 'widget' 'numberfield' { $result = new NumberField($ctx.start.getLine()); }
  | 'widget' 'textfield' { $result = new TextField($ctx.start.getLine()); }

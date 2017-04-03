@@ -4,14 +4,7 @@ import java.util.Stack;
 
 import QL.ui.Environment;
 import QL.ui.Notifier;
-import QL.ui.field.Check;
-import QL.ui.field.DropDownMenu;
-import QL.ui.field.Field;
-import QL.ui.field.Number;
-import QL.ui.field.RadioB;
-import QL.ui.field.Slide;
-import QL.ui.field.SpinBox;
-import QL.ui.field.Text;
+import QL.ui.field.*;
 import QL.value.BoolValue;
 import QL.value.IntegerValue;
 import QL.value.StringValue;
@@ -25,27 +18,27 @@ import qls.ast.Section;
 import qls.ast.Stylesheet;
 import qls.ast.StylesheetVisitor;
 import qls.ast.WidgetVisitor;
-import qls.ast.widget.Checkbox;
+import qls.ast.widget.CheckBox;
 import qls.ast.widget.DropDown;
 import qls.ast.widget.NumberField;
-import qls.ast.widget.Radio;
+import qls.ast.widget.RadioButton;
 import qls.ast.widget.Slider;
-import qls.ast.widget.Spinbox;
+import qls.ast.widget.SpinBox;
 import qls.ast.widget.TextField;
 
 public class Evaluator implements StylesheetVisitor, WidgetVisitor, DefaultVisitor {
 
-	private Environment environment;
-	private Notifier notifier;
+	private final Environment environment;
+	private final Notifier notifier;
 	
-	private Stack<DefaultWidget> defaults;
+	private final Stack<DefaultWidget> defaults;
 	private String currentQuestion;
 	
 	public Evaluator(Environment environment, Notifier notifier) {
 		
 		this.environment = environment;
 		this.notifier = notifier;
-		this.defaults = new Stack<DefaultWidget>();
+		this.defaults = new Stack<>();
 		currentQuestion = "";
 	}
 	
@@ -59,8 +52,7 @@ public class Evaluator implements StylesheetVisitor, WidgetVisitor, DefaultVisit
 	@Override
 	// TODO combined method for page and section
 	public void visit(Page page) {
-		
-		// Push on stack
+
 		for (DefaultWidget def : page.getDefaultWidgets()) {
 			defaults.push(def);
 		}
@@ -68,8 +60,7 @@ public class Evaluator implements StylesheetVisitor, WidgetVisitor, DefaultVisit
 		for (Section section : page.getSections()) {	
 			section.accept(this);	
 		}
-		
-		// Pop off stack
+
 		for (int i = 0; i < page.getDefaultWidgets().size(); ++i) {
 			defaults.pop();
 		}
@@ -78,8 +69,7 @@ public class Evaluator implements StylesheetVisitor, WidgetVisitor, DefaultVisit
 
 	@Override
 	public void visit(Section section) {
-		
-		// Push on stack
+
 		for (DefaultWidget def : section.getDefaultWidgets()) {
 			defaults.push(def);
 		}
@@ -87,8 +77,7 @@ public class Evaluator implements StylesheetVisitor, WidgetVisitor, DefaultVisit
 		for (Question question : section.getQuestions()) {
 			question.accept(this);
 		}	
-		
-		// Pop off stack
+
 		for (int i = 0; i < section.getDefaultWidgets().size(); ++i) {
 			defaults.pop();
 		}
@@ -96,7 +85,6 @@ public class Evaluator implements StylesheetVisitor, WidgetVisitor, DefaultVisit
 
 	@Override
 	public void visit(Question question) {
-		
 		saveQuestionStyle(question.getName());
 	}
 
@@ -104,9 +92,7 @@ public class Evaluator implements StylesheetVisitor, WidgetVisitor, DefaultVisit
 	public void visit(QuestionWithWidget question) {
 				
 		saveQuestionStyle(question.getName());
-		
-		// Override default widget
-		environment.add(question.getName(), question.getWidget().accept(this));	
+		environment.addField(question.getName(), question.getWidget().accept(this));
 	}
 	
 	private void saveQuestionStyle(String question) {
@@ -122,45 +108,45 @@ public class Evaluator implements StylesheetVisitor, WidgetVisitor, DefaultVisit
 	}
 
 	@Override
-	public Field visit(Checkbox checkbox) {
-		return new Check(currentQuestion, notifier, new BoolValue());
+	public Field visit(CheckBox checkbox) {
+		return new CheckBoxF(currentQuestion, notifier, new BoolValue());
 	}
 
 	@Override
-	public Field visit(Radio radio) {
-		return new RadioB(currentQuestion, radio.getTrueText(), radio.getFalseText(), notifier, new BoolValue());
+	public Field visit(RadioButton radio) {
+		return new RadioButtonF(currentQuestion, radio.getTrueText(), radio.getFalseText(), notifier, new BoolValue());
 	}
 
 	@Override
-	public Field visit(Spinbox spinbox) {
-		return new SpinBox(currentQuestion, notifier, new IntegerValue());
+	public Field visit(SpinBox spinbox) {
+		return new SpinBoxF(currentQuestion, notifier, new IntegerValue());
 	}
 	
 	@Override 
 	public Field visit(Slider slide) {
-		return new Slide(currentQuestion, notifier, new IntegerValue());
+		return new SliderF(currentQuestion, notifier, new IntegerValue());
 	}
 	
 	@Override
 	public Field visit(DropDown dropDown) {
-		return new DropDownMenu(currentQuestion, dropDown.getTrueText(), dropDown.getFalseText(), notifier, new BoolValue());
+		return new DropDownF(currentQuestion, dropDown.getTrueText(), dropDown.getFalseText(), notifier, new BoolValue());
 	}
 
 	@Override
 	public Field visit(NumberField numberField) {
-		return new Number(currentQuestion, notifier, new IntegerValue());
+		return new NumberF(currentQuestion, notifier, new IntegerValue());
 	}
 
 	@Override
 	public Field visit(TextField textField) {
-		return new Text(currentQuestion, notifier, new StringValue());
+		return new TextF(currentQuestion, notifier, new StringValue());
 	}
 	
 	@Override
 	public void visit(DefaultStyle defaultStyle) {		
 		
 		if (environment.getType(currentQuestion).equals(defaultStyle.getType())) {
-			environment.add(currentQuestion, defaultStyle.getStyle());
+			environment.addStyle(currentQuestion, defaultStyle.getStyle());
 		}	
 	}
 
@@ -168,7 +154,7 @@ public class Evaluator implements StylesheetVisitor, WidgetVisitor, DefaultVisit
 	public void visit(DefaultWidget defaultWidget) {
 		
 		if (environment.getType(currentQuestion).equals(defaultWidget.getType())) {
-			environment.add(currentQuestion, defaultWidget.getWidget().accept(this));
+			environment.addField(currentQuestion, defaultWidget.getWidget().accept(this));
 		}
 	}
 

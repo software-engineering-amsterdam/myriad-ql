@@ -44,7 +44,6 @@ class Main {
 
 		qlsParser parser = new qlsParser(tokens);
 		Stylesheet stylesheet = parser.stylesheet().result;
-		System.out.println(stylesheet);
 		
 		Form form = createForm();
 
@@ -60,7 +59,6 @@ class Main {
 		PrettyQuestionnaire questionnaire = new PrettyQuestionnaire();
 		questionnaire.main(form, new Environment(referenceTable), messages, stylesheet);
 	}
-	
 
 	
 	private static Form createForm() {

@@ -5,9 +5,9 @@ import QL.ast.type.Type;
 import QL.ui.field.Field;
 import qls.evaluation.Evaluator;
 
-public class Spinbox extends Widget {
+public class SpinBox extends Widget {
 
-	public Spinbox(int line) {
+	public SpinBox(int line) {
 		super(line);
 	}
 

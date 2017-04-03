@@ -1,9 +1,5 @@
 package QL.value;
 
-import QL.ui.Notifier;
-import QL.ui.field.Field;
-import QL.ui.field.Number;
-
 public class IntegerValue extends Value {
 
 	private final Integer value;
@@ -15,12 +11,6 @@ public class IntegerValue extends Value {
     public IntegerValue() {
     	this.value = 0;
     }
-
-
-	@Override
-	public Field getField(String name, Notifier notifier, Value value) {
-		return new Number(name, notifier, (IntegerValue) value);
-	}
 
 	@Override
 	public Value add(Value other) {

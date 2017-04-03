@@ -1,22 +1,21 @@
 package QL.ui.field;
 
 import QL.ui.Notifier;
-import QL.value.BoolValue;
 import QL.value.IntegerValue;
 import QL.value.Value;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 
-public class SpinBox implements Field {
+public class SpinBoxF implements Field {
 	
 	private final Spinner<Integer> field;
 	
-    public SpinBox(String name, Notifier notifier, IntegerValue value) {
+    public SpinBoxF(String name, Notifier notifier, IntegerValue value) {
 		
-		this.field = new Spinner<Integer>();
+		this.field = new Spinner<>();
 		field.setId(name);
 		
-        final int initialValue = 3;
+        final int initialValue = value.getValue();
         
         SpinnerValueFactory<Integer> valueFactory = 
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 5, initialValue);

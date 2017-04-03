@@ -1,11 +1,7 @@
 package QL.value;
 
-import QL.ui.Notifier;
-import QL.ui.field.Field;
-
 public abstract class Value {
 
-	public abstract Field getField(String name, Notifier notifier, Value value);
 	public abstract String convertToString();
 	public abstract boolean equals(Value other);
 	

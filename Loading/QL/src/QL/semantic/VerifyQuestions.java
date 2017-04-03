@@ -16,11 +16,11 @@ import java.util.Map;
 public class VerifyQuestions implements FormVisitor {
 	
 	private final Environment environment;
-	private final Map<String, String> labelVariable;
+	private final Map<String, String> labelName;
 	
 	VerifyQuestions(Environment environment) {
 		this.environment = environment;
-		labelVariable = new HashMap<>();
+		labelName = new HashMap<>();
 	}
 
 	@Override
@@ -54,38 +54,38 @@ public class VerifyQuestions implements FormVisitor {
 	
 	@Override
 	public void visit(Question question) {
-		checkDuplicateId(question.getVariable(), question.getType(), question.getLine());
-		checkDuplicateLabel(question.getLabel(), question.getVariable(), question.getLine());
+		checkDuplicateId(question.getName(), question.getType(), question.getLine());
+		checkDuplicateLabel(question.getLabel(), question.getName(), question.getLine());
 	}
 
 	@Override
 	public void visit(ComputedQuestion question) {
-		checkDuplicateId(question.getVariable(), question.getType(), question.getLine());
-		checkDuplicateLabel(question.getLabel(), question.getVariable(), question.getLine());
+		checkDuplicateId(question.getName(), question.getType(), question.getLine());
+		checkDuplicateLabel(question.getLabel(), question.getName(), question.getLine());
 	}
 
-	private void addLabel(String label, String variableName) {
-		labelVariable.put(label, variableName);
+	private void addLabel(String label, String name) {
+		labelName.put(label, name);
 	}
 
 	private boolean labelExists(String label) {
-		return labelVariable.containsKey(label);
+		return labelName.containsKey(label);
 	}
 
-	private void checkDuplicateLabel(String label, String variableName, int line) {
+	private void checkDuplicateLabel(String label, String name, int line) {
 		if (labelExists(label)) {
 		    environment.addMessage(new Warning("The question: " + label +
                     " exists twice in the questionnaire", line));
 		}
-		addLabel(label, variableName);
+		addLabel(label, name);
 	}
 
-	private void checkDuplicateId(String variable, Type type, int line) {
+	private void checkDuplicateId(String name, Type type, int line) {
 
-		if (environment.getReferenceTable().variableExists(variable)) {
-			environment.addMessage(new Error("The variable " + variable + " cannot be added, because it is "
+		if (environment.getReferenceTable().nameExists(name)) {
+			environment.addMessage(new Error("The question " + name + " cannot be added, because it is "
 					+ "already defined", line));
 		}
-		environment.getReferenceTable().addReference(variable, type);
+		environment.getReferenceTable().addReference(name, type);
 	}
 }

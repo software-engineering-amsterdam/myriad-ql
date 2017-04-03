@@ -5,11 +5,11 @@ import QL.value.BoolValue;
 import QL.value.Value;
 import javafx.scene.control.CheckBox;
 
-public class Check implements Field {
+public class CheckBoxF implements Field {
 
 	private final CheckBox field;
 	
-	public Check(String name, Notifier notifier, BoolValue value) {
+	public CheckBoxF(String name, Notifier notifier, BoolValue value) {
 		
 		this.field = new CheckBox();
 		field.setId(name);

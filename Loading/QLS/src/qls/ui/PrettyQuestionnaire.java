@@ -31,7 +31,7 @@ public class PrettyQuestionnaire extends Questionnaire {
     public void start(Stage primaryStage) {
     	
 		Evaluator evaluator = new Evaluator(environment, this);
-		evaluator.visit(stylesheet);
+		stylesheet.accept(evaluator);
     	
     	super.main(form, environment, messages, primaryStage);
 

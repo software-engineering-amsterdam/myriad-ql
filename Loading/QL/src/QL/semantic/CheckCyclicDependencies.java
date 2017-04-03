@@ -113,7 +113,7 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
     @Override
     public Void visit(IdExpr id) {
 
-        addReference(current.getVariable(), id.getName());
+        addReference(current.getName(), id.getName());
         check();
 
         return null;
@@ -205,13 +205,13 @@ public class CheckCyclicDependencies implements FormVisitor, QL.ast.ExpressionVi
     }
 
     private void check() {
-        List<String> references = getReferences(current.getVariable());
+        List<String> references = getReferences(current.getName());
 
         for (String reference : references) {
             List<String> cycleReferences = getReferences(reference);
-            if (!cycleReferences.isEmpty() && cycleReferences.contains(current.getVariable())) {
+            if (!cycleReferences.isEmpty() && cycleReferences.contains(current.getName())) {
             	environment.addMessage(new Error("There is a cyclic dependency in "
-            			+ "the computed questions " + current.getVariable() + " and " + reference, 
+            			+ "the computed questions " + current.getName() + " and " + reference,
             			current.getLine()));
             }
         }
