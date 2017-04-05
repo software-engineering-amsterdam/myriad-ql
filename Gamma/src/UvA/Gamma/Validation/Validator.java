@@ -18,12 +18,12 @@ public class Validator {
         for (FormItem item : form) {
 
             /* Terminating errors */
-            try {
-                item.accept(this);
-            } catch (IdNotFoundException | IdRedeclaredException | IncompatibleTypesException | CyclicDependencyException ex) {
-                System.err.println(ex.getMessage());
-                System.exit(1);
-            }
+//            try {
+//                item.accept(this);
+//            } catch (IdNotFoundException | IdRedeclaredException | IncompatibleTypesException | CyclicDependencyException ex) {
+//                System.err.println(ex.getMessage());
+//                System.exit(1);
+//            }
 
             /* Warnings */
             try {

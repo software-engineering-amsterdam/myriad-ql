@@ -1,7 +1,8 @@
 package UvA.Gamma.AST;
 
 import UvA.Gamma.GUI.FXMLController;
-import UvA.Gamma.Validation.*;
+import UvA.Gamma.Validation.Pair;
+import UvA.Gamma.Visitors.Visitor;
 import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
@@ -58,16 +59,13 @@ public class Condition implements FormItem {
     }
 
     @Override
-    public void accept(Validator validator) throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException, CyclicDependencyException {
-        for (FormItem item : thenBlockItems) {
-            item.accept(validator);
-        }
-        for (FormItem item : elseBlockItems) {
-            item.accept(validator);
-        }
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+        thenBlockItems.forEach(formItem -> formItem.accept(visitor));
+        elseBlockItems.forEach(formItem -> formItem.accept(visitor));
     }
 
-//    @Override
+    //    @Override
 //    public Value.Type validateIdentifierType(String identifier, Value.Type type) {
 //        Optional<FormItem> thenItem = thenBlockItems.stream().filter(formItem -> formItem.validateIdentifierType(identifier, type) != null).findFirst();
 //        Optional<FormItem> elseItem = elseBlockItems.stream().filter(formItem -> formItem.validateIdentifierType(identifier, type) != null).findFirst();

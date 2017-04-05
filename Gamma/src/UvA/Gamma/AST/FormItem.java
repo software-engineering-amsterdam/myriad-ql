@@ -1,7 +1,8 @@
 package UvA.Gamma.AST;
 
 import UvA.Gamma.GUI.FXMLController;
-import UvA.Gamma.Validation.*;
+import UvA.Gamma.Validation.Pair;
+import UvA.Gamma.Visitors.Visitor;
 
 /**
  * Created by Tjarco, 14-02-17.
@@ -11,8 +12,7 @@ public interface FormItem extends ASTNode {
 
     void idChanged(Form root, FormItem changed, String value);
 
-    void accept(Validator validator) throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException,
-            CyclicDependencyException;
+    void accept(Visitor visitor);
 
     /* Returns the invalid type, or null if the the type is valid */
 //    Value.Type validateIdentifierType(String identifier, Value.Type type);

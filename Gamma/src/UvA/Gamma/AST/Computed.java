@@ -1,7 +1,10 @@
 package UvA.Gamma.AST;
 
+import UvA.Gamma.AST.Expression.Expression;
+import UvA.Gamma.AST.Expression.Identifier;
 import UvA.Gamma.GUI.FXMLController;
-import UvA.Gamma.Validation.*;
+import UvA.Gamma.Validation.Pair;
+import UvA.Gamma.Visitors.Visitor;
 import javafx.beans.property.StringProperty;
 
 /**
@@ -9,13 +12,13 @@ import javafx.beans.property.StringProperty;
  */
 public class Computed implements FormItem {
     private String label;
-    private String id;
-//    public Expression expression;
+    private Identifier id;
+    public Expression expression;
 
-    public Computed(String label, String id) {
+    public Computed(String label, Identifier id, Expression expression) {
         this.label = label;
         this.id = id;
-//        this.expression = expression;
+        this.expression = expression;
     }
 
     public String getLabel() {
@@ -31,36 +34,9 @@ public class Computed implements FormItem {
 //        }
     }
 
-    interface Visitor {
-        void visit(Computed c);
-
-        void visit(Question q);
-
-    }
-
-    class MyValidator implements Visitor {
-
-        @Override
-        public void visit(Computed c) {
-
-        }
-
-        @Override
-        public void visit(Question q) {
-
-        }
-    }
-
-    public void accept(Visitor v) {
-        v.visit(this);
-    }
-
-    @Override
-    public void accept(Validator validator) throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException, CyclicDependencyException {
-//        assert expression != null;
-//        validator.validateRedeclaration(this);
-//        validator.validateCyclicDependency(this);
-//        expression.accept(validator);
+    public void accept(Visitor visitor) {
+        expression.accept(visitor);
+        visitor.visit(this);
     }
 
 //    @Override
@@ -72,13 +48,15 @@ public class Computed implements FormItem {
     @Override
     public String validateRedeclaration(FormItem item) {
         assert id != null;
-        return item != this && item.hasId(this.id) ? this.id : null;
+//        return item != this && item.hasId(this.id) ? this.id : null;
+        return null;
     }
 
     @Override
     public String validateLabel(FormItem item) {
         assert label != null;
-        return item != this && item.containsLabel(this.label) ? this.id : null;
+//        return item != this && item.containsLabel(this.label) ? this.id : null;
+        return null;
     }
 
     @Override
@@ -90,7 +68,8 @@ public class Computed implements FormItem {
     @Override
     public Pair<String> validateCyclicDependency(FormItem item) {
         assert id != null;
-        return new Pair<>(item.isDependentOn(this.id) ? this.id : null, item.isDependencyOf(this));
+//        return new Pair<>(item.isDependentOn(this.id) ? this.id : null, item.isDependencyOf(this));
+        return null;
     }
 
     @Override
@@ -103,7 +82,8 @@ public class Computed implements FormItem {
     @Override
     public String isDependencyOf(FormItem item) {
         assert id != null;
-        return item.isDependentOn(this.id) ? this.id : null;
+//        return item.isDependentOn(this.id) ? this.id : null;
+        return null;
     }
 
     @Override

@@ -1,11 +1,13 @@
 package UvA.Gamma;
 
+import UvA.Gamma.AST.Expression.Values.IdentifierValue;
+import UvA.Gamma.AST.Expression.Values.NumberValue;
 import UvA.Gamma.AST.Form;
 import UvA.Gamma.Antlr.QL.QLLexer;
 import UvA.Gamma.Antlr.QL.QLParser;
 import UvA.Gamma.GUI.MainScreen;
 import UvA.Gamma.Validation.QLParseErrorListener;
-import UvA.Gamma.Validation.Validator;
+import UvA.Gamma.Visitors.IdentifierUpdatedVisitor;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -34,14 +36,22 @@ public class Main extends Application {
                 parser.removeErrorListeners();
                 parser.addErrorListener(new QLParseErrorListener());
                 ParseTree parseTree = parser.form();
-                QLVisitor visitor = new QLVisitor();
+                ASTBuilder visitor = new ASTBuilder();
 
                 //The root element is a form, hence the result can be casted to Form
                 Form form = (Form) visitor.visit(parseTree);
 
-                Validator validator = new Validator(form);
-                // Will terminate the program with an appropriate message if the QL form is not valid
-                validator.visit();
+                IdentifierUpdatedVisitor idVisitor = new IdentifierUpdatedVisitor(
+                        new IdentifierValue("question", new NumberValue("4.5")));
+                form.forEach(formItem -> formItem.accept(idVisitor));
+
+//                Validator validator = new Validator(form);
+//                // Will terminate the program with an appropriate message if the QL form is not valid
+//                validator.visit();
+
+
+                System.err.println("Exiting early for testing");
+                System.exit(1);
 
                 MainScreen mainScreen = new MainScreen(form);
                 mainScreen.initUI(primaryStage);

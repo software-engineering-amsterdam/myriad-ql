@@ -1,9 +1,9 @@
 package UvA.Gamma.AST.Expression.Values;
 
-import UvA.Gamma.AST.Expression.Expression;
 import UvA.Gamma.AST.Types.DecimalType;
 import UvA.Gamma.AST.Types.IntegerType;
 import UvA.Gamma.AST.Types.Type;
+import UvA.Gamma.Visitors.Visitor;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -11,7 +11,7 @@ import java.math.RoundingMode;
 /**
  * Created by Tjarco, 21-03-17.
  */
-public class NumberValue extends Expression implements Value<NumberValue> {
+public class NumberValue extends Value<NumberValue> {
     private BigDecimal value;
 
     public NumberValue(String value) {
@@ -53,6 +53,11 @@ public class NumberValue extends Expression implements Value<NumberValue> {
     @Override
     public Type getType() {
         return isInteger() ? new IntegerType() : new DecimalType();
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 
     @Override

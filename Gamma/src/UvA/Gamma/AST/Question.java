@@ -1,18 +1,21 @@
 package UvA.Gamma.AST;
 
+import UvA.Gamma.AST.Expression.Identifier;
 import UvA.Gamma.AST.Types.Type;
 import UvA.Gamma.GUI.FXMLController;
-import UvA.Gamma.Validation.*;
+import UvA.Gamma.Validation.Pair;
+import UvA.Gamma.Validation.TypeChecker;
+import UvA.Gamma.Visitors.Visitor;
 
 /**
  * Created by Tjarco, 14-02-17.
  */
 public class Question implements FormItem {
     private String question;
-    private String id;
+    private Identifier id;
     private Type type;
 
-    public Question(String question, String id, Type type) {
+    public Question(String question, Identifier id, Type type) {
         this.question = question;
         this.id = id;
         this.type = type;
@@ -31,13 +34,14 @@ public class Question implements FormItem {
 
 
     @Override
-    public void accept(Validator validator) throws IdNotFoundException, IdRedeclaredException, IncompatibleTypesException {
-        validator.validateRedeclaration(this);
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 
     @Override
     public String validateRedeclaration(FormItem item) {
-        return item != this && item.hasId(this.id) ? this.id : null;
+//        return item != this && item.hasId(this.id) ? this.id : null;
+        return null;
     }
 
 //    @Override
@@ -50,13 +54,15 @@ public class Question implements FormItem {
     @Override
     public Pair<String> validateCyclicDependency(FormItem item) {
         assert id != null;
-        return new Pair<>(item.isDependentOn(this.id) ? this.id : null, item.isDependencyOf(this));
+//        return new Pair<>(item.isDependentOn(this.id) ? this.id : null, item.isDependencyOf(this));
+        return null;
     }
 
     @Override
     public String validateLabel(FormItem item) {
         assert question != null;
-        return item != this && item.containsLabel(this.question) ? this.id : null;
+//        return item != this && item.containsLabel(this.question) ? this.id : null;
+        return null;
     }
 
     @Override
@@ -73,7 +79,8 @@ public class Question implements FormItem {
     @Override
     public String isDependencyOf(FormItem item) {
         assert id != null;
-        return item.isDependentOn(this.id) ? this.id : null;
+//        return item.isDependentOn(this.id) ? this.id : null;
+        return null;
     }
 
     @Override

@@ -1,12 +1,13 @@
 package UvA.Gamma;
 
-import UvA.Gamma.AST.ASTNode;
+import UvA.Gamma.AST.*;
 import UvA.Gamma.AST.Expression.Expression;
+import UvA.Gamma.AST.Expression.Identifier;
 import UvA.Gamma.AST.Expression.Operands.BooleanOperands.*;
 import UvA.Gamma.AST.Expression.Operands.NumberOperands.*;
 import UvA.Gamma.AST.Expression.Values.BooleanValue;
+import UvA.Gamma.AST.Expression.Values.IdentifierValue;
 import UvA.Gamma.AST.Expression.Values.NumberValue;
-import UvA.Gamma.AST.Form;
 import UvA.Gamma.AST.Types.*;
 import UvA.Gamma.Antlr.QL.QLBaseVisitor;
 import UvA.Gamma.Antlr.QL.QLParser;
@@ -16,34 +17,36 @@ import UvA.Gamma.Antlr.QL.QLParser;
  * Created by Tjarco, 08-02-17.
  */
 
-public class QLVisitor extends QLBaseVisitor<ASTNode> {
+public class ASTBuilder extends QLBaseVisitor<ASTNode> {
 
     @Override
     public Form visitForm(QLParser.FormContext ctx) {
         String id = ctx.ID().getText();
         Form form = new Form(id);
         for (QLParser.FormItemContext formItemContext : ctx.formItem()) {
-//            form.addFormItem((FormItem) visit(formItemContext));
+            form.addFormItem((FormItem) visit(formItemContext));
             visit(formItemContext);
         }
         return form;
     }
 
-//    @Override
-//    public Question visitQuestion(QLParser.QuestionContext ctx) {
-//        String questionString = ctx.STRING_LITERAL().getText().replaceAll("\"", "");
-//        String id = ctx.ID().getText();
-//        Value value = (Value) visit(ctx.type());
-//        return new Question(questionString, id, value);
-//    }
+    @Override
+    public Question visitQuestion(QLParser.QuestionContext ctx) {
+        String questionString = ctx.STRING_LITERAL().getText().replaceAll("\"", "");
+        Identifier id = new Identifier(ctx.ID().getText());
+        Type type = (Type) visit(ctx.type());
+        System.out.println(type);
+        return new Question(questionString, id, type);
+    }
 
     @Override
-    public ASTNode visitComputed(QLParser.ComputedContext ctx) {
+    public Computed visitComputed(QLParser.ComputedContext ctx) {
         String label = ctx.STRING_LITERAL().getText().replaceAll("\"", "");
-        String id = ctx.ID().getText();
         Expression expression = (Expression) visit(ctx.expression());
+        Identifier identifier = new Identifier(ctx.ID().getText());
+        Computed computed = new Computed(label, identifier, expression);
         System.out.println(expression.value());
-        return super.visitComputed(ctx);
+        return computed;
     }
 
     @Override
@@ -84,7 +87,7 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
     }
 
     @Override
-    public ASTNode visitLogicalBooleanExpression(QLParser.LogicalBooleanExpressionContext ctx) {
+    public Expression visitLogicalBooleanExpression(QLParser.LogicalBooleanExpressionContext ctx) {
         Expression left = (Expression) visit(ctx.boolExpression(0));
         Expression right = (Expression) visit(ctx.boolExpression(1));
         switch (ctx.op.getText()) {
@@ -128,44 +131,19 @@ public class QLVisitor extends QLBaseVisitor<ASTNode> {
     }
 
     @Override
+    public ASTNode visitNegatedBooleanExpression(QLParser.NegatedBooleanExpressionContext ctx) {
+        return new Not((Expression) visit(ctx.boolExpression()));
+    }
+
+    @Override
     public ASTNode visitBooleanValueExpression(QLParser.BooleanValueExpressionContext ctx) {
         return new BooleanValue(ctx.getText());
     }
 
-    //
-//    @Override
-//    public Condition visitCondition(QLParser.ConditionContext ctx) {
-//        BooleanExpression expression = new BooleanExpression(ctx.boolExpr().getText());
-//        Condition condition = new Condition(expression);
-//        for (QLParser.FormItemContext formItemContext : ctx.formItem()) {
-//            condition.addThenBlockItem((FormItem) visit(formItemContext));
-//        }
-//
-//        if (ctx.elseblock() != null) {
-//            for (QLParser.FormItemContext elseItemContext : ctx.elseblock().formItem()) {
-//                condition.addElseBlockItem((FormItem) visit(elseItemContext));
-//            }
-//        }
-//
-//        return condition;
-//    }
-
-//    @Override
-//    public BooleanExpression visitBooleanExpression(QLParser.BooleanExpressionContext ctx) {
-//        return new BooleanExpression(ctx.boolExpr().getText());
-//    }
-//
-//
-//    @Override
-//    public NumberExpression visitNumberExpression(QLParser.NumberExpressionContext ctx) {
-//        return new NumberExpression(ctx.numExpr().getText());
-//    }
-//
-//    @Override
-//    public MoneyExpression visitMoneyExpression(QLParser.MoneyExpressionContext ctx) {
-//        return new MoneyExpression(ctx.numExpr().getText());
-//    }
-
+    @Override
+    public ASTNode visitIdentifierExpression(QLParser.IdentifierExpressionContext ctx) {
+        return new IdentifierValue(ctx.ID().getText(), new NumberValue("0"));
+    }
 
     @Override
     public BooleanType visitBooleanType(QLParser.BooleanTypeContext ctx) {
