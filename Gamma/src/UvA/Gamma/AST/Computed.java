@@ -10,14 +10,13 @@ import javafx.beans.property.StringProperty;
 /**
  * Created by Tjarco, 14-02-17.
  */
-public class Computed implements FormItem {
+public class Computed extends IdentifiableFormItem {
     private String label;
-    private Identifier id;
     public Expression expression;
 
     public Computed(String label, Identifier id, Expression expression) {
         this.label = label;
-        this.id = id;
+        this.identifier = id;
         this.expression = expression;
     }
 
@@ -34,6 +33,7 @@ public class Computed implements FormItem {
 //        }
     }
 
+    @Override
     public void accept(Visitor visitor) {
         expression.accept(visitor);
         visitor.visit(this);
@@ -47,7 +47,7 @@ public class Computed implements FormItem {
 
     @Override
     public String validateRedeclaration(FormItem item) {
-        assert id != null;
+        assert identifier != null;
 //        return item != this && item.hasId(this.id) ? this.id : null;
         return null;
     }
@@ -67,7 +67,7 @@ public class Computed implements FormItem {
 
     @Override
     public Pair<String> validateCyclicDependency(FormItem item) {
-        assert id != null;
+        assert identifier != null;
 //        return new Pair<>(item.isDependentOn(this.id) ? this.id : null, item.isDependencyOf(this));
         return null;
     }
@@ -81,7 +81,7 @@ public class Computed implements FormItem {
 
     @Override
     public String isDependencyOf(FormItem item) {
-        assert id != null;
+        assert identifier != null;
 //        return item.isDependentOn(this.id) ? this.id : null;
         return null;
     }
@@ -89,7 +89,7 @@ public class Computed implements FormItem {
     @Override
     public boolean hasId(String id) {
         assert id != null;
-        return this.id.equals(id);
+        return this.identifier.equals(id);
     }
 
     @Override

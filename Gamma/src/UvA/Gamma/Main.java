@@ -1,13 +1,11 @@
 package UvA.Gamma;
 
-import UvA.Gamma.AST.Expression.Values.IdentifierValue;
-import UvA.Gamma.AST.Expression.Values.NumberValue;
 import UvA.Gamma.AST.Form;
 import UvA.Gamma.Antlr.QL.QLLexer;
 import UvA.Gamma.Antlr.QL.QLParser;
 import UvA.Gamma.GUI.MainScreen;
 import UvA.Gamma.Validation.QLParseErrorListener;
-import UvA.Gamma.Visitors.IdentifierUpdatedVisitor;
+import UvA.Gamma.Visitors.ValidationVisitor;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -41,9 +39,12 @@ public class Main extends Application {
                 //The root element is a form, hence the result can be casted to Form
                 Form form = (Form) visitor.visit(parseTree);
 
-                IdentifierUpdatedVisitor idVisitor = new IdentifierUpdatedVisitor(
-                        new IdentifierValue("question", new NumberValue("4.5")));
-                form.forEach(formItem -> formItem.accept(idVisitor));
+//                IdentifierUpdatedVisitor idVisitor = new IdentifierUpdatedVisitor(
+//                        new IdentifierValue("question", new NumberValue("4.5")));
+//                form.forEach(formItem -> formItem.accept(idVisitor));
+
+                ValidationVisitor validationVisitor = new ValidationVisitor();
+                form.forEach(formItem -> formItem.accept(validationVisitor));
 
 //                Validator validator = new Validator(form);
 //                // Will terminate the program with an appropriate message if the QL form is not valid

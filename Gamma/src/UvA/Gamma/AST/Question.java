@@ -10,14 +10,13 @@ import UvA.Gamma.Visitors.Visitor;
 /**
  * Created by Tjarco, 14-02-17.
  */
-public class Question implements FormItem {
+public class Question extends IdentifiableFormItem {
     private String question;
-    private Identifier id;
     private Type type;
 
     public Question(String question, Identifier id, Type type) {
         this.question = question;
-        this.id = id;
+        this.identifier = id;
         this.type = type;
     }
 
@@ -29,7 +28,6 @@ public class Question implements FormItem {
     public boolean check(TypeChecker checker, String newValue) {
         assert type != null;
         return false;
-//        return checker.check(type, newValue);
     }
 
 
@@ -53,7 +51,7 @@ public class Question implements FormItem {
 
     @Override
     public Pair<String> validateCyclicDependency(FormItem item) {
-        assert id != null;
+        assert identifier != null;
 //        return new Pair<>(item.isDependentOn(this.id) ? this.id : null, item.isDependencyOf(this));
         return null;
     }
@@ -78,7 +76,7 @@ public class Question implements FormItem {
 
     @Override
     public String isDependencyOf(FormItem item) {
-        assert id != null;
+        assert identifier != null;
 //        return item.isDependentOn(this.id) ? this.id : null;
         return null;
     }
@@ -91,7 +89,7 @@ public class Question implements FormItem {
     @Override
     public boolean hasId(String id) {
         assert id != null;
-        return this.id.equals(id);
+        return this.identifier.equals(id);
     }
 
     @Override
@@ -106,6 +104,6 @@ public class Question implements FormItem {
 
     @Override
     public String toString() {
-        return "<Question>: " + question + " " + id + ": " + type;
+        return "<Question>: " + question + " " + identifier + ": " + type;
     }
 }

@@ -9,4 +9,9 @@ public class Identifier {
     public Identifier(String identifier) {
         this.value = identifier;
     }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }

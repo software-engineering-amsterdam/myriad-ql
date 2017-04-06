@@ -35,7 +35,6 @@ public class ASTBuilder extends QLBaseVisitor<ASTNode> {
         String questionString = ctx.STRING_LITERAL().getText().replaceAll("\"", "");
         Identifier id = new Identifier(ctx.ID().getText());
         Type type = (Type) visit(ctx.type());
-        System.out.println(type);
         return new Question(questionString, id, type);
     }
 
@@ -44,9 +43,7 @@ public class ASTBuilder extends QLBaseVisitor<ASTNode> {
         String label = ctx.STRING_LITERAL().getText().replaceAll("\"", "");
         Expression expression = (Expression) visit(ctx.expression());
         Identifier identifier = new Identifier(ctx.ID().getText());
-        Computed computed = new Computed(label, identifier, expression);
-        System.out.println(expression.value());
-        return computed;
+        return new Computed(label, identifier, expression);
     }
 
     @Override

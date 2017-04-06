@@ -5,13 +5,19 @@ import UvA.Gamma.AST.Condition;
 import UvA.Gamma.AST.Expression.Expression;
 import UvA.Gamma.AST.Expression.Values.IdentifierValue;
 import UvA.Gamma.AST.Expression.Values.Value;
+import UvA.Gamma.AST.IdentifiableFormItem;
 import UvA.Gamma.AST.Question;
 import UvA.Gamma.AST.Types.Type;
 
 /**
  * Created by Tjarco, 05-04-17.
  */
-public class AbstractBaseVisitor implements Visitor {
+public abstract class AbstractBaseVisitor implements Visitor {
+    @Override
+    public void visit(IdentifiableFormItem item) {
+
+    }
+
     @Override
     public void visit(Computed computed) {
 
@@ -46,4 +52,5 @@ public class AbstractBaseVisitor implements Visitor {
     public void visit(IdentifierValue value) {
 
     }
+
 }
