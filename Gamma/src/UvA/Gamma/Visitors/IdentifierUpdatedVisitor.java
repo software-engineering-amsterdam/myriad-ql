@@ -6,7 +6,7 @@ import UvA.Gamma.AST.Expression.Values.IdentifierValue;
 /**
  * Created by Tjarco, 05-04-17.
  */
-public class IdentifierUpdatedVisitor extends AbstractBaseVisitor {
+public class IdentifierUpdatedVisitor extends BaseVisitor {
     private IdentifierValue updatedValue;
 
     public IdentifierUpdatedVisitor(IdentifierValue updatedValue) {

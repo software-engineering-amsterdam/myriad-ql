@@ -1,5 +1,6 @@
 package UvA.Gamma.AST.Expression.Values;
 
+import UvA.Gamma.AST.Expression.Identifier;
 import UvA.Gamma.AST.Types.Type;
 import UvA.Gamma.Visitors.Visitor;
 
@@ -8,11 +9,15 @@ import UvA.Gamma.Visitors.Visitor;
  */
 public class IdentifierValue extends Value<IdentifierValue> {
     private Value value;
-    private String identifier;
+    private Identifier identifier;
 
-    public IdentifierValue(String identifier, Value value) {
-        this.identifier = identifier;
-        this.value = value;
+    /**
+     * The Identifiervalue can be initialized without a value
+     *
+     * @param identifier The identifier string given in the QL
+     */
+    public IdentifierValue(String identifier) {
+        this.identifier = new Identifier(identifier);
     }
 
     public void setValue(Value value) {
@@ -20,13 +25,15 @@ public class IdentifierValue extends Value<IdentifierValue> {
     }
 
     public void updateValue(IdentifierValue value) {
-        if (value.identifier.equals(this.identifier)) {
+        assert identifier != null;
+        if (value.identifier.toString().equals(this.identifier.toString())) {
             this.value = value.value;
         }
     }
 
     @Override
     public Type getType() {
+        assert value != null;
         return value.getType();
     }
 
@@ -37,13 +44,21 @@ public class IdentifierValue extends Value<IdentifierValue> {
 
     @Override
     public Value value() {
+        assert value != null;
         return value.value();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public BooleanValue equals(IdentifierValue other) {
+        assert value != null;
         assert this.getType().equals(other.getType());
         return this.value.equals(other.value);
+    }
+
+    @Override
+    public String toString() {
+        assert identifier != null;
+        return identifier.toString();
     }
 }

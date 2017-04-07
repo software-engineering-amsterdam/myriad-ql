@@ -5,6 +5,7 @@ import UvA.Gamma.Antlr.QL.QLLexer;
 import UvA.Gamma.Antlr.QL.QLParser;
 import UvA.Gamma.GUI.MainScreen;
 import UvA.Gamma.Validation.QLParseErrorListener;
+import UvA.Gamma.Visitors.ReferenceValidator;
 import UvA.Gamma.Visitors.ValidationVisitor;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -45,6 +46,9 @@ public class Main extends Application {
 
                 ValidationVisitor validationVisitor = new ValidationVisitor();
                 form.forEach(formItem -> formItem.accept(validationVisitor));
+                ReferenceValidator referenceValidator = new ReferenceValidator(validationVisitor.getIdentifierStrings());
+                form.forEach(formItem -> formItem.accept(referenceValidator));
+
 
 //                Validator validator = new Validator(form);
 //                // Will terminate the program with an appropriate message if the QL form is not valid

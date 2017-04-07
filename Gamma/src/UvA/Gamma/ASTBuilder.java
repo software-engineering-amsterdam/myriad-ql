@@ -139,7 +139,7 @@ public class ASTBuilder extends QLBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitIdentifierExpression(QLParser.IdentifierExpressionContext ctx) {
-        return new IdentifierValue(ctx.ID().getText(), new NumberValue("0"));
+        return new IdentifierValue(ctx.ID().getText());
     }
 
     @Override

@@ -35,8 +35,8 @@ public class Computed extends IdentifiableFormItem {
 
     @Override
     public void accept(Visitor visitor) {
-        expression.accept(visitor);
         visitor.visit(this);
+        expression.accept(visitor);
     }
 
 //    @Override

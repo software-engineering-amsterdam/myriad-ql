@@ -12,7 +12,7 @@ import UvA.Gamma.AST.Types.Type;
 /**
  * Created by Tjarco, 05-04-17.
  */
-public abstract class AbstractBaseVisitor implements Visitor {
+public class BaseVisitor implements Visitor {
     @Override
     public void visit(IdentifiableFormItem item) {
 

@@ -1,6 +1,7 @@
 package UvA.Gamma.Visitors;
 
 import UvA.Gamma.AST.Computed;
+import UvA.Gamma.AST.Condition;
 import UvA.Gamma.AST.IdentifiableFormItem;
 import UvA.Gamma.AST.Question;
 
@@ -10,7 +11,7 @@ import java.util.Set;
 /**
  * Created by Tjarco, 06-04-17.
  */
-public class ValidationVisitor extends AbstractBaseVisitor {
+public class ValidationVisitor extends BaseVisitor {
     private Set<String> identifierStrings;
 
     public ValidationVisitor() {
@@ -24,6 +25,11 @@ public class ValidationVisitor extends AbstractBaseVisitor {
         }
     }
 
+
+    public Set<String> getIdentifierStrings() {
+        return identifierStrings;
+    }
+
     @Override
     public void visit(Computed computed) {
         validateRedeclaration(computed);
@@ -32,5 +38,10 @@ public class ValidationVisitor extends AbstractBaseVisitor {
     @Override
     public void visit(Question question) {
         validateRedeclaration(question);
+    }
+
+    @Override
+    public void visit(Condition condition) {
+        super.visit(condition);
     }
 }
