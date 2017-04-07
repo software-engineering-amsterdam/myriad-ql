@@ -2,6 +2,8 @@ package sc.ql.model.types;
 
 import javax.swing.JPanel;
 
+import sc.ql.gui.BuildComponents;
+import sc.ql.gui.values.Value;
 import sc.ql.gui.widgets.IntegerWidget;
 import sc.ql.gui.widgets.Widget;
 
@@ -28,8 +30,8 @@ public class IntegerType extends Type {
 	}
 	
 	@Override
-	public Widget getWidget(JPanel panel) {
-		return new IntegerWidget(panel);
+	public Widget getWidget(BuildComponents buildComponents, String questionId, Value value) {
+		return new IntegerWidget(buildComponents, questionId, value);
 	}
 	
 }

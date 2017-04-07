@@ -7,4 +7,14 @@ public class EmptyValue extends Value {
 		return true;
 	}
 	
+	@Override
+	public String toString() {
+		return "Empty value";
+	}
+	
+	@Override
+	public Boolean getValue() {
+		return false;
+	}
+	
 }

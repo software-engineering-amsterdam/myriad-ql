@@ -2,6 +2,8 @@ package sc.ql.model.types;
 
 import javax.swing.JPanel;
 
+import sc.ql.gui.BuildComponents;
+import sc.ql.gui.values.Value;
 import sc.ql.gui.widgets.BooleanWidget;
 import sc.ql.gui.widgets.Widget;
 
@@ -28,8 +30,8 @@ public class BooleanType extends Type {
 	}
 	
 	@Override
-	public Widget getWidget(JPanel panel) {
-		return new BooleanWidget(panel);
+	public Widget getWidget(BuildComponents buildComponents, String questionId, Value value) {
+		return new BooleanWidget(buildComponents, questionId, value);
 	}
 	
 }

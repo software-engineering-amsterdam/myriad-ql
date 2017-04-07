@@ -1,6 +1,6 @@
 package sc.ql.gui;
 
-import java.awt.Component;
+import java.awt.Dimension;
 import java.util.Map;
 
 import javax.swing.JLabel;
@@ -19,12 +19,31 @@ import sc.ql.model.form_elements.*;
 import sc.ql.model.visitors.*;
 
 public class BuildComponents implements FormVisitor<JPanel>, FormElementVisitor<JPanel>, ExpressionVisitor<Value> {
-	private JPanel panel;
+	private Form form;
 	private Map<String, Value> questionValues;
+	private JPanel panel;
 	
-	public BuildComponents(JPanel jPanel, Map<String, Value> questionValues) {
-		this.panel = jPanel;
+	public BuildComponents(Form form, Map<String, Value> questionValues) {
+		this.form = form;
 		this.questionValues = questionValues;
+		
+		panel = new JPanel();
+		panel.setLayout(new MigLayout());
+		panel.setPreferredSize(new Dimension(1000, 800));
+		
+		visit(this.form);
+	}
+	
+	public void updatePanel(String questionId, Value value) {		
+		panel.removeAll();
+		questionValues.put(questionId, value);
+		visit(this.form);
+		panel.revalidate();
+		panel.repaint();
+	}
+	
+	public JPanel getPanel() {
+		return this.panel;
 	}
 	
 	@Override
@@ -39,7 +58,9 @@ public class BuildComponents implements FormVisitor<JPanel>, FormElementVisitor<
 	@Override
 	public JPanel visit(IfThenStatement statement) {
 		Value condition = statement.getCondition().accept(this);
-		Boolean visible = !condition.isEmptyValue();
+		Boolean visible = !condition.isEmptyValue() && condition.isTrue();
+		
+		System.out.println(visible);
 		
 		JPanel statementPanel = new JPanel();
 		statementPanel.setLayout(new MigLayout());
@@ -61,7 +82,7 @@ public class BuildComponents implements FormVisitor<JPanel>, FormElementVisitor<
 	@Override
 	public JPanel visit(IfThenElseStatement statement) {
 		Value condition = statement.getCondition().accept(this);
-		Boolean visible = !condition.isEmptyValue();
+		Boolean visible = !condition.isEmptyValue() && condition.isTrue();
 		
 		JPanel statementPanel = new JPanel();
 		statementPanel.setLayout(new MigLayout());
@@ -91,32 +112,33 @@ public class BuildComponents implements FormVisitor<JPanel>, FormElementVisitor<
 	@Override
 	public JPanel visit(Question question) {	
 		JPanel questionPanel = new JPanel();
+		String questionId = question.getId();
+		
+		Value value = questionValues.containsKey(questionId) ? questionValues.get(questionId) : new EmptyValue();
+		questionValues.put(questionId, value);
 		
 		JLabel label = new JLabel(question.getLabel());
 		questionPanel.add(label);
 		
-		Widget widgetComponent = question.getType().getWidget(this.panel);
+		Widget widgetComponent = question.getType().getWidget(this, questionId, value);
 		questionPanel.add(widgetComponent.getComponent());
-		
-		String questionId = question.getId();
-		Value value = questionValues.containsKey(questionId) ? questionValues.get(questionId) : new EmptyValue();
-		questionValues.put(questionId, value);
-		
+
 		return questionPanel;
 	}
 	
 	@Override
 	public JPanel visit(CalculatedQuestion question) {
 		JPanel questionPanel = new JPanel();
+		String questionId = question.getId();
+		
+		Value value = questionValues.containsKey(questionId) ? questionValues.get(questionId) : new EmptyValue();
+		questionValues.put(question.getId(), value);
 		
 		JLabel label = new JLabel(question.getLabel());
 		questionPanel.add(label);
 		
-		Widget widgetComponent = question.getType().getWidget(this.panel);
+		Widget widgetComponent = question.getType().getWidget(this, questionId, value);
 		questionPanel.add(widgetComponent.getComponent());
-		
-		Value value = question.getExpression().accept(this);
-		questionValues.put(question.getId(), value);
 		
 		return questionPanel;
 	}

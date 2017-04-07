@@ -1,7 +1,7 @@
 package sc.ql.model.types;
 
-import javax.swing.JPanel;
-
+import sc.ql.gui.BuildComponents;
+import sc.ql.gui.values.Value;
 import sc.ql.gui.widgets.Widget;
 import sc.ql.model.Node;
 
@@ -42,8 +42,8 @@ public class Type extends Node {
 	public Boolean isCompatibleWith(StringType type) {
 		return false;
 	}
-	
-	public Widget getWidget(JPanel panel) {
+
+	public Widget getWidget(BuildComponents buildComponents, String questionId, Value value) {
 		return null;
 	}
 	

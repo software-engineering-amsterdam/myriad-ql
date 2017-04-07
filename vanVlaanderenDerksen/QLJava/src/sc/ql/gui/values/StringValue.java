@@ -12,6 +12,11 @@ public class StringValue extends Value {
 	}
 	
 	@Override
+	public String toString() {
+		return value.toString();
+	}
+	
+	@Override
 	public Value equals(Value value) {
         return value.equals(this);
     }

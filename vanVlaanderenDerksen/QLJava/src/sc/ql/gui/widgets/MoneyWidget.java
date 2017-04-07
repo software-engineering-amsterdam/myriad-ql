@@ -8,10 +8,13 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.text.NumberFormatter;
 
+import sc.ql.gui.BuildComponents;
+import sc.ql.gui.values.Value;
+
 public class MoneyWidget implements Widget {
 	private final Component component;
 	
-	public MoneyWidget(JPanel panel) {
+	public MoneyWidget(BuildComponents buildComponents, String questionId, Value value) {
 		DecimalFormat format = new DecimalFormat("#,##0.00");
 		
 		NumberFormatter formatter = new NumberFormatter(format);

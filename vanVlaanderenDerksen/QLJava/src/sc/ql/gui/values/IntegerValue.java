@@ -12,6 +12,11 @@ public class IntegerValue extends Value {
 	}
 	
 	@Override
+	public String toString() {
+		return value.toString();
+	}
+	
+	@Override
 	public Value add(Value value) {
         return value.add(this);
     }

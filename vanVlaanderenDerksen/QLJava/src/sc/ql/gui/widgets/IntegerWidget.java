@@ -7,10 +7,13 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.text.NumberFormatter;
 
+import sc.ql.gui.BuildComponents;
+import sc.ql.gui.values.Value;
+
 public class IntegerWidget implements Widget {
 	private final Component component;
 	
-	public IntegerWidget(JPanel panel) {
+	public IntegerWidget(BuildComponents buildComponents, String questionId, Value value) {
 		NumberFormat format = NumberFormat.getInstance();
 		
 		NumberFormatter formatter = new NumberFormatter(format);

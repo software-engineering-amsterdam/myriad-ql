@@ -5,10 +5,13 @@ import java.awt.Component;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import sc.ql.gui.BuildComponents;
+import sc.ql.gui.values.Value;
+
 public class StringWidget implements Widget {
 	private final Component component;
 	
-	public StringWidget(JPanel panel) {
+	public StringWidget(BuildComponents buildComponents, String questionId, Value value) {
 		JTextField field = new JTextField(30);
 		this.component = field;
 	}

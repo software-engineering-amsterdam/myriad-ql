@@ -2,7 +2,19 @@ package sc.ql.gui.values;
 
 public abstract class Value {
 	
+	public Boolean getValue() {
+		return null;
+	}
+	
+	public String toString() {
+		return null;
+	}
+	
 	public Boolean isEmptyValue() {
+		return false;
+	}
+	
+	public Boolean isTrue() {
 		return false;
 	}
 	

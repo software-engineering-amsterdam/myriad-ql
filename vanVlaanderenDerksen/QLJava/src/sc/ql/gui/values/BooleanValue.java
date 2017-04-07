@@ -7,8 +7,19 @@ public class BooleanValue extends Value {
 		this.value = value;
 	}
 	
+	@Override
 	public Boolean getValue() {
 		return value;
+	}
+	
+	@Override
+	public String toString() {
+		return value.toString();
+	}
+	
+	@Override
+	public Boolean isTrue() {
+		return value == true;
 	}
 	
 	@Override

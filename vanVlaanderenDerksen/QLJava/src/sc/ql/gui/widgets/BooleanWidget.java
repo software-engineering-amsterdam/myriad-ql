@@ -5,31 +5,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JCheckBox;
-import javax.swing.JPanel;
 
+import sc.ql.gui.BuildComponents;
 import sc.ql.gui.values.BooleanValue;
+import sc.ql.gui.values.Value;
 
 public class BooleanWidget implements Widget {
 	private final Component component;
-	public BooleanValue value;
 	
-	public BooleanWidget(JPanel panel) {
-		value = new BooleanValue(false);
-		
+	public BooleanWidget(BuildComponents buildComponents, String questionId, Value value) {
 		JCheckBox checkbox = new JCheckBox();
+		checkbox.setSelected(value.getValue());
+		
 		checkbox.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent event) {
 		        JCheckBox cb = (JCheckBox) event.getSource();
-		        if (cb.isSelected()) {
-		            System.out.println("checkbox checked");
-		            value = new BooleanValue(true);
-		        } else {
-		        	System.out.println("checkbox unchecked");
-		        	value = new BooleanValue(false);
-		        }
-		        
-		        panel.revalidate();
+		        BooleanValue value = cb.isSelected() ? new BooleanValue(true) : new BooleanValue(false);
+
+		        buildComponents.updatePanel(questionId, value);
 		    }
 		});
 		
