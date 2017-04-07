@@ -1,8 +1,9 @@
 package sc.ql.model.types;
 
-import java.awt.Component;
+import javax.swing.JPanel;
 
-import javax.swing.JCheckBox;
+import sc.ql.gui.widgets.BooleanWidget;
+import sc.ql.gui.widgets.Widget;
 
 public class BooleanType extends Type {
 
@@ -26,8 +27,9 @@ public class BooleanType extends Type {
 		return true;
 	}
 	
-	@Override 
-	public Component getWidget() {
-		return new JCheckBox();
+	@Override
+	public Widget getWidget(JPanel panel) {
+		return new BooleanWidget(panel);
 	}
+	
 }

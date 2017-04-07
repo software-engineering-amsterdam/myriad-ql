@@ -1,10 +1,9 @@
 package sc.ql.model.types;
 
-import java.awt.Component;
-import java.text.NumberFormat;
+import javax.swing.JPanel;
 
-import javax.swing.JFormattedTextField;
-import javax.swing.text.NumberFormatter;
+import sc.ql.gui.widgets.IntegerWidget;
+import sc.ql.gui.widgets.Widget;
 
 public class IntegerType extends Type {
 
@@ -28,19 +27,9 @@ public class IntegerType extends Type {
 		return true;
 	}
 	
-	@Override 
-	public Component getWidget() {
-		NumberFormat format = NumberFormat.getInstance();
-		
-		NumberFormatter formatter = new NumberFormatter(format);
-		formatter.setValueClass(Integer.class);
-		formatter.setAllowsInvalid(false);
-		
-		JFormattedTextField field = new JFormattedTextField(formatter);
-		field.setValue(0);
-		field.setColumns(10);
-		
-		return field;
+	@Override
+	public Widget getWidget(JPanel panel) {
+		return new IntegerWidget(panel);
 	}
 	
 }

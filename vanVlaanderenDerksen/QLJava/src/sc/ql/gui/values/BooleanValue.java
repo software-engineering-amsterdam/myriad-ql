@@ -16,4 +16,24 @@ public class BooleanValue extends Value {
         return new BooleanValue(!this.value);
     }
 	
+	@Override
+	public Value and(Value value) {
+        return value.and(this);
+    }
+	
+	@Override
+	public BooleanValue and(BooleanValue value) {
+        return new BooleanValue(this.value && value.getValue());
+    }
+	
+	@Override
+	public Value or(Value value) {
+        return value.and(this);
+    }
+	
+	@Override
+	public BooleanValue or(BooleanValue value) {
+        return new BooleanValue(this.value || value.getValue());
+    }
+	
 }

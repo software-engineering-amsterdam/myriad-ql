@@ -1,7 +1,8 @@
 package sc.ql.model.types;
 
-import java.awt.Component;
+import javax.swing.JPanel;
 
+import sc.ql.gui.widgets.Widget;
 import sc.ql.model.Node;
 
 public class Type extends Node {
@@ -42,7 +43,8 @@ public class Type extends Node {
 		return false;
 	}
 	
-	public Component getWidget() {
+	public Widget getWidget(JPanel panel) {
 		return null;
 	}
+	
 }
