@@ -27,7 +27,7 @@ import sc.ql.checkform.QuestionTypeMap;
 
 public class ModelTest {
 
-	@Test
+	
 	public void checkParseQuestion(){
 		
 		
@@ -51,18 +51,21 @@ public class ModelTest {
 						+ "endif "
 				+ "endform";
 		
+		Form form = createForm(input);
+    	CheckForm checkForm = new CheckForm(form);    	
+    	List<Message> messages = checkForm.getMessages();
+    	   	
+    	assertTrue(messages.isEmpty());
+	}
+	
+	public Form createForm(String input){
 		CharStream stream = new ANTLRInputStream(input);
         QLLexer lexer = new QLLexer((stream));
         QLParser parser = new QLParser(new CommonTokenStream(lexer));
         ParseTree tree = parser.form();
         
         AstVisitor visitor = new AstVisitor();
-        Form form = (Form) visitor.visit(tree);
-
-    	CheckForm checkForm = new CheckForm(form);    	
-    	List<Message> messages = checkForm.getMessages();
-    	   	
-    	assertTrue(messages.isEmpty());
+        return (Form) visitor.visit(tree);
 	}
 
 }
