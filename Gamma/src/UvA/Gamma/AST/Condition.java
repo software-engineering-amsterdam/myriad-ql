@@ -116,13 +116,6 @@ public class Condition implements FormItem {
     }
 
     @Override
-    public boolean isDependentOn(String id) {
-        return
-                thenBlockItems.stream().anyMatch(item -> item.isDependentOn(id)) ||
-                        elseBlockItems.stream().anyMatch(item -> item.isDependentOn(id));
-    }
-
-    @Override
     public String isDependencyOf(FormItem item) {
         return null;
     }

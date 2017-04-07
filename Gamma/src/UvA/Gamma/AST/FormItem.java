@@ -32,8 +32,6 @@ public interface FormItem extends ASTNode {
 
     boolean containsLabel(String label);
 
-    boolean isDependentOn(String id);
-
     /* Returns the the identifier of the item this method is called on if it is a dependency of the the parameter */
     String isDependencyOf(FormItem item);
 }

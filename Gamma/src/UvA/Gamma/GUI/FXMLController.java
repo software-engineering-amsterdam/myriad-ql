@@ -54,7 +54,7 @@ public class FXMLController {
 
     public void showQuestion(Question question) {
         assert rootGrid != null;
-        Text questionLabel = new Text(question.getQuestion());
+        Text questionLabel = new Text(question.getLabel());
         TextField input = new TextField();
 
         questionOnUpdate(question, input);
@@ -63,7 +63,7 @@ public class FXMLController {
 
     public void showBoolean(Question question) {
         assert rootGrid != null;
-        Text questionLabel = new Text(question.getQuestion());
+        Text questionLabel = new Text(question.getLabel());
         CheckBox input = new CheckBox();
 
         input.selectedProperty().addListener((observable, oldValue, newValue) ->
@@ -75,7 +75,7 @@ public class FXMLController {
 
     public void showDateValue(Question question) {
         assert rootGrid != null;
-        Text questionLabel = new Text(question.getQuestion());
+        Text questionLabel = new Text(question.getLabel());
         final DatePicker datePicker = new DatePicker();
 
         datePicker.setOnAction(t -> {
@@ -98,7 +98,7 @@ public class FXMLController {
 
     public void showMoney(Question question) {
         assert rootGrid != null;
-        Text questionLabel = new Text(question.getQuestion());
+        Text questionLabel = new Text(question.getLabel());
 
         Text euroLabel = new Text("'");
         TextField input = new TextField();

@@ -4,6 +4,7 @@ import UvA.Gamma.AST.Expression.Expression;
 import UvA.Gamma.AST.Expression.Identifier;
 import UvA.Gamma.GUI.FXMLController;
 import UvA.Gamma.Validation.Pair;
+import UvA.Gamma.Visitors.IdentifiersFromExpressionVisitor;
 import UvA.Gamma.Visitors.Visitor;
 import javafx.beans.property.StringProperty;
 
@@ -11,7 +12,6 @@ import javafx.beans.property.StringProperty;
  * Created by Tjarco, 14-02-17.
  */
 public class Computed extends IdentifiableFormItem {
-    private String label;
     public Expression expression;
 
     public Computed(String label, Identifier id, Expression expression) {
@@ -72,11 +72,10 @@ public class Computed extends IdentifiableFormItem {
         return null;
     }
 
-    @Override
-    public boolean isDependentOn(String id) {
-//        assert expression != null;
-//        return expression.isDependentOn(id);
-        return false;
+    public boolean isDependentOn(String identifier) {
+        IdentifiersFromExpressionVisitor visitor = new IdentifiersFromExpressionVisitor();
+        expression.accept(visitor);
+        return visitor.getIdentifiers().contains(identifier);
     }
 
     @Override

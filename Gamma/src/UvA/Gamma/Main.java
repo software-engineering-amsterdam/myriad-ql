@@ -44,7 +44,7 @@ public class Main extends Application {
 //                        new IdentifierValue("question", new NumberValue("4.5")));
 //                form.forEach(formItem -> formItem.accept(idVisitor));
 
-                ValidationVisitor validationVisitor = new ValidationVisitor();
+                ValidationVisitor validationVisitor = new ValidationVisitor(form);
                 form.forEach(formItem -> formItem.accept(validationVisitor));
                 ReferenceValidator referenceValidator = new ReferenceValidator(validationVisitor.getIdentifierStrings());
                 form.forEach(formItem -> formItem.accept(referenceValidator));

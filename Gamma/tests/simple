@@ -1,4 +1,5 @@
 form test{
     "test" test: boolean = (1 + question)
-    "question?" question: decimal
+    "question?" question: decimal = (test + 2)
+    "question?" question2: decimal = (test2 + 2)
 }

@@ -10,9 +10,15 @@ import UvA.Gamma.Visitors.Visitor;
  */
 public abstract class IdentifiableFormItem implements FormItem {
     protected Identifier identifier;
+    protected String label;
 
     public String getIdentifier() {
         return identifier.toString();
+    }
+
+
+    public String getLabel() {
+        return label;
     }
 
     @Override
@@ -57,11 +63,6 @@ public abstract class IdentifiableFormItem implements FormItem {
 
     @Override
     public boolean containsLabel(String label) {
-        return false;
-    }
-
-    @Override
-    public boolean isDependentOn(String id) {
         return false;
     }
 
