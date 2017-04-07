@@ -1,5 +1,6 @@
 package sc.ql.gui;
 
+import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import net.miginfocom.swing.MigLayout;
 import sc.ql.gui.values.Value;
 import sc.ql.checkform.Message;
 import sc.ql.model.Form;
@@ -21,19 +23,22 @@ public class GUI {
 	}
 	
 	public void launchGUI() {
-		JPanel jPanel = null;
+		JPanel panel = new JPanel();
+		panel.setLayout(new MigLayout());
+		panel.setPreferredSize(new Dimension(1000, 800));
 		
 		if (this.messages.isEmpty()) {
-			BuildComponents buildComponents = new BuildComponents(this.form, new HashMap<String, Value>());
-			jPanel = buildComponents.getPanel();
+			System.out.println("build form");
+			BuildComponents buildComponents = new BuildComponents(this.form, new HashMap<String, Value>(), panel);
+			panel = buildComponents.getPanel();
 		}
 		else {
-			jPanel = buildMessages(jPanel);
+			panel = buildMessages(panel);
 		}
 		
 		JFrame frame = new JFrame("QL Form: "+this.form.getFormName());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(jPanel);
+        frame.getContentPane().add(panel);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

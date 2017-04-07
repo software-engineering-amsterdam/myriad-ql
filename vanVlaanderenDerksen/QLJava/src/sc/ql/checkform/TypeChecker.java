@@ -121,7 +121,7 @@ public class TypeChecker implements FormVisitor<List<Message>>, FormElementVisit
 	}
 	
 	@Override
-	public Type visit(Substract expression) { 
+	public Type visit(Subtract expression) { 
 		return checkNumericError(expression, "substract");
 	}
 	

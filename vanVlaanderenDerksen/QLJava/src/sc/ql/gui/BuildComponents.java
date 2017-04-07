@@ -1,6 +1,6 @@
 package sc.ql.gui;
 
-import java.awt.Dimension;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JLabel;
@@ -23,13 +23,10 @@ public class BuildComponents implements FormVisitor<JPanel>, FormElementVisitor<
 	private Map<String, Value> questionValues;
 	private JPanel panel;
 	
-	public BuildComponents(Form form, Map<String, Value> questionValues) {
+	public BuildComponents(Form form, Map<String, Value> questionValues, JPanel panel) {
 		this.form = form;
 		this.questionValues = questionValues;
-		
-		panel = new JPanel();
-		panel.setLayout(new MigLayout());
-		panel.setPreferredSize(new Dimension(1000, 800));
+		this.panel = panel;
 		
 		visit(this.form);
 	}
@@ -37,8 +34,9 @@ public class BuildComponents implements FormVisitor<JPanel>, FormElementVisitor<
 	public void updatePanel(String questionId, Value value) {		
 		panel.removeAll();
 		questionValues.put(questionId, value);
+		
 		visit(this.form);
-		panel.revalidate();
+		panel.validate();
 		panel.repaint();
 	}
 	
@@ -58,23 +56,16 @@ public class BuildComponents implements FormVisitor<JPanel>, FormElementVisitor<
 	@Override
 	public JPanel visit(IfThenStatement statement) {
 		Value condition = statement.getCondition().accept(this);
-		Boolean visible = !condition.isEmptyValue() && condition.isTrue();
-		
-		System.out.println(visible);
+		Boolean visible = condition.toBoolean();
 		
 		JPanel statementPanel = new JPanel();
 		statementPanel.setLayout(new MigLayout());
 		
-		JPanel thenPanel = new JPanel();
-		thenPanel.setLayout(new MigLayout());
-		
-		thenPanel.setVisible(visible);
-		
-		for(FormElement formElement : statement.getThenBody()) {
-			thenPanel.add(formElement.accept(this), "span");
+		if (visible) {
+			for(FormElement formElement : statement.getThenBody()) {
+				statementPanel.add(formElement.accept(this), "span");
+			}
 		}
-		
-		statementPanel.add(thenPanel);
 		
 		return statementPanel;
 	}
@@ -82,29 +73,16 @@ public class BuildComponents implements FormVisitor<JPanel>, FormElementVisitor<
 	@Override
 	public JPanel visit(IfThenElseStatement statement) {
 		Value condition = statement.getCondition().accept(this);
-		Boolean visible = !condition.isEmptyValue() && condition.isTrue();
+		Boolean visible = condition.toBoolean();
 		
 		JPanel statementPanel = new JPanel();
 		statementPanel.setLayout(new MigLayout());
 		
-		JPanel thenPanel = new JPanel();
-		thenPanel.setLayout(new MigLayout());
-		JPanel elsePanel = new JPanel();
-		elsePanel.setLayout(new MigLayout());
+		List<FormElement> visibleBody = visible ? statement.getThenBody() : statement.getElseBody();
 		
-		thenPanel.setVisible(visible);
-		elsePanel.setVisible(!visible);
-		
-		for(FormElement formElement : statement.getThenBody()) {
-			thenPanel.add(formElement.accept(this), "span");
+		for(FormElement formElement : visibleBody) {
+			statementPanel.add(formElement.accept(this), "span");
 		}
-
-		for(FormElement formElement : statement.getElseBody()) {
-			elsePanel.add(formElement.accept(this), "span");
-		}
-		
-		statementPanel.add(thenPanel);
-		statementPanel.add(elsePanel);
 		
 		return statementPanel;
 	}
@@ -131,7 +109,7 @@ public class BuildComponents implements FormVisitor<JPanel>, FormElementVisitor<
 		JPanel questionPanel = new JPanel();
 		String questionId = question.getId();
 		
-		Value value = questionValues.containsKey(questionId) ? questionValues.get(questionId) : new EmptyValue();
+		Value value = question.getExpression().accept(this);
 		questionValues.put(question.getId(), value);
 		
 		JLabel label = new JLabel(question.getLabel());
@@ -180,7 +158,7 @@ public class BuildComponents implements FormVisitor<JPanel>, FormElementVisitor<
 	}
 
 	@Override
-	public Value visit(Substract expression) {
+	public Value visit(Subtract expression) {
 		Value value_left = expression.getLeft().accept(this);
 		Value value_right = expression.getRight().accept(this);
 		
@@ -195,7 +173,7 @@ public class BuildComponents implements FormVisitor<JPanel>, FormElementVisitor<
 	@Override
 	public Value visit(IdLiteral expression) {
 		String questionId = expression.getValue();
-		Value value = questionValues.containsKey(questionId) ? questionValues.get(questionId) : new EmptyValue();
+		Value value = questionValues.containsKey(questionId) ? questionValues.get(questionId) : new EmptyValue();		
 		return value;
 	}
 

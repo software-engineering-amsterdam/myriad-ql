@@ -15,16 +15,18 @@ public class BooleanWidget implements Widget {
 	
 	public BooleanWidget(BuildComponents buildComponents, String questionId, Value value) {
 		JCheckBox checkbox = new JCheckBox();
-		checkbox.setSelected(value.getValue());
+		checkbox.setSelected(value.toBoolean());
 		
 		checkbox.addActionListener(new ActionListener() {
-		    @Override
+			
+			@Override
 		    public void actionPerformed(ActionEvent event) {
 		        JCheckBox cb = (JCheckBox) event.getSource();
-		        BooleanValue value = cb.isSelected() ? new BooleanValue(true) : new BooleanValue(false);
-
+		        BooleanValue value = new BooleanValue(cb.isSelected());
+		        
 		        buildComponents.updatePanel(questionId, value);
 		    }
+			
 		});
 		
 		this.component = checkbox;

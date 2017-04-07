@@ -12,7 +12,7 @@ public interface ExpressionVisitor<T> {
 	public T visit(Add expression);
 	public T visit(Divide expression);
 	public T visit(Multiply expression);
-	public T visit(Substract expression);
+	public T visit(Subtract expression);
 	
 	public T visit(BooleanLiteral expression);
 	public T visit(IdLiteral expression);

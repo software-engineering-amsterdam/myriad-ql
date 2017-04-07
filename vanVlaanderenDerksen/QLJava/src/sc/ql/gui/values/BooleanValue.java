@@ -8,18 +8,13 @@ public class BooleanValue extends Value {
 	}
 	
 	@Override
-	public Boolean getValue() {
+	public Boolean toBoolean() {
 		return value;
 	}
 	
 	@Override
 	public String toString() {
 		return value.toString();
-	}
-	
-	@Override
-	public Boolean isTrue() {
-		return value == true;
 	}
 	
 	@Override
@@ -34,7 +29,7 @@ public class BooleanValue extends Value {
 	
 	@Override
 	public BooleanValue and(BooleanValue value) {
-        return new BooleanValue(this.value && value.getValue());
+        return new BooleanValue(value.toBoolean() && this.value);
     }
 	
 	@Override
@@ -44,7 +39,7 @@ public class BooleanValue extends Value {
 	
 	@Override
 	public BooleanValue or(BooleanValue value) {
-        return new BooleanValue(this.value || value.getValue());
+        return new BooleanValue(value.toBoolean() || this.value);
     }
 	
 }

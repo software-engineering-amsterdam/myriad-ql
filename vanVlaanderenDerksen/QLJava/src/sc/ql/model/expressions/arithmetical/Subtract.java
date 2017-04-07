@@ -4,9 +4,9 @@ import sc.ql.model.Expression;
 import sc.ql.model.expressions.BinaryExpression;
 import sc.ql.model.visitors.ExpressionVisitor;
 
-public class Substract extends BinaryExpression {
+public class Subtract extends BinaryExpression {
 
-	public Substract(Expression left, Expression right) {
+	public Subtract(Expression left, Expression right) {
 		super(left, right);
 	}
 

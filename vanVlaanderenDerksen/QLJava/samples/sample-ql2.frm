@@ -6,6 +6,9 @@ form taxOfficeExample
 	if(hasSoldHouse)
 		"What was the selling price?" sellingPrice MONEY
 		"Private debts for the sold house:" privateDebt MONEY
-		"Value residue:" valueResidue MONEY = (sellingPrice - privateDebt)
+		"Value residue:" valueResidue MONEY = (sellingPrice * privateDebt)
 	endif
+	
+	"Did you buy a house in 2010 adsdsa?" hasBoughtHouse2 BOOLEAN
+	"Did you enter a loan?afaf a" hasMaintLoan2 BOOLEAN
 endform

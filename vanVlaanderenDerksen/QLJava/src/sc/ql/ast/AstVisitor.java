@@ -143,8 +143,8 @@ public class AstVisitor extends QLBaseVisitor<Node> {
 	}
 	
 	@Override 
-	public Substract visitSubstract(QLParser.SubstractContext ctx) {
-		Substract expression = new Substract((Expression) visit(ctx.left), (Expression) visit(ctx.right));
+	public Subtract visitSubstract(QLParser.SubstractContext ctx) {
+		Subtract expression = new Subtract((Expression) visit(ctx.left), (Expression) visit(ctx.right));
 		expression.setPosition(ctx.getStart().getLine(), ctx.getStart().getCharPositionInLine());		
 
 		return expression;

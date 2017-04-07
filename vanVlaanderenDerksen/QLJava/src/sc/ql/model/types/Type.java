@@ -1,7 +1,7 @@
 package sc.ql.model.types;
 
 import sc.ql.gui.BuildComponents;
-import sc.ql.gui.values.Value;
+import sc.ql.gui.values.*;
 import sc.ql.gui.widgets.Widget;
 import sc.ql.model.Node;
 

@@ -7,7 +7,8 @@ public class IntegerValue extends Value {
 		this.value = value;
 	}
 	
-	public Integer getValue() {
+	@Override
+	public Integer toInteger() {
 		return value;
 	}
 	
@@ -23,7 +24,7 @@ public class IntegerValue extends Value {
 	
 	@Override
 	public IntegerValue add(IntegerValue value) {
-        return new IntegerValue(this.value + value.getValue());
+        return new IntegerValue(value.toInteger() + this.value);
     }
 	
 	@Override
@@ -33,7 +34,7 @@ public class IntegerValue extends Value {
 	
 	@Override
 	public IntegerValue divide(IntegerValue value) {
-        return new IntegerValue(this.value / value.getValue());
+        return new IntegerValue(value.toInteger() / this.value);
     }
 	
 	@Override
@@ -43,7 +44,7 @@ public class IntegerValue extends Value {
 	
 	@Override
 	public IntegerValue multiply(IntegerValue value) {
-        return new IntegerValue(this.value * value.getValue());
+        return new IntegerValue(value.toInteger() * this.value);
     }
 	
 	@Override
@@ -53,7 +54,7 @@ public class IntegerValue extends Value {
 	
 	@Override
 	public IntegerValue subtract(IntegerValue value) {
-        return new IntegerValue(this.value - value.getValue());
+        return new IntegerValue(value.toInteger() - this.value );
     }
 	
 	@Override
@@ -63,7 +64,7 @@ public class IntegerValue extends Value {
 	
 	@Override
 	public BooleanValue equals(IntegerValue value) {
-        return new BooleanValue(this.value == value.getValue());
+        return new BooleanValue(value.toInteger() == this.value);
     }
 	
 	@Override
@@ -73,7 +74,7 @@ public class IntegerValue extends Value {
 	
 	@Override
 	public BooleanValue equalsNot(IntegerValue value) {
-        return new BooleanValue(this.value != value.getValue());
+        return new BooleanValue(value.toInteger() != this.value);
     }
 	
 	@Override
@@ -83,7 +84,7 @@ public class IntegerValue extends Value {
 	
 	@Override
 	public BooleanValue greaterThen(IntegerValue value) {
-        return new BooleanValue(this.value > value.getValue());
+        return new BooleanValue(value.toInteger() > this.value);
     }
 	
 	@Override
@@ -93,7 +94,7 @@ public class IntegerValue extends Value {
 	
 	@Override
 	public BooleanValue greaterThenEqual(IntegerValue value) {
-        return new BooleanValue(this.value >= value.getValue());
+        return new BooleanValue(value.toInteger() >= this.value);
     }
 	
 	@Override
@@ -103,7 +104,7 @@ public class IntegerValue extends Value {
 	
 	@Override
 	public BooleanValue lessThen(IntegerValue value) {
-        return new BooleanValue(this.value < value.getValue());
+        return new BooleanValue(value.toInteger() < this.value);
     }
 	
 	@Override
@@ -113,7 +114,7 @@ public class IntegerValue extends Value {
 	
 	@Override
 	public BooleanValue lessThenEqual(IntegerValue value) {
-        return new BooleanValue(this.value <= value.getValue());
+        return new BooleanValue(value.toInteger() <= this.value);
     }
 	
 }

@@ -7,10 +7,6 @@ public class StringValue extends Value {
 		this.value = value;
 	}
 	
-	public String getValue() {
-		return value;
-	}
-	
 	@Override
 	public String toString() {
 		return value.toString();
@@ -23,7 +19,7 @@ public class StringValue extends Value {
 	
 	@Override
 	public BooleanValue equals(StringValue value) {
-        return new BooleanValue(this.value == value.getValue());
+        return new BooleanValue(value.toString() == this.value);
     }
 	
 	@Override
@@ -33,7 +29,7 @@ public class StringValue extends Value {
 	
 	@Override
 	public BooleanValue equalsNot(StringValue value) {
-        return new BooleanValue(this.value != value.getValue());
+        return new BooleanValue(value.toString() != this.value);
     }
 	
 }
