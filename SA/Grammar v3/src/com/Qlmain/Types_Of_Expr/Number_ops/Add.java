@@ -17,7 +17,7 @@ public class Add extends Expression {
     }
 
     @Override
-    public Type exprTypeChecker() throws UndefinedException {
+    public Type exprTypeChecker() {
         return new Resolve_branches_numer().resolve_branches_numerical(lhs.exprTypeChecker(),rhs.exprTypeChecker());
     }
 

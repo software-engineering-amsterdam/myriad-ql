@@ -38,4 +38,7 @@ public class Type_int extends Type {
 
     @Override
     public boolean check__wrong_type() {return false;}
+
+    @Override
+    public boolean check__no_type() {return false;}
 }

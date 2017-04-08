@@ -9,7 +9,7 @@ public class Type_wrongtype extends Type {
     public Type_wrongtype(){}
 
     @Override
-    public Type exprTypeChecker() throws UndefinedException {
+    public Type exprTypeChecker() {
         return null;
     }
 
@@ -32,4 +32,7 @@ public class Type_wrongtype extends Type {
 
     @Override
     public boolean check__wrong_type() {return true;}
+
+    @Override
+    public boolean check__no_type() {return false;}
 }

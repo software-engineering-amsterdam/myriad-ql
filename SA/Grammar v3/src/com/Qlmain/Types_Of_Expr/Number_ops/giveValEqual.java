@@ -16,7 +16,7 @@ public class GiveValEqual extends Expression {
     }
 
     @Override
-    public Type exprTypeChecker() throws UndefinedException {
+    public Type exprTypeChecker() {
         Type evalr = rhs.exprTypeChecker();
         return new Resolve_branches_numer().resolve_branches_numerical(lhs, evalr);
 

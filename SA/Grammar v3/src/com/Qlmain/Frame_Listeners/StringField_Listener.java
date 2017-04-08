@@ -22,29 +22,15 @@ public class StringField_Listener implements DocumentListener {
     public void insertUpdate(DocumentEvent e) {
 
         new Evaluation().storeDataAndChangeValueForStringFields(qTextField, question);
-        //System.out.println("update " + qTextField.getText());
     }
 
     @Override
     public void removeUpdate(DocumentEvent e) {
 
         new Evaluation().storeDataAndChangeValueForStringFields(qTextField, question);
-        //System.out.println("remove update " + qTextField.getText());
     }
 
     @Override
     public void changedUpdate(DocumentEvent e) { }
-
-    /*private void storeDataAndChangeValue(DocumentEvent e) {
-        //Map<String,Object> variablesAndValues = Frame_Window.getVariablesAndValues();
-        if (qTextField.getText().equals("")) {
-            variablesAndValues.replace(this.question.name, "");
-
-        }else {
-            String temp = qTextField.getText();
-            variablesAndValues.replace(this.question.name, temp);
-
-        }
-    }*/
 
 }

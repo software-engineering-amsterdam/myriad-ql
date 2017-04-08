@@ -1,10 +1,13 @@
 package com.Qlmain.type_check;
 
-import com.Qlmain.exceptions.UndefinedException;
+import com.Qlmain.error_types.ErrorCodes;
+import com.Qlmain.error_types.Error_codes_list;
+import com.Qlmain.error_types.error_codes.Already_used_var;
+import com.Qlmain.error_types.error_codes.If_condition_err;
+import com.Qlmain.error_types.error_codes.Undefined_var;
+import com.Qlmain.error_types.error_codes.Wrong_type;
 import com.Qlmain.QL.*;
 import com.Qlmain.types_Of_Expr.types.Type;
-//import com.Qlmain.types_Of_Expr.Type;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,59 +21,64 @@ public class Type_Checking {
     private static Map<String,Type> variablesAndTypes;
 
     public boolean Type_CheckingMethod(Form formToCheck) {
+        Error_codes_list errorList = new Error_codes_list();
         variablesAndTypes = new HashMap<>();
-        return checkStatements(formToCheck.getStatementList());
-
+        checkStatements(formToCheck.getStatementList(), errorList);
+        List<ErrorCodes> errList = errorList.get_error_list();
+        if (errList.isEmpty()) {
+            return true;
+        } else {
+            for (ErrorCodes e : errList) System.out.println(e.get_error_code());
+            return false;
+        }
     }
 
-    private boolean checkStatements(List<Statement> statementList) {
+    private void checkStatements(List<Statement> statementList, Error_codes_list errorList) {
+
         for (Statement parseThroughStatements : statementList) {
-            //parseThroughStatements.visitst(parseThroughStatements);
+
             if (parseThroughStatements instanceof Question) {
                 Question quToEvaluate = (Question) parseThroughStatements;
 
-                //Expr.Type typeEval = null;
                 Type typeEval = null;
-                try {
-                   // typeEval = Expression_Type_Check.typeCheckExp(quToEvaluate.type);
-                    typeEval = quToEvaluate.type.exprTypeChecker();
-                } catch (UndefinedException e) {
-                    System.out.println("Undefined variable in question statement starting in line " +quToEvaluate.line);
-                    return false;
-                }
-                if (typeEval.check__wrong_type()){
-                    System.out.println("Invalid type in Question \"" + quToEvaluate.text +"\" in line " + quToEvaluate.line);
-                    return false;
-                } else if ( variablesAndTypes.containsKey(quToEvaluate.name) ) {
-                    System.out.println("Already used variable name \""+quToEvaluate.name+"\" in Question \"" + quToEvaluate.text +"\" in line " + quToEvaluate.line);
-                    return false;
+
+                typeEval = quToEvaluate.type.exprTypeChecker();
+
+                if (typeEval.check__no_type()) {
+                    errorList.add_elem(new Undefined_var("Line " + quToEvaluate.line + ": Undefined variable in question statement"));
+
+                }else if (typeEval.check__wrong_type()){
+                    errorList.add_elem( new Wrong_type( "Line " + quToEvaluate.line +": Invalid type in Question \"" + quToEvaluate.text +"\"" ) );
+
+                }else if ( variablesAndTypes.containsKey(quToEvaluate.name) ) {
+                    errorList.add_elem( new Already_used_var( "Line " + quToEvaluate.line + ": Already used variable name \""+quToEvaluate.name+"\" in Question \"" + quToEvaluate.text +"\"" ) );
+
                 } else {
                     variablesAndTypes.put(quToEvaluate.name, typeEval);
 
                 }
             }else if (parseThroughStatements instanceof IfStatement) {
                 IfStatement ifStToEvaluate = (IfStatement) parseThroughStatements;
-                //Expr.Type ifConditionCheck;
+
                 Type ifConditionCheck;
-                try {
-                    //ifConditionCheck = Expression_Type_Check.typeCheckExp(ifStToEvaluate.getIfCase());
-                    ifConditionCheck = ifStToEvaluate.getIfCase().exprTypeChecker();
-                    //ifConditionCheck = ifStToEvaluate.getIfCase().exprVisitor(ifStToEvaluate.getIfCase());
-                } catch (UndefinedException e) {
-                    System.out.println("Undefined variable in if case in line " + ifStToEvaluate.getIfStatementLine());
-                    return false;
+
+                ifConditionCheck = ifStToEvaluate.getIfCase().exprTypeChecker();
+
+                if (ifConditionCheck.check__no_type()) {
+                    errorList.add_elem( new Undefined_var("Line " + ifStToEvaluate.getIfStatementLine() + ": Undefined variable in if case.") );
+
                 }
                 if ( !( ifConditionCheck.check__bool_type() ) ) {
-                    System.out.println("Error in if case in line " + ifStToEvaluate.getIfStatementLine()+". Expected type boolean.");
-                    return false;
+                    errorList.add_elem( new If_condition_err( "Line " + ifStToEvaluate.getIfStatementLine()+": Error in if case. Expected type boolean." ) );
+
                 }
 
-                if (!checkStatements(ifStToEvaluate.getStatementsList()))
-                    return false;
+                checkStatements(ifStToEvaluate.getStatementsList(), errorList);
+
             }
 
         }
-        return true;
+
     }
 
     public static Map<String,Type> getVariablesAndTypes () {

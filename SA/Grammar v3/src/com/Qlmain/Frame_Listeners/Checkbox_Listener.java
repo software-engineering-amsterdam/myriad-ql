@@ -14,16 +14,15 @@ public class Checkbox_Listener implements ActionListener {
 
     private boolean checked = false;
     private Question questionChecked;
-    private List<Statement> data;
+    //private List<Statement> data;
 
     public Checkbox_Listener(Question tempQuestionChecked, List<Statement> dataToDisplay) {
-        data = dataToDisplay;
+        //data = dataToDisplay;
         questionChecked = tempQuestionChecked;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //Map<String,Object> variablesAndValues = new Evaluation().getVariablesAndValues();
         if (checked){
             new Evaluation().replaceValueInVariablesAndValues(this.questionChecked.name, false);
             checked = false;
@@ -32,7 +31,6 @@ public class Checkbox_Listener implements ActionListener {
             checked = true;
         }
         new Frame_Window().RedrawIf();
-        //for (String oh : variablesAndValues.keySet()) System.out.println("values of the list in frame " + oh + " " + variablesAndValues.get(oh));
 
     }
 }

@@ -16,7 +16,7 @@ public class And extends Expression {
     }
 
     @Override
-    public Type exprTypeChecker() throws UndefinedException {
+    public Type exprTypeChecker() {
         return new Resolve_branches_bool().resolve_branches_boolean(lhs.exprTypeChecker(), rhs.exprTypeChecker());
     }
 

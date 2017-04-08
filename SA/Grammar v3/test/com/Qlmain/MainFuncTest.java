@@ -99,11 +99,11 @@ public class MainFuncTest {
         Map<String,Type> variablesAndTypes = Type_Checking.getVariablesAndTypes();
         for (Statement qu : formToTest.getStatementList()){
             if (qu instanceof Question) {
-                try {
+                //try {
                     assertEquals(variablesAndTypes.get(((Question) qu).name), ((Question) qu).type.exprTypeChecker());
-                } catch (UndefinedException e) {
-                    System.out.println("Undefined variable");
-                }
+                //} catch (UndefinedException e) {
+                    //System.out.println("Undefined variable");
+                //}
             }
         }
         //formToTest.addIfStatement(new IfStatement());
@@ -116,12 +116,12 @@ public class MainFuncTest {
     {
         for (Statement st : formToTest.getStatementList()){
             if (st instanceof IfStatement) {
-                try {
+                //try {
                     assertEquals(new Type_bool(), ((IfStatement) st).getIfCase().exprTypeChecker());
 
-                } catch (UndefinedException e) {
-                    System.out.println("Undefined variable");
-                }
+                //} catch (UndefinedException e) {
+                   // System.out.println("Undefined variable");
+                //}
             }
         }
         //formToTest.addIfStatement(new IfStatement());

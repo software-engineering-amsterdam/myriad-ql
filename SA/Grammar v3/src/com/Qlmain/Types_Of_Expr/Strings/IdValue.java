@@ -7,6 +7,7 @@ import com.Qlmain.types_Of_Expr.Expression;
 //import com.Qlmain.types_Of_Expr.Type;
 import com.Qlmain.type_check.Type_Checking;
 import com.Qlmain.types_Of_Expr.types.Type;
+import com.Qlmain.types_Of_Expr.types.Type_notype;
 
 import java.util.Map;
 
@@ -22,12 +23,13 @@ public class IdValue extends Expression {
     public String getIdValue() { return this.val; }
 
     @Override
-    public Type exprTypeChecker() throws UndefinedException {
+    public Type exprTypeChecker() {
         Map<String,Type> variablesAndTypes = Type_Checking.getVariablesAndTypes();
         if (variablesAndTypes.containsKey(this.val)) {
             return variablesAndTypes.get(this.val);
         }else {
-            throw new UndefinedException();
+            return new Type_notype();
+            //throw new UndefinedException();
         }
     }
 

@@ -1,7 +1,6 @@
 package com.Qlmain.evaluation;
 
 import com.Qlmain.Frame_Window;
-import com.Qlmain.QL.Form;
 import com.Qlmain.QL.IfStatement;
 import com.Qlmain.QL.Question;
 import com.Qlmain.QL.Statement;
@@ -41,9 +40,8 @@ public class Evaluation {
 
             if (statementItem instanceof Question) {
                 Question tempQu = (Question) statementItem;
-
                 variablesAndValues.put( tempQu.name, tempQu.type.Evaluator());
-                //System.out.println(tempQu.name+" "+tempQu.type.Evaluator());
+
             }else if (statementItem instanceof IfStatement) {
                 evaluateAST(((IfStatement) statementItem).getStatementsList());
             }
@@ -107,7 +105,5 @@ public class Evaluation {
     {
         JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
     }
-
-    public Map<String, Object> getVariablesAndValues() { return variablesAndValues; }
 
 }

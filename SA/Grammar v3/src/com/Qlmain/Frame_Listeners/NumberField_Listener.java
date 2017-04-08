@@ -24,14 +24,13 @@ public class NumberField_Listener implements DocumentListener {
     public void insertUpdate(DocumentEvent e) {
 
         new Evaluation().storeDataAndChangeValueForNumberFields(qTextField, question);
-        //System.out.println("update " + qTextField.getText());
+
     }
 
     @Override
     public void removeUpdate(DocumentEvent e) {
 
         new Evaluation().storeDataAndChangeValueForNumberFields(qTextField, question);
-        //System.out.println("remove update " + qTextField.getText());
     }
 
     @Override

@@ -57,7 +57,7 @@ public class MainFunc {
         try {
             // Specify our entry point
             QLParser.FormDeclarationContext formDeclarationContext = parser.formDeclaration();
-            //QLVisitorBuildAST visitor = new QLVisitorBuildAST();
+
             QLVisitorBuildAST visitor = new QLVisitorBuildAST();
             formAST = (Form) visitor.visit(formDeclarationContext);
 
@@ -82,15 +82,5 @@ public class MainFunc {
         return formAST;
 
     }
-
-   /* private void printIfCheck(Expr typeCheck) {
-        if (typeCheck.getLeft() == null &&  typeCheck.getRight() == null){
-            System.out.println(typeCheck.getToken());
-        }else {
-            printIfCheck(typeCheck.getLeft());
-            System.out.println(typeCheck.getToken());
-            printIfCheck(typeCheck.getRight());
-        }
-    }*/
 
 }

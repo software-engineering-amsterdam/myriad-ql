@@ -12,7 +12,7 @@ public class Type_str extends Type {
     public Type_str(String val){this.val = val;}
     public Type getStrType(){ return this;}
     @Override
-    public Type exprTypeChecker() throws UndefinedException {
+    public Type exprTypeChecker() {
         return getStrType();
     }
 
@@ -35,4 +35,7 @@ public class Type_str extends Type {
 
     @Override
     public boolean check__wrong_type() {return false;}
+
+    @Override
+    public boolean check__no_type() {return false;}
 }

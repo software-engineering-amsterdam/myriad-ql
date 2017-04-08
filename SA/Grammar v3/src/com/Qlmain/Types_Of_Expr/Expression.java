@@ -8,11 +8,6 @@ public abstract class Expression {
 
     public Expression(){}
 
-
-   // public Type visitor(And a) throws UndefinedException {
-   //     return a.exprVisitor(a.getAndlhs(),a.getAndrhs());
-   // }
-
-    public abstract Type exprTypeChecker() throws UndefinedException ;
+    public abstract Type exprTypeChecker() ;
     public abstract Object Evaluator();
 }

@@ -12,5 +12,6 @@ public abstract class Type extends Expression {
     public abstract boolean check__mon_type();
     public abstract boolean check__str_type();
     public abstract boolean check__wrong_type();
+    public abstract boolean check__no_type();
 
 }

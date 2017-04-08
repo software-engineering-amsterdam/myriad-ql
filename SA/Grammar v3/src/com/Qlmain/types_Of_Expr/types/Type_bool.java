@@ -12,7 +12,7 @@ public class Type_bool extends Type {
     private Type getBooleanType(){ return this;}
 
     @Override
-    public Type exprTypeChecker() throws UndefinedException {return getBooleanType();}
+    public Type exprTypeChecker() {return getBooleanType();}
 
     @Override
     public Object Evaluator() {return value;}
@@ -31,4 +31,7 @@ public class Type_bool extends Type {
 
     @Override
     public boolean check__wrong_type() {return false;}
+
+    @Override
+    public boolean check__no_type() {return false;}
 }

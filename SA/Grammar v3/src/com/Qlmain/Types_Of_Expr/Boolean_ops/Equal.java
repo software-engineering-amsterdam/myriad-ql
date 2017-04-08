@@ -16,7 +16,7 @@ public class Equal extends Expression {
     }
 
     @Override
-    public Type exprTypeChecker() throws UndefinedException {
+    public Type exprTypeChecker() {
         return new Resolve_branches_number_to_bool().resolve_branches_number_to_boolean(lhs.exprTypeChecker(), rhs.exprTypeChecker());
     }
 
