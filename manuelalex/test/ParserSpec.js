@@ -4,7 +4,7 @@
 import chai from 'chai';
 import transpiledRequire from '../src/utils/TranspiledRequire.js';
 import JspmImport from './JspmImport.js';
-import {testStrings} from './testStrings.js';
+import {validStrings, invalidStrings} from './testStrings.js';
 
 const expect = chai.expect;
 const assert = chai.assert;
@@ -33,9 +33,6 @@ describe('Parser', () => {
     });
 
     describe('Parser', () => {
-        let validStrings = testStrings.valid;
-        let invalidStrings = testStrings.invalid;
-
         Object.keys(validStrings).forEach((key)=>{
             let testString = validStrings[key];
             it('Parses the valid string: '+ key + ' without errors ', function() {
