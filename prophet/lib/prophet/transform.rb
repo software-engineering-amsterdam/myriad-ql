@@ -10,10 +10,24 @@ module Prophet
 
     rule(identifier: simple(:identifier)) { Ast::Identifier.new(identifier) }
 
-    rule(left: subtree(:left), operator: '*', right: subtree(:right)) { Ast::Multiplication.new(left, right) }
-    rule(left: subtree(:left), operator: '/', right: subtree(:right)) { Ast::Division.new(left, right) }
-    rule(left: subtree(:left), operator: '+', right: subtree(:right)) { Ast::Addition.new(left, right) }
-    rule(left: subtree(:left), operator: '-', right: subtree(:right)) { Ast::Subtraction.new(left, right) }
+    {
+      '&&' => Ast::LogicalAnd,
+      '||' => Ast::LogicalOr,
+      '==' => Ast::Equal,
+      '!=' => Ast::NotEqual,
+      '<=' => Ast::LessThenOrEqual,
+      '<'  => Ast::LessThen,
+      '>'  => Ast::GreaterThen,
+      '>=' => Ast::GreaterThenOrEqual,
+      '+'  => Ast::Addition,
+      '-'  => Ast::Subtraction,
+      '*'  => Ast::Multiplication,
+      '/'  => Ast::Division
+    }.each do |operator, ast_class|
+      rule(left: subtree(:left), operator: operator, right: subtree(:right)) { ast_class.new(left, right) }
+    end
+
+    rule(operator: '!', value: subtree(:value)) { Ast::Negation.new(value) }
 
     rule(question: { text: simple(:text), type: simple(:type), identifier: simple(:identifier) }) { Ast::Question.new(text, type, identifier) }
     rule(question: { text: simple(:text), type: simple(:type), identifier: simple(:identifier), value: subtree(:value) }) { Ast::QuestionWithValue.new(text, type, identifier, value) }

@@ -5,13 +5,43 @@ module Prophet
       end
     end
 
-    class UnaryExpression < Expression.new(:value)
+    class BinaryExpression < Expression.new(:left, :right)
+    end
+
+    class LogicalAnd < BinaryExpression
+    end
+
+    class LogicalOr < BinaryExpression
+    end
+
+    class Equal < BinaryExpression
+    end
+
+    class NotEqual < BinaryExpression
+    end
+
+    class LessThenOrEqual < BinaryExpression
+    end
+
+    class LessThen < BinaryExpression
+    end
+
+    class GreaterThen < BinaryExpression
+    end
+
+    class GreaterThenOrEqual < BinaryExpression
+    end
+
+    class Addition < BinaryExpression
       def eval(context)
-        value.eval(context)
+        left.eval(context) + right.eval(context)
       end
     end
 
-    class BinaryExpression < Expression.new(:left, :right)
+    class Subtraction < BinaryExpression
+      def eval(context)
+        left.eval(context) - right.eval(context)
+      end
     end
 
     class Multiplication < BinaryExpression
@@ -26,16 +56,13 @@ module Prophet
       end
     end
 
-    class Addition < BinaryExpression
+    class UnaryExpression < Expression.new(:value)
       def eval(context)
-        left.eval(context) + right.eval(context)
+        value.eval(context)
       end
     end
 
-    class Subtraction < BinaryExpression
-      def eval(context)
-        left.eval(context) - right.eval(context)
-      end
+    class Negation < UnaryExpression
     end
   end
 end

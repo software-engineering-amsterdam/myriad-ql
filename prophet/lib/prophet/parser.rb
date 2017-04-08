@@ -20,13 +20,31 @@ module Prophet
 
     rule(:identifier) { (match['a-zA-Z'] >> match['a-zA-z0-9'].repeat).as(:identifier) >> space? }
 
-    rule(:addition) { str('+').as(:operator) >> space? }
-    rule(:subtraction) { str('-').as(:operator) >> space? }
-    rule(:multiplication) { str('*').as(:operator) >> space? }
-    rule(:division) { str('/').as(:operator) >> space? }
+    rule(:logical_and) { str('&&').as(:operator) >> space? }
+    rule(:logical_or) { str('||').as(:operator) >> space? }
 
-    rule(:expression) { term.as(:left) >> (addition | subtraction) >> expression.as(:right) | term }
-    rule(:term) { factor.as(:left) >> (multiplication | division) >> term.as(:right) | factor }
+    rule(:equal) { str('==').as(:operator) >> space? }
+    rule(:not_equal) { str('!=').as(:operator) >> space? }
+
+    rule(:less_then_or_equal) { str('<=').as(:operator) >> space? }
+    rule(:less_then) { str('<').as(:operator) >> space? }
+    rule(:greater_then) { str('>').as(:operator) >> space? }
+    rule(:greater_then_or_equal) { str('>=').as(:operator) >> space? }
+
+    rule(:plus) { str('+').as(:operator) >> space? }
+    rule(:minus) { str('-').as(:operator) >> space? }
+
+    rule(:multiply) { str('*').as(:operator) >> space? }
+    rule(:divide) { str('/').as(:operator) >> space? }
+
+    rule(:negation) { str('!').as(:operator) >> space? }
+
+    rule(:expression) { logical_term.as(:left) >> (logical_and | logical_or) >> expression.as(:right) | logical_term }
+    rule(:logical_term) { equality_term.as(:left) >> (equal | not_equal) >> logical_term.as(:right) | equality_term }
+    rule(:equality_term) { comparison_term.as(:left) >> (less_then_or_equal | less_then | greater_then | greater_then_or_equal) >> equality_term.as(:right) | comparison_term }
+    rule(:comparison_term) { addition_term.as(:left) >> (plus | minus) >> comparison_term.as(:right) | addition_term }
+    rule(:addition_term) { multiplication_term.as(:left) >> (multiply | divide) >> addition_term.as(:right) | multiplication_term }
+    rule(:multiplication_term) { negation >> factor.as(:value) | factor }
     rule(:factor) { lparen >> expression >> rparen | literal | identifier }
 
     rule(:block) { (if_statement | question | comment).repeat }
