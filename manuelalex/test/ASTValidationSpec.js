@@ -103,7 +103,7 @@ describe('Test ASTValidator', () => {
 
     describe('Check expressions', () => {
         it('QLBoolean && QLBoolean || QLMoney < QLMoney -> OK', (done) => {
-            let astValidationVisitor = validate(new imports.QLBoolean(), new imports.QLBoolean(), "&&", new imports.QLMoney(), new imports.QLMoney, "<", "||");
+            let astValidationVisitor = validateExpression(new imports.QLBoolean(), new imports.QLBoolean(), "&&", new imports.QLMoney(), new imports.QLMoney, "<", "||");
             expect(astValidationVisitor.hasDetectedErrors()).to.equal(false);
             done();
         })
@@ -112,14 +112,18 @@ describe('Test ASTValidator', () => {
 
     describe('Check expressions', () => {
         it('QLBoolean && QLBoolean * QLNumber < QLNumber -> Detects Error', (done) => {
-            let astValidationVisitor = validate(new imports.QLBoolean(), new imports.QLBoolean(), "&&", new imports.QLMoney(), new imports.QLMoney, "<", "*");
+            let b1 = new imports.QLBoolean();
+            let b2 = new imports.QLBoolean();
+            let m1 = new imports.QLMoney();
+            let m2 = new imports.QLMoney;
+            let astValidationVisitor = validateExpression(b1, b2, "&&", m1, m2, "<", "*");
             expect(astValidationVisitor.hasDetectedErrors()).to.equal(true);
             done();
         })
     });
 
 
-    function validate(left1, right1, operator1, left2, right2, operator2, operator) {
+    function validateExpression(left1, right1, operator1, left2, right2, operator2, operator) {
         let astValidationVisitor = new imports.ASTValidationVisitor();
         let memoryState = new imports.MemoryState();
 
@@ -152,10 +156,11 @@ describe('Test ASTValidator', () => {
 
         mainExpression.leftHand = leftExpression;
         mainExpression.rightHand = rightExpression;
-        leftExpression.operator = operator;
+        mainExpression.operator = operator;
 
         astValidationVisitor.memoryState = memoryState;
         astValidationVisitor.visitExpression(mainExpression);
+        return astValidationVisitor;
     }
 
 
