@@ -101,7 +101,7 @@ export class ASTValidationVisitor {
         if (!(prefixcondition.expression.accept(this) instanceof QLBoolean)) {
             this.errors.push(`Invalid expression. The prefix operator ${prefixcondition.prefix} can not be applied to ${prefixcondition.expression.name}, because it is not a boolean`);
         }
-        condition.expression.accept(this);
+        prefixcondition.expression.accept(this);
     }
 
     visitExpression(expression) {
@@ -138,15 +138,6 @@ export class ASTValidationVisitor {
             }
         }
     }
-
-
-    // validateOperator(leftHand, rightHandType, operator, validOperators, validType) {
-    //     if (validOperators.includes(operator)) {
-    //         if (!(leftHand instanceof validType) || !(rightHand instanceof validType)) {
-    //             this.errors.push(`Invalid expression. The operator ${operator} can not be applied to ${leftHand.name} [type: ${leftHand.name}] and ${rightHand.name}[type: ${rightHand.name}]`);
-    //         }
-    //     }
-    // }
 
     hasDetectedErrors() {
         return !!this.errors.length;
