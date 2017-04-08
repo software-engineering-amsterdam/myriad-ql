@@ -16,14 +16,17 @@ describe('Test ASTValidator', () => {
     let imports = {};
 
     beforeEach(function () {
-        return Promise.all([JspmImport('./src/ASTValidationVisitor.js'), JspmImport('./src/Form.js'), JspmImport('./src/expressions/Expression.js'), JspmImport('./src/types/Property.js'), JspmImport('./src/memory/MemoryState.js'), JspmImport('./src/types/Types.js')]).then(([{ASTValidationVisitor}, {Form}, {Expression}, {Property}, {MemoryState}, {QLBoolean, QLMoney}]) => {
+        return Promise.all([JspmImport('./src/ASTValidationVisitor.js'), JspmImport('./src/Form.js'), JspmImport('./src/expressions/Expression.js'), JspmImport('./src/types/Property.js'), JspmImport('./src/memory/MemoryState.js'), JspmImport('./src/types/Types.js')]).then(([{ASTValidationVisitor}, {Form}, {Expression}, {Property}, {MemoryState}, {QLMoney, QLString, QLBoolean, QLNumber, QLDate}]) => {
             imports.ASTValidationVisitor = ASTValidationVisitor;
             imports.Form = Form;
             imports.Expression = Expression;
             imports.Property = Property;
             imports.MemoryState = MemoryState;
-            imports.QLBoolean = QLBoolean;
             imports.QLMoney = QLMoney;
+            imports.QLString = QLString;
+            imports.QLBoolean = QLBoolean;
+            imports.QLNumber = QLNumber;
+            imports.QLDate = QLDate;
 
 
         });
@@ -73,6 +76,30 @@ describe('Test ASTValidator', () => {
         })
     });
 
+    describe('Check expressions', () => {
+        it('QLBoolean + QLMoney -> Detects Error', (done) => {
+            let astValidationVisitor = validate(new imports.QLBoolean(), new imports.QLMoney(), "+")
+            expect(astValidationVisitor.hasDetectedErrors()).to.equal(true);
+            done();
+        })
+    });
+
+    describe('Check expressions', () => {
+        it('QLBoolean - QLMoney -> Detects Error', (done) => {
+            let astValidationVisitor = validate(new imports.QLBoolean(), new imports.QLMoney(), "-")
+            expect(astValidationVisitor.hasDetectedErrors()).to.equal(true);
+            done();
+        })
+    });
+
+
+    describe('Check expressions', () => {
+        it('QLMoney - QLMoney -> OK', (done) => {
+            let astValidationVisitor = validate(new imports.QLMoney(), new imports.QLMoney(), "-")
+            expect(astValidationVisitor.hasDetectedErrors()).to.equal(false);
+            done();
+        })
+    });
 
     describe('Check expressions', () => {
         it('QLBoolean && QLBoolean || QLMoney < QLMoney -> OK', (done) => {
@@ -84,15 +111,15 @@ describe('Test ASTValidator', () => {
 
 
     describe('Check expressions', () => {
-        it('QLBoolean && QLBoolean + QLNumber < QLNumber -> Detects Error', (done) => {
-            let astValidationVisitor = validate(new imports.QLBoolean(), new imports.QLBoolean(), "&&", new imports.QLMoney(), new imports.QLMoney, "<", "+");
+        it('QLBoolean && QLBoolean * QLNumber < QLNumber -> Detects Error', (done) => {
+            let astValidationVisitor = validate(new imports.QLBoolean(), new imports.QLBoolean(), "&&", new imports.QLMoney(), new imports.QLMoney, "<", "*");
             expect(astValidationVisitor.hasDetectedErrors()).to.equal(true);
             done();
         })
     });
 
 
-    function validate(left1, right1, operator1, left2, right2, operator2, operator){
+    function validate(left1, right1, operator1, left2, right2, operator2, operator) {
         let astValidationVisitor = new imports.ASTValidationVisitor();
         let memoryState = new imports.MemoryState();
 
@@ -154,13 +181,10 @@ describe('Test ASTValidator', () => {
         let p2 = new imports.Property();
         p2.name = prop2.name;
 
-
         let expression = new imports.Expression();
-
         expression.leftHand = p1;
         expression.rightHand = p2;
         expression.operator = operator;
-
 
         return expression;
     }
