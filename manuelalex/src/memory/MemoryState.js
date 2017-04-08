@@ -17,10 +17,8 @@ export class MemoryState extends eventemitter3 {
         let element = new MemoryElement(elementType, elementValue);
         this.memory.set(elementName, element);
 
-        //TODO: Refactor. this glues our memory to our gui. Now we need to change the memory if we change the GUI.
+        this._onStateChange(element, elementName);
         this._onSetterTriggered(elementName, {type: elementType, value: elementValue});
-        element.on('set', ()=> this._onSetterTriggered(elementName, {type: element.getType(), value: element.getValue()}));
-
         return element;
     }
 
@@ -35,15 +33,11 @@ export class MemoryState extends eventemitter3 {
     }
 
     getElement(elementName){
-        let element = this.memory.get(elementName);
+        return this.memory.get(elementName);
+    }
 
-        // todo This should be removed when the ASTValidator creates a valid MemoryState
-        if(!element){
-            return this.set(elementName, 'todoType', '');
-        }
-
-        return element;
-
+    _onStateChange(element, elementName){
+        element.on('set', ()=> this._onSetterTriggered(elementName, {type: element.getType(), value: element.getValue()}));
     }
 
     _onSetterTriggered(elementName = '', values = {}){
