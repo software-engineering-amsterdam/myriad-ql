@@ -4,6 +4,7 @@ import ql.ui.Notifier;
 import ql.value.BoolValue;
 import ql.value.Value;
 import javafx.scene.control.CheckBox;
+import javafx.scene.layout.GridPane;
 
 public class CheckBoxF implements Field {
 
@@ -24,17 +25,16 @@ public class CheckBoxF implements Field {
 	public Value getAnswer() {
 		return new BoolValue(field.isSelected());
 	}
-	
-	
-	@Override
-	public CheckBox getField() {
-		return field;
-	}
 
 	@Override
 	public void setValue(Value value) {
 		field.setSelected(((BoolValue) value).getValue()); 
 		
+	}
+
+	@Override
+	public void draw(GridPane grid, int index) {
+		grid.add(field, 1, index);	
 	}
 
 }

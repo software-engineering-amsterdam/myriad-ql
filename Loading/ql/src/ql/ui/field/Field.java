@@ -1,7 +1,7 @@
 package ql.ui.field;
 
 import ql.value.Value;
-import javafx.scene.control.Control;
+import javafx.scene.layout.GridPane;
 
 
 public interface Field {
@@ -10,6 +10,5 @@ public interface Field {
 	
 	void setValue(Value value);
 	
-	Control getField();
-	
+	void draw(GridPane grid, int index);
 }

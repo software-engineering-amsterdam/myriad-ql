@@ -5,44 +5,51 @@ import ql.value.BoolValue;
 import ql.value.Value;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 public class RadioButtonF implements Field {
 	
-	private final RadioButton field;
+	private final HBox field;
+	private final RadioButton trueBtn;
+	private final RadioButton falseBtn;
 	
 	public RadioButtonF(String name, String trueText, String falseText, Notifier notifier, BoolValue value) {
 		
 		final ToggleGroup group = new ToggleGroup();
 		
-		this.field = new RadioButton(trueText);
-		field.setToggleGroup(group);
+		this.field = new HBox();
+		
+		this.trueBtn = new RadioButton(trueText);
+		trueBtn.setToggleGroup(group);
 
-		RadioButton rb2 = new RadioButton(falseText);
-		rb2.setToggleGroup(group);
+		this.falseBtn = new RadioButton(falseText);
+		falseBtn.setToggleGroup(group);
+		
+		field.getChildren().addAll(trueBtn, falseBtn);
 		
 		field.setId(name);
 		
-		field.setSelected(value.getValue());
-		rb2.setSelected(!value.getValue());
+		trueBtn.setSelected(value.getValue());
+		falseBtn.setSelected(!value.getValue());
 		
-		field.selectedProperty().addListener(
+		trueBtn.selectedProperty().addListener(
 				(observable, oldValue, newValue) -> notifier.updateQuestionnaire(name, new BoolValue(newValue)));
 	}
 	
 	@Override
 	public Value getAnswer() {
-		return new BoolValue(field.isSelected());
+		return new BoolValue(trueBtn.isSelected());
 	}
 	
 	
 	@Override
-	public RadioButton getField() {
-		return field;
+	public void draw(GridPane grid, int index) {
+		grid.add(field, 1, index);
 	}
 
 	@Override
 	public void setValue(Value value) {
-		// TODO Auto-generated method stub
-		
+		trueBtn.setSelected(((BoolValue) value).getValue());
 	}
 }

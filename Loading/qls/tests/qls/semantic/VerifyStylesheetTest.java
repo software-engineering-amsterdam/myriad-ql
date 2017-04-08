@@ -19,9 +19,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class VerifyQuestionsTest {
+class VerifyStylesheetTest {
     @Test
-    public void validQuestionnaire() throws IOException {
+    void validQuestionnaire() throws IOException {
         Form form = createForm("qls/tests/assets/validquestionnaire.ql");
         Stylesheet stylesheet = createStylesheet("qls/tests/assets/validstylesheet.qls");
 
@@ -38,7 +38,7 @@ class VerifyQuestionsTest {
     }
 
     @Test
-    public void questionNotCovered() throws IOException {
+    void questionNotCovered() throws IOException {
         Form form = createForm("qls/tests/assets/validquestionnaire.ql");
         Stylesheet stylesheet = createStylesheet("qls/tests/assets/notcovered.qls");
 
@@ -57,7 +57,7 @@ class VerifyQuestionsTest {
     }
 
     @Test
-    public void questionNotInQl() throws IOException {
+    void questionNotInQl() throws IOException {
         Form form = createForm("qls/tests/assets/validquestionnaire.ql");
         Stylesheet stylesheet = createStylesheet("qls/tests/assets/notinql.qls");
 
@@ -76,7 +76,7 @@ class VerifyQuestionsTest {
     }
 
     @Test
-    public void multiplequestions() throws IOException {
+    void multiplequestions() throws IOException {
         Form form = createForm("qls/tests/assets/validquestionnaire.ql");
         Stylesheet stylesheet = createStylesheet("qls/tests/assets/multiplequestions.qls");
 
@@ -95,7 +95,7 @@ class VerifyQuestionsTest {
     }
 
     @Test
-    public void wrongtypes() throws IOException {
+    void wrongtypes() throws IOException {
         Form form = createForm("qls/tests/assets/validquestionnaire.ql");
         Stylesheet stylesheet = createStylesheet("qls/tests/assets/wrongtypes.qls");
 

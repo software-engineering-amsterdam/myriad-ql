@@ -157,8 +157,7 @@ public class Questionnaire extends Application implements Notifier {
         for (Row row : visibleRows) {
             
         	environment.applyStyle(row.getName(), row.getLabel());
-            grid.add(row.getLabel(), 0, rowIndex);
-            grid.add(row.getControl(), 1, rowIndex);
+        	row.draw(grid, rowIndex);
             
             ++rowIndex;
         }
@@ -204,7 +203,7 @@ public class Questionnaire extends Application implements Notifier {
             JsonObjectBuilder questionnaire = Json.createObjectBuilder();
 
             for (Row question : visibleRows) {
-                questionnaire.add(question.getName(), question.getAnswer().convertToString());
+                questionnaire.add(question.getName(), question.getAnswer());
             }
 
             OutputStream os = new FileOutputStream(file);

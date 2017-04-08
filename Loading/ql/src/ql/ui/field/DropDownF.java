@@ -1,18 +1,18 @@
 package ql.ui.field;
 
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
 import ql.ui.Notifier;
 import ql.value.BoolValue;
 import ql.value.Value;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
+import javafx.scene.layout.GridPane;
 
 public class DropDownF implements Field {
 
 	private final ComboBox<String> field;
-	private String trueText;
-	private String falseText;
+	private final String trueText;
+	private final String falseText;
 
 	public DropDownF(String name, String trueText, String falseText, Notifier notifier, BoolValue value) {				
 				
@@ -24,13 +24,11 @@ public class DropDownF implements Field {
 			        trueText,
 			        falseText
 			    );
-		this.field = new ComboBox<String>(options);
+		this.field = new ComboBox<>(options);
 		
 		field.setId(name);
 		
-	    field.valueProperty().addListener((observable, oldValue, newValue) -> {	    	
-            notifier.updateQuestionnaire(name, new BoolValue(currentValue(newValue)));
-	    });
+	    field.valueProperty().addListener((observable, oldValue, newValue) -> notifier.updateQuestionnaire(name, new BoolValue(currentValue(newValue))));
 		
 	}
 	
@@ -42,12 +40,6 @@ public class DropDownF implements Field {
 	public Value getAnswer() {
 		return new BoolValue(currentValue(field.getValue()));
 	}
-	
-	
-	@Override
-	public ComboBox<String> getField() {
-		return field;
-	}
 
 	@Override
 	public void setValue(Value value) {
@@ -57,5 +49,10 @@ public class DropDownF implements Field {
 		} else {
 			field.setValue(falseText);	
 		}	
+	}
+	
+	@Override
+	public void draw(GridPane grid, int index) {
+		grid.add(field, 1, index);	
 	}
 }

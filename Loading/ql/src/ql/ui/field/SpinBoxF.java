@@ -5,6 +5,7 @@ import ql.value.IntegerValue;
 import ql.value.Value;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.layout.GridPane;
 
 public class SpinBoxF implements Field {
 	
@@ -18,7 +19,7 @@ public class SpinBoxF implements Field {
         final int initialValue = value.getValue();
         
         SpinnerValueFactory<Integer> valueFactory = 
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 5, initialValue);
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 5, initialValue);
  
         field.setValueFactory(valueFactory);
 		
@@ -30,17 +31,16 @@ public class SpinBoxF implements Field {
 	public Value getAnswer() {
 		return new IntegerValue(field.getValue());
 	}
-	
-	
-	@Override
-	public Spinner<Integer> getField() {
-		return field;
-	}
 
 	@Override
 	public void setValue(Value value) {
 		field.getValueFactory().setValue(((IntegerValue) value).getValue());
 		
+	}
+	
+	@Override
+	public void draw(GridPane grid, int index) {
+		grid.add(field, 1, index);	
 	}
 	
 }

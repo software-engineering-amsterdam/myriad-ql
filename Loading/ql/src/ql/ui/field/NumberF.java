@@ -4,6 +4,7 @@ import ql.ui.Notifier;
 import ql.value.IntegerValue;
 import ql.value.Value;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 
 public class NumberF implements Field {
 	
@@ -38,15 +39,15 @@ public class NumberF implements Field {
 		}
 		return new IntegerValue(Integer.valueOf(str));
 	}
-	
-	@Override 
-	public TextField getField() {
-		return field;
-	}
 
 	@Override
 	public void setValue(Value value) {
 		field.setText(Integer.toString(((IntegerValue) value).getValue()));	
+	}
+	
+	@Override
+	public void draw(GridPane grid, int index) {
+		grid.add(field, 1, index);	
 	}
 	
 }

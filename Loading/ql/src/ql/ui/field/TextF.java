@@ -4,6 +4,7 @@ import ql.ui.Notifier;
 import ql.value.StringValue;
 import ql.value.Value;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 
 public class TextF implements Field {
 	
@@ -27,17 +28,16 @@ public class TextF implements Field {
 		}	
 		return new StringValue(field.getText());
 	}
-	
-	
-	@Override
-	public TextField getField() {
-		return field;
-	}
 
 	@Override
 	public void setValue(Value value) {
 		field.setText(((StringValue) value).getValue());
 		
+	}
+	
+	@Override
+	public void draw(GridPane grid, int index) {
+		grid.add(field, 1, index);	
 	}
 	
 

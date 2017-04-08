@@ -1,9 +1,8 @@
 package ql.ui;
 
 import ql.ui.field.Field;
-import ql.value.Value;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 
 class Row {
 
@@ -17,8 +16,8 @@ class Row {
 		this.field = field;
 	}
 
-	Value getAnswer() {
-		return field.getAnswer();
+	String getAnswer() {
+		return field.getAnswer().convertToString();
 	}
 
 	String getName() {
@@ -28,9 +27,10 @@ class Row {
 	public Label getLabel() {
 		return label;
 	}
-
-	Control getControl() {
-		return field.getField();
+	
+	void draw(GridPane grid, int index) {
+		grid.add(label, 0, index);
+		field.draw(grid, index);
 	}
 
 }

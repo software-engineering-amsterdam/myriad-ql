@@ -1,7 +1,6 @@
 package qls;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -15,7 +14,6 @@ import ql.ReferenceTable;
 import ql.ast.Form;
 import ql.message.Message;
 import ql.ui.Environment;
-import ql.ui.Questionnaire;
 import qls.ast.Stylesheet;
 import qls.semantic.Analyzer;
 import qls.ui.PrettyQuestionnaire;

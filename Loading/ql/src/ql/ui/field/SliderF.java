@@ -4,6 +4,7 @@ import ql.ui.Notifier;
 import ql.value.IntegerValue;
 import ql.value.Value;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.GridPane;
 
 public class SliderF implements Field {
 	
@@ -28,16 +29,15 @@ public class SliderF implements Field {
 	public Value getAnswer() {
 		return new IntegerValue((int) field.getValue());
 	}
-	
-	
-	@Override
-	public Slider getField() {
-		return field;
-	}
 
 	@Override
 	public void setValue(Value value) {
 		field.setValue(((IntegerValue) value).getValue()); 
 		
+	}
+	
+	@Override
+	public void draw(GridPane grid, int index) {
+		grid.add(field, 1, index);	
 	}
 }

@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class VerifyQuestionnaireTest {
     @Test
-    public void validQuestionnaire() throws IOException {
+    void validQuestionnaire() throws IOException {
         Form form = createForm("QL/tests/assets/validquestionnaire.ql");
         Analyzer analyzer = new Analyzer();
         analyzer.analyze(form);
@@ -24,7 +24,7 @@ class VerifyQuestionnaireTest {
     }
 
     @Test
-    public void cyclicDependencies() throws IOException {
+    void cyclicDependencies() throws IOException {
         Form form = createForm("ql/tests/assets/cyclicdependencies.ql");
         Analyzer analyzer = new Analyzer();
         analyzer.analyze(form);
@@ -35,7 +35,7 @@ class VerifyQuestionnaireTest {
     }
 
     @Test
-    public void duplicateLabel() throws IOException {
+    void duplicateLabel() throws IOException {
         Form form = createForm("ql/tests/assets/duplicatelabel.ql");
         Analyzer analyzer = new Analyzer();
         analyzer.analyze(form);
@@ -46,7 +46,7 @@ class VerifyQuestionnaireTest {
     }
 
     @Test
-    public void duplicateNames() throws IOException {
+    void duplicateNames() throws IOException {
         Form form = createForm("ql/tests/assets/duplicatenames.ql");
         Analyzer analyzer = new Analyzer();
         analyzer.analyze(form);
@@ -57,7 +57,7 @@ class VerifyQuestionnaireTest {
     }
 
     @Test
-    public void unreferencedName() throws IOException {
+    void unreferencedName() throws IOException {
         Form form = createForm("ql/tests/assets/unreferenced.ql");
         Analyzer analyzer = new Analyzer();
         analyzer.analyze(form);
