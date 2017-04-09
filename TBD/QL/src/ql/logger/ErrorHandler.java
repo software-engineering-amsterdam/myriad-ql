@@ -7,7 +7,7 @@ import java.util.List;
  * Created by Erik on 21-2-2017.
  */
 public class ErrorHandler {
-    private List<Error> errors = new ArrayList<>();
+    private final List<Error> errors = new ArrayList<>();
     private final boolean debugMode;
 
     public ErrorHandler() {

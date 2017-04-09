@@ -3,6 +3,7 @@ package ql.gui.elements;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -34,6 +35,12 @@ public class GUIForm extends GUIElement {
                 FileWriter fileWriter = new FileWriter("outPutFile.json");
                 fileWriter.write(jsonEvaluator.toJson(this).toString());
                 fileWriter.close();
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Questionnaire saved");
+                alert.setHeaderText(null);
+                alert.setContentText("The Questionnaire has been saved to a file! ");
+                alert.showAndWait();
             } catch (IOException e) {
                 e.printStackTrace();
             }

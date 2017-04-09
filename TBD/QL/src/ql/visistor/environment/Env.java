@@ -1,16 +1,13 @@
 package ql.visistor.environment;
 
 import ql.ast.ASTNode;
-import ql.ast.Expr;
 import ql.ast.Question;
 import ql.ast.QuestionExpr;
 import ql.ast.types.Type;
 import ql.values.Value;
 import ql.visistor.EvalASTVisitor;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Erik on 14-3-2017.

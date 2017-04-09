@@ -19,7 +19,6 @@ public class QLSLexer implements QLSTokens {
     private Object yylval;
     private int c = ' ';
     private int rowNumber = 1;
-    private int columnNumber = 1;
 
 
     private final Reader input;
@@ -85,7 +84,6 @@ public class QLSLexer implements QLSTokens {
             while (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
                 if(c == '\n') {
                     rowNumber += 1;
-                    columnNumber = 0;
                 }
                 nextChar();
             }

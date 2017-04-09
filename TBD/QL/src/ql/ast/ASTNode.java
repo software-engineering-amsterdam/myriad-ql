@@ -4,7 +4,7 @@ package ql.ast;
  * Created by Erik on 6-2-2017.
  */
 public abstract class ASTNode {
-    private int rowNumber;
+    private final int rowNumber;
     public ASTNode (int rowNumber) {
         this.rowNumber = rowNumber;
     }

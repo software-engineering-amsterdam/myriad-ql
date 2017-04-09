@@ -5,7 +5,7 @@ package qls.ast;
  */
 public abstract class ASTNode {
 
-    private int rowNumber;
+    private final int rowNumber;
     public ASTNode (int rowNumber) {
         this.rowNumber = rowNumber;
     }

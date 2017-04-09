@@ -5,7 +5,6 @@ import ql.ast.expressions.ArithmeticOp;
 import ql.ast.expressions.EqualityOp;
 import ql.ast.expressions.LogicalOp;
 import ql.ast.expressions.RelationalOp;
-import ql.visistor.interfaces.ExpressionVisitor;
 import ql.visistor.interfaces.TypeVisitor;
 
 /**

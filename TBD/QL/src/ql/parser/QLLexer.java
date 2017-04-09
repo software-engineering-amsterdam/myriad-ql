@@ -22,7 +22,6 @@ public class QLLexer implements QLTokens {
     private Object yylval;
     private int c = ' ';
     private int rowNumber = 1;
-    private int columnNumber = 1;
 
 
     private final Reader input;
@@ -48,7 +47,6 @@ public class QLLexer implements QLTokens {
         if (c >= 0) {
             try {
                 c = input.read();
-                columnNumber += 1;
             } catch (IOException e) {
                 c = -1;
             }
@@ -79,7 +77,6 @@ public class QLLexer implements QLTokens {
             while (c == ' ' || c == '\n' || c == '\t' || c == '\r') {
                 if(c == '\n') {
                     rowNumber += 1;
-                    columnNumber = 0;
                 }
                 nextChar();
             }
@@ -236,9 +233,6 @@ public class QLLexer implements QLTokens {
 
     public int getRowNumber() {
         return rowNumber;
-    }
-    public int getColumn() {
-        return columnNumber;
     }
     public int getToken() {
         return token;
