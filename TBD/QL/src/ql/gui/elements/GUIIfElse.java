@@ -12,7 +12,7 @@ import ql.values.Value;
 public class GUIIfElse extends GUIElement {
     private final GUIElement ifStatements;
     private final GUIElement elseStatements;
-    private Boolean current = null;
+    private Boolean currentValue = null;
     private final Expr condition;
 
     public GUIIfElse(Expr condition, GUIElement ifStatements, GUIElement elseStatements) {
@@ -23,7 +23,7 @@ public class GUIIfElse extends GUIElement {
 
     public void update (Value value) {
         if (value instanceof UndefinedValue) {
-            if (current == null) {
+            if (currentValue == null) {
                 return;
             }
 
@@ -34,7 +34,7 @@ public class GUIIfElse extends GUIElement {
 
         boolean aBoolean = ((BooleanValue) value).getValue();
 
-        if (current != null && current == aBoolean) {
+        if (currentValue != null && currentValue == aBoolean) {
             return;
         }
 
@@ -46,7 +46,7 @@ public class GUIIfElse extends GUIElement {
             this.getChildren().add(elseStatements);
             this.getChildren().remove(ifStatements);
         }
-        current = aBoolean;
+        currentValue = aBoolean;
     }
 
     public GUIElement getIfStatements() {
@@ -59,6 +59,10 @@ public class GUIIfElse extends GUIElement {
 
     public Expr getCondition() {
         return condition;
+    }
+
+    public Boolean getConditionValue() {
+        return currentValue;
     }
 
     public <T> T accept(BaseEvaluator<T> visitor) {

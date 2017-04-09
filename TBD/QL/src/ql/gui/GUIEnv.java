@@ -1,8 +1,7 @@
-package ql.gui.elements;
+package ql.gui;
 
 import ql.values.UndefinedValue;
 import ql.values.Value;
-
 import java.util.HashMap;
 
 /**

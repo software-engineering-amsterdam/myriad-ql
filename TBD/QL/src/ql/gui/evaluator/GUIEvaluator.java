@@ -6,6 +6,7 @@ import ql.ast.expressions.monop.Neg;
 import ql.ast.expressions.monop.Not;
 import ql.ast.expressions.monop.Pos;
 import ql.ast.literals.*;
+import ql.gui.GUIEnv;
 import ql.gui.elements.*;
 import ql.values.Value;
 import ql.visistor.interfaces.ExpressionVisitor;

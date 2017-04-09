@@ -118,4 +118,9 @@ public class UndefinedValue extends Value<String> {
     public Value pos() {
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Undefined";
+    }
 }

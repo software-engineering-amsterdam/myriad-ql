@@ -1,7 +1,5 @@
 package ql.visistor.environment;
 
-import ql.ast.ASTNode;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +12,6 @@ public class Scope {
 
     public Scope(Scope parent) {
         this.parent = parent;
-    }
-
-    public Scope(ASTNode node) {
-        this.parent = null;
     }
 
     public Scope getParent() {

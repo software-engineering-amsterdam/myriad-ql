@@ -12,13 +12,16 @@ import ql.values.Value;
 public class GUIQuestionExpr extends GUIElement{
         private final QLField field;
         private final String variableName;
+    private final String question;
         private final Expr expr;
 
         public GUIQuestionExpr(String question, String variableName, QLField field, Expr expr) {
             this.variableName = variableName;
             this.field = field;
-            this.getChildren().addAll(new Text(question), field.getNode());
+            this.question = question;
             this.expr = expr;
+
+            this.getChildren().addAll(new Text(question), field.getNode());
         }
 
         public String getKey() {
@@ -27,6 +30,11 @@ public class GUIQuestionExpr extends GUIElement{
 
         public Value getValue() {
             return this.field.getValue();
+        }
+
+
+        public String getQuestion() {
+            return question;
         }
 
         public Expr getExpr() {

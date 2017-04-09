@@ -1,9 +1,10 @@
-// Output created by jacc on Mon Mar 20 11:56:36 CET 2017
+// Output created by jacc on Sun Apr 09 13:35:06 CEST 2017
 
 package ql.parser;
 
 import ql.ast.*;
 import ql.ast.literals.*;
+import ql.ast.expressions.*;
 import ql.ast.expressions.binop.*;
 import ql.ast.expressions.monop.*;
 import ql.ast.types.*;
@@ -2136,7 +2137,7 @@ class QLParser implements QLTokens {
     }
 
     private int yyr1() { // form : FORM IDENT '{' statements '}'
-        { System.out.println("test"); result = new Form(((QLIdent)yysv[yysp-4]), ((Statements)yysv[yysp-2]));    }
+        { result = new Form(((QLIdent)yysv[yysp-4]), ((Statements)yysv[yysp-2]));    }
         yysv[yysp-=5] = yyrv;
         return 1;
     }

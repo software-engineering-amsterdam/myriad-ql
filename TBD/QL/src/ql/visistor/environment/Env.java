@@ -18,7 +18,6 @@ import java.util.List;
 public class Env {
     private final HashMap<ASTNode, Scope> scopes = new HashMap<>();
     private final HashMap<String, EnvQuestion> questions = new HashMap<>();
-    private final List<EnvironmentEventListener> eventListeners = new ArrayList<>();
     private final EvalASTVisitor evalASTVisitor = new EvalASTVisitor(this);
 
     public void addScope(ASTNode node, Scope scope) {
@@ -60,29 +59,8 @@ public class Env {
         return questions.get(key).hasExpr();
     }
 
-    public void setQuestionValue(String key, Value value) {
-        if (questions.containsKey(key)) {
-            questions.get(key).setValue(value);
-            updateEvent();
-        }
-    }
-
     public boolean contains(String key) {
         return questions.containsKey(key);
     }
 
-
-    public Value evalExpr(Expr expr) {
-        return evalASTVisitor.startVisitor(expr);
-    }
-
-    public void addEventListener(EnvironmentEventListener listener) {
-        eventListeners.add(listener);
-    }
-
-    private void updateEvent(){
-        for (EnvironmentEventListener listener : eventListeners) {
-            listener.onChange();
-        }
-    }
 }

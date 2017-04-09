@@ -11,10 +11,13 @@ import ql.values.Value;
 public class GUIQuestion extends GUIElement {
     private final QLField field;
     private final String variableName;
+    private final String question;
 
     public GUIQuestion(String question, String variableName, QLField field) {
         this.variableName = variableName;
         this.field = field;
+        this.question = question;
+
         this.getChildren().addAll(new Text(question), field.getNode());
     }
 
@@ -26,8 +29,8 @@ public class GUIQuestion extends GUIElement {
         return this.field.getValue();
     }
 
-    public QLField getField() {
-        return field;
+    public String getQuestion() {
+        return question;
     }
 
     public <T> T accept(BaseEvaluator<T> visitor) {
