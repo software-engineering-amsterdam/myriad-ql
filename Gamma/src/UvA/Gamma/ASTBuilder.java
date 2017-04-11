@@ -11,6 +11,10 @@ import UvA.Gamma.AST.Expression.Values.NumberValue;
 import UvA.Gamma.AST.Types.*;
 import UvA.Gamma.Antlr.QL.QLBaseVisitor;
 import UvA.Gamma.Antlr.QL.QLParser;
+import UvA.Gamma.Visitors.IdentifierInitVisitor;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -18,24 +22,35 @@ import UvA.Gamma.Antlr.QL.QLParser;
  */
 
 public class ASTBuilder extends QLBaseVisitor<ASTNode> {
+    Map<Identifier, Type> identifierTypes;
 
     @Override
     public Form visitForm(QLParser.FormContext ctx) {
         String id = ctx.ID().getText();
         Form form = new Form(id);
+        identifierTypes = new HashMap<>();
         for (QLParser.FormItemContext formItemContext : ctx.formItem()) {
             form.addFormItem((FormItem) visit(formItemContext));
             visit(formItemContext);
         }
+        initializeIdentifiers(form);
         return form;
+    }
+
+    private void initializeIdentifiers(Form form) {
+        identifierTypes.forEach((identifier, type) -> {
+            IdentifierInitVisitor identifierInitVisitor = new IdentifierInitVisitor(identifier, type);
+            form.forEach(formItem -> formItem.accept(identifierInitVisitor));
+        });
     }
 
     @Override
     public Question visitQuestion(QLParser.QuestionContext ctx) {
         String questionString = ctx.STRING_LITERAL().getText().replaceAll("\"", "");
-        Identifier id = new Identifier(ctx.ID().getText());
+        Identifier identifier = new Identifier(ctx.ID().getText());
         Type type = (Type) visit(ctx.type());
-        return new Question(questionString, id, type);
+        identifierTypes.put(identifier, type);
+        return new Question(questionString, identifier, type);
     }
 
     @Override
@@ -43,7 +58,9 @@ public class ASTBuilder extends QLBaseVisitor<ASTNode> {
         String label = ctx.STRING_LITERAL().getText().replaceAll("\"", "");
         Expression expression = (Expression) visit(ctx.expression());
         Identifier identifier = new Identifier(ctx.ID().getText());
-        return new Computed(label, identifier, expression);
+        Type type = (Type) visit(ctx.type());
+        identifierTypes.put(identifier, type);
+        return new Computed(label, identifier, type, expression);
     }
 
     @Override

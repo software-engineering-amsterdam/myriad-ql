@@ -9,7 +9,6 @@ import UvA.Gamma.Visitors.Visitor;
  * Created by Tjarco, 14-02-17.
  */
 public class Question extends IdentifiableFormItem {
-    private Type type;
 
     public Question(String question, Identifier id, Type type) {
         this.label = question;

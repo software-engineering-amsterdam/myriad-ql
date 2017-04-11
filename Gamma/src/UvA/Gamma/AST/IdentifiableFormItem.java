@@ -1,6 +1,7 @@
 package UvA.Gamma.AST;
 
 import UvA.Gamma.AST.Expression.Identifier;
+import UvA.Gamma.AST.Types.Type;
 import UvA.Gamma.GUI.FXMLController;
 import UvA.Gamma.Validation.Pair;
 import UvA.Gamma.Visitors.Visitor;
@@ -11,6 +12,7 @@ import UvA.Gamma.Visitors.Visitor;
 public abstract class IdentifiableFormItem implements FormItem {
     protected Identifier identifier;
     protected String label;
+    protected Type type;
 
     public String getIdentifier() {
         return identifier.toString();
