@@ -15,16 +15,6 @@ question
     : STRING questionParameters
     ;
 
-/*ifCase
-    : expresion
-    |  ifCase TOKEN ifCase
-    ;
-
-ifCaseArgs
-    : ID
-    | NUMBER
-    ;*/
-
 questionParameters
     : ID':' type
     ;
@@ -48,16 +38,6 @@ expression
     ;
 
 //lexer
-
-/*TOKEN
-    : '>'
-    | '<'
-    | '>='
-    | '<='
-    | '=='
-    | 'AND'
-    | 'OR'
-    ;*/
 
 BOOLEAN
     : 'true'

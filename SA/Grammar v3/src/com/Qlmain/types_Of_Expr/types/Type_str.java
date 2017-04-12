@@ -1,7 +1,5 @@
 package com.Qlmain.types_Of_Expr.types;
 
-import com.Qlmain.exceptions.UndefinedException;
-
 /**
  * Created by sotos on 20/3/2017.
  */
@@ -10,7 +8,7 @@ public class Type_str extends Type {
     private String val;
     public Type_str(){}
     public Type_str(String val){this.val = val;}
-    public Type getStrType(){ return this;}
+    private Type getStrType(){ return this;}
     @Override
     public Type exprTypeChecker() {
         return getStrType();

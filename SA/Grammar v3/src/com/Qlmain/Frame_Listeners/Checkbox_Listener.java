@@ -2,22 +2,17 @@ package com.Qlmain.frame_Listeners;
 
 import com.Qlmain.Frame_Window;
 import com.Qlmain.QL.Question;
-import com.Qlmain.QL.Statement;
 import com.Qlmain.evaluation.Evaluation;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
-import java.util.Map;
 
 public class Checkbox_Listener implements ActionListener {
 
     private boolean checked = false;
     private Question questionChecked;
-    //private List<Statement> data;
 
-    public Checkbox_Listener(Question tempQuestionChecked, List<Statement> dataToDisplay) {
-        //data = dataToDisplay;
+    public Checkbox_Listener(Question tempQuestionChecked) {
+
         questionChecked = tempQuestionChecked;
     }
 

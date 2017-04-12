@@ -1,7 +1,5 @@
 package com.Qlmain.types_Of_Expr.Boolean_ops;
 
-//import com.Qlmain.types_Of_Expr.Type;
-
 import com.Qlmain.types_Of_Expr.types.Type;
 import com.Qlmain.types_Of_Expr.types.Type_bool;
 import com.Qlmain.types_Of_Expr.types.Type_notype;

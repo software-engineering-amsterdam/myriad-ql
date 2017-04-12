@@ -114,16 +114,18 @@ public class QLVisitorBuildAST extends AbstractParseTreeVisitor implements QLVis
     }
 
     private Type evaluateQLType(String tempType) {
-        if (tempType.equals("boolean"))
-            return new Type_bool(false);
-        else if (tempType.equals("integer"))
-            return new Type_int("0");
-        else if (tempType.equals("string"))
-            return new Type_str("");
-        else if (tempType.equals("money"))
-            return new Type_mon("0.0");
-        else
-            return new Type_wrongtype();
+        switch (tempType) {
+            case "boolean":
+                return new Type_bool(false);
+            case "integer":
+                return new Type_int("0");
+            case "string":
+                return new Type_str("");
+            case "money":
+                return new Type_mon("0.0");
+            default:
+                return new Type_wrongtype();
+        }
 
     }
 

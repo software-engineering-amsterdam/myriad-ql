@@ -4,7 +4,6 @@ import com.Qlmain.QL.*;
 import com.Qlmain.evaluation.Evaluation;
 import com.Qlmain.antlr.QLLexer;
 import com.Qlmain.antlr.QLParser;
-//import com.Qlmain.parsing.QLVisitorBuildAST;
 import com.Qlmain.parsing.QLVisitorBuildAST;
 import com.Qlmain.type_check.Type_Checking;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -28,9 +27,7 @@ public class MainFunc {
 
         try {
             inputContent = new OpenAndReadTheQl().QlRead();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             e.printStackTrace();
         }
 
@@ -66,16 +63,16 @@ public class MainFunc {
             System.exit(1);
         }
 
-        boolean typecheckTree = new Type_Checking().Type_CheckingMethod(formAST);
-        System.out.println("Typechecking of the tree " + typecheckTree);
+        boolean typeCheckTree = new Type_Checking().Type_CheckingMethod(formAST);
+        System.out.println("Type checking of the tree " + typeCheckTree);
 
         Map<String, Object> firstEvaluation = new HashMap<>();
-        if (typecheckTree) {
+        if (typeCheckTree) {
             new Evaluation().initialise();
             firstEvaluation = new Evaluation().evaluateAST(formAST.getStatementList());
         }
 
-        if (typecheckTree) {
+        if (typeCheckTree) {
             new Frame_Window().Custom_Frame(formAST, firstEvaluation);
         }
 

@@ -1,10 +1,7 @@
 package com.Qlmain.types_Of_Expr.Strings;
 
 import com.Qlmain.evaluation.Evaluation;
-import com.Qlmain.exceptions.UndefinedException;
-import com.Qlmain.Frame_Window;
 import com.Qlmain.types_Of_Expr.Expression;
-//import com.Qlmain.types_Of_Expr.Type;
 import com.Qlmain.type_check.Type_Checking;
 import com.Qlmain.types_Of_Expr.types.Type;
 import com.Qlmain.types_Of_Expr.types.Type_notype;
@@ -20,7 +17,6 @@ public class IdValue extends Expression {
     public IdValue(String val){
         this.val = val;
     }
-    public String getIdValue() { return this.val; }
 
     @Override
     public Type exprTypeChecker() {
@@ -29,7 +25,6 @@ public class IdValue extends Expression {
             return variablesAndTypes.get(this.val);
         }else {
             return new Type_notype();
-            //throw new UndefinedException();
         }
     }
 

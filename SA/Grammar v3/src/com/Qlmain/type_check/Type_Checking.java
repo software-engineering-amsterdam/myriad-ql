@@ -24,7 +24,7 @@ public class Type_Checking {
         Error_codes_list errorList = new Error_codes_list();
         variablesAndTypes = new HashMap<>();
         checkStatements(formToCheck.getStatementList(), errorList);
-        List<ErrorCodes> errList = errorList.get_error_list();
+        List<ErrorCodes> errList = Error_codes_list.get_error_list();
         if (errList.isEmpty()) {
             return true;
         } else {
@@ -40,9 +40,7 @@ public class Type_Checking {
             if (parseThroughStatements instanceof Question) {
                 Question quToEvaluate = (Question) parseThroughStatements;
 
-                Type typeEval = null;
-
-                typeEval = quToEvaluate.type.exprTypeChecker();
+                Type typeEval = quToEvaluate.type.exprTypeChecker();
 
                 if (typeEval.check__no_type()) {
                     errorList.add_elem(new Undefined_var("Line " + quToEvaluate.line + ": Undefined variable in question statement"));
@@ -67,8 +65,10 @@ public class Type_Checking {
                 if (ifConditionCheck.check__no_type()) {
                     errorList.add_elem( new Undefined_var("Line " + ifStToEvaluate.getIfStatementLine() + ": Undefined variable in if case.") );
 
-                }
-                if ( !( ifConditionCheck.check__bool_type() ) ) {
+                }else if (ifConditionCheck.check__wrong_type()){
+                    errorList.add_elem( new Wrong_type( "Line " + ifStToEvaluate.getIfStatementLine() +": Invalid type in if case " ) );
+
+                }else if ( !( ifConditionCheck.check__bool_type() ) ) {
                     errorList.add_elem( new If_condition_err( "Line " + ifStToEvaluate.getIfStatementLine()+": Error in if case. Expected type boolean." ) );
 
                 }

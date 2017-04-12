@@ -1,6 +1,5 @@
 package com.Qlmain.types_Of_Expr.Number_ops;
 
-import com.Qlmain.exceptions.UndefinedException;
 import com.Qlmain.types_Of_Expr.Expression;
 import com.Qlmain.types_Of_Expr.types.Type;
 

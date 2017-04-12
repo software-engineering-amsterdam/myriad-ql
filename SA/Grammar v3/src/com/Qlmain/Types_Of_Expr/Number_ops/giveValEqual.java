@@ -1,6 +1,5 @@
 package com.Qlmain.types_Of_Expr.Number_ops;
 
-import com.Qlmain.exceptions.UndefinedException;
 import com.Qlmain.types_Of_Expr.Expression;
 import com.Qlmain.types_Of_Expr.types.Type;
 
@@ -17,8 +16,8 @@ public class GiveValEqual extends Expression {
 
     @Override
     public Type exprTypeChecker() {
-        Type evalr = rhs.exprTypeChecker();
-        return new Resolve_branches_numer().resolve_branches_numerical(lhs, evalr);
+        Type evalR = rhs.exprTypeChecker();
+        return new Resolve_branches_numer().resolve_branches_numerical(lhs, evalR);
 
     }
 

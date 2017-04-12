@@ -1,7 +1,5 @@
 package com.Qlmain.types_Of_Expr.types;
 
-import com.Qlmain.exceptions.UndefinedException;
-
 /**
  * Created by sotos on 20/3/2017.
  */

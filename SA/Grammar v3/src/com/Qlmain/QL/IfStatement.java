@@ -11,7 +11,7 @@ import java.util.List;
  * Created by matt on 21/02/2017.
  */
 
-public class IfStatement implements Statement<IfStatement>, Node {
+public class IfStatement extends Statement implements Node {
 
     private Expression caseStatement;
     private List<Statement> statementsList;
@@ -22,9 +22,9 @@ public class IfStatement implements Statement<IfStatement>, Node {
         this.line=line;
     }
 
-    public void ifStatementAddCase( Expression ifcase)
+    public void ifStatementAddCase( Expression ifCase)
     {
-        this.caseStatement = ifcase;
+        this.caseStatement = ifCase;
     }
 
     public void ifStatementAddStatement( Question qu) { this.statementsList.add(qu); }
@@ -37,10 +37,4 @@ public class IfStatement implements Statement<IfStatement>, Node {
 
     public int getIfStatementLine() { return line; }
 
-    @Override
-    public void visitst(IfStatement st) {
-        for (Statement state: st.statementsList){
-            state.visitst(state);
-        }
-    }
 }

@@ -26,7 +26,7 @@ public class Frame_Window {
         panelsAndConditions = new HashMap<>();
         textFieldWithExprToEval = new HashMap<>();
         JFrame frame = new JFrame("Check Box Test");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         Dimension dim = new Dimension(500,500);
         frame.setPreferredSize(dim);
         frame.getContentPane().add( questionsToDisplay(dataToDisplay.getStatementList(), variablesAndValues));
@@ -51,7 +51,7 @@ public class Frame_Window {
                 Font font = new Font("Verdana", Font.ITALIC, 12);
                 jlabel.setFont(font);
 
-                newItemPanel = defineQuestionType(questionItem, newItemPanel, dataToDisplay, jlabel, variablesAndValues);
+                newItemPanel = defineQuestionType(questionItem, newItemPanel, jlabel, variablesAndValues);
 
             }else if (statementItem instanceof IfStatement) {
 
@@ -67,29 +67,29 @@ public class Frame_Window {
         return newItemPanel;
     }
 
-    private JPanel defineQuestionType(Question questionItem, JPanel newItemPanel, List<Statement> dataToDisplay, JLabel jlabel, Map<String, Object> variablesAndValues) {
+    private JPanel defineQuestionType(Question questionItem, JPanel newItemPanel, JLabel jlabel, Map<String, Object> variablesAndValues) {
         Map<String,Type> variablesAndTypes = Type_Checking.getVariablesAndTypes();
 
-        JPanel temppanel = new JPanel(new GridLayout(1,1));
+        JPanel tempPanel = new JPanel(new GridLayout(1,1));
         Dimension dim = new Dimension(500,30);
-        temppanel.setMaximumSize(dim);
-        temppanel.setBackground(Color.WHITE);
+        tempPanel.setMaximumSize(dim);
+        tempPanel.setBackground(Color.WHITE);
 
-        temppanel.add(jlabel);
+        tempPanel.add(jlabel);
 
         if (variablesAndTypes.get(questionItem.name).check__bool_type() ) {
 
             JCheckBox questionCheckBox = new JCheckBox();
             questionCheckBox.setBackground(Color.WHITE);
-            questionCheckBox.addActionListener(new Checkbox_Listener(questionItem,dataToDisplay));
-            temppanel.add(questionCheckBox);
+            questionCheckBox.addActionListener(new Checkbox_Listener(questionItem));
+            tempPanel.add(questionCheckBox);
 
         }else if (variablesAndTypes.get(questionItem.name).check__str_type() ){
 
             JTextField questionTextField = new JTextField();
             questionTextField.getDocument().addDocumentListener(new StringField_Listener(questionItem, questionTextField));
             questionTextField.setBackground(Color.WHITE);
-            temppanel.add(questionTextField);
+            tempPanel.add(questionTextField);
 
         }else if (variablesAndTypes.get(questionItem.name).check__int_type() ||
                 variablesAndTypes.get(questionItem.name).check__mon_type()) {
@@ -106,9 +106,9 @@ public class Frame_Window {
             }
             questionTextField.setBackground(Color.WHITE);
 
-            temppanel.add(questionTextField);
+            tempPanel.add(questionTextField);
         }
-        newItemPanel.add(temppanel);
+        newItemPanel.add(tempPanel);
         return newItemPanel;
     }
 

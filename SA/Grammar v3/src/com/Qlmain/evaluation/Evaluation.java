@@ -97,7 +97,6 @@ public class Evaluation {
                 infoBox("We expect a Number!", "Error in input " + e1.getMessage());
             }
         }
-        for (String oh : variablesAndValues.keySet()) System.out.println("values of the list in frame " + oh + " " + variablesAndValues.get(oh));
 
     }
 

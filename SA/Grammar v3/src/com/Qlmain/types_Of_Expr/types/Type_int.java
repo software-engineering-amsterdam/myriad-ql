@@ -1,7 +1,5 @@
 package com.Qlmain.types_Of_Expr.types;
 
-import com.Qlmain.exceptions.UndefinedException;
-
 /**
  * Created by sotos on 20/3/2017.
  */
@@ -11,8 +9,7 @@ public class Type_int extends Type {
     public Type_int(String val){
         this.val = Integer.parseInt(val);
     }
-    public int getIntValue() { return this.val; }
-    public Type getIntType(){ return new Type_int();}
+    private Type getIntType(){ return new Type_int();}
 
     @Override
     public Type exprTypeChecker() {
