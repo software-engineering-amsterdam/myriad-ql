@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by matt on 15/03/2017.
- *
+ * <p>
  * Tests parse of addition expressions
  */
 public class AdditionTest {

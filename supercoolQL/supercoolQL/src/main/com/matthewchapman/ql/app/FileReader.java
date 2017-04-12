@@ -1,6 +1,7 @@
 package com.matthewchapman.ql.app;
 
 import com.matthewchapman.ql.gui.errors.ErrorDialogGenerator;
+import javafx.application.Platform;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,7 +28,7 @@ public class FileReader {
         } catch (IOException e) {
             Logger.getAnonymousLogger().log(Level.SEVERE, "Exception", e);
             ErrorDialogGenerator.generateErrorListBox(e.getMessage(), "File Read Error", "There was an error reading the input file");
-            return null;
+            Platform.exit();
         }
         return fileContents;
     }

@@ -20,7 +20,7 @@ public class TypeTable {
         this.table.put(name, type);
     }
 
-    public Type getEntryByName(String name) {
+    Type getEntryByName(String name) {
         return this.table.get(name);
     }
 

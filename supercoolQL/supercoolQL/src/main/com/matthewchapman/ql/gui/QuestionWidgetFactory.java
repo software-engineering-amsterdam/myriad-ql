@@ -13,7 +13,7 @@ import com.matthewchapman.ql.gui.widgets.StringQuestionWidget;
 class QuestionWidgetFactory {
 
     QuestionWidget getQuestionWidget(Question question, Value value, QuestionChangeObserver observer) {
-        if("BOOLEAN".equals(value.getTypeAsString())) {
+        if ("BOOLEAN".equals(value.getTypeAsString())) {
             return new BooleanQuestionWidget(question, value, observer);
         } else if ("STRING".equals(value.getTypeAsString())) {
             return new StringQuestionWidget(question, value, observer);

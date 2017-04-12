@@ -28,5 +28,4 @@ public class StringTypeTest {
 
         assertEquals(EXPECTED_RESULT, question.getType().toString());
     }
-
 }

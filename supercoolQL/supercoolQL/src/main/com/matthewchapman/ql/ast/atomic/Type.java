@@ -15,5 +15,4 @@ public abstract class Type extends TreeNode {
     public abstract String toString();
 
     public abstract <T, C> T accept(TypeVisitor<T, C> visitor, C context);
-
 }

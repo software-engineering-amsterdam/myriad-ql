@@ -34,10 +34,11 @@ public abstract class QuestionWidget extends GridPane {
         GridPane.setHalignment(uiLabel, HPos.RIGHT);
     }
 
-    String getQuestionID() { return this.id; }
+    String getQuestionID() {
+        return this.id;
+    }
 
     public abstract void setCalculated();
 
     public abstract void setFocus();
-
 }

@@ -12,7 +12,7 @@ class ParseTreeErrorListener extends BaseErrorListener {
 
     private final ErrorLogger logger;
 
-    public ParseTreeErrorListener() {
+    ParseTreeErrorListener() {
         this.logger = new ErrorLogger();
     }
 

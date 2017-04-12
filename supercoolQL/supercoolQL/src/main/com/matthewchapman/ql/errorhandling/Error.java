@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  * Created by matt on 13/03/2017.
- *
+ * <p>
  * Error implementation
  */
 class Error implements Comparable<Error> {
@@ -16,7 +16,7 @@ class Error implements Comparable<Error> {
     private final int column;
     private final String id;
 
-    public Error(int line, int column, String id, String message) {
+    Error(int line, int column, String id, String message) {
         this.message = message;
         this.line = line;
         this.column = column;

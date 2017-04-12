@@ -21,7 +21,7 @@ public class StringQuestionWidget extends QuestionWidget {
 
         answer = new TextField();
         answer.setOnKeyPressed(event -> {
-            if(event.getCode() == KeyCode.ENTER) {
+            if (event.getCode() == KeyCode.ENTER) {
                 observer.notifyQuestionChanged(super.getQuestionID(), new StringValue(answer.getText()));
             }
         });

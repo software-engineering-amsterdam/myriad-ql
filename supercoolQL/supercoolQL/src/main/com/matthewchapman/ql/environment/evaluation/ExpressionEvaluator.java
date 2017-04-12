@@ -15,7 +15,7 @@ import com.matthewchapman.ql.visitors.ExpressionVisitor;
 
 /**
  * Created by matt on 20/03/2017.
- *
+ * <p>
  * Uses the visitor pattern to evaluate given expressions
  */
 public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {

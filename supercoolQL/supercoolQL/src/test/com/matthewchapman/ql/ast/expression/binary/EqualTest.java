@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by matt on 15/03/2017.
- *
+ * <p>
  * Tests parsing of Equal objects
  */
 public class EqualTest {

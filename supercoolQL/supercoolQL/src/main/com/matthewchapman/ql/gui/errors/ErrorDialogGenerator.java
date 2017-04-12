@@ -9,14 +9,10 @@ import javafx.scene.layout.Priority;
 
 /**
  * Created by matt on 15/03/2017.
- *
+ * <p>
  * Generates GUI error boxes
  */
 public final class ErrorDialogGenerator {
-
-    private ErrorDialogGenerator() {
-
-    }
 
     public static void generateErrorListBox(String content, String title, String headerText) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -24,7 +20,6 @@ public final class ErrorDialogGenerator {
         alert.setHeaderText(headerText);
         GridPane expContent = getGridPane(content, "Resolve the following to continue");
         alert.getDialogPane().setContent(expContent);
-
         alert.showAndWait();
         Platform.exit();
     }
@@ -35,7 +30,6 @@ public final class ErrorDialogGenerator {
         alert.setHeaderText(headerText);
         GridPane expContent = getGridPane(content, "The following non-fatal warnings have occurred");
         alert.getDialogPane().setContent(expContent);
-
         alert.showAndWait();
     }
 

@@ -28,6 +28,4 @@ public class IntegerLiteralTest {
 
         assertEquals(EXPECTED_RESULT, expression.getValue());
     }
-
-
 }

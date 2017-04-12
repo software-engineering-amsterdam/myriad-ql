@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by matt on 15/03/2017.
- *
+ * <p>
  * Tests parsing of boolean values
  */
 public class BooleanTypeTest {
@@ -30,5 +30,4 @@ public class BooleanTypeTest {
 
         assertEquals(EXPECTED_RESULT, question.getType().toString());
     }
-
 }

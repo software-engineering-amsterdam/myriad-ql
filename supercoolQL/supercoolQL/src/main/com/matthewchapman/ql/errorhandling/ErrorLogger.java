@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Created by matt on 13/03/2017.
- *
+ * <p>
  * Contains a collection of Error and Warning
  */
 public class ErrorLogger {

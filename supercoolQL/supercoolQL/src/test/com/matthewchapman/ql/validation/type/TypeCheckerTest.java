@@ -37,7 +37,5 @@ public class TypeCheckerTest {
         ErrorLogger logger = checker.checkExpressionTypes(form, typeTable);
 
         assertEquals(EXPECTED_RESULT, logger.getErrorNumber());
-
     }
-
 }

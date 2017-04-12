@@ -39,7 +39,6 @@ public class LabelChecker implements StatementVisitor<Void, String> {
         }
 
         findDuplicates();
-
         return this.logger;
     }
 

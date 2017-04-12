@@ -44,7 +44,6 @@ public class ExpressionChecker implements StatementVisitor<Void, String>, Expres
         }
 
         checkForMissingParameters(typeTable);
-
         return logger;
     }
 
@@ -80,14 +79,12 @@ public class ExpressionChecker implements StatementVisitor<Void, String>, Expres
 
     @Override
     public Void visit(IfStatement ifStatement, String context) {
-
         ifStatement.getCondition().accept(this, "If Condition");
         return null;
     }
 
     @Override
     public Void visit(IfElseStatement ifElseStatement, String context) {
-
         ifElseStatement.getCondition().accept(this, "If Condition");
         return null;
     }
@@ -218,6 +215,5 @@ public class ExpressionChecker implements StatementVisitor<Void, String>, Expres
             assert context != null;
         }
         return null;
-
     }
 }
