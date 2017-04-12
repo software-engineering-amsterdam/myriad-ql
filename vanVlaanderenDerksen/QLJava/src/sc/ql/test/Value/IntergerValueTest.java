@@ -14,7 +14,7 @@ public class IntergerValueTest {
     	IntegerValue integer2 = new IntegerValue(2);
 
     	IntegerValue result = integer1.add(integer2);
-    	assertEquals(3, (int) result.getValue());
+    	assertEquals(3, result.toInteger().intValue());
 	}
     @Test
     public void substractInteger() {
@@ -22,7 +22,7 @@ public class IntergerValueTest {
     	IntegerValue integer2 = new IntegerValue(2);
 
     	IntegerValue result = integer1.subtract(integer2);
-    	assertEquals(3, (int) result.getValue());
+    	assertEquals(3, result.toInteger().intValue());
 	}
     @Test
     public void divideInteger() {
@@ -30,7 +30,7 @@ public class IntergerValueTest {
     	IntegerValue integer2 = new IntegerValue(2);
 
     	IntegerValue result = integer1.divide(integer2);
-    	assertEquals(5, (int) result.getValue());
+    	assertEquals(5, (int) result.toInteger());
 	}
     @Test
     public void multiplyInteger() {
@@ -38,7 +38,7 @@ public class IntergerValueTest {
     	IntegerValue integer2 = new IntegerValue(2);
 
     	IntegerValue result = integer1.multiply(integer2);
-    	assertEquals(8, (int) result.getValue());
+    	assertEquals(8, (int) result.toInteger());
 	}
     @Test
     public void equalInteger() {
@@ -46,7 +46,7 @@ public class IntergerValueTest {
     	IntegerValue integer2 = new IntegerValue(2);
 
     	BooleanValue result = integer1.equals(integer2);
-    	assertTrue((boolean) result.getValue());
+    	assertTrue(result.toBoolean());
 	}
     @Test
     public void notEqualInteger() {
@@ -54,7 +54,7 @@ public class IntergerValueTest {
     	IntegerValue integer2 = new IntegerValue(3);
 
     	BooleanValue result = integer1.equalsNot(integer2);
-    	assertTrue((boolean) result.getValue());
+    	assertTrue(result.toBoolean());
 	}
     @Test
     public void greaterThenInteger() {
@@ -62,7 +62,7 @@ public class IntergerValueTest {
     	IntegerValue integer2 = new IntegerValue(2);
 
     	BooleanValue result = integer1.greaterThen(integer2);
-    	assertTrue((boolean) result.getValue());
+    	assertTrue(result.toBoolean());
 	}
     @Test
     public void greaterThenEqualInteger() {
@@ -72,8 +72,9 @@ public class IntergerValueTest {
     	
     	BooleanValue result1 = integer1.greaterThenEqual(integer2);
     	BooleanValue result2 = integer1.greaterThenEqual(integer3);
-    	assertTrue((boolean) result1.getValue());
-    	assertTrue((boolean) result2.getValue());	
+    	
+    	assertTrue(result1.toBoolean());
+    	assertTrue(result2.toBoolean());	
 	}
     @Test
     public void lessThenInteger() {
@@ -81,7 +82,7 @@ public class IntergerValueTest {
     	IntegerValue integer2 = new IntegerValue(3);
     	
     	BooleanValue result = integer1.lessThen(integer2);
-    	assertTrue((boolean) result.getValue());
+    	assertTrue(result.toBoolean());
 	}
     @Test
     public void lessThenEqualInteger() {
@@ -91,7 +92,7 @@ public class IntergerValueTest {
     	
     	BooleanValue result1 = integer1.lessThenEqual(integer2);
     	BooleanValue result2 = integer1.lessThenEqual(integer3);
-    	assertTrue((boolean) result1.getValue());
-    	assertTrue((boolean) result2.getValue());	
+    	assertTrue(result1.toBoolean());
+    	assertTrue(result2.toBoolean());	
 	}
 }

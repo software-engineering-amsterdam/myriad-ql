@@ -15,7 +15,7 @@ public class StringValueTest {
     	StringValue string2 = new StringValue("sentence one");
 
     	BooleanValue result = string1.equals(string2);
-    	assertTrue((boolean) result.getValue());
+    	assertTrue(result.toBoolean());
 	}
     @Test
     public void equalsStringFalse() {
@@ -23,7 +23,7 @@ public class StringValueTest {
     	StringValue string2 = new StringValue("sentence two");
 
     	BooleanValue result = string1.equals(string2);
-    	assertFalse((boolean) result.getValue());
+    	assertFalse(result.toBoolean());
 	}
     @Test
     public void notEqualsStringTrue() {
@@ -31,7 +31,7 @@ public class StringValueTest {
     	StringValue string2 = new StringValue("sentence two");
 
     	BooleanValue result = string1.equalsNot(string2);
-    	assertTrue((boolean) result.getValue());
+    	assertTrue(result.toBoolean());
 	}
     @Test
     public void notEqualsStringFalse() {
@@ -39,6 +39,6 @@ public class StringValueTest {
     	StringValue string2 = new StringValue("sentence one");
 
     	BooleanValue result = string1.equalsNot(string2);
-    	assertFalse((boolean) result.getValue());
+    	assertFalse(result.toBoolean());
 	}
 }

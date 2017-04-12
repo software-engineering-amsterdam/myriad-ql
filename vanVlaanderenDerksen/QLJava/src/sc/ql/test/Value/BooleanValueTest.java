@@ -13,7 +13,7 @@ public class BooleanValueTest {
     	BooleanValue int2 = new BooleanValue(true);
 
     	BooleanValue result = int1.and(int2);
-    	assertTrue((Boolean) result.getValue());
+    	assertTrue(result.toBoolean());
 	}
     @Test
     public void andFirstTrue() {
@@ -21,7 +21,7 @@ public class BooleanValueTest {
     	BooleanValue int2 = new BooleanValue(false);
 
     	BooleanValue result = int1.and(int2);
-    	assertFalse((Boolean) result.getValue());
+    	assertFalse(result.toBoolean());
 	}
     @Test
     public void andSeconTrue() {
@@ -29,7 +29,7 @@ public class BooleanValueTest {
     	BooleanValue int2 = new BooleanValue(true);
 
     	BooleanValue result = int1.and(int2);
-    	assertFalse((Boolean) result.getValue());
+    	assertFalse(result.toBoolean());
 	}
     @Test
     public void andBothFalse() {
@@ -37,7 +37,7 @@ public class BooleanValueTest {
     	BooleanValue int2 = new BooleanValue(false);
 
     	BooleanValue result = int1.and(int2);
-    	assertFalse((Boolean) result.getValue());
+    	assertFalse(result.toBoolean());
 	}
 	@Test
     public void orBothTrue() {
@@ -45,7 +45,7 @@ public class BooleanValueTest {
     	BooleanValue int2 = new BooleanValue(true);
 
     	BooleanValue result = int1.or(int2);
-    	assertTrue((Boolean) result.getValue());
+    	assertTrue(result.toBoolean());
 	}
     @Test
     public void orFirstTrue() {
@@ -53,7 +53,7 @@ public class BooleanValueTest {
     	BooleanValue int2 = new BooleanValue(false);
 
     	BooleanValue result = int1.or(int2);
-    	assertTrue((Boolean) result.getValue());
+    	assertTrue(result.toBoolean());
 	}
     @Test
     public void orSecondTrue() {
@@ -61,7 +61,7 @@ public class BooleanValueTest {
     	BooleanValue int2 = new BooleanValue(true);
 
     	BooleanValue result = int1.or(int2);
-    	assertTrue((Boolean) result.getValue());
+    	assertTrue(result.toBoolean());
 	}
     @Test
     public void orBothFalse() {
@@ -69,6 +69,6 @@ public class BooleanValueTest {
     	BooleanValue int2 = new BooleanValue(false);
 
     	BooleanValue result = int1.or(int2);
-    	assertFalse((Boolean) result.getValue());
+    	assertFalse(result.toBoolean());
 	}
 }

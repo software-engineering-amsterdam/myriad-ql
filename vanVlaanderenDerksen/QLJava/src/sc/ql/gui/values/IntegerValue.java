@@ -24,7 +24,7 @@ public class IntegerValue extends Value {
 	
 	@Override
 	public IntegerValue add(IntegerValue value) {
-        return new IntegerValue(value.toInteger() + this.value);
+        return new IntegerValue(this.value + value.toInteger());
     }
 	
 	@Override
@@ -34,7 +34,7 @@ public class IntegerValue extends Value {
 	
 	@Override
 	public IntegerValue divide(IntegerValue value) {
-        return new IntegerValue(value.toInteger() / this.value);
+        return new IntegerValue(this.value / value.toInteger());
     }
 	
 	@Override
@@ -44,7 +44,7 @@ public class IntegerValue extends Value {
 	
 	@Override
 	public IntegerValue multiply(IntegerValue value) {
-        return new IntegerValue(value.toInteger() * this.value);
+        return new IntegerValue(this.value * value.toInteger());
     }
 	
 	@Override
@@ -54,7 +54,7 @@ public class IntegerValue extends Value {
 	
 	@Override
 	public IntegerValue subtract(IntegerValue value) {
-        return new IntegerValue(value.toInteger() - this.value );
+        return new IntegerValue(this.value - value.toInteger());
     }
 	
 	@Override
@@ -84,7 +84,7 @@ public class IntegerValue extends Value {
 	
 	@Override
 	public BooleanValue greaterThen(IntegerValue value) {
-        return new BooleanValue(value.toInteger() > this.value);
+        return new BooleanValue(this.value > value.toInteger());
     }
 	
 	@Override
@@ -94,7 +94,7 @@ public class IntegerValue extends Value {
 	
 	@Override
 	public BooleanValue greaterThenEqual(IntegerValue value) {
-        return new BooleanValue(value.toInteger() >= this.value);
+        return new BooleanValue(this.value >= value.toInteger());
     }
 	
 	@Override
@@ -104,7 +104,7 @@ public class IntegerValue extends Value {
 	
 	@Override
 	public BooleanValue lessThen(IntegerValue value) {
-        return new BooleanValue(value.toInteger() < this.value);
+        return new BooleanValue(this.value < value.toInteger());
     }
 	
 	@Override
@@ -114,7 +114,7 @@ public class IntegerValue extends Value {
 	
 	@Override
 	public BooleanValue lessThenEqual(IntegerValue value) {
-        return new BooleanValue(value.toInteger() <= this.value);
+        return new BooleanValue(this.value <= value.toInteger());
     }
 	
 }

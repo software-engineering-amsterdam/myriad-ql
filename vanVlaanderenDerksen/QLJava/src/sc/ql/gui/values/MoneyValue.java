@@ -66,7 +66,7 @@ public class MoneyValue extends Value {
 	
 	@Override
 	public BooleanValue equals(MoneyValue value) {
-        return new BooleanValue(value.toMoney() == this.value);
+        return new BooleanValue(value.toMoney().floatValue() == this.value.floatValue());
     }
 	
 	@Override
@@ -76,7 +76,7 @@ public class MoneyValue extends Value {
 	
 	@Override
 	public BooleanValue equalsNot(MoneyValue value) {
-        return new BooleanValue(value.toMoney() != this.value);
+        return new BooleanValue(value.toMoney().floatValue() != this.value.floatValue());
     }
 	
 	@Override
@@ -86,7 +86,7 @@ public class MoneyValue extends Value {
 	
 	@Override
 	public BooleanValue greaterThen(MoneyValue value) {
-        return new BooleanValue(value.toMoney().floatValue() > this.value.floatValue());
+        return new BooleanValue(this.value.floatValue() > value.toMoney().floatValue());
     }
 	
 	@Override
@@ -96,7 +96,7 @@ public class MoneyValue extends Value {
 	
 	@Override
 	public BooleanValue greaterThenEqual(MoneyValue value) {
-        return new BooleanValue(value.toMoney().floatValue() >= this.value.floatValue());
+        return new BooleanValue(this.value.floatValue() >= value.toMoney().floatValue());
     }
 	
 	@Override
@@ -106,7 +106,7 @@ public class MoneyValue extends Value {
 	
 	@Override
 	public BooleanValue lessThen(MoneyValue value) {
-        return new BooleanValue(value.toMoney().floatValue() < this.value.floatValue());
+        return new BooleanValue(this.value.floatValue() < value.toMoney().floatValue());
     }
 	
 	@Override
@@ -116,7 +116,7 @@ public class MoneyValue extends Value {
 	
 	@Override
 	public BooleanValue lessThenEqual(MoneyValue value) {
-        return new BooleanValue(value.toMoney().floatValue() <= this.value.floatValue());
+        return new BooleanValue(this.value.floatValue() <= value.toMoney().floatValue());
     }
 
 }

@@ -22,25 +22,26 @@ public class MoneyValueTest {
 
     	MoneyValue result = money1.add(money2);
     	BigDecimal expected = new BigDecimal("6.45");
-    	assertEquals(expected, (BigDecimal) result.getValue());
+    	assertEquals(expected, result.toMoney());
 	}
     @Test
     public void substractValue() {
-    	MoneyValue money1 = new MoneyValue(value2);
-    	MoneyValue money2 = new MoneyValue(value1);
+    	MoneyValue money1 = new MoneyValue(value1);
+    	MoneyValue money2 = new MoneyValue(value2);
 
     	MoneyValue result = money1.subtract(money2);
     	BigDecimal expected = new BigDecimal("2.15");
-    	assertEquals(expected, (BigDecimal) result.getValue());
+    	assertEquals(expected, result.toMoney());
 	}
     @Test
     public void divideValue() {
-    	MoneyValue money1 = new MoneyValue(value2);
-    	MoneyValue money2 = new MoneyValue(value1);
+    	MoneyValue money1 = new MoneyValue(value1);
+    	MoneyValue money2 = new MoneyValue(value2);
 
     	MoneyValue result = money1.divide(money2);
-    	BigDecimal expected = new BigDecimal("2");
-    	assertEquals(expected, (BigDecimal) result.getValue());
+    	
+    	BigDecimal expected = new BigDecimal("2.00");
+    	assertEquals(expected, result.toMoney());
 	}
     @Test
     public void multiplyValue() {
@@ -49,19 +50,16 @@ public class MoneyValueTest {
 
     	MoneyValue result = money1.multiply(money2);
     	BigDecimal expected = new BigDecimal("9.2450");
-    	assertEquals(expected, (BigDecimal) result.getValue());
+    	assertEquals(expected, result.toMoney());
 	}
     @Test
     public void equalValue() {
     	MoneyValue money1 = new MoneyValue(value1);
     	MoneyValue money2 = new MoneyValue(value4);
-    	System.out.println(money1.getValue());
-    	System.out.println(money2.getValue());
     	
     	BooleanValue result = money1.equals(money2);
-
-    	System.out.println(result.getValue());
-    	assertTrue((boolean) result.getValue());
+    	
+    	assertTrue(result.toBoolean());
 	}
     @Test
     public void notEqualValue() {
@@ -69,15 +67,15 @@ public class MoneyValueTest {
     	MoneyValue money2 = new MoneyValue(value2);
 
     	BooleanValue result = money1.equalsNot(money2);
-    	assertTrue((boolean) result.getValue());
+    	assertTrue(result.toBoolean());
 	}
     @Test
     public void greaterThenValue() {
-    	MoneyValue money1 = new MoneyValue(value2);
-    	MoneyValue money2 = new MoneyValue(value1);
+    	MoneyValue money1 = new MoneyValue(value1);
+    	MoneyValue money2 = new MoneyValue(value2);
 
-    	BooleanValue result = money1.greaterThen(money2);
-    	assertTrue((boolean) result.getValue());
+    	BooleanValue result = money2.greaterThen(money1);
+    	assertTrue(result.toBoolean());
 	}
     @Test
     public void greaterThenEqualValue() {
@@ -87,8 +85,8 @@ public class MoneyValueTest {
     	
     	BooleanValue result1 = money1.greaterThenEqual(money2);
     	BooleanValue result2 = money1.greaterThenEqual(money3);
-    	assertTrue((boolean) result1.getValue());
-    	assertTrue((boolean) result2.getValue());	
+    	assertTrue(result1.toBoolean());
+    	assertTrue(result2.toBoolean());	
 	}
     @Test
     public void lessThenValue() {
@@ -96,7 +94,7 @@ public class MoneyValueTest {
     	MoneyValue money2 = new MoneyValue(value2);
     	
     	BooleanValue result = money1.lessThen(money2);
-    	assertTrue((boolean) result.getValue());
+    	assertTrue(result.toBoolean());
 	}
     @Test
     public void lessThenEqualValue() {
@@ -106,7 +104,7 @@ public class MoneyValueTest {
     	
     	BooleanValue result1 = money1.lessThenEqual(money2);
     	BooleanValue result2 = money1.lessThenEqual(money3);
-    	assertTrue((boolean) result1.getValue());
-    	assertTrue((boolean) result2.getValue());	
+    	assertTrue(result1.toBoolean());
+    	assertTrue(result2.toBoolean());	
 	}
 }

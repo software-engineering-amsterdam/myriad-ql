@@ -28,7 +28,6 @@ public class GUI {
 		panel.setPreferredSize(new Dimension(1000, 800));
 		
 		if (this.messages.isEmpty()) {
-			System.out.println("build form");
 			BuildComponents buildComponents = new BuildComponents(this.form, new HashMap<String, Value>(), panel);
 			panel = buildComponents.getPanel();
 		}
