@@ -1,6 +1,5 @@
 package UvA.Gamma.Visitors;
 
-import UvA.Gamma.AST.Computed;
 import UvA.Gamma.AST.Expression.Identifier;
 import UvA.Gamma.AST.Expression.Values.IdentifierValue;
 import UvA.Gamma.AST.Expression.Values.Value;
@@ -23,10 +22,5 @@ public class IdentifierInitVisitor extends BaseVisitor {
         if (this.identifier.toString().equals(value.toString())) {
             value.setValue(this.value);
         }
-    }
-
-    @Override
-    public void visit(Computed computed) {
-        System.out.println(computed.expression.value());
     }
 }

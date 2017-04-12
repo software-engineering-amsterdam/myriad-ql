@@ -2,22 +2,26 @@ package UvA.Gamma.AST;
 
 import UvA.Gamma.AST.Expression.Expression;
 import UvA.Gamma.AST.Expression.Identifier;
+import UvA.Gamma.AST.Expression.Values.Value;
 import UvA.Gamma.AST.Types.Type;
 import UvA.Gamma.Visitors.IdentifiersFromExpressionVisitor;
 import UvA.Gamma.Visitors.Visitor;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
  * Created by Tjarco, 14-02-17.
  */
 public class Computed extends IdentifiableFormItem {
-    public Expression expression;
+    private Expression expression;
+    private StringProperty stringValue;
 
     public Computed(String label, Identifier id, Type type, Expression expression) {
         this.label = label;
         this.identifier = id;
         this.expression = expression;
         this.type = type;
+        this.stringValue = new SimpleStringProperty("");
     }
 
     public String getLabel() {
@@ -37,10 +41,15 @@ public class Computed extends IdentifiableFormItem {
         return visitor.getIdentifiers().contains(identifier);
     }
 
+    public Value value() {
+        return expression.value();
+    }
+
+    public void updateValue() {
+        this.stringValue.setValue(expression.value().toString());
+    }
 
     public StringProperty getStringValueProperty() {
-//        assert expression != null;
-//        return expression.getStringValueProperty();
-        return null;
+        return stringValue;
     }
 }

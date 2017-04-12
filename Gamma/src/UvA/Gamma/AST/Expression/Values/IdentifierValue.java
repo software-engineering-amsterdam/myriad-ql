@@ -20,6 +20,11 @@ public class IdentifierValue extends Value<IdentifierValue> {
         this.identifier = new Identifier(identifier);
     }
 
+    public IdentifierValue(String identifier, Value value) {
+        this.identifier = new Identifier(identifier);
+        this.value = value;
+    }
+
     public void setValue(Value value) {
         this.value = value;
     }
@@ -35,6 +40,11 @@ public class IdentifierValue extends Value<IdentifierValue> {
     public Type getType() {
         assert value != null;
         return value.getType();
+    }
+
+    @Override
+    public boolean conformsToType(Type type) {
+        return value.conformsToType(type);
     }
 
     @Override

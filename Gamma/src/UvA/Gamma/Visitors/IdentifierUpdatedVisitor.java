@@ -1,6 +1,6 @@
 package UvA.Gamma.Visitors;
 
-import UvA.Gamma.AST.Expression.Expression;
+import UvA.Gamma.AST.Computed;
 import UvA.Gamma.AST.Expression.Values.IdentifierValue;
 
 /**
@@ -13,9 +13,10 @@ public class IdentifierUpdatedVisitor extends BaseVisitor {
         this.updatedValue = updatedValue;
     }
 
+
     @Override
-    public void visit(Expression expression) {
-        System.out.println(expression.value());
+    public void visit(Computed computed) {
+        computed.updateValue();
     }
 
     @Override

@@ -22,6 +22,7 @@ public class ReferenceValidator extends BaseVisitor {
         diff.removeAll(identifierStrings);
         if (diff.size() > 0) {
             System.err.println("Referenced non existing identifiers: " + diff);
+            System.exit(1);
         }
     }
 

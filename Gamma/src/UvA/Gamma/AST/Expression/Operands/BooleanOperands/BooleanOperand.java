@@ -20,7 +20,6 @@ public abstract class BooleanOperand extends Expression {
         left.accept(visitor);
         right.accept(visitor);
         visitor.visit(this);
-
     }
 
     @Override

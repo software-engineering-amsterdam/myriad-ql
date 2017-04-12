@@ -27,6 +27,11 @@ public class BooleanValue extends Value<BooleanValue> {
     }
 
     @Override
+    public boolean conformsToType(Type type) {
+        return type.equalsType(new BooleanType());
+    }
+
+    @Override
     public BooleanValue equals(BooleanValue other) {
         return new BooleanValue(this.value == other.value);
     }

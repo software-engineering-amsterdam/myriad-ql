@@ -43,7 +43,7 @@ public class FXMLController {
         conditionStack.push(rootGrid);
         this.form = form;
         for (FormItem item : form) {
-            item.show(this);
+//            item.show(this);
         }
     }
 

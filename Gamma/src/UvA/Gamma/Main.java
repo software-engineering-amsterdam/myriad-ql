@@ -1,10 +1,13 @@
 package UvA.Gamma;
 
+import UvA.Gamma.AST.Expression.Values.IdentifierValue;
+import UvA.Gamma.AST.Expression.Values.NumberValue;
 import UvA.Gamma.AST.Form;
 import UvA.Gamma.Antlr.QL.QLLexer;
 import UvA.Gamma.Antlr.QL.QLParser;
 import UvA.Gamma.GUI.MainScreen;
 import UvA.Gamma.Validation.QLParseErrorListener;
+import UvA.Gamma.Visitors.IdentifierUpdatedVisitor;
 import UvA.Gamma.Visitors.ReferenceValidator;
 import UvA.Gamma.Visitors.ValidationVisitor;
 import javafx.application.Application;
@@ -49,6 +52,10 @@ public class Main extends Application {
                 ReferenceValidator referenceValidator = new ReferenceValidator(validationVisitor.getIdentifierStrings());
                 form.forEach(formItem -> formItem.accept(referenceValidator));
 
+
+                IdentifierUpdatedVisitor updatedVisitor = new IdentifierUpdatedVisitor(
+                        new IdentifierValue("test", new NumberValue("20")));
+                form.forEach(formItem -> formItem.accept(updatedVisitor));
 
 //                Validator validator = new Validator(form);
 //                // Will terminate the program with an appropriate message if the QL form is not valid

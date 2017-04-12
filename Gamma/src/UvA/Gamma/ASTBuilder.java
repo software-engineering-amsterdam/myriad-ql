@@ -60,7 +60,26 @@ public class ASTBuilder extends QLBaseVisitor<ASTNode> {
         Identifier identifier = new Identifier(ctx.ID().getText());
         Type type = (Type) visit(ctx.type());
         identifierTypes.put(identifier, type);
-        return new Computed(label, identifier, type, expression);
+        Computed c = new Computed(label, identifier, type, expression);
+        c.getStringValueProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("new value for " + identifier + ": " + newValue);
+        });
+        return c;
+    }
+
+    @Override
+    public Condition visitCondition(QLParser.ConditionContext ctx) {
+        Expression expression = (Expression) visit(ctx.boolExpression());
+        Condition condition = new Condition(expression);
+        for (QLParser.FormItemContext thenItem : ctx.formItem()) {
+            condition.addThenBlockItem((FormItem) visit(thenItem));
+        }
+        if (ctx.elseblock() != null) {
+            for (QLParser.FormItemContext elseItem : ctx.elseblock().formItem()) {
+                condition.addElseBlockItem((FormItem) visit(elseItem));
+            }
+        }
+        return condition;
     }
 
     @Override

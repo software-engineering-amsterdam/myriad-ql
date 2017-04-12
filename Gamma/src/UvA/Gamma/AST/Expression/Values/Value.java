@@ -10,4 +10,6 @@ public abstract class Value<SELF extends Value> extends Expression {
     public abstract BooleanValue equals(SELF other);
 
     public abstract Type getType();
+
+    public abstract boolean conformsToType(Type type);
 }
