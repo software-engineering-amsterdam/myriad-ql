@@ -42,5 +42,4 @@ public class LabelCheckerTest {
         assertEquals(EXPECTED_PARAMETERS, labelChecker.getQuestionList().size());
         assertEquals(EXPECTED_QUESTIONS, labelChecker.getTypeTable().size());
     }
-
 }

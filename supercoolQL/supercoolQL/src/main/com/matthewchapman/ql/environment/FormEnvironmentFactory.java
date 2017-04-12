@@ -39,7 +39,7 @@ public class FormEnvironmentFactory implements StatementVisitor<Void, String>, T
         questions = new QuestionTable();
         values = new ValueTable();
 
-        for(Statement statement : ast.getStatements()) {
+        for (Statement statement : ast.getStatements()) {
             statement.accept(this, null);
         }
 

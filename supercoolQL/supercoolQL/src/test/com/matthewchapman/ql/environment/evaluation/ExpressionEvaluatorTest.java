@@ -16,7 +16,7 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by matt on 21/03/2017.
- *
+ * <p>
  * Tests for correct expression evaluation
  */
 public class ExpressionEvaluatorTest {
@@ -34,7 +34,7 @@ public class ExpressionEvaluatorTest {
         Expression test2 = new Multiplication(new IntegerLiteral("12", 0, 0), new IntegerLiteral("10", 0, 0), 0, 0);
         Expression test3 = new LogicalAnd(new BooleanLiteral("true", 0, 0), new BooleanLiteral("true", 0, 0), 0, 0);
         Expression test4 = new Equal(new StringLiteral("test", 0, 0), new StringLiteral("test", 0, 0), 0, 0);
-        Expression test5 = new Equal(new IntegerLiteral("12", 0, 0), new IntegerLiteral("12",0,0), 0, 0);
+        Expression test5 = new Equal(new IntegerLiteral("12", 0, 0), new IntegerLiteral("12", 0, 0), 0, 0);
         ValueTable values = new ValueTable();
 
         ExpressionEvaluator eval = new ExpressionEvaluator();

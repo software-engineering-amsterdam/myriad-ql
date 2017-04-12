@@ -11,11 +11,14 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.logging.Logger;
+
 /**
  * Created by matt on 15/03/2017.
  */
 public class GUIHandler {
 
+    private static final Logger LOGGER = Logger.getLogger(GUIHandler.class.getName());
     private final FormEnvironment environment;
     private final ExpressionEvaluator evaluator;
     private final Stage stage;
@@ -32,14 +35,14 @@ public class GUIHandler {
 
     void onQuestionChange(String id, Value value) {
         this.environment.addOrUpdateValue(id, value);
+        LOGGER.info("Value " + id + " updated to " + value.getValue().toString());
         drawUI();
         setFocus(id);
     }
 
     private void drawUI() {
         stage.setResizable(true);
-        Scene scene = getScene();
-        stage.setScene(scene);
+        stage.setScene(generateScene());
         stage.show();
         stage.setResizable(false);
     }
@@ -51,13 +54,13 @@ public class GUIHandler {
     }
 
     @NotNull
-    private Scene getScene() {
+    private Scene generateScene() {
         VBox box = new VBox();
 
         QuestionWidgetFactory factory = new QuestionWidgetFactory();
         environment.evaluateExpressions(evaluator);
 
-        for(Question question : environment.getQuestionsAsList()) {
+        for (Question question : environment.getQuestionsAsList()) {
             box.getChildren().add(getQuestionWidget(factory, question));
         }
 
@@ -70,16 +73,14 @@ public class GUIHandler {
 
         QuestionWidget widget = factory.getQuestionWidget(question, value, this.questionChangeObserver);
 
-        if(environment.questionHasCondition(name)) {
+        if (environment.questionHasCondition(name)) {
             BooleanValue conditionValue = (BooleanValue) evaluator.evaluateExpression(name, environment.getConditionByID(name), environment.getValues());
             widget.setVisible(conditionValue.getValue());
         }
 
-        if(environment.questionIsCalculated(name))
-        {
+        if (environment.questionIsCalculated(name)) {
             widget.setCalculated();
         }
         return widget;
     }
-
 }

@@ -55,12 +55,12 @@ public class IfStatement extends Statement {
     }
 
     @Override
-    public <T, C> T accept(StatementVisitor<T, C> visitor, C context) {
-        return visitor.visit(this, context);
+    public String getName() {
+        return this.name;
     }
 
     @Override
-    public String getName() {
-        return this.name;
+    public <T, C> T accept(StatementVisitor<T, C> visitor, C context) {
+        return visitor.visit(this, context);
     }
 }

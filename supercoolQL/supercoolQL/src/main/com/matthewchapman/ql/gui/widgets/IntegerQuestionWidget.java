@@ -21,7 +21,7 @@ public class IntegerQuestionWidget extends QuestionWidget {
 
         answer = new TextField();
         answer.setOnKeyPressed(event -> {
-            if(event.getCode() == KeyCode.ENTER) {
+            if (event.getCode() == KeyCode.ENTER) {
                 try {
                     observer.notifyQuestionChanged(super.getQuestionID(), new IntegerValue(Integer.parseInt(answer.getText())));
                 } catch (NumberFormatException e) {
@@ -45,5 +45,4 @@ public class IntegerQuestionWidget extends QuestionWidget {
     public void setFocus() {
         this.answer.requestFocus();
     }
-
 }

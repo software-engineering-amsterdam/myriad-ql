@@ -28,5 +28,4 @@ public class StringLiteralTest {
 
         assertEquals(EXPECTED_RESULT, expression.getValue());
     }
-
 }

@@ -4,7 +4,7 @@ import java.util.Objects;
 
 /**
  * Created by matt on 16/03/2017.
- *
+ * <p>
  * Models a pair of dependent questions
  */
 class DependencyPair {

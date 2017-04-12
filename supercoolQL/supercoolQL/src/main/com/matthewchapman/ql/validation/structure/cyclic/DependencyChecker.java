@@ -20,7 +20,6 @@ public class DependencyChecker {
     private Set<DependencyPair> dependencies;
 
     public DependencyChecker() {
-
         this.dependencies = new HashSet<>();
     }
 

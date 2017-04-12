@@ -47,6 +47,8 @@ public class Launcher extends Application {
             } else if (parser.validateAST(form)) {
                 LOGGER.info("AST Validated, handing off to UI");
                 handOffToGUI(primaryStage, form);
+            } else {
+                LOGGER.severe("Errors found in validation, terminating");
             }
         } else {
             LOGGER.info("Closing: no file selected");
@@ -72,7 +74,6 @@ public class Launcher extends Application {
             FileReader reader = new FileReader();
             return reader.readFile(file);
         }
-
     }
 
     private File getFileSelection(Stage primaryStage) {

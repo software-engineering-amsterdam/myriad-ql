@@ -11,7 +11,7 @@ import static org.junit.Assert.assertFalse;
 
 /**
  * Created by matt on 15/03/2017.
- *
+ * <p>
  * Tests implementation of ErrorType
  */
 public class ErrorTypeTest {
@@ -27,5 +27,4 @@ public class ErrorTypeTest {
         assertFalse(error.isCompatible(string));
         assertFalse(error.isCompatible(bool));
     }
-
 }

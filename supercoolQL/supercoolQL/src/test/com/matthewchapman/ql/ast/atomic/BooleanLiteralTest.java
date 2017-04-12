@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by matt on 15/03/2017.
- *
+ * <p>
  * Tests parsing of Boolean literals
  */
 public class BooleanLiteralTest {
@@ -39,6 +39,4 @@ public class BooleanLiteralTest {
 
         assertEquals(EXPECTED_RESULT, expression.toString());
     }
-
-
 }

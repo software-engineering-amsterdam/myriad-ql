@@ -15,6 +15,7 @@ public class IntegerValue implements Value {
     public String getTypeAsString() {
         return "INTEGER";
     }
+
     @Override
     public String toString() {
         return Integer.toString(this.value);
@@ -87,7 +88,7 @@ public class IntegerValue implements Value {
 
     @Override
     public Value greaterThan(IntegerValue value) {
-        return new BooleanValue( value.getValue() > this.value );
+        return new BooleanValue(value.getValue() > this.value);
     }
 
     @Override
@@ -117,7 +118,7 @@ public class IntegerValue implements Value {
 
     @Override
     public Value lessThanEqualTo(IntegerValue value) {
-        return new BooleanValue( value.getValue() <= this.value );
+        return new BooleanValue(value.getValue() <= this.value);
     }
 
     @Override

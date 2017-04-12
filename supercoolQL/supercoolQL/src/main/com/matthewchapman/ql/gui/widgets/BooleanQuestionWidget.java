@@ -10,7 +10,7 @@ import javafx.scene.layout.GridPane;
 
 /**
  * Created by matt on 22/03/2017.
- *
+ * <p>
  * Concrete widget for boolean questions
  */
 public class BooleanQuestionWidget extends QuestionWidget {

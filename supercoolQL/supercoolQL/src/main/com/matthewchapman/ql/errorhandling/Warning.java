@@ -3,8 +3,9 @@ package com.matthewchapman.ql.errorhandling;
 /**
  * Created by matt on 19/03/2017.
  */
-public class Warning extends Error {
-    public Warning(int line, int column, String id, String message) {
+class Warning extends Error {
+
+    Warning(int line, int column, String id, String message) {
         super(line, column, id, message);
     }
 
