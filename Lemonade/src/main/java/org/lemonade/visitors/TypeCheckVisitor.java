@@ -228,8 +228,6 @@ public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<
         QLType leftType = binaryExpression.getLeft().accept(this);
         QLType rightType = binaryExpression.getRight().accept(this);
 
-        //Doesn't return it's own type because this can evaluate to a new type.
-        // TODO!
         if (!(leftType.isOf(rightType.getClass()) && leftType.isComparable())) {
             errors.add("QLComparable type mismatch at " + binaryExpression.getPosition() + ", " + leftType + " with " + rightType);
         }

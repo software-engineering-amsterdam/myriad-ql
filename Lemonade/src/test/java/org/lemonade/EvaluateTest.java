@@ -3,19 +3,20 @@ package org.lemonade;
 import java.text.ParseException;
 import java.time.LocalDate;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.junit.Before;
 import org.junit.Test;
-import org.lemonade.exceptions.NotSupportedException;
-import org.lemonade.gui.values.*;
-
+import org.lemonade.gui.values.GuiBooleanValue;
+import org.lemonade.gui.values.GuiDateValue;
+import org.lemonade.gui.values.GuiDecimalValue;
+import org.lemonade.gui.values.GuiIntegerValue;
+import org.lemonade.gui.values.GuiMoneyValue;
+import org.lemonade.gui.values.GuiNumericalValue;
+import org.lemonade.gui.values.GuiStringValue;
+import org.lemonade.gui.values.GuiUndefinedValue;
+import org.lemonade.gui.values.GuiValue;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-/**
- *
- */
 public class EvaluateTest {
 
     private GuiIntegerValue zero;
@@ -94,7 +95,7 @@ public class EvaluateTest {
         GuiValue<?> onePlusTwo = one.plus(two);
         GuiValue<?> onePlusOnePointFive = one.plus(onePointFive);
         GuiValue<?> onePlusOneFifty = one.plus(oneFifty);
-        GuiValue<?> onePlusOnePointTwo =  one.plus(onePointTwo);
+        GuiValue<?> onePlusOnePointTwo = one.plus(onePointTwo);
 
         assertThat(onePlusTwo.getValue()).isEqualTo(3);
         assertThat(onePlusTwo).isInstanceOf(GuiIntegerValue.class);
@@ -142,14 +143,12 @@ public class EvaluateTest {
         assertThat(result2.getValue()).isEqualTo(4.8);
     }
 
-
     @Test
     public void testDateValue() {
         assertThat(date.compareTo(dateTwo)).isNegative();
         assertThat(date.compareTo(date)).isZero();
         assertThat(date.equals(dateTwo)).isEqualTo(false);
     }
-
 
     @Test
     public void testDivision() {
@@ -270,9 +269,8 @@ public class EvaluateTest {
         assertThat((Boolean) string.lTEq(string).getValue()).isTrue();
     }
 
-
     @Test
-    public void testBoolean(){
+    public void testBoolean() {
         assertThat((Boolean) boolTrue.and(boolFalse).getValue()).isFalse();
         assertThat((Boolean) boolTrue.and(boolTrue).getValue()).isTrue();
         assertThat((Boolean) boolTrue.or(boolFalse).getValue()).isTrue();
@@ -283,7 +281,7 @@ public class EvaluateTest {
     }
 
     @Test
-    public void testUndefined(){
+    public void testUndefined() {
         assertThat(one.plus(undefined).isDefined()).isFalse();
         assertThat(one.min(undefined).isDefined()).isFalse();
         assertThat(one.div(undefined).isDefined()).isFalse();
@@ -292,7 +290,7 @@ public class EvaluateTest {
         assertThat(one.gT(undefined).isDefined()).isFalse();
         assertThat(one.gTEq(undefined).isDefined()).isFalse();
         assertThat(one.lTEq(undefined).isDefined()).isFalse();
-        assertThat( one.eq(undefined).getValue()).isFalse();
+        assertThat(one.eq(undefined).getValue()).isFalse();
         assertThat(one.nEq(undefined).getValue()).isTrue();
 
         assertThat(zeroPointFive.plus(undefined).isDefined()).isFalse();
@@ -314,8 +312,8 @@ public class EvaluateTest {
         assertThat(oneFifty.gT(undefined).isDefined()).isFalse();
         assertThat(oneFifty.gTEq(undefined).isDefined()).isFalse();
         assertThat(oneFifty.lTEq(undefined).isDefined()).isFalse();
-        assertThat( oneFifty.eq(undefined).getValue()).isFalse();
-        assertThat( oneFifty.nEq(undefined).getValue()).isTrue();
+        assertThat(oneFifty.eq(undefined).getValue()).isFalse();
+        assertThat(oneFifty.nEq(undefined).getValue()).isTrue();
 
         assertThat(onePointTwo.plus(undefined).isDefined()).isFalse();
         assertThat(onePointTwo.min(undefined).isDefined()).isFalse();
@@ -325,15 +323,15 @@ public class EvaluateTest {
         assertThat(onePointTwo.gT(undefined).isDefined()).isFalse();
         assertThat(onePointTwo.gTEq(undefined).isDefined()).isFalse();
         assertThat(onePointTwo.lTEq(undefined).isDefined()).isFalse();
-        assertThat( onePointTwo.eq(undefined).getValue()).isFalse();
-        assertThat( onePointTwo.nEq(undefined).getValue()).isTrue();
+        assertThat(onePointTwo.eq(undefined).getValue()).isFalse();
+        assertThat(onePointTwo.nEq(undefined).getValue()).isTrue();
 
         assertThat(date.lT(undefined).isDefined()).isFalse();
         assertThat(date.gT(undefined).isDefined()).isFalse();
         assertThat(date.gTEq(undefined).isDefined()).isFalse();
         assertThat(date.lTEq(undefined).isDefined()).isFalse();
-        assertThat( date.eq(undefined).getValue()).isFalse();
-        assertThat( date.nEq(undefined).getValue()).isTrue();
+        assertThat(date.eq(undefined).getValue()).isFalse();
+        assertThat(date.nEq(undefined).getValue()).isTrue();
 
         assertThat(string.lT(undefined).isDefined()).isFalse();
         assertThat(string.gT(undefined).isDefined()).isFalse();
@@ -344,8 +342,8 @@ public class EvaluateTest {
 
         assertThat(boolTrue.and(undefined).isDefined()).isFalse();
         assertThat(boolTrue.or(undefined).isDefined()).isFalse();
-        assertThat( boolTrue.eq(undefined).getValue()).isFalse();
-        assertThat( boolTrue.nEq(undefined).getValue()).isTrue();
+        assertThat(boolTrue.eq(undefined).getValue()).isFalse();
+        assertThat(boolTrue.nEq(undefined).getValue()).isTrue();
 
     }
 

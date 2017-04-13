@@ -119,7 +119,7 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiMutableE
         GuiComputedQuestion guiComputedQuestion = new GuiComputedQuestion(identifier, labelElement, element, expression);
         qlGui.addQuestion(guiComputedQuestion);
 
-        return guiComputedQuestion;//TODO fixme
+        return guiComputedQuestion;
     }
 
     @Override

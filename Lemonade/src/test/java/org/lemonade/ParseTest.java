@@ -8,10 +8,8 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Before;
 import org.junit.Test;
-import org.lemonade.gui.QLGui;
 import org.lemonade.nodes.Form;
 import org.lemonade.visitors.FormVisitor;
-import org.lemonade.visitors.GuiVisitor;
 import org.lemonade.visitors.TypeCheckVisitor;
 
 public class ParseTest {
@@ -36,7 +34,7 @@ public class ParseTest {
     }
 
     @Test
-    public void astTest() throws IOException{
+    public void astTest() throws IOException {
         ANTLRInputStream input = new ANTLRInputStream(new StringReader(dateForm));
         QLLexer lexer = new QLLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -46,16 +44,16 @@ public class ParseTest {
         parser.addErrorListener(errorListener);
         ParseTree tree = parser.form();
 
-        if (errorListener.hasErrors()){
+        if (errorListener.hasErrors()) {
             System.err.printf("%s\n", errorListener);
-            throw new IllegalStateException();//TODO fix error type.
+            throw new IllegalStateException();
         }
 
         Form root = (Form) tree.accept(visitor);
         TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
         root.accept(typeCheckVisitor);
-        if (typeCheckVisitor.hasErrors()){
-            for (String error : typeCheckVisitor.getErrors()){
+        if (typeCheckVisitor.hasErrors()) {
+            for (String error : typeCheckVisitor.getErrors()) {
                 System.err.println(error);
             }
         }
