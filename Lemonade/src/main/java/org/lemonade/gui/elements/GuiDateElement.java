@@ -1,14 +1,14 @@
 package org.lemonade.gui.elements;
 
-import javafx.scene.control.DatePicker;
+import java.time.LocalDate;
 
 import org.lemonade.gui.values.GuiDateValue;
 import org.lemonade.gui.values.GuiUndefinedValue;
 import org.lemonade.gui.values.GuiValue;
 
-import java.time.LocalDate;
+import javafx.scene.control.DatePicker;
 
-public class GuiDateElement implements GuiElement {
+public class GuiDateElement extends GuiMutableElement {
 
     private GuiValue<?> value;
     private DatePicker picker;
@@ -28,11 +28,17 @@ public class GuiDateElement implements GuiElement {
     public void update() {
         LocalDate pickerValue = picker.getValue();
         if (pickerValue == null)
-            this.value = new GuiUndefinedValue();
-        else if (this.value.isDefined())
-            ((GuiDateValue) this.value).update(pickerValue);
+            value = new GuiUndefinedValue();
+        else if (value.isDefined())
+            ((GuiDateValue) value).update(pickerValue);
         else
-            this.value = new GuiDateValue(pickerValue);
+            value = new GuiDateValue(pickerValue);
+    }
+
+    @Override
+    public void clear() {
+        value = new GuiUndefinedValue();
+        picker.setValue(null);
     }
 
     @Override

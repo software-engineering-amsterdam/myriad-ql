@@ -5,17 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.lemonade.gui.GuiBody;
+import org.lemonade.gui.GuiComputedQuestion;
 import org.lemonade.gui.GuiConditional;
 import org.lemonade.gui.GuiExpression;
 import org.lemonade.gui.GuiForm;
-import org.lemonade.gui.GuiQuestion;
+import org.lemonade.gui.GuiInputQuestion;
+import org.lemonade.gui.QLGui;
 import org.lemonade.gui.elements.GuiBooleanElement;
+import org.lemonade.gui.elements.GuiComputedElement;
 import org.lemonade.gui.elements.GuiDateElement;
 import org.lemonade.gui.elements.GuiDecimalElement;
-import org.lemonade.gui.elements.GuiElement;
 import org.lemonade.gui.elements.GuiIntegerElement;
 import org.lemonade.gui.elements.GuiLabelElement;
 import org.lemonade.gui.elements.GuiMoneyElement;
+import org.lemonade.gui.elements.GuiMutableElement;
 import org.lemonade.gui.elements.GuiStringElement;
 import org.lemonade.gui.expressions.binary.GuiAndBinary;
 import org.lemonade.gui.expressions.binary.GuiDivideBinary;
@@ -38,7 +41,9 @@ import org.lemonade.gui.values.GuiIdentifierValue;
 import org.lemonade.gui.values.GuiIntegerValue;
 import org.lemonade.gui.values.GuiMoneyValue;
 import org.lemonade.gui.values.GuiStringValue;
+import org.lemonade.gui.values.GuiUndefinedValue;
 import org.lemonade.nodes.Body;
+import org.lemonade.nodes.ComputedQuestion;
 import org.lemonade.nodes.Conditional;
 import org.lemonade.nodes.Form;
 import org.lemonade.nodes.Question;
@@ -73,17 +78,12 @@ import org.lemonade.visitors.interfaces.BaseVisitor;
 import org.lemonade.visitors.interfaces.ExpressionVisitor;
 import org.lemonade.visitors.interfaces.TypeVisitor;
 
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
+public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiMutableElement>, ExpressionVisitor<GuiExpression> {
 
-public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>, ExpressionVisitor<GuiExpression> {
+    private QLGui qlGui;
 
-    private GridPane pane;
-    private int rowCount;
-
-    public GuiVisitor(GridPane pane) {
-        this.pane = pane;
-        this.rowCount = 0;
+    public GuiVisitor(QLGui qlGui) {
+        this.qlGui = qlGui;
     }
 
     @Override
@@ -93,41 +93,35 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
 
         for (Body body : form.getBodies()) {
             bodies.add(body.accept(this));
-            rowCount++;
         }
+
         return new GuiForm(identifier, bodies);
     }
 
     @Override
     public GuiBody visit(final Question question) {
         GuiIdentifierValue identifier = new GuiIdentifierValue(question.getIdentifier().getValue());
-        GuiElement element = question.getType().accept(this);
+        GuiMutableElement element = question.getType().accept(this);
         GuiLabelElement labelElement = new GuiLabelElement(question.getLabel());
-        GuiQuestion guiQuestion = new GuiQuestion(identifier, labelElement, element);
+        GuiInputQuestion guiInputQuestion = new GuiInputQuestion(identifier, labelElement, element);
 
-        final GridPane gridPane = new GridPane();
-        gridPane.setHgap(6);
-        gridPane.setVgap(6);
-        gridPane.setMaxWidth(560);
+        qlGui.addQuestion(guiInputQuestion);
 
-        ColumnConstraints col1 = new ColumnConstraints();
-        col1.setPercentWidth(50);
-        ColumnConstraints col2 = new ColumnConstraints();
-        col2.setPercentWidth(50);
-        gridPane.getColumnConstraints().addAll(col1, col2);
-
-        GridPane.setConstraints(labelElement.getWidget(), 0, 0);
-        GridPane.setConstraints(element.getWidget(), 1, 0);
-        gridPane.getChildren().addAll(labelElement.getWidget(), element.getWidget());
-
-        gridPane.managedProperty().bind(gridPane.visibleProperty());
-
-        pane.addRow(rowCount, gridPane);
-
-        return guiQuestion;
+        return guiInputQuestion;
     }
 
-    // TODO: figure out how to store related identifiers
+    @Override
+    public GuiBody visit(ComputedQuestion question) {
+        GuiIdentifierValue identifier = new GuiIdentifierValue(question.getIdentifier().getValue());
+        GuiLabelElement labelElement = new GuiLabelElement(question.getLabel());
+        GuiExpression expression = question.getExpression().accept(this);
+        GuiComputedElement element = new GuiComputedElement(new GuiUndefinedValue());
+        GuiComputedQuestion guiComputedQuestion = new GuiComputedQuestion(identifier, labelElement, element, expression);
+        qlGui.addQuestion(guiComputedQuestion);
+
+        return guiComputedQuestion;
+    }
+
     @Override
     public GuiBody visit(final Conditional conditional) {
         List<GuiBody> conditionalBodies = new ArrayList<>();
@@ -136,36 +130,39 @@ public class GuiVisitor implements BaseVisitor<GuiBody>, TypeVisitor<GuiElement>
         }
 
         GuiExpression expression = conditional.getCondition().accept(this);
-        return new GuiConditional(conditionalBodies, expression);
+        GuiConditional guiConditional = new GuiConditional(conditionalBodies, expression);
+        guiConditional.isVisible(false);
+
+        return guiConditional;
     }
 
     @Override
-    public GuiElement visit(final QLIntegerType qlIntegerType) {
+    public GuiMutableElement visit(final QLIntegerType qlIntegerType) {
         return new GuiIntegerElement();
     }
 
     @Override
-    public GuiElement visit(final QLBooleanType qlBooleanType) {
+    public GuiMutableElement visit(final QLBooleanType qlBooleanType) {
         return new GuiBooleanElement();
     }
 
     @Override
-    public GuiElement visit(final QLDateType qlDateType) {
+    public GuiMutableElement visit(final QLDateType qlDateType) {
         return new GuiDateElement();
     }
 
     @Override
-    public GuiElement visit(final QLDecimalType qlDecimalType) {
+    public GuiMutableElement visit(final QLDecimalType qlDecimalType) {
         return new GuiDecimalElement();
     }
 
     @Override
-    public GuiElement visit(final QLMoneyType qlMoneyType) {
+    public GuiMutableElement visit(final QLMoneyType qlMoneyType) {
         return new GuiMoneyElement();
     }
 
     @Override
-    public GuiElement visit(final QLStringType qlStringType) {
+    public GuiMutableElement visit(final QLStringType qlStringType) {
         return new GuiStringElement();
     }
 

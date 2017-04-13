@@ -3,7 +3,7 @@ package org.lemonade.visitors;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.lemonade.gui.GuiBody;
+import org.lemonade.gui.GuiComputedQuestion;
 import org.lemonade.gui.GuiConditional;
 import org.lemonade.gui.GuiExpression;
 import org.lemonade.gui.GuiForm;
@@ -29,17 +29,16 @@ import org.lemonade.gui.values.GuiIdentifierValue;
 import org.lemonade.gui.values.GuiIntegerValue;
 import org.lemonade.gui.values.GuiLabelValue;
 import org.lemonade.gui.values.GuiMoneyValue;
+import org.lemonade.gui.values.GuiNumericalValue;
 import org.lemonade.gui.values.GuiStringValue;
 import org.lemonade.gui.values.GuiUndefinedValue;
 import org.lemonade.gui.values.GuiValue;
+import org.lemonade.visitors.interfaces.GuiBaseElementsVisitor;
 import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 
-/**
- *
- */
-public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, UpdateVisitor {
+public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, GuiBaseElementsVisitor {
 
-    private Map<String, GuiValue<?>> guiEnvironment;
+    public Map<String, GuiValue<?>> guiEnvironment;
 
     public EvaluateVisitor() {
         this.guiEnvironment = new HashMap<>();
@@ -47,14 +46,7 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
 
     @Override
     public void visit(final GuiForm form) {
-        for (GuiBody body : form.getBodies()) {
-            body.accept(this);
-        }
-    }
-
-    @Override
-    public void visit(final GuiBody body) {
-        body.accept(this);
+        form.getBodies().forEach(body -> body.accept(this));
     }
 
     @Override
@@ -63,122 +55,165 @@ public class EvaluateVisitor implements GuiExpressionVisitor<GuiExpression>, Upd
     }
 
     @Override
+    public void visit(GuiComputedQuestion question) {
+        GuiValue<?> computedValue = (GuiValue<?>) question.getExpression().accept(this);
+        if (computedValue.isDefined()) {
+            question.getValueElement().update(computedValue);
+            question.isVisible(true);
+        } else {
+            question.isVisible(false);
+        }
+    }
+
+    @Override
     public void visit(final GuiConditional conditional) {
-        //        if ()
+        GuiValue<?> condition = (GuiValue<?>) conditional.getCondition().accept(this);
+        if (condition.isDefined() && ((GuiBooleanValue) condition).getValue()) {
+            conditional.isVisible(true);
+            conditional.getBodies().forEach(body -> body.accept(this));
+        } else {
+            conditional.getBodies().forEach(body -> body.isVisible(false));
+        }
     }
 
     @Override
     public GuiExpression visit(final GuiAndBinary guiAndBinary) {
-        return null;
-    }
-
-    @Override
-    public GuiExpression visit(final GuiDivideBinary guiDivideBinary) {
-        return null;
-    }
-
-    @Override
-    public GuiExpression visit(final GuiEqBinary guiEqBinary) {
-        return null;
-    }
-
-    @Override
-    public GuiExpression visit(final GuiGTBinary guiGtBinary) {
-        return null;
-    }
-
-    @Override
-    public GuiExpression visit(final GuiGTEBinary guiGteBinary) {
-        return null;
-    }
-
-    @Override
-    public GuiExpression visit(final GuiLTBinary guiLtBinary) {
-        return null;
-    }
-
-    @Override
-    public GuiExpression visit(final GuiLTEBinary guiLteBinary) {
-        return null;
-    }
-
-    @Override
-    public GuiExpression visit(final GuiMinusBinary guiMinusBinary) {
-        return null;
-    }
-
-    @Override
-    public GuiExpression visit(final GuiNEqBinary guiNEqBinary) {
-        return null;
+        GuiValue<?> left = (GuiValue<?>) guiAndBinary.getLeft().accept(this);
+        GuiValue<?> right = (GuiValue<?>) guiAndBinary.getRight().accept(this);
+        return left.and(right);
     }
 
     @Override
     public GuiExpression visit(final GuiOrBinary guiOrBinary) {
-        return null;
+        GuiValue<?> left = (GuiValue<?>) guiOrBinary.getLeft().accept(this);
+        GuiValue<?> right = (GuiValue<?>) guiOrBinary.getRight().accept(this);
+        return left.or(right);
+    }
+
+    @Override
+    public GuiExpression visit(final GuiEqBinary guiEqBinary) {
+        GuiValue<?> left = (GuiValue<?>) guiEqBinary.getLeft().accept(this);
+        GuiValue<?> right = (GuiValue<?>) guiEqBinary.getRight().accept(this);
+        return left.eq(right);
+    }
+
+    @Override
+    public GuiExpression visit(final GuiGTBinary guiGtBinary) {
+        GuiValue<?> left = (GuiValue<?>) guiGtBinary.getLeft().accept(this);
+        GuiValue<?> right = (GuiValue<?>) guiGtBinary.getRight().accept(this);
+        return left.gT(right);
+    }
+
+    @Override
+    public GuiExpression visit(final GuiGTEBinary guiGteBinary) {
+        GuiValue<?> left = (GuiValue<?>) guiGteBinary.getLeft().accept(this);
+        GuiValue<?> right = (GuiValue<?>) guiGteBinary.getRight().accept(this);
+        return left.gTEq(right);
+    }
+
+    @Override
+    public GuiExpression visit(final GuiLTBinary guiLtBinary) {
+        GuiValue<?> left = (GuiValue<?>) guiLtBinary.getLeft().accept(this);
+        GuiValue<?> right = (GuiValue<?>) guiLtBinary.getRight().accept(this);
+        return left.lT(right);
+    }
+
+    @Override
+    public GuiExpression visit(final GuiLTEBinary guiLteBinary) {
+        GuiValue<?> left = (GuiValue<?>) guiLteBinary.getLeft().accept(this);
+        GuiValue<?> right = (GuiValue<?>) guiLteBinary.getRight().accept(this);
+        return left.lTEq(right);
+    }
+
+    @Override
+    public GuiExpression visit(final GuiNEqBinary guiNEqBinary) {
+        GuiValue<?> left = (GuiValue<?>) guiNEqBinary.getLeft().accept(this);
+        GuiValue<?> right = (GuiValue<?>) guiNEqBinary.getRight().accept(this);
+        return left.nEq(right);
+    }
+
+    @Override
+    public GuiExpression visit(final GuiDivideBinary guiDivideBinary) {
+        GuiValue<?> left = (GuiValue<?>) guiDivideBinary.getLeft().accept(this);
+        GuiValue<?> right = (GuiValue<?>) guiDivideBinary.getRight().accept(this);
+        return left.div(right);
+    }
+
+    @Override
+    public GuiExpression visit(final GuiMinusBinary guiMinusBinary) {
+        GuiValue<?> left = (GuiValue<?>) guiMinusBinary.getLeft().accept(this);
+        GuiValue<?> right = (GuiValue<?>) guiMinusBinary.getRight().accept(this);
+        return left.min(right);
     }
 
     @Override
     public GuiExpression visit(final GuiPlusBinary guiPlusBinary) {
-        return null;
+        GuiValue<?> left = (GuiValue<?>) guiPlusBinary.getLeft().accept(this);
+        GuiValue<?> right = (GuiValue<?>) guiPlusBinary.getRight().accept(this);
+        return left.plus(right);
     }
 
     @Override
     public GuiExpression visit(final GuiProductBinary guiProductBinary) {
-        return null;
+        GuiValue<?> left = (GuiValue<?>) guiProductBinary.getLeft().accept(this);
+        GuiValue<?> right = (GuiValue<?>) guiProductBinary.getRight().accept(this);
+        return left.prod(right);
     }
 
     @Override
     public GuiExpression visit(final GuiBangUnary guiBangUnary) {
-        return null;
+        GuiBooleanValue expression = (GuiBooleanValue) guiBangUnary.getExpression().accept(this);
+        return expression.bang();
     }
 
     @Override
     public GuiExpression visit(final GuiNegUnary guiNegUnary) {
-        return null;
+        GuiNumericalValue<?> expression = (GuiNumericalValue<?>) guiNegUnary.getExpression().accept(this);
+        return expression.neg();
     }
 
     @Override
     public GuiExpression visit(final GuiBooleanValue booleanValue) {
-        return null;
+        return booleanValue;
     }
 
     @Override
     public GuiExpression visit(final GuiDateValue guiDateValue) {
-        return null;
+        return guiDateValue;
     }
 
     @Override
     public GuiExpression visit(final GuiMoneyValue guiMoneyValue) {
-        return null;
+        return guiMoneyValue;
     }
 
     @Override
     public GuiExpression visit(final GuiIntegerValue guiIntegerValue) {
-        return null;
+        return guiIntegerValue;
     }
 
     @Override
     public GuiExpression visit(final GuiDecimalValue guiDecimalValue) {
-        return null;
+        return guiDecimalValue;
     }
 
     @Override
     public GuiExpression visit(final GuiStringValue guiStringValue) {
-        return null;
+        return guiStringValue;
     }
 
     @Override
     public GuiExpression visit(final GuiIdentifierValue guiIdentifierValue) {
-        return null;
+        return guiEnvironment.containsKey(guiIdentifierValue.getValue()) ? guiEnvironment.get(guiIdentifierValue.getValue()) : new GuiUndefinedValue();
     }
 
     @Override
     public GuiExpression visit(final GuiUndefinedValue guiUndefinedValue) {
-        return null;
+        return guiUndefinedValue;
     }
 
     @Override
     public GuiExpression visit(final GuiLabelValue guiLabelValue) {
-        return null;
+        return guiLabelValue;
     }
 }

@@ -4,9 +4,6 @@ import org.lemonade.gui.GuiExpression;
 import org.lemonade.gui.expressions.GuiUnaryExpression;
 import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 
-/**
- *
- */
 public class GuiNegUnary extends GuiUnaryExpression {
 
     public GuiNegUnary(GuiExpression expression) {

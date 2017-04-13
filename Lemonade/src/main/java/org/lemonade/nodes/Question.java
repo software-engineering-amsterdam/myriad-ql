@@ -10,7 +10,6 @@ public class Question extends Body {
     private QLType type;
 
     public Question(IdentifierLiteral identifier, String label, QLType type) {
-        super();
         this.identifier = identifier;
         this.label = label;
         this.type = type;
@@ -28,6 +27,7 @@ public class Question extends Body {
         return type;
     }
 
+    @Override
     public <T> T accept(BaseVisitor<T> visitor) {
         return visitor.visit(this);
     }

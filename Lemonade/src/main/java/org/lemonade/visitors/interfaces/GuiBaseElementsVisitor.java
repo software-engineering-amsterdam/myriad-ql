@@ -1,17 +1,17 @@
-package org.lemonade.visitors;
+package org.lemonade.visitors.interfaces;
 
-import org.lemonade.gui.GuiBody;
+import org.lemonade.gui.GuiComputedQuestion;
 import org.lemonade.gui.GuiConditional;
 import org.lemonade.gui.GuiForm;
 import org.lemonade.gui.GuiQuestion;
 
-public interface UpdateVisitor {
+public interface GuiBaseElementsVisitor {
 
     void visit(GuiForm form);
 
-    void visit(GuiBody body);
-
     void visit(GuiQuestion question);
+
+    void visit(GuiComputedQuestion question);
 
     void visit(GuiConditional conditional);
 

@@ -10,7 +10,8 @@ body
     ;
 
 question
-    : identifier ':' label type_specifier
+    : label identifier ':' type_specifier '=' expr
+    | label identifier ':' type_specifier
     ;
 
 conditional

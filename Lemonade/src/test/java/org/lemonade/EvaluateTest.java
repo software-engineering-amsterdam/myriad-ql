@@ -5,65 +5,84 @@ import java.time.LocalDate;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.lemonade.nodes.expressions.literal.BooleanLiteral;
-import org.lemonade.nodes.expressions.literal.DateLiteral;
-import org.lemonade.nodes.expressions.literal.DecimalLiteral;
-import org.lemonade.nodes.expressions.literal.IntegerLiteral;
-import org.lemonade.nodes.expressions.literal.MoneyLiteral;
-import org.lemonade.nodes.expressions.literal.NumericLiteral;
+import org.lemonade.gui.values.GuiBooleanValue;
+import org.lemonade.gui.values.GuiDateValue;
+import org.lemonade.gui.values.GuiDecimalValue;
+import org.lemonade.gui.values.GuiIntegerValue;
+import org.lemonade.gui.values.GuiMoneyValue;
+import org.lemonade.gui.values.GuiNumericalValue;
+import org.lemonade.gui.values.GuiStringValue;
+import org.lemonade.gui.values.GuiUndefinedValue;
+import org.lemonade.gui.values.GuiValue;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-/**
- *
- */
 public class EvaluateTest {
 
-    private IntegerLiteral zero;
-    private IntegerLiteral two;
-    private IntegerLiteral one;
-    private DecimalLiteral zeroPointFive;
-    private DecimalLiteral onePointZero;
-    private DecimalLiteral onePointFive;
-    private DecimalLiteral twoPointZero;
-    private MoneyLiteral oneFifty;
-    private MoneyLiteral twoFifty;
-    private NumericLiteral<?> onePointTwo;
+    private GuiIntegerValue zero;
+    private GuiIntegerValue two;
+    private GuiIntegerValue one;
+    private GuiDecimalValue zeroPointZero;
+    private GuiDecimalValue zeroPointFive;
+    private GuiDecimalValue onePointZero;
+    private GuiDecimalValue onePointFive;
+    private GuiDecimalValue twoPointZero;
+    private GuiMoneyValue zeroZero;
+    private GuiMoneyValue oneFifty;
+    private GuiMoneyValue twoFifty;
+    private GuiNumericalValue<?> onePointTwo;
 
-    private DateLiteral date;
-    private DateLiteral dateTwo;
+    private GuiBooleanValue boolTrue;
+    private GuiBooleanValue boolFalse;
+
+    private GuiUndefinedValue undefined;
+
+    private GuiDateValue date;
+    private GuiDateValue dateTwo;
+
+    private GuiStringValue string;
+    private GuiStringValue stringTwo;
 
     @Before
     public void setUp() throws ParseException {
-        zero = new IntegerLiteral(0);
-        two = new IntegerLiteral(2);
-        one = new IntegerLiteral(1);
+        zero = new GuiIntegerValue(0);
+        two = new GuiIntegerValue(2);
+        one = new GuiIntegerValue(1);
 
-        zeroPointFive = new DecimalLiteral(0.5);
-        onePointFive = new DecimalLiteral(1.5);
-        onePointZero = new DecimalLiteral(1.0);
-        twoPointZero = new DecimalLiteral(2.0);
+        zeroPointZero = new GuiDecimalValue(0.0);
+        zeroPointFive = new GuiDecimalValue(0.5);
+        onePointFive = new GuiDecimalValue(1.5);
+        onePointZero = new GuiDecimalValue(1.0);
+        twoPointZero = new GuiDecimalValue(2.0);
 
-        oneFifty = new MoneyLiteral(1.50);
-        twoFifty = new MoneyLiteral(2.50);
+        zeroZero = new GuiMoneyValue(0.0);
+        oneFifty = new GuiMoneyValue(1.50);
+        twoFifty = new GuiMoneyValue(2.50);
 
-        onePointTwo = new DecimalLiteral(1.2);
+        onePointTwo = new GuiDecimalValue(1.2);
 
-        date = new DateLiteral(LocalDate.of(2010, 1, 1));
-        dateTwo = new DateLiteral(LocalDate.of(2012, 1, 1));
+        date = new GuiDateValue(LocalDate.of(2010, 1, 1));
+        dateTwo = new GuiDateValue(LocalDate.of(2012, 1, 1));
+
+        undefined = new GuiUndefinedValue();
+
+        boolTrue = new GuiBooleanValue(true);
+        boolFalse = new GuiBooleanValue(false);
+
+        string = new GuiStringValue("aaa");
+        stringTwo = new GuiStringValue("abb");
     }
 
     @Test
     public void testBooleanValue() {
-        BooleanLiteral boolTrue = new BooleanLiteral(true);
-        BooleanLiteral boolFalse = new BooleanLiteral(false);
+        GuiBooleanValue boolTrue = new GuiBooleanValue(true);
+        GuiBooleanValue boolFalse = new GuiBooleanValue(false);
 
         assertThat(boolTrue.getValue()).isInstanceOf(Boolean.class);
-        assertThat(boolTrue.or(boolFalse).getValue()).isTrue();
-        assertThat(boolTrue.or(boolTrue).getValue()).isTrue();
-        assertThat(boolTrue.and(boolFalse).getValue()).isFalse();
-        assertThat(boolTrue.and(boolTrue).getValue()).isTrue();
+        assertThat((Boolean) boolTrue.or(boolFalse).getValue()).isTrue();
+        assertThat((Boolean) boolTrue.or(boolTrue).getValue()).isTrue();
+        assertThat((Boolean) boolTrue.and(boolFalse).getValue()).isFalse();
+        assertThat((Boolean) boolTrue.and(boolTrue).getValue()).isTrue();
     }
 
     @Test
@@ -73,54 +92,56 @@ public class EvaluateTest {
 
     @Test
     public void testNumericPlus() {
-        IntegerLiteral onePlusTwo = one.plus(two);
-        DecimalLiteral onePlusOnePointFive = one.plus(onePointFive);
-        MoneyLiteral onePlusOneFifty = one.plus(oneFifty);
-        NumericLiteral<?> onePlusOnePointTwo = one.plus(onePointTwo);
+        GuiValue<?> onePlusTwo = one.plus(two);
+        GuiValue<?> onePlusOnePointFive = one.plus(onePointFive);
+        GuiValue<?> onePlusOneFifty = one.plus(oneFifty);
+        GuiValue<?> onePlusOnePointTwo = one.plus(onePointTwo);
 
         assertThat(onePlusTwo.getValue()).isEqualTo(3);
-        assertThat(onePlusTwo).isInstanceOf(IntegerLiteral.class);
+        assertThat(onePlusTwo).isInstanceOf(GuiIntegerValue.class);
 
         assertThat(onePlusOnePointFive.getValue()).isEqualTo(2.5);
-        assertThat(onePlusOnePointFive).isInstanceOf(DecimalLiteral.class);
+        assertThat(onePlusOnePointFive).isInstanceOf(GuiDecimalValue.class);
 
         assertThat(onePlusOneFifty.getValue()).isEqualTo(2.50);
-        assertThat(onePlusOneFifty).isInstanceOf(MoneyLiteral.class);
+        assertThat(onePlusOneFifty).isInstanceOf(GuiMoneyValue.class);
 
         assertThat(onePlusOnePointTwo.getValue()).isEqualTo(2.2);
-        assertThat(onePlusOnePointTwo).isInstanceOf(DecimalLiteral.class);
+        assertThat(onePlusOnePointTwo).isInstanceOf(GuiDecimalValue.class);
     }
 
     @Test
     public void testNumericMinus() {
-        IntegerLiteral twoMinusOne = two.minus(one);
-        DecimalLiteral twoMinusOnePointFive = two.minus(onePointFive);
-        MoneyLiteral twoMinusOneFifty = two.minus(oneFifty);
-        NumericLiteral<?> twoMinusOnePointTwo = two.minus(onePointTwo);
+        GuiValue<?> twoMinusOne = two.min(one);
+        GuiValue<?> twoMinusOnePointFive = two.min(onePointFive);
+        GuiValue<?> twoMinusOneFifty = two.min(oneFifty);
+        GuiValue<?> twoMinusOnePointTwo = (GuiValue<?>) two.min(onePointTwo);
 
         assertThat(twoMinusOne.getValue()).isEqualTo(1);
-        assertThat(twoMinusOne).isInstanceOf(IntegerLiteral.class);
+        assertThat(twoMinusOne).isInstanceOf(GuiIntegerValue.class);
 
         assertThat(twoMinusOnePointFive.getValue()).isEqualTo(0.5);
-        assertThat(twoMinusOnePointFive).isInstanceOf(DecimalLiteral.class);
+        assertThat(twoMinusOnePointFive).isInstanceOf(GuiDecimalValue.class);
 
         assertThat(twoMinusOneFifty.getValue()).isEqualTo(0.5);
-        assertThat(twoMinusOneFifty).isInstanceOf(MoneyLiteral.class);
+        assertThat(twoMinusOneFifty).isInstanceOf(GuiMoneyValue.class);
 
         assertThat(twoMinusOnePointTwo.getValue()).isEqualTo(0.8);
-        assertThat(twoMinusOnePointTwo).isInstanceOf(DecimalLiteral.class);
+        assertThat(twoMinusOnePointTwo).isInstanceOf(GuiDecimalValue.class);
     }
 
     @Test
     public void testNumericProduct() {
-        NumericLiteral<?> result = two.product(onePointTwo);
-        assertThat(result).isInstanceOf(DecimalLiteral.class);
+        GuiValue<?> result = two.prod(onePointTwo);
+        assertThat(result).isInstanceOf(GuiDecimalValue.class);
 
-        NumericLiteral<?> result2 = result.product(two);
-        assertThat(result2).isInstanceOf(DecimalLiteral.class);
+        GuiNumericalValue<?> result2;
+
+        result2 = (GuiNumericalValue<?>) result.prod(two);
+
+        assertThat(result2).isInstanceOf(GuiDecimalValue.class);
         assertThat(result2.getValue()).isEqualTo(4.8);
     }
-
 
     @Test
     public void testDateValue() {
@@ -129,119 +150,206 @@ public class EvaluateTest {
         assertThat(date.equals(dateTwo)).isEqualTo(false);
     }
 
-
     @Test
     public void testDivision() {
-        assertThat(one.divide(two)).isEqualTo(zero);
-        assertThat(one.divide(twoPointZero).getValue()).isEqualTo(zeroPointFive.getValue());
-        assertThat(onePointTwo.divide(onePointTwo).getValue()).isEqualTo(onePointZero.getValue());
+        assertThat(one.div(two)).isEqualTo(zero);
+        assertThat(one.div(twoPointZero).getValue()).isEqualTo(zeroPointFive.getValue());
+        assertThat(onePointTwo.div(onePointTwo).getValue()).isEqualTo(onePointZero.getValue());
+
+        assertThat(one.div(zero).isDefined()).isFalse();
+        assertThat(onePointTwo.div(zero).isDefined()).isFalse();
+        assertThat(onePointFive.div(zero).isDefined()).isFalse();
+        assertThat(oneFifty.div(zero).isDefined()).isFalse();
+
+        assertThat(one.div(zeroPointZero).isDefined()).isFalse();
+        assertThat(onePointTwo.div(zeroPointZero).isDefined()).isFalse();
+        assertThat(onePointFive.div(zeroPointZero).isDefined()).isFalse();
+        assertThat(oneFifty.div(zeroPointZero).isDefined()).isFalse();
+
+        assertThat(one.div(zeroZero).isDefined()).isFalse();
+        assertThat(onePointTwo.div(zeroZero).isDefined()).isFalse();
+        assertThat(onePointFive.div(zeroZero).isDefined()).isFalse();
+        assertThat(oneFifty.div(zeroZero).isDefined()).isFalse();
+
+        assertThat(zero.div(zero).isDefined()).isFalse();
+        assertThat(zero.div(zero).isDefined()).isFalse();
+        assertThat(zero.div(zero).isDefined()).isFalse();
+        assertThat(zero.div(zero).isDefined()).isFalse();
     }
 
     @Test
     public void testGreaterThan() {
-        assertThat(one.gT(two).getValue()).isFalse();
-        assertThat(two.gT(one).getValue()).isTrue();
-        assertThat(one.gT(one).getValue()).isFalse();
+        assertThat((Boolean) one.gT(two).getValue()).isFalse();
+        assertThat((Boolean) two.gT(one).getValue()).isTrue();
+        assertThat((Boolean) one.gT(one).getValue()).isFalse();
 
-        assertThat(zeroPointFive.gT(onePointFive).getValue()).isFalse();
-        assertThat(onePointFive.gT(zeroPointFive).getValue()).isTrue();
-        assertThat(zeroPointFive.gT(zeroPointFive).getValue()).isFalse();
+        assertThat((Boolean) zeroPointFive.gT(onePointFive).getValue()).isFalse();
+        assertThat((Boolean) onePointFive.gT(zeroPointFive).getValue()).isTrue();
+        assertThat((Boolean) zeroPointFive.gT(zeroPointFive).getValue()).isFalse();
 
-        assertThat(oneFifty.gT(twoFifty).getValue()).isFalse();
-        assertThat(twoFifty.gT(oneFifty).getValue()).isTrue();
-        assertThat(oneFifty.gT(oneFifty).getValue()).isFalse();
+        assertThat((Boolean) oneFifty.gT(twoFifty).getValue()).isFalse();
+        assertThat((Boolean) twoFifty.gT(oneFifty).getValue()).isTrue();
+        assertThat((Boolean) oneFifty.gT(oneFifty).getValue()).isFalse();
 
-        assertThat(date.gT(dateTwo).getValue()).isFalse();
-        assertThat(dateTwo.gT(date).getValue()).isTrue();
-        assertThat(date.gT(date).getValue()).isFalse();
+        assertThat((Boolean) date.gT(dateTwo).getValue()).isFalse();
+        assertThat((Boolean) dateTwo.gT(date).getValue()).isTrue();
+        assertThat((Boolean) date.gT(date).getValue()).isFalse();
+
+        assertThat((Boolean) string.gT(stringTwo).getValue()).isFalse();
+        assertThat((Boolean) stringTwo.gT(string).getValue()).isTrue();
+        assertThat((Boolean) string.gT(string).getValue()).isFalse();
     }
 
     @Test
     public void testLessThan() {
-        assertThat(one.lT(two).getValue()).isTrue();
-        assertThat(two.lT(one).getValue()).isFalse();
-        assertThat(one.lT(one).getValue()).isFalse();
+        assertThat((Boolean) one.lT(two).getValue()).isTrue();
+        assertThat((Boolean) two.lT(one).getValue()).isFalse();
+        assertThat((Boolean) one.lT(one).getValue()).isFalse();
 
-        assertThat(zeroPointFive.lT(onePointFive).getValue()).isTrue();
-        assertThat(onePointFive.lT(zeroPointFive).getValue()).isFalse();
-        assertThat(zeroPointFive.lT(zeroPointFive).getValue()).isFalse();
+        assertThat((Boolean) zeroPointFive.lT(onePointFive).getValue()).isTrue();
+        assertThat((Boolean) onePointFive.lT(zeroPointFive).getValue()).isFalse();
+        assertThat((Boolean) zeroPointFive.lT(zeroPointFive).getValue()).isFalse();
 
-        assertThat(oneFifty.lT(twoFifty).getValue()).isTrue();
-        assertThat(twoFifty.lT(oneFifty).getValue()).isFalse();
-        assertThat(oneFifty.lT(oneFifty).getValue()).isFalse();
+        assertThat((Boolean) oneFifty.lT(twoFifty).getValue()).isTrue();
+        assertThat((Boolean) twoFifty.lT(oneFifty).getValue()).isFalse();
+        assertThat((Boolean) oneFifty.lT(oneFifty).getValue()).isFalse();
 
-        assertThat(date.lT(dateTwo).getValue()).isTrue();
-        assertThat(dateTwo.lT(date).getValue()).isFalse();
-        assertThat(date.lT(date).getValue()).isFalse();
+        assertThat((Boolean) date.lT(dateTwo).getValue()).isTrue();
+        assertThat((Boolean) dateTwo.lT(date).getValue()).isFalse();
+        assertThat((Boolean) date.lT(date).getValue()).isFalse();
+
+        assertThat((Boolean) string.lT(stringTwo).getValue()).isTrue();
+        assertThat((Boolean) stringTwo.lT(string).getValue()).isFalse();
+        assertThat((Boolean) string.lT(string).getValue()).isFalse();
     }
 
     @Test
     public void testGreaterThanOrEqual() {
-        assertThat(one.gTEq(two).getValue()).isFalse();
-        assertThat(two.gTEq(one).getValue()).isTrue();
-        assertThat(one.gTEq(one).getValue()).isTrue();
+        assertThat((Boolean) one.gTEq(two).getValue()).isFalse();
+        assertThat((Boolean) two.gTEq(one).getValue()).isTrue();
+        assertThat((Boolean) one.gTEq(one).getValue()).isTrue();
 
-        assertThat(zeroPointFive.gTEq(onePointFive).getValue()).isFalse();
-        assertThat(onePointFive.gTEq(zeroPointFive).getValue()).isTrue();
-        assertThat(zeroPointFive.gTEq(zeroPointFive).getValue()).isTrue();
+        assertThat((Boolean) zeroPointFive.gTEq(onePointFive).getValue()).isFalse();
+        assertThat((Boolean) onePointFive.gTEq(zeroPointFive).getValue()).isTrue();
+        assertThat((Boolean) zeroPointFive.gTEq(zeroPointFive).getValue()).isTrue();
 
-        assertThat(oneFifty.gTEq(twoFifty).getValue()).isFalse();
-        assertThat(twoFifty.gTEq(oneFifty).getValue()).isTrue();
-        assertThat(oneFifty.gTEq(oneFifty).getValue()).isTrue();
+        assertThat((Boolean) oneFifty.gTEq(twoFifty).getValue()).isFalse();
+        assertThat((Boolean) twoFifty.gTEq(oneFifty).getValue()).isTrue();
+        assertThat((Boolean) oneFifty.gTEq(oneFifty).getValue()).isTrue();
 
-        assertThat(date.gTEq(dateTwo).getValue()).isFalse();
-        assertThat(dateTwo.gTEq(date).getValue()).isTrue();
-        assertThat(date.gTEq(date).getValue()).isTrue();
+        assertThat((Boolean) date.gTEq(dateTwo).getValue()).isFalse();
+        assertThat((Boolean) dateTwo.gTEq(date).getValue()).isTrue();
+        assertThat((Boolean) date.gTEq(date).getValue()).isTrue();
+
+        assertThat((Boolean) string.gTEq(stringTwo).getValue()).isFalse();
+        assertThat((Boolean) stringTwo.gTEq(string).getValue()).isTrue();
+        assertThat((Boolean) string.gTEq(string).getValue()).isTrue();
     }
 
     @Test
     public void testLessThanOrEqual() {
-        assertThat(one.lTEq(two).getValue()).isTrue();
-        assertThat(two.lTEq(one).getValue()).isFalse();
-        assertThat(one.lTEq(one).getValue()).isTrue();
+        assertThat((Boolean) one.lTEq(two).getValue()).isTrue();
+        assertThat((Boolean) two.lTEq(one).getValue()).isFalse();
+        assertThat((Boolean) one.lTEq(one).getValue()).isTrue();
 
-        assertThat(zeroPointFive.lTEq(onePointFive).getValue()).isTrue();
-        assertThat(onePointFive.lTEq(zeroPointFive).getValue()).isFalse();
-        assertThat(zeroPointFive.lTEq(zeroPointFive).getValue()).isTrue();
+        assertThat((Boolean) zeroPointFive.lTEq(onePointFive).getValue()).isTrue();
+        assertThat((Boolean) onePointFive.lTEq(zeroPointFive).getValue()).isFalse();
+        assertThat((Boolean) zeroPointFive.lTEq(zeroPointFive).getValue()).isTrue();
 
-        assertThat(oneFifty.lTEq(twoFifty).getValue()).isTrue();
-        assertThat(twoFifty.lTEq(oneFifty).getValue()).isFalse();
-        assertThat(oneFifty.lTEq(oneFifty).getValue()).isTrue();
+        assertThat((Boolean) oneFifty.lTEq(twoFifty).getValue()).isTrue();
+        assertThat((Boolean) twoFifty.lTEq(oneFifty).getValue()).isFalse();
+        assertThat((Boolean) oneFifty.lTEq(oneFifty).getValue()).isTrue();
 
-        assertThat(date.lTEq(dateTwo).getValue()).isTrue();
-        assertThat(dateTwo.lTEq(date).getValue()).isFalse();
-        assertThat(date.lTEq(date).getValue()).isTrue();
+        assertThat((Boolean) date.lTEq(dateTwo).getValue()).isTrue();
+        assertThat((Boolean) dateTwo.lTEq(date).getValue()).isFalse();
+        assertThat((Boolean) date.lTEq(date).getValue()).isTrue();
+
+        assertThat((Boolean) string.lTEq(stringTwo).getValue()).isTrue();
+        assertThat((Boolean) stringTwo.lTEq(string).getValue()).isFalse();
+        assertThat((Boolean) string.lTEq(string).getValue()).isTrue();
     }
 
     @Test
-    public void cantCompareDifferentTypes() {
-        assertThatThrownBy(() -> one.gT(onePointFive))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Cannot compare integer with decimal");
+    public void testBoolean() {
+        assertThat((Boolean) boolTrue.and(boolFalse).getValue()).isFalse();
+        assertThat((Boolean) boolTrue.and(boolTrue).getValue()).isTrue();
+        assertThat((Boolean) boolTrue.or(boolFalse).getValue()).isTrue();
+        assertThat((Boolean) boolFalse.and(boolFalse).getValue()).isFalse();
+        assertThat((Boolean) boolFalse.or(boolFalse).getValue()).isFalse();
+        assertThat(boolFalse.bang().getValue()).isTrue();
+        assertThat(undefined.bang().isDefined()).isFalse();
+    }
 
-        assertThatThrownBy(() -> one.gT(oneFifty))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Cannot compare integer with money");
+    @Test
+    public void testUndefined() {
+        assertThat(one.plus(undefined).isDefined()).isFalse();
+        assertThat(one.min(undefined).isDefined()).isFalse();
+        assertThat(one.div(undefined).isDefined()).isFalse();
+        assertThat(one.prod(undefined).isDefined()).isFalse();
+        assertThat(one.lT(undefined).isDefined()).isFalse();
+        assertThat(one.gT(undefined).isDefined()).isFalse();
+        assertThat(one.gTEq(undefined).isDefined()).isFalse();
+        assertThat(one.lTEq(undefined).isDefined()).isFalse();
+        assertThat(one.eq(undefined).getValue()).isFalse();
+        assertThat(one.nEq(undefined).getValue()).isTrue();
 
-        assertThatThrownBy(() -> one.gT(date))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Cannot compare integer with date");
+        assertThat(zeroPointFive.plus(undefined).isDefined()).isFalse();
+        assertThat(zeroPointFive.min(undefined).isDefined()).isFalse();
+        assertThat(zeroPointFive.div(undefined).isDefined()).isFalse();
+        assertThat(zeroPointFive.prod(undefined).isDefined()).isFalse();
+        assertThat(zeroPointFive.lT(undefined).isDefined()).isFalse();
+        assertThat(zeroPointFive.gT(undefined).isDefined()).isFalse();
+        assertThat(zeroPointFive.gTEq(undefined).isDefined()).isFalse();
+        assertThat(zeroPointFive.lTEq(undefined).isDefined()).isFalse();
+        assertThat(zeroPointFive.eq(undefined).getValue()).isFalse();
+        assertThat(zeroPointFive.nEq(undefined).getValue()).isTrue();
 
-        assertThatThrownBy(() -> zeroPointFive.gT(oneFifty))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Cannot compare decimal with money");
+        assertThat(oneFifty.plus(undefined).isDefined()).isFalse();
+        assertThat(oneFifty.min(undefined).isDefined()).isFalse();
+        assertThat(oneFifty.div(undefined).isDefined()).isFalse();
+        assertThat(oneFifty.prod(undefined).isDefined()).isFalse();
+        assertThat(oneFifty.lT(undefined).isDefined()).isFalse();
+        assertThat(oneFifty.gT(undefined).isDefined()).isFalse();
+        assertThat(oneFifty.gTEq(undefined).isDefined()).isFalse();
+        assertThat(oneFifty.lTEq(undefined).isDefined()).isFalse();
+        assertThat(oneFifty.eq(undefined).getValue()).isFalse();
+        assertThat(oneFifty.nEq(undefined).getValue()).isTrue();
 
-        assertThatThrownBy(() -> zeroPointFive.gT(date))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Cannot compare decimal with date");
+        assertThat(onePointTwo.plus(undefined).isDefined()).isFalse();
+        assertThat(onePointTwo.min(undefined).isDefined()).isFalse();
+        assertThat(onePointTwo.div(undefined).isDefined()).isFalse();
+        assertThat(onePointTwo.prod(undefined).isDefined()).isFalse();
+        assertThat(onePointTwo.lT(undefined).isDefined()).isFalse();
+        assertThat(onePointTwo.gT(undefined).isDefined()).isFalse();
+        assertThat(onePointTwo.gTEq(undefined).isDefined()).isFalse();
+        assertThat(onePointTwo.lTEq(undefined).isDefined()).isFalse();
+        assertThat(onePointTwo.eq(undefined).getValue()).isFalse();
+        assertThat(onePointTwo.nEq(undefined).getValue()).isTrue();
 
-        assertThatThrownBy(() -> oneFifty.gT(date))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Cannot compare money with date");
+        assertThat(date.lT(undefined).isDefined()).isFalse();
+        assertThat(date.gT(undefined).isDefined()).isFalse();
+        assertThat(date.gTEq(undefined).isDefined()).isFalse();
+        assertThat(date.lTEq(undefined).isDefined()).isFalse();
+        assertThat(date.eq(undefined).getValue()).isFalse();
+        assertThat(date.nEq(undefined).getValue()).isTrue();
+
+        assertThat(string.lT(undefined).isDefined()).isFalse();
+        assertThat(string.gT(undefined).isDefined()).isFalse();
+        assertThat(string.gTEq(undefined).isDefined()).isFalse();
+        assertThat(string.lTEq(undefined).isDefined()).isFalse();
+        assertThat(string.eq(undefined).getValue()).isFalse();
+        assertThat(string.nEq(undefined).getValue()).isTrue();
+
+        assertThat(boolTrue.and(undefined).isDefined()).isFalse();
+        assertThat(boolTrue.or(undefined).isDefined()).isFalse();
+        assertThat(boolTrue.eq(undefined).getValue()).isFalse();
+        assertThat(boolTrue.nEq(undefined).getValue()).isTrue();
+
     }
 
     @Test
     public void testNeg() {
         assertThat(one.neg().getValue()).isEqualTo(-1);
+        assertThat(undefined.neg().isDefined()).isFalse();
     }
 }

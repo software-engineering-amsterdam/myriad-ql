@@ -2,13 +2,7 @@ package org.lemonade.nodes;
 
 import org.lemonade.visitors.interfaces.BaseVisitor;
 
-/**
- *
- */
 public abstract class Body extends ASTNode {
-    public Body() {
-
-    }
 
     public abstract boolean isQuestion();
 

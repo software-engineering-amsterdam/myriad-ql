@@ -12,7 +12,6 @@ public class GuiIdentifierValue extends GuiValue<String> {
 
     @Override
     public String getValue() {
-
         return value;
     }
 
@@ -25,6 +24,12 @@ public class GuiIdentifierValue extends GuiValue<String> {
     @Override
     public <T> T accept(GuiExpressionVisitor<T> visitor) {
         return visitor.visit(this);
+    }
+
+    // Implemented for writing to JSON
+    @Override
+    public String toString() {
+        return this.value;
     }
 
 }
