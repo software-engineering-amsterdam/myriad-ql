@@ -3,9 +3,6 @@ package org.lemonade.nodes.types;
 import org.lemonade.nodes.ASTNode;
 import org.lemonade.visitors.interfaces.TypeVisitor;
 
-/**
- *
- */
 public abstract class QLType extends ASTNode {
 
     public boolean isOf(Class<?> other) {

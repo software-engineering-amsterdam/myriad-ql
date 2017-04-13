@@ -1,14 +1,10 @@
 package org.lemonade.nodes.expressions;
 
-import org.lemonade.nodes.expressions.literal.BooleanLiteral;
 import org.lemonade.nodes.types.QLType;
 
-/**
- *
- */
 public abstract class Literal<T> extends Expression {
-    QLType type;
-    T value;
+    private QLType type;
+    private T value;
 
     public Literal(QLType type, T value) {
         super();

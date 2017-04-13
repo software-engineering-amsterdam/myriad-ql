@@ -1,9 +1,7 @@
 package org.lemonade.nodes.types;
 
-/**
- *
- */
 public abstract class QLNumberType extends QLType {
+
     private int precedenceStrength;
 
     public QLNumberType(int precedenceStrength) {
