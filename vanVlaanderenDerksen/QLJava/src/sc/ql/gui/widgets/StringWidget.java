@@ -1,6 +1,7 @@
 package sc.ql.gui.widgets;
 
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
@@ -15,6 +16,7 @@ public class StringWidget implements Widget {
 	
 	public StringWidget(BuildComponents buildComponents, String questionId, Value value) {
 		JTextField field = new JTextField(30);
+		field.setFont(new Font("Arial", Font.PLAIN, 18));
 		field.setText(value.toString());
 		
 		field.addFocusListener(new FocusListener() {

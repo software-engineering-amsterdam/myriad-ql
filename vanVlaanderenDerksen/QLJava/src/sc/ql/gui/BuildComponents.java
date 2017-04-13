@@ -1,5 +1,6 @@
 package sc.ql.gui;
 
+import java.awt.Font;
 import java.util.List;
 import java.util.Map;
 
@@ -96,6 +97,7 @@ public class BuildComponents implements FormVisitor<JPanel>, FormElementVisitor<
 		questionValues.put(questionId, value);
 		
 		JLabel label = new JLabel(question.getLabel());
+		label.setFont(new Font("Arial", Font.PLAIN, 18));
 		questionPanel.add(label);
 		
 		Widget widgetComponent = question.getType().getWidget(this, questionId, value);
@@ -113,6 +115,7 @@ public class BuildComponents implements FormVisitor<JPanel>, FormElementVisitor<
 		questionValues.put(question.getId(), value);
 		
 		JLabel label = new JLabel(question.getLabel());
+		label.setFont(new Font("Arial", Font.PLAIN, 18));
 		questionPanel.add(label);
 		
 		Widget widgetComponent = question.getType().getWidget(this, questionId, value);

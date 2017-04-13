@@ -1,6 +1,7 @@
 package sc.ql.gui.widgets;
 
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.math.BigDecimal;
@@ -24,6 +25,7 @@ public class MoneyWidget implements Widget {
 		formatter.setAllowsInvalid(false);
 		
 		JFormattedTextField field = new JFormattedTextField(formatter);
+		field.setFont(new Font("Arial", Font.PLAIN, 18));
 		field.setValue(value.toMoney());
 		field.setColumns(10);
 		
