@@ -75,7 +75,7 @@ class Builder(object):
         type of the variable given.
         """
         label = ttk.Label(self.mainframe, text=text[1:-1], wraplength=200)
-        value = variable.type.init_variable()
+        value = variable.type.create_variable()
         field = variable.type.init_field(self, value)
 
         value.trace('w', lambda *args: self.__tracer(variable))
@@ -92,7 +92,7 @@ class Builder(object):
         depend on the type of the variable given.
         """
         label = ttk.Label(self.mainframe, text=text[1:-1], wraplength=200)
-        value = variable.type.init_variable()
+        value = variable.type.create_variable()
         field = variable.type.init_field(self, value, assignation=True)
 
         value.trace('w', lambda *args: self.__tracer(variable))

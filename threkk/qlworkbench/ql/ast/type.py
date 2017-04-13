@@ -52,7 +52,7 @@ class Undefined(Type):
         return None
 
     @staticmethod
-    def init_variable():
+    def create_variable():
         """Initialises a UI variable of this type"""
         return None
 
@@ -80,7 +80,7 @@ class Boolean(Type):
         return False
 
     @staticmethod
-    def init_variable():
+    def create_variable():
         """Initialises a UI variable of this type"""
         return BooleanVar()
 
@@ -115,7 +115,7 @@ class Decimal(Type):
         return 0
 
     @staticmethod
-    def init_variable():
+    def create_variable():
         """Initialises a UI variable of this type"""
         return DoubleVar()
 
@@ -172,7 +172,7 @@ class String(Type):
         return ''
 
     @staticmethod
-    def init_variable():
+    def create_variable():
         """Initialises a UI variable of this type"""
         return StringVar()
 
