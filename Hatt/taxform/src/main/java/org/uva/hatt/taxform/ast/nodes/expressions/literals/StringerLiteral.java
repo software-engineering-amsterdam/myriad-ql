@@ -1,7 +1,7 @@
 package org.uva.hatt.taxform.ast.nodes.expressions.literals;
 
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
-import org.uva.hatt.taxform.ast.visitors.Visitor;
+import org.uva.hatt.taxform.ast.visitors.ExpressionVisitor;
 
 public class StringerLiteral extends Expression{
 
@@ -17,7 +17,7 @@ public class StringerLiteral extends Expression{
     }
 
     @Override
-    public <T> T accept(Visitor<T> visitor) {
-        return visitor.visit(this);
+    public <T> T accept(ExpressionVisitor<T> expressionVisitor){
+        return expressionVisitor.visit(this);
     }
 }
