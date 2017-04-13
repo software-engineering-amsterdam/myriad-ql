@@ -28,5 +28,6 @@ public class GuiForm extends GuiBody {
     }
 
     @Override
-    public void isVisible(final boolean flag) {}
+    public void isVisible(final boolean flag) {
+    }
 }
