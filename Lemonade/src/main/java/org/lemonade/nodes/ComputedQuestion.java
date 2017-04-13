@@ -5,10 +5,7 @@ import org.lemonade.nodes.expressions.literal.IdentifierLiteral;
 import org.lemonade.nodes.types.QLType;
 import org.lemonade.visitors.interfaces.BaseVisitor;
 
-/**
- *
- */
-public class ComputedQuestion extends Question{
+public class ComputedQuestion extends Question {
 
     private Expression expression;
 
