@@ -13,6 +13,8 @@ import com.matthewchapman.ql.environment.values.*;
 import com.matthewchapman.ql.errorhandling.InvalidOperationException;
 import com.matthewchapman.ql.visitors.ExpressionVisitor;
 
+import java.util.logging.Logger;
+
 /**
  * Created by matt on 20/03/2017.
  * <p>
@@ -21,12 +23,14 @@ import com.matthewchapman.ql.visitors.ExpressionVisitor;
 public class ExpressionEvaluator implements ExpressionVisitor<Value, String> {
 
     private ValueTable valueTable;
+    private final static Logger LOGGER = Logger.getLogger(ExpressionEvaluator.class.getName());
 
     public Value evaluateExpression(String id, Expression expression, ValueTable valueTable) {
         this.valueTable = valueTable;
         try {
             return expression.accept(this, id);
         } catch (InvalidOperationException e) {
+            LOGGER.severe("Invalid operation on " + e.value.getValue() + "!");
             return new NullValue();
         }
     }
