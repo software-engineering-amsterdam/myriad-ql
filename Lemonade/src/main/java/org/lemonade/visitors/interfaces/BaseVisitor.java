@@ -5,9 +5,6 @@ import org.lemonade.nodes.Conditional;
 import org.lemonade.nodes.Form;
 import org.lemonade.nodes.Question;
 
-/**
- *
- */
 public interface BaseVisitor<T> {
     T visit(Form form);
 

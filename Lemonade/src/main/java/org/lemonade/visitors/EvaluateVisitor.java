@@ -3,8 +3,11 @@ package org.lemonade.visitors;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.lemonade.gui.*;
-import org.lemonade.gui.elements.GuiComputedElement;
+import org.lemonade.gui.GuiComputedQuestion;
+import org.lemonade.gui.GuiConditional;
+import org.lemonade.gui.GuiExpression;
+import org.lemonade.gui.GuiForm;
+import org.lemonade.gui.GuiQuestion;
 import org.lemonade.gui.expressions.binary.GuiAndBinary;
 import org.lemonade.gui.expressions.binary.GuiDivideBinary;
 import org.lemonade.gui.expressions.binary.GuiEqBinary;
@@ -30,7 +33,6 @@ import org.lemonade.gui.values.GuiNumericalValue;
 import org.lemonade.gui.values.GuiStringValue;
 import org.lemonade.gui.values.GuiUndefinedValue;
 import org.lemonade.gui.values.GuiValue;
-import org.lemonade.nodes.expressions.Expression;
 import org.lemonade.visitors.interfaces.GuiBaseElementsVisitor;
 import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 

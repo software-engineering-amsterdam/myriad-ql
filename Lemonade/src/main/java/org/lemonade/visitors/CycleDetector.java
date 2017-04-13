@@ -1,15 +1,29 @@
 package org.lemonade.visitors;
 
 import org.lemonade.nodes.Position;
-import org.lemonade.nodes.expressions.binary.*;
-import org.lemonade.nodes.expressions.literal.*;
+import org.lemonade.nodes.expressions.binary.AndBinary;
+import org.lemonade.nodes.expressions.binary.DivideBinary;
+import org.lemonade.nodes.expressions.binary.EqBinary;
+import org.lemonade.nodes.expressions.binary.GTBinary;
+import org.lemonade.nodes.expressions.binary.GTEBinary;
+import org.lemonade.nodes.expressions.binary.LTBinary;
+import org.lemonade.nodes.expressions.binary.LTEBinary;
+import org.lemonade.nodes.expressions.binary.MinusBinary;
+import org.lemonade.nodes.expressions.binary.NEqBinary;
+import org.lemonade.nodes.expressions.binary.OrBinary;
+import org.lemonade.nodes.expressions.binary.PlusBinary;
+import org.lemonade.nodes.expressions.binary.ProductBinary;
+import org.lemonade.nodes.expressions.literal.BooleanLiteral;
+import org.lemonade.nodes.expressions.literal.DateLiteral;
+import org.lemonade.nodes.expressions.literal.DecimalLiteral;
+import org.lemonade.nodes.expressions.literal.IdentifierLiteral;
+import org.lemonade.nodes.expressions.literal.IntegerLiteral;
+import org.lemonade.nodes.expressions.literal.MoneyLiteral;
+import org.lemonade.nodes.expressions.literal.StringLiteral;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
 import org.lemonade.visitors.interfaces.ExpressionVisitor;
 
-/**
- *
- */
 public class CycleDetector implements ExpressionVisitor<Boolean> {
 
     private String identifier;
@@ -111,14 +125,12 @@ public class CycleDetector implements ExpressionVisitor<Boolean> {
 
     @Override
     public Boolean visit(BangUnary bangUnary) {
-        boolean expression = bangUnary.getExpression().accept(this);
-        return expression;
+        return bangUnary.getExpression().accept(this);
     }
 
     @Override
     public Boolean visit(NegUnary negUnary) {
-        boolean expression = negUnary.getExpression().accept(this);
-        return expression;
+        return negUnary.getExpression().accept(this);
     }
 
     @Override
@@ -155,7 +167,8 @@ public class CycleDetector implements ExpressionVisitor<Boolean> {
     public Boolean visit(IdentifierLiteral identifierValue) {
         boolean cyclic = identifierValue.getValue().equals(this.identifier);
         if (cyclic)
-            error = "Cyclic dependency on " + identifier +  " found at " + this.position;
+            error = "Cyclic dependency on " + identifier + " found at " + this.position;
+
         return cyclic;
     }
 }

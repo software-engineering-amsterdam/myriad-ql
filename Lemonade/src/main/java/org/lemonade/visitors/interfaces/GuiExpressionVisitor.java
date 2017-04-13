@@ -24,9 +24,6 @@ import org.lemonade.gui.values.GuiMoneyValue;
 import org.lemonade.gui.values.GuiStringValue;
 import org.lemonade.gui.values.GuiUndefinedValue;
 
-/**
- *
- */
 public interface GuiExpressionVisitor<T> {
     T visit(GuiAndBinary guiAndBinary);
 

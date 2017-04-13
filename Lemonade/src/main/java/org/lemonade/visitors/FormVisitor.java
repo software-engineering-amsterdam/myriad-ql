@@ -1,26 +1,51 @@
 package org.lemonade.visitors;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.lemonade.QLBaseVisitor;
 import org.lemonade.QLParser;
 import org.lemonade.exceptions.QLOperatorException;
-import org.lemonade.nodes.*;
+import org.lemonade.nodes.ASTNode;
+import org.lemonade.nodes.Body;
+import org.lemonade.nodes.ComputedQuestion;
+import org.lemonade.nodes.Conditional;
+import org.lemonade.nodes.Form;
+import org.lemonade.nodes.Position;
+import org.lemonade.nodes.Question;
 import org.lemonade.nodes.expressions.BinaryExpression;
 import org.lemonade.nodes.expressions.Expression;
-import org.lemonade.nodes.expressions.binary.*;
-import org.lemonade.nodes.expressions.literal.*;
+import org.lemonade.nodes.expressions.binary.AndBinary;
+import org.lemonade.nodes.expressions.binary.DivideBinary;
+import org.lemonade.nodes.expressions.binary.EqBinary;
+import org.lemonade.nodes.expressions.binary.GTBinary;
+import org.lemonade.nodes.expressions.binary.GTEBinary;
+import org.lemonade.nodes.expressions.binary.LTBinary;
+import org.lemonade.nodes.expressions.binary.LTEBinary;
+import org.lemonade.nodes.expressions.binary.MinusBinary;
+import org.lemonade.nodes.expressions.binary.NEqBinary;
+import org.lemonade.nodes.expressions.binary.OrBinary;
+import org.lemonade.nodes.expressions.binary.PlusBinary;
+import org.lemonade.nodes.expressions.binary.ProductBinary;
+import org.lemonade.nodes.expressions.literal.BooleanLiteral;
+import org.lemonade.nodes.expressions.literal.DateLiteral;
+import org.lemonade.nodes.expressions.literal.DecimalLiteral;
+import org.lemonade.nodes.expressions.literal.IdentifierLiteral;
+import org.lemonade.nodes.expressions.literal.IntegerLiteral;
+import org.lemonade.nodes.expressions.literal.StringLiteral;
 import org.lemonade.nodes.expressions.unary.BangUnary;
 import org.lemonade.nodes.expressions.unary.NegUnary;
-import org.lemonade.nodes.types.*;
+import org.lemonade.nodes.types.QLBooleanType;
+import org.lemonade.nodes.types.QLDateType;
+import org.lemonade.nodes.types.QLDecimalType;
+import org.lemonade.nodes.types.QLIntegerType;
+import org.lemonade.nodes.types.QLMoneyType;
+import org.lemonade.nodes.types.QLStringType;
+import org.lemonade.nodes.types.QLType;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- *
- */
 public class FormVisitor extends QLBaseVisitor<ASTNode> {
 
     @Override
@@ -57,7 +82,7 @@ public class FormVisitor extends QLBaseVisitor<ASTNode> {
         String label = ctx.label().getText();
         QLType type = (QLType) ctx.type_specifier().accept(this);
         Position position = constructPosition(ctx);
-        Expression expression = (Expression)  ctx.expr().accept(this);
+        Expression expression = (Expression) ctx.expr().accept(this);
 
         ComputedQuestion question = new ComputedQuestion(identifier, label, type, expression);
         question.setPosition(position);
@@ -133,16 +158,16 @@ public class FormVisitor extends QLBaseVisitor<ASTNode> {
         BinaryExpression expr;
         try {
             switch (ctx.op.getType()) {
-                case QLParser.PRODUCT:
-                    expr = new ProductBinary(left, right);
-                    expr.setPosition(position);
-                    return expr;
-                case QLParser.DIVIDE:
-                    expr = new DivideBinary(left, right);
-                    expr.setPosition(position);
-                    return expr;
-                default:
-                    throw new QLOperatorException("");//TODO change type of error
+            case QLParser.PRODUCT:
+                expr = new ProductBinary(left, right);
+                expr.setPosition(position);
+                return expr;
+            case QLParser.DIVIDE:
+                expr = new DivideBinary(left, right);
+                expr.setPosition(position);
+                return expr;
+            default:
+                throw new QLOperatorException();
             }
         } catch (QLOperatorException e) {
             throw new IllegalArgumentException();
@@ -173,16 +198,16 @@ public class FormVisitor extends QLBaseVisitor<ASTNode> {
         Expression expr;
 
         switch (ctx.op.getType()) {
-            case QLParser.PLUS:
-                expr = new PlusBinary(left, right);
-                expr.setPosition(position);
-                return expr;
-            case QLParser.MINUS:
-                expr = new MinusBinary(left, right);
-                expr.setPosition(position);
-                return expr;
-            default:
-                throw new IllegalArgumentException();//TODO change type of error
+        case QLParser.PLUS:
+            expr = new PlusBinary(left, right);
+            expr.setPosition(position);
+            return expr;
+        case QLParser.MINUS:
+            expr = new MinusBinary(left, right);
+            expr.setPosition(position);
+            return expr;
+        default:
+            throw new IllegalArgumentException();
         }
     }
 
@@ -203,24 +228,24 @@ public class FormVisitor extends QLBaseVisitor<ASTNode> {
 
         Expression expr;
         switch (ctx.op.getType()) {
-            case QLParser.LT:
-                expr = new LTBinary(left, right);
-                expr.setPosition(position);
-                return expr;
-            case QLParser.GT:
-                expr = new GTBinary(left, right);
-                expr.setPosition(position);
-                return expr;
-            case QLParser.LTEQ:
-                expr = new LTEBinary(left, right);
-                expr.setPosition(position);
-                return expr;
-            case QLParser.GTEQ:
-                expr = new GTEBinary(left, right);
-                expr.setPosition(position);
-                return expr;
-            default:
-                throw new IllegalArgumentException();//TODO change type of error
+        case QLParser.LT:
+            expr = new LTBinary(left, right);
+            expr.setPosition(position);
+            return expr;
+        case QLParser.GT:
+            expr = new GTBinary(left, right);
+            expr.setPosition(position);
+            return expr;
+        case QLParser.LTEQ:
+            expr = new LTEBinary(left, right);
+            expr.setPosition(position);
+            return expr;
+        case QLParser.GTEQ:
+            expr = new GTEBinary(left, right);
+            expr.setPosition(position);
+            return expr;
+        default:
+            throw new IllegalArgumentException();
         }
     }
 
@@ -232,16 +257,16 @@ public class FormVisitor extends QLBaseVisitor<ASTNode> {
         Expression expr;
 
         switch (ctx.op.getType()) {
-            case QLParser.EQ:
-                expr = new EqBinary(left, right);
-                expr.setPosition(position);
-                return expr;
-            case QLParser.NEQ:
-                expr = new NEqBinary(left, right);
-                expr.setPosition(position);
-                return expr;
-            default:
-                throw new IllegalArgumentException();//TODO change type of error
+        case QLParser.EQ:
+            expr = new EqBinary(left, right);
+            expr.setPosition(position);
+            return expr;
+        case QLParser.NEQ:
+            expr = new NEqBinary(left, right);
+            expr.setPosition(position);
+            return expr;
+        default:
+            throw new IllegalArgumentException();
         }
     }
 
