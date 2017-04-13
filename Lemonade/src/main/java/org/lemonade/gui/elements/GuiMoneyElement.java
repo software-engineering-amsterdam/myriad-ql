@@ -1,10 +1,10 @@
 package org.lemonade.gui.elements;
 
-import javafx.scene.control.TextField;
-
 import org.lemonade.gui.values.GuiMoneyValue;
 import org.lemonade.gui.values.GuiUndefinedValue;
 import org.lemonade.gui.values.GuiValue;
+
+import javafx.scene.control.TextField;
 
 public class GuiMoneyElement extends GuiMutableElement {
 

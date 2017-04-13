@@ -1,12 +1,12 @@
 package org.lemonade.gui.elements;
 
-import javafx.scene.control.DatePicker;
+import java.time.LocalDate;
 
 import org.lemonade.gui.values.GuiDateValue;
 import org.lemonade.gui.values.GuiUndefinedValue;
 import org.lemonade.gui.values.GuiValue;
 
-import java.time.LocalDate;
+import javafx.scene.control.DatePicker;
 
 public class GuiDateElement extends GuiMutableElement {
 

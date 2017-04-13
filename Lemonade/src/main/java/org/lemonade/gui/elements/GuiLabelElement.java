@@ -2,7 +2,6 @@ package org.lemonade.gui.elements;
 
 import org.lemonade.gui.values.GuiStringValue;
 
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 
 public class GuiLabelElement extends GuiElement {
