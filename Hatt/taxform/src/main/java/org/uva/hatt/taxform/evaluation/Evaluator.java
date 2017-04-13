@@ -17,13 +17,14 @@ import org.uva.hatt.taxform.ast.nodes.types.*;
 import org.uva.hatt.taxform.ast.nodes.types.Boolean;
 import org.uva.hatt.taxform.ast.nodes.types.Integer;
 import org.uva.hatt.taxform.ast.nodes.types.String;
+import org.uva.hatt.taxform.ast.visitors.ExpressionVisitor;
 import org.uva.hatt.taxform.ast.visitors.Visitor;
 import org.uva.hatt.taxform.values.BooleanValue;
 import org.uva.hatt.taxform.values.IntegerValue;
 import org.uva.hatt.taxform.values.StringValue;
 import org.uva.hatt.taxform.values.Value;
 
-public class Evaluator implements Visitor<Value>{
+public class Evaluator implements Visitor<Value>, ExpressionVisitor<Value>{
 
     private final EnvironmentsTable environmentsTable;
 
@@ -87,9 +88,7 @@ public class Evaluator implements Visitor<Value>{
     }
 
     @Override
-    public Value visit(GroupedExpression node) {
-        return node.getExpression().accept(this);
-    }
+    public Value visit(GroupedExpression node) { return node.getExpression().accept(this); }
 
     @Override
     public Value visit(Identifier identifier) {
