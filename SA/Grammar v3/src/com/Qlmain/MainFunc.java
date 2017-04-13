@@ -31,7 +31,7 @@ public class MainFunc {
             e.printStackTrace();
         }
 
-        if(inputContent != null)
+        if(inputContent != null && inputContent != "")
             runner.buildQLAST(inputContent);
 
     }

@@ -9,6 +9,7 @@ public class Type_str extends Type {
     public Type_str(){}
     public Type_str(String val){this.val = val;}
     private Type getStrType(){ return this;}
+
     @Override
     public Type exprTypeChecker() {
         return getStrType();

@@ -25,7 +25,6 @@ public class Sub extends Expression {
     public Object Evaluator() {
         Object thatLhs = lhs.Evaluator();
         Object thatRhs = rhs.Evaluator();
-        //System.out.println(thatLhs + " " + thatRhs);
         if (thatLhs instanceof Integer && thatRhs instanceof Integer) {
             return (int) thatLhs - (int) thatRhs;
         }else {

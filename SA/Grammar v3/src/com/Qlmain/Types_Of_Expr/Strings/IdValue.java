@@ -30,7 +30,6 @@ public class IdValue extends Expression {
 
     @Override
     public Object Evaluator() {
-        //Map<String,Object> variablesAndValues = new Evaluation().getVariablesAndValues();
         return new Evaluation().getTheIdValue(val);
     }
 }
