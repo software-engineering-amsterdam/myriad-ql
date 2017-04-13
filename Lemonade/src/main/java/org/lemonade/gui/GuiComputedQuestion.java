@@ -1,14 +1,10 @@
 package org.lemonade.gui;
 
 import org.lemonade.gui.elements.GuiComputedElement;
-import org.lemonade.gui.elements.GuiElement;
 import org.lemonade.gui.elements.GuiLabelElement;
 import org.lemonade.gui.values.GuiIdentifierValue;
 import org.lemonade.visitors.interfaces.GuiBaseElementsVisitor;
 
-/**
- *
- */
 public class GuiComputedQuestion extends GuiQuestion {
 
     private GuiComputedElement valueElement;

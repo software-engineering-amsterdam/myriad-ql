@@ -3,6 +3,7 @@ package org.lemonade.gui.values;
 import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 
 public class GuiDecimalValue extends GuiNumericalValue<Double> implements Comparable<GuiDecimalValue> {
+
     private Double value;
 
     public GuiDecimalValue(Double value) {
@@ -112,7 +113,7 @@ public class GuiDecimalValue extends GuiNumericalValue<Double> implements Compar
     }
 
     @Override
-    public GuiValue<?> divide(GuiDecimalValue that){
+    public GuiValue<?> divide(GuiDecimalValue that) {
         if (!(this.getValue() == 0.0)) {
             return new GuiDecimalValue(that.getValue() / this.getValue());
         }
@@ -120,9 +121,9 @@ public class GuiDecimalValue extends GuiNumericalValue<Double> implements Compar
     }
 
     @Override
-    public GuiValue<?> divide(GuiIntegerValue that){
+    public GuiValue<?> divide(GuiIntegerValue that) {
         if (!(this.getValue() == 0.0)) {
-            return new GuiDecimalValue((Double)(that.getValue() / this.getValue()));
+            return new GuiDecimalValue((Double) (that.getValue() / this.getValue()));
         }
         return new GuiUndefinedValue();
     }
@@ -154,6 +155,7 @@ public class GuiDecimalValue extends GuiNumericalValue<Double> implements Compar
     public GuiValue<?> doLtE(GuiDecimalValue that) {
         return new GuiBooleanValue(that.compareTo(this) <= 0);
     }
+
     @Override
     public GuiDecimalValue neg() {
         return new GuiDecimalValue(-this.getValue());

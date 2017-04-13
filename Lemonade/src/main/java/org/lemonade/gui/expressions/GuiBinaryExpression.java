@@ -3,9 +3,6 @@ package org.lemonade.gui.expressions;
 import org.lemonade.gui.GuiExpression;
 import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 
-/**
- *
- */
 public abstract class GuiBinaryExpression implements GuiExpression {
 
     private GuiExpression left;

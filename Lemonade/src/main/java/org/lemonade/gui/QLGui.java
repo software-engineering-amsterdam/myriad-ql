@@ -3,8 +3,6 @@ package org.lemonade.gui;
 import java.io.File;
 import java.util.List;
 
-import org.lemonade.gui.elements.GuiElement;
-import org.lemonade.gui.elements.GuiLabelElement;
 import org.lemonade.visitors.EvaluateVisitor;
 
 import javafx.geometry.Insets;
@@ -168,7 +166,6 @@ public class QLGui {
         gridPane.getChildren().addAll(guiQuestion.getLabelElement().getWidget(), guiQuestion.getElement().getWidget());
         gridPane.managedProperty().bind(gridPane.visibleProperty());
 
-        // Increment rowCount to place question on next row
         questionsGridPane.addRow(questionsRowCount++, gridPane);
     }
 

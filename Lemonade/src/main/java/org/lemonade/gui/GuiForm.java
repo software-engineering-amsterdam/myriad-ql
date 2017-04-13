@@ -3,7 +3,6 @@ package org.lemonade.gui;
 import java.util.List;
 
 import org.lemonade.gui.values.GuiIdentifierValue;
-import org.lemonade.visitors.EvaluateVisitor;
 import org.lemonade.visitors.interfaces.GuiBaseElementsVisitor;
 
 public class GuiForm extends GuiBody {
@@ -28,8 +27,6 @@ public class GuiForm extends GuiBody {
         visitor.visit(this);
     }
 
-    // TODO irrelevant method for form
     @Override
-    public void isVisible(final boolean flag) {
-    }
+    public void isVisible(final boolean flag) {}
 }

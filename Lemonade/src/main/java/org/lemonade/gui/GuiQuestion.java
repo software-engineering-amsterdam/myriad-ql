@@ -34,6 +34,7 @@ public abstract class GuiQuestion extends GuiBody {
 
     public abstract GuiElement getElement();
 
+    @Override
     public void isVisible(boolean flag) {
         getElement().getWidget().getParent().setVisible(flag);
         if (!flag)

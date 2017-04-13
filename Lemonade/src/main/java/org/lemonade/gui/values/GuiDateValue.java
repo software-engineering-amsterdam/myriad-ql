@@ -1,11 +1,10 @@
 package org.lemonade.gui.values;
 
+import java.time.LocalDate;
+
 import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 
-import java.time.LocalDate;
-import java.util.Date;
-
-public class GuiDateValue extends GuiValue<LocalDate> implements Comparable<GuiDateValue>{
+public class GuiDateValue extends GuiValue<LocalDate> implements Comparable<GuiDateValue> {
 
     private LocalDate value;
 
