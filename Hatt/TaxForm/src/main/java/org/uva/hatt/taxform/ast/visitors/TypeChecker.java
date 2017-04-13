@@ -15,22 +15,18 @@ import org.uva.hatt.taxform.ast.nodes.types.*;
 import org.uva.hatt.taxform.ast.nodes.types.Boolean;
 import org.uva.hatt.taxform.ast.nodes.types.Integer;
 import org.uva.hatt.taxform.ast.nodes.types.String;
-import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.DuplicateDeclaration;
+import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.*;
 import org.uva.hatt.taxform.ast.visitors.exceptionHandler.ExceptionHandler;
-import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.InvalidOperandsTypeToOperator;
-import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.TypeMismatch;
-import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.UndefinedReference;
 import org.uva.hatt.taxform.ast.visitors.exceptionHandler.warning.DuplicateLabel;
 
 import java.util.*;
 
 
-public class TypeChecker implements Visitor{
+public class TypeChecker implements Visitor, ExpressionVisitor<ValueType>{
 
     private ExceptionHandler exceptionHandler;
     private List<java.lang.String> questions = new LinkedList<>();
-    private Map<java.lang.String, ValueType> declarations = new HashMap<>();
-    private Set<java.lang.String> dependencies = new HashSet<>();
+    private Map<java.lang.String, IdentifierInput> declarations = new HashMap<>();
 
     public TypeChecker(ExceptionHandler exceptionHandler)
     {
@@ -54,14 +50,54 @@ public class TypeChecker implements Visitor{
             exceptionHandler.addWarning(new DuplicateLabel(node.getLineNumber(), node.getQuestion()));
         }
 
-        declarations.put(node.getValue(), node.getType());
+        declarations.put(node.getValue(), new IdentifierInput(node.getType()));
         questions.add(node.getQuestion().toLowerCase());
         return null;
     }
 
     @Override
     public ComputedQuestion visit(ComputedQuestion computedQuestion) {
+        if (declarations.containsKey(computedQuestion.getValue())) {
+            exceptionHandler.addError(new DuplicateDeclaration(computedQuestion.getLineNumber(), computedQuestion.getValue()));
+        }
+
+        if (questions.contains(computedQuestion.getQuestion().toLowerCase())) {
+            exceptionHandler.addWarning(new DuplicateLabel(computedQuestion.getLineNumber(), computedQuestion.getQuestion()));
+        }
+
+        declarations.put(computedQuestion.getValue(), new IdentifierInput(computedQuestion.getType()));
+        questions.add(computedQuestion.getQuestion().toLowerCase());
+
+        Expression expression = computedQuestion.getComputedValue();
+        expression.accept(this);
+        DependencyVisitor dependencyVisitor = new DependencyVisitor();
+        Set<java.lang.String> dependencies = expression.accept(dependencyVisitor);
+        java.lang.String identifier = computedQuestion.getValue();
+        for (java.lang.String dependency: dependencies){
+            addDependencies(identifier, dependency);
+        }
+
+        checkForDependencies(expression);
+
         return null;
+    }
+
+    private void addDependencies(java.lang.String identifier, java.lang.String dependency){
+        if (declarations.containsKey(dependency)) {
+            IdentifierInput identifierInput = declarations.get(identifier);
+            identifierInput.setDependencies(dependency);
+        }
+    }
+
+    private void checkForDependencies(Expression expression)
+    {
+        for(Map.Entry<java.lang.String, IdentifierInput> entry : declarations.entrySet()){
+            Set<java.lang.String> dependencies = entry.getValue().getDependencies();
+            Iterator<java.lang.String> iterator = dependencies.iterator();
+            while (iterator.hasNext()){
+                exceptionHandler.addError(new CyclicDependency(expression.getLineNumber(), entry.getKey(), iterator.next()));
+            }
+        }
     }
 
     @Override
@@ -89,7 +125,7 @@ public class TypeChecker implements Visitor{
 
     private void validateIfCondition(Expression expression, int line)
     {
-        ValueType type = (ValueType) expression.accept(this);
+        ValueType type = expression.accept(this);
 
         if(!type.isBoolean())
         {
@@ -128,14 +164,14 @@ public class TypeChecker implements Visitor{
     }
 
     @Override
-    public GroupedExpression visit(GroupedExpression node) {
+    public ValueType visit(GroupedExpression node) {
         return null;
     }
 
     @Override
     public ValueType visit(Identifier identifier) {
         if (declarations.keySet().contains(identifier.getValue())) {
-            return declarations.get(identifier.getValue());
+            return declarations.get(identifier.getValue()).getType();
         }
 
         exceptionHandler.addError(new UndefinedReference(identifier.getLineNumber(), identifier.getValue()));
@@ -174,13 +210,13 @@ public class TypeChecker implements Visitor{
     public ValueType visit(Equal equal){
         ValueType expectedType = new String(0);
 
-        if (!validateBinaryExpression(equal, expectedType).equals(new Unknown())) {
+        if (!validateBinaryExpression(equal, expectedType).name().equals(new Unknown().name())) {
             return new Boolean(0);
         }
 
         ValueType type = validateNumericType(equal, "Equal");
 
-        if (type.equals(new Unknown()))
+        if (type.name().equals(new Unknown().name()))
         {
             return type;
         }
@@ -191,7 +227,7 @@ public class TypeChecker implements Visitor{
     public ValueType visit(GreaterThan greaterThan){
         ValueType type = validateNumericType(greaterThan, "Greater than");
 
-        if (type.equals(new Unknown()))
+        if (type.name().equals(new Unknown().name()))
         {
             return type;
         }
@@ -202,7 +238,7 @@ public class TypeChecker implements Visitor{
     public ValueType visit(GreaterThanOrEqual greaterThanOrEqual){
         ValueType type = validateNumericType(greaterThanOrEqual, "Greater than or equal");
 
-        if (type.equals(new Unknown()))
+        if (type.name().equals(new Unknown().name()))
         {
             return type;
         }
@@ -213,7 +249,7 @@ public class TypeChecker implements Visitor{
     public ValueType visit(LessThan lessThan){
         ValueType type = validateNumericType(lessThan, "Less than");
 
-        if (type.equals(new Unknown()))
+        if (type.name().equals(new Unknown().name()))
         {
             return type;
         }
@@ -224,7 +260,7 @@ public class TypeChecker implements Visitor{
     public ValueType visit(LessThanOrEqual lessThanOrEqual){
         ValueType type = validateNumericType(lessThanOrEqual, "Less than or equal");
 
-        if (type.equals(new Unknown()))
+        if (type.name().equals(new Unknown().name()))
         {
             return type;
         }
@@ -235,7 +271,7 @@ public class TypeChecker implements Visitor{
     public ValueType visit(LogicalAnd logicalAnd) {
         ValueType expectedType = new Boolean(0);
 
-        if (!validateBinaryExpression(logicalAnd, expectedType).equals(new Unknown())) {
+        if (!validateBinaryExpression(logicalAnd, expectedType).name().equals(new Unknown().name())) {
             return expectedType;
         }
 
@@ -247,7 +283,7 @@ public class TypeChecker implements Visitor{
     public ValueType visit(LogicalOr logicalOr) {
         ValueType expectedType = new Boolean(0);
 
-        if (!validateBinaryExpression(logicalOr, expectedType).equals(new Unknown())) {
+        if (!validateBinaryExpression(logicalOr, expectedType).name().equals(new Unknown().name())) {
             return expectedType;
         }
 
@@ -264,13 +300,13 @@ public class TypeChecker implements Visitor{
     public ValueType visit(NotEqual notEqual){
         ValueType expectedType = new String(0);
 
-        if (!validateBinaryExpression(notEqual, expectedType).equals(new Unknown())) {
+        if (!validateBinaryExpression(notEqual, expectedType).name().equals(new Unknown().name())) {
             return new Boolean(0);
         }
 
         ValueType type = validateNumericType(notEqual, "Not equal");
 
-        if (type.equals(new Unknown()))
+        if (type.name().equals(new Unknown().name()))
         {
             return type;
         }
@@ -284,10 +320,10 @@ public class TypeChecker implements Visitor{
 
     private ValueType validateNumericType(BooleanExpression expression, java.lang.String operationName){
 
-        if (!validateBinaryExpression(expression, new Integer(0)).equals(new Unknown())) {
+        if (!validateBinaryExpression(expression, new Integer(0)).name().equals(new Unknown().name())) {
             return new Integer(0);
         }
-        if (!validateBinaryExpression(expression, new Money(0)).equals(new Unknown())) {
+        if (!validateBinaryExpression(expression, new Money(0)).name().equals(new Unknown().name())) {
             return new Money(0);
         }
 
