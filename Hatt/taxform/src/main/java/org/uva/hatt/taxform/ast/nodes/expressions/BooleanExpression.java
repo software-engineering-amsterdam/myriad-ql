@@ -1,7 +1,5 @@
 package org.uva.hatt.taxform.ast.nodes.expressions;
 
-import org.uva.hatt.taxform.ast.visitors.Visitor;
-
 public abstract class BooleanExpression extends Expression{
 
     private final Expression lhs;
@@ -19,10 +17,5 @@ public abstract class BooleanExpression extends Expression{
 
     public Expression getRhs() {
         return rhs;
-    }
-
-    @Override
-    public <T> T accept(Visitor<T> visitor){
-        return visitor.visit(this);
     }
 }
