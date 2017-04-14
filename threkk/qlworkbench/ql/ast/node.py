@@ -21,7 +21,7 @@ class Variable(object):
         return context.get_value(self.name)
 
     def __str__(self):
-        return '({}, {})'.format(self.name, self.type)
+        return '{} ({})'.format(self.name, self.type)
 
 
 class Node(object):
@@ -60,7 +60,7 @@ class Declaration(Node):
         ui.add_question(self.text, self.variable, self.conditions)
 
     def __str__(self):
-        return '(declaration, {}, {})"'.format(self.text, self.variable)
+        return '(declaration {})"'.format(self.variable)
 
 
 # ASSIGNATIONS
@@ -77,5 +77,4 @@ class Assignation(Node):
 
     def __str__(self):
         """Displays the declaration in the given UI."""
-        return '(assignation, {}, {}, {})'.format(self.text, self.variable,
-                                                  self.expression)
+        return '(assignation {}, {})'.format(self.variable, self.expression)
