@@ -93,12 +93,12 @@ class UIContext(object):
             displayed. If not, it is hidden.
         """
         if reg.expression:
-            reg.set_value(reg.expression.read(self))
+            reg.set_value(reg.expression.get_value(self))
 
         if reg.conditions:
             visible = True
             for condition in reg.conditions:
-                visible = visible and condition.read(self)
+                visible = visible and condition.get_value(self)
                 if visible:
                     reg.get_label().grid()
                     reg.get_field().grid()

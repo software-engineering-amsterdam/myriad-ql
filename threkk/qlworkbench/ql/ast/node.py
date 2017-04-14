@@ -14,7 +14,7 @@ class Variable(object):
         self.type = type
         self.name = variable
 
-    def read(self, context):
+    def get_value(self, context):
         """
         Returns the value of the variable in a given context, usually the UI.
         """
@@ -33,11 +33,11 @@ class Node(object):
         self.variable = Variable(variable, type)
         self.conditions = []
 
-    def read(self, context):
+    def get_value(self, context):
         """
         Returns the value of the node in a given context, usually the UI.
         """
-        return self.variable.read(context)
+        return self.variable.get_value(context)
 
     def register(self, ql):
         """Adds the node the given AST."""
