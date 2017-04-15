@@ -32,10 +32,11 @@ public class QLSFormTest extends SemanticsTester {
     public void executeMain() throws IOException {
         // Generate AST
         QlAstBuilder builder = new QlAstBuilder(testFile("SimpleForm.txfrm"));
-        FormNode ast = builder.generateAst(new MessageList());
+        MessageList messageList = new MessageList();
+        FormNode ast = builder.generateAst(messageList);
         SymbolTable symbolTable = new SymbolTable();
         ast.fillSymbolTable(symbolTable);
-        createQls("SimpleForm.qls");
+        createQls("SimpleForm.qls", messageList);
         QuestionForm taxForm = new QlsForm(ast.toString(), symbolTable, mQlsStyle);
         ast.fillQuestionForm(taxForm);
         taxForm.show();
@@ -46,18 +47,18 @@ public class QLSFormTest extends SemanticsTester {
         assertSemantics("SimpleForm.txfrm", 0, "Qls should not contain errors");
     }
 
-    private void createQls(String taxFile) {
+    private void createQls(String taxFile, MessageList messageList) {
         String styleFile = FileUtility.replaceExtension(taxFile, ".qls");
         File style = testFile(styleFile);
         Assert.assertTrue(style.exists(), "File not found: " + styleFile);
         mStyleBuilder = new QlsStyleBuilder(style);
-        mQlsStyle = mStyleBuilder.generateStyle();
+        mQlsStyle = mStyleBuilder.generateStyle(messageList);
     }
 
     protected void assertSemantics(String fileName, int expectedErrorAmount, String description) throws IOException {
         super.assertSemantics(fileName, 0, "only works for valid tax forms");
-        createQls(fileName);
         MessageList messages = new MessageList();
+        createQls(fileName, messages);
         mQlsStyle.checkSemantics(getSymbolTable(), messages);
         System.out.println(messages);
         Assert.assertEquals(expectedErrorAmount, messages.messageAmount(), "invalid error amount detected: " + description);

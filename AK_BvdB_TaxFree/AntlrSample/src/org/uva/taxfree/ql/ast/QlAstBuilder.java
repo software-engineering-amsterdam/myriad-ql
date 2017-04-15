@@ -60,7 +60,7 @@ public class QlAstBuilder extends QLGrammarBaseListener {
             mBuilder.walkParseTree(this, parser.form());
             return mRootNode;
         } catch (UnsupportedOperationException e) {
-            semanticsMessages.addError(e.getMessage());
+            semanticsMessages.addError("(QlAstBuilder.java:63): Couldn't generate AST because of a parse error: " + e.getMessage());
             return null;
         }
     }

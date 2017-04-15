@@ -46,7 +46,7 @@ public class Main {
         File qlsFile = createStyleFile(inputFile);
         if (qlsFile.exists()) {
             QlsStyleBuilder qlsStyleBuilder = new QlsStyleBuilder(qlsFile);
-            QlsStyle qlsStyle = qlsStyleBuilder.generateStyle();
+            QlsStyle qlsStyle = qlsStyleBuilder.generateStyle(semanticsMessages);
             qlsStyle.checkSemantics(symbolTable, semanticsMessages);
             QlsForm qls = new QlsForm(ast.toString(), symbolTable, qlsStyle);
             taxForm = qls;

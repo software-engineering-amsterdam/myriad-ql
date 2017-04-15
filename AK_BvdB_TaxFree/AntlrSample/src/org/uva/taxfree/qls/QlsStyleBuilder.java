@@ -5,6 +5,7 @@ import org.uva.taxfree.ql.ast.AntlrBuilder;
 import org.uva.taxfree.ql.gen.QLSGrammarBaseListener;
 import org.uva.taxfree.ql.gen.QLSGrammarLexer;
 import org.uva.taxfree.ql.gen.QLSGrammarParser;
+import org.uva.taxfree.ql.gui.MessageList;
 import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.types.BooleanType;
 import org.uva.taxfree.ql.model.types.IntegerType;
@@ -38,7 +39,7 @@ public class QlsStyleBuilder extends QLSGrammarBaseListener {
         mCachedDefaultStyles = new ArrayList<>();
     }
 
-    private void cacheSyleOption(StyleOption styleOption) {
+    private void cacheStyleOption(StyleOption styleOption) {
         mCachedStyleOptions.add(styleOption);
     }
 
@@ -70,25 +71,22 @@ public class QlsStyleBuilder extends QLSGrammarBaseListener {
         return cachedList;
     }
 
-    // TODO: Might want to pass the messages array?
-    public QlsStyle generateStyle() {
+    public QlsStyle generateStyle(MessageList messageList) {
         try {
             QLSGrammarParser parser;
             try {
                 parser = createGrammarParser();
             } catch (IOException e) {
-//                semanticsMessages.addError("(QlAstBuilder.java:55): Unable to create grammarParser: " + e.getMessage());
-//                return null;
-                throw new RuntimeException("Unable to create grammarParser: " + e.getMessage());
+                messageList.addError("(QlsStyleBuilder.java:81): Unable to create grammarParser: " + e.getMessage());
+                return null;
             }
 
             parser.addErrorListener(mBuilder.createErrorListener());
             mBuilder.walkParseTree(this, parser.stylesheet());
             return mQlsStyle;
         } catch (UnsupportedOperationException e) {
-//            semanticsMessages.addError(e.getMessage());
-//            return null;
-            throw new RuntimeException("Couldn't generate style because of a parse error: " + e.getMessage());
+            messageList.addError("(QlsStyleBuilder.java:89): Couldn't generate style because of a parse error: " + e.getMessage());
+            return null;
         }
     }
 
@@ -139,32 +137,32 @@ public class QlsStyleBuilder extends QLSGrammarBaseListener {
     @Override
     public void enterFontStyle(QLSGrammarParser.FontStyleContext ctx) {
         super.enterFontStyle(ctx);
-        cacheSyleOption(new FontStyleOption(ctx.STRING_LITERAL().getText(), createSourceInfo(ctx)));
+        cacheStyleOption(new FontStyleOption(ctx.STRING_LITERAL().getText(), createSourceInfo(ctx)));
     }
 
     @Override
     public void enterFontSizeStyle(QLSGrammarParser.FontSizeStyleContext ctx) {
         super.enterFontSizeStyle(ctx);
-        cacheSyleOption(new FontSizeStyleOption(Integer.valueOf(ctx.INTEGER_LITERAL().getText()), createSourceInfo(ctx)));
+        cacheStyleOption(new FontSizeStyleOption(Integer.valueOf(ctx.INTEGER_LITERAL().getText()), createSourceInfo(ctx)));
     }
 
     @Override
     public void enterColorStyle(QLSGrammarParser.ColorStyleContext ctx) {
         super.enterColorStyle(ctx);
-        cacheSyleOption(new ColorStyleOption(ctx.COLOR_LITERAL().getText(), createSourceInfo(ctx)));
+        cacheStyleOption(new ColorStyleOption(ctx.COLOR_LITERAL().getText(), createSourceInfo(ctx)));
     }
 
     @Override
     public void enterBackgroundColorStyle(QLSGrammarParser.BackgroundColorStyleContext ctx) {
         super.enterBackgroundColorStyle(ctx);
-        cacheSyleOption(new BackgroundColorStyleOption(ctx.COLOR_LITERAL().getText(), createSourceInfo(ctx)));
+        cacheStyleOption(new BackgroundColorStyleOption(ctx.COLOR_LITERAL().getText(), createSourceInfo(ctx)));
     }
 
     // Exits
     @Override
     public void exitWidgetStyle(QLSGrammarParser.WidgetStyleContext ctx) {
         super.exitWidgetStyle(ctx);
-        cacheSyleOption(mCachedWidgetStyleOption);
+        cacheStyleOption(mCachedWidgetStyleOption);
     }
 
     @Override
