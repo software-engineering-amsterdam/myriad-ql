@@ -33,7 +33,7 @@ from .ast.expression import DecimalExpression
 from .ast.expression import IdExpression
 from .ast.node import Assignation
 from .ast.node import Declaration
-from .ast.root import QLAST
+from .ast.node import Root
 from .ast.type import Boolean
 from .ast.type import Decimal
 from .ast.type import String
@@ -42,7 +42,7 @@ from .ast.type import String
 class QLParser(object):
     """Encapsulates the logic of the PLY parser."""
     def __init__(self, tokens):
-        self.ast = QLAST()
+        self.ast = Root()
         self.tokens = tokens
         self.start = 'start'
         self.parser = yacc.yacc(module=self, debug=0, write_tables=0)
@@ -55,9 +55,9 @@ class QLParser(object):
         """
         start : FORM ID LBRACK statements RBRACK
         """
-        self.ast.set_title(p[2])
+        self.ast.set_text(p[2])
         for statement in p[4]:
-            self.ast.register_node(statement)
+            self.ast.add_node(statement)
 
     def p_statements(self, p):
         """
@@ -110,7 +110,7 @@ class QLParser(object):
         elif p[1] == 'string':
             p[0] = String()
         else:
-            self.ast.register_error(p[1], 'Invalid type given.')
+            pass
 
     def p_condition(self, p):
         """
@@ -144,8 +144,7 @@ class QLParser(object):
             elif p[2] == '||':
                 p[0] = OrExpression(p[1], p[3])
             else:
-                self.ast.register_error(p[2],
-                                        'Invalid condition operator given.')
+                pass
         else:
             p[0] = p[1]
 
@@ -173,8 +172,7 @@ class QLParser(object):
             elif p[2] == '==':
                 p[0] = EQExpression(p[1], p[3])
             else:
-                self.ast.register_error(p[2],
-                                        'Invalid comparison operator given.')
+                pass
         else:
             p[0] = p[1]
 
@@ -190,8 +188,7 @@ class QLParser(object):
             elif p[2] == '-':
                 p[0] = MinusExpression(p[1], p[3])
             else:
-                self.ast.register_error(p[2],
-                                        'Invalid expression operator given.')
+                pass
         else:
             p[0] = p[1]
 
@@ -207,7 +204,7 @@ class QLParser(object):
             elif p[2] == '/':
                 p[0] = DivExpression(p[1], p[3])
             else:
-                self.ast.register_error(p[2], 'Invalid term operator given.')
+                pass
 
         else:
             p[0] = p[1]
@@ -242,4 +239,4 @@ class QLParser(object):
         p[0] = []
 
     def p_error(self, p):
-        self.ast.register_error(p, 'Critical grammar error: {}'.format(p))
+        pass

@@ -17,16 +17,15 @@ class Visitor(object):
     trough the AST to retrieve all the nodes and use them to build the user
     interface.
     """
-    def __init__(self, ast):
-        self.__ast = ast
+    def __init__(self, root):
+        self.__ast = root
         self.__ui = Builder()
 
     def execute(self):
-        self.__ui.set_title(self.__ast.title)
-        queue = self.__ast.build_order
+        self.__ui.set_title(self.__ast.text)
 
-        for node in queue:
-            self.__ast.register[node].build_ui(self.__ui)
+        for node in self.__ast.nodes:
+            node.build_ui(self.__ui)
 
         return self.__ui
 

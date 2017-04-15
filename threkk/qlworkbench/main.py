@@ -7,6 +7,7 @@ printed in the screen. If not, the application will be launched.
 import click
 from ql.lexer import QLLexer
 from ql.parser import QLParser
+from typechecker.root import QLAST
 from ui.builder import Visitor
 
 
@@ -22,14 +23,15 @@ def cli(file):
     lex = QLLexer()
     par = QLParser(lex.tokens)
     ast = par.parse(data, lexer=lex.lexer)
-    ast.typechecker.check()
+    typechecker = QLAST(ast)
+    typechecker.typechecker.check()
 
-    if ast.get_warnings():
-        for warn in ast.get_warnings():
+    if typechecker.get_warnings():
+        for warn in typechecker.get_warnings():
             click.secho(warn.__str__(), fg='yellow')
 
-    if ast.get_errors():
-        for error in ast.get_errors():
+    if typechecker.get_errors():
+        for error in typechecker.get_errors():
             click.secho(error.__str__(), fg='red')
     else:
         ui_generator = Visitor(ast)

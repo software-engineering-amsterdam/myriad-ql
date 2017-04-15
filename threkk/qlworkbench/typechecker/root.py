@@ -4,7 +4,7 @@ The root module holds the definition of the root of the AST tree. As it is the
 root, it hold extra information, logic and syntax that make it unique from the
 rest of the nodes.
 """
-from .typechecker import TypeChecker
+from typechecker.ql_checker import TypeChecker
 
 
 class QLAST(object):
@@ -13,16 +13,14 @@ class QLAST(object):
     the variables and nodes, a queue with the order in which the nodes must be
     displayed and the typechecker.
     """
-    def __init__(self):
+    def __init__(self, ast):
         super().__init__()
         self.build_order = []
         self.typechecker = TypeChecker(self)
         self.register = {}
-        self.title = 'QL Workbench'
 
-    def set_title(self, title):
-        """Sets the title/name of the app"""
-        self.title = title
+        for node in ast.nodes:
+            self.register_node(node)
 
     def register_node(self, node):
         """

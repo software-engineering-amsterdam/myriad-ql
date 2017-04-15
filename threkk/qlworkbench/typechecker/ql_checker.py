@@ -4,8 +4,8 @@ This module contains the typechecker. The typechecker is in charge of making
 sure that the AST returned by the parser is valid and does not contains errors
 that would make the program to crash.
 """
-from .type import Boolean
-from .type import Undefined
+from ql.ast.type import Boolean
+from ql.ast.type import Undefined
 
 
 class TypeCheckerMessage(object):

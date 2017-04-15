@@ -24,6 +24,29 @@ class Variable(object):
         return '{} ({})'.format(self.name, self.type)
 
 
+# ROOT
+class Root(object):
+    """
+    Initialises a root node. The root node holds every other node existing in
+    the tree. The result is a flatten tree in which the root has a list with
+    every descendant declaration or assignation, which hold their own
+    conditions.
+    """
+    def __init__(self):
+        super().__init__()
+        self.nodes = []
+        self.text = 'Root'
+
+    def add_node(self, node):
+        self.nodes.append(node)
+
+    def set_text(self, text):
+        self.text = text
+
+    def __str__(self):
+        return '{}: {}'.format(self.text, self.nodes)
+
+
 class Node(object):
     """
     Abstract parent class for `Declaration` and `Assignation`. It holds the
