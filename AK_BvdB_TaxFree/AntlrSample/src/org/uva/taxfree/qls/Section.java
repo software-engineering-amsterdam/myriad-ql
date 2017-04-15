@@ -4,6 +4,7 @@ import org.uva.taxfree.ql.gui.MessageList;
 import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 
+import javax.swing.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,5 +42,13 @@ public class Section {
 
     protected boolean contains(String variableId) {
         return getUsedVariables().contains(variableId);
+    }
+
+    protected void applyStyle(JComponent component) {
+        for (QuestionStyle style : mQuestionStyles) {
+            if (style.getId().equals(component.getName())) {
+                style.applyStyle(component);
+            }
+        }
     }
 }
