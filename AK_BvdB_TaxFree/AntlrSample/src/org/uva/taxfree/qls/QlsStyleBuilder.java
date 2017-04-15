@@ -77,7 +77,7 @@ public class QlsStyleBuilder extends QLSGrammarBaseListener {
             try {
                 parser = createGrammarParser();
             } catch (IOException e) {
-                messageList.addError("(QlsStyleBuilder.java:81): Unable to create grammarParser: " + e.getMessage());
+                messageList.addError("(QlsStyleBuilder.java:80): Unable to create grammarParser: " + e.getMessage());
                 return null;
             }
 
@@ -85,7 +85,7 @@ public class QlsStyleBuilder extends QLSGrammarBaseListener {
             mBuilder.walkParseTree(this, parser.stylesheet());
             return mQlsStyle;
         } catch (UnsupportedOperationException e) {
-            messageList.addError("(QlsStyleBuilder.java:89): Couldn't generate style because of a parse error: " + e.getMessage());
+            messageList.addError("(QlsStyleBuilder.java:88): Couldn't generate style because of a parse error: " + e.getMessage());
             return null;
         }
     }
@@ -211,32 +211,6 @@ public class QlsStyleBuilder extends QLSGrammarBaseListener {
     public void exitStylesheet(QLSGrammarParser.StylesheetContext ctx) {
         super.exitStylesheet(ctx);
         mQlsStyle = new QlsStyle(mCachedPages);
-    }
-
-    // TODO: REMOVE!
-    public QlsStyle generateStyleOld() {
-        // TODO parse and generate the styles.
-        SourceInfo tmpSourceInfo = new SourceInfo(0, 0, 0, 0);
-        List<StyleOption> booleanStyleOptions = new ArrayList<>();
-        booleanStyleOptions.add(new FontStyleOption("Arial", tmpSourceInfo));
-        booleanStyleOptions.add(new FontSizeStyleOption(20, tmpSourceInfo));
-        booleanStyleOptions.add(new ColorStyleOption("#FFFF00", tmpSourceInfo));
-        booleanStyleOptions.add(new BackgroundColorStyleOption("#CCCC", tmpSourceInfo));
-
-        List<StyleOption> stringStyleOptions = new ArrayList<>();
-        stringStyleOptions.add(new FontStyleOption("Arial", tmpSourceInfo));
-        stringStyleOptions.add(new FontSizeStyleOption(14, tmpSourceInfo));
-        stringStyleOptions.add(new ColorStyleOption("#00FFFF", tmpSourceInfo));
-        stringStyleOptions.add(new BackgroundColorStyleOption("#FFAA00", tmpSourceInfo));
-        List<Page> pages = new ArrayList<>();
-        List<Section> sections = new ArrayList<>();
-
-        List<QuestionStyle> questionStyles = new ArrayList<>();
-        sections.add(new Section("TaxSection", questionStyles, tmpSourceInfo));
-        List<DefaultStyle> defaultStyles = new ArrayList<>();
-        defaultStyles.add(new DefaultStyle(new BooleanType(), stringStyleOptions, tmpSourceInfo));
-        pages.add(new Page("TaxPage", sections, defaultStyles, tmpSourceInfo));
-        return new QlsStyle(pages);
     }
 
     private SourceInfo createSourceInfo(ParserRuleContext context) {
