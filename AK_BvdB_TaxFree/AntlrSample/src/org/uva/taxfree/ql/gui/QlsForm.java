@@ -36,9 +36,9 @@ public class QlsForm extends QuestionForm {
     @Override
     protected void registerWidget(Widget widget) {
         widget.updateStyle(mStyle);
+        String sectionName = mStyle.getSectionName(widget.getId());
         for (GuiPage page : mPages) {
-            if (page.contains(widget.getId())) {
-                String sectionName = mStyle.getSectionName(widget.getId());
+            if(page.contains(sectionName)){
                 page.register(sectionName, widget);
             }
         }
