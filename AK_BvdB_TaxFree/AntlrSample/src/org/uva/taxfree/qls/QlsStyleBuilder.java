@@ -28,7 +28,6 @@ public class QlsStyleBuilder extends QLSGrammarBaseListener {
     private final List<QuestionStyle> mCachedQuestionStyles;
     private final List<StyleOption> mCachedStyleOptions;
     private final List<DefaultStyle> mCachedDefaultStyles;
-    private StyleOption mCachedWidgetStyleOption;
 
     public QlsStyleBuilder(File inputFile) {
         mBuilder = new AntlrBuilder(inputFile);
@@ -37,6 +36,7 @@ public class QlsStyleBuilder extends QLSGrammarBaseListener {
         mCachedQuestionStyles = new ArrayList<>();
         mCachedStyleOptions = new ArrayList<>();
         mCachedDefaultStyles = new ArrayList<>();
+
     }
 
     private void cacheStyleOption(StyleOption styleOption) {
@@ -44,7 +44,7 @@ public class QlsStyleBuilder extends QLSGrammarBaseListener {
     }
 
     private void cacheWidgetStyle(WidgetStyleOption widgetStyleOption) {
-        mCachedWidgetStyleOption = widgetStyleOption;
+        cacheStyleOption(widgetStyleOption);
     }
 
     private List<StyleOption> popCachedStyleOptions() {
@@ -160,9 +160,9 @@ public class QlsStyleBuilder extends QLSGrammarBaseListener {
 
     // Exits
     @Override
-    public void exitWidgetStyle(QLSGrammarParser.WidgetStyleContext ctx) {
-        super.exitWidgetStyle(ctx);
-        cacheStyleOption(mCachedWidgetStyleOption);
+    public void exitQuestionWithWidget(QLSGrammarParser.QuestionWithWidgetContext ctx) {
+        super.exitQuestionWithWidget(ctx);
+        mCachedQuestionStyles.add(new QuestionStyle(ctx.VARIABLE_LITERAL().getText(), popCachedStyleOptions(), createSourceInfo(ctx)));
     }
 
     @Override
