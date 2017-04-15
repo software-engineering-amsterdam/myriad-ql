@@ -55,15 +55,6 @@ public class Page {
         return usedVariables;
     }
 
-    public String retrieveSectionName(String variableId) {
-        for (Section section : mSections) {
-            if (section.contains(variableId)) {
-                return section.getName();
-            }
-        }
-        throw new RuntimeException("Type checker missed an undeclared identifier: " + variableId);
-    }
-
     void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
         checkDefaultStyles(semanticsMessages);
         checkUndeclaredIdentifiers(symbolTable, semanticsMessages);
@@ -94,6 +85,12 @@ public class Page {
     }
 
     public void applyStyle(Type type, JComponent component) {
+        for (Section section : mSections) {
+            if (section.contains(component.getName())) {
+                section.applyStyle(component);
+            }
+        }
+
         for (StyleDeclaration declaration : mDefaultStyleDeclarations) {
             if (declaration.equals(type)) {
                 declaration.applyStyle(component);
