@@ -10,17 +10,15 @@ import javax.swing.*;
 public abstract class Widget {
     private final JPanel mPanel;
     private final JLabel mLabel;
-    private final String mId;
 
     public Widget(String label, String id) {
         mLabel = new JLabel(label);
-        mPanel = createPanel(label);
-        mId = id;
+        mPanel = createPanel(id);
     }
 
-    private JPanel createPanel(String label) {
+    private JPanel createPanel(String name) {
         JPanel widgetPanel = new JPanel();
-        widgetPanel.setName(label);
+        widgetPanel.setName(name);
         widgetPanel.add(mLabel);
         widgetPanel.setVisible(true);
         return widgetPanel;
@@ -38,17 +36,17 @@ public abstract class Widget {
     public abstract void callOnUpdate(FormListener listener);
 
     public void updateVisibility(SymbolTable symbolTable) {
-        mPanel.setVisible(symbolTable.isVisible(mId));
+        mPanel.setVisible(symbolTable.isVisible(getId()));
     }
 
     public abstract void updateValues(SymbolTable symbolTable);
 
     protected void writeToTable(SymbolTable symbolTable) {
-        symbolTable.updateValue(mId, resolveValue());
+        symbolTable.updateValue(getId(), resolveValue());
     }
 
     protected String readFromTable(SymbolTable symbolTable) {
-        return symbolTable.resolveValue(mId).toString();
+        return symbolTable.resolveValue(getId()).toString();
     }
 
     public void updateStyle(QlsStyle qlsStyle) {
@@ -60,7 +58,7 @@ public abstract class Widget {
     }
 
     public String getId() {
-        return mId;
+        return mPanel.getName();
     }
 
 }
