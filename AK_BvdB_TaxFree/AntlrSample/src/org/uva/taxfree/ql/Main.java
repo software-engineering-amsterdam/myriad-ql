@@ -41,8 +41,6 @@ public class Main {
         }
 
         QuestionForm taxForm = new QuestionForm(ast.toString(), symbolTable);
-        ast.fillQuestionForm(taxForm);
-
         File qlsFile = createStyleFile(inputFile);
         if (qlsFile.exists()) {
             QlsStyleBuilder qlsStyleBuilder = new QlsStyleBuilder(qlsFile);
@@ -51,6 +49,7 @@ public class Main {
             QlsForm qls = new QlsForm(ast.toString(), symbolTable, qlsStyle);
             taxForm = qls;
         }
+        ast.fillQuestionForm(taxForm);
         taxForm.show();
     }
 
