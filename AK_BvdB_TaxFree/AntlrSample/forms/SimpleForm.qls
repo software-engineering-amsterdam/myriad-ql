@@ -1,7 +1,10 @@
 stylesheet OurTaxFreeSolution {
   page Taxes {
     section "Meta" {
-        question likesToPayTaxes widget checkbox
+        question likesToPayTaxes { 
+          color:#FF0000
+          background-color:#00FF00
+        }
     }
   }
 }
