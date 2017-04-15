@@ -8,6 +8,7 @@ import UvA.Gamma.AST.Expression.Values.Value;
 import UvA.Gamma.AST.IdentifiableFormItem;
 import UvA.Gamma.AST.Question;
 import UvA.Gamma.AST.Types.Type;
+import UvA.Gamma.GUI.WidgetBuilder;
 
 /**
  * Created by casboot on 09-04-17.
@@ -15,19 +16,21 @@ import UvA.Gamma.AST.Types.Type;
 public class UIVisitor extends BaseVisitor {
 
     @Override
-    public void visit(Computed computed) {
-
+    public void visit(Computed com) {
+        WidgetBuilder.getWidget(com);
     }
 
     @Override
-    public void visit(Question question) {
-
+    public void visit(Condition con) {
+        WidgetBuilder.getWidget(con);
     }
 
     @Override
-    public void visit(Condition condition) {
-
+    public void visit(Question ques) {
+        WidgetBuilder.getWidget(ques);
     }
+
+
 
 
 }

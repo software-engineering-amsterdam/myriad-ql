@@ -203,9 +203,9 @@ public class ASTBuilder extends QLBaseVisitor<ASTNode> {
         return super.visitStringType(ctx);
     }
 
-    @Override
-    public DateType visitDateType(QLParser.DateTypeContext ctx) {
-        return new DateType();
-    }
+//    @Override
+//    public DateType visitDateType(QLParser.DateTypeContext ctx) {
+//        return new DateType();
+//    }
 
 }

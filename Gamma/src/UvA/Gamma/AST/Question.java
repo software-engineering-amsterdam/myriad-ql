@@ -24,6 +24,7 @@ public class Question extends IdentifiableFormItem {
 
     @Override
     public void accept(Visitor visitor) {
+        System.out.println(this.type.toString());
         visitor.visit(this);
     }
 
@@ -32,4 +33,8 @@ public class Question extends IdentifiableFormItem {
     public String toString() {
         return "<Question>: " + label + " " + identifier + ": " + type;
     }
+
+//    public Type returnType(){
+//        return (this.type);
+//    }
 }
