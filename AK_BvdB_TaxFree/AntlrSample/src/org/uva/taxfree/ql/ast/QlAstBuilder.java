@@ -35,7 +35,7 @@ import java.util.Stack;
 
 import static org.uva.taxfree.ql.gen.QLGrammarParser.*;
 
-public class QlAstBuilder extends QLGrammarBaseListener{
+public class QlAstBuilder extends QLGrammarBaseListener {
 
     private final AntlrBuilder mBuilder;
     private final List<ExpressionNode> mCachedConditions = new ArrayList<>();
@@ -52,7 +52,7 @@ public class QlAstBuilder extends QLGrammarBaseListener{
             try {
                 parser = createGrammarParser();
             } catch (IOException e) {
-                semanticsMessages.addError("(AntlrBuilder.java:52): Unable to create grammarParser: " + e.getMessage());
+                semanticsMessages.addError("(QlAstBuilder.java:55): Unable to create grammarParser: " + e.getMessage());
                 return null;
             }
 
@@ -95,20 +95,7 @@ public class QlAstBuilder extends QLGrammarBaseListener{
     }
 
     private SourceInfo createSourceInfo(ParserRuleContext context) {
-        int startLineNumber = context.getStart().getLine();
-        int startColumn = context.getStart().getCharPositionInLine();
-        int endLineNumber = context.getStop().getLine();
-        int endColumn = calcEndColumn(startLineNumber, startColumn, endLineNumber, context);
-        return new SourceInfo(startLineNumber, startColumn, endLineNumber, endColumn);
-    }
-
-    private int calcEndColumn(int startLineNumber, int endLineNumber, int startColumn, ParserRuleContext context) {
-        int endColumn = context.getStop().getCharPositionInLine();
-        if (startLineNumber == endLineNumber && startColumn == endColumn) {
-            // Literals have an invalid endColumn, so we need to calculate it by ourselves
-            endColumn = startColumn + context.getText().length();
-        }
-        return endColumn;
+        return mBuilder.createSourceInfo(context);
     }
 
     // Enters

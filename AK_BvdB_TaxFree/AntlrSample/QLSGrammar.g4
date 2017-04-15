@@ -22,13 +22,13 @@ pageStatement : 'section' sectionName=STRING_LITERAL '{' sectionStatement* '}'  
               ;
 
 sectionStatement : 'question' questionId=VARIABLE_LITERAL                       #question
-//                 | 'question' questionId=VARIABLE_LITERAL 'widget' widgetType   #questionWithWidget
+                 | 'question' questionId=VARIABLE_LITERAL 'widget' widgetType   #questionWithWidget
                  | 'question' questionId=VARIABLE_LITERAL '{' styleOption+ '}'  #questionWithStyle
                  ;
 
 styleOption : 'widget' ':' widgetType               #widgetStyle
             | 'font' ':' STRING_LITERAL             #fontStyle
-            | 'fontsize' ':' INTEGER_LITERAL        #fontsizeStyle
+            | 'fontsize' ':' INTEGER_LITERAL        #fontSizeStyle
             | 'color' ':' COLOR_LITERAL             #colorStyle
             | 'background-color' ':' COLOR_LITERAL  #backgroundColorStyle
 //            | 'width' ':' INTEGER_LITERAL           #widthStyle // Not supported yet

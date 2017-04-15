@@ -5,6 +5,7 @@ import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.uva.taxfree.ql.model.SourceInfo;
 
 import java.io.File;
 import java.io.FileReader;
@@ -19,16 +20,17 @@ public class AntlrBuilder {
         mInputFile = inputFile;
     }
 
-    protected ANTLRInputStream createInputStream() throws IOException {
+    // Unfortunately, we need to make these methods public, since the QlsStyleBuilder is in another package.
+    public ANTLRInputStream createInputStream() throws IOException {
         FileReader reader = new FileReader(mInputFile);
         return new ANTLRInputStream(reader);
     }
 
-    protected TokenStream createTokenStream(TokenSource tokenSource) {
+    public TokenStream createTokenStream(TokenSource tokenSource) {
         return new CommonTokenStream(tokenSource);
     }
 
-    protected ANTLRErrorListener createErrorListener() {
+    public ANTLRErrorListener createErrorListener() {
         return new ANTLRErrorListener() {
             @Override
             public void syntaxError(Recognizer<?, ?> recognizer, Object o, int line, int column, String message, RecognitionException e) {
@@ -52,9 +54,26 @@ public class AntlrBuilder {
         };
     }
 
-    protected void walkParseTree(ParseTreeListener listener, ParserRuleContext context) {
+    public void walkParseTree(ParseTreeListener listener, ParserRuleContext context) {
         ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(listener, context);
+    }
+
+    public SourceInfo createSourceInfo(ParserRuleContext context) {
+        int startLineNumber = context.getStart().getLine();
+        int startColumn = context.getStart().getCharPositionInLine();
+        int endLineNumber = context.getStop().getLine();
+        int endColumn = calcEndColumn(startLineNumber, startColumn, endLineNumber, context);
+        return new SourceInfo(startLineNumber, startColumn, endLineNumber, endColumn);
+    }
+
+    private int calcEndColumn(int startLineNumber, int endLineNumber, int startColumn, ParserRuleContext context) {
+        int endColumn = context.getStop().getCharPositionInLine();
+        if (startLineNumber == endLineNumber && startColumn == endColumn) {
+            // Literals have an invalid endColumn, so we need to calculate it by ourselves
+            endColumn = startColumn + context.getText().length();
+        }
+        return endColumn;
     }
 }
 
