@@ -6,15 +6,21 @@ import org.uva.taxfree.ql.ast.QlAstBuilder;
 import org.uva.taxfree.ql.gui.MessageList;
 import org.uva.taxfree.ql.gui.QlsForm;
 import org.uva.taxfree.ql.gui.QuestionForm;
+import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.blocks.FormNode;
+import org.uva.taxfree.ql.model.types.BooleanType;
 import org.uva.taxfree.ql.util.FileUtility;
-import org.uva.taxfree.qls.QlsStyle;
-import org.uva.taxfree.qls.QlsStyleBuilder;
+import org.uva.taxfree.qls.*;
+import org.uva.taxfree.qls.styleoption.StyleOption;
+import org.uva.taxfree.qls.styleoption.widget.CheckboxWidget;
+import org.uva.taxfree.qls.styleoption.widget.WidgetStyleOption;
 import test.org.uva.taxfree.ql.SemanticsTester;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class QLSFormTest extends SemanticsTester {
     QlsStyleBuilder mStyleBuilder;
@@ -40,6 +46,45 @@ public class QLSFormTest extends SemanticsTester {
         QuestionForm taxForm = new QlsForm(ast.toString(), symbolTable, mQlsStyle);
         ast.fillQuestionForm(taxForm);
         taxForm.show();
+    }
+
+    @Test
+    public void TestPages(){
+        Page p = generatePage();
+        Assert.assertTrue(p.contains("likesToPayTaxes"), "Page contains the question");
+        Assert.assertFalse(p.contains("someUnknownQuestion"), "Page does not contain this question");
+    }
+
+    private Page generatePage(){
+        return new Page("Taxes", generateSections(), generateDefaultStyles(), generateSourceInfo());
+    }
+
+    private List<Section> generateSections() {
+        List<Section> sections = new ArrayList<>();
+        sections.add(new Section("Meta", generateQuestionStyles(), generateSourceInfo()));
+        return sections;
+    }
+
+    private List<DefaultStyle> generateDefaultStyles(){
+        List<DefaultStyle> defaultStyles = new ArrayList<>();
+        defaultStyles.add(new DefaultStyle(new BooleanType(), generateStyleOptions(), generateSourceInfo()));
+        return defaultStyles;
+    }
+
+    private List<QuestionStyle> generateQuestionStyles() {
+        List<QuestionStyle> questionStyles = new ArrayList<>();
+        questionStyles.add(new QuestionStyle("likesToPayTaxes", generateStyleOptions(), generateSourceInfo()));
+        return questionStyles;
+    }
+
+    private SourceInfo generateSourceInfo() {
+        return new SourceInfo(0, 0, 0, 0);
+    }
+
+    private List<StyleOption> generateStyleOptions() {
+        List<StyleOption> styleOptions = new ArrayList<>();
+        styleOptions.add(new CheckboxWidget(generateSourceInfo()));
+        return styleOptions;
     }
 
     @Test
