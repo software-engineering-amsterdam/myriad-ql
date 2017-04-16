@@ -1,4 +1,4 @@
-package org.uva.hatt.taxform.typeChecker.exceptionHandler.error;
+package org.uva.hatt.taxform.typeChecker.messages.error;
 
 public class CyclicDependency extends Error{
 

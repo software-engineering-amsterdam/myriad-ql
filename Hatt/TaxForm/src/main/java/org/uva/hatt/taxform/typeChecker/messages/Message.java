@@ -1,16 +1,16 @@
-package org.uva.hatt.taxform.typeChecker.exceptionHandler;
+package org.uva.hatt.taxform.typeChecker.messages;
 
-import org.uva.hatt.taxform.typeChecker.exceptionHandler.warning.Warning;
-import org.uva.hatt.taxform.typeChecker.exceptionHandler.error.Error;
+import org.uva.hatt.taxform.typeChecker.messages.warning.Warning;
+import org.uva.hatt.taxform.typeChecker.messages.error.Error;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExceptionHandler {
+public class Message {
     private List<Warning> warnings;
     private List<Error> errors;
 
-    public ExceptionHandler(){
+    public Message(){
         warnings = new ArrayList<>();
         errors = new ArrayList<>();
     }

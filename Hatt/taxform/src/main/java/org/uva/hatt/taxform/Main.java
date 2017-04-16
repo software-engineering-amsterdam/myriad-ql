@@ -3,7 +3,7 @@ package org.uva.hatt.taxform;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.uva.hatt.taxform.ast.ASTGenerator;
 import org.uva.hatt.taxform.ast.nodes.Form;
-import org.uva.hatt.taxform.typeChecker.exceptionHandler.ExceptionHandler;
+import org.uva.hatt.taxform.typeChecker.messages.Message;
 import org.uva.hatt.taxform.ast.visitors.QLVisitor;
 import org.uva.hatt.taxform.typeChecker.TypeChecker;
 
@@ -25,7 +25,7 @@ public class Main {
         Form form = visitor.getForm();
         System.out.println(form.toString());
 
-        ExceptionHandler exceptionHandler = new ExceptionHandler();
+        Message exceptionHandler = new Message();
         TypeChecker typeCheckerVisitor = new TypeChecker(exceptionHandler);
         typeCheckerVisitor.visit(form);
 

@@ -17,20 +17,20 @@ import org.uva.hatt.taxform.ast.nodes.types.Integer;
 import org.uva.hatt.taxform.ast.nodes.types.String;
 import org.uva.hatt.taxform.ast.visitors.ExpressionVisitor;
 import org.uva.hatt.taxform.ast.visitors.Visitor;
-import org.uva.hatt.taxform.typeChecker.exceptionHandler.error.*;
-import org.uva.hatt.taxform.typeChecker.exceptionHandler.ExceptionHandler;
-import org.uva.hatt.taxform.typeChecker.exceptionHandler.warning.DuplicateLabel;
+import org.uva.hatt.taxform.typeChecker.messages.error.*;
+import org.uva.hatt.taxform.typeChecker.messages.Message;
+import org.uva.hatt.taxform.typeChecker.messages.warning.DuplicateLabel;
 
 import java.util.*;
 
 
 public class TypeChecker implements Visitor, ExpressionVisitor<ValueType> {
 
-    private ExceptionHandler exceptionHandler;
+    private Message exceptionHandler;
     private List<java.lang.String> questions = new LinkedList<>();
     private Map<java.lang.String, IdentifierInput> declarations = new HashMap<>();
 
-    public TypeChecker(ExceptionHandler exceptionHandler)
+    public TypeChecker(Message exceptionHandler)
     {
         this.exceptionHandler = exceptionHandler;
     }
