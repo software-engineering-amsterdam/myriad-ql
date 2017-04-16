@@ -16,16 +16,16 @@ import UvA.Gamma.Antlr.QL.QLParser;
 
 public abstract class WidgetBuilder {
 
-    public static widgetObject getWidget(Computed com){
-        return com.getType().widget;
+    public static void getWidget(Computed com){
+//        return com.getType().widget;
     }
-
-    public static widgetObject getWidget(Condition con){
-        return con.getType().widget;
-    }
-
-    public static widgetObject getWidget (Question ques){
-        return ques.getType().widget;
+//
+//   public static widgetObject getWidget(Condition con){
+//        return con.getType().widget;
+////    }
+//
+    public static void getWidget (Question ques){
+//        return ques.getType().widget;
     }
 
 }

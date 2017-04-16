@@ -3,6 +3,7 @@ package UvA.Gamma.AST;
 import UvA.Gamma.AST.Expression.Identifier;
 import UvA.Gamma.AST.Types.Type;
 import UvA.Gamma.Validation.TypeChecker;
+import UvA.Gamma.Visitors.UIVisitor;
 import UvA.Gamma.Visitors.Visitor;
 
 /**
@@ -22,9 +23,9 @@ public class Question extends IdentifiableFormItem {
     }
 
 
+
     @Override
     public void accept(Visitor visitor) {
-        System.out.println(this.type.toString());
         visitor.visit(this);
     }
 

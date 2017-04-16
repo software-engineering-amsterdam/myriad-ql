@@ -47,7 +47,7 @@ public class FXMLController {
         }
     }
 
-    @FXML
+    //@FXML
     private GridPane grid;
     private GridPane rootGrid;
     private Stack<GridPane> conditionStack;

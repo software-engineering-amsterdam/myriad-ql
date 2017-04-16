@@ -8,30 +8,71 @@ import UvA.Gamma.AST.Expression.Values.Value;
 import UvA.Gamma.AST.IdentifiableFormItem;
 import UvA.Gamma.AST.Question;
 import UvA.Gamma.AST.Types.Type;
+import UvA.Gamma.GUI.MainScreen;
 import UvA.Gamma.GUI.WidgetBuilder;
+import UvA.Gamma.AST.Form;
+import UvA.Gamma.AST.Question;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * Created by casboot on 09-04-17.
  */
 public class UIVisitor extends BaseVisitor {
+    private GridPane grid;
 
-    @Override
-    public void visit(Computed com) {
-        WidgetBuilder.getWidget(com);
+    public UIVisitor(GridPane grid) {
+        this.grid = grid;
     }
 
-    @Override
-    public void visit(Condition con) {
-        WidgetBuilder.getWidget(con);
+    public GridPane getGrid() {
+        return grid;
     }
 
     @Override
     public void visit(Question ques) {
         WidgetBuilder.getWidget(ques);
+        Text questionLabel = new Text(ques.getLabel());
+        TextField input = new TextField();
+        grid.addRow(getRowCount(grid) + 1, questionLabel, input);
     }
 
+    private int getRowCount(GridPane pane) {
+        int numRows = pane.getRowConstraints().size();
+        for (int i = 0; i < pane.getChildren().size(); i++) {
+            Node child = pane.getChildren().get(i);
+            if (child.isManaged()) {
+                Integer rowIndex = GridPane.getRowIndex(child);
+                if (rowIndex != null) {
+                    numRows = Math.max(numRows, rowIndex + 1);
+                }
+            }
+        }
+        return numRows;
+    }
 
+//    @Override
+//    public void visit(Condition con) {
+//        WidgetBuilder.getWidget(con);
+//    }
 
+//    @Override
+//    public void visit(Computed com) {
+//        WidgetBuilder.getWidget(com);
+//    }
 
 }
 
