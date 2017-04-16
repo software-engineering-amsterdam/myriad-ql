@@ -1,4 +1,4 @@
-package org.uva.hatt.taxform.ast.visitors.exceptionHandler.error;
+package org.uva.hatt.taxform.typeChecker.exceptionHandler.error;
 
 public class TypeMismatch extends Error{
 

@@ -1,4 +1,4 @@
-package org.uva.hatt.taxform.ast.visitors;
+package org.uva.hatt.taxform.typeChecker;
 
 import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
@@ -8,11 +8,12 @@ import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.Identifier;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.IntegerLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.StringerLiteral;
+import org.uva.hatt.taxform.ast.visitors.ExpressionVisitor;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class DependencyVisitor implements ExpressionVisitor<Set<String>>{
+public class DependencyVisitor implements ExpressionVisitor<Set<String>> {
 
     private Set<String> dependencies;
 

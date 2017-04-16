@@ -1,4 +1,4 @@
-package org.uva.hatt.taxform.ast.visitors;
+package org.uva.hatt.taxform.typeChecker;
 
 
 import org.uva.hatt.taxform.ast.nodes.Form;
@@ -15,14 +15,16 @@ import org.uva.hatt.taxform.ast.nodes.types.*;
 import org.uva.hatt.taxform.ast.nodes.types.Boolean;
 import org.uva.hatt.taxform.ast.nodes.types.Integer;
 import org.uva.hatt.taxform.ast.nodes.types.String;
-import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.*;
-import org.uva.hatt.taxform.ast.visitors.exceptionHandler.ExceptionHandler;
-import org.uva.hatt.taxform.ast.visitors.exceptionHandler.warning.DuplicateLabel;
+import org.uva.hatt.taxform.ast.visitors.ExpressionVisitor;
+import org.uva.hatt.taxform.ast.visitors.Visitor;
+import org.uva.hatt.taxform.typeChecker.exceptionHandler.error.*;
+import org.uva.hatt.taxform.typeChecker.exceptionHandler.ExceptionHandler;
+import org.uva.hatt.taxform.typeChecker.exceptionHandler.warning.DuplicateLabel;
 
 import java.util.*;
 
 
-public class TypeChecker implements Visitor, ExpressionVisitor<ValueType>{
+public class TypeChecker implements Visitor, ExpressionVisitor<ValueType> {
 
     private ExceptionHandler exceptionHandler;
     private List<java.lang.String> questions = new LinkedList<>();

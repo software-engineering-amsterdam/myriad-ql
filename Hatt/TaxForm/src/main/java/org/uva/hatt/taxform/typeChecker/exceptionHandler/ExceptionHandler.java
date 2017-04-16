@@ -1,7 +1,7 @@
-package org.uva.hatt.taxform.ast.visitors.exceptionHandler;
+package org.uva.hatt.taxform.typeChecker.exceptionHandler;
 
-import org.uva.hatt.taxform.ast.visitors.exceptionHandler.warning.Warning;
-import org.uva.hatt.taxform.ast.visitors.exceptionHandler.error.Error;
+import org.uva.hatt.taxform.typeChecker.exceptionHandler.warning.Warning;
+import org.uva.hatt.taxform.typeChecker.exceptionHandler.error.Error;
 
 import java.util.ArrayList;
 import java.util.List;

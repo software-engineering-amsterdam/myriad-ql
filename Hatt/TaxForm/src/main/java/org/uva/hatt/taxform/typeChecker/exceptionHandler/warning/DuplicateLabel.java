@@ -1,4 +1,4 @@
-package org.uva.hatt.taxform.ast.visitors.exceptionHandler.warning;
+package org.uva.hatt.taxform.typeChecker.exceptionHandler.warning;
 
 public class DuplicateLabel extends Warning{
 

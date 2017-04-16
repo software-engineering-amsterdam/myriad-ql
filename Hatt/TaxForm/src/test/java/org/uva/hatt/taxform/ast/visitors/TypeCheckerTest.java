@@ -5,7 +5,8 @@ import org.uva.hatt.taxform.ast.ASTGenerator;
 import org.uva.hatt.taxform.ast.nodes.Form;
 import org.uva.hatt.taxform.ast.nodes.items.Item;
 import org.uva.hatt.taxform.ast.nodes.items.Question;
-import org.uva.hatt.taxform.ast.visitors.exceptionHandler.ExceptionHandler;
+import org.uva.hatt.taxform.typeChecker.TypeChecker;
+import org.uva.hatt.taxform.typeChecker.exceptionHandler.ExceptionHandler;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.uva.hatt.taxform.ast.visitors;
+package org.uva.hatt.taxform.typeChecker;
 
 import org.uva.hatt.taxform.ast.nodes.types.ValueType;
 
