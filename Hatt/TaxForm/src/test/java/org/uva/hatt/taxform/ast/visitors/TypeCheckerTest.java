@@ -24,7 +24,7 @@ public class TypeCheckerTest {
         Question q2 = (Question) questions.get(1);
         typeChecker.visit(q1);
         typeChecker.visit(q2);
-        assertEquals("DUPLICATE_LABEL", exceptionHandler.getErrors().get(0).getMessage());
+        assertEquals("Duplicate question label at line 1: Label: Same label question", exceptionHandler.getWarnings().get(0).getMessage());
     }
 
     @Test
@@ -38,7 +38,7 @@ public class TypeCheckerTest {
         Question q2 = (Question) questions.get(1);
         typeChecker.visit(q1);
         typeChecker.visit(q2);
-        assertEquals("DUPLICATE_DECLARATION", exceptionHandler.getErrors().get(0).getMessage());
+        assertEquals("Duplicate question declaration at line 1: declaration: var", exceptionHandler.getErrors().get(0).getMessage());
     }
 
     @Test
@@ -48,6 +48,37 @@ public class TypeCheckerTest {
         String qlForm = "form f1 { \"question 1\" var1: string if (unknown) {\"question 2\" var2: money } }";
         Form form = ASTGenerator.getForm(qlForm);
         typeChecker.visit(form);
-        assertEquals("UNDEFINED_REFERENCE", exceptionHandler.getErrors().get(0).getMessage());
+        assertEquals("Undefined question reference at line 1: reference: unknown", exceptionHandler.getErrors().get(0).getMessage());
+    }
+
+    @Test
+    public void testTypeMismatch() throws  IOException {
+        ExceptionHandler exceptionHandler = new ExceptionHandler();
+        TypeChecker typeChecker = new TypeChecker(exceptionHandler);
+        String qlForm = "form f1 { \"question 1\" var1: string if (var1) {\"question 2\" var2: money } }";
+        Form form = ASTGenerator.getForm(qlForm);
+        typeChecker.visit(form);
+        assertEquals("Type mismatch at line 1: expected boolean but got: String", exceptionHandler.getErrors().get(0).getMessage());
+    }
+
+    @Test
+    public void testInvalidOperandsTypeToOperator() throws  IOException {
+        ExceptionHandler exceptionHandler = new ExceptionHandler();
+        TypeChecker typeChecker = new TypeChecker(exceptionHandler);
+        String qlForm = "form f1 { \"question 1\" var1: boolean = 1 + var1 }";
+        Form form = ASTGenerator.getForm(qlForm);
+        typeChecker.visit(form);
+        assertEquals("Invalid operand type at line 1, to operation: Addition", exceptionHandler.getErrors().get(0).getMessage());
+    }
+
+    @Test
+    public void testCyclicDependency() throws  IOException {
+        ExceptionHandler exceptionHandler = new ExceptionHandler();
+        TypeChecker typeChecker = new TypeChecker(exceptionHandler);
+        String qlForm = "form taxOfficeExample { \"q1?\" val1: money = 5 - 1  \n \"q2?\" val2: money = 5 + 1  \n \"q3?\" val3: money = val1 + val2}";;
+        Form form = ASTGenerator.getForm(qlForm);
+        typeChecker.visit(form);
+        assertEquals("Cyclic dependency at line 3: Identifier 'val3' is dependent on 'val2'", exceptionHandler.getErrors().get(0).getMessage());
+        assertEquals("Cyclic dependency at line 3: Identifier 'val3' is dependent on 'val1'", exceptionHandler.getErrors().get(1).getMessage());
     }
 }
