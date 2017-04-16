@@ -49,4 +49,9 @@ public class QLInteger extends Field {
             textField.setText(String.valueOf(value.getValue()));
         }
     }
+
+    @Override
+    public void setReadOnly() {
+        textField.setDisable(true);
+    }
 }
