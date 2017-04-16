@@ -36,15 +36,10 @@ public class QlsStyleBuilder extends QLSGrammarBaseListener {
         mCachedQuestionStyles = new ArrayList<>();
         mCachedStyleOptions = new ArrayList<>();
         mCachedDefaultStyles = new ArrayList<>();
-
     }
 
     private void cacheStyleOption(StyleOption styleOption) {
         mCachedStyleOptions.add(styleOption);
-    }
-
-    private void cacheWidgetStyle(WidgetStyleOption widgetStyleOption) {
-        cacheStyleOption(widgetStyleOption);
     }
 
     private List<StyleOption> popCachedStyleOptions() {
@@ -77,7 +72,7 @@ public class QlsStyleBuilder extends QLSGrammarBaseListener {
             try {
                 parser = createGrammarParser();
             } catch (IOException e) {
-                messageList.addError("(QlsStyleBuilder.java:80): Unable to create grammarParser: " + e.getMessage());
+                messageList.addError("(QlsStyleBuilder.java:75): Unable to create grammarParser: " + e.getMessage());
                 return null;
             }
 
@@ -85,7 +80,7 @@ public class QlsStyleBuilder extends QLSGrammarBaseListener {
             mBuilder.walkParseTree(this, parser.stylesheet());
             return mQlsStyle;
         } catch (UnsupportedOperationException e) {
-            messageList.addError("(QlsStyleBuilder.java:88): Couldn't generate style because of a parse error: " + e.getMessage());
+            messageList.addError("(QlsStyleBuilder.java:83): Couldn't generate style because of a parse error: " + e.getMessage());
             return null;
         }
     }
@@ -100,37 +95,37 @@ public class QlsStyleBuilder extends QLSGrammarBaseListener {
     @Override
     public void enterCheckboxWidget(QLSGrammarParser.CheckboxWidgetContext ctx) {
         super.enterCheckboxWidget(ctx);
-        cacheWidgetStyle(new CheckboxWidget(createSourceInfo(ctx)));
+        cacheStyleOption(new CheckboxWidget(createSourceInfo(ctx)));
     }
 
     @Override
     public void enterDropdownWidget(QLSGrammarParser.DropdownWidgetContext ctx) {
         super.enterDropdownWidget(ctx);
-        cacheWidgetStyle(new DropdownWidget(ctx.textTrue.getText(), ctx.textFalse.getText(), createSourceInfo(ctx)));
+        cacheStyleOption(new DropdownWidget(ctx.textTrue.getText(), ctx.textFalse.getText(), createSourceInfo(ctx)));
     }
 
     @Override
     public void enterRadioWidget(QLSGrammarParser.RadioWidgetContext ctx) {
         super.enterRadioWidget(ctx);
-        cacheWidgetStyle(new RadioWidget(ctx.textTrue.getText(), ctx.textFalse.getText(), createSourceInfo(ctx)));
+        cacheStyleOption(new RadioWidget(ctx.textTrue.getText(), ctx.textFalse.getText(), createSourceInfo(ctx)));
     }
 
     @Override
     public void enterSliderWidget(QLSGrammarParser.SliderWidgetContext ctx) {
         super.enterSliderWidget(ctx);
-        cacheWidgetStyle(new SliderWidget(createSourceInfo(ctx)));
+        cacheStyleOption(new SliderWidget(createSourceInfo(ctx)));
     }
 
     @Override
     public void enterSpinboxWidget(QLSGrammarParser.SpinboxWidgetContext ctx) {
         super.enterSpinboxWidget(ctx);
-        cacheWidgetStyle(new SpinboxWidget(createSourceInfo(ctx)));
+        cacheStyleOption(new SpinboxWidget(createSourceInfo(ctx)));
     }
 
     @Override
     public void enterTextWidget(QLSGrammarParser.TextWidgetContext ctx) {
         super.enterTextWidget(ctx);
-        cacheWidgetStyle(new TextWidget(createSourceInfo(ctx)));
+        cacheStyleOption(new TextWidget(createSourceInfo(ctx)));
     }
 
     // Properties
