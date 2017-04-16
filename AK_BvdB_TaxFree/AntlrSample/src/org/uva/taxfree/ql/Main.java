@@ -46,6 +46,10 @@ public class Main {
             QlsStyleBuilder qlsStyleBuilder = new QlsStyleBuilder(qlsFile);
             QlsStyle qlsStyle = qlsStyleBuilder.generateStyle(semanticsMessages);
             qlsStyle.checkSemantics(symbolTable, semanticsMessages);
+            checkMessages(semanticsMessages);
+            if(semanticsMessages.hasFatalErrors()){
+                System.exit(3);
+            }
             QlsForm qls = new QlsForm(ast.toString(), symbolTable, qlsStyle);
             taxForm = qls;
         }
