@@ -1,4 +1,4 @@
-package org.uva.hatt.taxform.typeChecker.messages.error;
+package org.uva.hatt.taxform.typechecker.messages.error;
 
 public class InvalidOperandsTypeToOperator extends Error{
 

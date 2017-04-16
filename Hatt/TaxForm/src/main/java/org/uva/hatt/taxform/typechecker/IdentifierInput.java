@@ -1,4 +1,4 @@
-package org.uva.hatt.taxform.typeChecker;
+package org.uva.hatt.taxform.typechecker;
 
 import org.uva.hatt.taxform.ast.nodes.types.ValueType;
 

@@ -1,4 +1,4 @@
-package org.uva.hatt.taxform.typeChecker.messages.warning;
+package org.uva.hatt.taxform.typechecker.messages.warning;
 
 public class Warning {
     private String msg;

@@ -1,7 +1,7 @@
-package org.uva.hatt.taxform.typeChecker.messages;
+package org.uva.hatt.taxform.typechecker.messages;
 
-import org.uva.hatt.taxform.typeChecker.messages.warning.Warning;
-import org.uva.hatt.taxform.typeChecker.messages.error.Error;
+import org.uva.hatt.taxform.typechecker.messages.warning.Warning;
+import org.uva.hatt.taxform.typechecker.messages.error.Error;
 
 import java.util.ArrayList;
 import java.util.List;
