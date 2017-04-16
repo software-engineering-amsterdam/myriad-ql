@@ -14,7 +14,6 @@ import org.uva.taxfree.ql.util.FileUtility;
 import org.uva.taxfree.qls.*;
 import org.uva.taxfree.qls.styleoption.StyleOption;
 import org.uva.taxfree.qls.styleoption.widget.CheckboxWidget;
-import org.uva.taxfree.qls.styleoption.widget.WidgetStyleOption;
 import test.org.uva.taxfree.ql.SemanticsTester;
 
 import java.io.File;
@@ -88,8 +87,28 @@ public class QLSFormTest extends SemanticsTester {
     }
 
     @Test
-    public void testSemantics() throws Exception {
+    public void testSemantics_simpleForm() throws Exception {
         assertSemantics("SimpleForm.txfrm", 0, "Qls should not contain errors");
+    }
+
+    @Test
+    public void testSemantics_oneQuestionUnstyled() throws Exception {
+        assertSemantics("OneQuestionUnstyled.txfrm", 0, "Qls should not contain errors");
+    }
+
+    @Test
+    public void testSemantics_oneQuestionWidgetStyle() throws Exception {
+        assertSemantics("OneQuestionWidgetStyle.txfrm", 0, "Qls should not contain errors");
+    }
+
+    @Test
+    public void testSemantics_oneQuestionStyleOptions() throws Exception {
+        assertSemantics("OneQuestionStyleOptions.txfrm", 0, "Qls should not contain errors");
+    }
+
+    @Test
+    public void testSemantics_oneQuestionDefaultStyle() throws Exception {
+        assertSemantics("OneQuestionDefaultStyle.txfrm", 0, "Qls should not contain errors");
     }
 
     private void createQls(String taxFile, MessageList messageList) {

@@ -158,18 +158,18 @@ public class QlsStyleBuilder extends QLSGrammarBaseListener {
         cacheStyleOption(new BackgroundColorStyleOption(ctx.COLOR_LITERAL().getText(), createSourceInfo(ctx)));
     }
 
-    // Exits
-    @Override
-    public void exitQuestionWithWidget(QLSGrammarParser.QuestionWithWidgetContext ctx) {
-        super.exitQuestionWithWidget(ctx);
-        mCachedQuestionStyles.add(new QuestionStyle(ctx.VARIABLE_LITERAL().getText(), popCachedStyleOptions(), createSourceInfo(ctx)));
-    }
-
     @Override
     public void exitQuestion(QLSGrammarParser.QuestionContext ctx) {
         super.exitQuestion(ctx);
         // A question without style options
         mCachedQuestionStyles.add(new QuestionStyle(ctx.VARIABLE_LITERAL().getText(), new ArrayList<>(), createSourceInfo(ctx)));
+    }
+
+    // Exits
+    @Override
+    public void exitQuestionWithWidget(QLSGrammarParser.QuestionWithWidgetContext ctx) {
+        super.exitQuestionWithWidget(ctx);
+        mCachedQuestionStyles.add(new QuestionStyle(ctx.VARIABLE_LITERAL().getText(), popCachedStyleOptions(), createSourceInfo(ctx)));
     }
 
     @Override
