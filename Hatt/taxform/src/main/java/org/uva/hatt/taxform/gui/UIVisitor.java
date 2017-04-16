@@ -54,6 +54,7 @@ public class UIVisitor implements Visitor<Pane> {
         List<Pane> questions = node.getQuestions().stream().map(item -> item.accept(this)).collect(Collectors.toList());
 
         vBox.getChildren().addAll(questions);
+        vBox.requestFocus();
 
         stage.setScene(scene);
         stage.sizeToScene();

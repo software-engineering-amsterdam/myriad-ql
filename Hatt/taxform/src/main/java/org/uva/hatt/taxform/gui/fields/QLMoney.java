@@ -13,10 +13,7 @@ public class QLMoney extends Field {
     private final TextField textField;
 
     public QLMoney() {
-        TextField textField = new TextField();
-        textField.setFocusTraversable(false);
-
-        this.textField = textField;
+        this.textField = new TextField();
     }
 
     @Override

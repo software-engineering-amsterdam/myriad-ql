@@ -13,10 +13,7 @@ public class QLInteger extends Field {
     private final TextField textField;
 
     public QLInteger() {
-        TextField textField = new TextField();
-        textField.setFocusTraversable(false);
-
-        this.textField = textField;
+        this.textField = new TextField();
     }
 
     @Override

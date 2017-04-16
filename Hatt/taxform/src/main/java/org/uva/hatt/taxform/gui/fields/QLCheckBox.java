@@ -13,10 +13,7 @@ public class QLCheckBox extends Field {
     private final CheckBox checkBox;
 
     public QLCheckBox() {
-        CheckBox checkBox = new CheckBox();
-        checkBox.setFocusTraversable(false);
-
-        this.checkBox = checkBox;
+        this.checkBox = new CheckBox();
     }
 
     @Override

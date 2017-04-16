@@ -13,10 +13,7 @@ public class QLTextField extends Field {
     private final TextField textField;
 
     public QLTextField() {
-        TextField textField = new TextField();
-        textField.setFocusTraversable(false);
-
-        this.textField = textField;
+        this.textField = new TextField();
     }
 
     @Override
