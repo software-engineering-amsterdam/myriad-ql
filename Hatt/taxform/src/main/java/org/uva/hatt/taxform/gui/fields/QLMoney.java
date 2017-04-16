@@ -27,7 +27,15 @@ public class QLMoney extends Field {
 
     @Override
     public void update(EnvironmentsTable environmentsTable) {
-        environmentsTable.add(getIdentifier(), new IntegerValue(Integer.parseInt(textField.getText())));
+        IntegerValue value;
+
+        if (textField.getText().isEmpty()) {
+            value = new IntegerValue(0);
+        } else {
+            value = new IntegerValue(Integer.parseInt(textField.getText()));
+        }
+
+        environmentsTable.add(getIdentifier(), value);
     }
 
     @Override
