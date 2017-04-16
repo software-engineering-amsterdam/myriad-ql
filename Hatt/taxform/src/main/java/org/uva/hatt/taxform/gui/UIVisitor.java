@@ -8,7 +8,6 @@ import org.uva.hatt.taxform.ast.nodes.Form;
 import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
-import org.uva.hatt.taxform.ast.nodes.expressions.binary.*;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.Identifier;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.IntegerLiteral;
@@ -85,6 +84,7 @@ public class UIVisitor implements Visitor<Pane> {
 
         Value value = evaluator.visit(node.getComputedValue());
         widget.setValue(value);
+        widget.setReadOnly();
 
         Question question = new Question(environmentsTable, this, form);
         question.addField(widget);
