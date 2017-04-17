@@ -48,7 +48,6 @@
             new object[] { new MultiplyExpression(new MoneyLiteral(1), new BooleanLiteral(true)) },
         };
 
-        // TODO: Add more cases
         public static IEnumerable<object[]> InvalidBooleanBinaryExpressions => new List<object[]>
         {
             new object[] { new AndExpression(new BooleanLiteral(true), new IntegerLiteral(1)) },

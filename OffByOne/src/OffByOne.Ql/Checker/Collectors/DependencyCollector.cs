@@ -11,7 +11,6 @@
     using OffByOne.Ql.Checker.Analyzers.Environment;
     using OffByOne.Ql.Common.Visitors.Base;
 
-    // TODO: Test
     public class DependencyCollector : BaseQlDfsVisitor<object, TypeEnvironment>
     {
         public DependencyCollector()

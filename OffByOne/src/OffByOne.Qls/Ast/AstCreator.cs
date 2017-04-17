@@ -37,7 +37,6 @@
 
             var test = context.section().ToList();
 
-            // TODO: Do I need cast?
             var sections = context
                 .section()
                 .Select(x => (Section)this.VisitSection(x))
