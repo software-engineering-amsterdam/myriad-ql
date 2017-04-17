@@ -1,6 +1,7 @@
 require 'parslet'
 require 'tk'
 
+require 'gem_ext/tk'
 require 'prophet/ast'
 require 'prophet/checkers'
 require 'prophet/collectors'
