@@ -25,7 +25,7 @@ import java.util.*;
 public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
 
     private Message message;
-    private List<java.lang.String> questions = new LinkedList<>();
+    private List<java.lang.String> questions = new ArrayList<>();
     private Map<java.lang.String, IdentifierInput> declarations = new HashMap<>();
 
     public TypeChecker(Message message) {
