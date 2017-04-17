@@ -1,93 +1,29 @@
 # -*- coding: utf-8 -*-
 """
-This module contains the typechecker. The typechecker is in charge of making
-sure that the AST returned by the parser is valid and does not contains errors
-that would make the program to crash.
+The root module holds the definition of the root of the AST tree. As it is the
+root, it hold extra information, logic and syntax that make it unique from the
+rest of the nodes.
 """
 from ql.ast.type import Boolean
 from ql.ast.type import Undefined
 
 
-class TypeCheckerMessage(object):
+class QLChecker(object):
     """
-    Parent abstract class which holds the information necessary by the
-    typechecker to display a message.
+    Initialises a root node. It will also initialise an empty register with all
+    the variables and nodes, a queue with the order in which the nodes must be
+    displayed and the typechecker.
     """
-    def __init__(self, node, message):
-        self.node = node
-        self.message = message
-
-
-class Error(TypeCheckerMessage):
-    """Class which holds a typechecker error."""
-    def __str__(self):
-        return 'ERROR: {} at: {}'.format(self.message, self.node)
-
-
-class Warning(TypeCheckerMessage):
-    """Class which holds a typechecker warning."""
-    def __str__(self):
-        return 'WARNING: {} at: {}'.format(self.message, self.node)
-
-
-class TypeChecker(object):
-    """
-    This class contains the logic of the typechecker. It has a list of the
-    errors and warnings detected in the AST, and also a list of types and
-    dependencies of the variables found in the AST.
-    """
-    def __init__(self, ast):
+    def __init__(self, ast, checker):
+        super().__init__()
         self.ast = ast
+        self.checker = checker
         self.dependencies = {}
+        self.register = {}
         self.types = {}
-        self.errors = []
-        self.warns = []
 
-    def add_error(self, node, message):
-        """Adds a new error to the error list."""
-        error = Error(node, message)
-        self.errors.append(error)
-
-    def add_warning(self, node, message):
-        """Adds a new warning to the warning list."""
-        warn = Warning(node, message)
-        self.warns.append(warn)
-
-    def update(self, node):
-        """
-        Updates the typechecker with a new node. During this process, first the
-        node type is stored, and after the inmediate dependencies of the node
-        are calulated.
-
-        This function is usually called during the AST construction as a
-        "visitor" pattern which is executed at the same time as it is built.
-        """
-        self.types[node.variable.name] = node.variable.type
-
-        dependencies = []
-        try:
-            expr = node.expression
-            dependencies += expr.depends_on()
-        except AttributeError:
-            # Do nothing, it is a declaration. We could have avoided the
-            # exception but it seems that the pythonic way of doing it is to
-            # let it crash http://stackoverflow.com/a/610923
-            pass
-
-        for condition in node.conditions:
-            dependencies += condition.depends_on()
-
-        self.dependencies[node.variable.name] = dependencies
-
-    def get_type(self, key):
-        """Returns the type of a node."""
-        try:
-            return self.types[key]
-        except KeyError:
-            # If this exception is triggered, it means that the variable itself
-            # that we are querying is an undefined variable. This error has
-            # been already reported with the function __check_undefined_id
-            return Undefined()
+        for node in ast.nodes:
+            self.__register_node(node)
 
     def check(self):
         """
@@ -95,50 +31,122 @@ class TypeChecker(object):
         checks for possible errors in them. In case any error is found, it is
         reported to the checker.
         """
-        for key in self.ast.build_order:
-            self.__check_dependencies(key)
-            self.__check_expressions(key)
+        for node in self.ast.nodes:
+            self.__check_cyclic_dependencies(node)
+            self.__check_invalid_assignation(node)
+            self.__check_invalid_conditions(node)
+            self.__check_invalid_operands(node)
+            self.__check_undefined_dependencies(node)
 
-    def __check_expressions(self, key):
+    def get_type(self, key):
+        """
+        Returns the type of the node.
+        """
+        try:
+            return self.types[key]
+        except KeyError:
+            # If this exception is triggered, it means that the variable
+            # itself that we are querying is an undefined variable. This
+            # error has been already reported with the function
+            # __check_undefined_id
+            return Undefined()
+
+    def __register_node(self, node):
+        """
+        Adds a node to the AST. It will also check for certain errors detected
+        on declaration time like duplicated questions and labels (warning) and
+        will report them to the typechecker which will process them.
+        """
+        self.__check_duplicate_labels(node)
+        self.__check_duplicate_declarations(node)
+
+        # Type
+        self.types[node.variable.name] = node.variable.type
+
+        # Dependencies
+        dependencies = []
+        if node.expression:
+            expr = node.expression
+            dependencies += expr.depends_on()
+
+        for condition in node.conditions:
+            dependencies += condition.depends_on()
+
+        self.dependencies[node.variable.name] = dependencies
+        self.register[node.variable.name] = node
+
+    def __check_duplicate_labels(self, node):
+        """
+        Lookis for duplicated labels before adding it. If anyone is found,
+        it will raise a warning in the typechecker.
+        """
+        labels = [item.text for key, item in self.register.items()]
+        if (node.text in labels):
+            msg = 'Duplicated field label {}'
+            self.__register_warning(node, msg.format(node.text))
+
+    def __check_duplicate_declarations(self, node):
+        """
+        Duplicate question declarations with different types.
+
+        The project description says that it should only detect duplicated
+        questions if they have different types. However, it makes more sense
+        detect any duplicate variable. Therefore, we do both.
+        """
+        variable_name = node.variable.name
+        if variable_name in self.register:
+            msg = 'Duplicated question detected. It was {}'
+
+            existing_node = self.register[variable_name]
+            if (existing_node.variable.type != node.variable.type):
+                msg = 'Duplicated question with different type. It was {}'
+            self.__register_error(node, msg.format(existing_node))
+        else:
+            # Here we take the design decision of keeping the existing one and
+            # ignoring the new one.
+            self.register[variable_name] = node
+
+    def __check_invalid_conditions(self, node):
         """
         This function checks for errors in the expressions. Concretely, it
-        checks for:
-
-            - Invalid conditionals: expressions used in conditionals that do
-            not return a boolean.
-            - Missmatching types: expressions used in assignations that return
-            a diffrent type than the expected by the variable.
-            - Operations with invalid operands: Operations with operands that
-            are not supported, like adding strings.
-
+        checks for expressions used in conditionals that do not return a
+        boolean.
         """
-        node = self.ast.register[key]
-
         # Looks for invalid conditionals.
-        conditions = node.conditions
         for condition in node.conditions:
             if condition.get_type(self) != Boolean():
                 msg = ('The expression {} in the condition does not return a '
                        'boolean')
-                self.add_error(node, msg.format(condition))
+                self.__register_error(node, msg.format(condition))
 
-        # Looks for assignations with missmatching types.
-        expressions = []
-        try:
+    def __check_invalid_assignation(self, node):
+        """
+        This function checks for errors in the expressions. It checks for
+        expressions used in assignations that return a diffrent type than the
+        expected by the variable.
+        """
+        key = node.variable.name
+        if node.expression:
             expr_type = node.expression.get_type(key)
             node_type = self.get_type(key)
 
             if node_type != expr_type:
                 msg = 'The assignation expected a {} but got a {}'
-                self.add_error(node, msg.format(node_type, expr_type))
+                self.__register_error(node, msg.format(node_type, expr_type))
 
-            expressions.append(node.expression)
-        except AttributeError:
-            pass
+    def __check_invalid_operands(self, node):
+        """
+        This function checks for errors in the expressions. It checks for
+        operations with operands that are not supported, like adding strings.
+        """
+        queue = []
+        if node.expression:
+            queue += [node.expression]
+
+        queue += node.conditions
 
         # Looks for operations with invalid operands.
         # Order does not matter as all the expressions will be evaluated.
-        queue = conditions + expressions
         while queue:
             expr = queue.pop()
             children = expr.get_children()
@@ -150,7 +158,8 @@ class TypeChecker(object):
                             child.get_type(self).allowed_operations()):
                         msg = ('The child {} does not allow to perform the '
                                '{} operation')
-                        self.add_error(node, msg.format(child, operation))
+                        self.__register_error(node, msg.format(child,
+                                                               operation))
                     queue.append(child)
             except AttributeError:
                 # It is a Leaf node, nothing to worry about. Even if this looks
@@ -159,34 +168,35 @@ class TypeChecker(object):
                 # make sense.
                 pass
 
-    def __check_dependencies(self, key):
+    def __check_undefined_dependencies(self, node):
         """
-        Detects the errors in the dependencies of a node. Concretely, it checks
-        for:
-
-            - Undefined dependencies: Variables referenced in a expressions
-            which are not defined by any node.
-            - Cyclic dependencies: Nodes which dependencies depend on them. For
-            this, we calcualte the extended dependencies of a node to not only
-            check the dependencies of the node but also the dependencies of the
-            dependencies.
-
+        Detects the errors in the dependencies of a node. It checks for
+        Undefined dependencies: Variables referenced in a expressions which are
+        not defined by any node.
         """
-        for dependency in self.dependencies[key]:
+        for dependency in self.dependencies[node.variable.name]:
             if dependency not in self.dependencies:
-                node = self.ast.register[key]
                 msg = 'The node depends on a undefined variable "{}"'
-                self.add_error(node, msg.format(dependency))
-            else:
+                self.__register_error(node, msg.format(dependency))
+
+    def __check_cyclic_dependencies(self, node):
+        """
+        Detects the errors in the dependencies of a node. It checks for nodes
+        which dependencies depend on them, also known as cyclic dependencies.
+        For this, we calcualte the extended dependencies of a node to not only
+        check the dependencies of the node but also the dependencies of the
+        dependencies.
+        """
+        key = node.variable.name
+        for dependency in self.dependencies[key]:
                 # For every dependency of a key, we need to check the
                 # dependency and the ones that it has.
                 all_dependencies = self.__get_extended_dependencies(dependency)
-
                 if key in all_dependencies:
-                    node = self.ast.register[key]
-                    dependency_node = self.ast.register[dependency]
+                    dependency_node = self.register[dependency]
                     msg = 'The node {} has a cyclic dependency with {}'
-                    self.add_error(node, msg.format(node, dependency_node))
+                    self.__register_error(node, msg.format(node,
+                                                           dependency_node))
 
     def __get_extended_dependencies(self, key):
         """
@@ -196,9 +206,11 @@ class TypeChecker(object):
         all_dependencies = []
         queue = []
 
+        if key in self.dependencies:
+            all_dependencies += self.dependencies[key]
+            queue += self.dependencies[key]
+
         # I don't even want to think about the complexity of this.
-        all_dependencies += self.dependencies[key]
-        queue += self.dependencies[key]
         while queue:
             dependency = queue.pop()
             if dependency in self.dependencies:
@@ -208,3 +220,11 @@ class TypeChecker(object):
                     if dependency_dependency not in all_dependencies:
                         queue.append(dependency_dependency)
         return all_dependencies
+
+    def __register_error(self, node, message):
+        """Registers an error in the typechcker"""
+        self.checker.add_error(node, message)
+
+    def __register_warning(self, node, message):
+        """Registers a warning in the typechecker"""
+        self.checker.add_warning(node, message)
