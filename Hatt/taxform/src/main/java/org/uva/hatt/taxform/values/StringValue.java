@@ -20,6 +20,10 @@ public class StringValue extends Value<String> {
 
     @Override
     public Value add(Value val) {
+        if (val.isUndefined()) {
+            return new Undefined();
+        }
+
         StringValue stringValue = (StringValue) val;
         return new StringValue(value + stringValue.getValue());
     }

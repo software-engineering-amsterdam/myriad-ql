@@ -20,12 +20,20 @@ public class IntegerValue extends Value<Integer> {
 
     @Override
     public Value add(Value val) {
+        if (val.isUndefined()) {
+            return new Undefined();
+        }
+
         IntegerValue integerValue = (IntegerValue) val;
         return new IntegerValue(value + integerValue.getValue());
     }
 
     @Override
     public Value divide(Value val) {
+        if (val.isUndefined()) {
+            return new Undefined();
+        }
+
         IntegerValue integerValue = (IntegerValue) val;
 
         if (integerValue.getValue() == 0) {
@@ -67,6 +75,10 @@ public class IntegerValue extends Value<Integer> {
 
     @Override
     public Value multiply(Value val) {
+        if (val.isUndefined()) {
+            return new Undefined();
+        }
+
         IntegerValue integerValue = (IntegerValue) val;
         return new IntegerValue(value * integerValue.getValue());
     }
