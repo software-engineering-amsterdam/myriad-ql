@@ -20,7 +20,7 @@ import org.uva.hatt.taxform.grammars.QLParser;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class QLVisitor extends QLBaseVisitor<ASTNode> {
+public class ASTBuilder extends QLBaseVisitor<ASTNode> {
 
     private Form form;
 

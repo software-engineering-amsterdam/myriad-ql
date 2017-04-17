@@ -16,12 +16,11 @@ import org.fxmisc.richtext.LineNumberFactory;
 import org.uva.hatt.taxform.ast.ASTGenerator;
 import org.uva.hatt.taxform.ast.nodes.Form;
 import org.uva.hatt.taxform.evaluation.EnvironmentsTable;
-import org.uva.hatt.taxform.ast.visitors.QLVisitor;
+import org.uva.hatt.taxform.ast.visitors.ASTBuilder;
 import org.uva.hatt.taxform.ast.visitors.Visitor;
 import org.uva.hatt.taxform.typechecker.CircularDependencyChecker;
 import org.uva.hatt.taxform.typechecker.TypeChecker;
 import org.uva.hatt.taxform.typechecker.messages.Message;
-import org.uva.hatt.taxform.typechecker.messages.error.Error;
 
 import java.io.IOException;
 
@@ -57,7 +56,7 @@ public class Taxform extends Application {
                 e1.printStackTrace();
             }
 
-            QLVisitor visitor = new QLVisitor();
+            ASTBuilder visitor = new ASTBuilder();
             visitor.visit(tree);
 
             Form form = visitor.getForm();

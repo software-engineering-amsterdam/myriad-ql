@@ -4,7 +4,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.uva.hatt.taxform.ast.ASTGenerator;
 import org.uva.hatt.taxform.ast.nodes.Form;
 import org.uva.hatt.taxform.typechecker.messages.Message;
-import org.uva.hatt.taxform.ast.visitors.QLVisitor;
+import org.uva.hatt.taxform.ast.visitors.ASTBuilder;
 import org.uva.hatt.taxform.typechecker.TypeChecker;
 
 public class Main {
@@ -19,7 +19,7 @@ public class Main {
 
         ParseTree tree = ASTGenerator.getParseTree(qlForm);
 
-        QLVisitor visitor = new QLVisitor();
+        ASTBuilder visitor = new ASTBuilder();
         visitor.visit(tree);
 
         Form form = visitor.getForm();
