@@ -22,8 +22,4 @@ public class EnvironmentsTable {
         return values.get(id);
     }
 
-    public int size() {
-        return values.size();
-    }
-
 }
