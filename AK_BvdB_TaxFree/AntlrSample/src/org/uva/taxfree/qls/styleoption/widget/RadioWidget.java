@@ -25,6 +25,7 @@ public class RadioWidget extends WidgetStyleOption {
     @Override
     protected JComponent generateComponent() {
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.add(mButtonTrue);
         buttonPanel.add(mButtonFalse);
         return buttonPanel;
