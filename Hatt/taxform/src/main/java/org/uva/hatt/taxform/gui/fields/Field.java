@@ -28,7 +28,7 @@ public abstract class Field extends Pane{
         addField(nodes);
     }
 
-    public String getIdentifier() {
+    String getIdentifier() {
         return identifier;
     }
 

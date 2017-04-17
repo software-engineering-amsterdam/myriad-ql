@@ -1,9 +1,9 @@
 package org.uva.hatt.taxform.typechecker.messages.error;
 
 public class Error {
-    private String msg;
+    private final String msg;
 
-    public Error(String msg) {
+    Error(String msg) {
         this.msg = msg;
     }
 

@@ -31,12 +31,12 @@ import java.util.stream.Collectors;
 
 public class UIVisitor implements FormVisitor<Pane> {
 
-    private Stage stage;
-    private EnvironmentsTable environmentsTable;
+    private final Stage stage;
+    private final EnvironmentsTable environmentsTable;
     private Form form;
     private final Evaluator evaluator;
 
-    public UIVisitor(Stage stage, EnvironmentsTable environmentsTable) {
+    UIVisitor(Stage stage, EnvironmentsTable environmentsTable) {
         this.stage = stage;
         this.environmentsTable = environmentsTable;
         evaluator = new Evaluator(environmentsTable);

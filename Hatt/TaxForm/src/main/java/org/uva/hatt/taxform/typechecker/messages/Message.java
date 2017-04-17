@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Message {
-    private List<Warning> warnings;
-    private List<Error> errors;
+    private final List<Warning> warnings;
+    private final List<Error> errors;
 
     public Message(){
         warnings = new ArrayList<>();

@@ -20,7 +20,7 @@ import org.uva.hatt.taxform.typechecker.messages.Message;
 
 import java.io.IOException;
 
-public class Taxform extends Application {
+public class TaxForm extends Application {
 
     public static void run() {
         launch();

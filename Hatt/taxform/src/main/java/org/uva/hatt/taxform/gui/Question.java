@@ -22,7 +22,7 @@ public class Question extends VBox implements ChangeListener{
         this.environmentsTable = environmentsTable;
     }
 
-    public void addField(Field field) {
+    void addField(Field field) {
         field.fillContent(getChildren());
         field.updateCallback(this);
         fields.add(field);

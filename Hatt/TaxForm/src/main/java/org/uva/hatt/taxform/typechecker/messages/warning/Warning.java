@@ -1,9 +1,9 @@
 package org.uva.hatt.taxform.typechecker.messages.warning;
 
 public class Warning {
-    private String msg;
+    private final String msg;
 
-    public Warning(String msg){
+    Warning(String msg){
         this.msg = msg;
     }
 

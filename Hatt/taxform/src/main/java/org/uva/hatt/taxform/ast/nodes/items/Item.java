@@ -6,7 +6,7 @@ import org.uva.hatt.taxform.ast.nodes.FormVisitor;
 public abstract class Item extends ASTNode{
     public abstract <T> T accept(FormVisitor<T> visitor);
 
-    public Item(int lineNumber) {
+    Item(int lineNumber) {
         super(lineNumber);
     }
 }

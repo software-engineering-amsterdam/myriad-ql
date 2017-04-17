@@ -5,7 +5,7 @@ public abstract class BooleanExpression extends Expression{
     private final Expression lhs;
     private final Expression rhs;
 
-    public BooleanExpression(int lineNumber, Expression lhs, Expression rhs) {
+    protected BooleanExpression(int lineNumber, Expression lhs, Expression rhs) {
         super(lineNumber);
         this.lhs = lhs;
         this.rhs = rhs;

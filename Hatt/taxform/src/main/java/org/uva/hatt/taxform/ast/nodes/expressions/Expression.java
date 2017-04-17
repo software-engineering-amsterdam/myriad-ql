@@ -6,7 +6,7 @@ public abstract class Expression extends ASTNode{
 
     public abstract <T> T accept(ExpressionVisitor<T> expressionVisitor);
 
-    public Expression(int lineNumber) {
+    protected Expression(int lineNumber) {
         super(lineNumber);
     }
 }

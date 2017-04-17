@@ -24,11 +24,11 @@ import java.util.*;
 
 public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
 
-    private Message message;
-    private List<java.lang.String> questions = new ArrayList<>();
-    private Map<java.lang.String, IdentifierInput> declarations = new HashMap<>();
+    private final Message message;
+    private final List<java.lang.String> questions = new ArrayList<>();
+    private final Map<java.lang.String, IdentifierInput> declarations = new HashMap<>();
 
-    public TypeChecker(Message message) {
+    TypeChecker(Message message) {
         this.message = message;
     }
 

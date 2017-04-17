@@ -30,7 +30,7 @@ public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor
     private final Message message;
     private Question question;
 
-    public CircularDependencyChecker(Message message){
+    CircularDependencyChecker(Message message){
         this.message = message;
         dependencies = new HashMap<>();
     }
