@@ -11,7 +11,7 @@ import UvA.Gamma.AST.Expression.Values.NumberValue;
 import UvA.Gamma.AST.Types.*;
 import UvA.Gamma.Antlr.QL.QLBaseVisitor;
 import UvA.Gamma.Antlr.QL.QLParser;
-import UvA.Gamma.Visitors.IdentifierInitVisitor;
+import UvA.Gamma.Validation.IdentifierInitVisitor;
 
 import java.util.HashMap;
 import java.util.Map;

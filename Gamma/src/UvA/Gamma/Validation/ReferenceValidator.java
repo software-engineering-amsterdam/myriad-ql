@@ -1,6 +1,7 @@
-package UvA.Gamma.Visitors;
+package UvA.Gamma.Validation;
 
 import UvA.Gamma.AST.Expression.Expression;
+import UvA.Gamma.Visitors.BaseVisitor;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,8 +22,7 @@ public class ReferenceValidator extends BaseVisitor {
         Set<String> diff = new HashSet<>(visitor.getIdentifiers());
         diff.removeAll(identifierStrings);
         if (diff.size() > 0) {
-            System.err.println("Referenced non existing identifiers: " + diff);
-            System.exit(1);
+            ErrorHandler.invalidReference(diff);
         }
     }
 

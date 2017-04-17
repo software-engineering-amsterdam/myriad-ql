@@ -1,9 +1,10 @@
-package UvA.Gamma.Visitors;
+package UvA.Gamma.Validation;
 
 import UvA.Gamma.AST.Expression.Identifier;
 import UvA.Gamma.AST.Expression.Values.IdentifierValue;
 import UvA.Gamma.AST.Expression.Values.Value;
 import UvA.Gamma.AST.Types.Type;
+import UvA.Gamma.Visitors.BaseVisitor;
 
 /**
  * Created by Tjarco, 11-04-17.

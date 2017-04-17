@@ -57,11 +57,7 @@ public class NumberValue extends Value<NumberValue> {
 
     @Override
     public boolean conformsToType(Type type) {
-        if (isInteger()) {
-            return type.equalsType(new IntegerType());
-        } else {
-            return type.equalsType(new DecimalType());
-        }
+        return type.equalsType(new IntegerType()) || type.equalsType(new DecimalType());
     }
 
     @Override

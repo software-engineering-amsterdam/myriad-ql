@@ -1,6 +1,7 @@
-package UvA.Gamma.Visitors;
+package UvA.Gamma.Validation;
 
 import UvA.Gamma.AST.*;
+import UvA.Gamma.Visitors.BaseVisitor;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,14 +22,13 @@ public class ValidationVisitor extends BaseVisitor {
 
     private void validateRedeclaration(IdentifiableFormItem item) {
         if (!identifierStrings.add(item.getIdentifier())) {
-            System.err.println("Duplicate identifier: " + item.getIdentifier());
-            System.exit(1);
+            ErrorHandler.duplicateIdentifier(item.getIdentifier());
         }
     }
 
     private void validateDuplicateLabel(IdentifiableFormItem item) {
         if (!labels.add(item.getLabel())) {
-            System.err.println("Duplicate label for: " + item.getIdentifier());
+            ErrorHandler.duplicateLabel(item.getIdentifier());
         }
     }
 

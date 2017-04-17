@@ -46,6 +46,7 @@ public class Condition implements FormItem {
     public void accept(Visitor visitor) {
         thenBlockItems.forEach(formItem -> formItem.accept(visitor));
         elseBlockItems.forEach(formItem -> formItem.accept(visitor));
+        expression.accept(visitor);
         visitor.visit(this);
     }
 

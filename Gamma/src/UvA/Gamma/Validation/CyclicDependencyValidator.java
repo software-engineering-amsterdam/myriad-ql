@@ -1,6 +1,7 @@
-package UvA.Gamma.Visitors;
+package UvA.Gamma.Validation;
 
 import UvA.Gamma.AST.Computed;
+import UvA.Gamma.Visitors.BaseVisitor;
 
 import java.util.Set;
 
@@ -24,8 +25,7 @@ public class CyclicDependencyValidator extends BaseVisitor {
         assert computed != null;
         if (computed.equals(c)) return;
         if (c.isDependentOn(computed.getIdentifier()) && referencedIdentifiers.contains(c.getIdentifier())) {
-            System.err.println("Cyclic dependency between: " + computed.getIdentifier() + " and " + c.getIdentifier());
-            System.exit(1);
+            ErrorHandler.cyclicDependency(computed.getIdentifier(), c.getIdentifier());
         }
     }
 }
