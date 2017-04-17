@@ -54,6 +54,58 @@ public class Taxform extends Application {
     }
 
     private void buildFormAction(Stage stage, QLEditor qlEditor) {
+        Form form = createForm(qlEditor);
+
+        SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer();
+        Message message = semanticAnalyzer.analyze(form);
+
+        if (message.getErrors().isEmpty()) {
+
+            if (!message.getWarnings().isEmpty()) {
+                showWarningDialog(stage, message);
+            }
+
+            EnvironmentsTable environmentsTable = new EnvironmentsTable();
+            FormVisitor uiVisitor = new UIVisitor(stage, environmentsTable);
+            uiVisitor.visit(form);
+
+            stage.show();
+        } else {
+            showErrorDialog(stage, message);
+        }
+    }
+
+    private void showWarningDialog(Stage stage, Message message) {
+        Stage dialog = new Stage();
+        dialog.initModality(Modality.NONE);
+        dialog.initOwner(stage);
+
+        VBox dialogVbox = new VBox(10);
+
+        message.getWarnings().forEach(error -> dialogVbox.getChildren().add(new Text(error.getMessage())));
+
+        Scene dialogScene = new Scene(dialogVbox, 450, 300);
+
+        dialog.setScene(dialogScene);
+        dialog.show();
+    }
+
+    private void showErrorDialog(Stage stage, Message message) {
+        Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(stage);
+
+        VBox dialogVbox = new VBox(10);
+
+        message.getErrors().forEach(error -> dialogVbox.getChildren().add(new Text(error.getMessage())));
+
+        Scene dialogScene = new Scene(dialogVbox, 450, 300);
+
+        dialog.setScene(dialogScene);
+        dialog.show();
+    }
+
+    private Form createForm(QLEditor qlEditor) {
         ParseTree tree = null;
         try {
             tree = ASTGenerator.getParseTree(qlEditor.getCodeArea().getText());
@@ -64,46 +116,6 @@ public class Taxform extends Application {
         ASTBuilder visitor = new ASTBuilder();
         visitor.visit(tree);
 
-        Form form = visitor.getForm();
-
-        SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer();
-        Message message = semanticAnalyzer.analyze(form);
-
-        if (message.getErrors().isEmpty()) {
-
-            if (!message.getWarnings().isEmpty()) {
-                Stage dialog = new Stage();
-                dialog.initModality(Modality.NONE);
-                dialog.initOwner(stage);
-
-                VBox dialogVbox = new VBox(10);
-
-                message.getWarnings().forEach(error -> dialogVbox.getChildren().add(new Text(error.getMessage())));
-
-                Scene dialogScene = new Scene(dialogVbox, 450, 300);
-
-                dialog.setScene(dialogScene);
-                dialog.show();
-            }
-
-            EnvironmentsTable environmentsTable = new EnvironmentsTable();
-            FormVisitor uiVisitor = new UIVisitor(stage, environmentsTable);
-            uiVisitor.visit(form);
-
-            stage.show();
-        } else {
-            Stage dialog = new Stage();
-            dialog.initModality(Modality.APPLICATION_MODAL);
-            dialog.initOwner(stage);
-
-            VBox dialogVbox = new VBox(10);
-
-            message.getErrors().forEach(error -> dialogVbox.getChildren().add(new Text(error.getMessage())));
-
-            Scene dialogScene = new Scene(dialogVbox, 450, 300);
-
-            dialog.setScene(dialogScene);
-            dialog.show();
-        }
+        return visitor.getForm();
     }
 }
