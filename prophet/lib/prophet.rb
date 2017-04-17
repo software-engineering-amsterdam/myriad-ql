@@ -1,12 +1,15 @@
 require 'parslet'
+require 'tk'
 
 require 'prophet/ast'
 require 'prophet/checkers'
 require 'prophet/collectors'
 require 'prophet/evaluator'
+require 'prophet/gui'
 require 'prophet/parser'
 require 'prophet/transform'
 require 'prophet/utils/dependency_hash'
+require 'prophet/visitors'
 require 'prophet/widgets'
 require 'prophet/version'
 
@@ -29,5 +32,8 @@ module Prophet
 
     evaluator = Evaluator.new(ast)
     evaluator.evaluate
+
+    gui = Gui.new(ast)
+    gui.render
   end
 end
