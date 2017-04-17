@@ -19,7 +19,7 @@ public class BooleanWidget extends Widget {
 
     @Override
     protected void fillPanel(GuiComponent parentPanel) {
-        parentPanel.add(mCheckbox);
+        parentPanel.setValueComponent(mCheckbox);
     }
 
     protected boolean isTrue() {

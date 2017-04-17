@@ -28,10 +28,6 @@ public class GuiComponent {
         mainPanel.add(mPanel);
     }
 
-    protected void add(JComponent childComponent) {
-        mPanel.add(childComponent);
-    }
-
     public void setForegroundColor(Color foregroundColor) {
         mLabel.setForeground(foregroundColor);
         for (int i = 0; mPanel.getComponentCount() > i; ++i) {
@@ -69,5 +65,11 @@ public class GuiComponent {
 
     public String getId() {
         return mPanel.getName();
+    }
+
+    public void setValueComponent(JComponent valueComponent) {
+        mPanel.removeAll();
+        mPanel.add(mLabel);
+        mPanel.add(valueComponent);
     }
 }

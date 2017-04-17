@@ -26,7 +26,7 @@ public abstract class TextFieldWidget extends Widget {
 
     @Override
     public void fillPanel(GuiComponent parentPanel) {
-        parentPanel.add(mTextField);
+        parentPanel.setValueComponent(mTextField);
     }
 
     protected String currentValue() {

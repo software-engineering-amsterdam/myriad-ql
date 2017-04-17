@@ -22,7 +22,7 @@ public class CalculationWidget extends Widget {
 
     @Override
     protected void fillPanel(GuiComponent parent) {
-        parent.add(mTextField);
+        parent.setValueComponent(mTextField);
     }
 
     @Override
