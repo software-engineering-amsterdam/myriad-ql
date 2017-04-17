@@ -14,6 +14,11 @@ public class Or extends BooleanOperand {
     }
 
     @Override
+    public boolean validateTypes() {
+        return validateBools();
+    }
+
+    @Override
     public Value value() {
         assert left != null && right != null;
         return ((BooleanValue) left.value()).or((BooleanValue) right.value());

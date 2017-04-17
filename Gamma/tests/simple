@@ -1,7 +1,7 @@
 form test{
     "test" test: integer
     "test2" test2: boolean
-    if(test2){
+    if(test2 && test){
         "question?" question: integer = (test + 2)
     }
 }

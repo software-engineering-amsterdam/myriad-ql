@@ -13,6 +13,11 @@ public class Equals extends BooleanOperand {
     }
 
     @Override
+    public boolean validateTypes() {
+        return validateBools() || validateNumbers();
+    }
+
+    @Override
     @SuppressWarnings("unchecked") //Type equality is enforced by the grammar
     public Value value() {
         assert left != null && right != null;

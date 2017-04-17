@@ -1,6 +1,8 @@
 package UvA.Gamma.AST.Expression.Operands.BooleanOperands;
 
 import UvA.Gamma.AST.Expression.Expression;
+import UvA.Gamma.AST.Types.BooleanType;
+import UvA.Gamma.AST.Types.DecimalType;
 import UvA.Gamma.Visitors.Visitor;
 
 /**
@@ -20,6 +22,18 @@ public abstract class BooleanOperand extends Expression {
         left.accept(visitor);
         right.accept(visitor);
         visitor.visit(this);
+    }
+
+    public abstract boolean validateTypes();
+
+    protected boolean validateBools() {
+        return left.value().conformsToType(new BooleanType()) &&
+                right.value().conformsToType(new BooleanType());
+    }
+
+    protected boolean validateNumbers() {
+        return left.value().conformsToType(new DecimalType()) &&
+                right.value().conformsToType(new DecimalType());
     }
 
     @Override

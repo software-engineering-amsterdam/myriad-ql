@@ -1,7 +1,6 @@
-package UvA.Gamma.AST.Expression.Operands.BooleanOperands;
+package UvA.Gamma.AST.Expression.Operands.NumberOperands;
 
 import UvA.Gamma.AST.Expression.Expression;
-import UvA.Gamma.AST.Expression.Operands.NumberOperands.NumberOperand;
 import UvA.Gamma.AST.Expression.Values.NumberValue;
 import UvA.Gamma.AST.Expression.Values.Value;
 
