@@ -33,13 +33,17 @@ public class UIVisitor extends BaseVisitor {
 
     @Override
     public void visit(Condition condition) {
-        GridPane gridPane = new GridPane();
-        UIVisitor uiVisitor = new UIVisitor(gridPane, builder);
-        condition.visitChildNodes(uiVisitor);
-        condition.setGridPane(gridPane);
-        gridPane.managedProperty().bind(gridPane.visibleProperty());
-//        gridPane.visibleProperty().addListener((observable, oldValue, newValue) -> stage.sizeToScene());
-        grid.add(gridPane, 0, getRowCount(grid) + 1, 2, 1);
+        GridPane thenPane = new GridPane();
+        GridPane elsePane = new GridPane();
+        UIVisitor thenVisitor = new UIVisitor(thenPane, builder);
+        UIVisitor elseVisitor = new UIVisitor(elsePane, builder);
+        condition.visitThenChildNodes(thenVisitor);
+        condition.visitElseChildNodes(elseVisitor);
+        condition.setThenPane(thenPane);
+        condition.setElsePane(elsePane);
+
+        grid.add(thenPane, 0, getRowCount(grid) + 1, 2, 1);
+        grid.add(elsePane, 0, getRowCount(grid) + 1, 2, 1);
     }
 
     private void placeWidget(List<Node> widgets) {

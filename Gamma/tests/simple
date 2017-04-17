@@ -2,5 +2,7 @@ form test{
     "boolean" t: boolean
     if(t){
         "boolean negated:" t2: boolean = (!t)
+    }else{
+        "boolean and true: " t3: boolean = (t && true)
     }
 }
