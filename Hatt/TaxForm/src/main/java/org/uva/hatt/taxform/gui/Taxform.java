@@ -17,7 +17,7 @@ import org.uva.hatt.taxform.parsing.ASTGenerator;
 import org.uva.hatt.taxform.ast.nodes.Form;
 import org.uva.hatt.taxform.evaluation.EnvironmentsTable;
 import org.uva.hatt.taxform.parsing.ASTBuilder;
-import org.uva.hatt.taxform.ast.visitors.Visitor;
+import org.uva.hatt.taxform.ast.nodes.FormVisitor;
 import org.uva.hatt.taxform.typechecker.CircularDependencyChecker;
 import org.uva.hatt.taxform.typechecker.TypeChecker;
 import org.uva.hatt.taxform.typechecker.messages.Message;
@@ -86,7 +86,7 @@ public class Taxform extends Application {
                 }
 
                 EnvironmentsTable environmentsTable = new EnvironmentsTable();
-                Visitor uiVisitor = new UIVisitor(stage, environmentsTable);
+                FormVisitor uiVisitor = new UIVisitor(stage, environmentsTable);
                 uiVisitor.visit(form);
 
                 stage.show();

@@ -17,14 +17,14 @@ import org.uva.hatt.taxform.ast.nodes.types.*;
 import org.uva.hatt.taxform.ast.nodes.types.Boolean;
 import org.uva.hatt.taxform.ast.nodes.types.Integer;
 import org.uva.hatt.taxform.ast.nodes.types.String;
-import org.uva.hatt.taxform.ast.visitors.ExpressionVisitor;
-import org.uva.hatt.taxform.ast.visitors.Visitor;
+import org.uva.hatt.taxform.ast.nodes.expressions.ExpressionVisitor;
+import org.uva.hatt.taxform.ast.nodes.FormVisitor;
 import org.uva.hatt.taxform.values.BooleanValue;
 import org.uva.hatt.taxform.values.IntegerValue;
 import org.uva.hatt.taxform.values.StringValue;
 import org.uva.hatt.taxform.values.Value;
 
-public class Evaluator implements Visitor<Value>, ExpressionVisitor<Value>{
+public class Evaluator implements FormVisitor<Value>, ExpressionVisitor<Value>{
 
     private final EnvironmentsTable environmentsTable;
 

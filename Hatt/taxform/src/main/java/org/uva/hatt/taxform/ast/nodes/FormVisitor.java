@@ -1,4 +1,4 @@
-package org.uva.hatt.taxform.ast.visitors;
+package org.uva.hatt.taxform.ast.nodes;
 
 import org.uva.hatt.taxform.ast.nodes.*;
 import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
@@ -15,7 +15,7 @@ import org.uva.hatt.taxform.ast.nodes.types.Boolean;
 import org.uva.hatt.taxform.ast.nodes.types.Integer;
 import org.uva.hatt.taxform.ast.nodes.types.String;
 
-public interface Visitor<T> {
+public interface FormVisitor<T> {
     T visit(Form node);
     T visit(Question node);
     T visit(ComputedQuestion node);

@@ -1,7 +1,7 @@
 package org.uva.hatt.taxform.ast.nodes.items;
 
 import org.uva.hatt.taxform.ast.nodes.types.ValueType;
-import org.uva.hatt.taxform.ast.visitors.Visitor;
+import org.uva.hatt.taxform.ast.nodes.FormVisitor;
 
 public class Question extends Item{
 
@@ -38,7 +38,7 @@ public class Question extends Item{
     }
 
     @Override
-    public <T> T accept(Visitor<T> visitor){
+    public <T> T accept(FormVisitor<T> visitor){
         return visitor.visit(this);
     }
 }

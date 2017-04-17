@@ -1,7 +1,7 @@
 package org.uva.hatt.taxform.ast.nodes.types;
 
 import org.uva.hatt.taxform.ast.nodes.ASTNode;
-import org.uva.hatt.taxform.ast.visitors.Visitor;
+import org.uva.hatt.taxform.ast.nodes.FormVisitor;
 
 
 public abstract class ValueType extends ASTNode {
@@ -16,5 +16,5 @@ public abstract class ValueType extends ASTNode {
 
     public java.lang.Boolean isBoolean(){ return false; }
 
-    public abstract <T> T accept(Visitor<T> visitor);
+    public abstract <T> T accept(FormVisitor<T> visitor);
 }

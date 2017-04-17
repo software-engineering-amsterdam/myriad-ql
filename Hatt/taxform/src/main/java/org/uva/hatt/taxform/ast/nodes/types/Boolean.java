@@ -1,6 +1,6 @@
 package org.uva.hatt.taxform.ast.nodes.types;
 
-import org.uva.hatt.taxform.ast.visitors.Visitor;
+import org.uva.hatt.taxform.ast.nodes.FormVisitor;
 
 import java.lang.*;
 
@@ -18,7 +18,7 @@ public class Boolean extends ValueType {
     @Override
     public java.lang.Boolean isBoolean(){ return true; }
 
-    public <T> T accept(Visitor<T> visitor){
+    public <T> T accept(FormVisitor<T> visitor){
         return visitor.visit(this);
     }
 }

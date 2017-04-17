@@ -1,4 +1,4 @@
-package org.uva.hatt.taxform.ast.visitors;
+package org.uva.hatt.taxform.ast.nodes.expressions;
 
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.binary.*;

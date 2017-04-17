@@ -1,7 +1,5 @@
 package org.uva.hatt.taxform.ast.nodes.expressions;
 
-import org.uva.hatt.taxform.ast.visitors.ExpressionVisitor;
-
 public class GroupedExpression extends Expression{
 
     private final Expression expression;

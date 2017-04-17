@@ -20,7 +20,7 @@ import org.uva.hatt.taxform.ast.nodes.types.Integer;
 import org.uva.hatt.taxform.ast.nodes.types.*;
 import org.uva.hatt.taxform.ast.nodes.types.String;
 import org.uva.hatt.taxform.evaluation.EnvironmentsTable;
-import org.uva.hatt.taxform.ast.visitors.Visitor;
+import org.uva.hatt.taxform.ast.nodes.FormVisitor;
 import org.uva.hatt.taxform.evaluation.Evaluator;
 import org.uva.hatt.taxform.gui.fields.*;
 import org.uva.hatt.taxform.values.BooleanValue;
@@ -29,7 +29,7 @@ import org.uva.hatt.taxform.values.Value;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UIVisitor implements Visitor<Pane> {
+public class UIVisitor implements FormVisitor<Pane> {
 
     private Stage stage;
     private EnvironmentsTable environmentsTable;

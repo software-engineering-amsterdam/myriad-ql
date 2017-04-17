@@ -1,7 +1,7 @@
 package org.uva.hatt.taxform.ast.nodes.expressions.literals;
 
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
-import org.uva.hatt.taxform.ast.visitors.ExpressionVisitor;
+import org.uva.hatt.taxform.ast.nodes.expressions.ExpressionVisitor;
 
 public class IntegerLiteral extends Expression{
 

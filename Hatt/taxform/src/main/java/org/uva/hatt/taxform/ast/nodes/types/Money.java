@@ -1,6 +1,6 @@
 package org.uva.hatt.taxform.ast.nodes.types;
 
-import org.uva.hatt.taxform.ast.visitors.Visitor;
+import org.uva.hatt.taxform.ast.nodes.FormVisitor;
 
 public class Money extends ValueType {
 
@@ -13,7 +13,7 @@ public class Money extends ValueType {
         return "Money";
     }
 
-    public <T> T accept(Visitor<T> visitor){
+    public <T> T accept(FormVisitor<T> visitor){
         return visitor.visit(this);
     }
 }

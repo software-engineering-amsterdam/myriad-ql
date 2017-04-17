@@ -2,7 +2,7 @@ package org.uva.hatt.taxform.ast.nodes.expressions.binary;
 
 import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
-import org.uva.hatt.taxform.ast.visitors.ExpressionVisitor;
+import org.uva.hatt.taxform.ast.nodes.expressions.ExpressionVisitor;
 
 public class LessThan extends BooleanExpression {
 

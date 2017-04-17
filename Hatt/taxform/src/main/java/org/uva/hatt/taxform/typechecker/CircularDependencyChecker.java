@@ -17,14 +17,14 @@ import org.uva.hatt.taxform.ast.nodes.types.*;
 import org.uva.hatt.taxform.ast.nodes.types.Boolean;
 import org.uva.hatt.taxform.ast.nodes.types.Integer;
 import org.uva.hatt.taxform.ast.nodes.types.String;
-import org.uva.hatt.taxform.ast.visitors.ExpressionVisitor;
-import org.uva.hatt.taxform.ast.visitors.Visitor;
+import org.uva.hatt.taxform.ast.nodes.expressions.ExpressionVisitor;
+import org.uva.hatt.taxform.ast.nodes.FormVisitor;
 import org.uva.hatt.taxform.typechecker.messages.Message;
 import org.uva.hatt.taxform.typechecker.messages.error.CyclicDependency;
 
 import java.util.*;
 
-public class CircularDependencyChecker implements Visitor, ExpressionVisitor<Set<String>> {
+public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor<Set<String>> {
 
     private final Map<java.lang.String, List<java.lang.String>> dependencies;
     private final Message message;
