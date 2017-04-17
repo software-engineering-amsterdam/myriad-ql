@@ -23,6 +23,7 @@ public class Not extends Expression {
 
     @Override
     public void accept(Visitor visitor) {
+        value.accept(visitor);
         visitor.visit(this);
     }
 

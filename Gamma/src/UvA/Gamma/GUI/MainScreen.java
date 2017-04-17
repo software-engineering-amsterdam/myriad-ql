@@ -2,21 +2,14 @@ package UvA.Gamma.GUI;
 
 import UvA.Gamma.AST.Form;
 import UvA.Gamma.AST.Question;
-import UvA.Gamma.Visitors.UIVisitor;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import UvA.Gamma.GUI.FXMLController;
 
 
 /**
@@ -30,7 +23,6 @@ public class MainScreen {
     }
 
     public void initUI(Stage stage) throws Exception {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("Form.fxml"));
 //        Parent root = loader.load();
 //        FXMLController controller = loader.getController();
 //        controller.addFormItems(form, stage);
@@ -52,7 +44,7 @@ public class MainScreen {
         stage.show();
     }
 
-    public void showQuestion(Question question){
+    public void showQuestion(Question question) {
 
     }
 }

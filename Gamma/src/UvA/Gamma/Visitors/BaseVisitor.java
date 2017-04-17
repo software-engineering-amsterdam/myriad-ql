@@ -65,4 +65,9 @@ public class BaseVisitor implements Visitor {
 
     }
 
+    @Override
+    public boolean shouldTraverseRecursive() {
+        return true;
+    }
+
 }

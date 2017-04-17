@@ -1,13 +1,18 @@
 package UvA.Gamma.GUI;
 
 import UvA.Gamma.AST.Computed;
-import UvA.Gamma.AST.Condition;
-import UvA.Gamma.AST.IdentifiableFormItem;
+import UvA.Gamma.AST.Expression.Identifier;
+import UvA.Gamma.AST.Expression.Values.BooleanValue;
+import UvA.Gamma.AST.Expression.Values.DateValue;
+import UvA.Gamma.AST.Expression.Values.IdentifierValue;
+import UvA.Gamma.AST.Expression.Values.NumberValue;
+import UvA.Gamma.AST.Form;
 import UvA.Gamma.AST.Question;
-import UvA.Gamma.AST.Types.DateType;
-import UvA.Gamma.AST.Types.Type;
-import UvA.Gamma.Visitors.UIVisitor;
+import UvA.Gamma.AST.Types.*;
+import UvA.Gamma.Validation.TypeChecker;
+import UvA.Gamma.Visitors.IdentifierUpdatedVisitor;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -15,85 +20,130 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by casboot on 16-04-17.
  */
 public class DefaultWidgetBuilder implements WidgetBuilder {
+    private Form form;
+    private TypeChecker typeChecker;
 
-    @Override
-    public void getWidget(Question ques) {
-        Type type = ques.getType();
-        widgetBuilder(type.returnType());
+    public DefaultWidgetBuilder(Form form) {
+        this.form = form;
+        this.typeChecker = new TypeChecker();
     }
 
     @Override
-    public void getWidget(Computed com) {
-        //Zelfde idee als bij Question
+    public List<Node> getWidget(Question ques) {
+        List<Node> widgets = new ArrayList<>();
+        widgets.add(new Text(ques.getLabel()));
+        widgets.add(ques.getType().typeNode(this, new Identifier(ques.getIdentifier())));
+        return widgets;
     }
 
     @Override
-    public void getWidget(Condition con) {
-        //Zelfde idee als bij Question
-
+    public List<Node> getWidget(Computed com) {
+        List<Node> widgets = new ArrayList<>();
+        widgets.add(new Text(com.getLabel()));
+        Text valueText = new Text();
+        valueText.textProperty().bindBidirectional(com.getStringValueProperty());
+        widgets.add(valueText);
+        return widgets;
     }
 
-    public DatePicker widgetBuilder(DateType Date) {
-        final DatePicker datePicker = new DatePicker();
+    @Override
+    public Node getNode(BooleanType type, Identifier identifier) {
+        return getCheckbox(identifier);
+    }
+
+    @Override
+    public Node getNode(DateType type, Identifier identifier) {
+        return getDatePicker(identifier);
+    }
+
+    @Override
+    public Node getNode(IntegerType type, Identifier identifier) {
+        return getTextfield(identifier);
+    }
+
+    @Override
+    public Node getNode(DecimalType type, Identifier identifier) {
+        return getTextfield(identifier);
+    }
+
+    @Override
+    public Node getNode(MoneyType type, Identifier identifier) {
+        return getMoneyBox(identifier);
+    }
+
+    private DatePicker getDatePicker(Identifier identifier) {
+        DatePicker datePicker = new DatePicker();
 
         datePicker.setOnAction(t -> {
             LocalDate date = datePicker.getValue();
-            System.err.println("Selected date: " + date);
+            if (typeChecker.checkDate(date.toString())) {
+                IdentifierUpdatedVisitor identifierUpdatedVisitor =
+                        new IdentifierUpdatedVisitor(
+                                new IdentifierValue(identifier.toString(), new DateValue(date.toString())));
+                form.forEach(formItem -> formItem.accept(identifierUpdatedVisitor));
+            } else {
+                datePicker.setStyle("-fx-text-fill: red");
+            }
         });
         return datePicker;
     }
 
-    public CheckBox widgetBuilder(Boolean bool) {
-    //Deze is wel tricky want hier hebben we dus ook het form en de gridpane voor nodig. Of een deel van deze implementatie moet naar de visitor zelf verhuizen.
-        assert rootGrid != null;
-        Text questionLabel = new Text(question.getLabel());
+    private CheckBox getCheckbox(Identifier identifier) {
         CheckBox input = new CheckBox();
 
-        input.selectedProperty().addListener((observable, oldValue, newValue) ->
-                form.stream().forEach(
-                        formItem -> formItem.idChanged(form, question, String.valueOf(newValue))));
+        input.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            IdentifierUpdatedVisitor identifierUpdatedVisitor =
+                    new IdentifierUpdatedVisitor(
+                            new IdentifierValue(identifier.toString(), new BooleanValue(String.valueOf(newValue))));
+            form.forEach(formItem -> formItem.accept(identifierUpdatedVisitor));
+        });
 
-        rootGrid.addRow(getRowCount(rootGrid) + 1, questionLabel, input);
+        return input;
     }
 
-    public void showMoney(Question question) {
-        Text questionLabel = new Text(question.getLabel());
+    private TextField getTextfield(Identifier identifier) {
+        TextField textField = new TextField();
 
-        Text euroLabel = new Text("'");
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (typeChecker.checkDouble(newValue)) {
+                textField.setStyle("-fx-text-fill: green");
+                IdentifierUpdatedVisitor identifierUpdatedVisitor =
+                        new IdentifierUpdatedVisitor(new IdentifierValue(identifier.toString(), new NumberValue(newValue)));
+                form.forEach(formItem -> formItem.accept(identifierUpdatedVisitor));
+            } else {
+                textField.setStyle("-fx-text-fill: red");
+            }
+        });
+        return textField;
+    }
+
+
+    private HBox getMoneyBox(Identifier identifier) {
+        Text euroLabel = new Text("€");
         TextField input = new TextField();
-        questionOnUpdate(question, input);
+
+        input.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (typeChecker.checkMoney(newValue)) {
+                input.setStyle("-fx-text-fill: green");
+                IdentifierUpdatedVisitor identifierUpdatedVisitor =
+                        new IdentifierUpdatedVisitor(new IdentifierValue(identifier.toString(), new NumberValue(newValue)));
+                form.forEach(formItem -> formItem.accept(identifierUpdatedVisitor));
+            } else {
+                input.setStyle("-fx-text-fill: red");
+            }
+        });
 
         HBox box = new HBox();
         box.getChildren().addAll(euroLabel, input);
         box.setAlignment(Pos.CENTER_RIGHT);
 
-        rootGrid.addRow(getRowCount(rootGrid) + 1, questionLabel, box);
-        //Moet iets worden van return box.
+        return box;
     }
-
-
-
-
-
-
-
 }
-
-    getWidget(Question q){
-        widget = q.type.widget(this, q)
-        //blabla make widget label etc.
-    }
-
-    getWidget(BooleanType type){
-        // Maak bool widget
-    }
-
-    getWidget(NumberType type){
-
-    }

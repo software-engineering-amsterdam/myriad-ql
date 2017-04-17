@@ -34,4 +34,6 @@ public interface Visitor {
     void visit(Type type);
 
     void visit(IdentifierValue value);
+
+    boolean shouldTraverseRecursive();
 }

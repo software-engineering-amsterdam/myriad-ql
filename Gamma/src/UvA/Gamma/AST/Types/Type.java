@@ -1,10 +1,11 @@
 package UvA.Gamma.AST.Types;
 
 import UvA.Gamma.AST.ASTNode;
+import UvA.Gamma.AST.Expression.Identifier;
 import UvA.Gamma.AST.Expression.Values.Value;
-import UvA.Gamma.Visitors.Visitor;
-import UvA.Gamma.GUI.DefaultWidgetBuilder;
 import UvA.Gamma.GUI.WidgetBuilder;
+import UvA.Gamma.Visitors.Visitor;
+import javafx.scene.Node;
 
 /**
  * Created by Tjarco, 21-03-17.
@@ -22,9 +23,5 @@ public abstract class Type implements ASTNode {
 
     public abstract Value defaultValue();
 
-    public DateType returnType(){
-
-    }
+    public abstract Node typeNode(WidgetBuilder builder, Identifier identifier);
 }
-//    misschien dan aan type een methode toevoegen en dan iets als: widget = type.getWidget(this); en dat elke type dan op
-//        die Widgetbuilder de juiste methode aanroept

@@ -3,6 +3,7 @@ package UvA.Gamma.AST;
 import UvA.Gamma.AST.Expression.Expression;
 import UvA.Gamma.AST.Expression.Values.BooleanValue;
 import UvA.Gamma.Visitors.Visitor;
+import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ public class Condition implements FormItem {
     private List<FormItem> elseBlockItems;
     //    private BooleanExpression expression;
     private Expression expression;
+    private GridPane gridPane;
 
     public Condition(Expression expression) {
         this.thenBlockItems = new ArrayList<>();
@@ -33,7 +35,16 @@ public class Condition implements FormItem {
 
     public boolean evaluateExpression() {
         assert expression != null;
-        return ((BooleanValue) expression.value()).toBoolean();
+        boolean value = ((BooleanValue) expression.value()).toBoolean();
+        if (gridPane != null) {
+            gridPane.setVisible(value);
+        }
+        return value;
+    }
+
+    public void setGridPane(GridPane gridPane) {
+        this.gridPane = gridPane;
+        evaluateExpression();
     }
 
     @Override
@@ -44,10 +55,17 @@ public class Condition implements FormItem {
 
     @Override
     public void accept(Visitor visitor) {
-        thenBlockItems.forEach(formItem -> formItem.accept(visitor));
-        elseBlockItems.forEach(formItem -> formItem.accept(visitor));
+        if (visitor.shouldTraverseRecursive()) {
+            thenBlockItems.forEach(formItem -> formItem.accept(visitor));
+            elseBlockItems.forEach(formItem -> formItem.accept(visitor));
+        }
         expression.accept(visitor);
         visitor.visit(this);
+    }
+
+    public void visitChildNodes(Visitor visitor) {
+        thenBlockItems.forEach(formItem -> formItem.accept(visitor));
+        elseBlockItems.forEach(formItem -> formItem.accept(visitor));
     }
 
 
