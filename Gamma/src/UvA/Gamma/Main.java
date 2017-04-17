@@ -9,8 +9,10 @@ import UvA.Gamma.GUI.MainScreen;
 import UvA.Gamma.Validation.QLParseErrorListener;
 import UvA.Gamma.Visitors.IdentifierUpdatedVisitor;
 import UvA.Gamma.Visitors.ReferenceValidator;
+import UvA.Gamma.Visitors.UIVisitor;
 import UvA.Gamma.Visitors.ValidationVisitor;
 import javafx.application.Application;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -52,9 +54,11 @@ public class Main extends Application {
                 ReferenceValidator referenceValidator = new ReferenceValidator(validationVisitor.getIdentifierStrings());
                 form.forEach(formItem -> formItem.accept(referenceValidator));
 
+                GridPane grid = new GridPane();
+                UIVisitor uivisit = new UIVisitor(grid);
+                form.forEach(formItem -> formItem.accept(uivisit));
 
-                IdentifierUpdatedVisitor updatedVisitor = new IdentifierUpdatedVisitor(
-                        new IdentifierValue("test", new NumberValue("20")));
+                IdentifierUpdatedVisitor updatedVisitor = new IdentifierUpdatedVisitor(new IdentifierValue("test", new NumberValue("20")));
                 form.forEach(formItem -> formItem.accept(updatedVisitor));
 
 //                Validator validator = new Validator(form);
@@ -62,8 +66,8 @@ public class Main extends Application {
 //                validator.visit();
 
 
-                System.err.println("Exiting early for testing");
-                System.exit(1);
+                //System.err.println("Exiting early for testing");
+                //System.exit(1);
 
                 MainScreen mainScreen = new MainScreen(form);
                 mainScreen.initUI(primaryStage);

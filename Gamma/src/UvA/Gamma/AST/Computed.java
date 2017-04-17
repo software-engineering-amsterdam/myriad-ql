@@ -29,6 +29,11 @@ public class Computed extends IdentifiableFormItem {
         return label;
     }
 
+    public Type getType(){
+        return type;
+    }
+
+
     @Override
     public void accept(Visitor visitor) {
         expression.accept(visitor);
@@ -48,6 +53,7 @@ public class Computed extends IdentifiableFormItem {
     public void updateValue() {
         this.stringValue.setValue(expression.value().toString());
     }
+
 
     public StringProperty getStringValueProperty() {
         return stringValue;
