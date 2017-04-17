@@ -19,6 +19,8 @@ public abstract class Field extends Pane{
 
     public abstract void setValue(Value value);
 
+    public abstract void setReadOnly();
+
     protected abstract void addField(ObservableList<Node> nodes);
 
     public void fillContent(ObservableList<Node> nodes) {

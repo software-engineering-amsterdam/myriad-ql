@@ -27,7 +27,15 @@ public class QLInteger extends Field {
 
     @Override
     public void update(EnvironmentsTable environmentsTable) {
-        environmentsTable.add(getIdentifier(), new IntegerValue(Integer.parseInt(textField.getText())));
+        IntegerValue value;
+
+        if (textField.getText().isEmpty()) {
+            value = new IntegerValue(0);
+        } else {
+            value = new IntegerValue(Integer.parseInt(textField.getText()));
+        }
+
+        environmentsTable.add(getIdentifier(), value);
     }
 
     @Override
@@ -40,5 +48,10 @@ public class QLInteger extends Field {
         if (value.getValue() != null) {
             textField.setText(String.valueOf(value.getValue()));
         }
+    }
+
+    @Override
+    public void setReadOnly() {
+        textField.setDisable(true);
     }
 }

@@ -41,4 +41,9 @@ public class QLCheckBox extends Field {
             checkBox.setSelected((Boolean) value.getValue());
         }
     }
+
+    @Override
+    public void setReadOnly() {
+        checkBox.setDisable(true);
+    }
 }
