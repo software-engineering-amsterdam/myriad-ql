@@ -65,7 +65,7 @@ public class Page {
         List<Type> processedTypes = new ArrayList<>();
         for (DefaultStyle declaration : mDefaultStyleDeclarations) {
             if (declaration.isOneOf(processedTypes)) {
-                semanticsMessages.addError(declaration.sourceInfo() + "Duplicate type declaration.");
+                semanticsMessages.addError(declaration.sourceInfo() + "Duplicate type declaration: " + declaration.toString());
             }
         }
     }
@@ -88,6 +88,7 @@ public class Page {
         for (Section section : mSections) {
             if (section.contains(component.getName())) {
                 section.applyStyle(component);
+                return;
             }
         }
 
