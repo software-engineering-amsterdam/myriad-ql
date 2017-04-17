@@ -10,7 +10,6 @@ import UvA.Gamma.AST.Form;
 import UvA.Gamma.AST.Question;
 import UvA.Gamma.AST.Types.*;
 import UvA.Gamma.Validation.TypeChecker;
-import UvA.Gamma.Visitors.IdentifierUpdatedVisitor;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
@@ -65,12 +64,12 @@ public class DefaultWidgetBuilder implements WidgetBuilder {
 
     @Override
     public Node getNode(IntegerType type, Identifier identifier) {
-        return getTextfield(identifier);
+        return getTextfield(identifier, true);
     }
 
     @Override
     public Node getNode(DecimalType type, Identifier identifier) {
-        return getTextfield(identifier);
+        return getTextfield(identifier, false);
     }
 
     @Override
@@ -108,11 +107,11 @@ public class DefaultWidgetBuilder implements WidgetBuilder {
         return input;
     }
 
-    private TextField getTextfield(Identifier identifier) {
+    private TextField getTextfield(Identifier identifier, boolean isInteger) {
         TextField textField = new TextField();
 
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (typeChecker.checkDouble(newValue)) {
+            if ((!isInteger && typeChecker.checkDouble(newValue)) || typeChecker.checkInteger(newValue)) {
                 textField.setStyle("-fx-text-fill: green");
                 IdentifierUpdatedVisitor identifierUpdatedVisitor =
                         new IdentifierUpdatedVisitor(new IdentifierValue(identifier.toString(), new NumberValue(newValue)));

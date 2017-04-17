@@ -1,5 +1,7 @@
 package UvA.Gamma.AST;
 
+import UvA.Gamma.Visitors.Visitor;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,8 +28,8 @@ public class Form implements ASTNode, Iterable<FormItem> {
         formItems.add(item);
     }
 
-    void idChanged(FormItem changed, String newValue) {
-        formItems.parallelStream().forEach(item -> item.idChanged(this, changed, newValue));
+    public void accept(Visitor visitor) {
+        this.forEach(formItem -> formItem.accept(visitor));
     }
 
     @Override

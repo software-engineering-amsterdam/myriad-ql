@@ -1,13 +1,12 @@
-package UvA.Gamma.Visitors;
+package UvA.Gamma.GUI;
 
 import UvA.Gamma.AST.Computed;
 import UvA.Gamma.AST.Condition;
 import UvA.Gamma.AST.Question;
-import UvA.Gamma.GUI.WidgetBuilder;
+import UvA.Gamma.Visitors.BaseVisitor;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
 
 import java.util.List;
 

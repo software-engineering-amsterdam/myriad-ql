@@ -1,8 +1,9 @@
-package UvA.Gamma.Visitors;
+package UvA.Gamma.GUI;
 
 import UvA.Gamma.AST.Computed;
 import UvA.Gamma.AST.Condition;
 import UvA.Gamma.AST.Expression.Values.IdentifierValue;
+import UvA.Gamma.Visitors.BaseVisitor;
 
 /**
  * Created by Tjarco, 05-04-17.

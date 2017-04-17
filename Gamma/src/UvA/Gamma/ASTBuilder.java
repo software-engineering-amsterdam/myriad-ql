@@ -22,7 +22,7 @@ import java.util.Map;
  */
 
 public class ASTBuilder extends QLBaseVisitor<ASTNode> {
-    Map<Identifier, Type> identifierTypes;
+    private Map<Identifier, Type> identifierTypes;
 
     @Override
     public Form visitForm(QLParser.FormContext ctx) {

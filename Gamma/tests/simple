@@ -1,3 +1,7 @@
 form test{
-    "testing.. " test: integer = (1 && 2)
+    "testint" testi: integer
+    "testdec" testd: decimal
+    "testbool" testb: boolean
+    "testdate" testda: date
+    "testmoney" testm: money
 }

@@ -8,9 +8,7 @@ import UvA.Gamma.Validation.QLParseErrorListener;
 import UvA.Gamma.Validation.ReferenceValidator;
 import UvA.Gamma.Validation.TypeValidator;
 import UvA.Gamma.Validation.ValidationVisitor;
-import UvA.Gamma.Visitors.UIVisitor;
 import javafx.application.Application;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -46,13 +44,6 @@ public class Main extends Application {
 
                 validateForm(form);
 
-//                GridPane grid = new GridPane();
-//                UIVisitor uivisit = new UIVisitor(grid);
-//                form.forEach(formItem -> formItem.accept(uivisit));
-
-                //System.err.println("Exiting early for testing");
-                //System.exit(1);
-
                 MainScreen mainScreen = new MainScreen(form);
                 mainScreen.initUI(primaryStage);
             } catch (IOException ex) {
@@ -67,7 +58,7 @@ public class Main extends Application {
 
     private void validateForm(Form form) {
         ValidationVisitor validationVisitor = new ValidationVisitor(form);
-        form.forEach(formItem -> formItem.accept(validationVisitor));
+        form.accept(validationVisitor);
 
         validateReferences(form, validationVisitor.getIdentifierStrings());
         validateTypes(form);
@@ -75,12 +66,12 @@ public class Main extends Application {
 
     private void validateTypes(Form form) {
         TypeValidator typeValidator = new TypeValidator();
-        form.forEach(formItem -> formItem.accept(typeValidator));
+        form.accept(typeValidator);
     }
 
     private void validateReferences(Form form, Set<String> identifierStrings) {
         ReferenceValidator referenceValidator = new ReferenceValidator(identifierStrings);
-        form.forEach(formItem -> formItem.accept(referenceValidator));
+        form.accept(referenceValidator);
     }
 
     public static void main(String[] args) throws IOException {
