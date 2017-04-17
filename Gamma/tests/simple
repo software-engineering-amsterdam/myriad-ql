@@ -1,4 +1,6 @@
 form test{
     "test" test: integer
+    if(true){
+        "question?" question: integer = (test + 2)
     }
 }

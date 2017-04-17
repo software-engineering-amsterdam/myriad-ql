@@ -11,18 +11,22 @@ import UvA.Gamma.Visitors.Visitor;
  */
 public class Question extends IdentifiableFormItem {
 
+    private Type type;
+
     public Question(String question, Identifier id, Type type) {
         this.label = question;
         this.identifier = id;
         this.type = type;
     }
 
+    public Type getType() {
+        return type;
+    }
+
     public boolean check(TypeChecker checker, String newValue) {
         assert type != null;
         return false;
     }
-
-
 
     @Override
     public void accept(Visitor visitor) {

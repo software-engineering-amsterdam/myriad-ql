@@ -16,6 +16,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import UvA.Gamma.GUI.FXMLController;
 
 
 /**
@@ -33,17 +34,20 @@ public class MainScreen {
 //        Parent root = loader.load();
 //        FXMLController controller = loader.getController();
 //        controller.addFormItems(form, stage);
+        FXMLController controller = new FXMLController(form);
+        GridPane grid = new GridPane();
+        controller.initVisitor(grid);
         Text scenetitle = new Text("Welcome");
-        GridPane root = new GridPane();
 
-        root.setAlignment(Pos.CENTER);
-        root.setHgap(10);
-        root.setVgap(10);
-        root.setPadding(new Insets(25, 25, 25, 25));
+
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        root.add(scenetitle, 0, 0, 2, 1);
+        grid.add(scenetitle, 0, 0, 2, 1);
 
-        stage.setScene(new Scene(root));
+        stage.setScene(new Scene(grid));
         stage.sizeToScene();
         stage.show();
     }

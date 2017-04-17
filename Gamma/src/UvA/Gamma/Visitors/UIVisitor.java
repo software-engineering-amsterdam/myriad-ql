@@ -16,10 +16,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
@@ -33,9 +30,11 @@ import javafx.stage.Stage;
  */
 public class UIVisitor extends BaseVisitor {
     private GridPane grid;
+    private WidgetBuilder builder;
 
-    public UIVisitor(GridPane grid) {
+    public UIVisitor(GridPane grid, WidgetBuilder builder) {
         this.grid = grid;
+        this.builder = builder;
     }
 
     public GridPane getGrid() {
@@ -44,10 +43,27 @@ public class UIVisitor extends BaseVisitor {
 
     @Override
     public void visit(Question ques) {
-        WidgetBuilder.getWidget(ques);
+       builder.getWidget(ques);
         Text questionLabel = new Text(ques.getLabel());
         TextField input = new TextField();
         grid.addRow(getRowCount(grid) + 1, questionLabel, input);
+    }
+
+//    @Override
+//    public void visit(Condition con) {
+//
+//
+//    }
+
+    @Override
+    public void visit(Computed com) {
+        builder.getWidget(com);
+        Text label = new Text(com.getLabel());
+        Text result = new Text(com.getStringValueProperty().get());
+
+        result.textProperty().bind(com.getStringValueProperty());
+
+        grid.addRow(getRowCount(grid) + 1, label, result);
     }
 
     private int getRowCount(GridPane pane) {
@@ -63,16 +79,6 @@ public class UIVisitor extends BaseVisitor {
         }
         return numRows;
     }
-
-//    @Override
-//    public void visit(Condition con) {
-//        WidgetBuilder.getWidget(con);
-//    }
-
-//    @Override
-//    public void visit(Computed com) {
-//        WidgetBuilder.getWidget(com);
-//    }
 
 }
 

@@ -12,4 +12,10 @@ public class DateType extends Type {
     public Value defaultValue() {
         return null;
     }
+
+    @Override
+    public DateType returnType() {
+        return this;
+    }
 }
+

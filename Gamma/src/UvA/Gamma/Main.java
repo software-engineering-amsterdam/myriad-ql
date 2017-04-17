@@ -54,9 +54,9 @@ public class Main extends Application {
                 ReferenceValidator referenceValidator = new ReferenceValidator(validationVisitor.getIdentifierStrings());
                 form.forEach(formItem -> formItem.accept(referenceValidator));
 
-                GridPane grid = new GridPane();
-                UIVisitor uivisit = new UIVisitor(grid);
-                form.forEach(formItem -> formItem.accept(uivisit));
+//                GridPane grid = new GridPane();
+//                UIVisitor uivisit = new UIVisitor(grid);
+//                form.forEach(formItem -> formItem.accept(uivisit));
 
                 IdentifierUpdatedVisitor updatedVisitor = new IdentifierUpdatedVisitor(new IdentifierValue("test", new NumberValue("20")));
                 form.forEach(formItem -> formItem.accept(updatedVisitor));

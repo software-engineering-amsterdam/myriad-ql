@@ -9,23 +9,22 @@ import UvA.Gamma.AST.Types.DateType;
 import UvA.Gamma.AST.Types.MoneyType;
 import UvA.Gamma.AST.Types.Type;
 import UvA.Gamma.Antlr.QL.QLParser;
+import javafx.scene.layout.GridPane;
 
 /**
  * Created by casboot on 10-04-17.
 // */
 
-public abstract class WidgetBuilder {
+public interface  WidgetBuilder {
 
-    public static void getWidget(Computed com){
-//        return com.getType().widget;
-    }
+    void getWidget(Computed com);
+    void getWidget (Question ques);
+    void getWidget (Condition con);
 //
 //   public static widgetObject getWidget(Condition con){
 //        return con.getType().widget;
 ////    }
 //
-    public static void getWidget (Question ques){
-//        return ques.getType().widget;
-    }
+
 
 }
