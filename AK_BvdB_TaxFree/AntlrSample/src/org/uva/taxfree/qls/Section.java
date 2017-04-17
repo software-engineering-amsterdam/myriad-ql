@@ -1,7 +1,7 @@
 package org.uva.taxfree.qls;
 
 import org.uva.taxfree.ql.gui.MessageList;
-import org.uva.taxfree.ql.gui.widgets.GuiComponent;
+import org.uva.taxfree.ql.gui.widgets.Widget;
 import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 
@@ -44,10 +44,10 @@ public class Section {
         return getUsedVariables().contains(variableId);
     }
 
-    protected void applyStyle(GuiComponent component) {
+    protected void applyStyle(Widget widget) {
         for (QuestionStyle style : mQuestionStyles) {
-            if (style.getId().equals(component.getId())) {
-                style.applyStyle(component);
+            if (style.getId().equals(widget.getId())) {
+                style.applyStyle(widget);
             }
         }
     }

@@ -1,9 +1,7 @@
 package org.uva.taxfree.qls.styleoption;
 
-import org.uva.taxfree.ql.gui.widgets.GuiComponent;
+import org.uva.taxfree.ql.gui.widgets.Widget;
 import org.uva.taxfree.ql.model.SourceInfo;
-
-import java.awt.*;
 
 public class FontSizeStyleOption extends StyleOption {
     private final int mFontSize;
@@ -13,7 +11,7 @@ public class FontSizeStyleOption extends StyleOption {
         mFontSize = fontSize;
     }
 
-    public void applyStyle(GuiComponent component) {
-        component.setFontSize(mFontSize);
+    public void applyStyle(Widget widget) {
+        widget.setFontSize(mFontSize);
     }
 }

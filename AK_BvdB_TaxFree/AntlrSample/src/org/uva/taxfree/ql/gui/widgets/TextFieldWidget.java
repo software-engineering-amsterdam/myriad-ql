@@ -44,8 +44,8 @@ public abstract class TextFieldWidget extends Widget {
     }
 
     @Override
-    protected void applyStyle(GuiComponent panel, QlsStyle qlsStyle) {
-        super.applyStyle(panel, qlsStyle);
-        qlsStyle.applyStyle(new StringType(), panel);
+    protected void applyStyle(Widget widget, QlsStyle qlsStyle) {
+        super.applyStyle(widget, qlsStyle);
+        qlsStyle.applyStyle(new StringType(), widget);
     }
 }

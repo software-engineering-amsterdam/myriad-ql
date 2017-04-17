@@ -1,6 +1,6 @@
 package org.uva.taxfree.qls;
 
-import org.uva.taxfree.ql.gui.widgets.GuiComponent;
+import org.uva.taxfree.ql.gui.widgets.Widget;
 import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.qls.styleoption.StyleOption;
 
@@ -16,9 +16,9 @@ public class StyleDeclaration {
         mSourceInfo = sourceInfo;
     }
 
-    public void applyStyle(GuiComponent component) {
+    public void applyStyle(Widget widget) {
         for (StyleOption styleOption : mStyleOptions) {
-            styleOption.applyStyle(component);
+            styleOption.applyStyle(widget);
         }
     }
 

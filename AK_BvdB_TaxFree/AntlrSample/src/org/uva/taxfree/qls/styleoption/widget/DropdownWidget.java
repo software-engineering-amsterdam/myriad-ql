@@ -1,6 +1,7 @@
 package org.uva.taxfree.qls.styleoption.widget;
 
-import org.uva.taxfree.ql.gui.widgets.GuiComponent;
+import org.uva.taxfree.ql.gui.widgets.BooleanWidget;
+import org.uva.taxfree.ql.gui.widgets.Widget;
 import org.uva.taxfree.ql.model.SourceInfo;
 
 import javax.swing.*;
@@ -17,8 +18,8 @@ public class DropdownWidget extends WidgetStyleOption {
     }
 
     @Override
-    public void applyStyle(GuiComponent component) {
-        component.setValueComponent(createDropdownBox());
+    public void applyStyle(Widget widget) {
+        // Handle the resolveValue callback
     }
 
     public JComponent createDropdownBox() {

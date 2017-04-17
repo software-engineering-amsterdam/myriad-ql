@@ -1,12 +1,11 @@
 package org.uva.taxfree.qls;
 
 import org.uva.taxfree.ql.gui.MessageList;
-import org.uva.taxfree.ql.gui.widgets.GuiComponent;
+import org.uva.taxfree.ql.gui.widgets.Widget;
 import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.types.Type;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -85,17 +84,17 @@ public class Page {
         }
     }
 
-    public void applyStyle(Type type, GuiComponent component) {
+    public void applyStyle(Type type, Widget widget) {
         for (Section section : mSections) {
-            if (section.contains(component.getId())) {
-                section.applyStyle(component);
+            if (section.contains(widget.getId())) {
+                section.applyStyle(widget);
                 return;
             }
         }
 
         for (StyleDeclaration declaration : mDefaultStyleDeclarations) {
             if (declaration.equals(type)) {
-                declaration.applyStyle(component);
+                declaration.applyStyle(widget);
             }
         }
     }

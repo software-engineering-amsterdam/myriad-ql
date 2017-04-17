@@ -1,7 +1,7 @@
 package org.uva.taxfree.qls;
 
 import org.uva.taxfree.ql.gui.MessageList;
-import org.uva.taxfree.ql.gui.widgets.GuiComponent;
+import org.uva.taxfree.ql.gui.widgets.Widget;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.types.Type;
 
@@ -15,10 +15,10 @@ public class QlsStyle {
         mPages = pages;
     }
 
-    public void applyStyle(Type type, GuiComponent component) {
+    public void applyStyle(Type type, Widget widget) {
         for (Page page : mPages) {
-            if (page.contains(component.getId())) {
-                page.applyStyle(type, component);
+            if (page.contains(widget.getId())) {
+                page.applyStyle(type, widget);
             }
         }
     }

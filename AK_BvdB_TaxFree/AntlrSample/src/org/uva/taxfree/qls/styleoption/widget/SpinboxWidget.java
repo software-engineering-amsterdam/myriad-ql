@@ -1,6 +1,6 @@
 package org.uva.taxfree.qls.styleoption.widget;
 
-import org.uva.taxfree.ql.gui.widgets.GuiComponent;
+import org.uva.taxfree.ql.gui.widgets.Widget;
 import org.uva.taxfree.ql.model.SourceInfo;
 
 public class SpinboxWidget extends WidgetStyleOption {
@@ -10,7 +10,7 @@ public class SpinboxWidget extends WidgetStyleOption {
     }
 
     @Override
-    public void applyStyle(GuiComponent component) {
+    public void applyStyle(Widget widget) {
 
     }
 }

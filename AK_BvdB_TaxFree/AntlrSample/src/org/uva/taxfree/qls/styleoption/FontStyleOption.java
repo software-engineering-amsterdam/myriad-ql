@@ -1,6 +1,6 @@
 package org.uva.taxfree.qls.styleoption;
 
-import org.uva.taxfree.ql.gui.widgets.GuiComponent;
+import org.uva.taxfree.ql.gui.widgets.Widget;
 import org.uva.taxfree.ql.model.SourceInfo;
 
 public class FontStyleOption extends StyleOption {
@@ -11,7 +11,7 @@ public class FontStyleOption extends StyleOption {
         mFontName = fontName;
     }
 
-    public void applyStyle(GuiComponent component) {
-        component.setFontName(mFontName);
+    public void applyStyle(Widget widget) {
+        widget.setFontName(mFontName);
     }
 }
