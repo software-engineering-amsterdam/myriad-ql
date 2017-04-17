@@ -72,34 +72,8 @@ public class Typechecker implements Visitor, ExpressionVisitor<ValueType> {
 
         Expression expression = computedQuestion.getComputedValue();
         expression.accept(this);
-        DependencyVisitor dependencyVisitor = new DependencyVisitor();
-        Set<java.lang.String> dependencies = expression.accept(dependencyVisitor);
-        java.lang.String identifier = computedQuestion.getValue();
-        for (java.lang.String dependency: dependencies){
-            addDependencies(identifier, dependency);
-        }
-
-        checkForDependencies(expression);
 
         return null;
-    }
-
-    private void addDependencies(java.lang.String identifier, java.lang.String dependency){
-        if (declarations.containsKey(dependency)) {
-            IdentifierInput identifierInput = declarations.get(identifier);
-            identifierInput.setDependencies(dependency);
-        }
-    }
-
-    private void checkForDependencies(Expression expression)
-    {
-        for(Map.Entry<java.lang.String, IdentifierInput> entry : declarations.entrySet()){
-            Set<java.lang.String> dependencies = entry.getValue().getDependencies();
-            Iterator<java.lang.String> iterator = dependencies.iterator();
-            while (iterator.hasNext()){
-                exceptionHandler.addError(new CyclicDependency(expression.getLineNumber(), entry.getKey(), iterator.next()));
-            }
-        }
     }
 
     @Override
