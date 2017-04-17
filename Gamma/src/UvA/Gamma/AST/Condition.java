@@ -17,7 +17,8 @@ public class Condition implements FormItem {
     private List<FormItem> elseBlockItems;
     //    private BooleanExpression expression;
     private Expression expression;
-    private GridPane gridPane;
+    private GridPane thenPane;
+    private GridPane elsePane;
 
     public Condition(Expression expression) {
         this.thenBlockItems = new ArrayList<>();
@@ -36,14 +37,22 @@ public class Condition implements FormItem {
     public boolean evaluateExpression() {
         assert expression != null;
         boolean value = ((BooleanValue) expression.value()).toBoolean();
-        if (gridPane != null) {
-            gridPane.setVisible(value);
+        if (thenPane != null) {
+            thenPane.setVisible(value);
+        }
+        if (elsePane != null) {
+            elsePane.setVisible(!value);
         }
         return value;
     }
 
-    public void setGridPane(GridPane gridPane) {
-        this.gridPane = gridPane;
+    public void setThenPane(GridPane thenPane) {
+        this.thenPane = thenPane;
+        evaluateExpression();
+    }
+
+    public void setElsePane(GridPane elsePane) {
+        this.elsePane = elsePane;
         evaluateExpression();
     }
 
@@ -63,8 +72,11 @@ public class Condition implements FormItem {
         visitor.visit(this);
     }
 
-    public void visitChildNodes(Visitor visitor) {
+    public void visitThenChildNodes(Visitor visitor) {
         thenBlockItems.forEach(formItem -> formItem.accept(visitor));
+    }
+
+    public void visitElseChildNodes(Visitor visitor) {
         elseBlockItems.forEach(formItem -> formItem.accept(visitor));
     }
 

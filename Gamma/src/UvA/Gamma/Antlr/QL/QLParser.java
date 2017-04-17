@@ -32,7 +32,7 @@ public class QLParser extends Parser {
 
 	private static final String[] _LITERAL_NAMES = {
 		null, "'form'", "'{'", "'}'", "':'", "'='", "'('", "')'", "'if'", "'else'", 
-		"'&&'", "'||'", "'=='", "'!='", "'<'", "'>'", "'<='", "'>='", "'!'", "'true'", 
+		"'!'", "'&&'", "'||'", "'=='", "'!='", "'<'", "'>'", "'<='", "'>='", "'true'", 
 		"'false'", "'*'", "'/'", "'+'", "'-'", "'boolean'", "'string'", "'integer'", 
 		"'date'", "'decimal'", "'money'"
 	};
@@ -759,16 +759,27 @@ public class QLParser extends Parser {
 			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
 			case 1:
 				{
-				_localctx = new LogicalIntegerExpressionContext(_localctx);
+				_localctx = new NegatedBooleanExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
 				setState(88);
-				numExpression(0);
+				match(T__9);
 				setState(89);
+				boolExpression(6);
+				}
+				break;
+			case 2:
+				{
+				_localctx = new LogicalIntegerExpressionContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(90);
+				numExpression(0);
+				setState(91);
 				((LogicalIntegerExpressionContext)_localctx).op = _input.LT(1);
 				_la = _input.LA(1);
-				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__11) | (1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__15) | (1L << T__16))) != 0)) ) {
+				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__15) | (1L << T__16) | (1L << T__17))) != 0)) ) {
 					((LogicalIntegerExpressionContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 				}
 				else {
@@ -776,32 +787,21 @@ public class QLParser extends Parser {
 					_errHandler.reportMatch(this);
 					consume();
 				}
-				setState(90);
-				numExpression(0);
-				}
-				break;
-			case 2:
-				{
-				_localctx = new NestedBooleanExpressionContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
 				setState(92);
-				match(T__5);
-				setState(93);
-				boolExpression(0);
-				setState(94);
-				match(T__6);
+				numExpression(0);
 				}
 				break;
 			case 3:
 				{
-				_localctx = new NegatedBooleanExpressionContext(_localctx);
+				_localctx = new NestedBooleanExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
+				setState(94);
+				match(T__5);
+				setState(95);
+				boolExpression(0);
 				setState(96);
-				match(T__17);
-				setState(97);
-				boolExpression(3);
+				match(T__6);
 				}
 				break;
 			case 4:
@@ -844,11 +844,11 @@ public class QLParser extends Parser {
 					_localctx = new LogicalBooleanExpressionContext(new BoolExpressionContext(_parentctx, _parentState));
 					pushNewRecursionContext(_localctx, _startState, RULE_boolExpression);
 					setState(102);
-					if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
+					if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 					setState(103);
 					((LogicalBooleanExpressionContext)_localctx).op = _input.LT(1);
 					_la = _input.LA(1);
-					if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__9) | (1L << T__10) | (1L << T__11) | (1L << T__12))) != 0)) ) {
+					if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__10) | (1L << T__11) | (1L << T__12) | (1L << T__13))) != 0)) ) {
 						((LogicalBooleanExpressionContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 					}
 					else {
@@ -857,7 +857,7 @@ public class QLParser extends Parser {
 						consume();
 					}
 					setState(104);
-					boolExpression(7);
+					boolExpression(6);
 					}
 					} 
 				}
@@ -1089,7 +1089,7 @@ public class QLParser extends Parser {
 	private boolean boolExpression_sempred(BoolExpressionContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 6);
+			return precpred(_ctx, 5);
 		}
 		return true;
 	}
@@ -1113,8 +1113,8 @@ public class QLParser extends Parser {
 		"\t\3\t\5\tX\n\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\5"+
 		"\ng\n\n\3\n\3\n\3\n\7\nl\n\n\f\n\16\no\13\n\3\13\3\13\3\13\3\13\3\13\3"+
 		"\13\3\13\5\13x\n\13\3\13\3\13\3\13\3\13\3\13\3\13\7\13\u0080\n\13\f\13"+
-		"\16\13\u0083\13\13\3\13\2\4\22\24\f\2\4\6\b\n\f\16\20\22\24\2\7\3\2\16"+
-		"\23\3\2\25\26\3\2\f\17\3\2\27\30\3\2\31\32\u008f\2\26\3\2\2\2\4$\3\2\2"+
+		"\16\13\u0083\13\13\3\13\2\4\22\24\f\2\4\6\b\n\f\16\20\22\24\2\7\3\2\17"+
+		"\24\3\2\25\26\3\2\r\20\3\2\27\30\3\2\31\32\u008f\2\26\3\2\2\2\4$\3\2\2"+
 		"\2\6&\3\2\2\2\b+\3\2\2\2\n:\3\2\2\2\f<\3\2\2\2\16K\3\2\2\2\20W\3\2\2\2"+
 		"\22f\3\2\2\2\24w\3\2\2\2\26\27\7\3\2\2\27\30\7#\2\2\30\34\7\4\2\2\31\33"+
 		"\5\4\3\2\32\31\3\2\2\2\33\36\3\2\2\2\34\32\3\2\2\2\34\35\3\2\2\2\35\37"+
@@ -1129,10 +1129,10 @@ public class QLParser extends Parser {
 		"\2HJ\5\16\b\2IH\3\2\2\2IJ\3\2\2\2J\r\3\2\2\2KL\7\13\2\2LP\7\4\2\2MO\5"+
 		"\4\3\2NM\3\2\2\2OR\3\2\2\2PN\3\2\2\2PQ\3\2\2\2QS\3\2\2\2RP\3\2\2\2ST\7"+
 		"\5\2\2T\17\3\2\2\2UX\5\22\n\2VX\5\24\13\2WU\3\2\2\2WV\3\2\2\2X\21\3\2"+
-		"\2\2YZ\b\n\1\2Z[\5\24\13\2[\\\t\2\2\2\\]\5\24\13\2]g\3\2\2\2^_\7\b\2\2"+
-		"_`\5\22\n\2`a\7\t\2\2ag\3\2\2\2bc\7\24\2\2cg\5\22\n\5dg\7#\2\2eg\t\3\2"+
-		"\2fY\3\2\2\2f^\3\2\2\2fb\3\2\2\2fd\3\2\2\2fe\3\2\2\2gm\3\2\2\2hi\f\b\2"+
-		"\2ij\t\4\2\2jl\5\22\n\tkh\3\2\2\2lo\3\2\2\2mk\3\2\2\2mn\3\2\2\2n\23\3"+
+		"\2\2YZ\b\n\1\2Z[\7\f\2\2[g\5\22\n\b\\]\5\24\13\2]^\t\2\2\2^_\5\24\13\2"+
+		"_g\3\2\2\2`a\7\b\2\2ab\5\22\n\2bc\7\t\2\2cg\3\2\2\2dg\7#\2\2eg\t\3\2\2"+
+		"fY\3\2\2\2f\\\3\2\2\2f`\3\2\2\2fd\3\2\2\2fe\3\2\2\2gm\3\2\2\2hi\f\7\2"+
+		"\2ij\t\4\2\2jl\5\22\n\bkh\3\2\2\2lo\3\2\2\2mk\3\2\2\2mn\3\2\2\2n\23\3"+
 		"\2\2\2om\3\2\2\2pq\b\13\1\2qr\7\b\2\2rs\5\24\13\2st\7\t\2\2tx\3\2\2\2"+
 		"ux\7!\2\2vx\7#\2\2wp\3\2\2\2wu\3\2\2\2wv\3\2\2\2x\u0081\3\2\2\2yz\f\7"+
 		"\2\2z{\t\5\2\2{\u0080\5\24\13\b|}\f\6\2\2}~\t\6\2\2~\u0080\5\24\13\7\177"+

@@ -37,14 +37,20 @@ public class UIVisitor extends BaseVisitor {
 
     @Override
     public void visit(Condition condition) {
-        GridPane gridPane = new GridPane();
-        UIVisitor uiVisitor = new UIVisitor(gridPane, builder,stage);
-        condition.visitChildNodes(uiVisitor);
-        condition.setGridPane(gridPane);
-        gridPane.managedProperty().bind(gridPane.visibleProperty());
-        grid.add(gridPane, 0, getRowCount(grid) + 1, 2, 1);
-        gridPane.visibleProperty().addListener((observable, oldValue, newValue) -> stage.sizeToScene());
-        
+        GridPane thenPane = new GridPane();
+        GridPane elsePane = new GridPane();
+        UIVisitor thenVisitor = new UIVisitor(thenPane, builder, stage);
+        UIVisitor elseVisitor = new UIVisitor(elsePane, builder, stage);
+        condition.visitThenChildNodes(thenVisitor);
+        condition.visitElseChildNodes(elseVisitor);
+        condition.setThenPane(thenPane);
+        condition.setElsePane(elsePane);
+        thenPane.managedProperty().bind(thenPane.visibleProperty());
+        grid.add(thenPane, 0, getRowCount(grid) + 1, 2, 1);
+        elsePane.managedProperty().bind(elsePane.visibleProperty());
+        grid.add(elsePane, 0, getRowCount(grid) + 1, 2, 1);
+        thenPane.visibleProperty().addListener((observable, oldValue, newValue) -> stage.sizeToScene());
+        elsePane.visibleProperty().addListener((observable, oldValue, newValue) -> stage.sizeToScene());
     }
 
     private void placeWidget(List<Node> widgets) {
