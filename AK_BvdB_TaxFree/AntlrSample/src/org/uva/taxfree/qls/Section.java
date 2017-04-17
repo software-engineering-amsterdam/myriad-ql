@@ -23,7 +23,7 @@ public class Section {
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
         for (QuestionStyle question : mQuestionStyles) {
             if (!symbolTable.contains(question.getId())) {
-                semanticsMessages.addWarning("Undeclared identifier, section: " + mName + ", question: " + question);
+                semanticsMessages.addWarning(question.sourceInfo() +" Undeclared identifier, section: " + mName + ", question: " + question.getId());
             }
         }
     }
