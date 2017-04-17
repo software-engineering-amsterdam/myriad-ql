@@ -24,14 +24,21 @@ module Prophet
     transformer = Transform.new
     ast = transformer.apply(parsed)
 
-    [
-      Checkers::UndefinedIdentifiers, Checkers::DuplicateIdentifiers,
-      Checkers::InvalidOperands, Checkers::CyclicDependencies
-    ].each do |checker|
+    errors = [
+      Checkers::UndefinedIdentifiers,
+      Checkers::DuplicateIdentifiers,
+      Checkers::InvalidConditions,
+      Checkers::InvalidOperands,
+      Checkers::CyclicDependencies
+    ].flat_map do |checker|
       checker.new(ast).check
     end
 
-    gui = Gui.new(ast)
-    gui.render
+    if errors.any?
+      puts errors
+    else
+      gui = Gui.new(ast)
+      gui.render
+    end
   end
 end

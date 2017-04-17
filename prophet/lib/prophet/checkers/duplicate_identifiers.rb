@@ -7,7 +7,7 @@ module Prophet
         end
 
         names.group_by(&:to_s).values.reject(&:one?).collect do |names|
-          puts error_formatter(names)
+          error_formatter(names)
         end
       end
 

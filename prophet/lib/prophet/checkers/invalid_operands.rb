@@ -2,14 +2,14 @@ module Prophet
   module Checkers
     class InvalidOperands < Base
       def check
-        ast.select_by_type(:question_with_value).each do |question|
           expression_type = question.value.visit(Visitors::ExpressionType.new(type_mapping))
+        ast.select_by_type(:question_with_value).map do |question|
           if expression_type == Ast::UndefinedType.new
-            puts mismatch_error_formatter(question)
+            mismatch_error_formatter(question)
           elsif expression_type != question.type
-            puts invalid_error_formatter(question, expression_type)
+            invalid_error_formatter(question, expression_type)
           end
-        end
+        end.compact
       end
 
       def mismatch_error_formatter(question)

@@ -3,8 +3,9 @@ module Prophet
     class CyclicDependencies < Base
       def check
         dependency_hash.tsort
+        []
       rescue TSort::Cyclic
-        puts error_formatter
+        error_formatter
       end
 
       def error_formatter

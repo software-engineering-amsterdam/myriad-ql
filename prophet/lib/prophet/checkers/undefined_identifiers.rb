@@ -8,8 +8,8 @@ module Prophet
 
         ast.select_by_type(:identifier).map(&:name).reject do |name|
           defined_names.include? name
-        end.each do |name|
-          puts error_formatter(name)
+        end.map do |name|
+          error_formatter(name)
         end
       end
 
