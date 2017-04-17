@@ -2,6 +2,7 @@ package UvA.Gamma.AST.Expression.Values;
 
 import UvA.Gamma.AST.Types.DecimalType;
 import UvA.Gamma.AST.Types.IntegerType;
+import UvA.Gamma.AST.Types.MoneyType;
 import UvA.Gamma.AST.Types.Type;
 import UvA.Gamma.Visitors.Visitor;
 
@@ -57,7 +58,7 @@ public class NumberValue extends Value<NumberValue> {
 
     @Override
     public boolean conformsToType(Type type) {
-        return type.equalsType(new IntegerType()) || type.equalsType(new DecimalType());
+        return type.equalsType(new IntegerType()) || type.equalsType(new DecimalType()) || type.equalsType(new MoneyType());
     }
 
     @Override

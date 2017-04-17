@@ -22,7 +22,6 @@ public class IdentifierUpdatedVisitor extends BaseVisitor {
 
     @Override
     public void visit(Condition condition) {
-
         System.out.println("Condition is now: " + condition.evaluateExpression());
     }
 
