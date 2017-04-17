@@ -9,7 +9,7 @@ import org.uva.taxfree.qls.QlsStyle;
 
 import javax.swing.*;
 
-public class BooleanWidget extends Widget {
+public class BooleanWidget extends Widget implements Resolvable {
     private JCheckBox mCheckbox;
 
     public BooleanWidget(String label, String id) {
@@ -22,13 +22,9 @@ public class BooleanWidget extends Widget {
         parentPanel.setValueComponent(mCheckbox);
     }
 
-    protected boolean isTrue() {
-        return mCheckbox.isSelected();
-    }
-
     @Override
     public Value resolveValue() {
-        return new BooleanValue(isTrue());
+        return new BooleanValue(mCheckbox.isSelected());
     }
 
     @Override
@@ -42,7 +38,7 @@ public class BooleanWidget extends Widget {
     }
 
     @Override
-    protected void applyStyle(GuiComponent component, QlsStyle qlsStyle) {
+    protected void applyStyle(Widget component, QlsStyle qlsStyle) {
         super.applyStyle(component, qlsStyle);
         qlsStyle.applyStyle(new BooleanType(), component);
     }
