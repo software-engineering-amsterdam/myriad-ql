@@ -4,5 +4,7 @@ form OurTaxFreeSolution {
   "You want to get back tax?" -> muchTax : boolean
   "How many sliders?" -> sliderAmount : integer
   "How many spinners?" -> spinnerAmount : integer
+  "How many numbers?" -> textValueAmount : integer
   "Do you like radio or TV?" -> likesTheRadio : boolean
+  "How many characters?" -> textCharacterAmount : string
 }

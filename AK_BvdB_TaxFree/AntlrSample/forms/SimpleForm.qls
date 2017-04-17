@@ -16,7 +16,9 @@ stylesheet OurTaxFreeSolution {
                   widget : radio ( "Radio" , "Television" )
                  }
 
-        }
+    }
+
+
     section "Integers" {
         question sliderAmount {
             widget : slider
@@ -25,6 +27,15 @@ stylesheet OurTaxFreeSolution {
             widget : spinbox
         }
 
+        question textValueAmount {
+            widget : text
+        }
+
+    }
+    section "Strings" {
+        question textCharacterAmount {
+            widget : text
+        }
     }
 
   }
