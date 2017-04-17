@@ -9,19 +9,19 @@ module Prophet
 
     class TextType < Type
       def associated_widget
-        TkEntry
+        Widgets::Text
       end
     end
 
     class NumberType < Type
       def associated_widget
-        TkEntry
+        Widgets::Text
       end
     end
 
     class BoolType < Type
       def associated_widget
-        TkRadioButton
+        Widgets::Radio
       end
     end
 

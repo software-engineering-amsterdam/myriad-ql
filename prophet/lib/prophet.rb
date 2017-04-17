@@ -7,6 +7,7 @@ require 'prophet/evaluator'
 require 'prophet/parser'
 require 'prophet/transform'
 require 'prophet/utils/dependency_hash'
+require 'prophet/widgets'
 require 'prophet/version'
 
 module Prophet
