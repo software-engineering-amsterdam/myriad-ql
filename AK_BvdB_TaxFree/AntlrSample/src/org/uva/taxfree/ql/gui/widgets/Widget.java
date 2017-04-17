@@ -8,41 +8,31 @@ import org.uva.taxfree.qls.QlsStyle;
 import javax.swing.*;
 
 public abstract class Widget {
-    private final JPanel mPanel;
-    private final JLabel mLabel;
+    private final GuiComponent mGuiComponent;
 
     public Widget(String label, String id) {
-        mLabel = new JLabel(label);
-        mPanel = createPanel(id);
-    }
-
-    private JPanel createPanel(String name) {
-        JPanel widgetPanel = new JPanel();
-        widgetPanel.setName(name);
-        widgetPanel.add(mLabel);
-        widgetPanel.setVisible(true);
-        return widgetPanel;
+        mGuiComponent = new GuiComponent(label, id);
     }
 
     public void registerToPanel(JPanel widgetPanel) {
-        fillPanel(mPanel);
-        widgetPanel.add(mPanel);
+        fillPanel(mGuiComponent);
+        mGuiComponent.registerToPanel(widgetPanel);
     }
 
-    protected abstract void fillPanel(JPanel widgetPanel);
+    protected abstract void fillPanel(GuiComponent widgetPanel);
 
     public abstract Value resolveValue();
 
     public abstract void callOnUpdate(FormListener listener);
 
     public void updateVisibility(SymbolTable symbolTable) {
-        mPanel.setVisible(symbolTable.isVisible(getId()));
+        mGuiComponent.setVisible(symbolTable.isVisible(mGuiComponent.getId()));
     }
 
     public abstract void updateValues(SymbolTable symbolTable);
 
     protected void writeToTable(SymbolTable symbolTable) {
-        symbolTable.updateValue(getId(), resolveValue());
+        symbolTable.updateValue(mGuiComponent.getId(), resolveValue());
     }
 
     protected String readFromTable(SymbolTable symbolTable) {
@@ -50,15 +40,15 @@ public abstract class Widget {
     }
 
     public void updateStyle(QlsStyle qlsStyle) {
-        applyStyle(mPanel, mLabel, qlsStyle);
+        applyStyle(mGuiComponent, qlsStyle);
     }
 
-    protected void applyStyle(JPanel panel, JLabel label, QlsStyle qlsStyle) {
+    protected void applyStyle(GuiComponent component, QlsStyle qlsStyle) {
         // Intentionally left blank
     }
 
     public String getId() {
-        return mPanel.getName();
+        return mGuiComponent.getId();
     }
 
 }
