@@ -1,21 +1,36 @@
 package org.uva.taxfree.qls.styleoption.widget;
 
-import org.uva.taxfree.ql.gui.widgets.Widget;
 import org.uva.taxfree.ql.model.SourceInfo;
+import org.uva.taxfree.ql.model.values.BooleanValue;
+import org.uva.taxfree.ql.model.values.Value;
+
+import javax.swing.*;
 
 public class RadioWidget extends WidgetStyleOption {
 
-    private String mLabelTrue;
-    private String mLabelFalse;
+    private final JRadioButton mButtonFalse;
+    private final JRadioButton mButtonTrue;
 
     public RadioWidget(String labelTrue, String labelFalse, SourceInfo sourceInfo) {
         super(sourceInfo);
-        mLabelTrue = labelTrue;
-        mLabelFalse = labelFalse;
+        mButtonTrue = new JRadioButton(labelTrue);
+        mButtonFalse = new JRadioButton(labelFalse);
+        mButtonFalse.setSelected(true);
+        ButtonGroup radioButtons = new ButtonGroup();
+        radioButtons.add(mButtonFalse);
+        radioButtons.add(mButtonTrue);
     }
 
     @Override
-    public void applyStyle(Widget widget) {
-        
+    protected JComponent generateComponent() {
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(mButtonTrue);
+        buttonPanel.add(mButtonFalse);
+        return buttonPanel;
+    }
+
+    @Override
+    public Value resolve() {
+        return new BooleanValue(mButtonTrue.isSelected());
     }
 }
