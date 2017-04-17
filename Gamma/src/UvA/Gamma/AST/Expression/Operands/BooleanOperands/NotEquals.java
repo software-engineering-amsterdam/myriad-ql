@@ -17,4 +17,9 @@ public class NotEquals extends Equals {
     public Value value() {
         return ((BooleanValue) super.value()).not();
     }
+
+    @Override
+    public String toString() {
+        return left.toString() + " != " + right.toString();
+    }
 }

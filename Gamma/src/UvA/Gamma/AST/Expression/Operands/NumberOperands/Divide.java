@@ -18,4 +18,9 @@ public class Divide extends NumberOperand {
         assert left != null && right != null;
         return ((NumberValue) left.value()).divide((NumberValue) right.value());
     }
+
+    @Override
+    public String toString() {
+        return left + " / " + right;
+    }
 }

@@ -23,4 +23,9 @@ public class Or extends BooleanOperand {
         assert left != null && right != null;
         return ((BooleanValue) left.value()).or((BooleanValue) right.value());
     }
+
+    @Override
+    public String toString() {
+        return left.toString() + " || " + right.toString();
+    }
 }

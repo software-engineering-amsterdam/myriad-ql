@@ -24,4 +24,9 @@ public class Equals extends BooleanOperand {
         assert left.value().getType().equalsType(right.value().getType());
         return left.value().equals(right.value());
     }
+
+    @Override
+    public String toString() {
+        return left.toString() + " == " + right.toString();
+    }
 }

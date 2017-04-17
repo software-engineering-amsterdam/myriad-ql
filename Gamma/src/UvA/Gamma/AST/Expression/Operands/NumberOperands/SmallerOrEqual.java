@@ -21,4 +21,9 @@ public class SmallerOrEqual extends NumberOperand {
         BooleanValue equalTo = ((NumberValue) left.value()).equals(((NumberValue) right.value()));
         return smallerThan.or(equalTo);
     }
+
+    @Override
+    public String toString() {
+        return left + " <= " + right;
+    }
 }

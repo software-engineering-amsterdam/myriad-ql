@@ -18,4 +18,9 @@ public class Multiply extends NumberOperand {
         assert left != null && right != null;
         return ((NumberValue) left.value()).multiply((NumberValue) right.value());
     }
+
+    @Override
+    public String toString() {
+        return left + " * " + right;
+    }
 }

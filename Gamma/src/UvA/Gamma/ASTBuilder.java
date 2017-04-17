@@ -140,7 +140,7 @@ public class ASTBuilder extends QLBaseVisitor<ASTNode> {
     }
 
     @Override
-    public ASTNode visitLogicalIntegerExpression(QLParser.LogicalIntegerExpressionContext ctx) {
+    public Expression visitLogicalIntegerExpression(QLParser.LogicalIntegerExpressionContext ctx) {
         Expression left = (Expression) visit(ctx.numExpression(0));
         Expression right = (Expression) visit(ctx.numExpression(1));
         switch (ctx.op.getText()) {
@@ -161,6 +161,16 @@ public class ASTBuilder extends QLBaseVisitor<ASTNode> {
                 System.exit(1);
                 return null;
         }
+    }
+
+    @Override
+    public Expression visitNestedBooleanExpression(QLParser.NestedBooleanExpressionContext ctx) {
+        return (Expression) visit(ctx.boolExpression());
+    }
+
+    @Override
+    public Expression visitNestedExpression(QLParser.NestedExpressionContext ctx) {
+        return (Expression) visit(ctx.numExpression());
     }
 
     @Override

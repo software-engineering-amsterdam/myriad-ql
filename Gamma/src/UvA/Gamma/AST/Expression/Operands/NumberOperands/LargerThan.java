@@ -18,4 +18,9 @@ public class LargerThan extends NumberOperand {
         assert left != null && right != null;
         return ((NumberValue) left.value()).smallerThan(((NumberValue) right.value())).not();
     }
+
+    @Override
+    public String toString() {
+        return left + " > " + right;
+    }
 }
