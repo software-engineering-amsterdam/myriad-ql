@@ -302,8 +302,8 @@ public class TypeChecker implements Visitor, ExpressionVisitor<ValueType> {
     }
 
     private ValueType validateBinaryExpression(BooleanExpression expression, ValueType expectedType) {
-        ValueType leftType = (ValueType) expression.getLhs().accept(this);
-        ValueType rightType = (ValueType) expression.getRhs().accept(this);
+        ValueType leftType = expression.getLhs().accept(this);
+        ValueType rightType = expression.getRhs().accept(this);
 
         if (leftType.name().equals(rightType.name())) {
             if (leftType.name().equals(expectedType.name())) {
