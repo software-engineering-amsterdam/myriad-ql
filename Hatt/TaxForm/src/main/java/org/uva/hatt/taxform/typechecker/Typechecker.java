@@ -24,13 +24,13 @@ import org.uva.hatt.taxform.typechecker.messages.warning.DuplicateLabel;
 import java.util.*;
 
 
-public class Typechecker implements Visitor, ExpressionVisitor<ValueType> {
+public class TypeChecker implements Visitor, ExpressionVisitor<ValueType> {
 
     private Message exceptionHandler;
     private List<java.lang.String> questions = new LinkedList<>();
     private Map<java.lang.String, IdentifierInput> declarations = new HashMap<>();
 
-    public Typechecker(Message exceptionHandler)
+    public TypeChecker(Message exceptionHandler)
     {
         this.exceptionHandler = exceptionHandler;
     }

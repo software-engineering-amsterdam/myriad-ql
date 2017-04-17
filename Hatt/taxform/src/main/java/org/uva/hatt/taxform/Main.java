@@ -5,7 +5,7 @@ import org.uva.hatt.taxform.ast.ASTGenerator;
 import org.uva.hatt.taxform.ast.nodes.Form;
 import org.uva.hatt.taxform.typechecker.messages.Message;
 import org.uva.hatt.taxform.ast.visitors.QLVisitor;
-import org.uva.hatt.taxform.typechecker.Typechecker;
+import org.uva.hatt.taxform.typechecker.TypeChecker;
 
 public class Main {
 
@@ -26,7 +26,7 @@ public class Main {
         System.out.println(form.toString());
 
         Message exceptionHandler = new Message();
-        Typechecker typeCheckerVisitor = new Typechecker(exceptionHandler);
+        TypeChecker typeCheckerVisitor = new TypeChecker(exceptionHandler);
         typeCheckerVisitor.visit(form);
 
 //        System.out.println(typeCheckerVisitor.getErrors().toString());
