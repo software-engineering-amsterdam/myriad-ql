@@ -18,7 +18,7 @@ public class BooleanWidget extends Widget {
     }
 
     @Override
-    protected void fillPanel(JPanel parentPanel) {
+    protected void fillPanel(GuiComponent parentPanel) {
         parentPanel.add(mCheckbox);
     }
 
@@ -42,11 +42,8 @@ public class BooleanWidget extends Widget {
     }
 
     @Override
-    protected void applyStyle(JPanel panel, JLabel label, QlsStyle qlsStyle) {
-        super.applyStyle(panel, label, qlsStyle);
-        // Only used for QLS
-        qlsStyle.applyStyle(new BooleanType(), panel);
-        qlsStyle.applyStyle(new BooleanType(), label);
-        qlsStyle.applyStyle(new BooleanType(), mCheckbox);
+    protected void applyStyle(GuiComponent component, QlsStyle qlsStyle) {
+        super.applyStyle(component, qlsStyle);
+        qlsStyle.applyStyle(new BooleanType(), component);
     }
 }
