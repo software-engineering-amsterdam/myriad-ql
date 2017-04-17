@@ -1,6 +1,5 @@
 package org.uva.hatt.taxform.typechecker;
 
-
 import org.uva.hatt.taxform.ast.nodes.Form;
 import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
@@ -23,33 +22,33 @@ import org.uva.hatt.taxform.typechecker.messages.warning.DuplicateLabel;
 
 import java.util.*;
 
-
 public class TypeChecker implements Visitor, ExpressionVisitor<ValueType> {
 
-    private Message exceptionHandler;
+    private Message message;
     private List<java.lang.String> questions = new LinkedList<>();
     private Map<java.lang.String, IdentifierInput> declarations = new HashMap<>();
 
-    public TypeChecker(Message exceptionHandler)
-    {
-        this.exceptionHandler = exceptionHandler;
+    public TypeChecker(Message message) {
+        this.message = message;
     }
+
     @Override
-    public Form visit(Form node){
+    public Form visit(Form node) {
         for (Item item : node.getQuestions()) {
             item.accept(this);
         }
+
         return null;
     }
 
     @Override
-    public Question visit(Question node){
+    public Question visit(Question node) {
         if (declarations.containsKey(node.getValue())) {
-            exceptionHandler.addError(new DuplicateDeclaration(node.getLineNumber(), node.getValue()));
+            message.addError(new DuplicateDeclaration(node.getLineNumber(), node.getValue()));
         }
 
         if (questions.contains(node.getQuestion().toLowerCase())) {
-            exceptionHandler.addWarning(new DuplicateLabel(node.getLineNumber(), node.getQuestion()));
+            message.addWarning(new DuplicateLabel(node.getLineNumber(), node.getQuestion()));
         }
 
         declarations.put(node.getValue(), new IdentifierInput(node.getType()));
@@ -60,11 +59,11 @@ public class TypeChecker implements Visitor, ExpressionVisitor<ValueType> {
     @Override
     public ComputedQuestion visit(ComputedQuestion computedQuestion) {
         if (declarations.containsKey(computedQuestion.getValue())) {
-            exceptionHandler.addError(new DuplicateDeclaration(computedQuestion.getLineNumber(), computedQuestion.getValue()));
+            message.addError(new DuplicateDeclaration(computedQuestion.getLineNumber(), computedQuestion.getValue()));
         }
 
         if (questions.contains(computedQuestion.getQuestion().toLowerCase())) {
-            exceptionHandler.addWarning(new DuplicateLabel(computedQuestion.getLineNumber(), computedQuestion.getQuestion()));
+            message.addWarning(new DuplicateLabel(computedQuestion.getLineNumber(), computedQuestion.getQuestion()));
         }
 
         declarations.put(computedQuestion.getValue(), new IdentifierInput(computedQuestion.getType()));
@@ -88,7 +87,7 @@ public class TypeChecker implements Visitor, ExpressionVisitor<ValueType> {
     }
 
     @Override
-    public IfThenElse visit(IfThenElse node){
+    public IfThenElse visit(IfThenElse node) {
         Expression expression = node.getCondition();
         validateIfCondition(expression, node.getLineNumber());
 
@@ -99,38 +98,36 @@ public class TypeChecker implements Visitor, ExpressionVisitor<ValueType> {
         return null;
     }
 
-    private void validateIfCondition(Expression expression, int line)
-    {
+    private void validateIfCondition(Expression expression, int line) {
         ValueType type = expression.accept(this);
 
-        if(!type.isBoolean())
-        {
-            exceptionHandler.addError(new TypeMismatch(line, type.name()));
+        if (!type.isBoolean()) {
+            message.addError(new TypeMismatch(line, type.name()));
         }
     }
 
     @Override
-    public Boolean visit(Boolean node){
+    public Boolean visit(Boolean node) {
         return null;
     }
 
     @Override
-    public Integer visit(Integer node){
+    public Integer visit(Integer node) {
         return null;
     }
 
     @Override
-    public Money visit(Money node){
+    public Money visit(Money node) {
         return null;
     }
 
     @Override
-    public String visit(String node){
+    public String visit(String node) {
         return null;
     }
 
     @Override
-    public ValueType visit(ValueType node){
+    public ValueType visit(ValueType node) {
         return null;
     }
 
@@ -150,7 +147,7 @@ public class TypeChecker implements Visitor, ExpressionVisitor<ValueType> {
             return declarations.get(identifier.getValue()).getType();
         }
 
-        exceptionHandler.addError(new UndefinedReference(identifier.getLineNumber(), identifier.getValue()));
+        message.addError(new UndefinedReference(identifier.getLineNumber(), identifier.getValue()));
         return new Unknown();
     }
 
@@ -170,20 +167,22 @@ public class TypeChecker implements Visitor, ExpressionVisitor<ValueType> {
     }
 
     @Override
-    public Expression visit(Expression expression) { return null; }
+    public Expression visit(Expression expression) {
+        return null;
+    }
 
     @Override
-    public ValueType visit(Addition addition){
+    public ValueType visit(Addition addition) {
         return validateNumericType(addition, "Addition");
     }
 
     @Override
-    public ValueType visit(Division division){
+    public ValueType visit(Division division) {
         return validateNumericType(division, "Division");
     }
 
     @Override
-    public ValueType visit(Equal equal){
+    public ValueType visit(Equal equal) {
         ValueType expectedType = new String(0);
 
         if (!validateBinaryExpression(equal, expectedType).name().equals(new Unknown().name())) {
@@ -192,52 +191,47 @@ public class TypeChecker implements Visitor, ExpressionVisitor<ValueType> {
 
         ValueType type = validateNumericType(equal, "Equal");
 
-        if (type.name().equals(new Unknown().name()))
-        {
+        if (type.name().equals(new Unknown().name())) {
             return type;
         }
         return new Boolean(0);
     }
 
     @Override
-    public ValueType visit(GreaterThan greaterThan){
+    public ValueType visit(GreaterThan greaterThan) {
         ValueType type = validateNumericType(greaterThan, "Greater than");
 
-        if (type.name().equals(new Unknown().name()))
-        {
+        if (type.name().equals(new Unknown().name())) {
             return type;
         }
         return new Boolean(0);
     }
 
     @Override
-    public ValueType visit(GreaterThanOrEqual greaterThanOrEqual){
+    public ValueType visit(GreaterThanOrEqual greaterThanOrEqual) {
         ValueType type = validateNumericType(greaterThanOrEqual, "Greater than or equal");
 
-        if (type.name().equals(new Unknown().name()))
-        {
+        if (type.name().equals(new Unknown().name())) {
             return type;
         }
         return new Boolean(0);
     }
 
     @Override
-    public ValueType visit(LessThan lessThan){
+    public ValueType visit(LessThan lessThan) {
         ValueType type = validateNumericType(lessThan, "Less than");
 
-        if (type.name().equals(new Unknown().name()))
-        {
+        if (type.name().equals(new Unknown().name())) {
             return type;
         }
         return new Boolean(0);
     }
 
     @Override
-    public ValueType visit(LessThanOrEqual lessThanOrEqual){
+    public ValueType visit(LessThanOrEqual lessThanOrEqual) {
         ValueType type = validateNumericType(lessThanOrEqual, "Less than or equal");
 
-        if (type.name().equals(new Unknown().name()))
-        {
+        if (type.name().equals(new Unknown().name())) {
             return type;
         }
         return new Boolean(0);
@@ -251,7 +245,7 @@ public class TypeChecker implements Visitor, ExpressionVisitor<ValueType> {
             return expectedType;
         }
 
-        exceptionHandler.addError(new InvalidOperandsTypeToOperator(logicalAnd.getLineNumber(), "Logical AND"));
+        message.addError(new InvalidOperandsTypeToOperator(logicalAnd.getLineNumber(), "Logical AND"));
         return new Unknown();
     }
 
@@ -263,17 +257,17 @@ public class TypeChecker implements Visitor, ExpressionVisitor<ValueType> {
             return expectedType;
         }
 
-        exceptionHandler.addError(new InvalidOperandsTypeToOperator(logicalOr.getLineNumber(), "Logical OR"));
+        message.addError(new InvalidOperandsTypeToOperator(logicalOr.getLineNumber(), "Logical OR"));
         return new Unknown();
     }
 
     @Override
-    public ValueType visit(Multiplication multiplication){
+    public ValueType visit(Multiplication multiplication) {
         return validateNumericType(multiplication, "Multiplication");
     }
 
     @Override
-    public ValueType visit(NotEqual notEqual){
+    public ValueType visit(NotEqual notEqual) {
         ValueType expectedType = new String(0);
 
         if (!validateBinaryExpression(notEqual, expectedType).name().equals(new Unknown().name())) {
@@ -282,19 +276,18 @@ public class TypeChecker implements Visitor, ExpressionVisitor<ValueType> {
 
         ValueType type = validateNumericType(notEqual, "Not equal");
 
-        if (type.name().equals(new Unknown().name()))
-        {
+        if (type.name().equals(new Unknown().name())) {
             return type;
         }
         return new Boolean(0);
     }
 
     @Override
-    public ValueType visit(Subtraction subtraction){
+    public ValueType visit(Subtraction subtraction) {
         return validateNumericType(subtraction, "Subtraction");
     }
 
-    private ValueType validateNumericType(BooleanExpression expression, java.lang.String operationName){
+    private ValueType validateNumericType(BooleanExpression expression, java.lang.String operationName) {
 
         if (!validateBinaryExpression(expression, new Integer(0)).name().equals(new Unknown().name())) {
             return new Integer(0);
@@ -303,12 +296,12 @@ public class TypeChecker implements Visitor, ExpressionVisitor<ValueType> {
             return new Money(0);
         }
 
-        exceptionHandler.addError(new InvalidOperandsTypeToOperator(expression.getLineNumber(), operationName));
+        message.addError(new InvalidOperandsTypeToOperator(expression.getLineNumber(), operationName));
 
         return new Unknown();
     }
 
-    private ValueType validateBinaryExpression(BooleanExpression expression, ValueType expectedType){
+    private ValueType validateBinaryExpression(BooleanExpression expression, ValueType expectedType) {
         ValueType leftType = (ValueType) expression.getLhs().accept(this);
         ValueType rightType = (ValueType) expression.getRhs().accept(this);
 
