@@ -1,6 +1,8 @@
 package UvA.Gamma.GUI;
 
 import UvA.Gamma.AST.Form;
+import UvA.Gamma.AST.Question;
+import UvA.Gamma.Visitors.UIVisitor;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,19 +19,14 @@ import javafx.stage.Stage;
 public class MainScreen {
     private Form form;
 
+
     public MainScreen(Form form) {
         this.form = form;
     }
 
     public void initUI(Stage stage) throws Exception {
-//        Parent root = loader.load();
-//        FXMLController controller = loader.getController();
-//        controller.addFormItems(form, stage);
-        FXMLController controller = new FXMLController(form);
-        GridPane grid = new GridPane();
-        controller.initVisitor(grid);
         Text scenetitle = new Text("Welcome");
-
+        GridPane grid = new GridPane();
 
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
@@ -38,10 +35,16 @@ public class MainScreen {
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
+        UIVisitor uivis = new UIVisitor(grid, new DefaultWidgetBuilder(form), stage);
+        form.forEach(formItem -> formItem.accept(uivis));
+
         stage.setScene(new Scene(grid));
         stage.sizeToScene();
         stage.show();
     }
 
+    public void showQuestion(Question question) {
+
+    }
 }
 
