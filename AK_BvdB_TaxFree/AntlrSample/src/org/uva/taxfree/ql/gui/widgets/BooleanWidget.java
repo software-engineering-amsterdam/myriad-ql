@@ -9,7 +9,7 @@ import org.uva.taxfree.qls.QlsStyle;
 
 import javax.swing.*;
 
-public class BooleanWidget extends Widget implements Resolvable {
+public class BooleanWidget extends Widget {
     private JCheckBox mCheckbox;
 
     public BooleanWidget(String label, String id) {
@@ -23,7 +23,7 @@ public class BooleanWidget extends Widget implements Resolvable {
     }
 
     @Override
-    public Value resolveValue() {
+    public Value resolve() {
         return new BooleanValue(mCheckbox.isSelected());
     }
 

@@ -8,11 +8,13 @@ import org.uva.taxfree.qls.QlsStyle;
 import javax.swing.*;
 import java.awt.*;
 
-public abstract class Widget {
+public abstract class Widget implements Resolvable {
     private final GuiComponent mGuiComponent;
+    private Resolvable mResolver;
 
     public Widget(String label, String id) {
         mGuiComponent = new GuiComponent(label, id);
+        mResolver = this;
     }
 
     public void registerToPanel(JPanel widgetPanel) {
@@ -22,7 +24,11 @@ public abstract class Widget {
 
     protected abstract void fillPanel(GuiComponent widgetPanel);
 
-    public abstract Value resolveValue();
+    public Value resolveValue() {
+        return mResolver.resolve();
+    }
+
+    public abstract Value resolve();
 
     public abstract void callOnUpdate(FormListener listener);
 

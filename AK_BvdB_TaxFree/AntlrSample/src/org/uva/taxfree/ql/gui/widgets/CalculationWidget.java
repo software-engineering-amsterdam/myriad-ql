@@ -26,7 +26,7 @@ public class CalculationWidget extends Widget {
     }
 
     @Override
-    public Value resolveValue() {
+    public Value resolve() {
         return mExpression.evaluate();
     }
 

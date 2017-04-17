@@ -14,7 +14,7 @@ public class StringWidget extends TextFieldWidget {
     }
 
     @Override
-    public Value resolveValue() {
+    public Value resolve() {
         return new StringValue(currentValue());
     }
 }
