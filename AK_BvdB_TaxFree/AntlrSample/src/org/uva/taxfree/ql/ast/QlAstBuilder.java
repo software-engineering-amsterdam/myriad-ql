@@ -52,7 +52,7 @@ public class QlAstBuilder extends QLGrammarBaseListener {
             try {
                 parser = createGrammarParser();
             } catch (IOException e) {
-                semanticsMessages.addError("(QlAstBuilder.java:55): Unable to create grammarParser: " + e.getMessage());
+                semanticsMessages.addError("(QlAstBuilder.java:generateAst): Unable to create grammarParser: " + e.getMessage());
                 return null;
             }
 
@@ -60,7 +60,7 @@ public class QlAstBuilder extends QLGrammarBaseListener {
             mBuilder.walkParseTree(this, parser.form());
             return mRootNode;
         } catch (UnsupportedOperationException e) {
-            semanticsMessages.addError("(QlAstBuilder.java:63): Couldn't generate AST because of a parse error: " + e.getMessage());
+            semanticsMessages.addError("(QlAstBuilder.java:generateAst): Couldn't generate AST because of a parse error: " + e.getMessage());
             return null;
         }
     }

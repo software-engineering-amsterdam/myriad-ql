@@ -72,7 +72,7 @@ public class QlsStyleBuilder extends QLSGrammarBaseListener {
             try {
                 parser = createGrammarParser();
             } catch (IOException e) {
-                messageList.addError("(QlsStyleBuilder.java:75): Unable to create grammarParser: " + e.getMessage());
+                messageList.addError("(QlsStyleBuilder.java:generateStyle): Unable to create grammarParser: " + e.getMessage());
                 return null;
             }
 
@@ -80,7 +80,7 @@ public class QlsStyleBuilder extends QLSGrammarBaseListener {
             mBuilder.walkParseTree(this, parser.stylesheet());
             return mQlsStyle;
         } catch (UnsupportedOperationException e) {
-            messageList.addError("(QlsStyleBuilder.java:83): Couldn't generate style because of a parse error: " + e.getMessage());
+            messageList.addError("(QlsStyleBuilder.java:generateStyle): Couldn't generate style because of a parse error: " + e.getMessage());
             return null;
         }
     }

@@ -2,7 +2,6 @@ package org.uva.taxfree.ql.gui;
 
 import org.uva.taxfree.ql.gui.widgets.Widget;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
-import org.uva.taxfree.qls.QlsStyle;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +34,7 @@ public class QuestionForm implements FormListener {
                 try {
                     mSymbolTable.exportData(caption + ".txdata");
                 } catch (IOException error) {
-                    MessageWindow.showMessage("(QuestionForm.java:38): Unable to write results to file:\r\n" + error.getMessage());
+                    MessageWindow.showMessage("(QuestionForm.java:createFrame): Unable to write results to file:\r\n" + error.getMessage());
                 }
             }
         });
@@ -50,11 +49,7 @@ public class QuestionForm implements FormListener {
     }
 
     public void show() {
-        mFrame.setLocationRelativeTo(null);
-        mFrame.setVisible(true);
-        mFrame.setPreferredSize(new Dimension(640, 480));
-        mFrame.pack();
-        mFrame.setLocationRelativeTo(null);
+        setDimensions();
         generatePanelContent();
         updateForm();
     }
@@ -64,7 +59,6 @@ public class QuestionForm implements FormListener {
     }
 
     public void updateForm() {
-
         for (Widget widget : mWidgets) {
             widget.updateValues(mSymbolTable);
         }
@@ -72,6 +66,14 @@ public class QuestionForm implements FormListener {
         for (Widget widget : mWidgets) {
             widget.updateVisibility(mSymbolTable);
         }
+    }
+
+    private void setDimensions() {
+        mFrame.setLocationRelativeTo(null);
+        mFrame.setVisible(true);
+        mFrame.setPreferredSize(new Dimension(640, 480));
+        mFrame.pack();
+        mFrame.setLocationRelativeTo(null);
     }
 
     private void generatePanelContent() {
