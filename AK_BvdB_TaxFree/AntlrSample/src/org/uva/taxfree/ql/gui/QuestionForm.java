@@ -79,8 +79,8 @@ public class QuestionForm implements FormListener {
     private void generatePanelContent() {
         mWidgetPanel.removeAll();
         for (Widget widget : mWidgets) {
-            widget.callOnUpdate(this);
             registerWidget(widget);
+            widget.setListener(this);
         }
         registerToPanel(mWidgetPanel);
     }
