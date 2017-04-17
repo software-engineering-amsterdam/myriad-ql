@@ -31,7 +31,7 @@ public class TextWidget extends WidgetStyleOption {
     }
 
     protected JFormattedTextField generateTextField(Value value) {
-        if (IntValue.class.equals(value)) {
+        if (new IntValue(0).equals(value)) {
             return new JFormattedTextField(0);
         }
         return new JFormattedTextField("");
