@@ -27,7 +27,7 @@ public class Main {
         checkMessages(semanticsMessages);
 
         if (semanticsMessages.hasFatalErrors()) {
-            System.exit(1);
+            System.exit(EXIT_AST_ERROR);
         }
 
         SymbolTable symbolTable = new SymbolTable();
@@ -37,7 +37,7 @@ public class Main {
         checkMessages(semanticsMessages);
 
         if (semanticsMessages.hasFatalErrors()) {
-            System.exit(2);
+            System.exit(EXIT_FORM_ERROR);
         }
 
         QuestionForm taxForm = new QuestionForm(ast.toString(), symbolTable);
@@ -47,8 +47,8 @@ public class Main {
             QlsStyle qlsStyle = qlsStyleBuilder.generateStyle(semanticsMessages);
             qlsStyle.checkSemantics(symbolTable, semanticsMessages);
             checkMessages(semanticsMessages);
-            if(semanticsMessages.hasFatalErrors()){
-                System.exit(3);
+            if (semanticsMessages.hasFatalErrors()) {
+                System.exit(EXIT_QLS_ERROR);
             }
             QlsForm qls = new QlsForm(ast.toString(), symbolTable, qlsStyle);
             taxForm = qls;
@@ -67,4 +67,9 @@ public class Main {
         String qlsFile = FileUtility.replaceExtension(inputFile.getAbsolutePath(), ".qls");
         return new File(qlsFile);
     }
+
+    private static final int EXIT_AST_ERROR = 1;
+    private static final int EXIT_FORM_ERROR = 2;
+    private static final int EXIT_QLS_ERROR = 3;
+
 }
