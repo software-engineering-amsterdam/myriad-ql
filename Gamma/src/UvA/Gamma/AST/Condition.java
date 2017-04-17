@@ -1,6 +1,7 @@
 package UvA.Gamma.AST;
 
 import UvA.Gamma.AST.Expression.Expression;
+import UvA.Gamma.AST.Expression.Values.BooleanValue;
 import UvA.Gamma.Visitors.Visitor;
 
 import java.util.ArrayList;
@@ -31,10 +32,8 @@ public class Condition implements FormItem {
     }
 
     public boolean evaluateExpression() {
-//        assert expression != null;
-//        expression.evaluate();
-//        return expression.getValue() != null && expression.getValue().getValue();
-        return false;
+        assert expression != null;
+        return ((BooleanValue) expression.value()).toBoolean();
     }
 
     @Override

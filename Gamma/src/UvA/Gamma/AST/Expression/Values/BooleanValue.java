@@ -59,4 +59,8 @@ public class BooleanValue extends Value<BooleanValue> {
     public String toString() {
         return "" + this.value;
     }
+
+    public boolean toBoolean() {
+        return value;
+    }
 }

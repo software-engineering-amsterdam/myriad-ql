@@ -174,6 +174,11 @@ public class ASTBuilder extends QLBaseVisitor<ASTNode> {
     }
 
     @Override
+    public ASTNode visitBooleanIdentifierExpression(QLParser.BooleanIdentifierExpressionContext ctx) {
+        return new IdentifierValue(ctx.ID().getText());
+    }
+
+    @Override
     public ASTNode visitIdentifierExpression(QLParser.IdentifierExpressionContext ctx) {
         return new IdentifierValue(ctx.ID().getText());
     }
