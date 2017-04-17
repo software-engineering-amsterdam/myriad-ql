@@ -30,5 +30,9 @@ class ErrorHandler {
         System.exit(1);
     }
 
+    static void invalidreference(String identifier) {
+        System.err.println("Referenced non existing identifier: " + identifier);
+        System.exit(1);
+    }
 
 }

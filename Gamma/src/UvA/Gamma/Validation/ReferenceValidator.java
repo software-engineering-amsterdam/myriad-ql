@@ -1,9 +1,8 @@
 package UvA.Gamma.Validation;
 
-import UvA.Gamma.AST.Expression.Expression;
+import UvA.Gamma.AST.Expression.Values.IdentifierValue;
 import UvA.Gamma.Visitors.BaseVisitor;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -16,18 +15,10 @@ public class ReferenceValidator extends BaseVisitor {
         this.identifierStrings = identifierStrings;
     }
 
-    private void validateIds(Expression expression) {
-        IdentifiersFromExpressionVisitor visitor = new IdentifiersFromExpressionVisitor();
-        expression.accept(visitor);
-        Set<String> diff = new HashSet<>(visitor.getIdentifiers());
-        diff.removeAll(identifierStrings);
-        if (diff.size() > 0) {
-            ErrorHandler.invalidReference(diff);
-        }
-    }
-
     @Override
-    public void visit(Expression expression) {
-        validateIds(expression);
+    public void visit(IdentifierValue value) {
+        if (!identifierStrings.contains(value.toString())) {
+            ErrorHandler.invalidreference(value.toString());
+        }
     }
 }

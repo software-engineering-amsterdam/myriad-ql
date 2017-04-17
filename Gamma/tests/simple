@@ -4,4 +4,9 @@ form test{
     "testbool" testb: boolean
     "testdate" testda: date
     "testmoney" testm: money
+
+    if(testb && (testi < 10) && (testd > 5.5)){
+        "money result" mres: money = (testmo * 100)
+    }
+
 }
