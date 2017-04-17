@@ -11,7 +11,7 @@ import java.util.List;
 
 public class QlsForm extends QuestionForm {
     private final QlsStyle mStyle;
-    private List<GuiPage> mPages;
+    private final List<GuiPage> mPages;
 
     public QlsForm(String caption, SymbolTable symbolTable, QlsStyle qlsStyle) {
         super(caption, symbolTable);
@@ -35,13 +35,13 @@ public class QlsForm extends QuestionForm {
 
     @Override
     protected void registerWidget(Widget widget) {
-        widget.updateStyle(mStyle);
         String sectionName = mStyle.getSectionName(widget.getId());
         for (GuiPage page : mPages) {
             if(page.contains(sectionName)){
                 page.register(sectionName, widget);
             }
         }
+        widget.updateStyle(mStyle);
     }
 
 
