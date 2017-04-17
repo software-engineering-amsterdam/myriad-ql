@@ -11,10 +11,12 @@ import org.uva.hatt.taxform.ast.nodes.items.Question;
 import org.uva.hatt.taxform.ast.nodes.types.ValueType;
 import org.uva.hatt.taxform.typechecker.Typechecker;
 import org.uva.hatt.taxform.typechecker.messages.Message;
+import org.uva.hatt.taxform.typechecker.messages.error.*;
 
 import java.io.IOException;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.*;
 
 public class TypeCheckerTest {
@@ -29,6 +31,8 @@ public class TypeCheckerTest {
         Question q2 = (Question) questions.get(1);
         typechecker.visit(q1);
         typechecker.visit(q2);
+        assertEquals(0, message.getErrors().size());
+        assertEquals(1, message.getWarnings().size());
         assertEquals("Duplicate question label at line 1: Label: Same label question", message.getWarnings().get(0).getMessage());
     }
 
@@ -43,7 +47,9 @@ public class TypeCheckerTest {
         Question q2 = (Question) questions.get(1);
         typechecker.visit(q1);
         typechecker.visit(q2);
-        assertEquals("Duplicate question declaration at line 1: declaration: var", message.getErrors().get(0).getMessage());
+        assertEquals(1, message.getErrors().size());
+        assertEquals(0, message.getWarnings().size());
+        assertThat(message.getErrors().get(0), instanceOf(DuplicateDeclaration.class));
     }
 
     @Test
@@ -53,7 +59,9 @@ public class TypeCheckerTest {
         String qlForm = "form f1 { \"question 1\" var1: string if (unknown) {\"question 2\" var2: money } else {} }";
         Form form = ASTGenerator.getForm(qlForm);
         typechecker.visit(form);
-        assertEquals("Undefined question reference at line 1: reference: unknown", message.getErrors().get(0).getMessage());
+        assertEquals(3, message.getErrors().size());
+        assertEquals(0, message.getWarnings().size());
+        assertThat(message.getErrors().get(0), instanceOf(UndefinedReference.class));
     }
 
     @Test
@@ -63,8 +71,10 @@ public class TypeCheckerTest {
         String qlForm = "form taxOfficeExample { \"q1?\" val1: money = 5 - 1  \n \"q2?\" val2: money = 5 + 1 / 2 \n \"q3?\" val3: money = val1 * val2}";;
         Form form = ASTGenerator.getForm(qlForm);
         typechecker.visit(form);
-        assertEquals("Cyclic dependency at line 3: Identifier 'val3' is dependent on 'val2'", message.getErrors().get(0).getMessage());
-        assertEquals("Cyclic dependency at line 3: Identifier 'val3' is dependent on 'val1'", message.getErrors().get(1).getMessage());
+        assertEquals(2, message.getErrors().size());
+        assertEquals(0, message.getWarnings().size());
+        assertThat(message.getErrors().get(0), instanceOf(CyclicDependency.class));
+        assertThat(message.getErrors().get(1), instanceOf(CyclicDependency.class));
     }
 
     @Test
@@ -74,7 +84,9 @@ public class TypeCheckerTest {
         String qlForm = "form f1 { \"question 1\" var1: string if (var1) {\"question 2\" var2: money } }";
         Form form = ASTGenerator.getForm(qlForm);
         typechecker.visit(form);
-        assertEquals("Type mismatch at line 1: expected boolean but got: String", message.getErrors().get(0).getMessage());
+        assertEquals(1, message.getErrors().size());
+        assertEquals(0, message.getWarnings().size());
+        assertThat(message.getErrors().get(0), instanceOf(TypeMismatch.class));
     }
 
     @Test
@@ -84,7 +96,9 @@ public class TypeCheckerTest {
         String qlForm = "form f1 { \"question 1\" var1: integer if (var1) {\"question 2\" var2: money } }";
         Form form = ASTGenerator.getForm(qlForm);
         typechecker.visit(form);
-        assertEquals("Type mismatch at line 1: expected boolean but got: Integer", message.getErrors().get(0).getMessage());
+        assertEquals(1, message.getErrors().size());
+        assertEquals(0, message.getWarnings().size());
+        assertThat(message.getErrors().get(0), instanceOf(TypeMismatch.class));
     }
 
     @Test
@@ -94,7 +108,9 @@ public class TypeCheckerTest {
         String qlForm = "form f1 { \"question 1\" var1: money if (var1) {\"question 2\" var2: money } }";
         Form form = ASTGenerator.getForm(qlForm);
         typechecker.visit(form);
-        assertEquals("Type mismatch at line 1: expected boolean but got: Money", message.getErrors().get(0).getMessage());
+        assertEquals(1, message.getErrors().size());
+        assertEquals(0, message.getWarnings().size());
+        assertThat(message.getErrors().get(0), instanceOf(TypeMismatch.class));
     }
 
     @Test
@@ -103,8 +119,9 @@ public class TypeCheckerTest {
         Typechecker typechecker = new Typechecker(message);
         Addition addition = new Addition(2, new StringerLiteral(2, "test"), new IntegerLiteral(2, 111));
         ValueType type = typechecker.visit(addition);
-
-        assertEquals("Invalid operand type at line 2, to operation: Addition", message.getErrors().get(0).getMessage());
+        assertEquals(1, message.getErrors().size());
+        assertEquals(0, message.getWarnings().size());
+        assertThat(message.getErrors().get(0), instanceOf(InvalidOperandsTypeToOperator.class));
     }
 
     @Test
@@ -113,8 +130,9 @@ public class TypeCheckerTest {
         Typechecker typechecker = new Typechecker(message);
         Division division = new Division(2, new StringerLiteral(2, "test"), new IntegerLiteral(2, 111));
         ValueType type = typechecker.visit(division);
-
-        assertEquals("Invalid operand type at line 2, to operation: Division", message.getErrors().get(0).getMessage());
+        assertEquals(1, message.getErrors().size());
+        assertEquals(0, message.getWarnings().size());
+        assertThat(message.getErrors().get(0), instanceOf(InvalidOperandsTypeToOperator.class));
     }
 
     @Test
@@ -123,8 +141,9 @@ public class TypeCheckerTest {
         Typechecker typechecker = new Typechecker(message);
         Equal equal = new Equal(2, new StringerLiteral(2, "test"), new IntegerLiteral(2, 111));
         ValueType type = typechecker.visit(equal);
-
-        assertEquals("Invalid operand type at line 2, to operation: Equal", message.getErrors().get(0).getMessage());
+        assertEquals(1, message.getErrors().size());
+        assertEquals(0, message.getWarnings().size());
+        assertThat(message.getErrors().get(0), instanceOf(InvalidOperandsTypeToOperator.class));
     }
 
     @Test
@@ -133,8 +152,9 @@ public class TypeCheckerTest {
         Typechecker typechecker = new Typechecker(message);
         GreaterThan greaterThan = new GreaterThan(2, new StringerLiteral(2, "test"), new IntegerLiteral(2, 111));
         ValueType type = typechecker.visit(greaterThan);
-
-        assertEquals("Invalid operand type at line 2, to operation: Greater than", message.getErrors().get(0).getMessage());
+        assertEquals(1, message.getErrors().size());
+        assertEquals(0, message.getWarnings().size());
+        assertThat(message.getErrors().get(0), instanceOf(InvalidOperandsTypeToOperator.class));
     }
 
     @Test
@@ -143,8 +163,9 @@ public class TypeCheckerTest {
         Typechecker typechecker = new Typechecker(message);
         GreaterThanOrEqual greaterThanOrEqual = new GreaterThanOrEqual(2, new StringerLiteral(2, "test"), new IntegerLiteral(2, 111));
         ValueType type = typechecker.visit(greaterThanOrEqual);
-
-        assertEquals("Invalid operand type at line 2, to operation: Greater than or equal", message.getErrors().get(0).getMessage());
+        assertEquals(1, message.getErrors().size());
+        assertEquals(0, message.getWarnings().size());
+        assertThat(message.getErrors().get(0), instanceOf(InvalidOperandsTypeToOperator.class));
     }
 
     @Test
@@ -153,8 +174,9 @@ public class TypeCheckerTest {
         Typechecker typechecker = new Typechecker(message);
         LessThan lessThan = new LessThan(2, new StringerLiteral(2, "test"), new IntegerLiteral(2, 111));
         ValueType type = typechecker.visit(lessThan);
-
-        assertEquals("Invalid operand type at line 2, to operation: Less than", message.getErrors().get(0).getMessage());
+        assertEquals(1, message.getErrors().size());
+        assertEquals(0, message.getWarnings().size());
+        assertThat(message.getErrors().get(0), instanceOf(InvalidOperandsTypeToOperator.class));
     }
 
     @Test
@@ -163,8 +185,9 @@ public class TypeCheckerTest {
         Typechecker typechecker = new Typechecker(message);
         LessThanOrEqual lessThanOrEqual = new LessThanOrEqual(2, new StringerLiteral(2, "test"), new IntegerLiteral(2, 111));
         ValueType type = typechecker.visit(lessThanOrEqual);
-
-        assertEquals("Invalid operand type at line 2, to operation: Less than or equal", message.getErrors().get(0).getMessage());
+        assertEquals(1, message.getErrors().size());
+        assertEquals(0, message.getWarnings().size());
+        assertThat(message.getErrors().get(0), instanceOf(InvalidOperandsTypeToOperator.class));
     }
 
     @Test
@@ -173,8 +196,9 @@ public class TypeCheckerTest {
         Typechecker typechecker = new Typechecker(message);
         LogicalAnd logicalAnd = new LogicalAnd(2, new StringerLiteral(2, "test"), new IntegerLiteral(2, 111));
         ValueType type = typechecker.visit(logicalAnd);
-
-        assertEquals("Invalid operand type at line 2, to operation: Logical AND", message.getErrors().get(0).getMessage());
+        assertEquals(1, message.getErrors().size());
+        assertEquals(0, message.getWarnings().size());
+        assertThat(message.getErrors().get(0), instanceOf(InvalidOperandsTypeToOperator.class));
     }
 
     @Test
@@ -183,8 +207,9 @@ public class TypeCheckerTest {
         Typechecker typechecker = new Typechecker(message);
         LogicalOr logicalOr = new LogicalOr(2, new StringerLiteral(2, "test"), new IntegerLiteral(2, 111));
         ValueType type = typechecker.visit(logicalOr);
-
-        assertEquals("Invalid operand type at line 2, to operation: Logical OR", message.getErrors().get(0).getMessage());
+        assertEquals(1, message.getErrors().size());
+        assertEquals(0, message.getWarnings().size());
+        assertThat(message.getErrors().get(0), instanceOf(InvalidOperandsTypeToOperator.class));
     }
 
     @Test
@@ -193,8 +218,9 @@ public class TypeCheckerTest {
         Typechecker typechecker = new Typechecker(message);
         Multiplication multiplication = new Multiplication(2, new StringerLiteral(2, "test"), new IntegerLiteral(2, 111));
         ValueType type = typechecker.visit(multiplication);
-
-        assertEquals("Invalid operand type at line 2, to operation: Multiplication", message.getErrors().get(0).getMessage());
+        assertEquals(1, message.getErrors().size());
+        assertEquals(0, message.getWarnings().size());
+        assertThat(message.getErrors().get(0), instanceOf(InvalidOperandsTypeToOperator.class));
     }
 
     @Test
@@ -203,8 +229,9 @@ public class TypeCheckerTest {
         Typechecker typechecker = new Typechecker(message);
         NotEqual notEqual = new NotEqual(2, new StringerLiteral(2, "test"), new IntegerLiteral(2, 111));
         ValueType type = typechecker.visit(notEqual);
-
-        assertEquals("Invalid operand type at line 2, to operation: Not equal", message.getErrors().get(0).getMessage());
+        assertEquals(1, message.getErrors().size());
+        assertEquals(0, message.getWarnings().size());
+        assertThat(message.getErrors().get(0), instanceOf(InvalidOperandsTypeToOperator.class));
     }
 
     @Test
@@ -213,7 +240,8 @@ public class TypeCheckerTest {
         Typechecker typechecker = new Typechecker(message);
         Subtraction subtraction = new Subtraction(2, new StringerLiteral(2, "test"), new IntegerLiteral(2, 111));
         ValueType type = typechecker.visit(subtraction);
-
-        assertEquals("Invalid operand type at line 2, to operation: Subtraction", message.getErrors().get(0).getMessage());
+        assertEquals(1, message.getErrors().size());
+        assertEquals(0, message.getWarnings().size());
+        assertThat(message.getErrors().get(0), instanceOf(InvalidOperandsTypeToOperator.class));
     }
 }
