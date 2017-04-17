@@ -3,6 +3,8 @@ package org.uva.taxfree.qls;
 import org.uva.taxfree.ql.gui.widgets.Widget;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +43,9 @@ public class GuiPage {
         JPanel section = new JPanel();
         section.setLayout(new BoxLayout(section, BoxLayout.Y_AXIS));
         section.setName(sectionName);
-        section.add(new JLabel("Section: " + sectionName));
+        TitledBorder titledBorder = BorderFactory.createTitledBorder(sectionName);
+        titledBorder.setTitleJustification(TitledBorder.CENTER);
+        section.setBorder(titledBorder);
         return section;
     }
 
