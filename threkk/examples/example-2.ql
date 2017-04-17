@@ -1,4 +1,6 @@
 form errorForm {
+    // Parser error: Illegal character.
+    @
 
     // Warning: Duplicated label.
     "Duplicated label" question1: boolean
