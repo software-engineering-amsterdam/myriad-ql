@@ -15,8 +15,7 @@ import org.uva.hatt.taxform.ast.nodes.FormVisitor;
 import org.uva.hatt.taxform.evaluation.EnvironmentsTable;
 import org.uva.hatt.taxform.parsing.ASTBuilder;
 import org.uva.hatt.taxform.parsing.ASTGenerator;
-import org.uva.hatt.taxform.typechecker.CircularDependencyChecker;
-import org.uva.hatt.taxform.typechecker.TypeChecker;
+import org.uva.hatt.taxform.typechecker.SemanticAnalyzer;
 import org.uva.hatt.taxform.typechecker.messages.Message;
 
 import java.io.IOException;
@@ -67,12 +66,8 @@ public class Taxform extends Application {
 
         Form form = visitor.getForm();
 
-        Message message = new Message();
-        TypeChecker typeChecker = new TypeChecker(message);
-        typeChecker.visit(form);
-
-        CircularDependencyChecker circularDependencyChecker = new CircularDependencyChecker(message);
-        circularDependencyChecker.visit(form);
+        SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer();
+        Message message = semanticAnalyzer.analyze(form);
 
         if (message.getErrors().isEmpty()) {
 
