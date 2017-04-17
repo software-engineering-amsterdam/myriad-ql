@@ -6,6 +6,8 @@ import UvA.Gamma.AST.Question;
 import UvA.Gamma.GUI.WidgetBuilder;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+
 
 import java.util.List;
 
@@ -15,10 +17,12 @@ import java.util.List;
 public class UIVisitor extends BaseVisitor {
     private GridPane grid;
     private WidgetBuilder builder;
+    private Stage stage;
 
-    public UIVisitor(GridPane grid, WidgetBuilder builder) {
+    public UIVisitor(GridPane grid, WidgetBuilder builder, Stage stage) {
         this.grid = grid;
         this.builder = builder;
+        this.stage = stage;
     }
 
     @Override
@@ -34,12 +38,13 @@ public class UIVisitor extends BaseVisitor {
     @Override
     public void visit(Condition condition) {
         GridPane gridPane = new GridPane();
-        UIVisitor uiVisitor = new UIVisitor(gridPane, builder);
+        UIVisitor uiVisitor = new UIVisitor(gridPane, builder,stage);
         condition.visitChildNodes(uiVisitor);
         condition.setGridPane(gridPane);
         gridPane.managedProperty().bind(gridPane.visibleProperty());
-//        gridPane.visibleProperty().addListener((observable, oldValue, newValue) -> stage.sizeToScene());
         grid.add(gridPane, 0, getRowCount(grid) + 1, 2, 1);
+        gridPane.visibleProperty().addListener((observable, oldValue, newValue) -> stage.sizeToScene());
+        
     }
 
     private void placeWidget(List<Node> widgets) {
