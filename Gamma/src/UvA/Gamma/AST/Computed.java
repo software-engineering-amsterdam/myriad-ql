@@ -4,7 +4,7 @@ import UvA.Gamma.AST.Expression.Expression;
 import UvA.Gamma.AST.Expression.Identifier;
 import UvA.Gamma.AST.Expression.Values.Value;
 import UvA.Gamma.AST.Types.Type;
-import UvA.Gamma.Visitors.IdentifiersFromExpressionVisitor;
+import UvA.Gamma.Validation.IdentifiersFromExpressionVisitor;
 import UvA.Gamma.Visitors.Visitor;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -29,10 +29,13 @@ public class Computed extends IdentifiableFormItem {
         return label;
     }
 
-    public Type getType(){
+    public Type getType() {
         return type;
     }
 
+    public boolean validateType() {
+        return this.expression.value().conformsToType(this.type);
+    }
 
     @Override
     public void accept(Visitor visitor) {

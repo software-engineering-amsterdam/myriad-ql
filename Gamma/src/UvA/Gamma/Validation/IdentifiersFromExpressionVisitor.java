@@ -1,6 +1,7 @@
-package UvA.Gamma.Visitors;
+package UvA.Gamma.Validation;
 
 import UvA.Gamma.AST.Expression.Values.IdentifierValue;
+import UvA.Gamma.Visitors.BaseVisitor;
 
 import java.util.HashSet;
 import java.util.Set;

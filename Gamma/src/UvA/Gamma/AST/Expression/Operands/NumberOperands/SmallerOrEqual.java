@@ -1,7 +1,6 @@
-package UvA.Gamma.AST.Expression.Operands.BooleanOperands;
+package UvA.Gamma.AST.Expression.Operands.NumberOperands;
 
 import UvA.Gamma.AST.Expression.Expression;
-import UvA.Gamma.AST.Expression.Operands.NumberOperands.NumberOperand;
 import UvA.Gamma.AST.Expression.Values.BooleanValue;
 import UvA.Gamma.AST.Expression.Values.NumberValue;
 import UvA.Gamma.AST.Expression.Values.Value;
@@ -21,5 +20,10 @@ public class SmallerOrEqual extends NumberOperand {
         BooleanValue smallerThan = ((NumberValue) left.value()).smallerThan(((NumberValue) right.value()));
         BooleanValue equalTo = ((NumberValue) left.value()).equals(((NumberValue) right.value()));
         return smallerThan.or(equalTo);
+    }
+
+    @Override
+    public String toString() {
+        return left + " <= " + right;
     }
 }

@@ -18,4 +18,9 @@ public class Add extends NumberOperand {
         assert left != null && right != null;
         return ((NumberValue) left.value()).add(((NumberValue) right.value()));
     }
+
+    @Override
+    public String toString() {
+        return left.toString() + " + " + right.toString();
+    }
 }

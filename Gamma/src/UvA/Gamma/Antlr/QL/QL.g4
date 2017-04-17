@@ -21,6 +21,7 @@ expression: boolExpression # booleanExpression | numExpression # numberExpressio
 
 boolExpression: boolExpression op=('&&' | '||' | '==' | '!=') boolExpression        #logicalBooleanExpression
         | numExpression op=('<' | '>' | '<=' | '>=' | '!=' | '==') numExpression    #logicalIntegerExpression
+        | '('boolExpression')'                                                      #nestedBooleanExpression
         | '!'boolExpression                                                         #negatedBooleanExpression
         | ID                                                                        #booleanIdentifierExpression
         | ('true' | 'false')                                                        #booleanValueExpression

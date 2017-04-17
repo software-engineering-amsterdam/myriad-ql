@@ -13,10 +13,20 @@ public class Equals extends BooleanOperand {
     }
 
     @Override
+    public boolean validateTypes() {
+        return validateBools() || validateNumbers();
+    }
+
+    @Override
     @SuppressWarnings("unchecked") //Type equality is enforced by the grammar
     public Value value() {
         assert left != null && right != null;
         assert left.value().getType().equalsType(right.value().getType());
         return left.value().equals(right.value());
+    }
+
+    @Override
+    public String toString() {
+        return left.toString() + " == " + right.toString();
     }
 }

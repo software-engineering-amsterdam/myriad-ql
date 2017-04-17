@@ -3,6 +3,8 @@ package UvA.Gamma.Visitors;
 import UvA.Gamma.AST.Computed;
 import UvA.Gamma.AST.Condition;
 import UvA.Gamma.AST.Expression.Expression;
+import UvA.Gamma.AST.Expression.Operands.BooleanOperands.BooleanOperand;
+import UvA.Gamma.AST.Expression.Operands.NumberOperands.NumberOperand;
 import UvA.Gamma.AST.Expression.Values.IdentifierValue;
 import UvA.Gamma.AST.Expression.Values.Value;
 import UvA.Gamma.AST.IdentifiableFormItem;
@@ -30,6 +32,16 @@ public class BaseVisitor implements Visitor {
 
     @Override
     public void visit(Condition condition) {
+
+    }
+
+    @Override
+    public void visit(NumberOperand operand) {
+
+    }
+
+    @Override
+    public void visit(BooleanOperand operand) {
 
     }
 

@@ -1,7 +1,6 @@
-package UvA.Gamma.AST.Expression.Operands.BooleanOperands;
+package UvA.Gamma.AST.Expression.Operands.NumberOperands;
 
 import UvA.Gamma.AST.Expression.Expression;
-import UvA.Gamma.AST.Expression.Operands.NumberOperands.NumberOperand;
 import UvA.Gamma.AST.Expression.Values.NumberValue;
 import UvA.Gamma.AST.Expression.Values.Value;
 
@@ -18,5 +17,10 @@ public class LargerThan extends NumberOperand {
     public Value value() {
         assert left != null && right != null;
         return ((NumberValue) left.value()).smallerThan(((NumberValue) right.value())).not();
+    }
+
+    @Override
+    public String toString() {
+        return left + " > " + right;
     }
 }

@@ -1,6 +1,7 @@
 package UvA.Gamma.AST.Expression.Operands.NumberOperands;
 
 import UvA.Gamma.AST.Expression.Expression;
+import UvA.Gamma.AST.Types.DecimalType;
 import UvA.Gamma.Visitors.Visitor;
 
 /**
@@ -20,6 +21,11 @@ public abstract class NumberOperand extends Expression {
         left.accept(visitor);
         right.accept(visitor);
         visitor.visit(this);
+    }
+
+    public boolean validateTypes() {
+        return left.value().conformsToType(new DecimalType()) &&
+                right.value().conformsToType(new DecimalType());
     }
 
     @Override

@@ -1,6 +1,7 @@
 package UvA.Gamma.Visitors;
 
 import UvA.Gamma.AST.Computed;
+import UvA.Gamma.AST.Condition;
 import UvA.Gamma.AST.Expression.Values.IdentifierValue;
 
 /**
@@ -17,6 +18,11 @@ public class IdentifierUpdatedVisitor extends BaseVisitor {
     @Override
     public void visit(Computed computed) {
         computed.updateValue();
+    }
+
+    @Override
+    public void visit(Condition condition) {
+        System.out.println("Condition is now: " + condition.evaluateExpression());
     }
 
     @Override

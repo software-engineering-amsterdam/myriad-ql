@@ -18,4 +18,9 @@ public class Subtract extends NumberOperand {
         assert left != null && right != null;
         return ((NumberValue) left.value()).subtract(((NumberValue) right.value()));
     }
+
+    @Override
+    public String toString() {
+        return left + " - " + right;
+    }
 }

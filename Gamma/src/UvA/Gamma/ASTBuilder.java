@@ -11,7 +11,7 @@ import UvA.Gamma.AST.Expression.Values.NumberValue;
 import UvA.Gamma.AST.Types.*;
 import UvA.Gamma.Antlr.QL.QLBaseVisitor;
 import UvA.Gamma.Antlr.QL.QLParser;
-import UvA.Gamma.Visitors.IdentifierInitVisitor;
+import UvA.Gamma.Validation.IdentifierInitVisitor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -140,7 +140,7 @@ public class ASTBuilder extends QLBaseVisitor<ASTNode> {
     }
 
     @Override
-    public ASTNode visitLogicalIntegerExpression(QLParser.LogicalIntegerExpressionContext ctx) {
+    public Expression visitLogicalIntegerExpression(QLParser.LogicalIntegerExpressionContext ctx) {
         Expression left = (Expression) visit(ctx.numExpression(0));
         Expression right = (Expression) visit(ctx.numExpression(1));
         switch (ctx.op.getText()) {
@@ -164,6 +164,16 @@ public class ASTBuilder extends QLBaseVisitor<ASTNode> {
     }
 
     @Override
+    public Expression visitNestedBooleanExpression(QLParser.NestedBooleanExpressionContext ctx) {
+        return (Expression) visit(ctx.boolExpression());
+    }
+
+    @Override
+    public Expression visitNestedExpression(QLParser.NestedExpressionContext ctx) {
+        return (Expression) visit(ctx.numExpression());
+    }
+
+    @Override
     public ASTNode visitNegatedBooleanExpression(QLParser.NegatedBooleanExpressionContext ctx) {
         return new Not((Expression) visit(ctx.boolExpression()));
     }
@@ -171,6 +181,11 @@ public class ASTBuilder extends QLBaseVisitor<ASTNode> {
     @Override
     public ASTNode visitBooleanValueExpression(QLParser.BooleanValueExpressionContext ctx) {
         return new BooleanValue(ctx.getText());
+    }
+
+    @Override
+    public ASTNode visitBooleanIdentifierExpression(QLParser.BooleanIdentifierExpressionContext ctx) {
+        return new IdentifierValue(ctx.ID().getText());
     }
 
     @Override
