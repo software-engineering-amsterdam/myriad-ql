@@ -65,12 +65,42 @@ public class TypeCheckerTest {
     }
 
     @Test
-    public void testCyclicDependency() throws  IOException {
+    public void testOneCyclicDependency() throws  IOException {
         Message message = new Message();
-        Typechecker typechecker = new Typechecker(message);
-        String qlForm = "form taxOfficeExample { \"q1?\" val1: money = 5 - 1  \n \"q2?\" val2: money = 5 + 1 / 2 \n \"q3?\" val3: money = val1 * val2}";;
+        DependencyVisitor dependencyVisitor = new DependencyVisitor(message);
+
+        String qlForm = "form tax {\n" +
+                "  \"q1?\" \n" +
+                "    a: integer = (b - 1)\n" +
+                "  \"q2?\"\n" +
+                "    b: integer = (a / 5)\n" +
+                "}";
+
         Form form = ASTGenerator.getForm(qlForm);
-        typechecker.visit(form);
+        dependencyVisitor.visit(form);
+
+        assertEquals(1, message.getErrors().size());
+        assertEquals(0, message.getWarnings().size());
+        assertThat(message.getErrors().get(0), instanceOf(CyclicDependency.class));
+    }
+
+    @Test
+    public void testTwoCyclicDependencies() throws  IOException {
+        Message message = new Message();
+        DependencyVisitor dependencyVisitor = new DependencyVisitor(message);
+
+        String qlForm = "form tax {\n" +
+                "  \"q1?\"\n" +
+                "    b: integer\n" +
+                "  \"q2?\"\n" +
+                "    a: integer = (b + c)\n" +
+                "  \"q3?\"\n" +
+                "    c: integer = (a + b)\n" +
+                "}";
+
+        Form form = ASTGenerator.getForm(qlForm);
+        dependencyVisitor.visit(form);
+
         assertEquals(2, message.getErrors().size());
         assertEquals(0, message.getWarnings().size());
         assertThat(message.getErrors().get(0), instanceOf(CyclicDependency.class));
