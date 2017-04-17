@@ -1,6 +1,6 @@
 package org.uva.taxfree.qls.styleoption.widget;
 
-import org.uva.taxfree.ql.gui.widgets.Resolvable;
+import org.uva.taxfree.ql.gui.FormListener;
 import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.values.BooleanValue;
 import org.uva.taxfree.ql.model.values.Value;
@@ -25,5 +25,10 @@ public class DropdownWidget extends WidgetStyleOption {
     @Override
     public Value resolve() {
         return new BooleanValue(mDropdownBox.getSelectedIndex() == 0);
+    }
+
+    @Override
+    public void callOnUpdate(FormListener listener) {
+        mDropdownBox.addActionListener(unusedEvent -> listener.updateForm());
     }
 }

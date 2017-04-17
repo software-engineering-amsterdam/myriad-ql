@@ -28,9 +28,9 @@ public abstract class Widget implements Resolvable {
         return mResolver.resolve();
     }
 
-    public abstract Value resolve();
-
-    public abstract void callOnUpdate(FormListener listener);
+    public void setListener(FormListener listener) {
+        mResolver.callOnUpdate(listener);
+    }
 
     public void updateVisibility(SymbolTable symbolTable) {
         mGuiComponent.setVisible(symbolTable.isVisible(mGuiComponent.getId()));

@@ -1,5 +1,6 @@
 package org.uva.taxfree.qls.styleoption.widget;
 
+import org.uva.taxfree.ql.gui.FormListener;
 import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.values.IntValue;
 import org.uva.taxfree.ql.model.values.Value;
@@ -23,5 +24,10 @@ public class SliderWidget extends WidgetStyleOption {
     @Override
     protected JComponent generateComponent() {
         return mSlider;
+    }
+
+    @Override
+    public void callOnUpdate(FormListener listener) {
+        mSlider.addChangeListener(unusedEvent -> listener.updateForm());
     }
 }

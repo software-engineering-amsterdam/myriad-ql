@@ -1,6 +1,6 @@
 package org.uva.taxfree.qls.styleoption.widget;
 
-import org.uva.taxfree.ql.gui.widgets.Widget;
+import org.uva.taxfree.ql.gui.FormListener;
 import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.values.StringValue;
 import org.uva.taxfree.ql.model.values.Value;
@@ -17,17 +17,17 @@ public class TextWidget extends WidgetStyleOption {
     }
 
     @Override
-    public void applyStyle(Widget widget) {
-
-    }
-
-    @Override
     public Value resolve() {
         return new StringValue(String.valueOf(mTextField.getValue()));
     }
 
     @Override
     protected JComponent generateComponent() {
-        return null;
+        return mTextField;
+    }
+
+    @Override
+    public void callOnUpdate(FormListener listener) {
+        mTextField.addPropertyChangeListener(unusedEvent -> listener.updateForm());
     }
 }
