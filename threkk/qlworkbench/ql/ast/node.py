@@ -55,6 +55,7 @@ class Node(object):
     def __init__(self, variable, type):
         self.variable = Variable(variable, type)
         self.conditions = []
+        self.expression = None
 
     def get_value(self, context):
         """
