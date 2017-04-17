@@ -58,6 +58,9 @@ public abstract class Widget implements Resolvable {
         return mGuiComponent.getId();
     }
 
+    public void setResolver(Resolvable externalResolver) {
+        mResolver = externalResolver;
+    }
 
     public void setBackgroundColor(Color backgroundColor) {
         mGuiComponent.setBackgroundColor(backgroundColor);
@@ -73,5 +76,9 @@ public abstract class Widget implements Resolvable {
 
     public void setForegroundColor(Color foregroundColor) {
         mGuiComponent.setForegroundColor(foregroundColor);
+    }
+
+    public void setValueCompoent(JComponent component) {
+        mGuiComponent.setValueComponent(component);
     }
 }
