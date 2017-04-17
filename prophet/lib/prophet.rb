@@ -31,9 +31,6 @@ module Prophet
       checker.new(ast).check
     end
 
-    evaluator = Evaluator.new(ast)
-    evaluator.evaluate
-
     gui = Gui.new(ast)
     gui.render
   end

@@ -16,9 +16,6 @@ module Prophet
     end
 
     class Identifier < Node.new(:name)
-      def eval(context)
-        context[name.to_s]
-      end
     end
 
     class Type < Node.new(:name)
