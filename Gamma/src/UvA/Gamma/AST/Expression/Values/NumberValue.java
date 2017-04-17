@@ -12,7 +12,7 @@ import java.math.RoundingMode;
  * Created by Tjarco, 21-03-17.
  */
 public class NumberValue extends Value<NumberValue> {
-    private BigDecimal value;
+    protected BigDecimal value;
 
     public NumberValue(String value) {
         this.setValue(value);

@@ -2,6 +2,6 @@ form test{
     "test" test: integer
     "test2" test2: boolean
     if(test2){
-        "question?" question: boolean = (test + 2)
+        "question?" question: integer = (test + 2)
     }
 }
