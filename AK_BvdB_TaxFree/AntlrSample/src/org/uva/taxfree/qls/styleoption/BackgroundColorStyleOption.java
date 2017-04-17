@@ -1,8 +1,8 @@
 package org.uva.taxfree.qls.styleoption;
 
+import org.uva.taxfree.ql.gui.widgets.GuiComponent;
 import org.uva.taxfree.ql.model.SourceInfo;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class BackgroundColorStyleOption extends StyleOption {
@@ -13,7 +13,7 @@ public class BackgroundColorStyleOption extends StyleOption {
         mColorValue = colorValue;
     }
 
-    public void applyStyle(JComponent component) {
-        component.setBackground(Color.decode(mColorValue));
+    public void applyStyle(GuiComponent component) {
+        component.setBackgroundColor(Color.decode(mColorValue));
     }
 }

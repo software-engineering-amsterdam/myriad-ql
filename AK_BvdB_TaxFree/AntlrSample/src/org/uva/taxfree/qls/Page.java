@@ -1,6 +1,7 @@
 package org.uva.taxfree.qls;
 
 import org.uva.taxfree.ql.gui.MessageList;
+import org.uva.taxfree.ql.gui.widgets.GuiComponent;
 import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.types.Type;
@@ -84,9 +85,9 @@ public class Page {
         }
     }
 
-    public void applyStyle(Type type, JComponent component) {
+    public void applyStyle(Type type, GuiComponent component) {
         for (Section section : mSections) {
-            if (section.contains(component.getName())) {
+            if (section.contains(component.getId())) {
                 section.applyStyle(component);
                 return;
             }

@@ -1,8 +1,7 @@
 package org.uva.taxfree.qls.styleoption.widget;
 
+import org.uva.taxfree.ql.gui.widgets.GuiComponent;
 import org.uva.taxfree.ql.model.SourceInfo;
-
-import javax.swing.*;
 
 public class RadioWidget extends WidgetStyleOption {
 
@@ -16,7 +15,7 @@ public class RadioWidget extends WidgetStyleOption {
     }
 
     @Override
-    public void applyStyle(JComponent component) {
+    public void applyStyle(GuiComponent component) {
         
     }
 }

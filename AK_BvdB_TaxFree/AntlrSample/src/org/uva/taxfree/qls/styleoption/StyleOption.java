@@ -1,8 +1,7 @@
 package org.uva.taxfree.qls.styleoption;
 
+import org.uva.taxfree.ql.gui.widgets.GuiComponent;
 import org.uva.taxfree.ql.model.SourceInfo;
-
-import javax.swing.*;
 
 public abstract class StyleOption {
 
@@ -12,5 +11,5 @@ public abstract class StyleOption {
         mSourceInfo = sourceInfo;
     }
 
-    public abstract void applyStyle(JComponent component);
+    public abstract void applyStyle(GuiComponent component);
 }
