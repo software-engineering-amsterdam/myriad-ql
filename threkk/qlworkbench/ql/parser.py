@@ -41,8 +41,9 @@ from .ast.type import String
 
 class QLParser(object):
     """Encapsulates the logic of the PLY parser."""
-    def __init__(self, tokens):
+    def __init__(self, tokens, checker):
         self.ast = Root()
+        self.checker = checker
         self.tokens = tokens
         self.start = 'start'
         self.parser = yacc.yacc(module=self, debug=0, write_tables=0)
@@ -110,7 +111,9 @@ class QLParser(object):
         elif p[1] == 'string':
             p[0] = String()
         else:
-            pass
+            msg = "Syntax error at token {} ({})".format(p[1].value,
+                                                         p[1].type)
+            self.checker.register_error(p.lineno(2), msg)
 
     def p_condition(self, p):
         """
@@ -144,7 +147,9 @@ class QLParser(object):
             elif p[2] == '||':
                 p[0] = OrExpression(p[1], p[3])
             else:
-                pass
+                msg = "Syntax error at token {} ({})".format(p[2].value,
+                                                             p[2].type)
+                self.checker.register_error(p.lineno(2), msg)
         else:
             p[0] = p[1]
 
@@ -172,7 +177,9 @@ class QLParser(object):
             elif p[2] == '==':
                 p[0] = EQExpression(p[1], p[3])
             else:
-                pass
+                msg = "Syntax error at token {} ({})".format(p[2].value,
+                                                             p[2].type)
+                self.checker.register_error(p.lineno(2), msg)
         else:
             p[0] = p[1]
 
@@ -188,7 +195,9 @@ class QLParser(object):
             elif p[2] == '-':
                 p[0] = MinusExpression(p[1], p[3])
             else:
-                pass
+                msg = "Syntax error at token {} ({})".format(p[2].value,
+                                                             p[2].type)
+                self.checker.register_error(p.lineno(2), msg)
         else:
             p[0] = p[1]
 
@@ -204,7 +213,9 @@ class QLParser(object):
             elif p[2] == '/':
                 p[0] = DivExpression(p[1], p[3])
             else:
-                pass
+                msg = "Syntax error at token {} ({})".format(p[2].value,
+                                                             p[2].type)
+                self.checker.register_error(p.lineno(2), msg)
 
         else:
             p[0] = p[1]
@@ -239,4 +250,12 @@ class QLParser(object):
         p[0] = []
 
     def p_error(self, p):
-        pass
+        if p:
+            msg = "Syntax error at token {} ({})".format(p.value, p.type)
+            self.checker.register_error(p.lineno, msg)
+            # Just discard the token and tell the parser it's okay. It will be
+            # stopped later by the typechecker.
+            self.parser.errok()
+        else:
+            msg = "Syntax error at EOF"
+            self.checker.register_error('EOF', msg)
