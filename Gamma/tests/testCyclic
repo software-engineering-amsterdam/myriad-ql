@@ -1,4 +1,4 @@
 form cyclic{
-    "input" bla: integer
+    "input" bla: integer = (first + 5)
     "hello!" first: integer = (bla - 5)
 }

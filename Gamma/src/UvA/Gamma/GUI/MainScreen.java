@@ -1,7 +1,6 @@
 package UvA.Gamma.GUI;
 
 import UvA.Gamma.AST.Form;
-import UvA.Gamma.AST.Question;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -44,8 +43,5 @@ public class MainScreen {
         stage.show();
     }
 
-    public void showQuestion(Question question) {
-
-    }
 }
 

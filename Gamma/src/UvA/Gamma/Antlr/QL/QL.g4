@@ -13,27 +13,30 @@ computed: STRING_LITERAL ID':' type '=' '('expression')';
 
 type: BOOL #booleanType | STRING #stringType | INT #intType | DATE #dateType | DEC  #decimalType| MONEY #moneyType;
 
-condition: 'if' '('boolExpression')' '{' (formItem)* '}' (elseblock)?;
+condition: 'if' '('expression')' '{' (formItem)* '}' (elseblock)?;
 
 elseblock: 'else' '{'(formItem)*'}';
 
-expression: boolExpression # booleanExpression | numExpression # numberExpression;
+//expression: boolExpression # booleanExpression | numExpression # numberExpression;
 
-boolExpression
-        : '!'boolExpression                                                         #negatedBooleanExpression
-        | boolExpression op=('&&' | '||' | '==' | '!=') boolExpression              #logicalBooleanExpression
-        | numExpression op=('<' | '>' | '<=' | '>=' | '!=' | '==') numExpression    #logicalIntegerExpression
-        | '('boolExpression')'                                                      #nestedBooleanExpression
-        | ID                                                                        #booleanIdentifierExpression
-        | ('true' | 'false')                                                        #booleanValueExpression
+expression
+        : '!'expression                                                         #negatedBooleanExpression
+        | expression op=('&&' | '||' | '==' | '!=') expression                  #logicalBooleanExpression
+        | expression op=('<' | '>' | '<=' | '>=' | '!=' | '==') expression      #logicalIntegerExpression
+        | expression op=('*' | '/') expression                                  #multiExpression
+        | expression op=('+' | '-') expression                                  #addExpression
+        | '('expression')'                                                      #nestedExpression
+        | ID                                                                    #identifierExpression
+        | ('true' | 'false')                                                    #booleanValueExpression
+        | NUMBER                                                                #numberValueExpression
         ;
 
-numExpression: numExpression op=('*' | '/') numExpression   #multiExpression
-       | numExpression op=('+' | '-') numExpression         #addExpression
-       | '('numExpression')'                                #nestedExpression
-       | NUMBER                                             #numberValueExpression
-       | ID                                                 #identifierExpression
-       ;
+//numExpression: numExpression op=('*' | '/') numExpression   #multiExpression
+//       | numExpression op=('+' | '-') numExpression         #addExpression
+//       | '('numExpression')'                                #nestedExpression
+//       | NUMBER                                             #numberValueExpression
+//       | ID                                                 #identifierExpression
+//       ;
 
 //datatypes
 BOOL:   'boolean';

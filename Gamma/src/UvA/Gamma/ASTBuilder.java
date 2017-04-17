@@ -69,7 +69,7 @@ public class ASTBuilder extends QLBaseVisitor<ASTNode> {
 
     @Override
     public Condition visitCondition(QLParser.ConditionContext ctx) {
-        Expression expression = (Expression) visit(ctx.boolExpression());
+        Expression expression = (Expression) visit(ctx.expression());
         Condition condition = new Condition(expression);
         for (QLParser.FormItemContext thenItem : ctx.formItem()) {
             condition.addThenBlockItem((FormItem) visit(thenItem));
@@ -83,14 +83,9 @@ public class ASTBuilder extends QLBaseVisitor<ASTNode> {
     }
 
     @Override
-    public Expression visitNumberExpression(QLParser.NumberExpressionContext ctx) {
-        return (Expression) visit(ctx.numExpression());
-    }
-
-    @Override
     public NumberOperand visitAddExpression(QLParser.AddExpressionContext ctx) {
-        Expression left = (Expression) visit(ctx.numExpression(0));
-        Expression right = (Expression) visit(ctx.numExpression(1));
+        Expression left = (Expression) visit(ctx.expression(0));
+        Expression right = (Expression) visit(ctx.expression(1));
         if (ctx.op.getText().equals("+")) {
             return new Add(left, right);
         } else {
@@ -100,8 +95,8 @@ public class ASTBuilder extends QLBaseVisitor<ASTNode> {
 
     @Override
     public NumberOperand visitMultiExpression(QLParser.MultiExpressionContext ctx) {
-        Expression left = (Expression) visit(ctx.numExpression(0));
-        Expression right = (Expression) visit(ctx.numExpression(1));
+        Expression left = (Expression) visit(ctx.expression(0));
+        Expression right = (Expression) visit(ctx.expression(1));
         if (ctx.op.getText().equals("*")) {
             return new Multiply(left, right);
         } else {
@@ -115,14 +110,9 @@ public class ASTBuilder extends QLBaseVisitor<ASTNode> {
     }
 
     @Override
-    public Expression visitBooleanExpression(QLParser.BooleanExpressionContext ctx) {
-        return (Expression) visit(ctx.boolExpression());
-    }
-
-    @Override
     public Expression visitLogicalBooleanExpression(QLParser.LogicalBooleanExpressionContext ctx) {
-        Expression left = (Expression) visit(ctx.boolExpression(0));
-        Expression right = (Expression) visit(ctx.boolExpression(1));
+        Expression left = (Expression) visit(ctx.expression(0));
+        Expression right = (Expression) visit(ctx.expression(1));
         switch (ctx.op.getText()) {
             case "&&":
                 return new And(left, right);
@@ -141,8 +131,8 @@ public class ASTBuilder extends QLBaseVisitor<ASTNode> {
 
     @Override
     public Expression visitLogicalIntegerExpression(QLParser.LogicalIntegerExpressionContext ctx) {
-        Expression left = (Expression) visit(ctx.numExpression(0));
-        Expression right = (Expression) visit(ctx.numExpression(1));
+        Expression left = (Expression) visit(ctx.expression(0));
+        Expression right = (Expression) visit(ctx.expression(1));
         switch (ctx.op.getText()) {
             case "<":
                 return new SmallerThan(left, right);
@@ -164,32 +154,23 @@ public class ASTBuilder extends QLBaseVisitor<ASTNode> {
     }
 
     @Override
-    public Expression visitNestedBooleanExpression(QLParser.NestedBooleanExpressionContext ctx) {
-        return (Expression) visit(ctx.boolExpression());
-    }
-
-    @Override
     public Expression visitNestedExpression(QLParser.NestedExpressionContext ctx) {
-        return (Expression) visit(ctx.numExpression());
+        return (Expression) visit(ctx.expression());
     }
 
     @Override
-    public ASTNode visitNegatedBooleanExpression(QLParser.NegatedBooleanExpressionContext ctx) {
-        return new Not((Expression) visit(ctx.boolExpression()));
+    public Not visitNegatedBooleanExpression(QLParser.NegatedBooleanExpressionContext ctx) {
+        return new Not((Expression) visit(ctx.expression()));
     }
 
     @Override
-    public ASTNode visitBooleanValueExpression(QLParser.BooleanValueExpressionContext ctx) {
+    public BooleanValue visitBooleanValueExpression(QLParser.BooleanValueExpressionContext ctx) {
         return new BooleanValue(ctx.getText());
     }
 
-    @Override
-    public ASTNode visitBooleanIdentifierExpression(QLParser.BooleanIdentifierExpressionContext ctx) {
-        return new IdentifierValue(ctx.ID().getText());
-    }
 
     @Override
-    public ASTNode visitIdentifierExpression(QLParser.IdentifierExpressionContext ctx) {
+    public IdentifierValue visitIdentifierExpression(QLParser.IdentifierExpressionContext ctx) {
         return new IdentifierValue(ctx.ID().getText());
     }
 

@@ -1,12 +1,3 @@
 form test{
-    "boolean" t: boolean
-    if(t){
-        "boolean negated:" t2: boolean = (!t && false)
-        "another bool: " tn: boolean
-        if(!t2 && tn){
-            "boolean nested: " t4: boolean = (t || t2 && (true || t))
-        }
-    }else{
-        "boolean and true: " t3: boolean = (t && true)
-    }
+    "testing.. " test: integer = (1 && 2)
 }
