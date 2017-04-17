@@ -78,7 +78,7 @@ public class TypeCheckerTest {
     @Test
     public void testOneCyclicDependency() throws IOException {
         Message message = new Message();
-        DependencyVisitor dependencyVisitor = new DependencyVisitor(message);
+        CircularDependencyChecker circularDependencyChecker = new CircularDependencyChecker(message);
 
         String qlForm = "form tax {\n" +
                 "  \"q1?\" \n" +
@@ -88,7 +88,7 @@ public class TypeCheckerTest {
                 "}";
 
         Form form = ASTGenerator.getForm(qlForm);
-        dependencyVisitor.visit(form);
+        circularDependencyChecker.visit(form);
 
         assertEquals(1, message.getErrors().size());
         assertEquals(0, message.getWarnings().size());
@@ -98,7 +98,7 @@ public class TypeCheckerTest {
     @Test
     public void testTwoCyclicDependencies() throws IOException {
         Message message = new Message();
-        DependencyVisitor dependencyVisitor = new DependencyVisitor(message);
+        CircularDependencyChecker circularDependencyChecker = new CircularDependencyChecker(message);
 
         String qlForm = "form tax {\n" +
                 "  \"q1?\"\n" +
@@ -110,7 +110,7 @@ public class TypeCheckerTest {
                 "}";
 
         Form form = ASTGenerator.getForm(qlForm);
-        dependencyVisitor.visit(form);
+        circularDependencyChecker.visit(form);
 
         assertEquals(2, message.getErrors().size());
         assertEquals(0, message.getWarnings().size());
