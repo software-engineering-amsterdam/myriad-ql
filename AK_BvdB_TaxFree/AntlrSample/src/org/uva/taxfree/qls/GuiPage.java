@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GuiPage {
-    private final JPanel mPage;
+    public final JPanel mPage;
     private final List<JPanel> mSections;
 
     public GuiPage(String pageName, List<String> sectionNames) {
@@ -24,8 +24,8 @@ public class GuiPage {
 
     private JPanel createPage(String name) {
         JPanel page = new JPanel();
+        page.setLayout(new BoxLayout(page, BoxLayout.Y_AXIS));
         page.setName(name);
-        page.add(new JLabel("Page: " + name));
         return page;
     }
 
@@ -39,6 +39,7 @@ public class GuiPage {
 
     private JPanel createSection(String sectionName) {
         JPanel section = new JPanel();
+        section.setLayout(new BoxLayout(section, BoxLayout.Y_AXIS));
         section.setName(sectionName);
         section.add(new JLabel("Section: " + sectionName));
         return section;
@@ -63,5 +64,9 @@ public class GuiPage {
             }
         }
         return false;
+    }
+
+    public String getPageName() {
+        return mPage.getName();
     }
 }

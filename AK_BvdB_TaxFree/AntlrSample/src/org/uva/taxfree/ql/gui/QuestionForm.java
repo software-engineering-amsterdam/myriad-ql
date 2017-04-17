@@ -1,5 +1,6 @@
 package org.uva.taxfree.ql.gui;
 
+import oracle.jrockit.jfr.JFR;
 import org.uva.taxfree.ql.gui.widgets.Widget;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 

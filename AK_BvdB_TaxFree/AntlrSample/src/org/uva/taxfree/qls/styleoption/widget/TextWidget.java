@@ -8,6 +8,7 @@ import org.uva.taxfree.ql.model.values.StringValue;
 import org.uva.taxfree.ql.model.values.Value;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class TextWidget extends WidgetStyleOption {
 
@@ -20,6 +21,7 @@ public class TextWidget extends WidgetStyleOption {
     @Override
     public void applyStyle(Widget widget) {
         mTextField = generateTextField(widget.resolveValue());
+        mTextField.setPreferredSize(new Dimension(100, 25));
         super.applyStyle(widget);
     }
 
@@ -29,10 +31,11 @@ public class TextWidget extends WidgetStyleOption {
     }
 
     protected JFormattedTextField generateTextField(Value value) {
-        if (value.equals(new IntValue(0))) {
+        if (IntValue.class.equals(value)) {
             return new JFormattedTextField(0);
         }
         return new JFormattedTextField("");
+
     }
 
     @Override

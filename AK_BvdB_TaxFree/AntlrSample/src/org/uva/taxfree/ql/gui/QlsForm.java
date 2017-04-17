@@ -28,16 +28,20 @@ public class QlsForm extends QuestionForm {
 
     @Override
     protected void registerToPanel(JPanel widgetPanel) {
+        JTabbedPane tabbedPane = new JTabbedPane();
         for (GuiPage page : mPages) {
-            page.registerToPanel(widgetPanel);
+            JPanel panel = new JPanel();
+            page.registerToPanel(panel);
+            tabbedPane.add(page.getPageName(), panel);
         }
+        widgetPanel.add(tabbedPane);
     }
 
     @Override
     protected void registerWidget(Widget widget) {
         String sectionName = mStyle.getSectionName(widget.getId());
         for (GuiPage page : mPages) {
-            if(page.contains(sectionName)){
+            if (page.contains(sectionName)) {
                 page.register(sectionName, widget);
             }
         }
