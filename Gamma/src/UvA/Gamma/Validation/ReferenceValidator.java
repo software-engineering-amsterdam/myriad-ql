@@ -18,7 +18,7 @@ public class ReferenceValidator extends BaseVisitor {
     @Override
     public void visit(IdentifierValue value) {
         if (!identifierStrings.contains(value.toString())) {
-            ErrorHandler.invalidreference(value.toString());
+            ErrorHandler.invalidReference(value.toString());
         }
     }
 }

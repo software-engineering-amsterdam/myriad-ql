@@ -13,6 +13,10 @@ public class MoneyValue extends NumberValue {
         super(value);
     }
 
+    public MoneyValue(BigDecimal value) {
+        super(value);
+    }
+
     @Override
     public Type getType() {
         return new MoneyType();
@@ -21,6 +25,11 @@ public class MoneyValue extends NumberValue {
     @Override
     public boolean conformsToType(Type type) {
         return super.conformsToType(type) || type.equalsType(this.getType());
+    }
+
+    @Override
+    protected NumberValue createNew(BigDecimal value) {
+        return new MoneyValue(value);
     }
 
     @Override

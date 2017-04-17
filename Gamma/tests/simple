@@ -5,8 +5,8 @@ form test{
     "testdate" testda: date
     "testmoney" testm: money
 
-    if(testb && (testi < 10) && (testd > 5.5)){
-        "money result" mres: money = (testmo * 100)
+    if(testb){
+        "money result" mres: money = (testm - 100)
     }
 
 }

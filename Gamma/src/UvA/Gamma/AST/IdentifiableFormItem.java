@@ -8,7 +8,7 @@ import UvA.Gamma.AST.Types.Type;
  */
 public abstract class IdentifiableFormItem implements FormItem {
     protected Identifier identifier;
-    protected String label;
+    String label;
     protected Type type;
 
     public String getIdentifier() {

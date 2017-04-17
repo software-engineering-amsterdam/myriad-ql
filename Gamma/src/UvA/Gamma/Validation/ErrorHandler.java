@@ -1,7 +1,5 @@
 package UvA.Gamma.Validation;
 
-import java.util.Set;
-
 /**
  * Created by Tjarco, 17-04-17.
  */
@@ -25,12 +23,7 @@ class ErrorHandler {
         System.err.println("Duplicate label for: " + identifier);
     }
 
-    static void invalidReference(Set<String> identifiers) {
-        System.err.println("Referenced non existing identifiers: " + identifiers);
-        System.exit(1);
-    }
-
-    static void invalidreference(String identifier) {
+    static void invalidReference(String identifier) {
         System.err.println("Referenced non existing identifier: " + identifier);
         System.exit(1);
     }

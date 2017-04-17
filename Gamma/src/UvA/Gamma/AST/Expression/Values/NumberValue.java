@@ -28,19 +28,19 @@ public class NumberValue extends Value<NumberValue> {
     }
 
     public NumberValue add(NumberValue other) {
-        return new NumberValue(this.value.add(other.value));
+        return createNew(this.value.add(other.value));
     }
 
     public NumberValue subtract(NumberValue other) {
-        return new NumberValue(this.value.subtract(other.value));
+        return createNew(this.value.subtract(other.value));
     }
 
     public NumberValue multiply(NumberValue other) {
-        return new NumberValue(this.value.multiply(other.value));
+        return createNew(this.value.multiply(other.value));
     }
 
     public NumberValue divide(NumberValue other) {
-        return new NumberValue(this.value.divide(other.value, RoundingMode.HALF_EVEN));
+        return createNew(this.value.divide(other.value, RoundingMode.HALF_EVEN));
     }
 
     public BooleanValue smallerThan(NumberValue other) {
@@ -49,6 +49,10 @@ public class NumberValue extends Value<NumberValue> {
 
     public boolean isInteger() {
         return value.signum() == 0 || value.scale() <= 0 || value.stripTrailingZeros().scale() <= 0;
+    }
+
+    protected NumberValue createNew(BigDecimal value) {
+        return new NumberValue(value);
     }
 
     @Override

@@ -2,10 +2,7 @@ package UvA.Gamma.GUI;
 
 import UvA.Gamma.AST.Computed;
 import UvA.Gamma.AST.Expression.Identifier;
-import UvA.Gamma.AST.Expression.Values.BooleanValue;
-import UvA.Gamma.AST.Expression.Values.DateValue;
-import UvA.Gamma.AST.Expression.Values.IdentifierValue;
-import UvA.Gamma.AST.Expression.Values.NumberValue;
+import UvA.Gamma.AST.Expression.Values.*;
 import UvA.Gamma.AST.Form;
 import UvA.Gamma.AST.Question;
 import UvA.Gamma.AST.Types.*;
@@ -132,7 +129,7 @@ public class DefaultWidgetBuilder implements WidgetBuilder {
             if (typeChecker.checkMoney(newValue)) {
                 input.setStyle("-fx-text-fill: green");
                 IdentifierUpdatedVisitor identifierUpdatedVisitor =
-                        new IdentifierUpdatedVisitor(new IdentifierValue(identifier.toString(), new NumberValue(newValue)));
+                        new IdentifierUpdatedVisitor(new IdentifierValue(identifier.toString(), new MoneyValue(newValue)));
                 form.forEach(formItem -> formItem.accept(identifierUpdatedVisitor));
             } else {
                 input.setStyle("-fx-text-fill: red");
