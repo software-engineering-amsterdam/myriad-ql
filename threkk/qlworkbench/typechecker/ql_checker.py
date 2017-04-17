@@ -1,20 +1,23 @@
 # -*- coding: utf-8 -*-
 """
-The root module holds the definition of the root of the AST tree. As it is the
-root, it hold extra information, logic and syntax that make it unique from the
-rest of the nodes.
+This module contains the logic of the QL checker. The QL checker looks for and
+reports errors in the AST tree. This module concreteley detects:
+
+    - Duplicated declarations.
+    - Duplicated labels.
+    - Invalid assignations.
+    - Invalid conditions.
+    - Invalid operands.
+    - Cyclic dependencies.
+    - Undefined dependencies.
 """
 from ql.ast.type import Boolean
 from ql.ast.type import Undefined
 
 
 class QLChecker(object):
-    """
-    Initialises a root node. It will also initialise an empty register with all
-    the variables and nodes, a queue with the order in which the nodes must be
-    displayed and the typechecker.
-    """
     def __init__(self, ast, checker):
+        """Initialises QL Checker."""
         super().__init__()
         self.ast = ast
         self.checker = checker
@@ -51,19 +54,31 @@ class QLChecker(object):
             # __check_undefined_id
             return Undefined()
 
+    def register_error(self, node, message):
+        """Registers an error in the typechcker"""
+        self.checker.add_error(node, message)
+
+    def register_warning(self, node, message):
+        """Registers a warning in the typechecker"""
+        self.checker.add_warning(node, message)
+
     def __register_node(self, node):
         """
-        Adds a node to the AST. It will also check for certain errors detected
-        on declaration time like duplicated questions and labels (warning) and
-        will report them to the typechecker which will process them.
+        Adds a node to the QL checker. It will also check for certain errors
+        detected on declaration time like duplicated questions and labels
+        (warning) and will report them to the typechecker which will process
+        them.
         """
+        # Checks if the declaration of the node will produce an error. Our
+        # register only allows to have one method declared so it is important
+        # to detect the
         self.__check_duplicate_labels(node)
         self.__check_duplicate_declarations(node)
 
-        # Type
+        # Add the type of the node to the dictionary.
         self.types[node.variable.name] = node.variable.type
 
-        # Dependencies
+        # Tracks the dependencies of the node.
         dependencies = []
         if node.expression:
             expr = node.expression
@@ -73,8 +88,13 @@ class QLChecker(object):
             dependencies += condition.depends_on()
 
         self.dependencies[node.variable.name] = dependencies
+
+        # Adds the node to a register with all the declared nodes.
         self.register[node.variable.name] = node
 
+    ###
+    # Checks on registration of the node.
+    ###
     def __check_duplicate_labels(self, node):
         """
         Lookis for duplicated labels before adding it. If anyone is found,
@@ -83,7 +103,7 @@ class QLChecker(object):
         labels = [item.text for key, item in self.register.items()]
         if (node.text in labels):
             msg = 'Duplicated field label {}'
-            self.__register_warning(node, msg.format(node.text))
+            self.register_warning(node, msg.format(node.text))
 
     def __check_duplicate_declarations(self, node):
         """
@@ -100,12 +120,15 @@ class QLChecker(object):
             existing_node = self.register[variable_name]
             if (existing_node.variable.type != node.variable.type):
                 msg = 'Duplicated question with different type. It was {}'
-            self.__register_error(node, msg.format(existing_node))
+            self.register_error(node, msg.format(existing_node))
         else:
             # Here we take the design decision of keeping the existing one and
             # ignoring the new one.
             self.register[variable_name] = node
 
+    ####
+    # Checks after registration of all the node.
+    ####
     def __check_invalid_conditions(self, node):
         """
         This function checks for errors in the expressions. Concretely, it
@@ -117,7 +140,7 @@ class QLChecker(object):
             if condition.get_type(self) != Boolean():
                 msg = ('The expression {} in the condition does not return a '
                        'boolean')
-                self.__register_error(node, msg.format(condition))
+                self.register_error(node, msg.format(condition))
 
     def __check_invalid_assignation(self, node):
         """
@@ -132,7 +155,7 @@ class QLChecker(object):
 
             if node_type != expr_type:
                 msg = 'The assignation expected a {} but got a {}'
-                self.__register_error(node, msg.format(node_type, expr_type))
+                self.register_error(node, msg.format(node_type, expr_type))
 
     def __check_invalid_operands(self, node):
         """
@@ -158,8 +181,7 @@ class QLChecker(object):
                             child.get_type(self).allowed_operations()):
                         msg = ('The child {} does not allow to perform the '
                                '{} operation')
-                        self.__register_error(node, msg.format(child,
-                                                               operation))
+                        self.register_error(node, msg.format(child, operation))
                     queue.append(child)
             except AttributeError:
                 # It is a Leaf node, nothing to worry about. Even if this looks
@@ -177,7 +199,7 @@ class QLChecker(object):
         for dependency in self.dependencies[node.variable.name]:
             if dependency not in self.dependencies:
                 msg = 'The node depends on a undefined variable "{}"'
-                self.__register_error(node, msg.format(dependency))
+                self.register_error(node, msg.format(dependency))
 
     def __check_cyclic_dependencies(self, node):
         """
@@ -195,8 +217,8 @@ class QLChecker(object):
                 if key in all_dependencies:
                     dependency_node = self.register[dependency]
                     msg = 'The node {} has a cyclic dependency with {}'
-                    self.__register_error(node, msg.format(node,
-                                                           dependency_node))
+                    self.register_error(node, msg.format(node,
+                                                         dependency_node))
 
     def __get_extended_dependencies(self, key):
         """
@@ -220,11 +242,3 @@ class QLChecker(object):
                     if dependency_dependency not in all_dependencies:
                         queue.append(dependency_dependency)
         return all_dependencies
-
-    def __register_error(self, node, message):
-        """Registers an error in the typechcker"""
-        self.checker.add_error(node, message)
-
-    def __register_warning(self, node, message):
-        """Registers a warning in the typechecker"""
-        self.checker.add_warning(node, message)
