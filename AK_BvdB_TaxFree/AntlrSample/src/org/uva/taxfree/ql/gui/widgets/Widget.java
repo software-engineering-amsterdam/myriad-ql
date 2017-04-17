@@ -6,6 +6,7 @@ import org.uva.taxfree.ql.model.values.Value;
 import org.uva.taxfree.qls.QlsStyle;
 
 import javax.swing.*;
+import java.awt.*;
 
 public abstract class Widget {
     private final GuiComponent mGuiComponent;
@@ -40,10 +41,10 @@ public abstract class Widget {
     }
 
     public void updateStyle(QlsStyle qlsStyle) {
-        applyStyle(mGuiComponent, qlsStyle);
+        applyStyle(this, qlsStyle);
     }
 
-    protected void applyStyle(GuiComponent component, QlsStyle qlsStyle) {
+    protected void applyStyle(Widget component, QlsStyle qlsStyle) {
         // Intentionally left blank
     }
 
@@ -51,4 +52,20 @@ public abstract class Widget {
         return mGuiComponent.getId();
     }
 
+
+    public void setBackgroundColor(Color backgroundColor) {
+        mGuiComponent.setBackgroundColor(backgroundColor);
+    }
+
+    public void setFontName(String fontName) {
+        mGuiComponent.setFontName(fontName);
+    }
+
+    public void setFontSize(int fontSize) {
+        mGuiComponent.setFontSize(fontSize);
+    }
+
+    public void setForegroundColor(Color foregroundColor) {
+        mGuiComponent.setForegroundColor(foregroundColor);
+    }
 }
