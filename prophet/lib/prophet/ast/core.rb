@@ -17,8 +17,5 @@ module Prophet
 
     class Identifier < Node.new(:name)
     end
-
-    class Type < Node.new(:name)
-    end
   end
 end
