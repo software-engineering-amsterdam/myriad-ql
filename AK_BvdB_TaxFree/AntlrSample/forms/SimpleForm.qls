@@ -1,10 +1,31 @@
 stylesheet OurTaxFreeSolution {
   page Taxes {
-    section "Meta" {
-        question likesToPayTaxes { 
-          color:#FF0000
-          background-color:#00FF00
+    section "Booleans" {
+        question noTax {
+          widget : checkbox
         }
+        question muchTax {
+            widget : radio ( "giveMe" , "iPay" )
+        }
+        question likesToPayTaxes {
+                  color:#FF0000
+                  background-color:#00FF00
+                  widget : dropdown ( "aye" , "naye" )
+                }
+        question likesTheRadio {
+                  widget : radio ( "Radio" , "Television" )
+                 }
+
+        }
+    section "Integers" {
+        question sliderAmount {
+            widget : slider
+        }
+        question spinnerAmount {
+            widget : spinbox
+        }
+
     }
+
   }
 }

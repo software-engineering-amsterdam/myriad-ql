@@ -1,4 +1,8 @@
 form OurTaxFreeSolution {
   "Do you like paying taxes?" -> likesToPayTaxes : boolean
- 
+  "Do you want tax?" -> noTax : boolean
+  "You want to get back tax?" -> muchTax : boolean
+  "How many sliders?" -> sliderAmount : integer
+  "How many spinners?" -> spinnerAmount : integer
+  "Do you like radio or TV?" -> likesTheRadio : boolean
 }
