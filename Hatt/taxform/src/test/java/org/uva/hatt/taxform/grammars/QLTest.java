@@ -1,7 +1,7 @@
 package org.uva.hatt.taxform.grammars;
 
 import org.junit.Test;
-import org.uva.hatt.taxform.ast.ASTGenerator;
+import org.uva.hatt.taxform.parsing.ASTGenerator;
 
 import java.io.IOException;
 

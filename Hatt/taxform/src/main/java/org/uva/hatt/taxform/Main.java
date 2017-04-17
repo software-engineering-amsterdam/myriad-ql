@@ -1,10 +1,10 @@
 package org.uva.hatt.taxform;
 
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.uva.hatt.taxform.ast.ASTGenerator;
+import org.uva.hatt.taxform.parsing.ASTGenerator;
 import org.uva.hatt.taxform.ast.nodes.Form;
 import org.uva.hatt.taxform.typechecker.messages.Message;
-import org.uva.hatt.taxform.ast.visitors.ASTBuilder;
+import org.uva.hatt.taxform.parsing.ASTBuilder;
 import org.uva.hatt.taxform.typechecker.TypeChecker;
 
 public class Main {

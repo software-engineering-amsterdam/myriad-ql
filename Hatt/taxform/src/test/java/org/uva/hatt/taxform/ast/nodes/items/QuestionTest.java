@@ -1,7 +1,7 @@
 package org.uva.hatt.taxform.ast.nodes.items;
 
 import org.junit.Test;
-import org.uva.hatt.taxform.ast.ASTGenerator;
+import org.uva.hatt.taxform.parsing.ASTGenerator;
 import org.uva.hatt.taxform.ast.nodes.Form;
 import org.uva.hatt.taxform.ast.nodes.types.Boolean;
 import org.uva.hatt.taxform.ast.nodes.types.Integer;

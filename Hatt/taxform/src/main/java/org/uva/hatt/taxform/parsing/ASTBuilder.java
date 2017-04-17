@@ -1,4 +1,4 @@
-package org.uva.hatt.taxform.ast.visitors;
+package org.uva.hatt.taxform.parsing;
 
 import org.uva.hatt.taxform.ast.nodes.ASTNode;
 import org.uva.hatt.taxform.ast.nodes.Form;

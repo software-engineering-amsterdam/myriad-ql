@@ -1,10 +1,9 @@
-package org.uva.hatt.taxform.ast;
+package org.uva.hatt.taxform.parsing;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.uva.hatt.taxform.ast.nodes.Form;
-import org.uva.hatt.taxform.ast.visitors.ASTBuilder;
 import org.uva.hatt.taxform.grammars.QLLexer;
 import org.uva.hatt.taxform.grammars.QLParser;
 
