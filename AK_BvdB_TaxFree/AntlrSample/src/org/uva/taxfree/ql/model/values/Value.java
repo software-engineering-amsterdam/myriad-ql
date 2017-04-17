@@ -140,4 +140,8 @@ public abstract class Value {
     }
 
     protected abstract boolean equalsToValue(StringValue StringValue);
+
+    public boolean equals(Object obj) {
+        return this.getClass().getSimpleName().equals(obj.getClass().getSimpleName());
+    }
 }
