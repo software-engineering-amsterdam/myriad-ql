@@ -66,7 +66,8 @@ module QLS
 
       def check_compatibility(widget, type, compatible_types)
         return if compatible_types.include?(type.class)
-        NotificationTable.store(Notification::Error.new("incompatible types at #{widget}"))
+        error = Notification::Error.new("incompatible types at #{widget}")
+        NotificationTable.store(error)
       end
     end
   end

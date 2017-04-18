@@ -17,28 +17,32 @@ module QL
     def read_file(file_name)
       File.read(file_name)
     rescue
-      NotificationTable.store(Notification::Error.new('Error while reading QL file'))
+      error = Notification::Error.new('Error while reading QL file')
+      NotificationTable.store(error)
       'form _ {}'
     end
 
     def parse_form
       Parser::FormParser.new.parse(content)
     rescue
-      NotificationTable.store(Notification::Error.new('Error while creating parse tree'))
+      error = Notification::Error.new('Error while creating parse tree')
+      NotificationTable.store(error)
       { form: { id: '_', body: {} } }
     end
 
     def transform_form
       Parser::FormTransformer.new.apply(parse_tree)
     rescue
-      NotificationTable.store(Notification::Error.new('Error while creating AST'))
+      error = Notification::Error.new('Error while creating AST')
+      NotificationTable.store(error)
       AST::Form.new('_', [])
     end
 
     def check_types
       TypeChecker::TypeChecker.new.check(ast)
     rescue
-      NotificationTable.store(Notification::Error.new('Error while type checking'))
+      error = Notification::Error.new('Error while type checking')
+      NotificationTable.store(error)
     end
 
     def build_gui
@@ -46,7 +50,8 @@ module QL
       ast.accept(form_builder)
       GUI::GUI.new(form_builder.question_frames)
     rescue
-      NotificationTable.store(Notification::Error.new('Error while building gui'))
+      error = Notification::Error.new('Error while building gui')
+      NotificationTable.store(error)
     end
 
     def run_gui
@@ -59,7 +64,8 @@ module QL
       end
       gui.render
     rescue
-      NotificationTable.store(Notification::Error.new('Runtime error'))
+      error = Notification::Error.new('Runtime error')
+      NotificationTable.store(error)
       render_errors
     end
 

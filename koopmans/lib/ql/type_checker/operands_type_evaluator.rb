@@ -114,7 +114,8 @@ module QL
 
       def check_if_condition(if_statement, condition_type)
         return if condition_type.is_a?(AST::BooleanType)
-        NotificationTable.store(Notification::Error.new("#{if_statement.condition} is not of the type boolean"))
+        error = Notification::Error.new("#{if_statement.condition} is not of the type boolean")
+        NotificationTable.store(error)
       end
 
       def evaluate_types(left, binary_expression, compatible_types, return_type)
@@ -123,7 +124,8 @@ module QL
         if check_compatibility(left_type, compatible_types) && check_compatibility(right_type, compatible_types)
           return_type
         else
-          NotificationTable.store(Notification::Error.new("incompatible types at #{binary_expression.operator} operator"))
+          error = Notification::Error.new("incompatible types at #{binary_expression.operator} operator")
+          NotificationTable.store(error)
           AST::ErrorType.new
         end
       end
@@ -133,7 +135,8 @@ module QL
         if check_compatibility(expression_type, compatible_types)
           expression_type
         else
-          NotificationTable.store(Notification::Error.new("incompatible types at #{negation.operator} negation"))
+          error = Notification::Error.new("incompatible types at #{negation.operator} negation")
+          NotificationTable.store(error)
           AST::ErrorType.new
         end
       end

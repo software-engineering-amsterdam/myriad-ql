@@ -19,19 +19,22 @@ module QLS
 
       def questions_placed_checker(qls_variable_names, ql_variable_names)
         (ql_variable_names - qls_variable_names).each do |error|
-          NotificationTable.store(Notification::Error.new("#{error} of the QL program is not placed by the QLS program."))
+          error = Notification::Error.new("#{error} of the QL program is not placed by the QLS program.")
+          NotificationTable.store(error)
         end
       end
 
       def questions_reference_checker(qls_variable_names, ql_variable_names)
         (qls_variable_names - ql_variable_names).each do |error|
-          NotificationTable.store(Notification::Error.new("#{error} is referenced to a question that is not in the QL program"))
+          error = Notification::Error.new("#{error} is referenced to a question that is not in the QL program")
+          NotificationTable.store(error)
         end
       end
 
       def questions_uniqueness_checker(qls_variable_names)
         select_duplicates(qls_variable_names).each do |error|
-          NotificationTable.store(Notification::Error.new("#{error} is placed multiple times"))
+          error = Notification::Error.new("#{error} is placed multiple times")
+          NotificationTable.store(error)
         end
       end
 

@@ -24,28 +24,32 @@ module QLS
     def read_file(file_name)
       File.read(file_name)
     rescue
-      NotificationTable.store(Notification::Error.new('Error while reading QL file'))
+      error = Notification::Error.new('Error while reading QL file')
+      NotificationTable.store(error)
       'stylesheet _'
     end
 
     def parse_form
       Parser::FormParser.new.parse(content)
     rescue
-      NotificationTable.store(Notification::Error.new('Error while creating parse tree'))
+      error = Notification::Error.new('Error while creating parse tree')
+      NotificationTable.store(error)
       { stylesheet: { id: '_', pages: [] } }
     end
 
     def transform_form
       Parser::FormTransformer.new.apply(parse_tree)
     rescue
-      NotificationTable.store(Notification::Error.new('Error while creating AST'))
+      error = Notification::Error.new('Error while creating AST')
+      NotificationTable.store(error)
       AST::Stylesheet.new('_', [])
     end
 
     def check_types
       TypeChecker::TypeChecker.new.check(ast, ql.ast)
     rescue
-      NotificationTable.store(Notification::Error.new('Error while type checking'))
+      error = Notification::Error.new('Error while type checking')
+      NotificationTable.store(error)
     end
 
     def collect_styles
@@ -53,7 +57,8 @@ module QLS
       ast.accept(style_collector)
       style_collector.styles
     rescue
-      NotificationTable.store(Notification::Error.new('Error while collecting style'))
+      error = Notification::Error.new('Error while collecting style')
+      NotificationTable.store(error)
       {}
     end
 
@@ -62,7 +67,8 @@ module QLS
       ast.accept(question_frame_styler)
       question_frame_styler.question_frame_styles
     rescue
-      NotificationTable.store(Notification::Error.new('Error styling question frame'))
+      error = Notification::Error.new('Error styling question frame')
+      NotificationTable.store(error)
       {}
     end
 
@@ -71,7 +77,8 @@ module QLS
       gui_with_style.question_frame_styles = question_frame_styles
       gui_with_style
     rescue
-      NotificationTable.store(Notification::Error.new('Error while building gui with style'))
+      error = Notification::Error.new('Error while building gui with style')
+      NotificationTable.store(error)
     end
 
     def run_gui
@@ -84,7 +91,8 @@ module QLS
       end
       gui.render
     rescue
-      NotificationTable.store(Notification::Error.new('Runtime error'))
+      error = Notification::Error.new('Runtime error')
+      NotificationTable.store(error)
       render_errors
     end
   end
