@@ -4,7 +4,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.uva.taxfree.ql.ast.QlAstBuilder;
 import org.uva.taxfree.ql.gui.MessageList;
-import org.uva.taxfree.ql.gui.QlsForm;
 import org.uva.taxfree.ql.gui.QuestionForm;
 import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
@@ -48,13 +47,13 @@ public class QLSFormTest extends SemanticsTester {
     }
 
     @Test
-    public void TestPages(){
+    public void TestPages() {
         Page p = generatePage();
         Assert.assertTrue(p.contains("likesToPayTaxes"), "Page contains the question");
         Assert.assertFalse(p.contains("someUnknownQuestion"), "Page does not contain this question");
     }
 
-    private Page generatePage(){
+    private Page generatePage() {
         return new Page("Taxes", generateSections(), generateDefaultStyles(), generateSourceInfo());
     }
 
@@ -64,7 +63,7 @@ public class QLSFormTest extends SemanticsTester {
         return sections;
     }
 
-    private List<DefaultStyle> generateDefaultStyles(){
+    private List<DefaultStyle> generateDefaultStyles() {
         List<DefaultStyle> defaultStyles = new ArrayList<>();
         defaultStyles.add(new DefaultStyle(new BooleanType(), generateStyleOptions(), generateSourceInfo()));
         return defaultStyles;
@@ -109,6 +108,11 @@ public class QLSFormTest extends SemanticsTester {
     @Test
     public void testSemantics_oneQuestionDefaultStyle() throws Exception {
         assertSemantics("OneQuestionDefaultStyle.txfrm", 0, "Qls should not contain errors");
+    }
+
+    @Test
+    public void testSemantics_duplicateAssignment() throws Exception {
+        assertSemantics("DuplicateAssignment.txfrm", 3, "Assigning questions multiple times yields errors");
     }
 
     private void createQls(String taxFile, MessageList messageList) {

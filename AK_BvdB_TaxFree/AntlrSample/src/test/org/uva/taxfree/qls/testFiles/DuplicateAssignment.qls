@@ -1,0 +1,16 @@
+stylesheet OurTaxFreeSolution {
+  page Taxes {
+    section "Meta" {
+        question likesToPayTaxes widget checkbox
+        question likesToPayTaxes widget spinbox
+    }
+  }
+  page Income {
+    section "Beta" {
+        question likesToPayTaxes widget radio ( "yes" , "no" )
+    }
+    section "Gamma" {
+        question likesToPayTaxes widget text
+    }
+  }
+}
