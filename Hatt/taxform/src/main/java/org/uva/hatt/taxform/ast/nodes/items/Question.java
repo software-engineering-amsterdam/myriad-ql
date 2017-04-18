@@ -1,48 +1,43 @@
 package org.uva.hatt.taxform.ast.nodes.items;
 
-import org.uva.hatt.taxform.ast.nodes.ASTNode;
 import org.uva.hatt.taxform.ast.nodes.types.ValueType;
 
-public class Question extends ASTNode implements Item{
+public class Question extends Item{
 
-    private String question;
-    private String value;
-    private ValueType type;
+    private final String label;
+    private final String identifier;
+    private final ValueType type;
 
-    public Question(int lineNumber) {
+    public Question(int lineNumber, String label, String identifier, ValueType type) {
         super(lineNumber);
+        this.label = label;
+        this.identifier = identifier;
+        this.type = type;
     }
 
-    public String getQuestion() {
-        return question;
+    public String getLabel() {
+        return label;
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
+    public String getIdentifier() {
+        return identifier;
     }
 
     public ValueType getType() {
         return type;
     }
 
-    public void setType(ValueType type) {
-        this.type = type;
-    }
-
     @Override
     public String toString() {
         return "Question{" +
-                "question='" + question + '\'' +
-                ", value='" + value + '\'' +
+                "label='" + label + '\'' +
+                ", identifier='" + identifier + '\'' +
                 ", type='" + type + '\'' +
                 '}';
+    }
+
+    @Override
+    public <T> T accept(ItemVisitor<T> visitor){
+        return visitor.visit(this);
     }
 }

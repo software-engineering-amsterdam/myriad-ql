@@ -20,6 +20,11 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.fxmisc.richtext</groupId>
+            <artifactId>richtextfx</artifactId>
+            <version>0.7-M3</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -38,7 +43,7 @@
                 <artifactId>antlr4-maven-plugin</artifactId>
                 <version>4.6</version>
                 <configuration>
-                    <sourceDirectory>${basedir}/src/main/java/org/uva/hatt/taxform/grammars</sourceDirectory>
+                    <sourceDirectory>src/main/java/org/uva/hatt/taxform/parsing</sourceDirectory>
                     <visitor>true</visitor>
                 </configuration>
                 <executions>
