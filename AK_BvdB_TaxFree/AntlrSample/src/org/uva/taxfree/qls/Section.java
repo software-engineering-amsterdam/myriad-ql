@@ -5,9 +5,8 @@ import org.uva.taxfree.ql.gui.widgets.Widget;
 import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class Section {
     private final String mName;
@@ -23,20 +22,20 @@ public class Section {
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
         for (QuestionStyle question : mQuestionStyles) {
             if (!symbolTable.contains(question.getId())) {
-                semanticsMessages.addWarning(question.sourceInfo() +" Undeclared identifier, section: " + mName + ", question: " + question.getId());
+                semanticsMessages.addWarning(mSourceInfo.sourceString() + ", section: " + mName + ", Undeclared identifier: " + question.sourceInfo() + " " + question.getId());
             }
         }
     }
 
-    protected Set<String> getUsedVariables() {
-        Set<String> usedVariables = new HashSet<>();
+    protected List<String> getUsedVariables() {
+        List<String> usedVariables = new ArrayList<>();
         for (QuestionStyle questionStyle : mQuestionStyles) {
             usedVariables.add(questionStyle.getId());
         }
         return usedVariables;
     }
 
-    public String getName() {
+    protected String getName() {
         return mName;
     }
 
