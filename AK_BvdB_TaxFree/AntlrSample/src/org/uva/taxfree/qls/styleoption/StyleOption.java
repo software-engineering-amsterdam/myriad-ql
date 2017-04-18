@@ -17,4 +17,9 @@ public abstract class StyleOption {
     public boolean supports(Type supportedType) {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName();
+    }
 }
