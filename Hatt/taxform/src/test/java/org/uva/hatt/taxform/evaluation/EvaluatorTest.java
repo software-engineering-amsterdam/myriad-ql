@@ -18,7 +18,7 @@ public class EvaluatorTest {
 
     @Before
     public void setUp() throws Exception {
-        evaluator = new Evaluator(new EnvironmentsTable());
+        evaluator = new Evaluator(new Environment());
     }
 
     @Test

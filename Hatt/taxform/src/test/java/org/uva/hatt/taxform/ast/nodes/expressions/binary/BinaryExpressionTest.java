@@ -14,7 +14,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
 
-public class BooleanExpressionTest {
+public class BinaryExpressionTest {
 
     @Test
     public void testAddition() throws IOException {

@@ -3,7 +3,7 @@ package org.uva.hatt.taxform.ast.nodes.items;
 import org.junit.Test;
 import org.uva.hatt.taxform.parsing.ASTGenerator;
 import org.uva.hatt.taxform.ast.nodes.Form;
-import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
+import org.uva.hatt.taxform.ast.nodes.expressions.BinaryExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.binary.Addition;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
@@ -52,7 +52,7 @@ public class ComputedQuestionTest {
         ComputedQuestion question = (ComputedQuestion) questions.get(0);
 
         assertThat(question.getType(), instanceOf(Boolean.class));
-        assertThat(question.getComputedValue(), instanceOf(BooleanExpression.class));
+        assertThat(question.getComputedValue(), instanceOf(BinaryExpression.class));
     }
 
     @Test

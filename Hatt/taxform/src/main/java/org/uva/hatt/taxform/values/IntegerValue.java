@@ -1,6 +1,6 @@
 package org.uva.hatt.taxform.values;
 
-public class IntegerValue extends Value<Integer> {
+public class IntegerValue extends Value {
 
     private final int value;
 

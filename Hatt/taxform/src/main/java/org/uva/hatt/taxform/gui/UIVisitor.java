@@ -5,7 +5,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.uva.hatt.taxform.ast.nodes.Form;
-import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
+import org.uva.hatt.taxform.ast.nodes.expressions.BinaryExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
@@ -19,7 +19,7 @@ import org.uva.hatt.taxform.ast.nodes.types.Boolean;
 import org.uva.hatt.taxform.ast.nodes.types.Integer;
 import org.uva.hatt.taxform.ast.nodes.types.*;
 import org.uva.hatt.taxform.ast.nodes.types.String;
-import org.uva.hatt.taxform.evaluation.EnvironmentsTable;
+import org.uva.hatt.taxform.evaluation.Environment;
 import org.uva.hatt.taxform.ast.nodes.FormVisitor;
 import org.uva.hatt.taxform.evaluation.Evaluator;
 import org.uva.hatt.taxform.gui.fields.*;
@@ -32,11 +32,11 @@ import java.util.stream.Collectors;
 public class UIVisitor implements FormVisitor<Pane> {
 
     private final Stage stage;
-    private final EnvironmentsTable environmentsTable;
+    private final Environment environmentsTable;
     private Form form;
     private final Evaluator evaluator;
 
-    UIVisitor(Stage stage, EnvironmentsTable environmentsTable) {
+    UIVisitor(Stage stage, Environment environmentsTable) {
         this.stage = stage;
         this.environmentsTable = environmentsTable;
         evaluator = new Evaluator(environmentsTable);
@@ -157,7 +157,7 @@ public class UIVisitor implements FormVisitor<Pane> {
     }
 
     @Override
-    public Pane visit(BooleanExpression node) {
+    public Pane visit(BinaryExpression node) {
         return null;
     }
 

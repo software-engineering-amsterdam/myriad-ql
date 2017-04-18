@@ -12,11 +12,11 @@ import javafx.stage.Stage;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.uva.hatt.taxform.ast.nodes.Form;
 import org.uva.hatt.taxform.ast.nodes.FormVisitor;
-import org.uva.hatt.taxform.evaluation.EnvironmentsTable;
+import org.uva.hatt.taxform.evaluation.Environment;
 import org.uva.hatt.taxform.parsing.ASTBuilder;
 import org.uva.hatt.taxform.parsing.ASTGenerator;
 import org.uva.hatt.taxform.typechecker.SemanticAnalyzer;
-import org.uva.hatt.taxform.typechecker.messages.Message;
+import org.uva.hatt.taxform.typechecker.messages.Messages;
 
 import java.io.IOException;
 
@@ -57,32 +57,32 @@ public class TaxForm extends Application {
         Form form = createForm(qlEditor);
 
         SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer();
-        Message message = semanticAnalyzer.analyze(form);
+        Messages messages = semanticAnalyzer.analyze(form);
 
-        if (message.getErrors().isEmpty()) {
+        if (messages.getErrors().isEmpty()) {
 
-            if (!message.getWarnings().isEmpty()) {
-                showWarningDialog(stage, message);
+            if (!messages.getWarnings().isEmpty()) {
+                showWarningDialog(stage, messages);
             }
 
-            EnvironmentsTable environmentsTable = new EnvironmentsTable();
+            Environment environmentsTable = new Environment();
             FormVisitor uiVisitor = new UIVisitor(stage, environmentsTable);
             uiVisitor.visit(form);
 
             stage.show();
         } else {
-            showErrorDialog(stage, message);
+            showErrorDialog(stage, messages);
         }
     }
 
-    private void showWarningDialog(Stage stage, Message message) {
+    private void showWarningDialog(Stage stage, Messages messages) {
         Stage dialog = new Stage();
         dialog.initModality(Modality.NONE);
         dialog.initOwner(stage);
 
         VBox dialogVbox = new VBox(10);
 
-        message.getWarnings().forEach(error -> dialogVbox.getChildren().add(new Text(error.getMessage())));
+        messages.getWarnings().forEach(error -> dialogVbox.getChildren().add(new Text(error.getMessage())));
 
         Scene dialogScene = new Scene(dialogVbox, 450, 300);
 
@@ -90,14 +90,14 @@ public class TaxForm extends Application {
         dialog.show();
     }
 
-    private void showErrorDialog(Stage stage, Message message) {
+    private void showErrorDialog(Stage stage, Messages messages) {
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(stage);
 
         VBox dialogVbox = new VBox(10);
 
-        message.getErrors().forEach(error -> dialogVbox.getChildren().add(new Text(error.getMessage())));
+        messages.getErrors().forEach(error -> dialogVbox.getChildren().add(new Text(error.getMessage())));
 
         Scene dialogScene = new Scene(dialogVbox, 450, 300);
 

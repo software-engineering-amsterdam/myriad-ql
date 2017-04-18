@@ -6,7 +6,7 @@ import org.uva.hatt.taxform.values.Value;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EnvironmentsTable {
+public class Environment {
 
     private final Map<String, Value> values = new HashMap<>();
 

@@ -1,7 +1,7 @@
 package org.uva.hatt.taxform.typechecker;
 
 import org.uva.hatt.taxform.ast.nodes.Form;
-import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
+import org.uva.hatt.taxform.ast.nodes.expressions.BinaryExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.binary.*;
@@ -17,19 +17,19 @@ import org.uva.hatt.taxform.ast.nodes.types.String;
 import org.uva.hatt.taxform.ast.nodes.expressions.ExpressionVisitor;
 import org.uva.hatt.taxform.ast.nodes.FormVisitor;
 import org.uva.hatt.taxform.typechecker.messages.error.*;
-import org.uva.hatt.taxform.typechecker.messages.Message;
+import org.uva.hatt.taxform.typechecker.messages.Messages;
 import org.uva.hatt.taxform.typechecker.messages.warning.DuplicateLabel;
 
 import java.util.*;
 
 public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
 
-    private final Message message;
+    private final Messages messages;
     private final List<java.lang.String> questions = new ArrayList<>();
     private final Map<java.lang.String, IdentifierInput> declarations = new HashMap<>();
 
-    TypeChecker(Message message) {
-        this.message = message;
+    TypeChecker(Messages messages) {
+        this.messages = messages;
     }
 
     @Override
@@ -44,11 +44,11 @@ public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
     @Override
     public Question visit(Question node) {
         if (declarations.containsKey(node.getValue())) {
-            message.addError(new DuplicateDeclaration(node.getLineNumber(), node.getValue()));
+            messages.addError(new DuplicateDeclaration(node.getLineNumber(), node.getValue()));
         }
 
         if (questions.contains(node.getQuestion().toLowerCase())) {
-            message.addWarning(new DuplicateLabel(node.getLineNumber(), node.getQuestion()));
+            messages.addWarning(new DuplicateLabel(node.getLineNumber(), node.getQuestion()));
         }
 
         declarations.put(node.getValue(), new IdentifierInput(node.getType()));
@@ -59,11 +59,11 @@ public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
     @Override
     public ComputedQuestion visit(ComputedQuestion computedQuestion) {
         if (declarations.containsKey(computedQuestion.getValue())) {
-            message.addError(new DuplicateDeclaration(computedQuestion.getLineNumber(), computedQuestion.getValue()));
+            messages.addError(new DuplicateDeclaration(computedQuestion.getLineNumber(), computedQuestion.getValue()));
         }
 
         if (questions.contains(computedQuestion.getQuestion().toLowerCase())) {
-            message.addWarning(new DuplicateLabel(computedQuestion.getLineNumber(), computedQuestion.getQuestion()));
+            messages.addWarning(new DuplicateLabel(computedQuestion.getLineNumber(), computedQuestion.getQuestion()));
         }
 
         declarations.put(computedQuestion.getValue(), new IdentifierInput(computedQuestion.getType()));
@@ -102,7 +102,7 @@ public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
         ValueType type = expression.accept(this);
 
         if (!type.isBoolean()) {
-            message.addError(new TypeMismatch(line, type.name()));
+            messages.addError(new TypeMismatch(line, type.name()));
         }
     }
 
@@ -132,7 +132,7 @@ public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
     }
 
     @Override
-    public BooleanExpression visit(BooleanExpression node) {
+    public BinaryExpression visit(BinaryExpression node) {
         return null;
     }
 
@@ -147,7 +147,7 @@ public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
             return declarations.get(identifier.getValue()).getType();
         }
 
-        message.addError(new UndefinedReference(identifier.getLineNumber(), identifier.getValue()));
+        messages.addError(new UndefinedReference(identifier.getLineNumber(), identifier.getValue()));
         return new Unknown();
     }
 
@@ -245,7 +245,7 @@ public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
             return expectedType;
         }
 
-        message.addError(new InvalidOperandsTypeToOperator(logicalAnd.getLineNumber(), "Logical AND"));
+        messages.addError(new InvalidOperandsTypeToOperator(logicalAnd.getLineNumber(), "Logical AND"));
         return new Unknown();
     }
 
@@ -257,7 +257,7 @@ public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
             return expectedType;
         }
 
-        message.addError(new InvalidOperandsTypeToOperator(logicalOr.getLineNumber(), "Logical OR"));
+        messages.addError(new InvalidOperandsTypeToOperator(logicalOr.getLineNumber(), "Logical OR"));
         return new Unknown();
     }
 
@@ -287,7 +287,7 @@ public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
         return validateNumericType(subtraction, "Subtraction");
     }
 
-    private ValueType validateNumericType(BooleanExpression expression, java.lang.String operationName) {
+    private ValueType validateNumericType(BinaryExpression expression, java.lang.String operationName) {
 
         if (!validateBinaryExpression(expression, new Integer(0)).name().equals(new Unknown().name())) {
             return new Integer(0);
@@ -296,12 +296,12 @@ public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
             return new Money(0);
         }
 
-        message.addError(new InvalidOperandsTypeToOperator(expression.getLineNumber(), operationName));
+        messages.addError(new InvalidOperandsTypeToOperator(expression.getLineNumber(), operationName));
 
         return new Unknown();
     }
 
-    private ValueType validateBinaryExpression(BooleanExpression expression, ValueType expectedType) {
+    private ValueType validateBinaryExpression(BinaryExpression expression, ValueType expectedType) {
         ValueType leftType = expression.getLhs().accept(this);
         ValueType rightType = expression.getRhs().accept(this);
 

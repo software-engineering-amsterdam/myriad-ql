@@ -1,24 +1,24 @@
 package org.uva.hatt.taxform.typechecker;
 
 import org.uva.hatt.taxform.ast.nodes.Form;
-import org.uva.hatt.taxform.typechecker.messages.Message;
+import org.uva.hatt.taxform.typechecker.messages.Messages;
 
 public class SemanticAnalyzer {
 
-    private final Message message;
+    private final Messages messages;
     private final TypeChecker typeChecker;
     private final CircularDependencyChecker circularDependencyChecker;
 
     public SemanticAnalyzer() {
-        this.message = new Message();
-        this.typeChecker = new TypeChecker(message);
-        this.circularDependencyChecker = new CircularDependencyChecker(message);
+        this.messages = new Messages();
+        this.typeChecker = new TypeChecker(messages);
+        this.circularDependencyChecker = new CircularDependencyChecker(messages);
     }
 
-    public Message analyze(Form form) {
+    public Messages analyze(Form form) {
         typeChecker.visit(form);
         circularDependencyChecker.visit(form);
 
-        return message;
+        return messages;
     }
 }

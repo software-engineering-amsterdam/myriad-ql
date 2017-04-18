@@ -1,6 +1,6 @@
 package org.uva.hatt.taxform.ast.nodes;
 
-import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
+import org.uva.hatt.taxform.ast.nodes.expressions.BinaryExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
 import org.uva.hatt.taxform.ast.nodes.items.*;
@@ -24,7 +24,7 @@ public interface FormVisitor<T> {
     T visit(Money node);
     T visit(String node);
     T visit(ValueType node);
-    T visit(BooleanExpression node);
+    T visit(BinaryExpression node);
     T visit(GroupedExpression node);
     T visit(Identifier identifier);
     T visit(StringerLiteral stringerLiteral);

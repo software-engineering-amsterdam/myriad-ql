@@ -1,7 +1,7 @@
 package org.uva.hatt.taxform.evaluation;
 
 import org.uva.hatt.taxform.ast.nodes.Form;
-import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
+import org.uva.hatt.taxform.ast.nodes.expressions.BinaryExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.binary.*;
@@ -24,11 +24,11 @@ import org.uva.hatt.taxform.values.IntegerValue;
 import org.uva.hatt.taxform.values.StringValue;
 import org.uva.hatt.taxform.values.Value;
 
-public class Evaluator implements FormVisitor<Value>, ExpressionVisitor<Value>{
+public class Evaluator implements FormVisitor<Value>, ExpressionVisitor<Value> {
 
-    private final EnvironmentsTable environmentsTable;
+    private final Environment environmentsTable;
 
-    public Evaluator(EnvironmentsTable environmentsTable) {
+    public Evaluator(Environment environmentsTable) {
         this.environmentsTable = environmentsTable;
     }
 
@@ -83,12 +83,14 @@ public class Evaluator implements FormVisitor<Value>, ExpressionVisitor<Value>{
     }
 
     @Override
-    public Value visit(BooleanExpression node) {
+    public Value visit(BinaryExpression node) {
         return node.accept(this);
     }
 
     @Override
-    public Value visit(GroupedExpression node) { return node.getExpression().accept(this); }
+    public Value visit(GroupedExpression node) {
+        return node.getExpression().accept(this);
+    }
 
     @Override
     public Value visit(Identifier identifier) {

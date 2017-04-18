@@ -3,7 +3,7 @@ package org.uva.hatt.taxform.gui.fields;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
-import org.uva.hatt.taxform.evaluation.EnvironmentsTable;
+import org.uva.hatt.taxform.evaluation.Environment;
 import org.uva.hatt.taxform.gui.ChangeListener;
 import org.uva.hatt.taxform.values.BooleanValue;
 import org.uva.hatt.taxform.values.Value;
@@ -26,7 +26,7 @@ public class QLCheckBox extends Field {
     }
 
     @Override
-    public void update(EnvironmentsTable environmentsTable) {
+    public void update(Environment environmentsTable) {
         environmentsTable.add(getIdentifier(), new BooleanValue(checkBox.isSelected()));
     }
 

@@ -1,7 +1,7 @@
 package org.uva.hatt.taxform.typechecker;
 
 import org.uva.hatt.taxform.ast.nodes.Form;
-import org.uva.hatt.taxform.ast.nodes.expressions.BooleanExpression;
+import org.uva.hatt.taxform.ast.nodes.expressions.BinaryExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.binary.*;
@@ -19,7 +19,7 @@ import org.uva.hatt.taxform.ast.nodes.types.Integer;
 import org.uva.hatt.taxform.ast.nodes.types.String;
 import org.uva.hatt.taxform.ast.nodes.expressions.ExpressionVisitor;
 import org.uva.hatt.taxform.ast.nodes.FormVisitor;
-import org.uva.hatt.taxform.typechecker.messages.Message;
+import org.uva.hatt.taxform.typechecker.messages.Messages;
 import org.uva.hatt.taxform.typechecker.messages.error.CyclicDependency;
 
 import java.util.*;
@@ -27,11 +27,11 @@ import java.util.*;
 public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor<Set<String>> {
 
     private final Map<java.lang.String, List<java.lang.String>> dependencies;
-    private final Message message;
+    private final Messages messages;
     private Question question;
 
-    CircularDependencyChecker(Message message){
-        this.message = message;
+    CircularDependencyChecker(Messages messages){
+        this.messages = messages;
         dependencies = new HashMap<>();
     }
 
@@ -211,7 +211,7 @@ public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor
     }
 
     @Override
-    public Set<String> visit(BooleanExpression node) {
+    public Set<String> visit(BinaryExpression node) {
         node.getLhs().accept(this);
         node.getRhs().accept(this);
 
@@ -263,7 +263,7 @@ public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor
 
         for (java.lang.String dependency : dependencies) {
             if (isCircularDependency(getDependencies(dependency))) {
-                message.addError(new CyclicDependency(question.getLineNumber(), question.getValue(), dependency));
+                messages.addError(new CyclicDependency(question.getLineNumber(), question.getValue(), dependency));
             }
         }
     }

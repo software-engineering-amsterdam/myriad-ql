@@ -1,6 +1,6 @@
 package org.uva.hatt.taxform.values;
 
-public class BooleanValue extends Value<Boolean> {
+public class BooleanValue extends Value {
 
     private final boolean value;
 

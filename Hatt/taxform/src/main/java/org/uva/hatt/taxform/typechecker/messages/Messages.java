@@ -6,11 +6,12 @@ import org.uva.hatt.taxform.typechecker.messages.error.Error;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Message {
+public class Messages {
+
     private final List<Warning> warnings;
     private final List<Error> errors;
 
-    public Message(){
+    public Messages(){
         warnings = new ArrayList<>();
         errors = new ArrayList<>();
     }

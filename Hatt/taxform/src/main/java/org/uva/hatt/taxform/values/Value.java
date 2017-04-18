@@ -1,8 +1,8 @@
 package org.uva.hatt.taxform.values;
 
-public abstract class Value<T> {
+public abstract class Value {
 
-    public abstract T getValue();
+    public abstract Object getValue();
 
     public abstract boolean isUndefined();
 
