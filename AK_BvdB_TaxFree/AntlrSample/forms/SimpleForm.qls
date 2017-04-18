@@ -1,4 +1,14 @@
 stylesheet OurTaxFreeSolution {
+  page Expenses {
+    section "Car" {
+
+    }
+    section "Insurance" {
+        question noTax {
+            widget : spinbox
+        }
+    }
+  }
   page Taxes {
     section "Booleans" {
         question noTax {
