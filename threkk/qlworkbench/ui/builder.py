@@ -77,7 +77,7 @@ class Builder(object):
         value = variable.type.create_variable()
         field = variable.type.init_field(self, value)
 
-        value.trace('w', lambda *args: self.__tracer(variable))
+        value.trace('w', lambda *args: self.__emit_event(variable))
         ui = {'field': field, 'label': label}
 
         self.elements.append(ui)
@@ -94,7 +94,7 @@ class Builder(object):
         value = variable.type.create_variable()
         field = variable.type.init_field(self, value, assignation=True)
 
-        value.trace('w', lambda *args: self.__tracer(variable))
+        value.trace('w', lambda *args: self.__emit_event(variable))
         ui = {'field': field, 'label': label}
 
         self.elements.append(ui)
@@ -122,7 +122,7 @@ class Builder(object):
         self.root.grab_set_global()
         self.root.mainloop()
 
-    def __tracer(self, variable):
+    def __emit_event(self, variable):
         """
         The tracer is attached to every pair input-variable to update the
         values of the register once it is updated. It updates the variable and
