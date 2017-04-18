@@ -5,13 +5,10 @@
 ### Getting started
 QL is tested on ruby '2.3.0'. Please run `bundle install` before you continue.
 
-### How do I run QL?
+### How do I run?
 ```ruby
 $ bundle exec ruby main.rb
 ```
-
-### How do I run QLS?
-Not yet...
 
 ### How do I run the test suite?
 ```ruby
@@ -79,8 +76,8 @@ stylesheet taxOfficeExample
     default boolean widget radio("Yes", "No")
   }
 ```
-
-precedence eval van expressions
+<!---
+ precedence eval van expressions
 
 ql parser
 integer negation  is type checking dus hoeft hier niet
@@ -144,3 +141,4 @@ is geen ast gedoe
 ast
 computed question
 
+--->

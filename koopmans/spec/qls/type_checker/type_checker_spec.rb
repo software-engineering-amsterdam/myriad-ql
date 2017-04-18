@@ -7,7 +7,7 @@ require_all 'lib'
 module QLS
   module TypeChecker
     include QL::AST
-    include QLS::AST
+    include AST
 
     describe TypeChecker do
       let(:notification_messages) do
@@ -17,6 +17,7 @@ module QLS
 
       describe 'questions placed checker' do
         it 'does detect unplaced questions' do
+          print(notification_messages)
           expect(notification_messages).to include('undefined of the QL program is not placed by the QLS program.')
         end
       end
@@ -41,7 +42,8 @@ module QLS
 
       # example stylesheet with errors
       def generate_stylesheet
-        question = Question.new(Variable.new('hasSoldHouse'), [SliderWidget.new(0, 10)])
+        print WidgetOptions.new(0, 10)
+        question = Question.new(Variable.new('hasSoldHouse'), [SliderWidget.new(WidgetOptions.new(0, 10))])
         question_2 = Question.new(Variable.new('valueResidue'), [CheckboxWidget.new])
         section = Section.new('_', [question, question_2, question_2])
         page = Page.new('_', [section])
