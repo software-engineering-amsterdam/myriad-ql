@@ -11,9 +11,6 @@ stylesheet OurTaxFreeSolution {
   }
   page Taxes {
     section "Booleans" {
-        question noTax {
-          widget : checkbox
-        }
         question muchTax {
             widget : radio ( "giveMe" , "iPay" )
         }
