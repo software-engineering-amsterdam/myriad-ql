@@ -3,7 +3,7 @@ module QL
     class QuestionFrame
       include Callback
       attr_reader :name, :enabled, :condition
-      attr_accessor :widget, :tk_frame
+      attr_accessor :widget, :tk_frame, :label
 
       def initialize(args)
         @name = args[:name]

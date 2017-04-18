@@ -1,0 +1,3 @@
+#<QL::GUI::Label:0x007feacf5dc840> false
+#<QL::GUI::Label:0x007fead0c3e480> false
+#<QL::GUI::Label:0x007fead0c3dd78> false

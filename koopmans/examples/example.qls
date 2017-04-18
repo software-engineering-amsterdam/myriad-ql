@@ -12,6 +12,7 @@ stylesheet taxOfficeExample
       question hasSoldHouse
         widget radio("Ye2s", "No")
         width: 100
+        font: "Georgia"
       section "You sold a house" {
         question sellingPrice
           widget text
@@ -20,8 +21,8 @@ stylesheet taxOfficeExample
         question valueResidue
         default money {
           width: 400
-          font: "Arial" 
-          fontsize: 14
+          font: "Arial"
+          fontsize: 17
           color: #999999
           widget spinbox
         }        

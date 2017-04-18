@@ -67,11 +67,17 @@ module QLS
         @styles[parent_id].width = width.value.value
       end
 
-      def visit_font(width, parent_id) end
+      def visit_font(font, parent_id)
+        @styles[parent_id].font = font.value.value
+      end
 
-      def visit_fontsize(width, parent_id) end
+      def visit_fontsize(fontsize, parent_id)
+        @styles[parent_id].fontsize = fontsize.value.value
+      end
 
-      def visit_color(width, parent_id) end
+      def visit_color(color, parent_id)
+        @styles[parent_id].color = color.value.value
+      end
 
       def try_visit_widget_options(widget)
         return unless widget.widget_options

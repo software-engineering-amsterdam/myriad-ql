@@ -16,28 +16,16 @@ module QLS
       def apply_styles
         return unless @question_frame_styles
 
-        normal_question_frames.each do |question_frame|
-          style = @question_frame_styles[question_frame.name]
-          next unless style
-          apply_widget(question_frame, style.widget)
-          apply_width(question_frame, style.width)
+        @gui.question_frames.map! do |question_frame|
+          question_frame = QuestionFrameWithStyle.new(question_frame)
+          style = find_style(question_frame)
+          question_frame.apply_style(style)
+          question_frame
         end
       end
 
-      def apply_widget(question_frame, widget)
-        return unless widget
-        question_frame.widget = widget
-      end
-
-      def apply_width(question_frame, width)
-        return unless width
-        question_frame.tk_frame.padx = width/2
-      end
-
-      def normal_question_frames
-        question_frames.each.select do |question_frame|
-          question_frame.class == QL::GUI::QuestionFrame
-        end
+      def find_style(question_frame)
+        @question_frame_styles[question_frame.name]
       end
     end
   end
