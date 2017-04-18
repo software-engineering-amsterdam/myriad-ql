@@ -1,6 +1,8 @@
 package org.uva.taxfree.qls;
 
+import org.uva.taxfree.ql.gui.MessageList;
 import org.uva.taxfree.ql.model.SourceInfo;
+import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.qls.styleoption.StyleOption;
 
 import java.util.List;
@@ -14,7 +16,12 @@ public class QuestionStyle extends StyleDeclaration {
         mQuestionId = questionId;
     }
 
+    public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
+        checkSemantics(symbolTable.resolveType(mQuestionId), semanticsMessages);
+    }
+
     protected String getId() {
         return mQuestionId;
     }
+
 }

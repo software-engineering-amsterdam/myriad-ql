@@ -4,7 +4,6 @@ import org.uva.taxfree.ql.gui.MessageList;
 import org.uva.taxfree.ql.gui.widgets.Widget;
 import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
-import org.uva.taxfree.ql.model.types.Type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +24,7 @@ public class Section {
             if (!symbolTable.contains(question.getId())) {
                 semanticsMessages.addWarning(mSourceInfo.sourceString() + ", section: " + mName + ", Undeclared identifier: " + question.sourceInfo() + " " + question.getId());
             } else {
-                Type questionType = symbolTable.resolveType(question.getId());
-                if (!question.supports(questionType)) {
-                    semanticsMessages.addError(mSourceInfo.sourceString() + "section: " + mName + ", Invalid type assigned: " + question.sourceInfo() + " " + question.getId() + " does not support " + questionType);
-                }
+                question.checkSemantics(symbolTable, semanticsMessages);
             }
         }
     }

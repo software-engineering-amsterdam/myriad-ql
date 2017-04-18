@@ -1,5 +1,6 @@
 package org.uva.taxfree.qls;
 
+import org.uva.taxfree.ql.gui.MessageList;
 import org.uva.taxfree.ql.gui.widgets.Widget;
 import org.uva.taxfree.ql.model.SourceInfo;
 import org.uva.taxfree.ql.model.types.Type;
@@ -27,6 +28,13 @@ public class StyleDeclaration {
         return mSourceInfo.sourceString();
     }
 
+    protected void checkSemantics(Type supportedType, MessageList semanticsMessages) {
+        for (StyleOption styleOption : mStyleOptions) {
+            if (!styleOption.supports(supportedType)) {
+                semanticsMessages.addError(mSourceInfo.sourceString() + " " + styleOption + " does not support type " + supportedType);
+            }
+        }
+    }
 
     protected boolean supports(Type supportedType) {
         for (StyleOption styleOption : mStyleOptions) {
