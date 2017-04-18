@@ -47,8 +47,8 @@ public class Page {
         return sections;
     }
 
-    public Set<String> getUsedVariables() {
-        Set<String> usedVariables = new HashSet<>();
+    public List<String> getUsedVariables() {
+        List<String> usedVariables = new ArrayList<>();
         for (Section section : mSections) {
             usedVariables.addAll(section.getUsedVariables());
         }
@@ -58,7 +58,6 @@ public class Page {
     void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
         checkDefaultStyles(semanticsMessages);
         checkUndeclaredIdentifiers(symbolTable, semanticsMessages);
-        checkMissingIdentifiers(symbolTable, semanticsMessages);
     }
 
     private void checkDefaultStyles(MessageList semanticsMessages) {
@@ -73,14 +72,6 @@ public class Page {
     private void checkUndeclaredIdentifiers(SymbolTable symbolTable, MessageList semanticsMessages) {
         for (Section section : mSections) {
             section.checkSemantics(symbolTable, semanticsMessages);
-        }
-    }
-
-    private void checkMissingIdentifiers(SymbolTable symbolTable, MessageList semanticsMessages) {
-        Set<String> missingVariables = symbolTable.getUsedVariables();
-        missingVariables.removeAll(getUsedVariables());
-        for (String variable : missingVariables) {
-            semanticsMessages.addError(mSourceInfo.sourceString() + "Question is not assigned to section: " + variable);
         }
     }
 

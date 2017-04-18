@@ -7,6 +7,7 @@ import org.uva.taxfree.ql.model.types.Type;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class QlsStyle {
     private final List<Page> mPages;
@@ -24,13 +25,27 @@ public class QlsStyle {
     }
 
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
+        checkMissingIdentifiers(symbolTable, semanticsMessages);
         for (Page page : mPages) {
             page.checkSemantics(symbolTable, semanticsMessages);
         }
     }
 
+    private void checkMissingIdentifiers(SymbolTable symbolTable, MessageList semanticsMessages) {
+        Set<String> declaredQuestions = symbolTable.getUsedVariables();
+        for (Page page : mPages) {
+            for (String pageQuestion : page.getUsedVariables()) {
+                if (!declaredQuestions.remove(pageQuestion)) {
+                    semanticsMessages.addError("page " + page.getName() + ", question assigned multiple times: " + pageQuestion);
+                }
+            }
+        }
+        for (String questionName : declaredQuestions) {
+            semanticsMessages.addError("Unassigned question: " + questionName);
+        }
+    }
 
-    public List<String> getPageNames() {
+    protected List<String> getPageNames() {
         List<String> pageNames = new ArrayList<>();
         for (Page page : mPages) {
             pageNames.add(page.getName());
@@ -38,7 +53,7 @@ public class QlsStyle {
         return pageNames;
     }
 
-    public List<String> getSectionNames(String pageName) {
+    protected List<String> getSectionNames(String pageName) {
         for (Page page : mPages) {
             if (pageName.equals(page.getName())) {
                 return page.getSectionNames();
