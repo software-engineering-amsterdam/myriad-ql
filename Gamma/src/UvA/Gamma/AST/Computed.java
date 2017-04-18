@@ -57,8 +57,12 @@ public class Computed extends IdentifiableFormItem {
         this.stringValue.setValue(expression.value().toString());
     }
 
-
     public StringProperty getStringValueProperty() {
         return stringValue;
+    }
+
+    @Override
+    public String toString() {
+        return "<Computed> " + this.identifier + " = " + expression;
     }
 }

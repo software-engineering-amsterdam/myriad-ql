@@ -2,6 +2,7 @@ package UvA.Gamma.AST;
 
 import UvA.Gamma.AST.Expression.Expression;
 import UvA.Gamma.AST.Expression.Values.BooleanValue;
+import UvA.Gamma.AST.Types.BooleanType;
 import UvA.Gamma.Visitors.Visitor;
 import javafx.scene.layout.GridPane;
 
@@ -62,6 +63,10 @@ public class Condition implements FormItem {
         elseBlockItems.forEach(item -> item.idChanged(root, changed, value));
     }
 
+    public boolean validateType() {
+        return this.expression.value().conformsToType(new BooleanType());
+    }
+
     @Override
     public void accept(Visitor visitor) {
         if (visitor.shouldTraverseRecursive()) {
@@ -86,6 +91,6 @@ public class Condition implements FormItem {
         StringBuilder builder = new StringBuilder();
         thenBlockItems.forEach(builder::append);
         elseBlockItems.forEach(builder::append);
-        return "<Condition>: (" + ")" + builder;
+        return "<Condition>: (" + expression + ") { " + builder + "}";
     }
 }
