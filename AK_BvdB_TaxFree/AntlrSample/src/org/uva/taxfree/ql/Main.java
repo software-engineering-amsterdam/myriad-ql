@@ -5,6 +5,7 @@ import org.uva.taxfree.ql.gui.*;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.blocks.FormNode;
 import org.uva.taxfree.ql.util.FileUtility;
+import org.uva.taxfree.qls.QlsForm;
 import org.uva.taxfree.qls.QlsStyle;
 import org.uva.taxfree.qls.QlsStyleBuilder;
 
