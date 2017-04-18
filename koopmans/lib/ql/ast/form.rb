@@ -1,8 +1,7 @@
 module QL
   module AST
     class Form
-      attr_reader :variable
-      attr_reader :statements
+      attr_reader :variable, :statements
 
       def initialize(variable, statements)
         @variable = variable
