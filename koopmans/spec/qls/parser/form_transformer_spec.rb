@@ -13,13 +13,13 @@ module QLS
       describe 'widgets' do
         context 'spinbox' do
           it 'transforms' do
-            expect(transformer.apply(widget: 'spinbox')).to be_a SpinboxWidget
+            expect(transformer.apply(widget: { spinbox: '_' })).to be_a SpinboxWidget
           end
         end
 
         context 'radio' do
           it 'transforms' do
-            expect(transformer.apply(widget: { radio: { first_value: { string_literal: 'Yes' }, second_value: { string_literal: 'No' } } })).to be_a RadioWidget
+            expect(transformer.apply(widget: { radio: { widget_options: { first_value: { string_literal: 'Yes' }, second_value: { string_literal: 'No' } } }})).to be_a RadioWidget
           end
         end
       end
