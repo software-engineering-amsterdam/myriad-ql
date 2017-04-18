@@ -15,7 +15,7 @@ public class QlsForm extends QuestionForm {
     public QlsForm(String caption, SymbolTable symbolTable, QlsStyle qlsStyle) {
         super(caption, symbolTable);
         mStyle = qlsStyle;
-        mPages = new ArrayList();
+        mPages = new ArrayList<>();
         createPages();
     }
 

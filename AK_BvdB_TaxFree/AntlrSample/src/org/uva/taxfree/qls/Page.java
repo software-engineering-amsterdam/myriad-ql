@@ -7,9 +7,7 @@ import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.types.Type;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Page {
 
@@ -36,7 +34,7 @@ public class Page {
                 return section.getName();
             }
         }
-        throw new RuntimeException("Unknown variable id queried: " + variableId);
+        throw new RuntimeException(mSourceInfo.sourceString() + "Unknown variable id queried: " + variableId);
     }
 
     public List<String> getSectionNames() {
