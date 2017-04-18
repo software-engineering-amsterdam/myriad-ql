@@ -1,0 +1,6 @@
+#<QL::GUI::Label:0x007fa5da39f008> true
+#<QL::GUI::Label:0x007fa5da446ce0> false
+#<QL::GUI::Label:0x007fa5da446510> false
+#<QL::GUI::Label:0x007fa5da445b10> 0
+#<QL::GUI::Label:0x007fa5da444c10> 0
+#<QL::GUI::Label:0x007fa5da446ec0> 0

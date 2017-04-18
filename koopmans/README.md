@@ -79,8 +79,8 @@ stylesheet taxOfficeExample
     default boolean widget radio("Yes", "No")
   }
 ```
-
-precedence eval van expressions
+<!---
+ precedence eval van expressions
 
 ql parser
 integer negation  is type checking dus hoeft hier niet
@@ -144,3 +144,4 @@ is geen ast gedoe
 ast
 computed question
 
+--->
