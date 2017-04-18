@@ -13,12 +13,12 @@ module QLS
 
     def build(filename)
       @content = read_file(filename)
-      @parse_tree = form_parser
-      @ast = form_transformer
-      type_checker
-      @styles = style_collector
-      @question_frame_styles = question_frame_styler
-      @gui = gui_builder
+      @parse_tree = parse_form
+      @ast = transform_form
+      check_types
+      @styles = collect_styles
+      @question_frame_styles = style_question_frame
+      @gui = build_gui
     end
 
     def read_file(file_name)
@@ -28,27 +28,27 @@ module QLS
       'stylesheet _'
     end
 
-    def form_parser
+    def parse_form
       Parser::FormParser.new.parse(content)
     rescue
       NotificationTable.store(Notification::Error.new('Error while creating parse tree'))
       { stylesheet: { id: '_', pages: [] } }
     end
 
-    def form_transformer
+    def transform_form
       Parser::FormTransformer.new.apply(parse_tree)
     rescue
       NotificationTable.store(Notification::Error.new('Error while creating AST'))
       AST::Stylesheet.new('_', [])
     end
 
-    def type_checker
+    def check_types
       TypeChecker::TypeChecker.new.check(ast, ql.ast)
     rescue
       NotificationTable.store(Notification::Error.new('Error while type checking'))
     end
 
-    def style_collector
+    def collect_styles
       style_collector = GUI::StyleCollector.new
       ast.accept(style_collector)
       style_collector.styles
@@ -57,8 +57,8 @@ module QLS
       {}
     end
 
-    def question_frame_styler
-      question_frame_styler = GUI::QuestionFrameStyler.new(styles)
+    def style_question_frame
+      question_frame_styler = GUI::QuestionFrameStyleBuilder.new(styles)
       ast.accept(question_frame_styler)
       question_frame_styler.question_frame_styles
     rescue
@@ -66,7 +66,7 @@ module QLS
       {}
     end
 
-    def gui_builder
+    def build_gui
       gui_with_style = GUI::GUIWithStyle.new(ql.gui)
       gui_with_style.question_frame_styles = question_frame_styles
       gui_with_style

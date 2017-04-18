@@ -19,7 +19,7 @@ module QLS
 
         context 'radio' do
           it 'transforms' do
-            expect(transformer.apply(widget: { radio: { widget_options: { first_value: { string_literal: 'Yes' }, second_value: { string_literal: 'No' } } }})).to be_a RadioWidget
+            expect(transformer.apply(widget: { radio: { widget_options: { first_value: { string_literal: 'Yes' }, second_value: { string_literal: 'No' } } } })).to be_a RadioWidget
           end
         end
       end

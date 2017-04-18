@@ -8,10 +8,10 @@ module QL
 
     def build(filename)
       @content = read_file(filename)
-      @parse_tree = form_parser
-      @ast = form_transformer
-      type_checker
-      @gui = gui_builder
+      @parse_tree = parse_form
+      @ast = transform_form
+      check_types
+      @gui = build_gui
     end
 
     def read_file(file_name)
@@ -21,27 +21,27 @@ module QL
       'form _ {}'
     end
 
-    def form_parser
+    def parse_form
       Parser::FormParser.new.parse(content)
     rescue
       NotificationTable.store(Notification::Error.new('Error while creating parse tree'))
       { form: { id: '_', body: {} } }
     end
 
-    def form_transformer
+    def transform_form
       Parser::FormTransformer.new.apply(parse_tree)
     rescue
       NotificationTable.store(Notification::Error.new('Error while creating AST'))
       AST::Form.new('_', [])
     end
 
-    def type_checker
+    def check_types
       TypeChecker::TypeChecker.new.check(ast)
     rescue
       NotificationTable.store(Notification::Error.new('Error while type checking'))
     end
 
-    def gui_builder
+    def build_gui
       form_builder = GUI::FormBuilder.new
       ast.accept(form_builder)
       GUI::GUI.new(form_builder.question_frames)

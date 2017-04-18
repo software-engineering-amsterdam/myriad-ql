@@ -10,7 +10,7 @@ module QLS
 
       def apply_style(style)
         return unless style
-        return if is_computed_question
+        return if computed_question?
 
         apply_widget(style.widget)
         apply_width(style.width)
@@ -24,7 +24,7 @@ module QLS
 
       def apply_width(width)
         return unless width
-        @question_frame.tk_frame.padx = width/2
+        @question_frame.tk_frame.padx = width / 2
       end
 
       def apply_style_to_label(style)
@@ -32,7 +32,7 @@ module QLS
         @question_frame.label.apply_style(style)
       end
 
-      def is_computed_question
+      def computed_question?
         @question_frame.class == QL::GUI::ComputedQuestionFrame
       end
     end
