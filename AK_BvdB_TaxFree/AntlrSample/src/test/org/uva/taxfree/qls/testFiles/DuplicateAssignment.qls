@@ -2,7 +2,7 @@ stylesheet OurTaxFreeSolution {
   page Taxes {
     section "Meta" {
         question likesToPayTaxes widget checkbox
-        question likesToPayTaxes widget spinbox
+        question likesToPayTaxes widget radio ( "Radio" , "Television" )
     }
   }
   page Income {
@@ -10,7 +10,7 @@ stylesheet OurTaxFreeSolution {
         question likesToPayTaxes widget radio ( "yes" , "no" )
     }
     section "Gamma" {
-        question likesToPayTaxes widget text
+        question likesToPayTaxes widget dropdown ( "isTrue" , "isFalse " )
     }
   }
 }
