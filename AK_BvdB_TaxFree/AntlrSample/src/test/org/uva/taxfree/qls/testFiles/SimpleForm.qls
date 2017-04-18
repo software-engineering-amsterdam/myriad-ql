@@ -2,7 +2,7 @@ stylesheet OurTaxFreeSolution {
   page Taxes {
     section "Meta" {
         question likesToPayTaxes widget checkbox
-        question likesToPayTaxesToo widget dropdown("Yes", "No")
+        question likesToPayTaxesToo widget text
         question likesToPayTaxesThree widget radio("Yes", "No")
     }
   }
