@@ -1,7 +1,6 @@
 package org.uva.hatt.taxform.ast.nodes.items;
 
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
-import org.uva.hatt.taxform.ast.nodes.FormVisitor;
 
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class IfThen extends Item{
     }
 
     @Override
-    public <T> T accept(FormVisitor<T> visitor) {
+    public <T> T accept(ItemVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

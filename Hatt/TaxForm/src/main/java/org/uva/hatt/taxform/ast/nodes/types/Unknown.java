@@ -1,7 +1,5 @@
 package org.uva.hatt.taxform.ast.nodes.types;
 
-import org.uva.hatt.taxform.ast.nodes.FormVisitor;
-
 public class Unknown extends ValueType{
 
     public Unknown() {
@@ -13,7 +11,7 @@ public class Unknown extends ValueType{
         return "Unknown";
     }
 
-    public <T> T accept(FormVisitor<T> visitor){
+    public <T> T accept(TypeVisitor<T> visitor){
         return visitor.visit(this);
     }
 }

@@ -1,42 +1,38 @@
 package org.uva.hatt.taxform.typechecker;
 
 import org.uva.hatt.taxform.ast.nodes.Form;
-import org.uva.hatt.taxform.ast.nodes.expressions.BinaryExpression;
+import org.uva.hatt.taxform.ast.nodes.FormVisitor;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
+import org.uva.hatt.taxform.ast.nodes.expressions.ExpressionVisitor;
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.binary.*;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.Identifier;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.IntegerLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.StringerLiteral;
-import org.uva.hatt.taxform.ast.nodes.items.ComputedQuestion;
-import org.uva.hatt.taxform.ast.nodes.items.IfThen;
-import org.uva.hatt.taxform.ast.nodes.items.IfThenElse;
-import org.uva.hatt.taxform.ast.nodes.items.Question;
-import org.uva.hatt.taxform.ast.nodes.types.*;
+import org.uva.hatt.taxform.ast.nodes.items.*;
 import org.uva.hatt.taxform.ast.nodes.types.Boolean;
 import org.uva.hatt.taxform.ast.nodes.types.Integer;
+import org.uva.hatt.taxform.ast.nodes.types.*;
 import org.uva.hatt.taxform.ast.nodes.types.String;
-import org.uva.hatt.taxform.ast.nodes.expressions.ExpressionVisitor;
-import org.uva.hatt.taxform.ast.nodes.FormVisitor;
 import org.uva.hatt.taxform.typechecker.messages.Messages;
 import org.uva.hatt.taxform.typechecker.messages.error.CyclicDependency;
 
 import java.util.*;
 
-public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor<Set<String>> {
+public class CircularDependencyChecker implements FormVisitor<Void>, ItemVisitor<Void>, ExpressionVisitor<Void> {
 
     private final Map<java.lang.String, List<java.lang.String>> dependencies;
     private final Messages messages;
     private Question question;
 
-    CircularDependencyChecker(Messages messages){
+    CircularDependencyChecker(Messages messages) {
         this.messages = messages;
         dependencies = new HashMap<>();
     }
 
     @Override
-    public Set<String> visit(Addition addition){
+    public Void visit(Addition addition) {
         addition.getLhs().accept(this);
         addition.getRhs().accept(this);
 
@@ -44,7 +40,7 @@ public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor
     }
 
     @Override
-    public Set<String> visit(Division division){
+    public Void visit(Division division) {
         division.getLhs().accept(this);
         division.getRhs().accept(this);
 
@@ -52,7 +48,7 @@ public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor
     }
 
     @Override
-    public Set<String> visit(Equal equal){
+    public Void visit(Equal equal) {
         equal.getLhs().accept(this);
         equal.getRhs().accept(this);
 
@@ -60,7 +56,7 @@ public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor
     }
 
     @Override
-    public Set<String> visit(GreaterThan greaterThan){
+    public Void visit(GreaterThan greaterThan) {
         greaterThan.getLhs().accept(this);
         greaterThan.getRhs().accept(this);
 
@@ -68,7 +64,7 @@ public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor
     }
 
     @Override
-    public Set<String> visit(GreaterThanOrEqual greaterThanOrEqual){
+    public Void visit(GreaterThanOrEqual greaterThanOrEqual) {
         greaterThanOrEqual.getLhs().accept(this);
         greaterThanOrEqual.getRhs().accept(this);
 
@@ -76,7 +72,7 @@ public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor
     }
 
     @Override
-    public Set<String> visit(LessThan lessThan){
+    public Void visit(LessThan lessThan) {
         lessThan.getLhs().accept(this);
         lessThan.getRhs().accept(this);
 
@@ -84,7 +80,7 @@ public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor
     }
 
     @Override
-    public Set<String> visit(LessThanOrEqual lessThanOrEqual){
+    public Void visit(LessThanOrEqual lessThanOrEqual) {
         lessThanOrEqual.getLhs().accept(this);
         lessThanOrEqual.getRhs().accept(this);
 
@@ -92,7 +88,7 @@ public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor
     }
 
     @Override
-    public Set<String> visit(LogicalAnd logicalAnd){
+    public Void visit(LogicalAnd logicalAnd) {
         logicalAnd.getLhs().accept(this);
         logicalAnd.getRhs().accept(this);
 
@@ -100,7 +96,7 @@ public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor
     }
 
     @Override
-    public Set<String> visit(LogicalOr logicalOr){
+    public Void visit(LogicalOr logicalOr) {
         logicalOr.getLhs().accept(this);
         logicalOr.getRhs().accept(this);
 
@@ -108,7 +104,7 @@ public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor
     }
 
     @Override
-    public Set<String> visit(Multiplication multiplication){
+    public Void visit(Multiplication multiplication) {
         multiplication.getLhs().accept(this);
         multiplication.getRhs().accept(this);
 
@@ -116,7 +112,7 @@ public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor
     }
 
     @Override
-    public Set<String> visit(NotEqual notEqual){
+    public Void visit(NotEqual notEqual) {
         notEqual.getLhs().accept(this);
         notEqual.getRhs().accept(this);
 
@@ -124,7 +120,7 @@ public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor
     }
 
     @Override
-    public Set<String> visit(Subtraction subtraction){
+    public Void visit(Subtraction subtraction) {
         subtraction.getLhs().accept(this);
         subtraction.getRhs().accept(this);
 
@@ -132,39 +128,39 @@ public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor
     }
 
     @Override
-    public Set<String> visit(BooleanLiteral booleanLiteral){
+    public Void visit(BooleanLiteral booleanLiteral) {
         return null;
     }
 
     @Override
-    public Set<String> visit(Expression expression) {
+    public Void visit(Expression expression) {
         return null;
     }
 
     @Override
-    public Set<String> visit(IntegerLiteral integerLiteral){
+    public Void visit(IntegerLiteral integerLiteral) {
         return null;
     }
 
     @Override
-    public Set<String> visit(StringerLiteral stringerLiteral){
+    public Void visit(StringerLiteral stringerLiteral) {
         return null;
     }
 
     @Override
-    public Set<String> visit(Form node) {
+    public Void visit(Form node) {
         node.getQuestions().forEach(item -> item.accept(this));
 
         return null;
     }
 
     @Override
-    public Set<String> visit(Question node) {
+    public Void visit(Question node) {
         return null;
     }
 
     @Override
-    public Set<String> visit(ComputedQuestion node) {
+    public Void visit(ComputedQuestion node) {
         question = node;
         node.getComputedValue().accept(this);
 
@@ -172,61 +168,28 @@ public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor
     }
 
     @Override
-    public Set<String> visit(IfThen node) {
+    public Void visit(IfThen node) {
         node.getCondition().accept(this);
 
         return null;
     }
 
     @Override
-    public Set<String> visit(IfThenElse node) {
+    public Void visit(IfThenElse node) {
         node.getCondition().accept(this);
 
         return null;
     }
 
     @Override
-    public Set<String> visit(Boolean node) {
-        return null;
-    }
-
-    @Override
-    public Set<String> visit(Integer node) {
-        return null;
-    }
-
-    @Override
-    public Set<String> visit(Money node) {
-        return null;
-    }
-
-    @Override
-    public Set<String> visit(String node) {
-        return null;
-    }
-
-    @Override
-    public Set<String> visit(ValueType node) {
-        return null;
-    }
-
-    @Override
-    public Set<String> visit(BinaryExpression node) {
-        node.getLhs().accept(this);
-        node.getRhs().accept(this);
-
-        return null;
-    }
-
-    @Override
-    public Set<String> visit(GroupedExpression groupedExpression){
+    public Void visit(GroupedExpression groupedExpression) {
         groupedExpression.getExpression().accept(this);
 
         return null;
     }
 
     @Override
-    public Set<String> visit(Identifier identifier){
+    public Void visit(Identifier identifier) {
         if (question != null) {
             addDependency(question.getIdentifier(), identifier.getValue());
             checkForCircularDependencies();
@@ -235,7 +198,7 @@ public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor
         return null;
     }
 
-    private void addDependency(java.lang.String value, java.lang.String dependency){
+    private void addDependency(java.lang.String value, java.lang.String dependency) {
         List<java.lang.String> valueDependencies = initDependencies(value);
 
         valueDependencies.add(dependency);
@@ -250,7 +213,7 @@ public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor
         return new ArrayList<>();
     }
 
-    private List<java.lang.String> getDependencies(java.lang.String value){
+    private List<java.lang.String> getDependencies(java.lang.String value) {
         if (dependencies.containsKey(value)) {
             return dependencies.get(value);
         }

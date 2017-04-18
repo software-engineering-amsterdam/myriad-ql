@@ -5,22 +5,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.uva.hatt.taxform.ast.nodes.Form;
-import org.uva.hatt.taxform.ast.nodes.expressions.BinaryExpression;
-import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
-import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
-import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
-import org.uva.hatt.taxform.ast.nodes.expressions.literals.Identifier;
-import org.uva.hatt.taxform.ast.nodes.expressions.literals.IntegerLiteral;
-import org.uva.hatt.taxform.ast.nodes.expressions.literals.StringerLiteral;
+import org.uva.hatt.taxform.ast.nodes.FormVisitor;
 import org.uva.hatt.taxform.ast.nodes.items.ComputedQuestion;
 import org.uva.hatt.taxform.ast.nodes.items.IfThen;
 import org.uva.hatt.taxform.ast.nodes.items.IfThenElse;
+import org.uva.hatt.taxform.ast.nodes.items.ItemVisitor;
 import org.uva.hatt.taxform.ast.nodes.types.Boolean;
 import org.uva.hatt.taxform.ast.nodes.types.Integer;
 import org.uva.hatt.taxform.ast.nodes.types.*;
 import org.uva.hatt.taxform.ast.nodes.types.String;
 import org.uva.hatt.taxform.evaluation.Environment;
-import org.uva.hatt.taxform.ast.nodes.FormVisitor;
 import org.uva.hatt.taxform.evaluation.Evaluator;
 import org.uva.hatt.taxform.gui.fields.*;
 import org.uva.hatt.taxform.values.BooleanValue;
@@ -29,7 +23,7 @@ import org.uva.hatt.taxform.values.Value;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UIVisitor implements FormVisitor<Pane> {
+public class UIVisitor implements FormVisitor<Pane>, ItemVisitor<Pane>, TypeVisitor<Pane> {
 
     private final Stage stage;
     private final Environment environmentsTable;
@@ -152,43 +146,8 @@ public class UIVisitor implements FormVisitor<Pane> {
     }
 
     @Override
-    public Pane visit(ValueType node) {
-        return null;
-    }
-
-    @Override
-    public Pane visit(BinaryExpression node) {
-        return null;
-    }
-
-    @Override
-    public Pane visit(GroupedExpression node) {
-        return null;
-    }
-
-    @Override
-    public Pane visit(Identifier identifier) {
-        return null;
-    }
-
-    @Override
-    public Pane visit(StringerLiteral stringerLiteral) {
-        return null;
-    }
-
-    @Override
-    public Pane visit(IntegerLiteral integerLiteral) {
-        return null;
-    }
-
-    @Override
-    public Pane visit(BooleanLiteral booleanLiteral) {
-        return null;
-    }
-
-    @Override
-    public Pane visit(Expression expression) {
-        return null;
+    public Pane visit(Unknown unknown) {
+        throw new RuntimeException("Found unknown type");
     }
 
 }

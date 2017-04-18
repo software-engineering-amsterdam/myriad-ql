@@ -1,90 +1,24 @@
 package org.uva.hatt.taxform.evaluation;
 
-import org.uva.hatt.taxform.ast.nodes.Form;
-import org.uva.hatt.taxform.ast.nodes.expressions.BinaryExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.Expression;
+import org.uva.hatt.taxform.ast.nodes.expressions.ExpressionVisitor;
 import org.uva.hatt.taxform.ast.nodes.expressions.GroupedExpression;
 import org.uva.hatt.taxform.ast.nodes.expressions.binary.*;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.BooleanLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.Identifier;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.IntegerLiteral;
 import org.uva.hatt.taxform.ast.nodes.expressions.literals.StringerLiteral;
-import org.uva.hatt.taxform.ast.nodes.items.ComputedQuestion;
-import org.uva.hatt.taxform.ast.nodes.items.IfThen;
-import org.uva.hatt.taxform.ast.nodes.items.IfThenElse;
-import org.uva.hatt.taxform.ast.nodes.items.Question;
-import org.uva.hatt.taxform.ast.nodes.types.*;
-import org.uva.hatt.taxform.ast.nodes.types.Boolean;
-import org.uva.hatt.taxform.ast.nodes.types.Integer;
-import org.uva.hatt.taxform.ast.nodes.types.String;
-import org.uva.hatt.taxform.ast.nodes.expressions.ExpressionVisitor;
-import org.uva.hatt.taxform.ast.nodes.FormVisitor;
 import org.uva.hatt.taxform.values.BooleanValue;
 import org.uva.hatt.taxform.values.IntegerValue;
 import org.uva.hatt.taxform.values.StringValue;
 import org.uva.hatt.taxform.values.Value;
 
-public class Evaluator implements FormVisitor<Value>, ExpressionVisitor<Value> {
+public class Evaluator implements ExpressionVisitor<Value> {
 
     private final Environment environmentsTable;
 
     public Evaluator(Environment environmentsTable) {
         this.environmentsTable = environmentsTable;
-    }
-
-    @Override
-    public Value visit(Form node) {
-        return null;
-    }
-
-    @Override
-    public Value visit(Question node) {
-        return null;
-    }
-
-    @Override
-    public Value visit(ComputedQuestion node) {
-        return null;
-    }
-
-    @Override
-    public Value visit(IfThen node) {
-        return null;
-    }
-
-    @Override
-    public Value visit(IfThenElse node) {
-        return null;
-    }
-
-    @Override
-    public Value visit(Boolean node) {
-        return null;
-    }
-
-    @Override
-    public Value visit(Integer node) {
-        return null;
-    }
-
-    @Override
-    public Value visit(Money node) {
-        return null;
-    }
-
-    @Override
-    public Value visit(String node) {
-        return null;
-    }
-
-    @Override
-    public Value visit(ValueType node) {
-        return null;
-    }
-
-    @Override
-    public Value visit(BinaryExpression node) {
-        return node.accept(this);
     }
 
     @Override

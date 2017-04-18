@@ -22,7 +22,7 @@ import org.uva.hatt.taxform.typechecker.messages.warning.DuplicateLabel;
 
 import java.util.*;
 
-public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
+public class TypeChecker implements FormVisitor<Void>, ItemVisitor<Void>, ExpressionVisitor<ValueType> {
 
     private final Messages messages;
     private final List<java.lang.String> questions = new ArrayList<>();
@@ -33,7 +33,7 @@ public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
     }
 
     @Override
-    public Form visit(Form node) {
+    public Void visit(Form node) {
         for (Item item : node.getQuestions()) {
             item.accept(this);
         }
@@ -42,7 +42,7 @@ public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
     }
 
     @Override
-    public Question visit(Question node) {
+    public Void visit(Question node) {
         if (declarations.containsKey(node.getIdentifier())) {
             messages.addError(new DuplicateDeclaration(node.getLineNumber(), node.getIdentifier()));
         }
@@ -53,11 +53,12 @@ public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
 
         declarations.put(node.getIdentifier(), new IdentifierInput(node.getType()));
         questions.add(node.getLabel().toLowerCase());
+
         return null;
     }
 
     @Override
-    public ComputedQuestion visit(ComputedQuestion computedQuestion) {
+    public Void visit(ComputedQuestion computedQuestion) {
         if (declarations.containsKey(computedQuestion.getIdentifier())) {
             messages.addError(new DuplicateDeclaration(computedQuestion.getLineNumber(), computedQuestion.getIdentifier()));
         }
@@ -76,18 +77,19 @@ public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
     }
 
     @Override
-    public IfThen visit(IfThen node) {
+    public Void visit(IfThen node) {
         Expression expression = node.getCondition();
         validateIfCondition(expression, node.getLineNumber());
 
         node.getCondition().accept(this);
 
         node.getThenStatements().forEach(item -> item.accept(this));
+
         return null;
     }
 
     @Override
-    public IfThenElse visit(IfThenElse node) {
+    public Void visit(IfThenElse node) {
         Expression expression = node.getCondition();
         validateIfCondition(expression, node.getLineNumber());
 
@@ -95,6 +97,7 @@ public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
 
         node.getThenStatements().forEach(item -> item.accept(this));
         node.getElseStatements().forEach(item -> item.accept(this));
+
         return null;
     }
 
@@ -104,36 +107,6 @@ public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
         if (!type.isBoolean()) {
             messages.addError(new TypeMismatch(line, type.name()));
         }
-    }
-
-    @Override
-    public Boolean visit(Boolean node) {
-        return null;
-    }
-
-    @Override
-    public Integer visit(Integer node) {
-        return null;
-    }
-
-    @Override
-    public Money visit(Money node) {
-        return null;
-    }
-
-    @Override
-    public String visit(String node) {
-        return null;
-    }
-
-    @Override
-    public ValueType visit(ValueType node) {
-        return null;
-    }
-
-    @Override
-    public BinaryExpression visit(BinaryExpression node) {
-        return null;
     }
 
     @Override
@@ -167,7 +140,7 @@ public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
     }
 
     @Override
-    public Expression visit(Expression expression) {
+    public ValueType visit(Expression expression) {
         return null;
     }
 
