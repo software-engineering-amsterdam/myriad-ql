@@ -90,4 +90,11 @@ public class TypeCheckTests {
         Type expressionType = b.getType();
         Assert.assertTrue(expressionType.equals(new BooleanType()), "Comparing booleans should yield booleans");
     }
+
+    @Test
+    public void testTypeComparison() throws Exception {
+        Type a = new BooleanType();
+        Type b = new BooleanType();
+        Assert.assertTrue(a.equals(b), "Equal types should yield true");
+    }
 }
