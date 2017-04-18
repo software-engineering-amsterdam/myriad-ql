@@ -5,7 +5,7 @@ stylesheet OurTaxFreeSolution {
     }
     section "Insurance" {
         question noTax {
-            widget : spinbox
+            widget : radio ( "Tax" , "NoTax" )
         }
     }
   }
