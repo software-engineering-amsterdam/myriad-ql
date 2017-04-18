@@ -1,9 +1,8 @@
-package org.uva.taxfree.ql.gui;
+package org.uva.taxfree.qls;
 
+import org.uva.taxfree.ql.gui.QuestionForm;
 import org.uva.taxfree.ql.gui.widgets.Widget;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
-import org.uva.taxfree.qls.GuiPage;
-import org.uva.taxfree.qls.QlsStyle;
 
 import javax.swing.*;
 import java.util.ArrayList;
