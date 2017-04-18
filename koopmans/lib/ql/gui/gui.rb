@@ -3,7 +3,7 @@ require 'tk'
 module QL
   module GUI
     class GUI
-      attr_writer :question_frames
+      attr_accessor :question_frames
 
       def initialize(question_frames = nil)
         @question_frames = question_frames

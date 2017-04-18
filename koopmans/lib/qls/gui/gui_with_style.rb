@@ -1,7 +1,12 @@
 module QLS
   module GUI
-    module GUIStylesheet
+    class GUIWithStyle < SimpleDelegator
       attr_writer :question_frame_styles
+
+      def initialize(gui)
+        @gui = gui
+        super
+      end
 
       def render
         apply_styles
@@ -9,6 +14,8 @@ module QLS
       end
 
       def apply_styles
+        return unless @question_frame_styles
+
         normal_question_frames.each do |question_frame|
           style = @question_frame_styles[question_frame.name]
           next unless style
@@ -28,7 +35,7 @@ module QLS
       end
 
       def normal_question_frames
-        @question_frames.each.select do |question_frame|
+        question_frames.each.select do |question_frame|
           question_frame.class == QL::GUI::QuestionFrame
         end
       end

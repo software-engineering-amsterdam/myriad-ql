@@ -1,7 +1,7 @@
 # TODO use wrapper pattern to apply styles
 module QLS
   module GUI
-    class StylesheetBuilder
+    class QuestionFrameStyler
       attr_reader :question_frame_styles
 
       def initialize(styles)

@@ -111,9 +111,9 @@ qls_ast = QLS::Parser::FormTransformer.new.apply(qls_parsed)
 style_collector = QLS::GUI::StyleCollector.new
 qls_ast.accept(style_collector)
 # pp style_collector.styles
-stylesheet_builder = QLS::GUI::StylesheetBuilder.new(style_collector.styles)
-qls_ast.accept(stylesheet_builder)
-question_frame_styles = stylesheet_builder.question_frame_styles
+question_frame_styler = QLS::GUI::QuestionFrameStyler.new(style_collector.styles)
+qls_ast.accept(question_frame_styler)
+question_frame_styles = question_frame_styler.question_frame_styles
 # pp question_frame_styles
 # qls_notifications = QLS::TypeChecker::TypeChecker.check(qls_ast, ql_ast)
 # pp qls_notifications
@@ -122,6 +122,10 @@ question_frame_styles = stylesheet_builder.question_frame_styles
 # #
 # QL::GUI::GUI.new(ql_ast, qls_ast, ql_notifications)
 
-gui.extend(QLS::GUI::GUIStylesheet)
-gui.question_frame_styles = question_frame_styles
-gui.render
+gui_with_style = QLS::GUI::GUIWithStyle.new(gui)
+gui_with_style.question_frame_styles = question_frame_styles
+gui_with_style.render
+
+# gui.extend(QLS::GUI::GUIStylesheet)
+# gui.question_frame_styles = question_frame_styles
+# gui.render
