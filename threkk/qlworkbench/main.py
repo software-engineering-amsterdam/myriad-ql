@@ -6,6 +6,10 @@ printed in the screen. If not, the application will be launched.
 import click
 from ql.lexer import QLLexer
 from ql.parser import QLParser
+from typechecker.checker import Checker
+from typechecker.lexer_checker import LexerChecker
+from typechecker.parser_checker import ParserChecker
+from typechecker.ql_checker import QLChecker
 from ui.builder import Visitor
 
 
@@ -17,18 +21,31 @@ def cli(file):
     <file> and generates a graphical interface based on the content. In case it
     contains errors, they will be displayed in the screen.
     """
+    # Extracts the content of the QL file.
     data = file.read()
-    lex = QLLexer()
-    par = QLParser(lex.tokens)
-    ast = par.parse(data, lexer=lex.lexer)
-    ast.typechecker.check()
 
-    if ast.get_warnings():
-        for warn in ast.get_warnings():
+    # Initialises the global checker.
+    checker = Checker()
+
+    # Creates a lexer checker and a checker.
+    lex_checker = LexerChecker(checker)
+    lex = QLLexer(lex_checker)
+
+    # Creates a parser checker and a checker.
+    par_checker = ParserChecker(checker)
+    par = QLParser(lex.tokens, par_checker)
+
+    # Creates an AST, an AST checker and executes it.
+    ast = par.parse(data, lexer=lex.lexer)
+    ql_checker = QLChecker(ast, checker)
+    ql_checker.check()
+
+    if checker.get_warnings():
+        for warn in checker.get_warnings():
             click.secho(warn.__str__(), fg='yellow')
 
-    if ast.get_errors():
-        for error in ast.get_errors():
+    if checker.get_errors():
+        for error in checker.get_errors():
             click.secho(error.__str__(), fg='red')
     else:
         ui_generator = Visitor(ast)

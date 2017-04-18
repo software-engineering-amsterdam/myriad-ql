@@ -4,7 +4,6 @@ verify_ssl = true
 
 [dev-packages]
 Sphinx = "*"
-pytest = "*"
 
 [packages]
 ply = "*"

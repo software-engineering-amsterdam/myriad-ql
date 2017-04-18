@@ -17,16 +17,15 @@ class Visitor(object):
     trough the AST to retrieve all the nodes and use them to build the user
     interface.
     """
-    def __init__(self, ast):
-        self.__ast = ast
+    def __init__(self, root):
+        self.__ast = root
         self.__ui = Builder()
 
     def execute(self):
-        self.__ui.set_title(self.__ast.title)
-        queue = self.__ast.build_order
+        self.__ui.set_title(self.__ast.text)
 
-        for node in queue:
-            self.__ast.register[node].build_ui(self.__ui)
+        for node in self.__ast.nodes:
+            node.build_ui(self.__ui)
 
         return self.__ui
 
@@ -75,10 +74,10 @@ class Builder(object):
         type of the variable given.
         """
         label = ttk.Label(self.mainframe, text=text[1:-1], wraplength=200)
-        value = variable.type.init_variable()
+        value = variable.type.create_variable()
         field = variable.type.init_field(self, value)
 
-        value.trace('w', lambda *args: self.__tracer(variable))
+        value.trace('w', lambda *args: self.__emit_event(variable))
         ui = {'field': field, 'label': label}
 
         self.elements.append(ui)
@@ -92,10 +91,10 @@ class Builder(object):
         depend on the type of the variable given.
         """
         label = ttk.Label(self.mainframe, text=text[1:-1], wraplength=200)
-        value = variable.type.init_variable()
+        value = variable.type.create_variable()
         field = variable.type.init_field(self, value, assignation=True)
 
-        value.trace('w', lambda *args: self.__tracer(variable))
+        value.trace('w', lambda *args: self.__emit_event(variable))
         ui = {'field': field, 'label': label}
 
         self.elements.append(ui)
@@ -123,7 +122,7 @@ class Builder(object):
         self.root.grab_set_global()
         self.root.mainloop()
 
-    def __tracer(self, variable):
+    def __emit_event(self, variable):
         """
         The tracer is attached to every pair input-variable to update the
         values of the register once it is updated. It updates the variable and
