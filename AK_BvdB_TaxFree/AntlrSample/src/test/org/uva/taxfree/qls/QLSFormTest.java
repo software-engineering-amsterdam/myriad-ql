@@ -129,6 +129,7 @@ public class QLSFormTest extends SemanticsTester {
         mQlsStyle = mStyleBuilder.generateStyle(messageList);
     }
 
+    @Override
     protected void assertSemantics(String fileName, int expectedErrorAmount, String description) throws IOException {
         super.assertSemantics(fileName, 0, "only works for valid tax forms");
         MessageList messages = new MessageList();
