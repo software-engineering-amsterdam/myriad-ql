@@ -41,7 +41,7 @@ public class QlsStyle {
             }
         }
         for (String questionName : declaredQuestions) {
-            semanticsMessages.addError("Unassigned question: " + questionName);
+            semanticsMessages.addError("qls file. Unassigned question: " + questionName);
         }
     }
 
