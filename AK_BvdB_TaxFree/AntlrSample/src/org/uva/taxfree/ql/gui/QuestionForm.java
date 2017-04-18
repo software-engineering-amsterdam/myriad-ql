@@ -1,6 +1,5 @@
 package org.uva.taxfree.ql.gui;
 
-import oracle.jrockit.jfr.JFR;
 import org.uva.taxfree.ql.gui.widgets.Widget;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 
@@ -67,6 +66,7 @@ public class QuestionForm implements FormListener {
         for (Widget widget : mWidgets) {
             widget.updateVisibility(mSymbolTable);
         }
+        mFrame.pack();
     }
 
     private void setDimensions() {

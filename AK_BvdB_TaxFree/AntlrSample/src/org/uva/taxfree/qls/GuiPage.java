@@ -3,7 +3,6 @@ package org.uva.taxfree.qls;
 import org.uva.taxfree.ql.gui.widgets.Widget;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +48,7 @@ public class GuiPage {
         return section;
     }
 
-    public void register(String sectionName, Widget widget) {
+    protected void register(String sectionName, Widget widget) {
         for (JPanel section : mSections) {
             if (sectionName.equals(section.getName())) {
                 widget.registerToPanel(section);
