@@ -4,8 +4,13 @@ import UvA.Gamma.AST.Computed;
 import UvA.Gamma.AST.Condition;
 import UvA.Gamma.AST.Question;
 import UvA.Gamma.Visitors.BaseVisitor;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
 import java.util.List;
@@ -38,6 +43,8 @@ public class UIVisitor extends BaseVisitor {
     public void visit(Condition condition) {
         GridPane thenPane = new GridPane();
         GridPane elsePane = new GridPane();
+        setGridPaneProperties(thenPane);
+        setGridPaneProperties(elsePane);
         UIVisitor thenVisitor = new UIVisitor(thenPane, builder, stage);
         UIVisitor elseVisitor = new UIVisitor(elsePane, builder, stage);
         condition.visitThenChildNodes(thenVisitor);
@@ -50,6 +57,16 @@ public class UIVisitor extends BaseVisitor {
         grid.add(elsePane, 0, getRowCount(grid) + 1, 2, 1);
         thenPane.visibleProperty().addListener((observable, oldValue, newValue) -> stage.sizeToScene());
         elsePane.visibleProperty().addListener((observable, oldValue, newValue) -> stage.sizeToScene());
+    }
+
+    private void setGridPaneProperties(GridPane grid){
+        grid.setVgap(10);
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setHalignment(HPos.LEFT);
+        col1.setHgrow(Priority.ALWAYS);
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setHalignment(HPos.RIGHT);
+        grid.getColumnConstraints().addAll(col1, col2);
     }
 
     private void placeWidget(List<Node> widgets) {
