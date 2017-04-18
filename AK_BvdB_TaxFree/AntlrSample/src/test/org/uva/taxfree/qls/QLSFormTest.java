@@ -115,6 +115,12 @@ public class QLSFormTest extends SemanticsTester {
         assertSemantics("DuplicateAssignment.txfrm", 3, "Assigning questions multiple times yields errors");
     }
 
+    @Test
+    public void testSemantics_invalidAssignment() throws Exception {
+        assertSemantics("InvalidWidgetStyle.txfrm", 1, "Assigning invalid widgets yields errors");
+    }
+
+
     private void createQls(String taxFile, MessageList messageList) {
         String styleFile = FileUtility.replaceExtension(taxFile, ".qls");
         File style = testFile(styleFile);
