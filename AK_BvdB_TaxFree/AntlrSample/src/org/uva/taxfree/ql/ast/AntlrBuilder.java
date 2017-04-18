@@ -34,7 +34,7 @@ public class AntlrBuilder {
         return new ANTLRErrorListener() {
             @Override
             public void syntaxError(Recognizer<?, ?> recognizer, Object o, int line, int column, String message, RecognitionException e) {
-                throw new UnsupportedOperationException("(" + line + ":" + column + "):" + message);
+                throw new UnsupportedOperationException("(" + line + ":" + column + "): " + message);
             }
 
             @Override
