@@ -4,7 +4,7 @@ The `ui.context` module defines all the classes necessary to describe the
 context of an user interface. Although it has been designed with the module
 `ui.builder` in mind, it should be easily substituted.
 """
-from ui.event_manager import EventManager
+from .event_manager import EventManager
 
 
 class UIContext(object):

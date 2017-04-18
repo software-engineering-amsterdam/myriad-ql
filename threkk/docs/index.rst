@@ -42,17 +42,10 @@ QL Parser
 .. automodule:: qlworkbench.ql.parser
     :members:
 
-Type checker
-------------
-.. automodule:: qlworkbench.ql.ast.typechecker
-    :members:
 
 AST
 ---
 .. automodule:: qlworkbench.ql.ast.type
-    :members:
-
-.. automodule:: qlworkbench.ql.ast.root
     :members:
 
 .. automodule:: qlworkbench.ql.ast.node
@@ -60,6 +53,22 @@ AST
 
 .. automodule:: qlworkbench.ql.ast.expression
     :members:
+
+Checkers
+========
+
+.. automodule:: qlworkbench.typechecker.checker
+    :members:
+
+.. automodule:: qlworkbench.typechecker.lexer_checker
+    :members:
+
+.. automodule:: qlworkbench.typechecker.parser_checker
+    :members:
+
+.. automodule:: qlworkbench.typechecker.ql_checker
+    :members:
+
 
 GUI
 ===
@@ -71,4 +80,9 @@ Builder
 Context
 -------
 .. automodule:: qlworkbench.ui.context
+    :members:
+
+Event manager
+-------------
+.. automodule:: qlworkbench.ui.event_manager
     :members:
