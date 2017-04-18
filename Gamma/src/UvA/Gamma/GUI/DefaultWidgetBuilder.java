@@ -26,7 +26,7 @@ public class DefaultWidgetBuilder implements WidgetBuilder {
     private Form form;
     private TypeChecker typeChecker;
 
-    public DefaultWidgetBuilder(Form form) {
+    DefaultWidgetBuilder(Form form) {
         this.form = form;
         this.typeChecker = new TypeChecker();
     }

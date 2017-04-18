@@ -60,11 +60,7 @@ public class ASTBuilder extends QLBaseVisitor<ASTNode> {
         Identifier identifier = new Identifier(ctx.ID().getText());
         Type type = (Type) visit(ctx.type());
         identifierTypes.put(identifier, type);
-        Computed c = new Computed(label, identifier, type, expression);
-        c.getStringValueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("new value for " + identifier + ": " + newValue);
-        });
-        return c;
+        return new Computed(label, identifier, type, expression);
     }
 
     @Override

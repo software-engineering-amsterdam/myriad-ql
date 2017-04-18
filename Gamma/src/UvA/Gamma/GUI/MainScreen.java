@@ -3,7 +3,6 @@ package UvA.Gamma.GUI;
 import UvA.Gamma.AST.Form;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -26,10 +25,23 @@ public class MainScreen {
     }
 
     public void initUI(Stage stage) throws Exception {
-        Text scenetitle = new Text(form.getId());
+        Text sceneTitle = new Text(form.getId());
         GridPane grid = new GridPane();
 
 
+        setGridPaneLayout(grid);
+        sceneTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        grid.add(sceneTitle, 0, 0, 2, 1);
+
+        UIVisitor uiVisitor = new UIVisitor(grid, new DefaultWidgetBuilder(form), stage);
+        form.accept(uiVisitor);
+
+        stage.setScene(new Scene(grid));
+        stage.sizeToScene();
+        stage.show();
+    }
+
+    private void setGridPaneLayout(GridPane grid) {
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setHalignment(HPos.LEFT);
         col1.setHgrow(Priority.ALWAYS);
@@ -40,15 +52,6 @@ public class MainScreen {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
-        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        grid.add(scenetitle, 0, 0, 2, 1);
-
-        UIVisitor uivis = new UIVisitor(grid, new DefaultWidgetBuilder(form), stage);
-        form.accept(uivis);
-
-        stage.setScene(new Scene(grid));
-        stage.sizeToScene();
-        stage.show();
     }
 }
 

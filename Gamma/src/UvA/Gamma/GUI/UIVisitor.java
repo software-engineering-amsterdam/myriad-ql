@@ -5,8 +5,6 @@ import UvA.Gamma.AST.Condition;
 import UvA.Gamma.AST.Question;
 import UvA.Gamma.Visitors.BaseVisitor;
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -30,13 +28,13 @@ public class UIVisitor extends BaseVisitor {
     }
 
     @Override
-    public void visit(Question ques) {
-        placeWidget(builder.getWidget(ques));
+    public void visit(Question question) {
+        placeWidget(builder.getWidget(question));
     }
 
     @Override
-    public void visit(Computed com) {
-        placeWidget(builder.getWidget(com));
+    public void visit(Computed computed) {
+        placeWidget(builder.getWidget(computed));
     }
 
     @Override
@@ -59,7 +57,7 @@ public class UIVisitor extends BaseVisitor {
         elsePane.visibleProperty().addListener((observable, oldValue, newValue) -> stage.sizeToScene());
     }
 
-    private void setGridPaneProperties(GridPane grid){
+    private void setGridPaneProperties(GridPane grid) {
         grid.setVgap(10);
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setHalignment(HPos.LEFT);

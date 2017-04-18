@@ -11,7 +11,7 @@ import UvA.Gamma.Visitors.BaseVisitor;
 public class IdentifierUpdatedVisitor extends BaseVisitor {
     private IdentifierValue updatedValue;
 
-    public IdentifierUpdatedVisitor(IdentifierValue updatedValue) {
+    IdentifierUpdatedVisitor(IdentifierValue updatedValue) {
         this.updatedValue = updatedValue;
     }
 
@@ -23,13 +23,12 @@ public class IdentifierUpdatedVisitor extends BaseVisitor {
 
     @Override
     public void visit(Condition condition) {
-        System.out.println("Condition is now: " + condition.evaluateExpression());
+        condition.evaluateExpression();
     }
 
     @Override
     public void visit(IdentifierValue value) {
         assert updatedValue != null;
         value.updateValue(updatedValue);
-        System.out.println("updated value: " + value.value() + " from " + updatedValue.value());
     }
 }

@@ -11,8 +11,6 @@ import javafx.scene.Node;
  * Created by Tjarco, 21-03-17.
  */
 public abstract class Type implements ASTNode {
-    private WidgetBuilder builder;
-
     public void accept(Visitor visitor) {
         visitor.visit(this);
     }

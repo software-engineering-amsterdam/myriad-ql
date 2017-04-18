@@ -17,8 +17,6 @@ condition: 'if' '('expression')' '{' (formItem)* '}' (elseblock)?;
 
 elseblock: 'else' '{'(formItem)*'}';
 
-//expression: boolExpression # booleanExpression | numExpression # numberExpression;
-
 expression
         : '!'expression                                                         #negatedBooleanExpression
         | expression op=('&&' | '||' | '==' | '!=') expression                  #logicalBooleanExpression
@@ -30,13 +28,6 @@ expression
         | ('true' | 'false')                                                    #booleanValueExpression
         | NUMBER                                                                #numberValueExpression
         ;
-
-//numExpression: numExpression op=('*' | '/') numExpression   #multiExpression
-//       | numExpression op=('+' | '-') numExpression         #addExpression
-//       | '('numExpression')'                                #nestedExpression
-//       | NUMBER                                             #numberValueExpression
-//       | ID                                                 #identifierExpression
-//       ;
 
 //datatypes
 BOOL:   'boolean';
