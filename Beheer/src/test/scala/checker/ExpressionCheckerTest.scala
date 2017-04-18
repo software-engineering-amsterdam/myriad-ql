@@ -28,12 +28,15 @@ class ExpressionCheckerTest extends PropSpec with Matchers with TableDrivenPrope
     (Add(intLit, intLit), IntegerType),
     (Add(intLit, intLit), DecimalType),
     (Add(intLit, intLit), MoneyType),
+    (Sub(intLit, intLit), IntegerType),
     (Neg(decLit), DecimalType),
     (Mul(Add(intLit, decLit), moneyLit), MoneyType),
     (Div(intLit, Identifier("decRef")), DecimalType),
 
     //Numeric -> Boolean:
     (Lt(intLit, Add(intLit, decLit)), BooleanType),
+    (Gt(intLit, Add(intLit, decLit)), BooleanType),
+    (Leq(Mul(decLit, intLit), Add(intLit, Identifier("moneyRef"))), BooleanType),
     (Geq(Mul(decLit, intLit), Add(intLit, Identifier("moneyRef"))), BooleanType),
 
     //Boolean -> Boolean
@@ -57,6 +60,9 @@ class ExpressionCheckerTest extends PropSpec with Matchers with TableDrivenPrope
     //Internal hierarchy error (e.g.: adding booleans)
     (Add(booleanLit, stringLit), MoneyType),
     (Eq(booleanLit, stringLit), BooleanType),
+    (Eq(booleanLit, Eq(booleanLit, stringLit)), BooleanType),
+    (Neg(stringLit), StringType),
+    (Neg(Neg(stringLit)), StringType),
 
     //Undefined references:
     (Eq(Identifier("undefined"), intLit), BooleanType)

@@ -1,0 +1,13 @@
+stylesheet OurTaxFreeSolution {
+  page Taxes {
+    section "Meta" {
+        question likesToPayTaxes {
+            widget : checkbox
+            font : "Arial"
+            fontsize : 20
+            color : #FF0000
+            background-color : #0000FF
+        }
+    }
+  }
+}

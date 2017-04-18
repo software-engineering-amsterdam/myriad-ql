@@ -1,12 +1,14 @@
 ﻿namespace OffByOne.Ql.Ast.Expressions
 {
-    using OffByOne.LanguageCore.Ast;
-    using OffByOne.LanguageCore.Visitors.Contracts;
+    using System.Collections.Generic;
+
     using OffByOne.Ql.Visitors.Contracts;
 
     public abstract class Expression : AstNode, IVisitableExpression
     {
-        public abstract TResult Accept<TResult, TContext>(IExpressionVisitor<TResult, TContext> visitor, TContext context)
-            where TContext : IContext;
+        public abstract TResult Accept<TResult, TContext>(IExpressionVisitor<TResult, TContext> visitor, TContext environment)
+            where TContext : IEnvironment;
+
+        public abstract ISet<string> GetDependencies();
     }
 }

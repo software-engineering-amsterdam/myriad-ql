@@ -3,15 +3,17 @@ package parser
 import java.text.SimpleDateFormat
 
 import ast._
+import com.typesafe.config.ConfigFactory
 
 import scala.util.matching.Regex
-import scala.util.parsing.combinator.JavaTokenParsers
 
-trait ExpressionParser extends JavaTokenParsers {
+trait ExpressionParser extends QLParser {
   type InfixMatcher = (ExpressionNode, ~[String, ExpressionNode]) => ExpressionNode
 
   //We do one date: yyyy-mm-dd.
-  private val dateFormat = new SimpleDateFormat("""yyyy-mm-dd""")
+  private val config = ConfigFactory.load()
+  private val dateFormat = new SimpleDateFormat(config.getString("dateFormat"))
+  private val currencySymbol = config.getString("currencySymbol")
 
   def expression: Parser[ExpressionNode] = logic
 
@@ -39,7 +41,7 @@ trait ExpressionParser extends JavaTokenParsers {
     case (lhs, "/" ~ rhs) => Div(lhs, rhs)
   }
 
-  private def factor: Parser[ExpressionNode] = literal | prefix | "(" ~> expression <~ ")"
+  private def factor: Parser[ExpressionNode] = literal | prefix | parentheses(expression)
 
   private def prefix: Parser[ExpressionNode] =
     """-|!""".r ~ factor ^^ {
@@ -63,7 +65,7 @@ trait ExpressionParser extends JavaTokenParsers {
   //Note: ORDER MATTERS HERE.
   private def numeric: Parser[ExpressionNode] = money | decimal | integer
 
-  private def money: Parser[MoneyLiteral] = "€" ~> decimal ^^ (x => MoneyLiteral(x.value))
+  private def money: Parser[MoneyLiteral] = currencySymbol ~> decimal ^^ (x => MoneyLiteral(x.value))
 
   private def decimal: Parser[DecimalLiteral] = """\d*\.\d+""".r ^^ (x => DecimalLiteral(BigDecimal(x)))
 

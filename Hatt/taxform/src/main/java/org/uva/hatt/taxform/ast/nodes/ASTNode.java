@@ -1,10 +1,9 @@
 package org.uva.hatt.taxform.ast.nodes;
 
-public class ASTNode {
+public abstract class ASTNode {
+    private final int lineNumber;
 
-    private int lineNumber;
-
-    public ASTNode(int lineNumber) {
+    protected ASTNode(int lineNumber) {
         this.lineNumber = lineNumber;
     }
 

@@ -12,7 +12,7 @@ form exampleForm {
   "Test question 3"
     testQuestion3: boolean;
 
-  if (testQuestion1 AND testQuestion2 OR testQuestion3) {
+  if (testQuestion1 && testQuestion2 || testQuestion3) {
     "Conditional question 1"
       conditionalQuestion1: integer;
     "Conditional question 2"
@@ -46,7 +46,7 @@ form exampleForm {
 - [x] QLVisitor implementation
 - [x] Replacement error listener for parser
 - [x] Application launcher
-- [ ] AST
+- [x] AST
   - [x] Form, Statement, Question classes
   - [x] IfStatement, IfElseStatement classes
   - [x] Classes for Operations
@@ -54,14 +54,20 @@ form exampleForm {
     - [x] Strings
     - [x] Booleans
     - [x] Integers
-- [ ] AST Processing
-  - [ ] Type checking
-    - [ ] reference to undefined questions
-    - [ ] duplicate question declarations with different types
-    - [ ] conditions that are not of the type boolean
-    - [ ] operands of invalid type to operators
-    - [ ] cyclic dependencies between questions
-    - [ ] duplicate labels
-  - [ ] Error output in GUI
-- [ ] GUI generation
-- [ ] Unit tests
+- [x] AST Processing
+  - [x] Type checking
+    - [x] reference to undefined questions
+    - [x] duplicate question declarations with different types
+    - [x] conditions that are not of the type boolean
+    - [x] operands of invalid type to operators
+    - [x] cyclic dependencies between questions
+    - [x] duplicate labels
+  - [x] Error handling
+    - [x] Error class
+    - [x] Error collection class
+    - [x] Make all tests return Error objects
+    - [x] Halt on bad error - don't throw exception!
+    - [x] Output in GUI
+- [x] GUI generation
+- [x] Unit tests
+    

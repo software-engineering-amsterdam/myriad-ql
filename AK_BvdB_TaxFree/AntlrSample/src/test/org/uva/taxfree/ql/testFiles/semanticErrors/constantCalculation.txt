@@ -1,0 +1,3 @@
+form ConstantConditionForm {
+    "My value will never change" -> constantValue : integer = 10+3
+}

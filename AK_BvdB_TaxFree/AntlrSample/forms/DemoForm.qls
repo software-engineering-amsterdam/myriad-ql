@@ -1,0 +1,49 @@
+stylesheet OurTaxFreeSolution {
+  page Expenses {
+    section "Car" {
+
+    }
+    section "Insurance" {
+        question noTax {
+            widget : radio ( "Tax" , "NoTax" )
+        }
+    }
+  }
+  page Taxes {
+    section "Booleans" {
+        question muchTax {
+            widget : radio ( "giveMe" , "iPay" )
+        }
+        question likesToPayTaxes {
+                  color:#FF0000
+                  background-color:#00FF00
+                  widget : dropdown ( "aye" , "naye" )
+                }
+        question likesTheRadio {
+                  widget : radio ( "Radio" , "Television" )
+                 }
+
+    }
+
+
+    section "Integers" {
+        question sliderAmount {
+            widget : slider
+        }
+        question spinnerAmount {
+            widget : spinbox
+        }
+
+        question textValueAmount {
+            widget : text
+        }
+
+    }
+    section "Strings" {
+        question textCharacterAmount {
+            widget : text
+        }
+    }
+
+  }
+}

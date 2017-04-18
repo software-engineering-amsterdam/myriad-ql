@@ -1,7 +1,7 @@
 module QL.Parser.Token exposing (identifier, quotedString, parseLocation, withLocation)
 
 import QL.AST exposing (Location(Location), Id)
-import Combine exposing (Parser, string, regex, succeed, (>>=), (*>), (<*), (<$>))
+import Combine exposing (Parser, string, regex, succeed, (*>), (<*), (<$>))
 
 
 parseLocation : Parser s Location

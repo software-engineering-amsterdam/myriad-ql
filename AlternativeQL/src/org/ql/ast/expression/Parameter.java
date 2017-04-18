@@ -1,7 +1,6 @@
 package org.ql.ast.expression;
 
-import org.ql.ast.Expression;
-import org.ql.ast.Identifier;
+import org.ql.ast.identifier.Identifier;
 
 public class Parameter extends Expression {
     private final Identifier id;
@@ -16,8 +15,8 @@ public class Parameter extends Expression {
     }
 
     @Override
-    public <T> T accept(ExpressionVisitor<T> visitor) throws Throwable {
-        return visitor.visit(this);
+    public <T, C> T accept(ExpressionVisitor<T, C> visitor, C context) {
+        return visitor.visitParameter(this, context);
     }
 
     public Identifier getId() {

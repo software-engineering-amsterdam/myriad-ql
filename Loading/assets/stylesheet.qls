@@ -1,0 +1,29 @@
+stylesheet taxOfficeExample
+    page Housing {
+         default integer {
+             width: 400
+             font: "Arial"
+             fontsize: 14
+             color: "#000000"
+             widget spinbox
+         }
+          default boolean {
+              width: 400
+              font: "Arial"
+              fontsize: 14
+              color: "#abc123"
+              widget checkbox
+          }
+         default boolean widget checkbox
+         default integer widget spinbox
+
+         section "House"
+         question hasSoldHouse
+         question hasBoughtHouse
+         question hasMaintLoan
+
+         section "Price"
+         question sellingPrice
+         question privateDebt
+         question valueResidue
+     }

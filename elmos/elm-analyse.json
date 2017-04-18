@@ -1,6 +1,8 @@
 {
   "checks" : {
     "ExposeAll" : false,
-    "ImportAll" : false
-  }
+    "ImportAll" : false,
+    "DebugCrash": false
+  },
+  "LineLengthExceeded": { "threshold": 200 }
 }

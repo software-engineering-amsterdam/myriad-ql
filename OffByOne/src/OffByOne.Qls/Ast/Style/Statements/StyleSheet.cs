@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
 
-    using OffByOne.LanguageCore.Ast;
     using OffByOne.Qls.Ast.Style.Statements.Base;
     using OffByOne.Qls.Visitors.Contracts;
 
@@ -22,9 +21,9 @@
 
         public override TResult Accept<TResult, TContext>(
             IStatementVisitor<TResult, TContext> visitor,
-            TContext context)
+            TContext environment)
         {
-            return visitor.Visit(this, context);
+            return visitor.Visit(this, environment);
         }
     }
 }

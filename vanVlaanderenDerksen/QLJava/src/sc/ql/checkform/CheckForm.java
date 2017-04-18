@@ -6,94 +6,24 @@ import java.util.List;
 import java.util.Map;
 
 import sc.ql.model.Form;
-import sc.ql.model.Node;
-import sc.ql.model.atoms.AtomId;
-import sc.ql.model.form_elements.Question;
+import sc.ql.model.types.Type;
 
 public class CheckForm {
-	public CheckForm(Form form) throws Exception {
-		List<Node> form_elements = form.getFormElements();
-		List<Question> questions = createQuestionsList(form_elements);
-				
-		checkQuestions(questions);
-		checkConditions(form_elements, questions);
-		checkDependencies(form_elements);
-	}
+	private final List<Message> messages;
 	
-	private Map<String, Question.Type> createIdTypeHashmap(List<Question> questions) {
-		Map<String, Question.Type> identifier_types = new HashMap<String, Question.Type>();
+	public CheckForm(Form form) {
+		Map<String, Type> stringTypes = new HashMap<String, Type>(); 
+		QuestionTypeMap questionTypeMap = new QuestionTypeMap();
+		stringTypes.putAll(form.accept(questionTypeMap));
 		
-		for (Question question : questions) {
-			identifier_types.put(question.getId().getValue(), question.getType());
-		}
+		List<Message> messages = new ArrayList<Message>();
+		TypeChecker typeChecker = new TypeChecker(stringTypes);
+		messages.addAll(form.accept(typeChecker));
 		
-		return identifier_types;
+		this.messages = messages;
 	}
 	
-	private void checkDependencies(List<Node> form_elements) {
-		try {
-			DependenciesVisitor dependencies = new DependenciesVisitor();
-			for (Node form_element : form_elements) {
-				form_element.accept(dependencies);
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	
-	private void checkConditions(List<Node> form_elements, List<Question> questions) {
-		try {
-			ConditionsVisitor condition_visitor = new ConditionsVisitor(createIdTypeHashmap(questions));
-			for (Node form_element : form_elements) {
-				form_element.accept(condition_visitor);
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	
-	private void checkQuestions(List<Question> questions) throws Exception {
-		Map<AtomId, Question> identifier_hm = new HashMap<AtomId, Question>();
-		Map<String, Question> question_hm = new HashMap<String, Question>();
-		
-		for (Question question : questions) {
-			if (question.getQuestion().isEmpty()) {
-				throw new Exception("Undefined question '"+question +"' at line: "+question.getLineNumber());
-			}
-			
-			// Check for duplicate identifiers
-			AtomId identifier = question.getId();
-			if (identifier_hm.containsKey(identifier)) {
-				throw new Exception("Question '"+question.getId().getValue()+"' already declared at line "+identifier_hm.get(identifier).getLineNumber()+", duplicate at line "+question.getLineNumber());
-			}
-			else {
-				identifier_hm.put(identifier, question);
-			}
-			
-			// Check for duplicate question labels
-			String question_str = question.getQuestion();
-			if (question_hm.containsKey(question_str)) {
-				String first_element = "'"+question_hm.get(question_str).getId().getValue()+"' (line "+question_hm.get(question_str).getLineNumber()+")";
-				String second_element = "'"+question.getId().getValue()+"' (line "+question.getLineNumber()+")";
-				throw new Exception("Question "+first_element+" and question "+second_element+" have the same labels.");
-			}
-			else {
-				question_hm.put(question_str, question);
-			}
-		}
-	}
-	
-	private List<Question> createQuestionsList(List<Node> form_elements) {
-		List<Question> questions = new ArrayList<Question>();
-		
-		for (Node form_element : form_elements) {
-			try {
-				questions.addAll(form_element.accept(new QuestionsVisitor()));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-        }
-
-		return questions;
+	public List<Message> getMessages() {
+		return this.messages;
 	}
 }

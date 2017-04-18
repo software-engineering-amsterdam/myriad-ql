@@ -1,35 +1,50 @@
 package ast
 
-case class Stylesheet(identifier: String, pages: Seq[Page])
+import ast.Stylesheet._
 
-case class Page(identifier: String, sections: Seq[Section], defaults: Seq[DefaultStyle])
+case class Stylesheet(identifier: String, pages: Pages)
+
+case class Page(identifier: String, sections: Sections, defaults: DefaultStyles)
 
 sealed trait Block
 
-case class Section(label: String, blocks: Seq[Block], defaults: Seq[DefaultStyle]) extends Block
+case class Section(label: String, blocks: Blocks, defaults: DefaultStyles) extends Block
 
-case class QuestionStyle(identifier: String, styling: Map[String, Style], widget: Option[Widget]) extends Block
+case class QuestionStyle(identifier: String, styling: Styling, widget: Option[Widget]) extends Block
 
-case class DefaultStyle(typeName: Type, styling: Map[String, Style], widget: Option[Widget])
+case class DefaultStyle(typeName: Type, styling: Styling, widget: Option[Widget])
 
-case class Widget(widgetType: WidgetType)
+sealed trait Widget
 
-sealed trait WidgetType
+case object Checkbox extends Widget
 
-case object Checkbox extends WidgetType
+case object Spinbox extends Widget
 
-case object Spinbox extends WidgetType
+case object DatePicker extends Widget
 
-case object DatePicker extends WidgetType
+case object Textfield extends Widget
 
-case class Radio(trueText: String, falseText: String) extends WidgetType
+case class Radio(trueText: String, falseText: String) extends Widget
 
-case class Dropdown(elements: Seq[String]) extends WidgetType
+case class Dropdown(trueText: String, falseText: String) extends Widget
+
+case class Slider(min: BigDecimal, max: BigDecimal) extends Widget
 
 sealed trait Style
 
-case class NumericStyle(value: BigDecimal) extends Style
+case class Width(value: BigDecimal) extends Style
 
-case class ColorStyle(value: String) extends Style
+case class Font(value: String) extends Style
 
-case class StringStyle(value: String) extends Style
+case class FontSize(value: BigDecimal) extends Style
+
+case class Color(value: String) extends Style
+
+object Stylesheet {
+  type Blocks = Seq[Block]
+  type DefaultStyles = Seq[DefaultStyle]
+  type QuestionStyles = Seq[QuestionStyle]
+  type Sections = Seq[Section]
+  type Pages = Seq[Page]
+  type Styling = Map[String, Style]
+}

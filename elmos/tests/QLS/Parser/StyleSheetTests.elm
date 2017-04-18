@@ -61,7 +61,7 @@ styleSheetTests =
                             (Field
                                 (ConfiguredQuestion
                                     ( "hasBoughtHouse", Location 3 14 )
-                                    (SingleConfig (WidgetConfig Checkbox))
+                                    (SingleConfig Checkbox)
                                 )
                             )
                         , SingleChildSection "Loaning" (Field (Question ( "hasMaintLoan", Location 6 14 )))
@@ -69,20 +69,29 @@ styleSheetTests =
                         []
                     , Page "Selling"
                         [ MultiChildSection "Selling"
-                            ([ Field (ConfiguredQuestion ( "hasSoldHouse", Location 11 14 ) (SingleConfig (WidgetConfig (Radio [ "Yes", "No" ]))))
-                             , SubSection
+                            [ Field (ConfiguredQuestion ( "hasSoldHouse", Location 11 14 ) (SingleConfig ((Radio [ "Yes", "No" ]))))
+                            , SubSection
                                 (MultiChildSection "You sold a house"
-                                    ([ Field (ConfiguredQuestion ( "sellingPrice", Location 14 16 ) (SingleConfig (WidgetConfig Spinbox)))
-                                     , Field (ConfiguredQuestion ( "privateDebt", Location 16 16 ) (SingleConfig (WidgetConfig Spinbox)))
-                                     , Field (Question ( "valueResidue", Location 18 16 ))
-                                     , Config (DefaultValueConfig MoneyType (MultiConfig ([ StyleConfig (Width 400), StyleConfig (Font "Arial"), StyleConfig (FontSize 14), StyleConfig (Color "#999999"), WidgetConfig Spinbox ])))
-                                     ]
-                                    )
+                                    [ Field (ConfiguredQuestion ( "sellingPrice", Location 14 16 ) (SingleConfig Spinbox))
+                                    , Field (ConfiguredQuestion ( "privateDebt", Location 16 16 ) (SingleConfig Spinbox))
+                                    , Field (Question ( "valueResidue", Location 18 16 ))
+                                    ]
+                                    [ DefaultValueConfig (Location 19 7)
+                                        MoneyType
+                                        (MultiConfig
+                                            [ Width 400
+                                            , Font "Arial"
+                                            , FontSize 14
+                                            , Color "#999999"
+                                            ]
+                                            (Just Spinbox)
+                                        )
+                                    ]
                                 )
-                             ]
-                            )
+                            ]
+                            []
                         ]
-                        [ DefaultValueConfig BooleanType (SingleConfig (WidgetConfig (Radio [ "Yes", "No" ]))) ]
+                        [ DefaultValueConfig (Location 28 3) BooleanType (SingleConfig (Radio [ "Yes", "No" ])) ]
                     ]
                 }
           )
@@ -119,7 +128,7 @@ pageTests =
                     [ SingleChildSection "Selling"
                         (Field (Question ( "foo", Location 1 38 )))
                     ]
-                    [ DefaultValueConfig BooleanType (SingleConfig (WidgetConfig (Radio [ "Yes", "No" ]))) ]
+                    [ DefaultValueConfig (Location 1 42) BooleanType (SingleConfig (Radio [ "Yes", "No" ])) ]
                 )
           )
         ]
@@ -134,16 +143,16 @@ sectionTests =
           , Just (SingleChildSection "Selling" (Field (Question ( "foo", Location 1 27 ))))
           )
         , ( "section with default widget config"
-          , "section \"Selling\" default boolean widget radio(\"Yes\",\"No\")"
+          , "section \"Selling\" { default boolean widget radio(\"Yes\",\"No\") }"
           , Just
-                (SingleChildSection "Selling"
-                    (Config
-                        (DefaultValueConfig BooleanType
-                            (SingleConfig
-                                (WidgetConfig (Radio [ "Yes", "No" ]))
-                            )
+                (MultiChildSection "Selling"
+                    []
+                    [ DefaultValueConfig (Location 1 20)
+                        BooleanType
+                        (SingleConfig
+                            (Radio [ "Yes", "No" ])
                         )
-                    )
+                    ]
                 )
           )
         , ( "section with single nested section"
@@ -167,6 +176,7 @@ sectionTests =
                             (Field (Question ( "bar", Location 1 59 )))
                         )
                     ]
+                    []
                 )
           )
         ]
@@ -185,7 +195,7 @@ questionTests =
           , Just
                 (ConfiguredQuestion
                     ( "foo", Location 1 9 )
-                    (SingleConfig (WidgetConfig Spinbox))
+                    (SingleConfig Spinbox)
                 )
           )
         , ( "question multi config"
@@ -193,7 +203,7 @@ questionTests =
           , Just
                 (ConfiguredQuestion
                     ( "foo", Location 1 9 )
-                    (MultiConfig [ WidgetConfig Spinbox ])
+                    (MultiConfig [] (Just Spinbox))
                 )
           )
         ]

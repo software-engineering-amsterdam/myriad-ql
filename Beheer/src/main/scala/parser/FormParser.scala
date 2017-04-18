@@ -2,12 +2,10 @@ package parser
 
 import java.io.{ Reader, StringReader }
 
+import ast.Form.Statements
 import ast._
-import model.FormModel
 
-import scala.util.parsing.combinator.JavaTokenParsers
-
-class FormParser extends JavaTokenParsers with ExpressionParser {
+class FormParser extends QLParser with ExpressionParser {
   def parseForm(input: Reader): Form = {
     parseAll(form, input) match {
       case Success(result, _) => result
@@ -15,38 +13,28 @@ class FormParser extends JavaTokenParsers with ExpressionParser {
     }
   }
 
-  private def typeName: Parser[Type] = (
-    "boolean" ^^^ BooleanType
-    | "string" ^^^ StringType
-    | "integer" ^^^ IntegerType
-    | "date" ^^^ DateType
-    | "decimal" ^^^ DecimalType
-    | "money" ^^^ MoneyType
-  )
-
-  private def label: Parser[String] = stringLiteral ^^ (x => x.stripPrefix("\"").stripSuffix("\""))
-
   private def question: Parser[Question] =
-    ident ~ ":" ~ label ~ typeName ~ opt("(" ~> expression <~ ")") ^^ {
-      case identifier ~ ":" ~ label ~ typeName ~ expr =>
+    ident ~ ":" ~ quotedString ~ typeName ~ opt(parentheses(expression)) ^^ {
+      case identifier ~ _ ~ label ~ typeName ~ expr =>
         Question(identifier, label, typeName, expr)
     }
 
   private def conditional: Parser[Conditional] =
-    "if" ~> "(" ~ expression ~ ")" ~ block ^^ {
-      case "(" ~ expression ~ ")" ~ block => Conditional(expression, block)
+    "if" ~> parentheses(expression) ~ statements ~ opt("else" ~> statements) ^^ {
+      case expression ~ ifBlock ~ None => Conditional(expression, ifBlock, Nil)
+      case expression ~ ifBlock ~ Some(elseBlock) => Conditional(expression, ifBlock, elseBlock)
     }
 
-  private def statements: Parser[Seq[Statement]] = curlyBrackets(rep(conditional | question))
+  private def statements: Parser[Statements] = curlyBrackets(rep(conditional | question))
 
   private def form: Parser[Form] =
-    "form" ~> ident ~ block ^^ {
-      case ident ~ block => Form(ident, block)
+    "form" ~> ident ~ statements ^^ {
+      case ident ~ statements => Form(ident, statements)
     }
 }
 
 object FormParser {
-  def apply(input: String): FormModel = apply(new StringReader(input))
+  def apply(input: String): Form = apply(new StringReader(input))
 
-  def apply(input: Reader): FormModel = new FormModel(new FormParser().parseForm(input))
+  def apply(input: Reader): Form = new FormParser().parseForm(input)
 }

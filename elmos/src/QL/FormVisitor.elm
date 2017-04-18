@@ -1,48 +1,39 @@
-module QL.FormVisitor exposing (Config, Order, defaultConfig, actionLambda, inspect, continue, post, pre)
+module QL.FormVisitor exposing (Config, Action, defaultConfig, actionLambda, inspect, continue, on)
 
 import QL.AST exposing (..)
 
 
 type alias Config context =
-    { onIfThen : Order context ( Expression, Block )
-    , onIfThenElse : Order context ( Expression, Block, Block )
-    , onField : Order context ( Label, Id, ValueType )
-    , onComputedField : Order context ( Label, Id, ValueType, Expression )
-    , onExpression : Order context Expression
+    { onIfThen : Action context ( Expression, Block )
+    , onIfThenElse : Action context ( Expression, Block, Block )
+    , onQuestion : Action context ( Label, Id, ValueType )
+    , onComputedQuestion : Action context ( Label, Id, ValueType, Expression )
+    , onExpression : Action context Expression
     }
 
 
-type Order context node
+type Action context node
     = Continue
-    | Pre (node -> context -> context)
-    | Post (node -> context -> context)
+    | On (node -> context -> context)
 
 
-continue : Order context node
+continue : Action context node
 continue =
     Continue
 
 
-post : (node -> context -> context) -> Order context node
-post =
-    Post
+on : (node -> context -> context) -> Action context node
+on =
+    On
 
 
-pre : (node -> context -> context) -> Order context node
-pre =
-    Pre
-
-
-actionLambda : Order context node -> (context -> context) -> node -> context -> context
+actionLambda : Action context node -> (context -> context) -> node -> context -> context
 actionLambda action =
     case action of
         Continue ->
             (\f _ context -> f context)
 
-        Pre g ->
-            (\f node context -> g node context |> f)
-
-        Post g ->
+        On g ->
             (\f node context -> f context |> g node)
 
 
@@ -50,8 +41,8 @@ defaultConfig : Config x
 defaultConfig =
     { onIfThen = Continue
     , onIfThenElse = Continue
-    , onField = Continue
-    , onComputedField = Continue
+    , onQuestion = Continue
+    , onComputedQuestion = Continue
     , onExpression = Continue
     }
 
@@ -77,14 +68,14 @@ inspectExpression config expression context =
 inspectFormItem : Config a -> FormItem -> a -> a
 inspectFormItem config formItem context =
     case formItem of
-        Field label id valueType ->
-            actionLambda config.onField
+        Question label id valueType ->
+            actionLambda config.onQuestion
                 identity
                 ( label, id, valueType )
                 context
 
-        ComputedField label id valueType computation ->
-            actionLambda config.onComputedField
+        ComputedQuestion label id valueType computation ->
+            actionLambda config.onComputedQuestion
                 (inspectExpression config computation)
                 ( label, id, valueType, computation )
                 context

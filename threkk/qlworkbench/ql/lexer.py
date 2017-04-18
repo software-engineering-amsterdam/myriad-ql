@@ -5,8 +5,6 @@ take a string and return instead a stream of tokens. PLY is often used as a
 single script but in this case we use a class for better encapsulation and code
 organisation.
 """
-from logging import basicConfig
-from logging import getLogger
 from ply import lex
 from ply.lex import TOKEN
 
@@ -19,13 +17,13 @@ class QLLexer(object):
     # separately in order to substitute common string for reserved words.
     reserved = {
         'boolean': 'BOOLEAN',
-        'date': 'DATE',
         'decimal': 'DECIMAL',
+        'else': 'ELSE',
+        'false': 'FALSE',
         'form': 'FORM',
         'if': 'IF',
-        'integer': 'INTEGER',
-        'money': 'MONEY',
-        'string': 'STRING'
+        'string': 'STRING',
+        'true': 'TRUE'
     }
 
     # List of tokens used in the lexer.
@@ -50,9 +48,7 @@ class QLLexer(object):
         'DIV',       # /
         'ASSIGN',    # =
         'ID',        # anyString
-        'LABEL',     # "A question?"
-        'COMMENT',   # // This is a comment
-        'WHITESPACE'
+        'STR'        # "A question?"
     ) + tuple(reserved.values())  # Added also the reserved words.
 
     # Reggular expressions that define the tokens.
@@ -74,12 +70,14 @@ class QLLexer(object):
     t_MULT = r'\*'
     t_DIV = r'/'
     t_ASSIGN = r'='
+    t_NOT = r'!'
+    t_STR = r'\".+\"'
 
     # Regular expressions for tokens that require special interactions.
     ID = r'[a-zA-Z_][a-zA-Z_0-9]*'
     COMMENT = r'\/\/.*'
     WHITESPACE = r'\s+'
-    LABEL = r'\".+\"'
+    DECIMAL = r'\d+(.\d+)?'
 
     @TOKEN(ID)
     def t_ID(self, t):
@@ -101,10 +99,10 @@ class QLLexer(object):
         """White spaces are ignored"""
         pass
 
-    @TOKEN(LABEL)
-    def t_LABEL(self, t):
-        """We extract the label without the quotes."""
-        t.value = t.value[1:-1]
+    @TOKEN(DECIMAL)
+    def t_DECIMAL(self, t):
+        """We make sure the value returned is an float"""
+        t.value = float(t.value)
         return t
 
     def t_error(self, t):
@@ -112,45 +110,8 @@ class QLLexer(object):
         Error handler. It logs when a character is not recognised by any token
         of the lexer.
         """
-        # Following the recommendations in the Hitchhiker's guide to Python
-        # (http://docs.python-guide.org/en/latest/writing/logging/)
-        self.log.error('Character not parsed: {value}'.format(
-            value=t.value[0]))
         t.lexer.skip(1)
 
     def __init__(self, **kwargs):
         """Initialises the lexer. It complies with PLY requirements."""
-        basicConfig(format='%(asctime)s %(levelname)-s %(message)s',
-                    datefmt='%m/%d/%Y %I:%M:%S %p')
-        self.log = getLogger()
         self.lexer = lex.lex(module=self, debug=0, **kwargs)
-
-
-if __name__ == '__main__':
-    data = """form taxOfficeExample {
-                "Did you sell a house in 2010?"
-                    hasSoldHouse: boolean
-                "Did you buy a house in 2010?"
-                    hasBoughtHouse: boolean
-                "Did you enter a loan?"
-                    hasMaintLoan: boolean
-
-                if (hasSoldHouse) {
-                    "What was the selling price?"
-                        sellingPrice: money
-                    "Private debts for the sold house:"
-                        privateDebt: money
-                    "Value residue:"
-                        valueResidue: money =
-                            (sellingPrice - privateDebt)
-                }
-
-            }"""
-
-    lexer = QLLexer()
-    lexer.lexer.input(data)
-    while True:
-            tok = lexer.lexer.token()
-            if not tok:
-                break
-            print(tok)

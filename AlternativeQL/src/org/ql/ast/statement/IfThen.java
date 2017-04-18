@@ -1,7 +1,6 @@
 package org.ql.ast.statement;
 
-import org.ql.ast.Expression;
-import org.ql.ast.Statement;
+import org.ql.ast.expression.Expression;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class IfThen extends Statement {
     }
 
     @Override
-    public <T> T accept(StatementVisitor<T> visitor) {
-        return visitor.visit(this);
+    public <T, C> T accept(StatementVisitor<T, C> visitor, C context) {
+        return visitor.visitIfThen(this, context);
     }
 }

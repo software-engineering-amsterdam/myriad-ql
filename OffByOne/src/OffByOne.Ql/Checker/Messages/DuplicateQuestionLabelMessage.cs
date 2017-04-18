@@ -1,13 +1,20 @@
 ﻿namespace OffByOne.Ql.Checker.Messages
 {
-    using OffByOne.LanguageCore.Checker.Messages.Base;
-    using OffByOne.LanguageCore.Checker.Models;
     using OffByOne.Ql.Ast.Statements;
+    using OffByOne.Ql.Checker.Messages.Base;
 
-    public class DuplicateQuestionLabelMessage : CheckerMessage
+    /// <summary>
+    /// A message representing a duplicate question label found during the static code analysis.
+    /// </summary>
+    /// <seealso cref="WarningMessage" />
+    public class DuplicateQuestionLabelMessage : WarningMessage
     {
-        public DuplicateQuestionLabelMessage(QuestionStatement question, LogLevel level = LogLevel.Error)
-            : base($"Duplicate question label {question.Identifier} at: {question.SourceCode}", level)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DuplicateQuestionLabelMessage"/> class.
+        /// </summary>
+        /// <param name="question">The question.</param>
+        public DuplicateQuestionLabelMessage(QuestionStatement question)
+            : base($"Duplicate question label \"{question.Label}\" at: {question.SourceCode}")
         {
         }
     }

@@ -1,14 +1,25 @@
-module UI.Field exposing (Field(Editable, Computed), fieldValueType, activeFields)
+module UI.Field exposing (Field(Editable, Computed), fieldValueType, activeFields, fieldForName)
 
-import QL.AST exposing (Form, Label, ValueType, Expression, FormItem(Field, ComputedField, IfThen, IfThenElse))
-import QL.Environment as Env exposing (Environment)
+import QL.AST exposing (Form, Label, ValueType, Expression, FormItem(Question, ComputedQuestion, IfThen, IfThenElse))
+import QL.Environment exposing (Environment)
 import QL.Values as Values exposing (Value)
 import QL.Evaluator as Evaluator
+import List.Extra as List
 
 
 type Field
     = Editable Label String ValueType
     | Computed Label String ValueType Expression
+
+
+fieldName : Field -> String
+fieldName field =
+    case field of
+        Editable _ name _ ->
+            name
+
+        Computed _ name _ _ ->
+            name
 
 
 fieldValueType : Field -> ValueType
@@ -19,6 +30,11 @@ fieldValueType field =
 
         Computed _ _ valueType _ ->
             valueType
+
+
+fieldForName : String -> List Field -> Maybe Field
+fieldForName name =
+    List.find (\field -> name == fieldName field)
 
 
 activeFields : Environment -> Form -> List Field
@@ -34,10 +50,10 @@ activeFieldsForItems env =
 activeFieldsForItem : Environment -> FormItem -> List Field
 activeFieldsForItem env item =
     case item of
-        Field label ( identifier, _ ) valueType ->
+        Question label ( identifier, _ ) valueType ->
             [ Editable label identifier valueType ]
 
-        ComputedField label ( identifier, _ ) valueType e ->
+        ComputedQuestion label ( identifier, _ ) valueType e ->
             [ Computed label identifier valueType e ]
 
         IfThen expression thenBranch ->

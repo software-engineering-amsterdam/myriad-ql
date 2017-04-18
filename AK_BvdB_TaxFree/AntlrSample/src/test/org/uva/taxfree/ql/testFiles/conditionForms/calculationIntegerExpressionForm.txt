@@ -1,0 +1,9 @@
+form houseForm {
+    if (5 > three) {
+        "What is my six?" -> six : integer
+    }
+    "I am Three" -> three : integer = 10 + soldHouseValue
+    "Value of your house?" -> soldHouseValue : integer
+
+
+}

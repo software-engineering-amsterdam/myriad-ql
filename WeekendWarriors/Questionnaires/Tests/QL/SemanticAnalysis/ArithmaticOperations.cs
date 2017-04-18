@@ -1,24 +1,21 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Questionnaires.AST;
-using Questionnaires.SemanticAnalysis;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests.QL.SemanticAnalysis
 {
     [TestClass]
     public class ArithmaticOperations
     {
-        protected SemanticTestHarness TestHarness = new SemanticTestHarness(ASTFactory.QLObjectType.Expression);
+        protected SemanticTestHarness TestHarness = new SemanticTestHarness();
 
         [TestMethod]
         public void TestNumberAddition()
         {
             TestHarness.TestExpression("1 + 1", 0, "Standard number addition");
-            TestHarness.TestExpression("1 + 2 + 3", 0, "Triple number addition" );
-            TestHarness.TestExpression("(1+1)+1", 0, "Number addition with brackets" );
-            TestHarness.TestExpression("1 + true", 1, "Adding a number and a boolean" );
-            TestHarness.TestExpression("1 + 1.123 ", 0, "Adding a number and a money" );
-            TestHarness.TestExpression("1 + \"string\"", 1, "Adding a number and a string" );
+            TestHarness.TestExpression("1 + 2 + 3", 0, "Triple number addition");
+            TestHarness.TestExpression("(1+1)+1", 0, "Number addition with brackets");
+            TestHarness.TestExpression("1 + true", 1, "Adding a number and a boolean");
+            TestHarness.TestExpression("1 + 1.123 ", 0, "Adding a number and a money");
+            TestHarness.TestExpression("1 + \"string\"", 1, "Adding a number and a string");
         }
 
         [TestMethod]
@@ -95,7 +92,7 @@ namespace Tests.QL.SemanticAnalysis
             TestHarness.TestExpression("1.23 * 2.34", 0, "Standard money multiplication");
             TestHarness.TestExpression("1.23 * 2.34 * 3.45", 0, "Triple money multiplication");
             TestHarness.TestExpression("(1.23*2.34)*3.45", 0, "money multiplication with brackets");
-            TestHarness.TestExpression("1.23 * true", 1, "Multiplying a money and a boolean");;
+            TestHarness.TestExpression("1.23 * true", 1, "Multiplying a money and a boolean"); ;
             TestHarness.TestExpression("1.234 * 1", 0, "Multiplying a money and a number");
             TestHarness.TestExpression("1.23 * \"string\"", 1, "Multiplying a money and a string");
         }

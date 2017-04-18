@@ -2,7 +2,6 @@
 {
     using System.Linq;
 
-    using OffByOne.Qls.Ast.Style;
     using OffByOne.Qls.Ast.Style.Statements;
     using OffByOne.Qls.Tests.ParserTests.Base;
 

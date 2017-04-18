@@ -1,70 +1,55 @@
 package sc.ql.gui;
 
-import net.miginfocom.swing.MigLayout;
-
 import java.awt.Dimension;
-import java.awt.Font;
+import java.util.HashMap;
+import java.util.List;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
+import net.miginfocom.swing.MigLayout;
+import sc.ql.gui.values.Value;
+import sc.ql.checkform.Message;
 import sc.ql.model.Form;
 
-public class GUI extends JPanel {
-	private static final int width = 1000;
-	private static final int height = 800;
-	private static final Font font = new Font("Arial", Font.PLAIN, 30);
+public class GUI {
+	private final Form form; 
+	private final List<Message> messages;
 	
-	public GUI(Form form) {
-		this.setLayout(new MigLayout());
-		this.setFont(new Font("Arial", Font.PLAIN, 30));
-		
-		JLabel nameLabel = new JLabel("test");
-		JTextField fNameField = new JTextField(30);
-		
-		add(nameLabel);
-		add(fNameField, "wrap");
-		
-		JLabel condLabel = new JLabel("Conditional label");
-		JTextField fCondField = new JTextField(30);
-	
-		add(condLabel).setVisible(false);
-		add(fCondField).setVisible(false);
-		
-		fNameField.getDocument().addDocumentListener(new DocumentListener() {
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				showHide(e);
-			}
-
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				showHide(e);
-			}
-
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				showHide(e);
-			}
-			
-			private void showHide(DocumentEvent e) {
-				if(e.getDocument().getLength() == 0) {
-					add(condLabel).setVisible(false);
-					add(fCondField).setVisible(false);
-				}
-				else {
-					add(condLabel).setVisible(true);
-					add(fCondField).setVisible(true);
-				}
-			}
-		});
+	public GUI(Form form, List<Message> messages) {
+		this.form = form;
+		this.messages = messages;
 	}
 	
-	@Override
-	public Dimension getPreferredSize() {
-		return new Dimension(width, height);
+	public void launchGUI() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new MigLayout());
+		panel.setPreferredSize(new Dimension(1000, 800));
+		
+		if (this.messages.isEmpty()) {
+			BuildComponents buildComponents = new BuildComponents(this.form, new HashMap<String, Value>(), panel);
+			panel = buildComponents.getPanel();
+		}
+		else {
+			panel = buildMessages(panel);
+		}
+		
+		JFrame frame = new JFrame("QL Form: "+this.form.getFormName());
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(panel);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
 	}
+	
+	private JPanel buildMessages(JPanel jPanel) {
+		for (Message message : this.messages) {
+			JLabel jLabel = new JLabel(message.toString());
+			jPanel.add(jLabel, "wrap");
+		}
+		
+		return jPanel;
+	}
+
 }

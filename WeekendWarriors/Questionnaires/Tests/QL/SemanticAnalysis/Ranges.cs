@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Questionnaires.AST;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Numerics;
 
 namespace Tests.QL.SemanticAnalysis
@@ -8,27 +6,27 @@ namespace Tests.QL.SemanticAnalysis
     [TestClass]
     public class Ranges
     {
-        protected SemanticTestHarness TestHarness = new SemanticTestHarness(ASTFactory.QLObjectType.ComputedQuestion);
+        protected SemanticTestHarness TestHarness = new SemanticTestHarness();
 
         [TestMethod]
         public void NumberRange()
         {
-            TestHarness.TestExpression(
+            TestHarness.TestComputedQuestion(
                 "question : \"body\" int(" + int.MaxValue + ")",
                 0,
                 "Using the maximal allowed value");
 
-            TestHarness.TestExpression(
+            TestHarness.TestComputedQuestion(
                 "question : \"body\" int(" + (int.MaxValue + (long)1).ToString() + ")",
                 1,
                 "using a number that is too large");
 
-            TestHarness.TestExpression(
+            TestHarness.TestComputedQuestion(
                "question : \"body\" int(" + int.MinValue + ")",
                0,
                "Using the minimal allowed value");
 
-            TestHarness.TestExpression(
+            TestHarness.TestComputedQuestion(
                 "question : \"body\" int(" + (int.MinValue - (long)1).ToString() + ")",
                 1,
                 "Using a number that is too small");
@@ -37,27 +35,27 @@ namespace Tests.QL.SemanticAnalysis
         [TestMethod]
         public void MoneyRange()
         {
-            TestHarness.TestExpression(
+            TestHarness.TestComputedQuestion(
                 "question : \"body\" money(" + decimal.MaxValue.ToString() + ".0)",
                 0,
                 "Using the maximal allowed value");
 
-            TestHarness.TestExpression(
+            TestHarness.TestComputedQuestion(
                "question : \"body\" money(" + decimal.MinValue.ToString() + ".0)",
                0,
                "Using the minimal allowed value");
 
-            BigInteger overflow = new BigInteger(decimal.MaxValue);
+            var overflow = new BigInteger(decimal.MaxValue);
             overflow++;
-            BigInteger underflow = new BigInteger(Decimal.MinValue);
+            var underflow = new BigInteger(decimal.MinValue);
             underflow--;
 
-            TestHarness.TestExpression(
+            TestHarness.TestComputedQuestion(
                 "question : \"body\" money(" + overflow.ToString() + ".0)",
                 1,
-                "using a number that is too large");            
+                "using a number that is too large");
 
-            TestHarness.TestExpression(
+            TestHarness.TestComputedQuestion(
                 "question : \"body\" money(" + underflow.ToString() + ".0)",
                 1,
                 "Using a number that is too small");

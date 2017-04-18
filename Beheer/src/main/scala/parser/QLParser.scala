@@ -9,7 +9,7 @@ trait QLParser extends JavaTokenParsers {
 
   def parentheses[T](parser: Parser[T]) = "(" ~> parser <~ ")"
 
-  def label: Parser[String] = stringLiteral ^^ (s => s.stripPrefix("\"").stripSuffix("\""))
+  def quotedString: Parser[String] = stringLiteral ^^ (s => s.stripPrefix("\"").stripSuffix("\""))
 
   def number: Parser[BigDecimal] = """\d+""".r ^^ (x => BigDecimal(x).setScale(0))
 

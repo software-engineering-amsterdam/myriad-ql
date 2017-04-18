@@ -1,6 +1,6 @@
 package org.ql.ast.expression.arithmetic;
 
-import org.ql.ast.Expression;
+import org.ql.ast.expression.Expression;
 import org.ql.ast.expression.BinaryExpression;
 import org.ql.ast.expression.ExpressionVisitor;
 
@@ -16,7 +16,7 @@ public class Subtraction extends BinaryExpression {
     }
 
     @Override
-    public <T> T accept(ExpressionVisitor<T> visitor) throws Throwable {
-        return visitor.visit(this);
+    public <T, C> T accept(ExpressionVisitor<T, C> visitor, C context) {
+        return visitor.visitSubtraction(this, context);
     }
 }

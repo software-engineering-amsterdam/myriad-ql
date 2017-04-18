@@ -1,47 +1,61 @@
 ﻿namespace OffByOne.Ql.Visitors.Contracts
 {
-    using OffByOne.LanguageCore.Visitors.Contracts;
     using OffByOne.Ql.Ast.Expressions;
     using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Expressions.Unary;
+    using OffByOne.Ql.Ast.Literals;
 
-    public interface IExpressionVisitor<out TResult, in TContext> : IVisitor
-        where TContext : IContext
+    public interface IExpressionVisitor<out TResult, in TEnvironment> : IVisitor
+        where TEnvironment : IEnvironment
     {
-        TResult Visit(AddExpression expression, TContext context);
+        TResult Visit(Expression expression, TEnvironment environment);
 
-        TResult Visit(SubtractExpression expression, TContext context);
+        TResult Visit(AddExpression expression, TEnvironment environment);
 
-        TResult Visit(MultiplyExpression expression, TContext context);
+        TResult Visit(SubtractExpression expression, TEnvironment environment);
 
-        TResult Visit(DivideExpression expression, TContext context);
+        TResult Visit(MultiplyExpression expression, TEnvironment environment);
 
-        TResult Visit(AndExpression expression, TContext context);
+        TResult Visit(DivideExpression expression, TEnvironment environment);
 
-        TResult Visit(OrExpression expression, TContext context);
+        TResult Visit(AndExpression expression, TEnvironment environment);
 
-        TResult Visit(EqualExpression expression, TContext context);
+        TResult Visit(OrExpression expression, TEnvironment environment);
 
-        TResult Visit(NotEqualExpression expression, TContext context);
+        TResult Visit(EqualExpression expression, TEnvironment environment);
 
-        TResult Visit(GreaterThanExpression expression, TContext context);
+        TResult Visit(NotEqualExpression expression, TEnvironment environment);
 
-        TResult Visit(GreaterThanOrEqualExpression expression, TContext context);
+        TResult Visit(GreaterThanExpression expression, TEnvironment environment);
 
-        TResult Visit(LessThanExpression expression, TContext context);
+        TResult Visit(GreaterThanOrEqualExpression expression, TEnvironment environment);
 
-        TResult Visit(LessThanOrEqualExpression expression, TContext context);
+        TResult Visit(LessThanExpression expression, TEnvironment environment);
 
-        TResult Visit(NotExpression expression, TContext context);
+        TResult Visit(LessThanOrEqualExpression expression, TEnvironment environment);
 
-        TResult Visit(NegativeExpression expression, TContext context);
+        TResult Visit(NotExpression expression, TEnvironment environment);
 
-        TResult Visit(PositiveExpression expression, TContext context);
+        TResult Visit(NegativeExpression expression, TEnvironment environment);
 
-        TResult Visit(VariableExpression expression, TContext context);
+        TResult Visit(PositiveExpression expression, TEnvironment environment);
 
-        TResult Visit(BracketExpression expression, TContext context);
+        TResult Visit(VariableExpression expression, TEnvironment environment);
 
-        TResult Visit(LiteralExpression expression, TContext context);
+        TResult Visit(BracketExpression expression, TEnvironment environment);
+
+        TResult Visit(IntegerLiteral literal, TEnvironment environment);
+
+        TResult Visit(MoneyLiteral literal, TEnvironment environment);
+
+        TResult Visit(DecimalLiteral literal, TEnvironment environment);
+
+        TResult Visit(BooleanLiteral literal, TEnvironment environment);
+
+        TResult Visit(StringLiteral literal, TEnvironment environment);
+
+        TResult Visit(DateLiteral literal, TEnvironment environment);
+
+        TResult Visit(HexLiteral literal, TEnvironment environment);
     }
 }

@@ -1,0 +1,6 @@
+form houseForm {
+    if (10 > hasSoldHouse) {
+
+    }
+    "I am hasSoldHouse" -> hasSoldHouse : boolean
+}

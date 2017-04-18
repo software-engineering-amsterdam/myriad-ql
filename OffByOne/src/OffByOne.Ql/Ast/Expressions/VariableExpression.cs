@@ -1,5 +1,7 @@
 ﻿namespace OffByOne.Ql.Ast.Expressions
 {
+    using System.Collections.Generic;
+
     using OffByOne.Ql.Visitors.Contracts;
 
     public class VariableExpression : Expression
@@ -13,9 +15,14 @@
 
         public override TResult Accept<TResult, TContext>(
             IExpressionVisitor<TResult, TContext> visitor,
-            TContext context)
+            TContext environment)
         {
-            return visitor.Visit(this, context);
+            return visitor.Visit(this, environment);
+        }
+
+        public override ISet<string> GetDependencies()
+        {
+            return new SortedSet<string>() { this.Identifier };
         }
     }
 }

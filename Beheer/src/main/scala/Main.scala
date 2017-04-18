@@ -1,22 +1,28 @@
 import java.io.FileReader
 
-import checker.{ Error, FormChecker, Issue, Warning }
-import parser._
+import checker._
+import model.{ FormModel, StyleModel }
+import parser.{ FormParser, StylesheetParser }
+import view.{ QL, QLS }
 
-object Main extends App {
-  val filename = "src/main/resources/example.ql"
-  val parsedForm = FormParser(new FileReader(filename))
-  val formModel = FormChecker(parsedForm)
+import scalafx.application.JFXApp
 
-  println(parsedForm.questions.mkString("\n"))
+object Main extends JFXApp {
+  private val formFile = "src/main/resources/example.ql"
+  private val formModel = new FormModel(FormParser(new FileReader(formFile)))
+  private val formIssues = FormChecker(formModel)
+
+  private val styleFile = "src/main/resources/example.qls"
+  private val styleModel = new StyleModel(StylesheetParser(new FileReader(styleFile)), formModel.identifiersWithType.toMap)
+  private val styleIssues = StyleChecker(styleModel, formModel.identifiersWithType.toMap)
+  private val issues = formIssues ++ styleIssues
 
   private def printIssues(issues: Iterable[Issue]) = issues.foreach {
     case Warning(message) => println(s"${Console.YELLOW}[WARNING] ${Console.RESET}$message")
     case Error(message) => println(s"${Console.RED}[ERROR] ${Console.RESET}$message")
   }
 
-  printIssues(formModel)*/
-  val filename = "src/main/resources/example.qls"
-  val stylesheet = StylesheetParser(new FileReader(filename))
-  println(stylesheet)
+  printIssues(issues)
+  //stage = QL(formIssues, formModel.displayQuestions)
+  stage = QLS(issues, formModel.displayQuestions, styleModel.processedStylesheet)
 }

@@ -8,9 +8,10 @@ import sc.ql.gui.*;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
-import java.io.*;
 
-import javax.swing.JFrame;
+import java.io.*;
+import java.util.List;
+
 import javax.swing.SwingUtilities;
 
 public class Main {
@@ -23,24 +24,14 @@ public class Main {
         
         AstVisitor visitor = new AstVisitor();
         Form form = (Form) visitor.visit(tree);
-        try {
-        	new CheckForm(form);
-        }
-        catch(Exception e) {
-        	System.out.println(e.getMessage());
-        }
+
+    	CheckForm checkForm = new CheckForm(form);    	
+    	List<Message> messages = checkForm.getMessages();
         
         SwingUtilities.invokeLater(new Runnable() {
         	public void run() {
-        		GUI gui = new GUI(form);
-            	
-            	JFrame frame = new JFrame("QL Form");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.getContentPane().add(gui);
-                frame.setResizable(false);
-                frame.pack();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
+        		GUI gui = new GUI(form, messages);
+        		gui.launchGUI();
             }
         });
     }

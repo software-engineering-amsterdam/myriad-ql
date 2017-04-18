@@ -1,6 +1,6 @@
 module QLS.AST exposing (..)
 
-import QL.AST exposing (ValueType, Id)
+import QL.AST exposing (Location, ValueType, Id)
 
 
 type alias StyleSheet =
@@ -15,13 +15,12 @@ type Page
 
 type Section
     = SingleChildSection String SectionChild
-    | MultiChildSection String (List SectionChild)
+    | MultiChildSection String (List SectionChild) (List DefaultValueConfig)
 
 
 type SectionChild
     = SubSection Section
     | Field Question
-    | Config DefaultValueConfig
 
 
 type Question
@@ -30,17 +29,12 @@ type Question
 
 
 type DefaultValueConfig
-    = DefaultValueConfig ValueType Configuration
+    = DefaultValueConfig Location ValueType Configuration
 
 
 type Configuration
-    = SingleConfig ConfigItem
-    | MultiConfig (List ConfigItem)
-
-
-type ConfigItem
-    = StyleConfig Style
-    | WidgetConfig Widget
+    = SingleConfig Widget
+    | MultiConfig (List Style) (Maybe Widget)
 
 
 type Style
@@ -52,5 +46,13 @@ type Style
 
 type Widget
     = Radio (List String)
+    | Dropdown (List String)
     | Spinbox
     | Checkbox
+    | Text
+    | Slider SliderArgs
+
+
+type SliderArgs
+    = SliderMax Int
+    | SliderMinMax Int Int

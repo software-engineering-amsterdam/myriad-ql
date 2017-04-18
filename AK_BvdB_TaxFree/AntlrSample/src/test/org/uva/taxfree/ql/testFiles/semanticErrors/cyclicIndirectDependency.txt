@@ -1,0 +1,15 @@
+// Tests that If's depending on other if's who depend on these inner declarations
+// are caught
+form houseForm {
+
+    // This if depends on the internals of the second if.
+    // That if depends on the internals of this if.
+    // Therefore, this if has a cyclic dependency error
+    if (5 < three) {
+        "What is my six?" -> six : integer
+    }
+
+    if (10 < six) {
+        "What is my three?" -> three : integer
+    }
+}

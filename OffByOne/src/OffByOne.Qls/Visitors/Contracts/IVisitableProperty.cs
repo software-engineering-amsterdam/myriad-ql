@@ -1,10 +1,10 @@
 ﻿namespace OffByOne.Qls.Visitors.Contracts
 {
-    using OffByOne.LanguageCore.Visitors.Contracts;
+    using OffByOne.Ql.Visitors.Contracts;
 
     public interface IVisitableProperty : IVisitable
     {
-        TResult Accept<TResult, TContext>(IPropertyVisitor<TResult, TContext> visitor, TContext context)
-            where TContext : IContext;
+        TResult Accept<TResult, TEnvironment>(IPropertyVisitor<TResult, TEnvironment> visitor, TEnvironment environment)
+            where TEnvironment : IEnvironment;
     }
 }

@@ -1,4 +1,4 @@
-module UI.Messages exposing (error, warning, renderLocation, renderLocations, renderVarName, renderId, renderIds, renderType)
+module UI.Messages exposing (error, warning, success, renderLocation, renderLocations, renderVarName, renderId, renderIds, renderType)
 
 import QL.AST exposing (Id, Location(Location), ValueType)
 import Html exposing (Html, div, text, b, span)
@@ -7,12 +7,17 @@ import Html.Attributes exposing (class)
 
 error : List (Html msg) -> Html msg
 error =
-    div [ class "alert", class "alert-danger" ]
+    div [ class "alert alert-danger" ]
+
+
+success : List (Html msg) -> Html msg
+success =
+    div [ class "alert alert-success" ]
 
 
 warning : List (Html msg) -> Html msg
 warning =
-    div [ class "alert", class "alert-warning" ]
+    div [ class "alert alert-warning" ]
 
 
 renderLocation : Location -> Html msg
