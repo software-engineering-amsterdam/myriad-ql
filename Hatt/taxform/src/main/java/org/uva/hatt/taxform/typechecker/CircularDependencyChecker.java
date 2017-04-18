@@ -228,7 +228,7 @@ public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor
     @Override
     public Set<String> visit(Identifier identifier){
         if (question != null) {
-            addDependency(question.getValue(), identifier.getValue());
+            addDependency(question.getIdentifier(), identifier.getValue());
             checkForCircularDependencies();
         }
 
@@ -259,16 +259,16 @@ public class CircularDependencyChecker implements FormVisitor, ExpressionVisitor
     }
 
     private void checkForCircularDependencies() {
-        List<java.lang.String> dependencies = getDependencies(question.getValue());
+        List<java.lang.String> dependencies = getDependencies(question.getIdentifier());
 
         for (java.lang.String dependency : dependencies) {
             if (isCircularDependency(getDependencies(dependency))) {
-                messages.addError(new CyclicDependency(question.getLineNumber(), question.getValue(), dependency));
+                messages.addError(new CyclicDependency(question.getLineNumber(), question.getIdentifier(), dependency));
             }
         }
     }
 
     private boolean isCircularDependency(List<java.lang.String> circularDependencies) {
-        return circularDependencies.contains(question.getValue()) && !circularDependencies.isEmpty();
+        return circularDependencies.contains(question.getIdentifier()) && !circularDependencies.isEmpty();
     }
 }

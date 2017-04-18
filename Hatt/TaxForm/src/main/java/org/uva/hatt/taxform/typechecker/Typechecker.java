@@ -43,31 +43,31 @@ public class TypeChecker implements FormVisitor, ExpressionVisitor<ValueType> {
 
     @Override
     public Question visit(Question node) {
-        if (declarations.containsKey(node.getValue())) {
-            messages.addError(new DuplicateDeclaration(node.getLineNumber(), node.getValue()));
+        if (declarations.containsKey(node.getIdentifier())) {
+            messages.addError(new DuplicateDeclaration(node.getLineNumber(), node.getIdentifier()));
         }
 
-        if (questions.contains(node.getQuestion().toLowerCase())) {
-            messages.addWarning(new DuplicateLabel(node.getLineNumber(), node.getQuestion()));
+        if (questions.contains(node.getLabel().toLowerCase())) {
+            messages.addWarning(new DuplicateLabel(node.getLineNumber(), node.getLabel()));
         }
 
-        declarations.put(node.getValue(), new IdentifierInput(node.getType()));
-        questions.add(node.getQuestion().toLowerCase());
+        declarations.put(node.getIdentifier(), new IdentifierInput(node.getType()));
+        questions.add(node.getLabel().toLowerCase());
         return null;
     }
 
     @Override
     public ComputedQuestion visit(ComputedQuestion computedQuestion) {
-        if (declarations.containsKey(computedQuestion.getValue())) {
-            messages.addError(new DuplicateDeclaration(computedQuestion.getLineNumber(), computedQuestion.getValue()));
+        if (declarations.containsKey(computedQuestion.getIdentifier())) {
+            messages.addError(new DuplicateDeclaration(computedQuestion.getLineNumber(), computedQuestion.getIdentifier()));
         }
 
-        if (questions.contains(computedQuestion.getQuestion().toLowerCase())) {
-            messages.addWarning(new DuplicateLabel(computedQuestion.getLineNumber(), computedQuestion.getQuestion()));
+        if (questions.contains(computedQuestion.getLabel().toLowerCase())) {
+            messages.addWarning(new DuplicateLabel(computedQuestion.getLineNumber(), computedQuestion.getLabel()));
         }
 
-        declarations.put(computedQuestion.getValue(), new IdentifierInput(computedQuestion.getType()));
-        questions.add(computedQuestion.getQuestion().toLowerCase());
+        declarations.put(computedQuestion.getIdentifier(), new IdentifierInput(computedQuestion.getType()));
+        questions.add(computedQuestion.getLabel().toLowerCase());
 
         Expression expression = computedQuestion.getComputedValue();
         expression.accept(this);

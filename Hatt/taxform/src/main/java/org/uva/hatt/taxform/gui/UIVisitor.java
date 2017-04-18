@@ -64,10 +64,10 @@ public class UIVisitor implements FormVisitor<Pane> {
     @Override
     public Pane visit(org.uva.hatt.taxform.ast.nodes.items.Question node) {
         Field widget = (Field) node.getType().accept(this);
-        widget.setIdentifier(node.getValue());
-        widget.setLabel(node.getQuestion());
+        widget.setIdentifier(node.getIdentifier());
+        widget.setLabel(node.getLabel());
 
-        Value value = environmentsTable.find(node.getValue());
+        Value value = environmentsTable.find(node.getIdentifier());
         widget.setValue(value);
 
         Question question = new Question(environmentsTable, this, form);
@@ -79,8 +79,8 @@ public class UIVisitor implements FormVisitor<Pane> {
     @Override
     public Pane visit(ComputedQuestion node) {
         Field widget = (Field) node.getType().accept(this);
-        widget.setIdentifier(node.getValue());
-        widget.setLabel(node.getQuestion());
+        widget.setIdentifier(node.getIdentifier());
+        widget.setLabel(node.getLabel());
 
         Value value = evaluator.visit(node.getComputedValue());
         widget.setValue(value);

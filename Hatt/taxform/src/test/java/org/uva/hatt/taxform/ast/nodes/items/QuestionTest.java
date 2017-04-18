@@ -24,8 +24,8 @@ public class QuestionTest {
         Question question = (Question) questions.get(0);
 
         assertEquals("taxOfficeExample", form.getFormId());
-        assertEquals("q1?", question.getQuestion());
-        assertEquals("value", question.getValue());
+        assertEquals("q1?", question.getLabel());
+        assertEquals("value", question.getIdentifier());
         assertThat(question.getType(), instanceOf(Boolean.class));
     }
 
@@ -50,12 +50,12 @@ public class QuestionTest {
         assertEquals("taxOfficeExample", form.getFormId());
         assertEquals(2, questions.size());
 
-        assertEquals("q1?", q1.getQuestion());
-        assertEquals("val1", q1.getValue());
+        assertEquals("q1?", q1.getLabel());
+        assertEquals("val1", q1.getIdentifier());
         assertThat(q1.getType(), instanceOf(Boolean.class));
 
-        assertEquals("q2?", q2.getQuestion());
-        assertEquals("val2", q2.getValue());
+        assertEquals("q2?", q2.getLabel());
+        assertEquals("val2", q2.getIdentifier());
         assertThat(q2.getType(), instanceOf(org.uva.hatt.taxform.ast.nodes.types.String.class));
     }
 

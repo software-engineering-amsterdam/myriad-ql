@@ -5,23 +5,23 @@ import org.uva.hatt.taxform.ast.nodes.FormVisitor;
 
 public class Question extends Item{
 
-    private final String question;
-    private final String value;
+    private final String label;
+    private final String identifier;
     private final ValueType type;
 
-    public Question(int lineNumber, String question, String value, ValueType type) {
+    public Question(int lineNumber, String label, String identifier, ValueType type) {
         super(lineNumber);
-        this.question = question;
-        this.value = value;
+        this.label = label;
+        this.identifier = identifier;
         this.type = type;
     }
 
-    public String getQuestion() {
-        return question;
+    public String getLabel() {
+        return label;
     }
 
-    public String getValue() {
-        return value;
+    public String getIdentifier() {
+        return identifier;
     }
 
     public ValueType getType() {
@@ -31,8 +31,8 @@ public class Question extends Item{
     @Override
     public String toString() {
         return "Question{" +
-                "question='" + question + '\'' +
-                ", value='" + value + '\'' +
+                "label='" + label + '\'' +
+                ", identifier='" + identifier + '\'' +
                 ", type='" + type + '\'' +
                 '}';
     }
