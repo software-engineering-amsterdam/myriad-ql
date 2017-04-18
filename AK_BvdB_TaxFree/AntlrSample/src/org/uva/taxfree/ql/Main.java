@@ -25,20 +25,20 @@ public class Main {
         MessageList semanticsMessages = new MessageList();
         FormNode ast = builder.generateAst(semanticsMessages);
 
-        checkMessages(semanticsMessages);
+        processMessages(semanticsMessages);
         SymbolTable symbolTable = new SymbolTable();
         ast.fillSymbolTable(symbolTable);
         ast.checkSemantics(symbolTable, semanticsMessages);
-        checkMessages(semanticsMessages);
+        processMessages(semanticsMessages);
 
         QuestionForm taxForm = new QuestionForm(ast.toString(), symbolTable);
         File qlsFile = createStyleFile(inputFile);
         if (qlsFile.exists()) {
             QlsStyleBuilder qlsStyleBuilder = new QlsStyleBuilder(qlsFile);
             QlsStyle qlsStyle = qlsStyleBuilder.generateStyle(semanticsMessages);
-            checkMessages(semanticsMessages);
+            processMessages(semanticsMessages);
             qlsStyle.checkSemantics(symbolTable, semanticsMessages);
-            checkMessages(semanticsMessages);
+            processMessages(semanticsMessages);
             QlsForm qls = new QlsForm(ast.toString(), symbolTable, qlsStyle);
             taxForm = qls;
         }
@@ -46,7 +46,7 @@ public class Main {
         taxForm.show();
     }
 
-    private static void checkMessages(MessageList semanticsMessages) {
+    private static void processMessages(MessageList semanticsMessages) {
         if (semanticsMessages.hasMessages()) {
             MessageWindow.showMessages(semanticsMessages);
         }
