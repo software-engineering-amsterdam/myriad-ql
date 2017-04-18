@@ -2,6 +2,8 @@ package org.uva.taxfree.qls.styleoption.widget;
 
 import org.uva.taxfree.ql.gui.FormListener;
 import org.uva.taxfree.ql.model.SourceInfo;
+import org.uva.taxfree.ql.model.types.IntegerType;
+import org.uva.taxfree.ql.model.types.Type;
 import org.uva.taxfree.ql.model.values.IntValue;
 import org.uva.taxfree.ql.model.values.Value;
 
@@ -29,5 +31,10 @@ public class SliderWidget extends WidgetStyleOption {
     @Override
     public void callOnUpdate(FormListener listener) {
         mSlider.addChangeListener(unusedEvent -> listener.updateForm());
+    }
+
+    @Override
+    public boolean supports(Type supportedType) {
+        return supportedType.equals(new IntegerType());
     }
 }

@@ -2,6 +2,8 @@ package org.uva.taxfree.qls.styleoption.widget;
 
 import org.uva.taxfree.ql.gui.FormListener;
 import org.uva.taxfree.ql.model.SourceInfo;
+import org.uva.taxfree.ql.model.types.BooleanType;
+import org.uva.taxfree.ql.model.types.Type;
 import org.uva.taxfree.ql.model.values.BooleanValue;
 import org.uva.taxfree.ql.model.values.Value;
 
@@ -30,5 +32,10 @@ public class CheckboxWidget extends WidgetStyleOption {
     @Override
     public void callOnUpdate(FormListener listener) {
         mCheckBox.addActionListener(unusedEvent -> listener.updateForm());
+    }
+
+    @Override
+    public boolean supports(Type supportedType) {
+        return supportedType.equals(new BooleanType());
     }
 }
