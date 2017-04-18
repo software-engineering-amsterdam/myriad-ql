@@ -31,7 +31,7 @@ module QL
         question_variables = questions.map(&:variable).map(&:name)
         expression_variable_collector = ExpressionVariableCollector.new
         ast.accept(expression_variable_collector)
-        expression_variables =  expression_variable_collector.variables.map(&:name)
+        expression_variables = expression_variable_collector.variables.map(&:name)
 
         (expression_variables - question_variables).each do |undefined_variable|
           NotificationTable.store(Notification::Error.new("variable '#{undefined_variable}' is undefined"))
