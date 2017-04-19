@@ -11,7 +11,7 @@ module Prophet
       end
 
       def each(&block)
-        block.call(self)
+        yield self
         children.each { |child| child.each(&block) }
       end
       alias walk each
@@ -20,15 +20,15 @@ module Prophet
         qualified_types = types.map do |type|
           "Prophet::Ast::#{type.camelize}".constantize
         end
-        select { |node| qualified_types.any? { |type| node.is_a? type }}
+        select { |node| qualified_types.any? { |type| node.is_a? type } }
       end
 
       def children
         values.each_with_object([]) do |child, memo|
-          if child.kind_of? Node
+          if child.is_a? Node
             memo << child
-          elsif child.kind_of? Array
-            child.each { |c| memo << c if c.kind_of? Node }
+          elsif child.is_a? Array
+            child.each { |c| memo << c if c.is_a? Node }
           end
         end
       end

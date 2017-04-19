@@ -9,7 +9,7 @@ module Prophet
       end
 
       def error_formatter
-        "A cyclic dependency exists"
+        'A cyclic dependency exists'
       end
 
       private
@@ -17,12 +17,13 @@ module Prophet
       attr_reader :dependency_hash
 
       def dependency_hash
-        @dependency_hash ||= DependencyHash[
-          ast.select_by_type(:question_with_value).map do |question|
+        @dependency_hash ||= begin
+          mapping = ast.select_by_type(:question_with_value).map do |question|
             [question.identifier.name.to_s,
              question.select_by_type(:identifier).map(&:name).map(&:to_s)]
           end
-        ]
+          DependencyHash[mapping]
+        end
       end
     end
   end

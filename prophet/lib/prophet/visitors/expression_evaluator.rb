@@ -54,7 +54,7 @@ module Prophet
       end
 
       def visit_negation(node)
-        !(node.value.visit(self))
+        !(node.value.visit self)
       end
 
       def visit_identifier(node)
