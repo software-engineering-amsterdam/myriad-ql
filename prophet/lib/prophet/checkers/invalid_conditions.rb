@@ -2,8 +2,8 @@ module Prophet
   module Checkers
     class InvalidConditions < Base
       def check
-          expression_type = if_statement.condition.visit(Visitors::ExpressionType.new(type_mapping))
         ast.select_by_type(:if_statement, :if_else_statement).map do |if_statement|
+          expression_type = if_statement.condition.visit Visitors::ExpressionTypeEvaluator.new(type_mapping)
           if expression_type == Ast::UndefinedType.new
             mismatch_error_formatter(if_statement)
           elsif expression_type != Ast::BoolType.new

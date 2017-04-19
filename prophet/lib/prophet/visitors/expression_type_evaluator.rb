@@ -1,6 +1,6 @@
 module Prophet
   module Visitors
-    class ExpressionType
+    class ExpressionTypeEvaluator
       def initialize(type_mapping)
         @type_mapping = type_mapping
         @fallback = Ast::UndefinedType.new
