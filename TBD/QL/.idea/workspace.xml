@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="62885f6a-3817-416b-8e65-17efacae74f2" name="Default" comment="cleaned up code and info box">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/EvalTest.java" />
+    <list default="true" id="62885f6a-3817-416b-8e65-17efacae74f2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/EvalTest.java" afterPath="$PROJECT_DIR$/src/test/EvalTest.java" />
     </list>
     <list id="76b6b3a2-7088-4438-a30c-090bb2c79e79" name="Revert: " comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -15,7 +15,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/QL$unitTest.coverage" NAME="unitTest Coverage Results" MODIFIED="1489500416753" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/QL$unitTest.coverage" NAME="unitTest Coverage Results" MODIFIED="1492598025742" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/QL$Main__1_.coverage" NAME="Main (1) Coverage Results" MODIFIED="1489495081724" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>ql.*</FILTER>
     </SUITE>
@@ -49,11 +49,21 @@
       <file leaf-file-name="EvalTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/EvalTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="218" column="5" lean-forward="true" selection-start-line="218" selection-start-column="5" selection-end-line="218" selection-end-column="5" />
+            <state relative-caret-position="450">
+              <caret line="258" column="66" lean-forward="false" selection-start-line="258" selection-start-column="66" selection-end-line="258" selection-end-column="66" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StringValue.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ql/values/StringValue.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1044,7 +1054,7 @@
       <workItem from="1492109670562" duration="2000" />
       <workItem from="1492545064767" duration="114000" />
       <workItem from="1492549655239" duration="1848000" />
-      <workItem from="1492597373591" duration="632000" />
+      <workItem from="1492597373591" duration="815000" />
     </task>
     <task id="LOCAL-00001" summary="jacc and beginning of ASt">
       <created>1486468125187</created>
@@ -1200,19 +1210,17 @@
       <option name="project" value="LOCAL" />
       <updated>1491741056900</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="added some eval test">
+      <created>1492598017256</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1492598017256</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="unitTest - 2017.04.19 at 12h 26m 59s.xml">
-      <configuration name="unitTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="unitTest - 2017.04.19 at 12h 27m 41s.xml">
-      <configuration name="unitTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="unitTest - 2017.04.19 at 12h 28m 45s.xml">
-      <configuration name="unitTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="unitTest - 2017.04.19 at 12h 29m 11s.xml">
       <configuration name="unitTest" configurationId="JUnit" />
     </history-entry>
@@ -1234,9 +1242,18 @@
     <history-entry file="unitTest - 2017.04.19 at 12h 33m 24s.xml">
       <configuration name="unitTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="unitTest - 2017.04.19 at 12h 33m 46s.xml">
+      <configuration name="unitTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="unitTest - 2017.04.19 at 12h 35m 18s.xml">
+      <configuration name="unitTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="unitTest - 2017.04.19 at 12h 36m 26s.xml">
+      <configuration name="unitTest" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="78311000" />
+    <option name="totallyTimeSpent" value="78494000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1253,6 +1270,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3273495" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29915434" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32946146" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1271,7 +1289,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32875264" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32769555" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1303,7 +1320,8 @@
     <MESSAGE value="it works" />
     <MESSAGE value="cleaned up env and added toJson" />
     <MESSAGE value="cleaned up code and info box" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleaned up code and info box" />
+    <MESSAGE value="added some eval test" />
+    <option name="LAST_COMMIT_MESSAGE" value="added some eval test" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1834,10 +1852,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ql/values/StringValue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/EvalTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="218" column="5" lean-forward="true" selection-start-line="218" selection-start-column="5" selection-end-line="218" selection-end-column="5" />
+        <state relative-caret-position="450">
+          <caret line="258" column="66" lean-forward="false" selection-start-line="258" selection-start-column="66" selection-end-line="258" selection-end-column="66" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

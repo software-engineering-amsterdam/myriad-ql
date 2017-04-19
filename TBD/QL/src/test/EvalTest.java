@@ -8,6 +8,7 @@ import ql.ast.expressions.binop.*;
 import ql.ast.literals.QLBoolean;
 import ql.ast.literals.QLFloat;
 import ql.ast.literals.QLInt;
+import ql.ast.literals.QLString;
 import ql.gui.evaluator.GUIEvaluator;
 import ql.logger.ErrorHandler;
 import ql.values.*;
@@ -234,6 +235,28 @@ public class EvalTest {
 
         GUIEvaluator guiEvaluator = new GUIEvaluator(null);
         Expr expr = new Or(new QLBoolean(false, 0), new QLBoolean(false, 0), 0);
+        Value value = expr.accept(guiEvaluator);
+
+        assertTrue(value instanceof BooleanValue);
+        assertFalse(((BooleanValue) value).getValue());
+    }
+
+    @Test
+    public void StringEqTest() {
+
+        GUIEvaluator guiEvaluator = new GUIEvaluator(null);
+        Expr expr = new Eq(new QLString("ab", 0), new QLString("ab", 0), 0);
+        Value value = expr.accept(guiEvaluator);
+
+        assertTrue(value instanceof BooleanValue);
+        assertTrue(((BooleanValue) value).getValue());
+    }
+
+    @Test
+    public void StringEqTest2() {
+
+        GUIEvaluator guiEvaluator = new GUIEvaluator(null);
+        Expr expr = new Eq(new QLString("ab", 0), new QLString("cd", 0), 0);
         Value value = expr.accept(guiEvaluator);
 
         assertTrue(value instanceof BooleanValue);
