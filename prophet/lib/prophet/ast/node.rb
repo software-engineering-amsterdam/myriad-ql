@@ -18,7 +18,7 @@ module Prophet
 
       def select_by_type(*types)
         qualified_types = types.map do |type|
-          ActiveSupport::Inflector.constantize("Prophet::Ast::#{ActiveSupport::Inflector.camelize(type)}")
+          "Prophet::Ast::#{type.camelize}".constantize
         end
         select { |node| qualified_types.any? { |type| node.is_a? type }}
       end
@@ -46,7 +46,7 @@ module Prophet
       end
 
       def node_name
-        ActiveSupport::Inflector.underscore ActiveSupport::Inflector.demodulize(self.class.name)
+        self.class.name.demodulize.underscore
       end
 
       def method_name
