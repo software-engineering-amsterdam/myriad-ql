@@ -50,7 +50,7 @@ module Prophet
 
     def build_initial_state
       ast.select_by_type(:question, :question_with_value).each do |question|
-        state[question.identifier.name.to_s] = question.type.default_value
+        state[question.identifier.name.to_s] = question.type.class.default_value
       end
     end
   end

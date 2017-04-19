@@ -24,14 +24,14 @@ module Prophet
       def visit_question(node)
         name = node.identifier.name.to_s
         label = Widgets::Label.new(name)
-        input = node.type.associated_widget.new(name, values[name])
+        input = node.type.class.associated_widget.new(name, values[name])
         Widgets::Fieldset.new(name, label, input)
       end
 
       def visit_question_with_value(node)
         name = node.identifier.name.to_s
         label = Widgets::Label.new(name)
-        input = node.type.associated_widget.new(name, values[name], state: 'disabled')
+        input = node.type.class.associated_widget.new(name, values[name], state: 'disabled')
         Widgets::Fieldset.new(name, label, input)
       end
 
