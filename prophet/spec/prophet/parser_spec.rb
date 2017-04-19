@@ -1,8 +1,7 @@
 require 'spec_helper'
-require 'parser'
 require 'byebug'
 
-describe Parser do
+describe Prophet::Parser do
   describe '#space' do
     it 'consumes a single space' do
       expect(subject.space).to parse(' ')
@@ -57,85 +56,73 @@ describe Parser do
     end
   end
 
-  describe '#string' do
-    it 'consumes an arbitrary string' do
-      expect(subject.string).to parse('"aB3# ?"')
+  describe '#comment' do
+    it 'consumes an empty comment' do
+      expect(subject.comment).to parse("#\n")
     end
 
-    it 'consumes empty strings' do
-      expect(subject.string).to parse('""')
+    it 'consumes a comment' do
+      expect(subject.comment).to parse("# foo bar \n")
     end
 
-    it 'only consumes strings enclosed in quotes' do
+    it 'consumes a comment with no whitespace' do
+      expect(subject.comment).to parse("#foobar\n")
+    end
+
+    it 'only consumes strings ending with a new line' do
       expect do
-        subject.string.parse('abc')
+        subject.comment.parse('# Just a comment')
       end.to raise_error(Parslet::ParseFailed)
     end
   end
 
-  describe '#integer' do
-    it 'consumes digits' do
-      expect(subject.integer).to parse('123')
+  describe '#text' do
+    it 'consumes an arbitrary text' do
+      expect(subject.text).to parse('"aB3# ?"')
     end
 
-    it 'consumes a single digit' do
-      expect(subject.integer).to parse('1')
+    it 'consumes empty text' do
+      expect(subject.text).to parse('""')
+    end
+
+    it 'only consumes text enclosed in quotes' do
+      expect do
+        subject.text.parse('abc')
+      end.to raise_error(Parslet::ParseFailed)
     end
   end
 
-  describe '#boolean' do
+  describe '#number' do
+    it 'consumes digits' do
+      expect(subject.number).to parse('123')
+    end
+
+    it 'consumes a single digit' do
+      expect(subject.number).to parse('1')
+    end
+  end
+
+  describe '#bool' do
     it 'consumes true' do
-      expect(subject.boolean).to parse('true')
+      expect(subject.bool).to parse('true')
     end
 
     it 'consumes false' do
-      expect(subject.boolean).to parse('false')
+      expect(subject.bool).to parse('false')
     end
   end
 
   describe '#literal' do
-    it 'consumes a string' do
+    it 'consumes a text' do
       expect(subject.literal).to parse('"foo"')
     end
 
-    it 'consumes an integer' do
+    it 'consumes a number' do
       expect(subject.literal).to parse('123')
     end
 
-    it 'consumes a boolean' do
+    it 'consumes a bool' do
       expect(subject.literal).to parse('true')
-    end
-  end
-
-  describe '#operator' do
-    it 'consumes addition' do
-      expect(subject.operator).to parse('+')
-    end
-
-    it 'consumes subtraction' do
-      expect(subject.operator).to parse('-')
-    end
-
-    it 'consumes multiplication' do
-      expect(subject.operator).to parse('*')
-    end
-
-    it 'consumes division' do
-      expect(subject.operator).to parse('/')
-    end
-  end
-
-  describe '#comment' do
-    it 'consumes an empty comment' do
-      expect(subject.comment).to parse('#')
-    end
-
-    it 'consumes a comment' do
-      expect(subject.comment).to parse('# foo bar')
-    end
-
-    it 'consumes a comment with no whitespace' do
-      expect(subject.comment).to parse('#foobar')
     end
   end
 
@@ -144,16 +131,12 @@ describe Parser do
       expect(subject.type).to parse('text')
     end
 
-    it 'consumes bool' do
-      expect(subject.type).to parse('bool')
-    end
-
     it 'consumes number' do
       expect(subject.type).to parse('number')
     end
 
-    it 'consumes money' do
-      expect(subject.type).to parse('money')
+    it 'consumes bool' do
+      expect(subject.type).to parse('bool')
     end
   end
 
@@ -170,6 +153,84 @@ describe Parser do
 
     it 'can contain letters and digits starting with the second character' do
       expect(subject.identifier).to parse('foO123')
+    end
+  end
+
+  describe '#logical_and' do
+    it 'consumes a &&' do
+      expect(subject.logical_and).to parse('&&')
+    end
+  end
+
+  describe '#logical_or' do
+    it 'consumes a ||' do
+      expect(subject.logical_or).to parse('||')
+    end
+  end
+
+  describe '#equal' do
+    it 'consumes a ==' do
+      expect(subject.equal).to parse('==')
+    end
+  end
+
+  describe '#not_equal' do
+    it 'consumes a !=' do
+      expect(subject.not_equal).to parse('!=')
+    end
+  end
+
+  describe '#less_then_or_equal' do
+    it 'consumes a <=' do
+      expect(subject.less_then_or_equal).to parse('<=')
+    end
+  end
+
+  describe '#less_then' do
+    it 'consumes a <' do
+      expect(subject.less_then).to parse('<')
+    end
+  end
+
+  describe '#greater_then' do
+    it 'consumes a >' do
+      expect(subject.greater_then).to parse('>')
+    end
+  end
+
+  describe '#greater_then_or_equal' do
+    it 'consumes a >=' do
+      expect(subject.greater_then_or_equal).to parse('>=')
+    end
+  end
+
+  describe '#plus' do
+    it 'consumes a +' do
+      expect(subject.plus).to parse('+')
+    end
+  end
+
+  describe '#minus' do
+    it 'consumes a -' do
+      expect(subject.minus).to parse('-')
+    end
+  end
+
+  describe '#multiply' do
+    it 'consumes a *' do
+      expect(subject.multiply).to parse('*')
+    end
+  end
+
+  describe '#divide' do
+    it 'consumes a /' do
+      expect(subject.divide).to parse('/')
+    end
+  end
+
+  describe '#negation' do
+    it 'consumes a !' do
+      expect(subject.negation).to parse('!')
     end
   end
 
@@ -194,7 +255,7 @@ describe Parser do
       expect(subject.expression).to parse('(1 + 1)')
     end
 
-    xit 'supports nested expressions' do
+    it 'supports nested expressions' do
       expect(subject.expression).to parse('(1 + (2 * foo))')
       expect(subject.expression).to parse('((1 + 2) * foo)')
     end
@@ -209,6 +270,10 @@ describe Parser do
       expect(subject.block).to parse('"foo bar?" text baz')
     end
 
+    it 'consumes a comment' do
+      expect(subject.block).to parse("# foo bar \n")
+    end
+
     it 'may be empty' do
       expect(subject.block).to parse('')
     end
@@ -220,7 +285,6 @@ describe Parser do
     end
 
     it 'consumes a well formed conditional with an alternative' do
-      # byebug
       expect(subject.if_statement).to parse('if foo "bar?" text baz else "foobar?" text qux end')
     end
   end
@@ -230,13 +294,13 @@ describe Parser do
       expect(subject.question).to parse('"foo bar?" text baz')
     end
 
-    it 'consumes a well formed question with an expression' do
+    it 'consumes a well formed question with a value' do
       expect(subject.question).to parse('"foo bar?" text baz => qux')
     end
   end
 
   describe '#form' do
-    it 'consumes a well formed questionnaire' do
+    it 'consumes a well formed form' do
       expect(subject.form).to parse('form fooBar "foo?" text bar end')
     end
   end
