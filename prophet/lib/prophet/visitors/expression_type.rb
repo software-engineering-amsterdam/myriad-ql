@@ -44,7 +44,7 @@ module Prophet
       end
 
       def visit_literal(node)
-        node.associated_type
+        node.class.associated_type
       end
 
       alias :visit_text_literal   :visit_literal

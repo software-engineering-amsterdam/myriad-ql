@@ -4,19 +4,19 @@ module Prophet
     end
 
     class TextLiteral < Literal
-      def associated_type
+      def self.associated_type
         TextType.new
       end
     end
 
     class NumberLiteral < Literal
-      def associated_type
+      def self.associated_type
         NumberType.new
       end
     end
 
     class BoolLiteral < Literal
-      def associated_type
+      def self.associated_type
         BoolType.new
       end
     end
