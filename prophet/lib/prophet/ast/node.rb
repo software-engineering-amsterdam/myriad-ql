@@ -14,11 +14,14 @@ module Prophet
         yield self
         children.each { |child| child.each(&block) }
       end
-      alias walk each
 
+      # Selects all children that are of given type(s)
+      #
+      #   ast.select_by_type(:identifier)
+      #   ast.select_by_type('question', 'question_with_value')
       def select_by_type(*types)
         qualified_types = types.map do |type|
-          "Prophet::Ast::#{type.camelize}".constantize
+          "Prophet::Ast::#{type.to_s.camelize}".constantize
         end
         select { |node| qualified_types.any? { |type| node.is_a? type } }
       end
@@ -33,6 +36,8 @@ module Prophet
         end
       end
 
+      # Finds the leftmost child that is a Parslet::Slice and returns its line
+      # and column
       def line_and_column
         first_value = values.first
         case first_value
