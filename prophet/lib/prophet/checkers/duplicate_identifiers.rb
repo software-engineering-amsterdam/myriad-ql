@@ -15,10 +15,6 @@ module Prophet
         "Identifier `#{names.first}` is defined multiple times (on " \
         "#{names.map { |i| i.line_and_column.join(':') }.join(', ')})"
       end
-
-      private
-
-      attr_reader :ast
     end
   end
 end

@@ -14,7 +14,7 @@ module Prophet
 
       private
 
-      attr_reader :ast, :dependency_hash
+      attr_reader :dependency_hash
 
       def dependency_hash
         @dependency_hash ||= DependencyHash[

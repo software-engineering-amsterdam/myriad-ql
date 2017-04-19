@@ -16,10 +16,6 @@ module Prophet
       def error_formatter(name)
         "Identifier `#{name}` is not defined (used on #{name.line_and_column.join(':')})"
       end
-
-      private
-
-      attr_reader :ast
     end
   end
 end

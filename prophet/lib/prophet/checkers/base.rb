@@ -8,6 +8,10 @@ module Prophet
       def check
         raise NotImplementedError
       end
+
+      private
+
+      attr_reader :ast
     end
   end
 end

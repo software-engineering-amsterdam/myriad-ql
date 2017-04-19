@@ -25,7 +25,7 @@ module Prophet
 
       private
 
-      attr_reader :ast, :type_mapping
+      attr_reader :type_mapping
 
       def type_mapping
         @type_mapping ||= ast.select_by_type(:question, :question_with_value).map do |question|
