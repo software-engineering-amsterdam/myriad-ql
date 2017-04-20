@@ -13,7 +13,7 @@ public class QLSApplication extends Application {
     public void start(Stage primaryStage) throws Exception {
         Window window = new Window(primaryStage, form.getName().toString());
         QLSGUIFormBuilder guiFormBuilder = new QLSGUIFormBuilder(window, form, styleSheet);
-        guiFormBuilder.constructFormPage(0);
+        guiFormBuilder.constructFormPage();
         primaryStage.show();
     }
 

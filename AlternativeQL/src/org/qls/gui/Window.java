@@ -1,11 +1,8 @@
 package org.qls.gui;
 
 import javafx.scene.Node;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import org.ql.gui.QuestionPane;
-import org.ql.gui.widgets.Widget;
 
 import java.util.List;
 

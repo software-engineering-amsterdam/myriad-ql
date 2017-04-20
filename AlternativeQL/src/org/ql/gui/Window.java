@@ -1,7 +1,7 @@
 package org.ql.gui;
 
 import javafx.stage.Stage;
-import org.ql.gui.widgets.Widget;
+import org.ql.gui.widgets.GUIWidget;
 
 public class Window {
 
@@ -19,7 +19,7 @@ public class Window {
         mainPane.reset();
     }
 
-    public void attachWidget(Widget widget) {
+    public void attachWidget(GUIWidget widget) {
         mainPane.add(widget.createGridPane());
     }
 }

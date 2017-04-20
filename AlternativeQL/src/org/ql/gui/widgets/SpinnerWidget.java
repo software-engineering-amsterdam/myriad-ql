@@ -3,15 +3,13 @@ package org.ql.gui.widgets;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import org.ql.ast.statement.ComputableQuestion;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.Value;
 import org.ql.gui.FormPane;
 import org.ql.gui.ValueReviser;
 
-public abstract class SpinnerWidget<V> extends Widget {
+public abstract class SpinnerWidget<V> extends GUIWidget {
     private final Spinner<V> spinner;
     private final Label label;
 

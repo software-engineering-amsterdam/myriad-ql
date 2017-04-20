@@ -2,16 +2,13 @@ package org.ql.gui.widgets;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import org.ql.ast.statement.ComputableQuestion;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.value.Value;
 import org.ql.gui.FormPane;
 import org.ql.gui.ValueReviser;
 
-abstract class InputWidget extends Widget {
+abstract class InputWidget extends GUIWidget {
     private final Label label;
     private final TextField textField;
 

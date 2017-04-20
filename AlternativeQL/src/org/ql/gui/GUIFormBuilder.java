@@ -5,25 +5,23 @@ import org.ql.ast.identifier.Identifier;
 import org.ql.ast.statement.Question;
 import org.ql.evaluator.ValueTable;
 import org.ql.evaluator.value.Value;
-import org.ql.gui.widgets.Widget;
-import org.ql.gui.widgets.WidgetContainer;
+import org.ql.gui.widgets.GUIWidget;
+import org.ql.gui.widgets.container.GUIWidgetContainer;
+
+import java.util.List;
 
 public class GUIFormBuilder implements ValueReviser {
 
     private final Window window;
     private final Form form;
-    private final ValueTable valueTable;
-    private final WidgetContainer widgetContainer;
-    private final GUIEvaluator guiEvaluator;
+
+    private final ValueTable valueTable = new ValueTable();
+    private final GUIWidgetContainer widgetContainer = new GUIWidgetContainer(this);
+    private final GUIEvaluator guiEvaluator = new GUIEvaluator(valueTable);
 
     public GUIFormBuilder(Window window, Form form) {
         this.window = window;
         this.form = form;
-
-        widgetContainer = new WidgetContainer(this);
-
-        valueTable = new ValueTable();
-        guiEvaluator = new GUIEvaluator(valueTable);
     }
 
     @Override
@@ -34,18 +32,24 @@ public class GUIFormBuilder implements ValueReviser {
 
     public void constructGUIForm() {
         window.reset();
-        guiEvaluator.refreshValues(form);
-        guiEvaluator.evaluateQuestions(form).forEach(this::addQuestionAsWidgetToForm);
+        List<Question> visibleQuestions = guiEvaluator.evaluateQuestions(form);
+        visibleQuestions.forEach(this::populateWidgetValue);
+        visibleQuestions.forEach(this::displayQuestionWidget);
     }
 
-    private void addQuestionAsWidgetToForm(Question question) {
-        Widget widget = widgetContainer.retrieveWidget(question);
+    private void populateWidgetValue(Question question) {
         Value value = valueTable.lookup(question.getId());
 
         if (value.isKnown() && !guiEvaluator.isQuestionModified(question.getId())) {
-            widget.updateWidgetValue(value);
+            findWidget(question).updateWidgetValue(value);
         }
+    }
 
-        window.attachWidget(widget);
+    private void displayQuestionWidget(Question question) {
+        window.attachWidget(findWidget(question));
+    }
+
+    private GUIWidget findWidget(Question question) {
+        return widgetContainer.retrieveDefaultWidget(question);
     }
 }
