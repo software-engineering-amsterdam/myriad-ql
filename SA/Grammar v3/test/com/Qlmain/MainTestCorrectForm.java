@@ -3,10 +3,10 @@ package com.Qlmain;
 import com.Qlmain.QL.*;
 import com.Qlmain.error_types.Error_codes_list;
 import com.Qlmain.evaluation.Evaluation;
-import com.Qlmain.types_Of_Expr.types.Type;
-import com.Qlmain.types_Of_Expr.types.Type_bool;
-import com.Qlmain.types_Of_Expr.types.Type_mon;
-import com.Qlmain.types_Of_Expr.types.Type_str;
+import com.Qlmain.typesOfExpr.types.Type;
+import com.Qlmain.typesOfExpr.types.Type_bool;
+import com.Qlmain.typesOfExpr.types.Type_mon;
+import com.Qlmain.typesOfExpr.types.Type_str;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -108,11 +108,11 @@ public class MainTestCorrectForm {
         for (Statement qu : temp) {
             if (qu instanceof Question) {
                 ty = ((Question) qu).type.exprTypeChecker();
-                if (!ty.check__no_type() && !ty.check__wrong_type()) {
-                    assertEquals(variableTypeTest.get(((Question) qu).name).check__bool_type(), ty.check__bool_type());
-                    assertEquals(variableTypeTest.get(((Question) qu).name).check__int_type(), ty.check__int_type());
-                    assertEquals(variableTypeTest.get(((Question) qu).name).check__mon_type(), ty.check__mon_type());
-                    assertEquals(variableTypeTest.get(((Question) qu).name).check__str_type(), ty.check__str_type());
+                if (!ty.checkNoType() && !ty.checkWrongType()) {
+                    assertEquals(variableTypeTest.get(((Question) qu).name).checkBoolType(), ty.checkBoolType());
+                    assertEquals(variableTypeTest.get(((Question) qu).name).checkIntType(), ty.checkIntType());
+                    assertEquals(variableTypeTest.get(((Question) qu).name).checkMonType(), ty.checkMonType());
+                    assertEquals(variableTypeTest.get(((Question) qu).name).checkStrType(), ty.checkStrType());
                 }
             }else if (qu instanceof IfStatement){
                 checkQuestionTypeIteration( ((IfStatement) qu).getStatementsList() );
@@ -133,10 +133,10 @@ public class MainTestCorrectForm {
         for (Statement st : statementLi){
             if (st instanceof IfStatement) {
                 if (count == 0) {
-                    assertEquals(true, ((IfStatement) st).getIfCase().exprTypeChecker().check__bool_type());
+                    assertEquals(true, ((IfStatement) st).getIfCase().exprTypeChecker().checkBoolType());
                     count++;
                 } else if (count > 0)
-                    assertEquals(true, ((IfStatement) st).getIfCase().exprTypeChecker().check__bool_type());
+                    assertEquals(true, ((IfStatement) st).getIfCase().exprTypeChecker().checkBoolType());
             }
         }
     }

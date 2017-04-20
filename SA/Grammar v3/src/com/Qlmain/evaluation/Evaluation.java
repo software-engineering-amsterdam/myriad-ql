@@ -4,8 +4,8 @@ import com.Qlmain.Frame_Window;
 import com.Qlmain.QL.IfStatement;
 import com.Qlmain.QL.Question;
 import com.Qlmain.QL.Statement;
-import com.Qlmain.type_check.Type_Checking;
-import com.Qlmain.types_Of_Expr.Expression;
+import com.Qlmain.type_check.TypeChecking;
+import com.Qlmain.typesOfExpr.Expression;
 
 import javax.swing.*;
 import java.util.HashMap;
@@ -74,7 +74,7 @@ public class Evaluation {
     public void storeDataAndChangeValueForNumberFields(JTextField qTextField, Question question) {
 
         if (qTextField.getText().equals("")) {
-            if (Type_Checking.getVariablesAndTypes().get(question.name).check__int_type()) {
+            if (TypeChecking.getVariablesAndTypes().get(question.name).checkIntType()) {
                 variablesAndValues.replace(question.name, 0);
             }else{
                 variablesAndValues.replace(question.name, 0.0);
@@ -83,7 +83,7 @@ public class Evaluation {
             new Frame_Window().RedrawExpr();
         }else {
             try {
-                if (Type_Checking.getVariablesAndTypes().get(question.name).check__int_type()) {
+                if (TypeChecking.getVariablesAndTypes().get(question.name).checkIntType()) {
                     int temp = Integer.parseInt(qTextField.getText());
                     variablesAndValues.replace(question.name, temp);
                 } else {
@@ -96,6 +96,9 @@ public class Evaluation {
 
                 infoBox("We expect a Number!", "Error in input " + e1.getMessage());
             }
+        }
+        for (Map.Entry<String, Object> entry : variablesAndValues.entrySet()) {
+            System.out.println("In map " + entry.getKey() + " " + entry.getValue());
         }
 
     }

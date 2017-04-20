@@ -2,7 +2,7 @@ package com.Qlmain.QL;
 
 
 
-import com.Qlmain.types_Of_Expr.Expression;
+import com.Qlmain.typesOfExpr.Expression;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class IfStatement extends Statement implements Node {
         this.line=line;
     }
 
-    public void ifStatementAddCase( Expression ifCase)
+    public void ifStatementAddCase( Expression ifCase )
     {
         this.caseStatement = ifCase;
     }

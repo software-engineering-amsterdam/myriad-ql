@@ -2,8 +2,8 @@ package com.Qlmain;
 
 import com.Qlmain.QL.*;
 import com.Qlmain.error_types.Error_codes_list;
-import com.Qlmain.type_check.Type_Checking;
-import com.Qlmain.types_Of_Expr.types.Type;
+import com.Qlmain.type_check.TypeChecking;
+import com.Qlmain.typesOfExpr.types.Type;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -74,7 +74,7 @@ public class MainFuncTest {
     @Test
     public void checkVariablesAndTypesTable()
     {
-        Map<String,Type> variablesAndTypes = Type_Checking.getVariablesAndTypes();
+        Map<String,Type> variablesAndTypes = TypeChecking.getVariablesAndTypes();
         checkVariablesAndTypesTableIteration(wrongFormToTest.getStatementList(), variablesAndTypes);
     }
 
@@ -83,7 +83,7 @@ public class MainFuncTest {
         for (Statement qu : temp) {
             if (qu instanceof Question) {
                 ty = ((Question) qu).type.exprTypeChecker();
-                if (!ty.check__no_type() && !ty.check__wrong_type())
+                if (!ty.checkNoType() && !ty.checkWrongType())
                     assertEquals( variablesAndTypes.get(((Question) qu).name) , ty );
             }else if (qu instanceof IfStatement){
                 checkVariablesAndTypesTableIteration( ((IfStatement) qu).getStatementsList(), variablesAndTypes );
@@ -102,11 +102,11 @@ public class MainFuncTest {
     private void testIf(List<Statement> statementLi) {
         for (Statement st : statementLi){
             if (st instanceof IfStatement) {
-                assertEquals(true, ((IfStatement) st).getIfCase().exprTypeChecker().check__bool_type());
+                assertEquals(true, ((IfStatement) st).getIfCase().exprTypeChecker().checkBoolType());
 
                 for (Statement st2 : ((IfStatement) st).getStatementsList()){
                     if (st2 instanceof IfStatement) {
-                        assertEquals(true, ((IfStatement) st2).getIfCase().exprTypeChecker().check__no_type());
+                        assertEquals(true, ((IfStatement) st2).getIfCase().exprTypeChecker().checkNoType());
                     }
                 }
             }

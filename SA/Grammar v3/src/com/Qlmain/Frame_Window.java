@@ -5,9 +5,9 @@ import com.Qlmain.frame_Listeners.Checkbox_Listener;
 import com.Qlmain.frame_Listeners.NumberField_Listener;
 import com.Qlmain.frame_Listeners.StringField_Listener;
 import com.Qlmain.QL.*;
-import com.Qlmain.types_Of_Expr.Number_ops.GiveValEqual;
-import com.Qlmain.type_check.Type_Checking;
-import com.Qlmain.types_Of_Expr.types.Type;
+import com.Qlmain.typesOfExpr.number_ops.numericalExpressions.GiveValEqual;
+import com.Qlmain.type_check.TypeChecking;
+import com.Qlmain.typesOfExpr.types.Type;
 
 import javax.swing.*;
 import java.awt.*;
@@ -68,7 +68,7 @@ public class Frame_Window {
     }
 
     private JPanel defineQuestionType(Question questionItem, JPanel newItemPanel, JLabel jlabel, Map<String, Object> variablesAndValues) {
-        Map<String,Type> variablesAndTypes = Type_Checking.getVariablesAndTypes();
+        Map<String,Type> variablesAndTypes = TypeChecking.getVariablesAndTypes();
 
         JPanel tempPanel = new JPanel(new GridLayout(1,1));
         Dimension dim = new Dimension(500,30);
@@ -77,22 +77,22 @@ public class Frame_Window {
 
         tempPanel.add(jlabel);
 
-        if (variablesAndTypes.get(questionItem.name).check__bool_type() ) {
+        if (variablesAndTypes.get(questionItem.name).checkBoolType() ) {
 
             JCheckBox questionCheckBox = new JCheckBox();
             questionCheckBox.setBackground(Color.WHITE);
             questionCheckBox.addActionListener(new Checkbox_Listener(questionItem));
             tempPanel.add(questionCheckBox);
 
-        }else if (variablesAndTypes.get(questionItem.name).check__str_type() ){
+        }else if (variablesAndTypes.get(questionItem.name).checkStrType() ){
 
             JTextField questionTextField = new JTextField();
             questionTextField.getDocument().addDocumentListener(new StringField_Listener(questionItem, questionTextField));
             questionTextField.setBackground(Color.WHITE);
             tempPanel.add(questionTextField);
 
-        }else if (variablesAndTypes.get(questionItem.name).check__int_type() ||
-                variablesAndTypes.get(questionItem.name).check__mon_type()) {
+        }else if (variablesAndTypes.get(questionItem.name).checkIntType() ||
+                variablesAndTypes.get(questionItem.name).checkMonType()) {
 
             JTextField questionTextField = new JTextField();
             if (questionItem.type instanceof GiveValEqual) {

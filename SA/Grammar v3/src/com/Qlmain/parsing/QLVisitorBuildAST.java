@@ -1,12 +1,12 @@
 package com.Qlmain.parsing;
 
 import com.Qlmain.QL.*;
-import com.Qlmain.types_Of_Expr.Boolean_ops.*;
-import com.Qlmain.types_Of_Expr.Expression;
-import com.Qlmain.types_Of_Expr.Number_ops.*;
-import com.Qlmain.types_Of_Expr.Strings.IdValue;
-import com.Qlmain.types_Of_Expr.Strings.SimpleTypeValue;
-import com.Qlmain.types_Of_Expr.types.*;
+import com.Qlmain.typesOfExpr.Expression;
+import com.Qlmain.typesOfExpr.boolean_ops.booleanExpressions.*;
+import com.Qlmain.typesOfExpr.number_ops.numericalExpressions.*;
+import com.Qlmain.typesOfExpr.strings.IdValue;
+import com.Qlmain.typesOfExpr.strings.SimpleTypeValue;
+import com.Qlmain.typesOfExpr.types.*;
 import com.Qlmain.antlr.*;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.antlr.v4.runtime.tree.ErrorNode;
