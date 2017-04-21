@@ -14,6 +14,7 @@ package qls.astnodes;
 import ql.astnodes.LineNumber;
 import ql.astnodes.Node;
 import qls.astnodes.sections.DefaultStyle;
+import qls.astnodes.sections.Page;
 import qls.astnodes.sections.Section;
 import qls.visitorinterfaces.StyleSheetVisitor;
 
@@ -22,26 +23,20 @@ import java.util.List;
 public class StyleSheet extends Node {
 
     private final String styleSheetName;
-    private final List<Section> sections;
-    private final List<DefaultStyle> defaultStyle;
+    private final List<Page> pages;
 
-    public StyleSheet(String styleSheetName, List<Section> sections, List<DefaultStyle> defaults, LineNumber lineNumber) {
+    public StyleSheet(String styleSheetName, List<Page> pages, LineNumber lineNumber) {
         super(lineNumber);
         this.styleSheetName = styleSheetName;
-        this.sections = sections;
-        defaultStyle = defaults;
+        this.pages = pages;
     }
 
     public String getName() {
         return styleSheetName;
     }
 
-    public List<Section> getSections() {
-        return sections;
-    }
-
-    public List<DefaultStyle> getDefaultStyle() {
-        return defaultStyle;
+    public List<Page> getPages() {
+        return pages;
     }
 
     public void accept(StyleSheetVisitor visitor) {

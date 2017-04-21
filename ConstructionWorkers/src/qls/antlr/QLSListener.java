@@ -1,4 +1,4 @@
-// Generated from C:/Users/LGGX/Documents/SC2017/ConstructionWorkers/src/qls\QLS.g4 by ANTLR 4.6
+// Generated from C:/Users/LGGX/Documents/SC2017/ConstructionWorkers/src/qls/grammar\QLS.g4 by ANTLR 4.6
 package qls.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -17,6 +17,16 @@ public interface QLSListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStylesheet(QLSParser.StylesheetContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link QLSParser#page}.
+	 * @param ctx the parse tree
+	 */
+	void enterPage(QLSParser.PageContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QLSParser#page}.
+	 * @param ctx the parse tree
+	 */
+	void exitPage(QLSParser.PageContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code defaultWithoutStyleDeclaration}
 	 * labeled alternative in {@link QLSParser#defaultStyle}.

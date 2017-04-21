@@ -12,7 +12,7 @@ package qls.astnodes.widgets;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.types.Type;
-import qls.visitorinterfaces.StyleAndWidgetVisitor;
+import qls.visitorinterfaces.WidgetVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ public class QLSUndefinedWidget extends QLSWidget {
         return true;
     }
 
-    public <T> T accept(StyleAndWidgetVisitor<T> visitor) {
+    public <T> T accept(WidgetVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

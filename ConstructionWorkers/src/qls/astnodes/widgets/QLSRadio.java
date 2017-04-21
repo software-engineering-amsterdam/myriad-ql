@@ -13,9 +13,8 @@ package qls.astnodes.widgets;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.types.BooleanType;
-import ql.astnodes.types.StringType;
 import ql.astnodes.types.Type;
-import qls.visitorinterfaces.StyleAndWidgetVisitor;
+import qls.visitorinterfaces.WidgetVisitor;
 
 import java.util.*;
 import java.util.List;
@@ -39,7 +38,7 @@ public class QLSRadio extends QLSWidget {
         return supportedQuestionTypes;
     }
 
-    public <T> T accept(StyleAndWidgetVisitor<T> visitor) {
+    public <T> T accept(WidgetVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

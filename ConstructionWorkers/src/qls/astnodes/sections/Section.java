@@ -18,30 +18,12 @@ import java.util.List;
 
 public class Section extends AbstractSection {
 
-    private final String sectionName;
-    private final List<Section> sections;
-    private final List<DefaultStyle> defaultStyles;
     private final List<StyleQuestion> questions;
 
-    public Section(String sectionName, List<Section> sections, List<DefaultStyle> defaultStyles, List<StyleQuestion> questions,
-                   LineNumber lineNumber) {
-        super(lineNumber);
-        this.sectionName = sectionName;
-        this.sections = sections;
-        this.defaultStyles = defaultStyles;
+    public Section(String sectionName, List<Section> sections, List<DefaultStyle> defaultStyles,
+                   List<StyleQuestion> questions, LineNumber lineNumber) {
+        super(sectionName, sections, defaultStyles, lineNumber);
         this.questions = questions;
-    }
-
-    public String getName() {
-        return sectionName;
-    }
-
-    public List<Section> getSections() {
-        return sections;
-    }
-
-    public List<DefaultStyle> getDefaultStyles() {
-        return defaultStyles;
     }
 
     public List<StyleQuestion> getQuestions() {

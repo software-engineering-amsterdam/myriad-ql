@@ -1,4 +1,4 @@
-// Generated from C:/Users/LGGX/Documents/SC2017/ConstructionWorkers/src/qls\QLS.g4 by ANTLR 4.6
+// Generated from C:/Users/LGGX/Documents/SC2017/ConstructionWorkers/src/qls/grammar\QLS.g4 by ANTLR 4.6
 package qls.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -16,6 +16,12 @@ public interface QLSVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitStylesheet(QLSParser.StylesheetContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link QLSParser#page}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPage(QLSParser.PageContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code defaultWithoutStyleDeclaration}
 	 * labeled alternative in {@link QLSParser#defaultStyle}.

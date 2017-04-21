@@ -12,12 +12,13 @@
 package qls.astnodes.sections;
 
 import ql.astnodes.LineNumber;
+import ql.astnodes.Node;
 import ql.astnodes.types.Type;
 import qls.astnodes.styles.Style;
 import qls.visitorinterfaces.StyleSheetVisitor;
 import qls.astnodes.widgets.QLSWidget;
 
-public class DefaultStyle extends AbstractSection {
+public class DefaultStyle extends Node {
 
     private final Type questionType;
     private Style style;

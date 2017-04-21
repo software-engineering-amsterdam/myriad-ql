@@ -17,7 +17,7 @@ import qls.astnodes.styles.FontSize;
 import qls.astnodes.styles.Width;
 import qls.astnodes.widgets.*;
 
-public interface StyleAndWidgetVisitor<T> {
+public interface WidgetVisitor<T> {
     T visit(Color style);
     T visit(Width style);
     T visit(Font style);

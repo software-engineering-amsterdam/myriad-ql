@@ -15,10 +15,32 @@ import ql.astnodes.LineNumber;
 import ql.astnodes.Node;
 import qls.visitorinterfaces.StyleSheetVisitor;
 
+import java.util.List;
+
 public abstract class AbstractSection extends Node {
 
-    AbstractSection(LineNumber lineNumber) {
+    private final String sectionName;
+    private final List<Section> sections;
+    private final List<DefaultStyle> defaultStyles;
+
+    AbstractSection(String sectionName, List<Section> sections, List<DefaultStyle> defaultStyles,
+                    LineNumber lineNumber) {
         super(lineNumber);
+        this.sectionName = sectionName;
+        this.sections = sections;
+        this.defaultStyles = defaultStyles;
+    }
+
+    public String getName() {
+        return sectionName;
+    }
+
+    public List<Section> getSections() {
+        return sections;
+    }
+
+    public List<DefaultStyle> getDefaultStyle() {
+        return defaultStyles;
     }
 
     public abstract void accept(StyleSheetVisitor visitor);

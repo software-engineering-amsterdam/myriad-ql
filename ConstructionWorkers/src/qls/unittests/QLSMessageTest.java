@@ -19,6 +19,7 @@ import ql.astnodes.types.IntegerType;
 import ql.astnodes.types.Type;
 import ql.semanticchecker.messagehandling.MessageData;
 import qls.astnodes.StyleSheet;
+import qls.astnodes.sections.Page;
 import qls.astnodes.sections.Section;
 import qls.astnodes.sections.StyleQuestion;
 import qls.astnodes.widgets.QLSCheckBox;
@@ -47,7 +48,12 @@ public class QLSMessageTest {
         List<Section> sectionList = new ArrayList<>();
         sectionList.add(testSection);
 
-        StyleSheet testSheet = new StyleSheet("testSheet", sectionList, new ArrayList<>(), new LineNumber(1));
+        Page testPage = new Page("testPage", sectionList, new ArrayList<>(),null);
+
+        List<Page> pageList = new ArrayList<>();
+        pageList.add(testPage);
+
+        StyleSheet testSheet = new StyleSheet("testSheet", pageList, new LineNumber(1));
 
         MessageData messages = new MessageData();
         Map<String, Type> identifierToTypeMap = new HashMap<>();
@@ -73,7 +79,12 @@ public class QLSMessageTest {
         List<Section> sectionList = new ArrayList<>();
         sectionList.add(testSection);
 
-        StyleSheet testSheet = new StyleSheet("testSheet", sectionList, new ArrayList<>(), new LineNumber(1));
+        Page testPage = new Page("testPage", sectionList, new ArrayList<>(),null);
+
+        List<Page> pageList = new ArrayList<>();
+        pageList.add(testPage);
+
+        StyleSheet testSheet = new StyleSheet("testSheet", pageList, new LineNumber(1));
 
         MessageData messages = new MessageData();
         Map<String, Type> identifierToTypeMap = new HashMap<>();
@@ -100,7 +111,12 @@ public class QLSMessageTest {
         List<Section> sectionList = new ArrayList<>();
         sectionList.add(testSection);
 
-        StyleSheet testSheet = new StyleSheet("testSheet", sectionList, new ArrayList<>(), new LineNumber(1));
+        Page testPage = new Page("testPage", sectionList, new ArrayList<>(),null);
+
+        List<Page> pageList = new ArrayList<>();
+        pageList.add(testPage);
+
+        StyleSheet testSheet = new StyleSheet("testSheet", pageList, new LineNumber(1));
 
         MessageData messages = new MessageData();
         Map<String, Type> identifierToTypeMap = new HashMap<>();
@@ -125,7 +141,12 @@ public class QLSMessageTest {
         List<Section> sectionList = new ArrayList<>();
         sectionList.add(testSection);
 
-        StyleSheet testSheet = new StyleSheet("testSheet", sectionList, new ArrayList<>(), new LineNumber(1));
+        Page testPage = new Page("testPage", sectionList, new ArrayList<>(),null);
+
+        List<Page> pageList = new ArrayList<>();
+        pageList.add(testPage);
+
+        StyleSheet testSheet = new StyleSheet("testSheet", pageList, new LineNumber(1));
 
         MessageData messages = new MessageData();
         Map<String, Type> identifierToTypeMap = new HashMap<>();

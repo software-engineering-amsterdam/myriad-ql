@@ -18,6 +18,7 @@ import ql.semanticchecker.messagehandling.errors.qlserrors.DuplicateQLSQuestionP
 import ql.semanticchecker.messagehandling.errors.qlserrors.NotAllQuestionsDefinedError;
 import ql.semanticchecker.messagehandling.errors.qlserrors.UndefinedQuestionReferenceError;
 import ql.semanticchecker.messagehandling.errors.qlserrors.UnsupportedWidgetTypeError;
+import qls.astnodes.sections.Page;
 import qls.astnodes.sections.StyleQuestion;
 import qls.astnodes.StyleSheet;
 import qls.astnodes.sections.DefaultStyle;
@@ -96,20 +97,28 @@ public class QLSTypeChecker implements StyleSheetVisitor {
 
     @Override
     public void visit(StyleSheet styleSheet) {
-        for (DefaultStyle style : styleSheet.getDefaultStyle()) {
+        for (Page page : styleSheet.getPages()) {
+            page.accept(this);
+        }
+    }
+
+    @Override
+    public void visit(Page page) {
+        for (DefaultStyle style : page.getDefaultStyle()) {
             if (!style.getWidget().isUndefined()) {
                 currentDefaultWidget = style.getWidget();
             }
         }
 
-        for (Section section : styleSheet.getSections()) {
+        for (Section section : page.getSections()) {
             section.accept(this);
         }
+        
     }
 
     @Override
     public void visit(Section section) {
-        for (DefaultStyle style : section.getDefaultStyles()) {
+        for (DefaultStyle style : section.getDefaultStyle()) {
             if (!style.getWidget().isUndefined()) {
                 currentDefaultWidget = style.getWidget();
             }
@@ -140,10 +149,13 @@ public class QLSTypeChecker implements StyleSheetVisitor {
 
         if (widget.isUndefined()) {
             List<Type> supportedTypes = currentDefaultWidget.getSupportedQuestionTypes();
-            Type questionType = identifierToTypeMap.get(question.getName());
+            if (supportedTypes.size() > 0) {
+                Type questionType = identifierToTypeMap.get(question.getName());
 
-            if (!supportedTypes.contains(questionType)) {
-                messages.addError(new UnsupportedWidgetTypeError(question.getLineNumber(), question.getName()));
+                if (!supportedTypes.contains(questionType)) {
+                    System.out.println("test");
+                    messages.addError(new UnsupportedWidgetTypeError(question.getLineNumber(), question.getName()));
+                }
             }
         }
     }
