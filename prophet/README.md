@@ -14,18 +14,19 @@ form festivalParticipationSurvey
       number numberOfFestivals
 
     "How much did you spend on average per tickets?"
-      number spendingOnTickets => 1 + (100 * 2)
+      number spendingOnTickets
 
     "How much did you spend on average on the festival site?"
-      number spendingAtFestival => 500
+      number spendingAtFestival
 
     "This means you've spent a total of:"
-      number spendingTotal => (spendingOnTickets + spendingAtFestival)
+      number spendingTotal => (spendingOnTickets + spendingAtFestival) # Wooah, that's pretty much, isn't it?
   else
-    "You really need to go to a festival. Type one festival you would like to attend:"
+    "You really need to go to a festival. Here are some examples:"
       text festivalName => "Tomorrowland, Defqon.1, ..."
   end
 end
+
 ```
 
 ## Installation
