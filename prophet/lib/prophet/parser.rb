@@ -80,7 +80,7 @@ module Prophet
 
     rule(:question) do
       (
-        text >> type.as(:type) >> identifier.as(:identifier) >>
+        text.as(:text) >> type.as(:type) >> identifier.as(:identifier) >>
         (hashrocket >> expression.as(:value)).maybe
       ).as(:question)
     end

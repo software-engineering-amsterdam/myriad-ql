@@ -12,13 +12,13 @@ module Prophet
 
       def render(window)
         true_button = TkRadioButton.new(window).pack
-        true_button.text = 'True'
+        true_button.text = 'Yes'
         true_button.value = true
         true_button.variable = variable
         true_button.state = state
 
         false_button = TkRadioButton.new(window).pack
-        false_button.text = 'False'
+        false_button.text = 'No'
         false_button.value = false
         false_button.variable = variable
         false_button.state = state
