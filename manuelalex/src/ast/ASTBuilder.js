@@ -51,7 +51,7 @@ export class ASTBuilder {
         return new PrefixExpression(data[0], _.flattenDeep(data[1])[0], location);
     }
 
-    deepExpression(data, location, reject) {
+    deepExpression(data, location) {
         return new Expression(_.flattenDeep(data[0])[0], data[2][0], _.flattenDeep(data[4])[0], location);
     }
 
@@ -63,7 +63,7 @@ export class ASTBuilder {
         }
     }
 
-    plusMinExpression(data, location, reject) {
+    plusMinExpression(data, location) {
         return new Expression(_.flattenDeep(data[0])[0], _.flattenDeep(data[1])[0], _.flattenDeep(data[2])[0], location);
     }
 
@@ -75,23 +75,23 @@ export class ASTBuilder {
         return data;
     }
 
-    money(data, location) {
+    money(location) {
         return new QLMoney(location);
     }
 
-    string(data, location) {
+    string(location) {
         return new QLString(location);
     }
 
-    number(data, location) {
+    number(location) {
         return new QLNumber(location);
     }
 
-    date(data, location) {
+    date(location) {
         return new QLDate(location);
     }
 
-    boolean(data, location) {
+    boolean(location) {
         return new QLBoolean(location);
     }
 
@@ -102,13 +102,4 @@ export class ASTBuilder {
     numbers(data, location){
         return new Numbers(data, location);
     }
-
-    toString(data) {
-        return data.join().split(',').join('');
-    }
-
-    toNull() {
-        return null;
-    }
-
 }
