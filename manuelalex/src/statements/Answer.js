@@ -23,7 +23,7 @@ export class Answer extends Statement {
     }
 
     accept(visitor) {
-        visitor.visitAnswer(self);
+        visitor.visitAnswer(this);
     }
 
     render(visitor, view) {
