@@ -35,7 +35,6 @@ export let test3 =
     A2: money = (Q1-Q2)
 }`;
 
-// TODO sentences should be alphanumeric
 
 export let test4 =
 `form taxOfficeExample{\n
