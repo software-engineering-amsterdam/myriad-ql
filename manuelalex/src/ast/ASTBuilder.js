@@ -113,7 +113,7 @@ export class ASTBuilder {
     }
 
     property(data, location) {
-        return new Property(data[0].join(""), location);
+        return new Property(_.flattenDeep(data[0]).join(""), location);
     }
 
     numbers(data, location){
