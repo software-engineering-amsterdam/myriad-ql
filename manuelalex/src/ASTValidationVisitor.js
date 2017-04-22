@@ -40,15 +40,7 @@ export class ASTValidationVisitor {
         this.memoryState.set(question.propertyName.name, question.propertyType);
 
 
-        //TODO: cyclic dependencies between questions
-        /*
-         if (x) { y: "Y?" boolean }
-         if (y) { x: "X?" boolean }
 
-
-         if (x) { a: "A?" boolean }
-         if (!x) { a: "A?" boolean }
-         */
         this.checkDuplicateDeclarations(question);
         this.checkDuplicateLabels(question);
 
@@ -90,6 +82,7 @@ export class ASTValidationVisitor {
 
     visitIfStatement(ifstatement) {
         ifstatement.condition.accept(this);
+        //this.visitStatements(ifstatement.ifBody.accept);
     }
 
     visitIfElseStatement(ifelsestatement) {
