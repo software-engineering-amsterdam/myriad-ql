@@ -27,7 +27,13 @@ export class ASTBuilder {
     }
 
     ifStatement(data, location) {
-        return new IfStatement(_.flattenDeep(data[3])[0], _.flattenDeep(data[5][3]), location);
+        if (data[3] instanceof Expression){
+            return new IfStatement(data[3], _.flattenDeep(data[5][3]), location);
+        } else {
+            return new IfStatement(_.flattenDeep(data[3])[0], _.flattenDeep(data[5][3]), location);
+        }
+
+
     }
 
     ifElseStatement(data, location) {

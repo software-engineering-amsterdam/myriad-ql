@@ -115,14 +115,15 @@ export class ASTValidationVisitor {
             if (leftHandType.getType() !== rightHandType.getType()) {
                 this.errors.push(`Invalid expression. The operator ${operator} can not be applied 
                                 to ${expression.leftHand.toString()} [type: ${leftHandType.toString()}] 
-                                and ${expression.rightHand.toString()}[type: ${rightHandType.toString()}]`);
+                                and ${expression.rightHand.toString()}[type: ${rightHandType.toString()}]. Reason types are different`);
             }
 
-            this.validateOperator(expression, leftHandType, operator, ['||', '&&', '=='], QLBoolean);
-            this.validateOperator(expression, leftHandType, operator, ['<', '>', '>=', '<=', '!=', '==', '*', '/', '+', '-'], QLMoney);
-            this.validateOperator(expression, leftHandType, operator, ['<', '>', '>=', '<=', '!=', '=='], QLString);
-            this.validateOperator(expression, leftHandType, operator, ['<', '>', '>=', '<=', '!=', '==', '*', '/', '+', '-'], QLNumber);
-            this.validateOperator(expression, leftHandType, operator, ['<', '>', '>=', '<=', '!=', '=='], QLDate);
+            if(!leftHandType.isValidOperator(operator)){
+                this.errors.push(`Invalid expression. The operator ${operator} can not be applied
+                            to ${expression.leftHand.toString()} [type: ${leftHandType.toString()}] 
+                            and ${expression.rightHand.toString()}[type: ${leftHandType.toString()}]`);
+            }
+
         }
         return expression.getType();
     }
@@ -134,16 +135,6 @@ export class ASTValidationVisitor {
             this.errors.push('Invalid use of property. The property ' + property.name + ' on location: ' + property.location + '  has not been instantiated');
         }
         return this.memoryState.getType(property.name);
-    }
-
-    validateOperator(expression, type, operator, validOperators, validType) {
-        if (type instanceof validType) {
-            if (!validOperators.includes(operator)) {
-                this.errors.push(`Invalid expression. The operator ${operator} can not be applied
-                            to ${expression.leftHand.toString()} [type: ${type.toString()}] 
-                            and ${expression.rightHand.toString()}[type: ${type.toString()}]`);
-            }
-        }
     }
 
     hasDetectedErrors() {
