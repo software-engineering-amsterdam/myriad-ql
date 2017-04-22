@@ -1,10 +1,10 @@
 package com.Qlmain.evaluation;
 
-import com.Qlmain.Frame_Window;
+import com.Qlmain.frame.Frame_Window;
 import com.Qlmain.QL.IfStatement;
 import com.Qlmain.QL.Question;
 import com.Qlmain.QL.Statement;
-import com.Qlmain.type_check.TypeChecking;
+import com.Qlmain.typeCheck.TypeChecking;
 import com.Qlmain.typesOfExpr.Expression;
 
 import javax.swing.*;
@@ -96,9 +96,6 @@ public class Evaluation {
 
                 infoBox("We expect a Number!", "Error in input " + e1.getMessage());
             }
-        }
-        for (Map.Entry<String, Object> entry : variablesAndValues.entrySet()) {
-            System.out.println("In map " + entry.getKey() + " " + entry.getValue());
         }
 
     }

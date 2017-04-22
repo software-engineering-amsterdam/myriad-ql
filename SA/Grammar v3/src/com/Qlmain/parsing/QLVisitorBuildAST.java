@@ -2,8 +2,8 @@ package com.Qlmain.parsing;
 
 import com.Qlmain.QL.*;
 import com.Qlmain.typesOfExpr.Expression;
-import com.Qlmain.typesOfExpr.boolean_ops.booleanExpressions.*;
-import com.Qlmain.typesOfExpr.number_ops.numericalExpressions.*;
+import com.Qlmain.typesOfExpr.booleanOps.booleanExpressions.*;
+import com.Qlmain.typesOfExpr.numberOps.numericalExpressions.*;
 import com.Qlmain.typesOfExpr.strings.IdValue;
 import com.Qlmain.typesOfExpr.strings.SimpleTypeValue;
 import com.Qlmain.typesOfExpr.types.*;

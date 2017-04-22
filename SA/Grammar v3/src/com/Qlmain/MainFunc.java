@@ -4,8 +4,10 @@ import com.Qlmain.QL.*;
 import com.Qlmain.evaluation.Evaluation;
 import com.Qlmain.antlr.QLLexer;
 import com.Qlmain.antlr.QLParser;
+import com.Qlmain.frame.Frame_Window;
 import com.Qlmain.parsing.QLVisitorBuildAST;
-import com.Qlmain.type_check.TypeChecking;
+import com.Qlmain.parsing.SyntacticalErrorListener;
+import com.Qlmain.typeCheck.TypeChecking;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
@@ -16,7 +18,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -38,7 +39,7 @@ public class MainFunc {
             e.printStackTrace();
         }
 
-        if(inputContent != null && inputContent != "")
+        if(inputContent != null && !inputContent.equals("") )
             runner.buildQLAST(inputContent);
 
     }
@@ -47,7 +48,7 @@ public class MainFunc {
         // Get our lexer
         QLLexer lexer = new QLLexer(new ANTLRInputStream(input));
         lexer.removeErrorListeners();
-        lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
+        lexer.addErrorListener(SyntacticalErrorListener.INSTANCE);
 
         // Get a list of matched tokens
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -55,7 +56,7 @@ public class MainFunc {
         // Pass the tokens to the parser
         QLParser parser = new QLParser(tokens);
         parser.removeErrorListeners();
-        parser.addErrorListener(ThrowingErrorListener.INSTANCE);
+        parser.addErrorListener(SyntacticalErrorListener.INSTANCE);
 
         Form formAST = null;
         try {
@@ -74,7 +75,7 @@ public class MainFunc {
         boolean typeCheckTree = typeCheck.TypeCheckingMethod(formAST);
         System.out.println("Type checking of the tree " + typeCheckTree);
 
-        Map<String, Object> firstEvaluation = new HashMap<>();
+        Map<String, Object> firstEvaluation;
         if (typeCheckTree) {
             Evaluation evaluation = new Evaluation();
             firstEvaluation = evaluation.evaluateAST(formAST.getStatementList());

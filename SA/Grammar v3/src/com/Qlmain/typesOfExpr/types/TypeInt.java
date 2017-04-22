@@ -1,7 +1,10 @@
 package com.Qlmain.typesOfExpr.types;
 
+import com.Qlmain.QL.IfStatement;
+import com.Qlmain.errorTypes.ErrorCodesList;
+import com.Qlmain.errorTypes.errorCodes.IfConditionErr;
 import com.Qlmain.evaluation.Evaluation;
-import com.Qlmain.type_check.TypeChecking;
+import com.Qlmain.typeCheck.TypeChecking;
 
 /**
  * Created by sotos on 20/3/2017.
@@ -20,5 +23,10 @@ public class TypeInt extends Type {
 
     @Override
     public boolean checkIntType() {return true;}
+
+    @Override
+    public void errorInIfRegister(ErrorCodesList errorList, IfStatement ifStToEvaluate) {
+        errorList.addElem( new IfConditionErr( "Line " + ifStToEvaluate.getIfStatementLine()+": Error in if case. Expected type boolean." ) );
+    }
 
 }

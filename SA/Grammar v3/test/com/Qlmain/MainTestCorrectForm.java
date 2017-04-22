@@ -1,9 +1,8 @@
 package com.Qlmain;
 
 import com.Qlmain.QL.*;
-import com.Qlmain.error_types.ErrorCodesList;
 import com.Qlmain.evaluation.Evaluation;
-import com.Qlmain.type_check.TypeChecking;
+import com.Qlmain.typeCheck.TypeChecking;
 import com.Qlmain.typesOfExpr.types.Type;
 import com.Qlmain.typesOfExpr.types.TypeBool;
 import com.Qlmain.typesOfExpr.types.TypeMon;
@@ -65,7 +64,6 @@ public class MainTestCorrectForm {
     public void qlWithoutErrors() throws InvocationTargetException, InterruptedException {
         TypeChecking typeCheck = new TypeChecking();
         typeCheck.TypeCheckingMethod(correctFormToTest);
-        checkErrorCodes();
         checkIfStatementEval(typeCheck);
         checkEvaluation();
     }
@@ -125,9 +123,6 @@ public class MainTestCorrectForm {
         }
     }
 
-    private void checkErrorCodes() {
-        assertEquals(0, ErrorCodesList.get_error_list().size() );
-    }
 
     private void checkIfStatementEval(TypeChecking typeCheck) {
         testIf(correctFormToTest.getStatementList(), typeCheck);
@@ -156,7 +151,6 @@ public class MainTestCorrectForm {
             Map<String, Object> variablesAndValues = eval.evaluateAST(statementLi);
 
             for (Map.Entry<String, Object> entry : variablesAndValues.entrySet()) {
-                //System.out.println("------------"+variablesAndValues.get(entry.getKey()));
                 assertEquals(entry.getValue(), variableAndValuesTest.get(entry.getKey()));
             }
 

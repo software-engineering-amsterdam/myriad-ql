@@ -1,7 +1,7 @@
 package com.Qlmain.typesOfExpr.types;
 
 import com.Qlmain.evaluation.Evaluation;
-import com.Qlmain.type_check.TypeChecking;
+import com.Qlmain.typeCheck.TypeChecking;
 
 /**
  * Created by sotos on 20/3/2017.
@@ -20,5 +20,6 @@ public class TypeBool extends Type {
 
     @Override
     public boolean checkBoolType() {return true;}
+
 
 }

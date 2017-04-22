@@ -1,8 +1,7 @@
 package com.Qlmain;
 
 import com.Qlmain.QL.*;
-import com.Qlmain.error_types.ErrorCodesList;
-import com.Qlmain.type_check.TypeChecking;
+import com.Qlmain.typeCheck.TypeChecking;
 import com.Qlmain.typesOfExpr.types.Type;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +37,6 @@ public class MainFuncTest {
     public void qlWithErrors() throws InvocationTargetException, InterruptedException {
         TypeChecking typeCheck = new TypeChecking();
         assertEquals(false, typeCheck.TypeCheckingMethod(wrongFormToTest));
-        checkErrorCodes();
         checkIfStatementEval(typeCheck);
     }
 
@@ -95,9 +93,6 @@ public class MainFuncTest {
         }
     }
 
-    private void checkErrorCodes() {
-        assertEquals(3, ErrorCodesList.get_error_list().size());
-    }
 
     private void checkIfStatementEval(TypeChecking typeCheck) {
         testIf(wrongFormToTest.getStatementList(), typeCheck);

@@ -1,7 +1,7 @@
 package com.Qlmain.typesOfExpr.strings;
 
 import com.Qlmain.evaluation.Evaluation;
-import com.Qlmain.type_check.TypeChecking;
+import com.Qlmain.typeCheck.TypeChecking;
 import com.Qlmain.typesOfExpr.Expression;
 import com.Qlmain.typesOfExpr.types.Type;
 
