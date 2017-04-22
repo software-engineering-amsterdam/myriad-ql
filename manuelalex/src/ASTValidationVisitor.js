@@ -128,7 +128,9 @@ export class ASTValidationVisitor {
     }
 
     visitProperty(property) {
-        if (!this.memoryState.getType(property.name)) {
+        if(property.name === "false" || property.name === "true" ){
+            return new QLBoolean();
+        } else if (!this.memoryState.getType(property.name)) {
             this.errors.push('Invalid use of property. The property ' + property.name + ' on location: ' + property.location + '  has not been instantiated');
         }
         return this.memoryState.getType(property.name);

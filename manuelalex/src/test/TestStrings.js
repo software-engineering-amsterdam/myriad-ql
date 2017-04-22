@@ -92,7 +92,7 @@ export let test8 =
     `form taxOfficeExample {
         question 'Did you buy a house in 2010?'
         hasSoldHouse: boolean
-        if (!hasSoldHouse) {
+        if (true) {
             question 'What was the selling price?'
             sellingPrice: money
         }
