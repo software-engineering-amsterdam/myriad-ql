@@ -43,12 +43,12 @@ public class QLSTypeChecker implements StyleSheetVisitor {
 
         styleSheet.accept(this);
 
-        checkWidgetsWithDefinedTypes();
+        checkQuestionsWithDefinedWidgets();
         checkDuplicateQuestionPlacement();
         checkForUndefinedQuestions();
     }
 
-    private void checkWidgetsWithDefinedTypes() {
+    private void checkQuestionsWithDefinedWidgets() {
 
         for (StyleQuestion question : qlsQuestions) {
 
@@ -113,7 +113,7 @@ public class QLSTypeChecker implements StyleSheetVisitor {
         for (Section section : page.getSections()) {
             section.accept(this);
         }
-        
+
     }
 
     @Override

@@ -13,18 +13,18 @@ package ql.astnodes;
 
 public class LineNumber {
 
-    private final int startingLine;
+    private final int lineNumber;
 
-    public LineNumber(int startingLine) {
-        this.startingLine = startingLine;
+    public LineNumber(int lineNumber) {
+        this.lineNumber = lineNumber;
     }
 
     public int getStartingLine() {
-        return startingLine;
+        return lineNumber;
     }
 
     @Override
     public String toString() {
-        return "Code starting line: " + startingLine;
+        return "Code starting line: " + lineNumber;
     }
 }
