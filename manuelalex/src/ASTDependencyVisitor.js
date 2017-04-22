@@ -10,30 +10,30 @@ export class ASTDependencyVisitor {
 
     constructor() {
         this.graph = [];
+        this.innerGraph = [];
         this.errors = [];
-        this.depth = 0;
     }
 
 
     visitAST(ast){
-   //     this.visitForm(ast.getProgram());
         this.visitStatements(ast.getStatements());
 
     }
-
-
-    // visitForm(form) {
-    //
-    // }
 
     visitStatements(statements) {
         for (const statement of statements) {
             statement.accept(this);
         }
+
     }
 
     visitQuestion(question) {
         console.log(question.propertyName);
+
+        for (var node of this.innerGraph) {
+            this.graph.push([node, question.propertyName]);
+        }
+
     }
 
 
@@ -42,46 +42,50 @@ export class ASTDependencyVisitor {
     }
 
     visitIfStatement(ifstatement) {
-        this.depth++;
+        let temporaryGraph = this.innerGraph.slice(0);
         ifstatement.condition.accept(this);
+        this.visitStatements(ifstatement.ifBody);
+        this.innerGraph = temporaryGraph;
     }
 
     visitIfElseStatement(ifelsestatement) {
-        this.depth++;
-        //ifelsestatement.condition.accept(this);
     }
 
 
-    visitPrefixExpression(condition){
-        condition.expression.accept(this);
+    visitPrefixExpression(expression){
+        expression.expression.accept(this);
     }
 
-    visitExpression(condition) {
-        if(condition.leftHand instanceof Expression){
-            condition.leftHand.accept(this);
-        }
-
-        if(condition.rightHand instanceof Expression){
-            condition.rightHand.accept(this);
-        }
-
-        if (condition.operator === undefined){
-            condition.leftHand.accept(this);
-        } else {
-            //Todo: add prefix operator !
-            condition.leftHand.accept(this);
-            condition.rightHand.accept(this);
-            // const typeLeftHand = this.memoryState.getType(condition.leftHand);
-            // const typeRightHand = this.memoryState.getType(condition.rightHand);
-            // console.log(`Invalid expression. The operator ${condition.operator} can not be applied to ${condition.leftHand} [type: ${typeLeftHand}] and ${condition.rightHand}[type:${typeRightHand}]`);
-        }
+    visitExpression(expression) {
+        expression.leftHand.accept(this);
+        expression.rightHand.accept(this);
     }
 
     visitProperty(property){
-        this.graph.push(property.getName());
+        this.innerGraph.push(property.getName());
+    }
+
+    checkForCyclicDependencies(){
+        /**
+        * Not yet optimized with the algorithm of Johnson, because Donald Knuth (Knuth, 1974) states that:
+        * "We should forget about small efficiencies, say about 97% of the time: premature optimization
+        * is the root of all evil. Yet we should not pass up our opportunities in that critical 3%".
+        *
+        * Knuth, D. E. (1974). Structured Programming with go to Statements. ACM Computing Surveys (CSUR), 6(4), 261-301.
+        */
+        for (var node of this.graph) {
+            console.log("node: " + node);
+            for (var innernode of this.graph) {
+                if(node[0] === innernode[1] && node[1] === innernode[0]){
+                    this.errors.push(`Cyclic dependency detected between ${node[0]} and ${node[1]}`);
+                }
+            }
+
+        }
     }
 
     hasDetectedErrors(){
+        this.checkForCyclicDependencies();
         return this.errors.length > 0;
     }
 }
