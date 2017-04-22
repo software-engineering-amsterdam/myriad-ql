@@ -1,12 +1,13 @@
 package com.Qlmain;
 
 import com.Qlmain.QL.*;
-import com.Qlmain.error_types.Error_codes_list;
+import com.Qlmain.error_types.ErrorCodesList;
 import com.Qlmain.evaluation.Evaluation;
+import com.Qlmain.type_check.TypeChecking;
 import com.Qlmain.typesOfExpr.types.Type;
-import com.Qlmain.typesOfExpr.types.Type_bool;
-import com.Qlmain.typesOfExpr.types.Type_mon;
-import com.Qlmain.typesOfExpr.types.Type_str;
+import com.Qlmain.typesOfExpr.types.TypeBool;
+import com.Qlmain.typesOfExpr.types.TypeMon;
+import com.Qlmain.typesOfExpr.types.TypeStr;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,15 +29,15 @@ public class MainTestCorrectForm {
 
     @Before
     public void setUp() throws Exception {
-        variableTypeTest.put("hasSoldHouse",new Type_bool());
-        variableTypeTest.put("hasBoughtHouse",new Type_bool());
-        variableTypeTest.put("hasMainLoan",new Type_str());
-        variableTypeTest.put("sellingPrice",new Type_mon());
-        variableTypeTest.put("privateDebt",new Type_mon());
-        variableTypeTest.put("valueResidue",new Type_mon());
-        variableTypeTest.put("sellingPrices",new Type_mon());
-        variableTypeTest.put("privateDebts",new Type_mon());
-        variableTypeTest.put("valueResidues",new Type_mon());
+        variableTypeTest.put("hasSoldHouse",new TypeBool());
+        variableTypeTest.put("hasBoughtHouse",new TypeBool());
+        variableTypeTest.put("hasMainLoan",new TypeStr());
+        variableTypeTest.put("sellingPrice",new TypeMon());
+        variableTypeTest.put("privateDebt",new TypeMon());
+        variableTypeTest.put("valueResidue",new TypeMon());
+        variableTypeTest.put("sellingPrices",new TypeMon());
+        variableTypeTest.put("privateDebts",new TypeMon());
+        variableTypeTest.put("valueResidues",new TypeMon());
 
         variableAndValuesTest.put("hasSoldHouse",false);
         variableAndValuesTest.put("hasBoughtHouse",false);
@@ -62,8 +63,10 @@ public class MainTestCorrectForm {
 
     @Test
     public void qlWithoutErrors() throws InvocationTargetException, InterruptedException {
+        TypeChecking typeCheck = new TypeChecking();
+        typeCheck.TypeCheckingMethod(correctFormToTest);
         checkErrorCodes();
-        checkIfStatementEval();
+        checkIfStatementEval(typeCheck);
         checkEvaluation();
     }
 
@@ -100,14 +103,16 @@ public class MainTestCorrectForm {
     @Test
     public void checkQuestionType()
     {
-        checkQuestionTypeIteration(correctFormToTest.getStatementList());
+        TypeChecking typeCheck = new TypeChecking();
+        assertEquals(true, typeCheck.TypeCheckingMethod(correctFormToTest) );
+        checkQuestionTypeIteration(correctFormToTest.getStatementList(), typeCheck);
     }
 
-    private void checkQuestionTypeIteration(List<Statement> temp) {
+    private void checkQuestionTypeIteration(List<Statement> temp, TypeChecking typeCheck) {
         Type ty;
         for (Statement qu : temp) {
             if (qu instanceof Question) {
-                ty = ((Question) qu).type.exprTypeChecker();
+                ty = ((Question) qu).type.exprTypeChecker(typeCheck);
                 if (!ty.checkNoType() && !ty.checkWrongType()) {
                     assertEquals(variableTypeTest.get(((Question) qu).name).checkBoolType(), ty.checkBoolType());
                     assertEquals(variableTypeTest.get(((Question) qu).name).checkIntType(), ty.checkIntType());
@@ -115,28 +120,28 @@ public class MainTestCorrectForm {
                     assertEquals(variableTypeTest.get(((Question) qu).name).checkStrType(), ty.checkStrType());
                 }
             }else if (qu instanceof IfStatement){
-                checkQuestionTypeIteration( ((IfStatement) qu).getStatementsList() );
+                checkQuestionTypeIteration( ((IfStatement) qu).getStatementsList(), typeCheck );
             }
         }
     }
 
     private void checkErrorCodes() {
-        assertEquals(0, Error_codes_list.get_error_list().size() );
+        assertEquals(0, ErrorCodesList.get_error_list().size() );
     }
 
-    private void checkIfStatementEval() {
-        testIf(correctFormToTest.getStatementList());
+    private void checkIfStatementEval(TypeChecking typeCheck) {
+        testIf(correctFormToTest.getStatementList(), typeCheck);
     }
 
-    private void testIf(List<Statement> statementLi) {
+    private void testIf(List<Statement> statementLi, TypeChecking typeCheck) {
         int count =0;
         for (Statement st : statementLi){
             if (st instanceof IfStatement) {
                 if (count == 0) {
-                    assertEquals(true, ((IfStatement) st).getIfCase().exprTypeChecker().checkBoolType());
+                    assertEquals(true, ((IfStatement) st).getIfCase().exprTypeChecker(typeCheck).checkBoolType());
                     count++;
                 } else if (count > 0)
-                    assertEquals(true, ((IfStatement) st).getIfCase().exprTypeChecker().checkBoolType());
+                    assertEquals(true, ((IfStatement) st).getIfCase().exprTypeChecker(typeCheck).checkBoolType());
             }
         }
     }
@@ -148,7 +153,6 @@ public class MainTestCorrectForm {
     private void iterativeEvaluation(List<Statement> statementLi) {
 
             Evaluation eval = new Evaluation();
-            eval.initialise();
             Map<String, Object> variablesAndValues = eval.evaluateAST(statementLi);
 
             for (Map.Entry<String, Object> entry : variablesAndValues.entrySet()) {

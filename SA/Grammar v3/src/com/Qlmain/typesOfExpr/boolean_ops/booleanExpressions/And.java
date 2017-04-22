@@ -1,5 +1,7 @@
 package com.Qlmain.typesOfExpr.boolean_ops.booleanExpressions;
 
+import com.Qlmain.evaluation.Evaluation;
+import com.Qlmain.type_check.TypeChecking;
 import com.Qlmain.typesOfExpr.*;
 import com.Qlmain.typesOfExpr.boolean_ops.BooleanExpression;
 import com.Qlmain.typesOfExpr.types.Type;
@@ -14,13 +16,13 @@ public class And extends BooleanExpression {
     }
 
     @Override
-    public Type exprTypeChecker() {
-        return typeCheckBooleanToBoolean(getLhs().exprTypeChecker(), getRhs().exprTypeChecker());
+    public Type exprTypeChecker(TypeChecking typeCheck) {
+        return typeCheckBooleanToBoolean(getLhs().exprTypeChecker(typeCheck), getRhs().exprTypeChecker(typeCheck));
     }
 
     @Override
-    public Object Evaluator() {
-        return (boolean) getLhs().Evaluator() && (boolean) getRhs().Evaluator();
+    public Object Evaluator(Evaluation evaluation) {
+        return (boolean) getLhs().Evaluator(evaluation) && (boolean) getRhs().Evaluator(evaluation);
     }
 
 }

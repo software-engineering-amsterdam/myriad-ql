@@ -1,7 +1,7 @@
 package com.Qlmain;
 
 import com.Qlmain.QL.*;
-import com.Qlmain.error_types.Error_codes_list;
+import com.Qlmain.error_types.ErrorCodesList;
 import com.Qlmain.type_check.TypeChecking;
 import com.Qlmain.typesOfExpr.types.Type;
 import org.junit.Before;
@@ -36,8 +36,10 @@ public class MainFuncTest {
 
     @Test
     public void qlWithErrors() throws InvocationTargetException, InterruptedException {
+        TypeChecking typeCheck = new TypeChecking();
+        assertEquals(false, typeCheck.TypeCheckingMethod(wrongFormToTest));
         checkErrorCodes();
-        checkIfStatementEval();
+        checkIfStatementEval(typeCheck);
     }
 
     @Test
@@ -74,39 +76,41 @@ public class MainFuncTest {
     @Test
     public void checkVariablesAndTypesTable()
     {
-        Map<String,Type> variablesAndTypes = TypeChecking.getVariablesAndTypes();
-        checkVariablesAndTypesTableIteration(wrongFormToTest.getStatementList(), variablesAndTypes);
+        TypeChecking typeCheck = new TypeChecking();
+        assertEquals(false, typeCheck.TypeCheckingMethod(wrongFormToTest) );
+        Map<String,Type> variablesAndTypes = typeCheck.getVariablesAndTypes();
+        checkVariablesAndTypesTableIteration(wrongFormToTest.getStatementList(), variablesAndTypes, typeCheck);
     }
 
-    private void checkVariablesAndTypesTableIteration(List<Statement> temp, Map<String,Type> variablesAndTypes) {
+    private void checkVariablesAndTypesTableIteration(List<Statement> temp, Map<String,Type> variablesAndTypes, TypeChecking typeCheck) {
         Type ty;
         for (Statement qu : temp) {
             if (qu instanceof Question) {
-                ty = ((Question) qu).type.exprTypeChecker();
+                ty = ((Question) qu).type.exprTypeChecker(typeCheck);
                 if (!ty.checkNoType() && !ty.checkWrongType())
                     assertEquals( variablesAndTypes.get(((Question) qu).name) , ty );
             }else if (qu instanceof IfStatement){
-                checkVariablesAndTypesTableIteration( ((IfStatement) qu).getStatementsList(), variablesAndTypes );
+                checkVariablesAndTypesTableIteration( ((IfStatement) qu).getStatementsList(), variablesAndTypes, typeCheck );
             }
         }
     }
 
     private void checkErrorCodes() {
-        assertEquals(3, Error_codes_list.get_error_list().size());
+        assertEquals(3, ErrorCodesList.get_error_list().size());
     }
 
-    private void checkIfStatementEval() {
-        testIf(wrongFormToTest.getStatementList());
+    private void checkIfStatementEval(TypeChecking typeCheck) {
+        testIf(wrongFormToTest.getStatementList(), typeCheck);
     }
 
-    private void testIf(List<Statement> statementLi) {
+    private void testIf(List<Statement> statementLi, TypeChecking typeCheck) {
         for (Statement st : statementLi){
             if (st instanceof IfStatement) {
-                assertEquals(true, ((IfStatement) st).getIfCase().exprTypeChecker().checkBoolType());
+                assertEquals(true, ((IfStatement) st).getIfCase().exprTypeChecker(typeCheck).checkBoolType());
 
                 for (Statement st2 : ((IfStatement) st).getStatementsList()){
                     if (st2 instanceof IfStatement) {
-                        assertEquals(true, ((IfStatement) st2).getIfCase().exprTypeChecker().checkNoType());
+                        assertEquals(true, ((IfStatement) st2).getIfCase().exprTypeChecker(typeCheck).checkNoType());
                     }
                 }
             }

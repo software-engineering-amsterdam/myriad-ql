@@ -6,8 +6,7 @@ import com.Qlmain.antlr.QLLexer;
 import com.Qlmain.antlr.QLParser;
 import com.Qlmain.parsing.QLVisitorBuildAST;
 import com.Qlmain.type_check.TypeChecking;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 import javax.swing.*;
@@ -71,24 +70,20 @@ public class MainFunc {
             System.exit(1);
         }
 
-        boolean typeCheckTree = new TypeChecking().Type_CheckingMethod(formAST);
+        TypeChecking typeCheck = new TypeChecking();
+        boolean typeCheckTree = typeCheck.TypeCheckingMethod(formAST);
         System.out.println("Type checking of the tree " + typeCheckTree);
 
         Map<String, Object> firstEvaluation = new HashMap<>();
         if (typeCheckTree) {
-            new Evaluation().initialise();
-            firstEvaluation = new Evaluation().evaluateAST(formAST.getStatementList());
-        }
-
-        if (typeCheckTree) {
-            new Frame_Window().Custom_Frame(formAST, firstEvaluation);
+            Evaluation evaluation = new Evaluation();
+            firstEvaluation = evaluation.evaluateAST(formAST.getStatementList());
+            new Frame_Window().Custom_Frame(formAST, firstEvaluation, typeCheck, evaluation);
         }
 
         return formAST;
 
     }
-
-
 
     public String QlRead() throws InvocationTargetException, InterruptedException {
 

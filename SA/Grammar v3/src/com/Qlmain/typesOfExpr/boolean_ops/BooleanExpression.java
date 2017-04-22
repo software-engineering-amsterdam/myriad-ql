@@ -1,10 +1,9 @@
 package com.Qlmain.typesOfExpr.boolean_ops;
 
+import com.Qlmain.evaluation.Evaluation;
+import com.Qlmain.type_check.TypeChecking;
 import com.Qlmain.typesOfExpr.Expression;
 import com.Qlmain.typesOfExpr.types.Type;
-import com.Qlmain.typesOfExpr.types.Type_bool;
-import com.Qlmain.typesOfExpr.types.Type_notype;
-import com.Qlmain.typesOfExpr.types.Type_wrongtype;
 
 /**
  * Created by sotos on 20/4/2017.
@@ -22,8 +21,8 @@ public class BooleanExpression extends Expression {
     public Expression getRhs() { return rhs;}
 
     @Override
-    public Type exprTypeChecker() {return null;}
+    public Type exprTypeChecker(TypeChecking typeCheck) {return null;}
 
     @Override
-    public Object Evaluator() {return null;}
+    public Object Evaluator(Evaluation evaluation) {return null;}
 }

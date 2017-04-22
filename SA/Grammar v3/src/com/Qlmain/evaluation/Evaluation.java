@@ -17,15 +17,15 @@ import java.util.Map;
  */
 public class Evaluation {
 
-    private static Map<String, Object> variablesAndValues;
+    private Map<String, Object> variablesAndValues;
 
-    public void initialise(){
+    public Evaluation(){
         variablesAndValues = new HashMap<>();
     }
 
     //evaluates if conditions
     public boolean setVisibleEval(IfStatement statementItem) {
-        return (boolean) statementItem.getIfCase().Evaluator();
+        return (boolean) statementItem.getIfCase().Evaluator(this);
 
     }
 
@@ -38,11 +38,11 @@ public class Evaluation {
 
         for (Statement statementItem : formAST) {
 
-            if (statementItem instanceof Question) {
+            if (statementItem.isQuestion()) {
                 Question tempQu = (Question) statementItem;
-                variablesAndValues.put( tempQu.name, tempQu.type.Evaluator());
+                variablesAndValues.put( tempQu.name, tempQu.type.Evaluator(this));
 
-            }else if (statementItem instanceof IfStatement) {
+            }else if (statementItem.isIfStatement()) {
                 evaluateAST(((IfStatement) statementItem).getStatementsList());
             }
         }
@@ -52,7 +52,7 @@ public class Evaluation {
 
     //evaluates expressions. Math ops
     public Object evaluateExpression(Expression expr) {
-        return expr.Evaluator();
+        return expr.Evaluator(this);
     }
 
     public void replaceValueInVariablesAndValues(String name, Object val) {
@@ -71,27 +71,27 @@ public class Evaluation {
         }
     }
 
-    public void storeDataAndChangeValueForNumberFields(JTextField qTextField, Question question) {
+    public void storeDataAndChangeValueForNumberFields(JTextField qTextField, Question question, TypeChecking typeCheck, Frame_Window frameWin) {
 
         if (qTextField.getText().equals("")) {
-            if (TypeChecking.getVariablesAndTypes().get(question.name).checkIntType()) {
+            if (typeCheck.getVariablesAndTypes().get(question.name).checkIntType()) {
                 variablesAndValues.replace(question.name, 0);
             }else{
                 variablesAndValues.replace(question.name, 0.0);
             }
-            new Frame_Window().RedrawIf();
-            new Frame_Window().RedrawExpr();
+            frameWin.RedrawIf(this);
+            frameWin.RedrawExpr(this);
         }else {
             try {
-                if (TypeChecking.getVariablesAndTypes().get(question.name).checkIntType()) {
+                if (typeCheck.getVariablesAndTypes().get(question.name).checkIntType()) {
                     int temp = Integer.parseInt(qTextField.getText());
                     variablesAndValues.replace(question.name, temp);
                 } else {
                     double temp = Double.parseDouble(qTextField.getText());
                     variablesAndValues.replace(question.name, temp);
                 }
-                new Frame_Window().RedrawIf();
-                new Frame_Window().RedrawExpr();
+                frameWin.RedrawIf(this);
+                frameWin.RedrawExpr(this);
             } catch (NumberFormatException e1) {
 
                 infoBox("We expect a Number!", "Error in input " + e1.getMessage());

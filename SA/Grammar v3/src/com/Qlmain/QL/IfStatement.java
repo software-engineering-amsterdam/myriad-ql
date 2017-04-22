@@ -37,4 +37,7 @@ public class IfStatement extends Statement implements Node {
 
     public int getIfStatementLine() { return line; }
 
+    @Override
+    public boolean isIfStatement() {return true;}
+
 }

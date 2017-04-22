@@ -1,5 +1,7 @@
 package com.Qlmain.typesOfExpr.number_ops.numericalExpressions;
 
+import com.Qlmain.evaluation.Evaluation;
+import com.Qlmain.type_check.TypeChecking;
 import com.Qlmain.typesOfExpr.Expression;
 import com.Qlmain.typesOfExpr.number_ops.NumericalAssignOp;
 import com.Qlmain.typesOfExpr.types.Type;
@@ -14,15 +16,15 @@ public class GiveValEqual extends NumericalAssignOp {
     }
 
     @Override
-    public Type exprTypeChecker() {
-        Type evalR = getRhs().exprTypeChecker();
+    public Type exprTypeChecker(TypeChecking typeCheck) {
+        Type evalR = getRhs().exprTypeChecker(typeCheck);
         return typeCheckNumericalToNumerical(getLhs(), evalR);
 
     }
 
     @Override
-    public Object Evaluator() {
+    public Object Evaluator(Evaluation evaluation) {
         //System.out.println(rhs.Evaluator());
-        return getRhs().Evaluator();
+        return getRhs().Evaluator(evaluation);
     }
 }

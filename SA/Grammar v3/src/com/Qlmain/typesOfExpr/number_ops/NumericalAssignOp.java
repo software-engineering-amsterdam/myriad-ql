@@ -1,5 +1,7 @@
 package com.Qlmain.typesOfExpr.number_ops;
 
+import com.Qlmain.evaluation.Evaluation;
+import com.Qlmain.type_check.TypeChecking;
 import com.Qlmain.typesOfExpr.Expression;
 import com.Qlmain.typesOfExpr.types.Type;
 
@@ -20,12 +22,12 @@ public class NumericalAssignOp extends Expression{
     public Expression getRhs() { return rhs;}
 
     @Override
-    public Type exprTypeChecker() {
+    public Type exprTypeChecker(TypeChecking typeCheck) {
         return null;
     }
 
     @Override
-    public Object Evaluator() {
+    public Object Evaluator(Evaluation evaluation) {
         return null;
     }
 }

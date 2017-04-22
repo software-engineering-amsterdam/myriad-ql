@@ -1,9 +1,9 @@
 package com.Qlmain;
 
 import com.Qlmain.evaluation.Evaluation;
-import com.Qlmain.frame_Listeners.Checkbox_Listener;
-import com.Qlmain.frame_Listeners.NumberField_Listener;
-import com.Qlmain.frame_Listeners.StringField_Listener;
+import com.Qlmain.frameListeners.CheckboxListener;
+import com.Qlmain.frameListeners.NumberFieldListener;
+import com.Qlmain.frameListeners.StringFieldListener;
 import com.Qlmain.QL.*;
 import com.Qlmain.typesOfExpr.number_ops.numericalExpressions.GiveValEqual;
 import com.Qlmain.type_check.TypeChecking;
@@ -18,10 +18,10 @@ import java.util.Map;
 
 public class Frame_Window {
 
-    private static Map<IfStatement, JPanel> panelsAndConditions;
-    private static Map<Question, JTextField> textFieldWithExprToEval;
+    private Map<IfStatement, JPanel> panelsAndConditions;
+    private Map<Question, JTextField> textFieldWithExprToEval;
 
-    public void Custom_Frame(Form dataToDisplay, Map<String, Object> variablesAndValues) {
+    public void Custom_Frame(Form dataToDisplay, Map<String, Object> variablesAndValues, TypeChecking typeCheck, Evaluation evaluation) {
 
         panelsAndConditions = new HashMap<>();
         textFieldWithExprToEval = new HashMap<>();
@@ -29,21 +29,21 @@ public class Frame_Window {
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         Dimension dim = new Dimension(500,500);
         frame.setPreferredSize(dim);
-        frame.getContentPane().add( questionsToDisplay(dataToDisplay.getStatementList(), variablesAndValues));
+        frame.getContentPane().add( questionsToDisplay(dataToDisplay.getStatementList(), variablesAndValues, typeCheck, evaluation));
 
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
-    private JPanel questionsToDisplay(List<Statement> dataToDisplay, Map<String, Object> variablesAndValues){
+    private JPanel questionsToDisplay(List<Statement> dataToDisplay, Map<String, Object> variablesAndValues, TypeChecking typeCheck, Evaluation evaluation){
         JPanel newItemPanel = new JPanel();
         newItemPanel.setLayout(new BoxLayout(newItemPanel,BoxLayout.Y_AXIS));
         newItemPanel.setBackground(Color.WHITE);
 
         for (Statement statementItem : dataToDisplay) {
 
-            if (statementItem instanceof Question) {
+            if (statementItem.isQuestion()) {
 
                 Question questionItem = (Question) statementItem;
                 JLabel jlabel = new JLabel(questionItem.text);
@@ -51,15 +51,15 @@ public class Frame_Window {
                 Font font = new Font("Verdana", Font.ITALIC, 12);
                 jlabel.setFont(font);
 
-                newItemPanel = defineQuestionType(questionItem, newItemPanel, jlabel, variablesAndValues);
+                newItemPanel = defineQuestionType(questionItem, newItemPanel, jlabel, variablesAndValues, typeCheck, evaluation);
 
-            }else if (statementItem instanceof IfStatement) {
+            }else if (statementItem.isIfStatement()) {
 
-                JPanel tempPan = questionsToDisplay( ((IfStatement) statementItem).getStatementsList(), variablesAndValues);
+                JPanel tempPan = questionsToDisplay( ((IfStatement) statementItem).getStatementsList(), variablesAndValues, typeCheck, evaluation);
                 panelsAndConditions.put((IfStatement) statementItem, tempPan );
                 newItemPanel.add(tempPan);
 
-                tempPan.setVisible(new Evaluation().setVisibleEval((IfStatement) statementItem) );
+                tempPan.setVisible(evaluation.setVisibleEval((IfStatement) statementItem) );
 
             }
 
@@ -67,8 +67,8 @@ public class Frame_Window {
         return newItemPanel;
     }
 
-    private JPanel defineQuestionType(Question questionItem, JPanel newItemPanel, JLabel jlabel, Map<String, Object> variablesAndValues) {
-        Map<String,Type> variablesAndTypes = TypeChecking.getVariablesAndTypes();
+    private JPanel defineQuestionType(Question questionItem, JPanel newItemPanel, JLabel jlabel, Map<String, Object> variablesAndValues, TypeChecking typeCheck, Evaluation evaluation) {
+        Map<String,Type> variablesAndTypes = typeCheck.getVariablesAndTypes();
 
         JPanel tempPanel = new JPanel(new GridLayout(1,1));
         Dimension dim = new Dimension(500,30);
@@ -81,13 +81,13 @@ public class Frame_Window {
 
             JCheckBox questionCheckBox = new JCheckBox();
             questionCheckBox.setBackground(Color.WHITE);
-            questionCheckBox.addActionListener(new Checkbox_Listener(questionItem));
+            questionCheckBox.addActionListener(new CheckboxListener(questionItem, evaluation, this));
             tempPanel.add(questionCheckBox);
 
         }else if (variablesAndTypes.get(questionItem.name).checkStrType() ){
 
             JTextField questionTextField = new JTextField();
-            questionTextField.getDocument().addDocumentListener(new StringField_Listener(questionItem, questionTextField));
+            questionTextField.getDocument().addDocumentListener(new StringFieldListener(questionItem, questionTextField, evaluation));
             questionTextField.setBackground(Color.WHITE);
             tempPanel.add(questionTextField);
 
@@ -102,7 +102,7 @@ public class Frame_Window {
                 textFieldWithExprToEval.put(questionItem, questionTextField);
             }else{
 
-                questionTextField.getDocument().addDocumentListener(new NumberField_Listener(questionItem, questionTextField));
+                questionTextField.getDocument().addDocumentListener(new NumberFieldListener(questionItem, questionTextField, typeCheck, evaluation, this));
             }
             questionTextField.setBackground(Color.WHITE);
 
@@ -112,22 +112,22 @@ public class Frame_Window {
         return newItemPanel;
     }
 
-    public void RedrawExpr() {
+    public void RedrawExpr(Evaluation evaluation) {
 
         Runnable doAssist = () -> {
             for (Question qu : textFieldWithExprToEval.keySet()) {
-                Object reevaluated = new Evaluation().evaluateExpression(qu.type);
+                Object reevaluated = evaluation.evaluateExpression(qu.type);
                 textFieldWithExprToEval.get(qu).setText( reevaluated.toString() );
-                new Evaluation().replaceValueInVariablesAndValues(qu.name, reevaluated);
+                evaluation.replaceValueInVariablesAndValues(qu.name, reevaluated);
             }
         };
         SwingUtilities.invokeLater(doAssist);
     }
 
-    public void RedrawIf() {
+    public void RedrawIf(Evaluation evaluation) {
         for (IfStatement statementItem : panelsAndConditions.keySet()) {
 
-            panelsAndConditions.get(statementItem).setVisible(new Evaluation().setVisibleEval(statementItem));
+            panelsAndConditions.get(statementItem).setVisible(evaluation.setVisibleEval(statementItem));
 
         }
 

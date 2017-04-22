@@ -20,4 +20,6 @@ public class Question extends Statement implements Node {
         this.line = line;
     }
 
+    @Override
+    public boolean isQuestion() {return true;}
 }

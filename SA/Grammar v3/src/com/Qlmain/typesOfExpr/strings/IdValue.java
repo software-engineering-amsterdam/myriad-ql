@@ -4,7 +4,7 @@ import com.Qlmain.evaluation.Evaluation;
 import com.Qlmain.typesOfExpr.Expression;
 import com.Qlmain.type_check.TypeChecking;
 import com.Qlmain.typesOfExpr.types.Type;
-import com.Qlmain.typesOfExpr.types.Type_notype;
+import com.Qlmain.typesOfExpr.types.TypeNotype;
 
 import java.util.Map;
 
@@ -19,17 +19,17 @@ public class IdValue extends Expression {
     }
 
     @Override
-    public Type exprTypeChecker() {
-        Map<String,Type> variablesAndTypes = TypeChecking.getVariablesAndTypes();
+    public Type exprTypeChecker(TypeChecking typeCheck) {
+        Map<String,Type> variablesAndTypes = typeCheck.getVariablesAndTypes();
         if (variablesAndTypes.containsKey(this.val)) {
             return variablesAndTypes.get(this.val);
         }else {
-            return new Type_notype();
+            return new TypeNotype();
         }
     }
 
     @Override
-    public Object Evaluator() {
-        return new Evaluation().getTheIdValue(val);
+    public Object Evaluator(Evaluation evaluation) {
+        return evaluation.getTheIdValue(val);
     }
 }

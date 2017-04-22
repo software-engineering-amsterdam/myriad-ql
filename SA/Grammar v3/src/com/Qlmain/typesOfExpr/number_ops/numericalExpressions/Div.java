@@ -1,5 +1,7 @@
 package com.Qlmain.typesOfExpr.number_ops.numericalExpressions;
 
+import com.Qlmain.evaluation.Evaluation;
+import com.Qlmain.type_check.TypeChecking;
 import com.Qlmain.typesOfExpr.Expression;
 import com.Qlmain.typesOfExpr.number_ops.NumericalExpression;
 import com.Qlmain.typesOfExpr.types.Type;
@@ -14,14 +16,14 @@ public class Div extends NumericalExpression {
     }
 
     @Override
-    public Type exprTypeChecker() {
-        return typeCheckNumericalToNumerical(getLhs().exprTypeChecker(),getRhs().exprTypeChecker());
+    public Type exprTypeChecker(TypeChecking typeCheck) {
+        return typeCheckNumericalToNumerical(getLhs().exprTypeChecker(typeCheck),getRhs().exprTypeChecker(typeCheck));
     }
 
     @Override
-    public Object Evaluator() {
-        Object thatLhs = getLhs().Evaluator();
-        Object thatRhs = getRhs().Evaluator();
+    public Object Evaluator(Evaluation evaluation) {
+        Object thatLhs = getLhs().Evaluator(evaluation);
+        Object thatRhs = getRhs().Evaluator(evaluation);
         if (thatLhs instanceof Integer && thatRhs instanceof Integer) {
             return (int) thatLhs / (int) thatRhs;
         }else {

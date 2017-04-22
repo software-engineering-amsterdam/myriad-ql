@@ -116,15 +116,15 @@ public class QLVisitorBuildAST extends AbstractParseTreeVisitor implements QLVis
     private Type evaluateQLType(String tempType) {
         switch (tempType) {
             case "boolean":
-                return new Type_bool(false);
+                return new TypeBool(false);
             case "integer":
-                return new Type_int("0");
+                return new TypeInt("0");
             case "string":
-                return new Type_str("");
+                return new TypeStr("");
             case "money":
-                return new Type_mon("0.0");
+                return new TypeMon("0.0");
             default:
-                return new Type_wrongtype();
+                return new TypeWrongtype();
         }
 
     }
@@ -157,9 +157,9 @@ public class QLVisitorBuildAST extends AbstractParseTreeVisitor implements QLVis
     public Object visitBool(QLParser.BoolContext ctx) {
 
         if (ctx.getText().equals("true")) {
-            return new Type_bool(true);
+            return new TypeBool(true);
         }else {
-            return new Type_bool(false);
+            return new TypeBool(false);
         }
     }
 
@@ -207,9 +207,9 @@ public class QLVisitorBuildAST extends AbstractParseTreeVisitor implements QLVis
     public Object visitNumber(QLParser.NumberContext ctx) {
 
         if (ctx.NUMBER().toString().contains(".")) {
-            return new Type_mon( ctx.NUMBER().toString() );
+            return new TypeMon( ctx.NUMBER().toString() );
         }else {
-            return new Type_int( ctx.NUMBER().toString() );
+            return new TypeInt( ctx.NUMBER().toString() );
         }
     }
 

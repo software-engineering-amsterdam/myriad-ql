@@ -1,5 +1,7 @@
 package com.Qlmain.typesOfExpr;
 
+import com.Qlmain.evaluation.Evaluation;
+import com.Qlmain.type_check.TypeChecking;
 import com.Qlmain.typesOfExpr.types.*;
 
 
@@ -7,29 +9,29 @@ public abstract class Expression {
 
     public Expression(){}
 
-    public abstract Type exprTypeChecker() ;
-    public abstract Object Evaluator();
+    public abstract Type exprTypeChecker(TypeChecking typeCheck) ;
+    public abstract Object Evaluator(Evaluation evaluation);
 
     protected Type typeCheckBooleanToBoolean(Type lhs, Type rhs){
         if (lhs.checkBoolType() && rhs.checkBoolType())
-            return new Type_bool();
+            return new TypeBool();
         else if (lhs.checkNoType() || rhs.checkNoType())
-            return new Type_notype();
+            return new TypeNotype();
         else
-            return new Type_wrongtype();
+            return new TypeWrongtype();
     }
 
     protected Type typeCheckNumberToBoolean(Type lhs, Type rhs){
-        if (lhs.checkIntType() && rhs.checkIntType()) return new Type_bool();
-        else if (lhs.checkMonType() && rhs.checkMonType()) return new Type_bool();
-        else if (lhs.checkNoType() || rhs.checkNoType()) return new Type_notype();
-        else return new Type_wrongtype();
+        if (lhs.checkIntType() && rhs.checkIntType()) return new TypeBool();
+        else if (lhs.checkMonType() && rhs.checkMonType()) return new TypeBool();
+        else if (lhs.checkNoType() || rhs.checkNoType()) return new TypeNotype();
+        else return new TypeWrongtype();
     }
 
     protected Type typeCheckNumericalToNumerical(Type lhs, Type rhs){
-        if (lhs.checkIntType() && rhs.checkIntType()) return new Type_int();
-        else if (lhs.checkMonType() && rhs.checkMonType()) return new Type_mon();
-        else if (lhs.checkNoType() || rhs.checkNoType()) return new Type_notype();
-        else return new Type_wrongtype();
+        if (lhs.checkIntType() && rhs.checkIntType()) return new TypeInt();
+        else if (lhs.checkMonType() && rhs.checkMonType()) return new TypeMon();
+        else if (lhs.checkNoType() || rhs.checkNoType()) return new TypeNotype();
+        else return new TypeWrongtype();
     }
 }

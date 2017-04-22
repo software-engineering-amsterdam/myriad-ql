@@ -5,4 +5,6 @@ package com.Qlmain.QL;
  */
 public class Statement  {
 
+    public boolean isQuestion() {return false;}
+    public boolean isIfStatement() {return false;}
 }

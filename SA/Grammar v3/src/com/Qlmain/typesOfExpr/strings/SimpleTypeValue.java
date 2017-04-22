@@ -1,5 +1,7 @@
 package com.Qlmain.typesOfExpr.strings;
 
+import com.Qlmain.evaluation.Evaluation;
+import com.Qlmain.type_check.TypeChecking;
 import com.Qlmain.typesOfExpr.Expression;
 import com.Qlmain.typesOfExpr.types.Type;
 
@@ -15,12 +17,12 @@ public class SimpleTypeValue extends Expression {
     private Type getSimpleTypeValue() { return this.val; }
 
     @Override
-    public Type exprTypeChecker() {
+    public Type exprTypeChecker(TypeChecking typeCheck) {
         return getSimpleTypeValue();
     }
 
     @Override
-    public Object Evaluator() {
-        return val.Evaluator();
+    public Object Evaluator(Evaluation evaluation) {
+        return val.Evaluator(evaluation);
     }
 }
