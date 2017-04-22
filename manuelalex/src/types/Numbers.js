@@ -16,4 +16,11 @@ export class Numbers {
         return this.location;
     }
 
+
+    evaluate(visitor){
+        return visitor.evaluateNumbers(this);
+    }
+
+
+
 }

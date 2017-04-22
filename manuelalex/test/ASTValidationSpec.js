@@ -4,11 +4,6 @@
 import chai from 'chai';
 // import Parser from '../src/Parser.js';
 import JspmImport       from './JspmImport.js';
-import {
-    loadDependencies,
-    mockDependency
-}                               from './Bootstrap.js';
-
 const expect = chai.expect;
 
 describe('Test ASTValidator', () => {

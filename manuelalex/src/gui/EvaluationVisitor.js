@@ -11,22 +11,22 @@ export class EvaluationVisitor {
         const leftHandValue = leftValue || undefined;
         const rightHandValue = rightValue || undefined;
 
-        return eval(`${leftHandValue} ${expression.getOperator()} ${rightHandValue}`);
+        return Boolean(eval(`${leftHandValue} ${expression.getOperator()} ${rightHandValue}`));
     }
 
     evaluatePrefixExpression(prefixExpression, memoryState) {
         const value = prefixExpression.getExpression().evaluate(this, memoryState);
-        return eval(`${prefixExpression.getPrefix} ${value}`);
+        return Boolean(eval(`${prefixExpression.getPrefix} ${value}`));
     }
 
 
     evaluateProperty(property, memoryState) {
         const value = memoryState.getValue(property.getName()) || undefined;
-        return eval(value);
+        return eval(value)
     }
 
-    evaluateNumbers(){
-
+    evaluateNumbers(number){
+        return eval(number.getValue());
     }
 }
 
