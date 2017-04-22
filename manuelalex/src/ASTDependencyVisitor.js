@@ -48,7 +48,7 @@ export class ASTDependencyVisitor {
 
     visitIfElseStatement(ifelsestatement) {
         this.depth++;
-        ifelsestatement.condition.accept(this);
+        //ifelsestatement.condition.accept(this);
     }
 
 

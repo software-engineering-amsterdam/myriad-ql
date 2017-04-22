@@ -119,7 +119,13 @@ export let validStrings = {
                 answer 'Value residue:'
                 valueResidue: money = (sellingPrice-privateDebt)
             }
-        }`
+        }`,
+    8: `form taxOfficeExample {
+            if (true) {
+                question 'What was the selling price?'
+                sellingPrice: money
+                }
+        }`,
 };
 
 export let invalidStrings = {

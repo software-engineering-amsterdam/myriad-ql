@@ -27,7 +27,7 @@ export class ASTBuilder {
     }
 
     ifStatement(data, location) {
-        return new IfStatement(data[3], _.flattenDeep(data[5][3]), location);
+        return new IfStatement(_.flattenDeep(data[3])[0], _.flattenDeep(data[5][3]), location);
     }
 
     ifElseStatement(data, location) {
@@ -48,7 +48,7 @@ export class ASTBuilder {
     }
 
     prefixExpression(data, location) {
-        return new PrefixExpression(data[0], _.flattenDeep(data[1])[0], location);
+        return new PrefixExpression(_.flattenDeep(data[0])[0], _.flattenDeep(data[1])[0], location);
     }
 
     deepExpression(data, location, reject) {

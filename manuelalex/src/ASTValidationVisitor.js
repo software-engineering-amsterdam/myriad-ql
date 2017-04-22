@@ -109,23 +109,28 @@ export class ASTValidationVisitor {
         const rightHandType = expression.rightHand.accept(this);
         const operator = expression.operator;
 
+        if(!leftHandType || !rightHandType){
+            return leftHandType;
+        } else {
+            if (leftHandType.getType() !== rightHandType.getType()) {
+                this.errors.push(`Invalid expression. The operator ${operator} can not be applied 
+                                to ${expression.leftHand.toString()} [type: ${leftHandType.toString()}] 
+                                and ${expression.rightHand.toString()}[type: ${rightHandType.toString()}]`);
+            }
 
-        if (leftHandType.getType() !== rightHandType.getType()) {
-            this.errors.push(`Invalid expression. The operator ${operator} can not be applied 
-                            to ${expression.leftHand.toString()} [type: ${leftHandType.toString()}] 
-                            and ${expression.rightHand.toString()}[type: ${rightHandType.toString()}]`);
+            this.validateOperator(expression, leftHandType, operator, ['||', '&&', '=='], QLBoolean);
+            this.validateOperator(expression, leftHandType, operator, ['<', '>', '>=', '<=', '!=', '==', '*', '/', '+', '-'], QLMoney);
+            this.validateOperator(expression, leftHandType, operator, ['<', '>', '>=', '<=', '!=', '=='], QLString);
+            this.validateOperator(expression, leftHandType, operator, ['<', '>', '>=', '<=', '!=', '==', '*', '/', '+', '-'], QLNumber);
+            this.validateOperator(expression, leftHandType, operator, ['<', '>', '>=', '<=', '!=', '=='], QLDate);
         }
-
-        this.validateOperator(expression, leftHandType, operator, ['||', '&&', '=='], QLBoolean);
-        this.validateOperator(expression, leftHandType, operator, ['<', '>', '>=', '<=', '!=', '==', '*', '/', '+', '-'], QLMoney);
-        this.validateOperator(expression, leftHandType, operator, ['<', '>', '>=', '<=', '!=', '=='], QLString);
-        this.validateOperator(expression, leftHandType, operator, ['<', '>', '>=', '<=', '!=', '==', '*', '/', '+', '-'], QLNumber);
-        this.validateOperator(expression, leftHandType, operator, ['<', '>', '>=', '<=', '!=', '=='], QLDate);
-
         return expression.getType();
     }
 
     visitProperty(property) {
+        if (!this.memoryState.getType(property.name)) {
+            this.errors.push('Invalid use of property. The property ' + property.name + ' on location: ' + property.location + '  has not been instantiated');
+        }
         return this.memoryState.getType(property.name);
     }
 

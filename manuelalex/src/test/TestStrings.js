@@ -86,3 +86,14 @@ export let test7 =
         valueResidue: money = (hasSoldHouse-hasMaintLoan)
     } else {question 'Secondlabel' sellingPrice: money}
      }`;
+
+
+export let test8 =
+    `form taxOfficeExample {
+        question 'Did you buy a house in 2010?'
+        hasSoldHouse: boolean
+        if (!hasSoldHouse) {
+            question 'What was the selling price?'
+            sellingPrice: money
+        }
+     }`;

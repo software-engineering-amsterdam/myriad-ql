@@ -30,10 +30,13 @@ multiply_divide_expression  -> factor | multiply_divide_expression _ ("/" | "*")
 factor  -> digits
        | propertyName
        | "(" expression ")"    {% (data)=> data[1] %}
-
+boolean -> "true" | "false"    {% ASTBuilder.boolean %}
 digits -> [0-9]:+   {% ASTBuilder.numbers %}
 
-propertyName -> [A-Za-z0-9]:+    {% ASTBuilder.property %}
+#propertyName -> ^/(?!"true"|"false")([a-z0-9]:+)$ {% ASTBuilder.property %}
+
+
+propertyName -> [A-Za-z0-9]:+   {% ASTBuilder.property %}
 propertyType -> "boolean"        {% ASTBuilder.boolean %}
             | "string"           {% ASTBuilder.string %}
             | "integer"          {% ASTBuilder.number %}
