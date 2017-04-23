@@ -8,26 +8,6 @@
     {
         private const string DefaultNotSupportedMessage = "Operation not supported";
 
-        public static bool operator >(BaseValue valueOne, BaseValue valueTwo)
-        {
-            return valueOne.GreaterThan(valueTwo).Value;
-        }
-
-        public static bool operator <(BaseValue valueOne, BaseValue valueTwo)
-        {
-            return valueOne.LessThan(valueTwo).Value;
-        }
-
-        public static bool operator >=(BaseValue valueOne, BaseValue valueTwo)
-        {
-            return valueOne.GreaterThanOrEqualTo(valueTwo).Value;
-        }
-
-        public static bool operator <=(BaseValue valueOne, BaseValue valueTwo)
-        {
-            return valueOne.LessThanOrEqualTo(valueTwo).Value;
-        }
-
         public static bool operator ==(BaseValue valueOne, BaseValue valueTwo)
         {
             return valueOne.Equals(valueTwo).Value;
