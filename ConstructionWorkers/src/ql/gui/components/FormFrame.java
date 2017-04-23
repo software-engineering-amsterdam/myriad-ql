@@ -24,14 +24,14 @@ public class FormFrame {
     private final JFrame formFrame;
     private final JPanel questionPanel;
 
-    private static final int DEFAULT_WIN_WIDTH = 480;
-    private static final int DEFAULT_WIN_HEIGHT = 540;
+    private static final int WIN_WIDTH = 480;
+    private static final int WIN_HEIGHT = 540;
 
     public FormFrame(String formTitle) {
         fields = new ArrayList<>();
 
         formFrame = new JFrame(formTitle);
-        formFrame.setSize(DEFAULT_WIN_WIDTH, DEFAULT_WIN_HEIGHT);
+        formFrame.setSize(WIN_WIDTH, WIN_HEIGHT);
         formFrame.setLocationRelativeTo(null);
         formFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         formFrame.setResizable(true);
