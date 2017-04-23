@@ -83,14 +83,14 @@ export class ASTValidationVisitor {
         condition.accept(this);
 
         let ifBody = ifStatement.getIfBody();
-        for(let statement of ifBody){
+        for (let statement of ifBody) {
             statement.accept(this);
         }
     }
 
     visitIfElseStatement(ifElseStatement) {
         let elseBody = ifElseStatement.getElseBody();
-        for(let statement of elseBody){
+        for (let statement of elseBody) {
             statement.accept(this);
         }
         return this.visitIfStatement(ifElseStatement);
@@ -109,7 +109,7 @@ export class ASTValidationVisitor {
         const rightHandType = expression.rightHand.accept(this);
         const operator = expression.operator;
 
-        if(!leftHandType || !rightHandType){
+        if (!leftHandType || !rightHandType) {
             return leftHandType;
         } else {
             if (leftHandType.getType() !== rightHandType.getType()) {
@@ -118,7 +118,7 @@ export class ASTValidationVisitor {
                                 and ${expression.rightHand.toString()}[type: ${rightHandType.toString()}]. Reason types are different`);
             }
 
-            if(!leftHandType.isValidOperator(operator)){
+            if (!leftHandType.isValidOperator(operator)) {
                 this.errors.push(`Invalid expression. The operator ${operator} can not be applied
                             to ${expression.leftHand.toString()} [type: ${leftHandType.toString()}] 
                             and ${expression.rightHand.toString()}[type: ${leftHandType.toString()}]`);
@@ -129,7 +129,7 @@ export class ASTValidationVisitor {
     }
 
     visitProperty(property) {
-        if(property.name === "false" || property.name === "true" ){
+        if (property.name === "false" || property.name === "true") {
             return new QLBoolean();
         } else if (!this.memoryState.getType(property.name)) {
             this.errors.push('Invalid use of property. The property ' + property.name + ' on location: ' + property.location + '  has not been instantiated');
