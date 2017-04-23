@@ -13,7 +13,7 @@ export class ASTDependencyVisitor {
         this.innerGraph = [];
         this.errors = [];
     }
-    
+
     visitAST(ast) {
         this.visitStatements(ast.getStatements());
 

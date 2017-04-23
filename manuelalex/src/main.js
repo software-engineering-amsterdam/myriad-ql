@@ -6,13 +6,15 @@ import {Parser} from './Parser.js';
 import {ASTValidationVisitor} from './ASTValidationVisitor.js';
 import {ASTDependencyVisitor} from './ASTDependencyVisitor.js';
 
-import {GUI}                                     from './gui/Gui.js';
-import {AST}                                     from './ast/AST.js';
+import {GUI} from './gui/Gui.js';
+import {AST} from './ast/AST.js';
 
-import {test1, test2, test3, test4, test5, test6, test7, test8}       from './test/TestStrings.js';
+import {test1, test2, test3,
+        test4, test5, test6,
+        test7, test8} from './test/TestStrings.js';
 
 let parser = new Parser();
-let { result, errors, parseString } = parser.parse(test8);
+let { result, errors, parseString } = parser.parse(test7);
 
 if (errors.length) {
     let gui = new GUI(null, null);
@@ -23,9 +25,8 @@ if (errors.length) {
 let ast = new AST(result[0]);
 let dependencyVisitor = new ASTDependencyVisitor();
 dependencyVisitor.visitAST(ast);
-console.log("dependency visitor graph:" + dependencyVisitor.graph);
 
-// Maybe make a new class for allocation the memory state
+// todo (Maybe, not sure) Maybe make a new class for allocation the memory state
 let visitor = new ASTValidationVisitor();
 visitor.visitAST(ast);
 
@@ -33,7 +34,6 @@ if (visitor.hasDetectedErrors()) {
     let gui = new GUI(null, null);
     gui.showValidationErrors(visitor.errors);
 } else {
-    /* Visitor has validated the AST */
     let memoryState = visitor.getMemoryState();
     let gui = new GUI(ast, memoryState);
     gui.createGUI();
