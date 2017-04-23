@@ -2,7 +2,7 @@
  * Created by alexvanmanen on 24-02-17.
  */
 
-import find     from 'lodash/find';
+import find from 'lodash/find';
 import {Expression} from './expressions/Expression.js';
 import {MemoryState} from './memory/MemoryState.js';
 import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from './types/Types.js';
@@ -38,8 +38,6 @@ export class ASTValidationVisitor {
 
     visitQuestion(question) {
         this.memoryState.set(question.propertyName.name, question.propertyType);
-
-
 
         this.checkDuplicateDeclarations(question);
         this.checkDuplicateLabels(question);
