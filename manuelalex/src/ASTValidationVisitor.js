@@ -39,39 +39,12 @@ export class ASTValidationVisitor {
     }
 
     visitQuestion(question) {
-        this.memoryState.set(question.propertyName.name, question.propertyType);
+
+        let property = question.getProperty();
+        property.accept(this);
 
         this.checkDuplicateDeclarations(question);
         this.checkDuplicateLabels(question);
-
-    }
-
-
-    /**
-     * Check duplicate question declarations with different types
-     * @param question
-     */
-    checkDuplicateDeclarations(question) {
-        const propertyName = question.getPropertyName();
-        const memoryElement = this.memoryState.getElement(propertyName);
-
-        const propertyInMemory = memoryElement !== undefined;
-
-        // TODO check if error should be thrown with a duplicate declaration with the same type
-        if (propertyInMemory && question.getPropertyType() !== memoryElement.getType()) {
-            this.warnings.push(`Property "${question.getPropertyType()}" is being used with multiple types`);
-        }
-    }
-
-    checkDuplicateLabels(statement) {
-        const localLabel = statement.getLabel();
-        const label = find(this.labels, (label) => label.contains(localLabel));
-
-        if (label) {
-            this.warnings.push(`Label "${localLabel.getValue()}" is being used multiple times`);
-        } else {
-            this.labels.push(statement.getLabel());
-        }
 
     }
 
@@ -135,16 +108,43 @@ export class ASTValidationVisitor {
 
     visitProperty(property) {
         let name = property.getName();
-        let location = property.getLocation();
 
         /* Return QLBoolean for a reserved boolean name */
-        if (this._reservedBooleanNames.includes(property.getName())) {
+        if (this._reservedBooleanNames.includes(name)) {
+            this.memoryState.set(name, this.memoryState.getType(name), property.getName());
             return new QLBoolean();
-        } else if (!this.memoryState.getType(name)) {
-            this.errors.push('Invalid use of property. The property ' + name + ' on location: ' + location + '  has not been instantiated');
         }
 
+        this.memoryState.set(name, this.memoryState.getType(name));
         return this.memoryState.getType(name);
+    }
+
+    /**
+     * Check duplicate question declarations with different types
+     * @param question
+     */
+    checkDuplicateDeclarations(question) {
+        const property = question.getProperty();
+        const memoryElement = this.memoryState.getElement(property);
+
+        const propertyInMemory = memoryElement !== undefined;
+
+        // TODO check if error should be thrown with a duplicate declaration with the same type
+        if (propertyInMemory && question.getPropertyType() !== memoryElement.getType()) {
+            this.warnings.push(`Property "${question.getPropertyType()}" is being used with multiple types`);
+        }
+    }
+
+    checkDuplicateLabels(statement) {
+        const localLabel = statement.getLabel();
+        const label = find(this.labels, (label) => label.contains(localLabel));
+
+        if (label) {
+            this.warnings.push(`Label "${localLabel.getValue()}" is being used multiple times`);
+        } else {
+            this.labels.push(statement.getLabel());
+        }
+
     }
 
     hasDetectedErrors() {
