@@ -49,8 +49,17 @@ export class ASTValidationVisitor {
     }
 
     visitAnswer(answer) {
-        //TODO: reference to undefined questions
+        let allocation = answer.getAllocation();
         this.checkDuplicateLabels(answer);
+        return allocation.accept(this);
+    }
+
+    visitAllocation(allocation) {
+        let expression = allocation.getExpression();
+        let returnType = expression.accept(this);
+        if (returnType !== allocation.getType()) {
+            this.errors.push(`Invalid alloction. The return type should be the same as the type proviced, at location ${allocation.getLocation()}. `);
+        }
     }
 
     visitIfStatement(ifStatement) {
@@ -109,13 +118,15 @@ export class ASTValidationVisitor {
     visitProperty(property) {
         let name = property.getName();
 
+        // todo we need a way to check for non allocated properties for Answers and Expressions.
+
         /* Return QLBoolean for a reserved boolean name */
         if (this._reservedBooleanNames.includes(name)) {
-            this.memoryState.set(name, this.memoryState.getType(name), property.getName());
+            this.memoryState.set(name, this.memoryState.getType(name), property.getName()); // todo type is not set correctly
             return new QLBoolean();
         }
 
-        this.memoryState.set(name, this.memoryState.getType(name));
+        this.memoryState.set(name, this.memoryState.getType(name)); // todo type is not set correctly
         return this.memoryState.getType(name);
     }
 

@@ -54,16 +54,16 @@ export let test6 =
     question 'Did you sell a house in 2010?'
     hasSoldHouse: boolean
     question 'Did you buy a house in 2010?'
-    hasSoldHouse: boolean
-    question 'Did you enter a loan?'
+    hasBoughtHouse: boolean
+    question 'Did you enter a loan? TEST'
     hasMaintLoan: string
-    if ((hasSoldHouse && hasSoldHouse) || (hasBoughtHouse < hasBoughtHouse)) {
+    if (true) {
         question 'What was the selling price?'
         sellingPrice: money
         question 'What was the private debts for the sold house?'
         privateDebt: date
         answer 'Value residue:'
-        valueResidue: money = (hasSoldHouse-hasMaintLoan)
+        valueResidue: boolean = (hasSoldHouse && hasBoughtHouse)
     } 
      }`;
 

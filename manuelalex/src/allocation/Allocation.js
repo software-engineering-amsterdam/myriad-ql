@@ -25,4 +25,8 @@ export class Allocation {
     getLocation() {
         return this.location;
     }
+
+    accept(visitor){
+        return visitor.visitAllocation(this);
+    }
 }
