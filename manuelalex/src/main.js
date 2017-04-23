@@ -26,6 +26,7 @@ let ast = new AST(result[0]);
 let dependencyVisitor = new ASTDependencyVisitor();
 dependencyVisitor.visitAST(ast);
 
+// todo determine if the dependencyvisitor should be called after the validation visitor
 // todo (Maybe, not sure) Maybe make a new class for allocation the memory state
 let visitor = new ASTValidationVisitor();
 visitor.visitAST(ast);

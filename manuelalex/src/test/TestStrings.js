@@ -76,6 +76,8 @@ export let test7 =
     hasBoughtHouse: boolean
     question 'Did you enter a loan?'
     hasMaintLoan: string
+    question 'What was the selling price?'
+    sellingPrice2: money
     if (!(hasSoldHouse && hasBoughtHouse) && (hasSoldHouse && hasBoughtHouse)) {
         question 'What was the selling price?'
         sellingPrice: money

@@ -21,7 +21,7 @@ export class ASTValidationVisitor {
     }
 
     visitAST(ast) {
-        this.visitForm(ast.getProgram());
+        this.visitForm(ast.getProgram()); // todo maybe remove this
         this.visitStatements(ast.getStatements());
     }
 
@@ -78,13 +78,22 @@ export class ASTValidationVisitor {
         this.checkDuplicateLabels(answer);
     }
 
-    visitIfStatement(ifstatement) {
-        ifstatement.condition.accept(this);
-        //this.visitStatements(ifstatement.ifBody.accept);
+    visitIfStatement(ifStatement) {
+        let condition = ifStatement.getCondition();
+        condition.accept(this);
+
+        let ifBody = ifStatement.getIfBody();
+        for(let statement of ifBody){
+            statement.accept(this);
+        }
     }
 
-    visitIfElseStatement(ifelsestatement) {
-        ifelsestatement.condition.accept(this);
+    visitIfElseStatement(ifElseStatement) {
+        let elseBody = ifElseStatement.getElseBody();
+        for(let statement of elseBody){
+            statement.accept(this);
+        }
+        return this.visitIfStatement(ifElseStatement);
     }
 
 
