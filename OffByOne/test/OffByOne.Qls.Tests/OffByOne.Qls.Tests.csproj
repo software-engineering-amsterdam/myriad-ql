@@ -50,6 +50,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Numerics" />
@@ -72,6 +73,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ast\Style\Literals\DecimalLiteralTests.cs" />
+    <Compile Include="Ast\Style\Literals\HexLiteralTests.cs" />
+    <Compile Include="Ast\Style\Literals\IntegerLiteralTests.cs" />
+    <Compile Include="Ast\Style\Literals\StringLiteralTests.cs" />
+    <Compile Include="Ast\Style\Properties\ColorPropertyTests.cs" />
+    <Compile Include="Ast\Style\Properties\FontNamePropertyTests.cs" />
+    <Compile Include="Ast\Style\Properties\FontSizePropertyTests.cs" />
+    <Compile Include="Ast\Style\Properties\FontStylePropertyTests.cs" />
+    <Compile Include="Ast\Style\Properties\HeightPropertyTests.cs" />
+    <Compile Include="Ast\Style\Properties\WidthPropertyTests.cs" />
+    <Compile Include="Ast\Style\Rules\QuestionRuleTests.cs" />
+    <Compile Include="Ast\Style\Rules\ValueTypeRuleTests.cs" />
+    <Compile Include="Ast\Style\Statements\PageTests.cs" />
+    <Compile Include="Ast\Style\Statements\SectionTests.cs" />
+    <Compile Include="Ast\Style\Statements\StyleSheetTests.cs" />
+    <Compile Include="Ast\Style\Widgets\DropDownListWidgetTests.cs" />
+    <Compile Include="Checker\Analyzers\FormAnalyerTests.cs" />
+    <Compile Include="Checker\Analyzers\TypeAnalyzerTests.cs" />
+    <Compile Include="Checker\StyleSheetCheckerTests.cs" />
     <Compile Include="ParserTests\Base\ParserTest.cs" />
     <Compile Include="ParserTests\PageTests.cs" />
     <Compile Include="ParserTests\SectionTests.cs" />
@@ -97,6 +117,7 @@
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.1.0-beta001\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

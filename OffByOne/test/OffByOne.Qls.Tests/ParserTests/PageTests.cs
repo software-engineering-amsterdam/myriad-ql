@@ -22,7 +22,7 @@
             var castAstTree = (StyleSheet)astTree;
 
             Assert.Equal("fuckingShit", castAstTree.Id);
-            Assert.Equal(2, castAstTree.Pages.Count);
+            Assert.Equal(2, castAstTree.Pages.Count());
             Assert.True(castAstTree.Pages
                 .Select(x => !x.Sections.Any() && !x.ValueTypeRules.Any())
                 .Aggregate((x, y) => x && y));

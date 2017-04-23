@@ -1,9 +1,12 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Literals
 {
+    using System;
     using System.Drawing;
 
+    using MoreDotNet.Wrappers;
+
     using OffByOne.Qls.Ast.Style.Literals.Base;
-    using OffByOne.Qls.Visitors.Contracts;
+    using OffByOne.Qls.Common.Visitors.Contracts;
 
     public class HexLiteral : Literal
     {
@@ -13,11 +16,16 @@
         }
 
         public HexLiteral(string value)
-            : this(ColorTranslator.FromHtml(value))
         {
+            if (value.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("A non-null, non-empty string must be given", nameof(value));
+            }
+
+            this.Value = ColorTranslator.FromHtml(value);
         }
 
-        public Color Value { get; private set; }
+        public Color Value { get; }
 
         public override TResult Accept<TResult, TContext>(
             ILiteralVisitor<TResult, TContext> visitor,

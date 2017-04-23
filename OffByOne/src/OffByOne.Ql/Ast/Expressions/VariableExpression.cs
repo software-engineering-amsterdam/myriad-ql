@@ -1,17 +1,27 @@
 ﻿namespace OffByOne.Ql.Ast.Expressions
 {
+    using System;
     using System.Collections.Generic;
 
-    using OffByOne.Ql.Visitors.Contracts;
+    using MoreDotNet.Wrappers;
+
+    using OffByOne.Ql.Common.Visitors.Contracts;
 
     public class VariableExpression : Expression
     {
         public VariableExpression(string identifier)
         {
+            if (identifier.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException(
+                    "A non-null, non-empty identifier must be given",
+                    nameof(identifier));
+            }
+
             this.Identifier = identifier;
         }
 
-        public string Identifier { get; private set; }
+        public string Identifier { get; }
 
         public override TResult Accept<TResult, TContext>(
             IExpressionVisitor<TResult, TContext> visitor,
@@ -22,7 +32,7 @@
 
         public override ISet<string> GetDependencies()
         {
-            return new SortedSet<string>() { this.Identifier };
+            return new HashSet<string> { this.Identifier };
         }
     }
 }

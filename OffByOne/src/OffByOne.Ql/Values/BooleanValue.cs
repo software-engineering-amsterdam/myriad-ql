@@ -14,7 +14,7 @@
         {
         }
 
-        public BooleanValue(bool value)
+        public BooleanValue(bool value = false)
         {
             this.Value = value;
         }

@@ -18,6 +18,7 @@
             : base(value, statement, guiEnvironment)
         {
             this.CreateControls(statement, style);
+            this.Value = value;
         }
 
         protected TextBox Input { get; private set; }
@@ -32,16 +33,14 @@
         {
             var label = new Label { Content = statement.Label };
             this.Input = new TextBox();
-            this.Input.KeyUp += this.UpdateValue;
+            this.Input.KeyUp += (e, a) => this.UpdateValue();
+            this.Input.IsEnabled = !this.IsReadOnly();
+            this.Input.Text = this.Value.ToString();
 
-            style.Apply(label);
-            style.Apply(this.Input);
-
-            this.Controls.Add(label);
-            this.Controls.Add(this.Input);
+            this.CreateControls(this.Input, statement, style);
         }
 
-        protected virtual void UpdateValue(object target, object eventArgs)
+        protected virtual void UpdateValue()
         {
             IValue value;
             switch (this.Value)

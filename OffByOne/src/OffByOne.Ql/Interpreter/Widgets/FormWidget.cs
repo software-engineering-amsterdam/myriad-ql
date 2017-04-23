@@ -1,5 +1,6 @@
 ﻿namespace OffByOne.Ql.Interpreter.Widgets
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -17,7 +18,7 @@
             this.Statement = statement;
             foreach (var control in controls)
             {
-                this.Controls = this.Controls.Concat(control.Controls).ToList();
+                this.AddControls(control.Controls);
             }
         }
 

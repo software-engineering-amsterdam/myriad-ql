@@ -1,10 +1,13 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Statements
 {
+    using System;
     using System.Collections.Generic;
+
+    using MoreDotNet.Wrappers;
 
     using OffByOne.Qls.Ast.Style.Rules;
     using OffByOne.Qls.Ast.Style.Statements.Base;
-    using OffByOne.Qls.Visitors.Contracts;
+    using OffByOne.Qls.Common.Visitors.Contracts;
 
     using StringLiteral = OffByOne.Qls.Ast.Style.Literals.StringLiteral;
 
@@ -12,17 +15,27 @@
     {
         public Section(
             StringLiteral name,
-            IEnumerable<Section> sections,
-            IEnumerable<QuestionRule> questionRules,
-            IEnumerable<ValueTypeRule> valueTypeRules)
+            IEnumerable<Section> sections = null,
+            IEnumerable<QuestionRule> questionRules = null,
+            IEnumerable<ValueTypeRule> valueTypeRules = null)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            if (name.Value.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("A non-null, non-empty section name must be given.");
+            }
+
             this.Name = name;
             this.Sections = sections;
             this.QuestionRules = questionRules;
             this.ValueTypeRules = valueTypeRules;
         }
 
-        public StringLiteral Name { get; private set; }
+        public StringLiteral Name { get; }
 
         public IEnumerable<Section> Sections { get; set; }
 

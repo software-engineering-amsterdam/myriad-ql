@@ -2,9 +2,11 @@
 {
     using System;
 
+    using MoreDotNet.Wrappers;
+
     using OffByOne.Ql.Ast.Literals.Base;
+    using OffByOne.Ql.Common.Visitors.Contracts;
     using OffByOne.Ql.Values;
-    using OffByOne.Ql.Visitors.Contracts;
 
     public class IntegerLiteral : Literal
     {
@@ -15,15 +17,17 @@
 
         public IntegerLiteral(string value)
         {
-            if (value == null)
+            if (value.IsNullOrWhiteSpace())
             {
-                throw new ArgumentNullException(nameof(value), "Literal must have a value.");
+                throw new ArgumentException(
+                    "Literal must have a value.",
+                    nameof(value));
             }
 
             this.Value = new IntegerValue(value);
         }
 
-        public IntegerValue Value { get; private set; }
+        public IntegerValue Value { get; }
 
         public override TResult Accept<TResult, TContext>(
             IExpressionVisitor<TResult, TContext> visitor,

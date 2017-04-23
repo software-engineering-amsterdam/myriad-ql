@@ -1,7 +1,9 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Properties
 {
+    using System;
+
     using OffByOne.Qls.Ast.Style.Properties.Base;
-    using OffByOne.Qls.Visitors.Contracts;
+    using OffByOne.Qls.Common.Visitors.Contracts;
 
     using StringLiteral = OffByOne.Qls.Ast.Style.Literals.StringLiteral;
 
@@ -9,10 +11,15 @@
     {
         public FontStyleProperty(StringLiteral value)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             this.Value = value;
         }
 
-        public StringLiteral Value { get; set; }
+        public StringLiteral Value { get; }
 
         public override TResult Accept<TResult, TContext>(
             IPropertyVisitor<TResult, TContext> visitor,

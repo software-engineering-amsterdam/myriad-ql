@@ -21,7 +21,7 @@
         [Fact]
         public void CreatingNewObject_ShouldThrowExceptionWhenIncorectDataGiven()
         {
-            Assert.Throws<ArgumentNullException>(() => new MoneyLiteral(null));
+            Assert.Throws<ArgumentException>(() => new MoneyLiteral(null));
             Assert.Throws<FormatException>(() => new MoneyLiteral("XaX"));
         }
     }

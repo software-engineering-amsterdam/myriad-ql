@@ -21,7 +21,7 @@
         [Fact]
         public void CreatingNewObject_ShouldThrowExceptionWhenIncorectDataGiven()
         {
-            Assert.Throws<ArgumentNullException>(() => new DecimalLiteral(null));
+            Assert.Throws<ArgumentException>(() => new DecimalLiteral(null));
             Assert.Throws<FormatException>(() => new DecimalLiteral("XaX"));
         }
     }

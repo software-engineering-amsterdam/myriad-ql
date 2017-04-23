@@ -4,8 +4,8 @@
     using OffByOne.Ql.Ast.Expressions.Binary;
     using OffByOne.Ql.Ast.Expressions.Unary;
     using OffByOne.Ql.Ast.Literals;
+    using OffByOne.Ql.Common.Visitors.Contracts;
     using OffByOne.Ql.Values.Contracts;
-    using OffByOne.Ql.Visitors.Contracts;
 
     public class Evaluator
         : IExpressionVisitor<IValue, TypeEnvironment>

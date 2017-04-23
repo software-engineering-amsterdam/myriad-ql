@@ -1,21 +1,33 @@
 ﻿namespace OffByOne.Ql.Ast.Statements
 {
+    using System;
     using System.Collections.Generic;
 
+    using MoreDotNet.Wrappers;
+
     using OffByOne.Ql.Ast.Statements.Base;
-    using OffByOne.Ql.Visitors.Contracts;
+    using OffByOne.Ql.Common.Visitors.Contracts;
 
     public class FormStatement : Statement
     {
-        public FormStatement(string identifier, IEnumerable<Statement> statements)
+        public FormStatement(
+            string identifier,
+            IEnumerable<Statement> statements = null)
         {
+            if (identifier.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException(
+                    "A non-null, non-empty identifier must be given",
+                    nameof(identifier));
+            }
+
             this.Identifier = identifier;
             this.Statements = statements;
         }
 
-        public string Identifier { get; private set; }
+        public string Identifier { get; }
 
-        public IEnumerable<Statement> Statements { get; private set; }
+        public IEnumerable<Statement> Statements { get; }
 
         public override TResult Accept<TResult, TContext>(
             IStatementVisitor<TResult, TContext> visitor,

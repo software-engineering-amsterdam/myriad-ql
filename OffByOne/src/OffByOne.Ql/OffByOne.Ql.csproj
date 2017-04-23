@@ -122,6 +122,8 @@
     <Compile Include="Checker\Analyzers\CircularDependencies\CircularDependencyChecker.cs" />
     <Compile Include="Checker\Analyzers\Contracts\IAnalyzer.cs" />
     <Compile Include="Checker\Analyzers\CyclicDependencyAnalyzer.cs" />
+    <Compile Include="Checker\Analyzers\Environment\Contracts\IQuestionEnvironment.cs" />
+    <Compile Include="Checker\Analyzers\Environment\Contracts\ITypeEnvironment.cs" />
     <Compile Include="Checker\CheckerReport.cs" />
     <Compile Include="Checker\Collectors\DependencyCollector.cs" />
     <Compile Include="Checker\Contracts\ICheckerReport.cs" />
@@ -136,10 +138,10 @@
     <Compile Include="Checker\Messages\UndeclaredVariableMessage.cs" />
     <Compile Include="Checker\Collectors\QuestionCollector.cs" />
     <Compile Include="Checker\SyntaxChecker.cs" />
-    <Compile Include="Checker\Collectors\VariableCollector.cs" />
+    <Compile Include="Common\Collections\OrderedDictionary.cs" />
     <Compile Include="Common\GlobalConstants.cs" />
-    <Compile Include="Common\IObservable.cs" />
-    <Compile Include="Common\IObserver.cs" />
+    <Compile Include="Common\Observers\Conracts\IObservable.cs" />
+    <Compile Include="Common\Observers\Conracts\IObserver.cs" />
     <Compile Include="Evaluator\Evaluator.cs" />
     <Compile Include="Evaluator\TypeEnvironment.cs" />
     <Compile Include="Interpreter\Validators\DecimalValidator.cs" />
@@ -163,28 +165,29 @@
     <Compile Include="Values\Base\BaseValue.cs" />
     <Compile Include="Values\BooleanValue.cs" />
     <Compile Include="Values\Contracts\IValue.cs" />
+    <Compile Include="Values\Contracts\IValueOperations.cs" />
     <Compile Include="Values\DateValue.cs" />
     <Compile Include="Values\DecimalValue.cs" />
     <Compile Include="Values\IntegerValue.cs" />
     <Compile Include="Values\MoneyValue.cs" />
     <Compile Include="Values\StringValue.cs" />
-    <Compile Include="Visitors\Contracts\IEnvironment.cs" />
-    <Compile Include="Visitors\Contracts\IValueTypeVisitor.cs" />
-    <Compile Include="Visitors\Contracts\IVisitable.cs" />
-    <Compile Include="Visitors\Contracts\IVisitableValueType.cs" />
-    <Compile Include="Visitors\Contracts\IVisitor.cs" />
-    <Compile Include="Visitors\Contracts\IVisitorTypeEnvironment.cs" />
+    <Compile Include="Common\Visitors\Contracts\IEnvironment.cs" />
+    <Compile Include="Common\Visitors\Contracts\IValueTypeVisitor.cs" />
+    <Compile Include="Common\Visitors\Contracts\IVisitable.cs" />
+    <Compile Include="Common\Visitors\Contracts\IVisitableValueType.cs" />
+    <Compile Include="Common\Visitors\Contracts\IVisitor.cs" />
+    <Compile Include="Common\Visitors\Contracts\IVisitorTypeEnvironment.cs" />
     <Compile Include="Checker\Analyzers\TypeAnalyzer.cs" />
     <Compile Include="Ast\AstCreator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Visitors\Base\BaseQlVisitor.cs" />
-    <Compile Include="Visitors\Contracts\IExpressionVisitor.cs" />
-    <Compile Include="Visitors\Contracts\IStatementVisitor.cs" />
-    <Compile Include="Visitors\Contracts\IVisitableExpression.cs" />
-    <Compile Include="Visitors\Contracts\IVisitableStatement.cs" />
+    <Compile Include="Common\Visitors\Base\BaseQlDfsVisitor.cs" />
+    <Compile Include="Common\Visitors\Contracts\IExpressionVisitor.cs" />
+    <Compile Include="Common\Visitors\Contracts\IStatementVisitor.cs" />
+    <Compile Include="Common\Visitors\Contracts\IVisitableExpression.cs" />
+    <Compile Include="Common\Visitors\Contracts\IVisitableStatement.cs" />
     <Compile Include="Checker\Analyzers\QuestionAnalyzer.cs" />
-    <Compile Include="Checker\Analyzers\Environment\QuestionVisitorTypeEnvironment.cs" />
-    <Compile Include="Checker\Analyzers\Environment\VisitorTypeEnvironment.cs" />
+    <Compile Include="Checker\Analyzers\Environment\QuestionEnvironment.cs" />
+    <Compile Include="Checker\Analyzers\Environment\TypeEnvironment.cs" />
   </ItemGroup>
   <Import Project="..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets" Condition="Exists('..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets')" />
   <ItemGroup>
