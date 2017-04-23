@@ -6,11 +6,11 @@ import {Statement}      from './Statement.js';
 
 
 export class Question extends Statement {
-    constructor(label = {}, propertyName = '', propertyType = null, location) {
+    constructor(label = {}, property = '', propertyType = null, location) {
         super(location);
 
         this.label = label;
-        this.propertyName = propertyName;
+        this.property = property;
         this.propertyType = propertyType;
     }
 
@@ -18,8 +18,8 @@ export class Question extends Statement {
         return this.label;
     }
 
-    getPropertyName() {
-        return this.propertyName;
+    getProperty() {
+        return this.property;
     }
 
     getPropertyType() {

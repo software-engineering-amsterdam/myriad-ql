@@ -41,8 +41,8 @@ export class RenderVisitor {
     renderQuestion(question = {}, view = {}) {
         const type = question.getPropertyType();
         const label = question.getLabel();
-        const propertyName = question.getPropertyName();
-        const propertyElement = this.memoryState.getElement(propertyName.getName());
+        const property = question.getProperty();
+        const propertyElement = this.memoryState.getElement(property.getName());
 
         const typeRenderable = type.render(this);
         const labelRenderable = label.render(this);
