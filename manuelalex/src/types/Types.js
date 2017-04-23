@@ -16,42 +16,42 @@ export class Type {
         throw new Error('Render method should have been overwritten');
     }
 
-    toString(){
+    toString() {
         return this.constructor.name;
     }
 
-    getType(){
+    getType() {
         return this.constructor;
     }
 }
 
 export class QLMoney extends Type {
-    render(visitor){
+    render(visitor) {
         return visitor.renderMoneyInput(this);
     }
 
-    renderValue(visitor){
+    renderValue(visitor) {
         return visitor.renderMoneyValue(this);
     }
 }
 export class QLString extends Type {
-    render(visitor){
+    render(visitor) {
         return visitor.renderStringInput(this);
     }
 }
 export class QLBoolean extends Type {
-    render(visitor){
+    render(visitor) {
         return visitor.renderBooleanInput(this);
     }
 }
 
 export class QLNumber extends Type {
-    render(visitor){
+    render(visitor) {
         return visitor.renderNumberInput(this);
     }
 }
 export class QLDate extends Type {
-    render(visitor){
+    render(visitor) {
         return visitor.renderDateInput(this);
     }
 }

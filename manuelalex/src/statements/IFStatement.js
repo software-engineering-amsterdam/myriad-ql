@@ -14,19 +14,19 @@ export class IfStatement extends Statement {
 
     }
 
-    getCondition(){
+    getCondition() {
         return this.condition;
     }
 
-    getIfBody(){
+    getIfBody() {
         return this.ifBody;
     }
 
-    accept(visitor){
+    accept(visitor) {
         visitor.visitIfStatement(this);
     }
 
-    render(visitor, view){
+    render(visitor, view) {
         visitor.renderIfStatement(this, view);
     }
 }

@@ -3,18 +3,17 @@
  */
 
 
-
 export class Statement {
 
     constructor(location) {
         this.location = location;
     }
 
-    getLocation(){
+    getLocation() {
         return this.location;
     }
 
-    render(){
+    render() {
         throw new Error('Render method should have been overwritten');
     }
 
@@ -22,7 +21,7 @@ export class Statement {
         throw new Error(`Error at ${this.location}: ${errorText.toString()}`);
     }
 
-    accept(visitor){
+    accept(visitor) {
         throw new Error('Accept method should have been overwritten');
     }
 }

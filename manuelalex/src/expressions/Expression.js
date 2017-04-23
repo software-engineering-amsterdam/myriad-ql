@@ -4,44 +4,44 @@
 import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from '../types/Types';
 export class Expression {
 
-    constructor(leftHand, operator, rightHand, location){
+    constructor(leftHand, operator, rightHand, location) {
         this.leftHand = leftHand;
         this.operator = operator;
         this.rightHand = rightHand;
         this.location = location;
     }
 
-    getLocation(){
+    getLocation() {
         return this.location;
     }
 
-    getLeftHand(){
+    getLeftHand() {
         return this.leftHand;
     }
 
-    getRightHand(){
+    getRightHand() {
         return this.rightHand;
     }
 
-    getOperator(){
+    getOperator() {
         return this.operator;
     }
 
-    accept(visitor){
+    accept(visitor) {
         return visitor.visitExpression(this);
     }
 
-    evaluate(visitor, memoryState){
+    evaluate(visitor, memoryState) {
         return visitor.evaluateExpression(this, memoryState);
     }
 
-    toString(){
+    toString() {
         return `${this.getLeftHand().toString()} ${this.getOperator()} ${this.getRightHand().toString()}`;
     }
 
-    getType(){
+    getType() {
         // todo return also the other types
-        if(['<', '>', '>=', '<=', '!=', '==', '&&', '||'].includes(this.getOperator())){
+        if (['<', '>', '>=', '<=', '!=', '==', '&&', '||'].includes(this.getOperator())) {
             return new QLBoolean();
         } else {
             return new QLMoney;
@@ -52,33 +52,33 @@ export class Expression {
 
 export class PrefixExpression {
 
-    constructor(prefix, expression, location){
+    constructor(prefix, expression, location) {
         this.prefix = prefix;
         this.expression = expression;
         this.location = location;
     }
 
-    getPrefix(){
+    getPrefix() {
         return this.prefix;
     }
 
-    getExpression(){
+    getExpression() {
         return this.expression;
     }
 
-    accept(visitor){
+    accept(visitor) {
         return visitor.visitPrefixExpression(this);
     }
 
-    evaluate(visitor, memoryState){
+    evaluate(visitor, memoryState) {
         return visitor.evaluatePrefixExpression(this, memoryState);
     }
 
-    toString(){
+    toString() {
         return this.getPrefix() + this.getExpression().toString();
     }
 
-    getTypeName(){
+    getTypeName() {
         return this.leftHand.getTypeName();
     }
 

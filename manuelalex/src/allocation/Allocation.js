@@ -10,19 +10,19 @@ export class Allocation {
         this.location = location;
     }
 
-    getPropertyName(){
+    getPropertyName() {
         return this.propertyName;
     }
 
-    getType(){
+    getType() {
         return this.type;
     }
 
-    getExpression(){
+    getExpression() {
         return this.expression;
     }
 
-    getLocation(){
+    getLocation() {
         return this.location;
     }
 }

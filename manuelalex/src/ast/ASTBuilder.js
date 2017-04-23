@@ -27,7 +27,7 @@ export class ASTBuilder {
     }
 
     ifStatement(data, location) {
-        return new IfStatement(data[3], _.flattenDeep(data[5][3]), location);
+        return new IfStatement(data[3][0], _.flattenDeep(data[5][3]), location);
     }
 
     ifElseStatement(data, location) {
@@ -99,7 +99,7 @@ export class ASTBuilder {
         return new Property(data[0].join(""), location);
     }
 
-    numbers(data, location){
+    numbers(data, location) {
         return new Numbers(data, location);
     }
 }

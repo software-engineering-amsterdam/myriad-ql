@@ -14,23 +14,23 @@ export class Question extends Statement {
         this.propertyType = propertyType;
     }
 
-    getLabel(){
+    getLabel() {
         return this.label;
     }
 
-    getPropertyName(){
+    getPropertyName() {
         return this.propertyName;
     }
 
-    getPropertyType(){
+    getPropertyType() {
         return this.propertyType;
     }
 
-    accept(visitor){
+    accept(visitor) {
         visitor.visitQuestion(this);
     }
 
-    render(visitor, view){
+    render(visitor, view) {
         visitor.renderQuestion(this, view);
     }
 }

@@ -6,20 +6,20 @@ export class AST {
         this.program = program;
     }
 
-    getProgram(){
+    getProgram() {
         return this.program;
     }
 
-    getStatements(){
+    getStatements() {
         return this.program.getStatements();
     }
 
-    getName(){
+    getName() {
         return this.program.getName();
     }
 
     validate() {
-        for(let statement of this.getStatements()){
+        for (let statement of this.getStatements()) {
             statement.validate();
         }
     }

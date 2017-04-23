@@ -12,16 +12,16 @@ export class IfElseStatement extends IfStatement {
 
     }
 
-    getElseBody(){
+    getElseBody() {
         return this.elseBody;
     }
 
 
-    accept(visitor){
+    accept(visitor) {
         visitor.visitIfElseStatement(this);
     }
 
-    render(visitor, view){
+    render(visitor, view) {
         visitor.renderIfElseStatement(this, view);
     }
 

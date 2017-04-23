@@ -25,7 +25,7 @@ export class EvaluationVisitor {
         return eval(value)
     }
 
-    evaluateNumbers(number){
+    evaluateNumbers(number) {
         return eval(number.getValue());
     }
 }

@@ -25,7 +25,7 @@ export class Property {
         return visitor.visitProperty(this);
     }
 
-    toString(){
+    toString() {
         return this.getName();
     }
 }

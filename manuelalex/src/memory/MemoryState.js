@@ -18,30 +18,33 @@ export class MemoryState extends eventemitter3 {
         this.memory.set(elementName, element);
 
         this._onStateChange(element, elementName);
-        this._onSetterTriggered(elementName, {type: elementType, value: elementValue});
+        this._onSetterTriggered(elementName, { type: elementType, value: elementValue });
         return element;
     }
 
-    getType(elementName){
+    getType(elementName) {
         let element = this.memory.get(elementName);
         return element ? element.type : undefined;
     }
 
-    getValue(elementName){
+    getValue(elementName) {
         let element = this.memory.get(elementName);
         return element ? element.value : undefined;
     }
 
-    getElement(elementName){
+    getElement(elementName) {
         return this.memory.get(elementName);
     }
 
-    _onStateChange(element, elementName){
-        element.on('set', ()=> this._onSetterTriggered(elementName, {type: element.getType(), value: element.getValue()}));
+    _onStateChange(element, elementName) {
+        element.on('set', () => this._onSetterTriggered(elementName, {
+            type: element.getType(),
+            value: element.getValue()
+        }));
     }
 
-    _onSetterTriggered(elementName = '', values = {}){
-        this.emit('set', {elementName, ...values});
+    _onSetterTriggered(elementName = '', values = {}) {
+        this.emit('set', { elementName, ...values });
     }
 
 }
