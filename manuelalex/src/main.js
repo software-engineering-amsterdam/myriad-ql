@@ -9,12 +9,14 @@ import {ASTDependencyVisitor} from './ASTDependencyVisitor.js';
 import {GUI} from './gui/Gui.js';
 import {AST} from './ast/AST.js';
 
-import {test1, test2, test3,
-        test4, test5, test6,
-        test7, test8} from './test/TestStrings.js';
+import {
+    test1, test2, test3,
+    test4, test5, test6,
+    test7, test8
+} from './test/TestStrings.js';
 
 let parser = new Parser();
-let { result, errors, parseString } = parser.parse(test7);
+let { result, errors, parseString } = parser.parse(test6);
 
 if (errors.length) {
     let gui = new GUI(null, null);
@@ -27,7 +29,7 @@ let dependencyVisitor = new ASTDependencyVisitor();
 dependencyVisitor.visitAST(ast);
 
 // todo determine if the dependencyvisitor should be called after the validation visitor
-// todo (Maybe, not sure) Maybe make a new class for allocation the memory state
+// todo (Maybe, not sure) Maybe make a new class for allocation the memory state, as it is currenlty done by validating the AST. this is needed by the GUI to properly render
 let visitor = new ASTValidationVisitor();
 visitor.visitAST(ast);
 
