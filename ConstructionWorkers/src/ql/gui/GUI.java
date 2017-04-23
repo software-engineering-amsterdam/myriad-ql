@@ -66,16 +66,11 @@ public class GUI implements GUIInterface{
     private void evaluateComputedQuestions() {
         for (ComputedQuestion computedQuestion : computedQuestions) {
             Value result = evaluator.getValueComputedQuestion(computedQuestion);
-            Field questionField = null;
 
             for (Field field : fieldToIfStatementsMap.keySet()) {
                 if (computedQuestion.getIdentifierName().equals(field.getIdentifierName())) {
-                    questionField = field;
+                    field.getWidget().setValue(result);
                 }
-            }
-
-            if (questionField != null) {
-                questionField.getWidget().setValue(result);
             }
         }
     }

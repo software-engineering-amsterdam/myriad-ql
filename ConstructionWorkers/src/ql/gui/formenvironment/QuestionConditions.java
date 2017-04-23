@@ -54,7 +54,7 @@ public class QuestionConditions implements FormAndStatementVisitor <Void>{
     private void addIfStatements(QuestionData questionData, SimpleQuestion question,
             Map<Field, List<IfStatement>> fieldMap) {
         for (IfStatement ifStatement : questionData.getIfStatements()) {
-            questionsInIfStatement.clear();
+            questionsInIfStatement = new ArrayList<>();
             ifStatement.accept(this);
 
             if (questionsInIfStatement.contains(question)) {
