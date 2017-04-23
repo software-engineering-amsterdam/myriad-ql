@@ -70,15 +70,13 @@ export let test6 =
 
 export let test7 =
     `form taxOfficeExample{
-    question 'Did you sell a house in 2010?'
-    hasSoldHouse: boolean
-    question 'Did you buy a house in 2010?'
-    hasBoughtHouse: boolean
-    question 'Did you enter a loan?'
-    hasMaintLoan: string
-    question 'What was the selling price?'
-    sellingPrice2: money
-    if (!(hasSoldHouse && hasBoughtHouse) && (hasSoldHouse && hasBoughtHouse)) {
+    question 'A'
+    A: boolean
+    question 'B'
+    B: boolean
+    question 'C'
+    C: boolean
+    if ((A && B) && !(A && C)) {
         question 'What was the selling price?'
         sellingPrice: money
         question 'What was the private debts for the sold house?'
