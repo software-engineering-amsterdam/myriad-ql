@@ -155,7 +155,15 @@ export class ASTValidationVisitor {
         } else {
             this.labels.push(statement.getLabel());
         }
+    }
 
+    // todo naming?
+    checkProperty(property){
+        const memoryElement = this.memoryState.getElement(property);
+        const propertyInMemory = memoryElement !== undefined;
+        if(propertyInMemory){
+            this.errors.push(`Property "${property.getName()}" is being used but is not defined.`)
+        }
     }
 
     hasDetectedErrors() {
