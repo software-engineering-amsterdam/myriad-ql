@@ -58,7 +58,7 @@ export class ASTValidationVisitor {
         let expression = allocation.getExpression();
         let returnType = expression.accept(this);
         if (returnType !== allocation.getType()) {
-            this.errors.push(`Invalid alloction. The return type should be the same as the type proviced, at location ${allocation.getLocation()}. `);
+            this.errors.push(`Invalid allocation. The return type should be the same as the type proviced, at location ${allocation.getLocation()}. `);
         }
     }
 
