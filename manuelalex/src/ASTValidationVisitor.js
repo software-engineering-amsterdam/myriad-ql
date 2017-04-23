@@ -9,6 +9,8 @@ import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from './types/Types.js';
 
 export class ASTValidationVisitor {
 
+    _reservedBooleanNames = ['true', 'false'];
+
     constructor() {
         this.memoryState = new MemoryState();
         this.errors = [];
@@ -97,44 +99,52 @@ export class ASTValidationVisitor {
     }
 
 
-    visitPrefixExpression(prefixcondition) {
-        if (!(prefixcondition.expression.accept(this) instanceof QLBoolean)) {
-            this.errors.push(`Invalid expression. The prefix operator ${prefixcondition.prefix} can not be applied to ${prefixcondition.expression.name}, because it is not a boolean`);
+    visitPrefixExpression(prefixExpression) {
+        let expression = prefixExpression.getExpression();
+        if (!(expression.accept(this) instanceof QLBoolean)) {
+            this.errors.push(`Invalid expression. The prefix operator ${prefixExpression.getPrefix()} can not be applied to ${expression.getName}, because it is not a boolean`);
         }
-        prefixcondition.expression.accept(this);
+        return expression.accept(this); // todo this seems duplicate, see two lines above
     }
 
     visitExpression(expression) {
-        const leftHandType = expression.leftHand.accept(this);
-        const rightHandType = expression.rightHand.accept(this);
-        const operator = expression.operator;
+        const leftHand = expression.getLeftHand();
+        const rightHand = expression.getRightHand();
+        const operator = expression.getOperator();
+
+        const leftHandType = leftHand.accept(this);
+        const rightHandType = rightHand.accept(this);
 
         if (!leftHandType || !rightHandType) {
-            return leftHandType;
+            return leftHandType; // todo what's the purpose if this??
         } else {
             if (leftHandType.getType() !== rightHandType.getType()) {
                 this.errors.push(`Invalid expression. The operator ${operator} can not be applied 
-                                to ${expression.leftHand.toString()} [type: ${leftHandType.toString()}] 
-                                and ${expression.rightHand.toString()}[type: ${rightHandType.toString()}]. Reason types are different`);
+                                to ${leftHand.toString()} [type: ${leftHandType.toString()}] 
+                                and ${rightHand.toString()}[type: ${rightHandType.toString()}]. Reason types are different`);
             }
 
             if (!leftHandType.isValidOperator(operator)) {
                 this.errors.push(`Invalid expression. The operator ${operator} can not be applied
-                            to ${expression.leftHand.toString()} [type: ${leftHandType.toString()}] 
-                            and ${expression.rightHand.toString()}[type: ${leftHandType.toString()}]`);
+                            to ${leftHand.toString()} [type: ${leftHandType.toString()}] 
+                            and ${rightHand.toString()}[type: ${leftHandType.toString()}]`);
             }
-
         }
         return expression.getType();
     }
 
     visitProperty(property) {
-        if (property.name === "false" || property.name === "true") {
+        let name = property.getName();
+        let location = property.getLocation();
+
+        /* Return QLBoolean for a reserved boolean name */
+        if (this._reservedBooleanNames.includes(property.getName())) {
             return new QLBoolean();
-        } else if (!this.memoryState.getType(property.name)) {
-            this.errors.push('Invalid use of property. The property ' + property.name + ' on location: ' + property.location + '  has not been instantiated');
+        } else if (!this.memoryState.getType(name)) {
+            this.errors.push('Invalid use of property. The property ' + name + ' on location: ' + location + '  has not been instantiated');
         }
-        return this.memoryState.getType(property.name);
+
+        return this.memoryState.getType(name);
     }
 
     hasDetectedErrors() {
