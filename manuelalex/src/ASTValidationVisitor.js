@@ -158,10 +158,10 @@ export class ASTValidationVisitor {
     }
 
     // todo naming?
-    checkProperty(property){
+    checkProperty(property) {
         const memoryElement = this.memoryState.getElement(property);
         const propertyInMemory = memoryElement !== undefined;
-        if(propertyInMemory){
+        if (propertyInMemory) {
             this.errors.push(`Property "${property.getName()}" is being used but is not defined.`)
         }
     }
