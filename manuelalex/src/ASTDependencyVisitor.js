@@ -38,8 +38,11 @@ export class ASTDependencyVisitor {
 
     visitIfStatement(ifStatement) {
         let temporaryGraph = this.innerGraph.slice(0);
-        ifStatement.condition.accept(this);
-        this.visitStatements(ifStatement.ifBody);
+
+        let condition = ifStatement.getCondition();
+        condition.accept(this);
+
+        this.visitStatements(ifStatement.getIfBody());
         this.innerGraph = temporaryGraph;
     }
 
@@ -47,13 +50,15 @@ export class ASTDependencyVisitor {
     }
 
 
-    visitPrefixExpression(expression) {
-        expression.expression.accept(this);
+    visitPrefixExpression(prefixExpression) {
+
+        let expression = prefixExpression.getExpression();
+        expression.accept(this);
     }
 
     visitExpression(expression) {
-        expression.leftHand.accept(this);
-        expression.rightHand.accept(this);
+        expression.getLeftHand().accept(this);
+        expression.getRightHand().accept(this);
     }
 
     visitProperty(property) {
