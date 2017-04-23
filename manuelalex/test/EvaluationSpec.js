@@ -161,7 +161,7 @@ describe('Evaluation', () => {
         memoryState.set('rightHand', new imports.QLBoolean(), true);
 
         let prefixExpression = new imports.PrefixExpression('!', expression);
-        expect(prefixExpression.evaluate(evaluationVisitor, memoryState)).to.equal(true);
+        expect(prefixExpression.evaluate(evaluationVisitor, memoryState)).to.equal(false);
     });
 
 });
