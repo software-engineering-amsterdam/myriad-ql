@@ -16,7 +16,7 @@ export class EvaluationVisitor {
 
     evaluatePrefixExpression(prefixExpression, memoryState) {
         const value = prefixExpression.getExpression().evaluate(this, memoryState);
-        return Boolean(eval(`${prefixExpression.getPrefix} ${value}`));
+        return Boolean(eval(`${prefixExpression.getPrefix()} ${value}`));
     }
 
 
