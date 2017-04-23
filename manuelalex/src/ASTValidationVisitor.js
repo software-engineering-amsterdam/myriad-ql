@@ -27,9 +27,9 @@ export class ASTValidationVisitor {
         this.visitStatements(ast.getStatements());
     }
 
-    /* TODO, and fix visitor pattern */
+
     visitForm(form) {
-        console.log(form.name);
+        /* TODO, and fix visitor pattern */
     }
 
     visitStatements(statements) {
