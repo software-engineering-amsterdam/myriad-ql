@@ -1,0 +1,26 @@
+form taxOfficeExample {
+  "Did you sell a house in 2010?"
+    hasSoldHouse: boolean
+  "Did you buy a house in 2010?"
+    hasBoughtHouse: boolean
+  "Did you enter a loan?"
+    hasBoughtHouses: string
+
+  if ( ((true AND true) OR hasSoldHouse) OR hasBoughtHouse ) {
+    "What was the selling price?"
+      sellingPrice: money
+    "Private debts for the sold house:"
+      privateDebt: money
+      if ( (sellingPrice > 1.0) AND (privateDebt == sellingPrice) ) {
+          "What was the selling price?"
+            sellingPrices: money
+          "Private debts for the sold house:"
+            privateDebts: integer
+          "Value residue:"
+            valueResidues: money = (sellingPrices+0.0)*10.0 - 100.0
+        }
+    "Value residue:"
+      valueResidue: money = privateDebt+10.0-10.0*10.0
+  }
+
+}
