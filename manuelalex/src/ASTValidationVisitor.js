@@ -40,15 +40,7 @@ export class ASTValidationVisitor {
         this.memoryState.set(question.propertyName.name, question.propertyType);
 
 
-        //TODO: cyclic dependencies between questions
-        /*
-         if (x) { y: "Y?" boolean }
-         if (y) { x: "X?" boolean }
 
-
-         if (x) { a: "A?" boolean }
-         if (!x) { a: "A?" boolean }
-         */
         this.checkDuplicateDeclarations(question);
         this.checkDuplicateLabels(question);
 
@@ -90,6 +82,7 @@ export class ASTValidationVisitor {
 
     visitIfStatement(ifstatement) {
         ifstatement.condition.accept(this);
+        //this.visitStatements(ifstatement.ifBody.accept);
     }
 
     visitIfElseStatement(ifelsestatement) {
@@ -109,34 +102,32 @@ export class ASTValidationVisitor {
         const rightHandType = expression.rightHand.accept(this);
         const operator = expression.operator;
 
+        if(!leftHandType || !rightHandType){
+            return leftHandType;
+        } else {
+            if (leftHandType.getType() !== rightHandType.getType()) {
+                this.errors.push(`Invalid expression. The operator ${operator} can not be applied 
+                                to ${expression.leftHand.toString()} [type: ${leftHandType.toString()}] 
+                                and ${expression.rightHand.toString()}[type: ${rightHandType.toString()}]. Reason types are different`);
+            }
 
-        if (leftHandType.getType() !== rightHandType.getType()) {
-            this.errors.push(`Invalid expression. The operator ${operator} can not be applied 
+            if(!leftHandType.isValidOperator(operator)){
+                this.errors.push(`Invalid expression. The operator ${operator} can not be applied
                             to ${expression.leftHand.toString()} [type: ${leftHandType.toString()}] 
-                            and ${expression.rightHand.toString()}[type: ${rightHandType.toString()}]`);
+                            and ${expression.rightHand.toString()}[type: ${leftHandType.toString()}]`);
+            }
+
         }
-
-        this.validateOperator(expression, leftHandType, operator, ['||', '&&', '=='], QLBoolean);
-        this.validateOperator(expression, leftHandType, operator, ['<', '>', '>=', '<=', '!=', '==', '*', '/', '+', '-'], QLMoney);
-        this.validateOperator(expression, leftHandType, operator, ['<', '>', '>=', '<=', '!=', '=='], QLString);
-        this.validateOperator(expression, leftHandType, operator, ['<', '>', '>=', '<=', '!=', '==', '*', '/', '+', '-'], QLNumber);
-        this.validateOperator(expression, leftHandType, operator, ['<', '>', '>=', '<=', '!=', '=='], QLDate);
-
         return expression.getType();
     }
 
     visitProperty(property) {
-        return this.memoryState.getType(property.name);
-    }
-
-    validateOperator(expression, type, operator, validOperators, validType) {
-        if (type instanceof validType) {
-            if (!validOperators.includes(operator)) {
-                this.errors.push(`Invalid expression. The operator ${operator} can not be applied
-                            to ${expression.leftHand.toString()} [type: ${type.toString()}] 
-                            and ${expression.rightHand.toString()}[type: ${type.toString()}]`);
-            }
+        if(property.name === "false" || property.name === "true" ){
+            return new QLBoolean();
+        } else if (!this.memoryState.getType(property.name)) {
+            this.errors.push('Invalid use of property. The property ' + property.name + ' on location: ' + property.location + '  has not been instantiated');
         }
+        return this.memoryState.getType(property.name);
     }
 
     hasDetectedErrors() {
