@@ -32,7 +32,7 @@ export class ReservedWord {
     }
 }
 
-export class ReservedBooleanWords extends ReservedWords {
+export class ReservedBooleanWord extends ReservedWord {
 
     getValue(){
         return this.value;
