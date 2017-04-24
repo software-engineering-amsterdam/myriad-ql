@@ -164,6 +164,10 @@ export class ASTValidationVisitor {
         }
     }
 
+    getErrors(){
+        return this.errors;
+    }
+
     hasDetectedErrors() {
         return !!this.errors.length;
     }

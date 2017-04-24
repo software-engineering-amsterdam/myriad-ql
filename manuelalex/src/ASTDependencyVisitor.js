@@ -83,6 +83,10 @@ export class ASTDependencyVisitor {
         }
     }
 
+    getErrors(){
+        return this.errors;
+    }
+
     hasDetectedErrors() {
         return this.errors.length > 0;
     }

@@ -23,19 +23,20 @@ if (errors.length) {
     gui.showParserErrors(parseString, errors);
     throw new Error("Parser error: " + parser.error);
 }
-
 let ast = new AST(result[0]);
-let dependencyVisitor = new ASTDependencyVisitor();
-dependencyVisitor.visitAST(ast);
 
-// todo determine if the dependencyvisitor should be called after the validation visitor
-// todo (Maybe, not sure) Maybe make a new class for allocation the memory state, as it is currenlty done by validating the AST. this is needed by the GUI to properly render
 let visitor = new ASTValidationVisitor();
 visitor.visitAST(ast);
 
-if (visitor.hasDetectedErrors()) {
+let dependencyVisitor = new ASTDependencyVisitor();
+dependencyVisitor.visitAST(ast);
+
+// todo (Maybe, not sure) Maybe make a new class for allocation the memory state, as it is currenlty done by validating the AST. this is needed by the GUI to properly render
+
+
+if (visitor.hasDetectedErrors() || dependencyVisitor.hasDetectedErrors()) {
     let gui = new GUI(null, null);
-    gui.showValidationErrors(visitor.errors);
+    gui.showValidationErrors(visitor.getErrors().concat(dependencyVisitor.getErrors()));
 } else {
     let memoryState = visitor.getMemoryState();
     let gui = new GUI(ast, memoryState);
