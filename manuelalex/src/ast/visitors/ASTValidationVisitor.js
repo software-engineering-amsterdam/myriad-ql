@@ -93,8 +93,7 @@ export class ASTValidationVisitor {
 
 
         if (!leftHandType || !rightHandType) {
-            // todo add error for no return type of part of the expression
-            return undefined;
+            this.errors.push(`Expression ${expression.toString()} does not have a valid leftHand or rightHand type`);
         } else {
             if (leftHandType.getType() !== rightHandType.getType()) {
                 this.errors.push(`Invalid expression. The operator ${operator} can not be applied 
@@ -109,6 +108,7 @@ export class ASTValidationVisitor {
             }
         }
         return expression.getType();
+
     }
 
     visitProperty(property) {
