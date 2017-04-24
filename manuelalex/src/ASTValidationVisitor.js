@@ -77,10 +77,11 @@ export class ASTValidationVisitor {
 
     visitPrefixExpression(prefixExpression) {
         let expression = prefixExpression.getExpression();
-        if (!(expression.accept(this) instanceof QLBoolean)) {
+        let returnType = expression.accept(this);
+        if (!(returnType instanceof QLBoolean)) {
             this.errors.push(`Invalid expression. The prefix operator ${prefixExpression.getPrefix()} can not be applied to ${expression.getName}, because it is not a boolean`);
         }
-        return expression.accept(this); // todo this seems duplicate, see two lines above
+        return returnType;
     }
 
     visitExpression(expression) {

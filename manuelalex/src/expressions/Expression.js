@@ -2,6 +2,7 @@
  * Created by Manuel on 13/02/2017.
  */
 import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from '../types/Types';
+
 export class Expression {
 
     constructor(leftHand, operator, rightHand, location) {
@@ -44,7 +45,7 @@ export class Expression {
         if (['<', '>', '>=', '<=', '!=', '==', '&&', '||'].includes(this.getOperator())) {
             return new QLBoolean();
         } else {
-            return new QLMoney;
+            return new QLMoney();
         }
 
     }
