@@ -45,8 +45,8 @@ describe('AST AST Cyclic Dependency Visitor', () => {
             expressionX.expression = x;
             let expressionY = new imports.PrefixExpression();
             expressionY.expression = y;
-            let questionA = new imports.Question("A?", "a", "QLBoolean", 3);
-            let questionB = new imports.Question("B?", "b", "QLBoolean", 5);
+            let questionA = new imports.Question("A?", new imports.Property("a"), "QLBoolean", 3);
+            let questionB = new imports.Question("B?", new imports.Property("b"), "QLBoolean", 5);
 
             let ifstatement1 = new imports.IfStatement(expressionX, [questionA], 2);
             let ifstatement2 = new imports.IfStatement(expressionY, [questionB], 4);
@@ -54,7 +54,7 @@ describe('AST AST Cyclic Dependency Visitor', () => {
 
             let astDependencyVisitor = new imports.ASTCyclicDependencyVisitor();
             astDependencyVisitor.visitStatements([ifstatement1, ifstatement2]);
-
+            astDependencyVisitor.checkForCyclicDependencies();
 
             expect(astDependencyVisitor.hasDetectedErrors()).to.equal(false);
             done();
@@ -78,8 +78,8 @@ describe('AST AST Cyclic Dependency Visitor', () => {
             expressionX.expression = x;
             let expressionY = new imports.PrefixExpression();
             expressionY.expression = y;
-            let questionY = new imports.Question("Y?", "y", "QLBoolean", 3);
-            let questionX = new imports.Question("X?", "x", "QLBoolean", 5);
+            let questionY = new imports.Question("Y?", new imports.Property("y"), "QLBoolean", 3);
+            let questionX = new imports.Question("X?", new imports.Property("x"), "QLBoolean", 5);
 
             let ifstatement1 = new imports.IfStatement(expressionX, [questionY], 2);
             let ifstatement2 = new imports.IfStatement(expressionY, [questionX], 4);
@@ -87,7 +87,7 @@ describe('AST AST Cyclic Dependency Visitor', () => {
 
             let astDependencyVisitor = new imports.ASTCyclicDependencyVisitor();
             astDependencyVisitor.visitStatements([ifstatement1, ifstatement2]);
-
+            astDependencyVisitor.checkForCyclicDependencies();
 
             expect(astDependencyVisitor.hasDetectedErrors()).to.equal(true);
             done();
@@ -123,8 +123,8 @@ describe('AST AST Cyclic Dependency Visitor', () => {
             expressionZ.expression = z;
 
 
-            let questionZ = new imports.Question("Z?", "z", "QLBoolean", 3);
-            let questionX = new imports.Question("X?", "x", "QLBoolean", 5);
+            let questionZ = new imports.Question("Z?", new imports.Property("z"), "QLBoolean", 3);
+            let questionX = new imports.Question("X?", new imports.Property("x"), "QLBoolean", 5);
 
             let ifstatementY1 = new imports.IfStatement(expressionX, [questionZ], 2);
             let ifstatementX = new imports.IfStatement(expressionX, [ifstatementY1], 2);
@@ -135,7 +135,7 @@ describe('AST AST Cyclic Dependency Visitor', () => {
 
             let astDependencyVisitor = new imports.ASTCyclicDependencyVisitor();
             astDependencyVisitor.visitStatements([ifstatementX, ifstatementZ]);
-
+            astDependencyVisitor.checkForCyclicDependencies();
 
             expect(astDependencyVisitor.hasDetectedErrors()).to.equal(true);
             done();
