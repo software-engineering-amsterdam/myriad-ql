@@ -20,9 +20,9 @@ export class Parser {
         }
 
         if (result.length > 1) {
-            // errors.push(`Ambiguous parsing: ${result.length} options. Choosing the first parsing.`);
-            // [result] = result;
-            result = [result[0]];
+            errors.push(`Ambiguous parsing: ${result.length} options. Choosing the first parsing.`);
+            [result] = result;
+            // result = [result[0]];
         }
         return { result, errors, parseString };
     }

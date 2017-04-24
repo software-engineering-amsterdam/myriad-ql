@@ -26,9 +26,9 @@ and_expression -> not_expression | and_expression _ "&&" _ and_expression   {% A
 not_expression              -> comparison | "!" not_expression  {% ASTBuilder.prefixExpression %}
 comparison                  -> plus_minus_expression | comparison _ ("<" | ">" | ">=" | "<=" | "!=" | "==") _ comparison    {% ASTBuilder.deepExpression %}
 plus_minus_expression       -> multiply_divide_expression | plus_minus_expression _ ("-" | "+") _ plus_minus_expression     {% ASTBuilder.deepExpression %}
-multiply_divide_expression  -> factor | multiply_divide_expression _ ("/" | "*") _ multiply_divide_expression   {% ASTBuilder.deepExpression %}
-factor ->  [0-9]:+               {% ASTBuilder.numbers %}
-       | "true" | "false"        {% ASTBuilder.reservedBooleanWords %}
+multiply_divide_expression  -> atom | multiply_divide_expression _ ("/" | "*") _ multiply_divide_expression   {% ASTBuilder.deepExpression %}
+atom ->  [0-9]:+               {% ASTBuilder.numbers %}
+       | "true" | "false"      {% ASTBuilder.reservedBooleanWords %}
        | propertyName
        | "(" expression ")"      {% (data)=> data[1] %}
 
