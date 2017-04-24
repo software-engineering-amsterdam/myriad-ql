@@ -51,7 +51,7 @@ export class ASTValidationVisitor {
     visitAllocation(allocation) {
         let expression = allocation.getExpression();
         let returnType = expression.accept(this);
-        if (returnType !== allocation.getType()) {
+        if (returnType.constructor.name !== allocation.getType().constructor.name) {
             this.errors.push(`Invalid allocation. The return type should be the same as the type proviced, at location ${allocation.getLocation()}. `);
         }
     }
@@ -91,8 +91,6 @@ export class ASTValidationVisitor {
 
         const leftHandType = leftHand.accept(this);
         const rightHandType = rightHand.accept(this);
-
-
 
         if (!leftHandType || !rightHandType) {
             // todo add error for no return type of part of the expression
