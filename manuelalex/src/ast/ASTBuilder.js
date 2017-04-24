@@ -59,15 +59,6 @@ export class ASTBuilder {
         return new Expression(_.flattenDeep(data[0])[0], data[2][0], _.flattenDeep(data[4])[0], location);
     }
 
-    // todo determine if this is deprecated
-    factor(data) {
-        if (data.length > 1) {
-            return data[1];
-        } else {
-            return data;
-        }
-    }
-
     plusMinExpression(data, location) {
         return new Expression(_.flattenDeep(data[0])[0], _.flattenDeep(data[1])[0], _.flattenDeep(data[2])[0], location);
     }

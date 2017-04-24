@@ -33,9 +33,6 @@ factor  -> digits
 boolean -> "true" | "false"    {% ASTBuilder.boolean %}
 digits -> [0-9]:+   {% ASTBuilder.numbers %}
 
-#propertyName -> ^/(?!"true"|"false")([a-z0-9]:+)$ {% ASTBuilder.property %}
-
-
 propertyName -> [A-Za-z0-9]:+   {% ASTBuilder.property %}
 propertyType -> "boolean"        {% ASTBuilder.boolean %}
             | "string"           {% ASTBuilder.string %}
