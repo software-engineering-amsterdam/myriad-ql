@@ -22,19 +22,18 @@ export class ASTCyclicDependencyVisitor extends AbstractVisitor {
 
     visitAST(ast) {
         this.visitStatements(ast.getStatements());
-
+        this.checkForCyclicDependencies();
     }
 
     visitStatements(statements) {
         for (let statement of statements) {
             statement.accept(this);
         }
-        this.checkForCyclicDependencies();
     }
 
     visitQuestion(question) {
         for (let node of this.innerGraph) {
-            this.graph.push([node,question.getProperty()]);
+            this.graph.push([node,question.getProperty().getName()]);
         }
     }
 
@@ -80,12 +79,16 @@ export class ASTCyclicDependencyVisitor extends AbstractVisitor {
          *
          * Knuth, D. E. (1974). Structured Programming with go to Statements. ACM Computing Surveys (CSUR), 6(4), 261-301.
          */
+        let memory = new Map()
         for (let node of this.graph) {
-            console.log('node: ' + node);
-            for (let innernode of this.graph) {
-                if (node[0] === innernode[1] && node[1] === innernode[0]) {
-                    this.errors.push(`Cyclic dependency detected between ${node[0]} and ${node[1]}`);
-                }
+            memory.set(node[0], node[1]);
+        }
+
+        for (let node of this.graph) {
+            let element = memory.get(node[1]);
+            if(element === node[0]){
+                this.errors.push(`Cyclic dependency detected between ${node[0]} and ${node[1]}`);
+                memory.delete(node[0]); // preventing the twin error to be shown.
             }
         }
     }

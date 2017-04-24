@@ -142,40 +142,6 @@ describe('AST AST Cyclic Dependency Visitor', () => {
         })
     });
 
-    /**
-     * testing the following case
-     * if (x) { a: "A?" boolean }
-     * if (!x) { a: "A?" boolean }
-     **/
-    describe('Test cyclic dependencies between questions', () => {
 
-
-        it('if (x) { a: "A?" boolean } \n if (!x) { a: "A?" boolean }', (done) => {
-            let form = new imports.Form();
-            let x = new imports.Property("x", 2);
-
-            let expressionX = new imports.PrefixExpression();
-            expressionX.expression = x;
-            let expressionNotX = new imports.PrefixExpression("!", x, 4);
-
-
-            let questionA1 = new imports.Question("A?", "a", "QLBoolean", 3);
-            let questionA2 = new imports.Question("A?", "a", "QLBoolean", 5);
-
-            let ifstatement1 = new imports.IfStatement(expressionX, [questionA1], 2);
-            let ifstatement2 = new imports.IfStatement(expressionNotX, [questionA2], 4);
-            form.statements = [ifstatement1, ifstatement2];
-
-            let astDependencyVisitor = new imports.ASTCyclicDependencyVisitor();
-            astDependencyVisitor.visitStatements([ifstatement1, ifstatement2]);
-            console.log(astDependencyVisitor.innerGraph);
-            console.log(astDependencyVisitor.graph);
-
-
-            expect(astDependencyVisitor.hasDetectedErrors()).to.equal(true);
-            console.log("errors: " + astDependencyVisitor.errors);
-            done();
-        })
-    });
 
 });
