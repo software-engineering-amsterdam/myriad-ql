@@ -109,7 +109,7 @@ describe('AST Dependency Visitor', () => {
      * }
      **/
     describe('Test cyclic dependencies between questions', () => {
-        it('if (x) { y: "Y?" boolean } \n if (y) { x: "X?" boolean }', (done) => {
+        it('if (x) { if(y) { z: "Z?" boolean}} \n if (z) { if(y) { x: "X?" boolean }}', (done) => {
             let form = new imports.Form();
             let x = new imports.Property("x", 2);
             let y = new imports.Property("y", 4);
