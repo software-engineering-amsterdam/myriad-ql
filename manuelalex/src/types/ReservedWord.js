@@ -4,7 +4,7 @@
 
 import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from './Types.js';
 
-export class ReservedWords {
+export class ReservedWord {
 
     constructor(value, location) {
         this.value = value;
@@ -32,7 +32,7 @@ export class ReservedWords {
     }
 }
 
-export class ReservedBooleanWords extends ReservedWords {
+export class ReservedBooleanWord extends ReservedWords {
 
     getValue(){
         return this.value;

@@ -15,7 +15,7 @@ import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from '../types/Types.js'
 import {Property} from '../types/Property.js';
 import {Numbers} from '../types/Numbers.js';
 import {Label} from '../Label.js';
-import {ReservedBooleanWords} from '../types/ReservedWords.js';
+import {ReservedBooleanWords} from '../types/ReservedWord.js';
 
 export class ASTBuilder {
 
@@ -93,12 +93,25 @@ export class ASTBuilder {
         return new QLBoolean(location);
     }
 
-    property(data, location) {
-        return new Property(_.flattenDeep(data[0]).join(""), location);
+    property(data, location, reject) {
+        if(["true", "false"].includes(_.flattenDeep(data[0]).join(""))){
+            return reject;
+        } else {
+            return new Property(_.flattenDeep(data[0]).join(""), location);
+        }
     }
 
-    reservedBooleanWords(data, location) {
-        return new ReservedBooleanWords(data[0], location);
+    reservedBooleanWord(data, location) {
+        return new ReservedBooleanWord(data[0], location);
+    }
+
+    isNotKeyWord(data, location){
+        let string = _.flattenDeep(data[0]).join("");
+        if(string ==="true" || string ==="false"){
+            return false;
+        } else {
+            return true;
+        }
     }
 
     numbers(data, location) {

@@ -19,7 +19,7 @@ import {
 
 
 let parser = new Parser();
-let { result, errors, parseString } = parser.parse(test6);
+let { result, errors, parseString } = parser.parse(test8);
 
 if (errors.length) {
     let gui = new GUI(null, null);

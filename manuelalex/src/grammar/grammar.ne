@@ -28,18 +28,21 @@ comparison                  -> plus_minus_expression | comparison _ ("<" | ">" |
 plus_minus_expression       -> multiply_divide_expression | plus_minus_expression _ ("-" | "+") _ plus_minus_expression     {% ASTBuilder.deepExpression %}
 multiply_divide_expression  -> atom | multiply_divide_expression _ ("/" | "*") _ multiply_divide_expression   {% ASTBuilder.deepExpression %}
 atom ->  [0-9]:+               {% ASTBuilder.numbers %}
-       | "true"                {% ASTBuilder.reservedBooleanWords %}
-       | "false"               {% ASTBuilder.reservedBooleanWords %}
+       | "true"                {% ASTBuilder.reservedBooleanWord %}
+       | "false"               {% ASTBuilder.reservedBooleanWord %}
        | propertyName
        | "(" expression ")"      {% (data)=> data[1] %}
 
-propertyName -> [A-Za-z]:+    {% ASTBuilder.property %}
+propertyName -> [A-Za-z]:+       {% ASTBuilder.property %}
 propertyType -> "boolean"        {% ASTBuilder.boolean %}
             | "string"           {% ASTBuilder.string %}
             | "integer"          {% ASTBuilder.number %}
             | "date"             {% ASTBuilder.date %}
             | "decimal"          {% ASTBuilder.number %}
             | "money"            {% ASTBuilder.money %}
+
+
+#Name -> _name {? function (d) { return !isKeyword(d[0]); } ?} {% function(d) {return {'name': d[0]}; } %}
 
 sentence -> [ A-Za-z0-9!@#$%^&*()_+\-\=}{\[\]":;?/>.<,i]:+   {% function(d) { return d[0].join("") } %}
 word -> [A-Za-z0-9]:+    {% function(d) { return d[0].join("") } %}
