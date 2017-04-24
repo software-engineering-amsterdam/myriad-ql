@@ -2,10 +2,11 @@
  * Created by Manuel on 24/04/2017.
  */
 
+import {AbstractVisitor} from '../../../AbstractVisitor.js';
 import {Checkbox} from 'arva-kit/components/Checkbox.js';
 import {SingleLineTextInput} from 'arva-kit/input/SingleLineTextInput.js';
 
-export class RenderInputVisitor {
+export class RenderInputVisitor extends AbstractVisitor{
 
     visitBoolean(qlBoolean) {
         const renderable = new Checkbox({

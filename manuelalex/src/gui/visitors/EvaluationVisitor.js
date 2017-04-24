@@ -2,9 +2,12 @@
  * Created by Manuel on 20/03/2017.
  */
 
-export class EvaluationVisitor {
+import {AbstractVisitor}    from '../../AbstractVisitor.js';
+
+export class EvaluationVisitor extends AbstractVisitor {
 
     visitExpression(expression, memoryState) {
+
         const leftValue = expression.getLeftHand().accept(this, memoryState);
         const rightValue = expression.getRightHand().accept(this, memoryState);
 

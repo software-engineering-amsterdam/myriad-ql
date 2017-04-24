@@ -2,9 +2,12 @@
  * Created by Manuel on 24/04/2017.
  */
 
-export class ASTMemoryAllocationVisitor {
+import {AbstractVisitor} from '../../AbstractVisitor.js';
+
+export class ASTMemoryAllocationVisitor extends AbstractVisitor{
 
     constructor(memoryState) {
+        super();
         this.memoryState = memoryState;
     }
 
@@ -74,7 +77,4 @@ export class ASTMemoryAllocationVisitor {
         this.memoryState.set(name, this.memoryState.getType(name) || propertyType);
         return this.memoryState.getType(name);
     }
-
-    visitReservedBooleanWords(){}
-
 }

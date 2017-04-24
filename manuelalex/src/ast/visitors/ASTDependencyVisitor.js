@@ -3,12 +3,14 @@
  */
 
 import find     from 'lodash/find';
+import {AbstractVisitor} from '../../AbstractVisitor.js';
 import {Expression} from '../../expressions/Expression.js';
 import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from '../../types/Types.js';
 
-export class ASTDependencyVisitor {
+export class ASTDependencyVisitor extends AbstractVisitor {
 
     constructor() {
+        super();
         this.graph = [];
         this.innerGraph = [];
         this.errors = [];
@@ -32,6 +34,7 @@ export class ASTDependencyVisitor {
         }
     }
 
+    // todo
     visitAnswer(answer) {}
 
     visitIfStatement(ifStatement) {
@@ -44,6 +47,7 @@ export class ASTDependencyVisitor {
         this.innerGraph = temporaryGraph;
     }
 
+    // todo
     visitIfElseStatement(ifElseStatement) {}
 
     visitPrefixExpression(prefixExpression) {
@@ -60,8 +64,6 @@ export class ASTDependencyVisitor {
     visitProperty(property) {
         this.innerGraph.push(property.getName());
     }
-
-    visitReservedBooleanWords(){}
 
     checkForCyclicDependencies() {
         /**

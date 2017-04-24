@@ -3,8 +3,9 @@
  */
 
 import Surface from 'famous/core/Surface.js';
+import {AbstractVisitor} from '../../../AbstractVisitor.js';
 
-export class RenderValueVisitor {
+export class RenderValueVisitor extends AbstractVisitor{
 
     visitMoney() {
         return new Surface();
