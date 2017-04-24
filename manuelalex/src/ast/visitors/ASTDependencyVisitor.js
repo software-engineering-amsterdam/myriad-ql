@@ -30,7 +30,7 @@ export class ASTDependencyVisitor extends AbstractVisitor {
 
     visitQuestion(question) {
         for (let node of this.innerGraph) {
-            this.graph.push([node, question.propertyName]);
+            this.graph.push([node,question.getProperty()]);
         }
     }
 
@@ -48,7 +48,9 @@ export class ASTDependencyVisitor extends AbstractVisitor {
     }
 
     // todo
-    visitIfElseStatement(ifElseStatement) {}
+    visitIfElseStatement(ifElseStatement) {
+
+    }
 
     visitPrefixExpression(prefixExpression) {
 
@@ -66,6 +68,7 @@ export class ASTDependencyVisitor extends AbstractVisitor {
     }
 
     checkForCyclicDependencies() {
+        console.log(this.graph);
         /**
          * Not yet optimized with the algorithm of Johnson, because Donald Knuth (Knuth, 1974) states that:
          * "We should forget about small efficiencies, say about 97% of the time: premature optimization
