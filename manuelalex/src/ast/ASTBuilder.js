@@ -95,6 +95,10 @@ export class ASTBuilder {
         return new Property(_.flattenDeep(data[0]).join(""), location);
     }
 
+    reservedBooleanWords(data, location) {
+        return new ReservedBooleanWords(_.flattenDeep(data[0]).join(""), location);
+    }
+
     numbers(data, location) {
         return new Numbers(data, location);
     }
