@@ -57,13 +57,13 @@ export let test6 =
     hasBoughtHouse: boolean
     question 'Did you enter a loan? TEST'
     hasMaintLoan: string
-    if (true && true) {
+    if ((true && true) && (1 > 0)) {
         question 'What was the selling price?'
         sellingPrice: money
         question 'What was the private debts for the sold house?'
         privateDebt: date
         answer 'Value residue:'
-        valueResidue: boolean = (hasSoldHouse && hasBoughtHouse)
+        valueResidue: boolean = true
     } 
      }`;
 

@@ -2,7 +2,7 @@
  * Created by Manuel on 13/03/2017.
  */
 
-import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from './Types.js';
+import {QLBoolean} from './Types.js';
 
 export class ReservedWord {
 
@@ -28,7 +28,7 @@ export class ReservedWord {
     }
 
     toString() {
-        return this.getName();
+        return this.getValue().toString();
     }
 }
 
@@ -39,7 +39,7 @@ export class ReservedBooleanWord extends ReservedWord {
     }
 
     getType(){
-        return new QLBoolean();
+        return QLBoolean;
     }
 
     accept(visitor, ...params){

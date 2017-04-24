@@ -30,7 +30,7 @@ describe('Test Types', () => {
 
     describe('test isValidOperator ', () => {
         it('QLBoolean operators', (done) => {
-            let boolean = new imports.QLBoolean();
+            let boolean = imports.QLBoolean;
             expect(boolean.isValidOperator("&&")).to.equal(true);
             expect(boolean.isValidOperator("||")).to.equal(true);
             expect(boolean.isValidOperator("!=")).to.equal(true);
@@ -45,7 +45,7 @@ describe('Test Types', () => {
 
     describe('test isValidOperator ', () => {
         it('QLNumber operators', (done) => {
-            let number = new imports.QLNumber();
+            let number = imports.QLNumber;
             expect(number.isValidOperator("&&")).to.equal(false);
             expect(number.isValidOperator("||")).to.equal(false);
             expect(number.isValidOperator("!=")).to.equal(true);

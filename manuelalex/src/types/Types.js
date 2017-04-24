@@ -21,13 +21,13 @@ export class Type {
     }
 
     getType() {
-        return this.constructor;
+        throw new Error('getType method should have been overwritten');
     }
 
     /**
      * determines whether operator can be executed on the type
      **/
-    isValidOperator(operator) {
+    static isValidOperator() {
         throw new Error('validOperator method should have been overwritten');
     }
 
@@ -38,8 +38,16 @@ export class QLMoney extends Type {
         return visitor.visitMoney(this, ...params);
     }
 
-    isValidOperator(operator){
+    getType(){
+        return QLMoney;
+    }
+
+    static isValidOperator(operator){
         return ['<', '>', '>=', '<=', '!=', '==', '*', '/', '+', '-'].includes(operator);
+    }
+
+    static toString(){
+        return 'QLMoney';
     }
 
 }
@@ -49,8 +57,17 @@ export class QLString extends Type {
         return visitor.visitString(this, ...params);
     }
 
-    isValidOperator(operator){
+    getType(){
+        return QLString;
+    }
+
+    static isValidOperator(operator){
         return ['<', '>', '>=', '<=', '!=', '=='].includes(operator);
+    }
+
+
+    static toString(){
+        return 'QLString';
     }
 }
 
@@ -59,8 +76,16 @@ export class QLBoolean extends Type {
         return visitor.visitBoolean(this, ...params);
     }
 
-    isValidOperator(operator){
+    getType(){
+        return QLBoolean;
+    }
+
+    static isValidOperator(operator){
         return ['||', '&&', '==', '!='].includes(operator);
+    }
+
+    static toString(){
+        return 'QLBoolean';
     }
 }
 
@@ -69,8 +94,16 @@ export class QLNumber extends Type {
         return visitor.visitNumber(this, ...params);
     }
 
-    isValidOperator(operator){
+    getType(){
+        return QLNumber;
+    }
+
+    static isValidOperator(operator){
         return ['<', '>', '>=', '<=', '!=', '==', '*', '/', '+', '-'].includes(operator);
+    }
+
+    static toString(){
+        return 'QLNumber';
     }
 }
 
@@ -78,8 +111,15 @@ export class QLDate extends Type {
     accept(visitor, ...params) {
         return visitor.visitDate(this, ...params);
     }
+    getType(){
+        return QLDate;
+    }
 
-    isValidOperator(operator){
+    static isValidOperator(operator){
         return ['<', '>', '>=', '<=', '!=', '=='].includes(operator);
+    }
+
+    static toString(){
+        return 'QLDate';
     }
 }

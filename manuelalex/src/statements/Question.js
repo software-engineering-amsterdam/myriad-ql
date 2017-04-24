@@ -23,7 +23,7 @@ export class Question extends Statement {
     }
 
     getPropertyType() {
-        return this.propertyType;
+        return this.propertyType.getType();
     }
 
     accept(visitor, ...params) {

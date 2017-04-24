@@ -2,6 +2,8 @@
  * Created by Manuel on 20/03/2017.
  */
 
+import {QLNumber}   from './Types.js';
+
 export class Numbers {
     constructor(value, location) {
         this.value = value;
@@ -18,6 +20,10 @@ export class Numbers {
 
     accept(visitor, ...params) {
         return visitor.visitNumbers(this, ...params);
+    }
+
+    getType(){
+        return QLNumber;
     }
 
 }

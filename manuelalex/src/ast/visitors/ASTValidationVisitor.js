@@ -95,7 +95,7 @@ export class ASTValidationVisitor extends AbstractVisitor{
         if (!leftHandType || !rightHandType) {
             this.errors.push(`Expression ${expression.toString()} does not have a valid leftHand or rightHand type`);
         } else {
-            if (leftHandType.getType() !== rightHandType.getType()) {
+            if (leftHandType !== rightHandType) {
                 this.errors.push(`Invalid expression. The operator ${operator} can not be applied 
                                 to ${leftHand.toString()} [type: ${leftHandType.toString()}] 
                                 and ${rightHand.toString()}[type: ${rightHandType.toString()}]. Reason types are different`);
@@ -107,7 +107,7 @@ export class ASTValidationVisitor extends AbstractVisitor{
                             and ${rightHand.toString()}[type: ${leftHandType.toString()}]`);
             }
         }
-        return expression.getType();
+        return expression.getType(leftHandType);
 
     }
 
@@ -117,7 +117,7 @@ export class ASTValidationVisitor extends AbstractVisitor{
     }
 
     visitNumbers(){
-        return new QLNumber();
+        return QLNumber;
     }
 
     visitReservedBooleanWord(reservedBooleanWord){

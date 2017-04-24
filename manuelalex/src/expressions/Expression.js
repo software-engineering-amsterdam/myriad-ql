@@ -1,7 +1,8 @@
 /**
  * Created by Manuel on 13/02/2017.
  */
-import {QLMoney, QLBoolean} from '../types/Types';
+
+import {QLBoolean}  from '../types/Types.js';
 
 export class Expression {
 
@@ -36,16 +37,18 @@ export class Expression {
         return `${this.getLeftHand().toString()} ${this.getOperator()} ${this.getRightHand().toString()}`;
     }
 
-    getType() {
+    /**
+     * LeftHand and RightHand should always have the same type, otherwise an error is thrown in the ASTValidationVisitor.
+     * Thus only returning the leftHand type is enough to determine the Expression type. One exception are the boolean operators which
+     * can work on non-boolean left and right hand values, these should always have a boolean return type.
+     * @returns {*}
+     */
+    isBooleanType() {
+        return (['<', '>', '>=', '<=', '!=', '==', '&&', '||'].includes(this.getOperator()));
+    }
 
-        //
-        // todo return also the other types
-        if (['<', '>', '>=', '<=', '!=', '==', '&&', '||'].includes(this.getOperator())) {
-            return new QLBoolean();
-        } else {
-            return new QLMoney();
-        }
-
+    getType(leftHandType){
+       return this.isBooleanType() ? QLBoolean : leftHandType;
     }
 }
 
@@ -70,7 +73,7 @@ export class PrefixExpression {
     }
 
     toString() {
-        return this.getPrefix() + this.getExpression().toString();
+        return `${this.getPrefix()} ${this.getExpression()}`;
     }
 
     getTypeName() {

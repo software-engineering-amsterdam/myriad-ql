@@ -11,7 +11,7 @@ import {SingleLineTextInput} from 'arva-kit/input/SingleLineTextInput.js';
 
 import {AbstractVisitor} from '../../AbstractVisitor.js';
 
-export class RenderVisitor extends AbstractVisitor{
+export class RenderVisitor extends AbstractVisitor {
 
     _viewCount = 0;
     memoryState;
@@ -44,7 +44,7 @@ export class RenderVisitor extends AbstractVisitor{
     }
 
     visitQuestion(question = {}, view = {}) {
-        const type = question.getPropertyType();
+        const type = new (question.getPropertyType());
         const label = question.getLabel();
         const property = question.getProperty();
         const propertyElement = this.memoryState.getElement(property.getName());
@@ -67,10 +67,9 @@ export class RenderVisitor extends AbstractVisitor{
     }
 
     visitAnswer(answer = {}, view = {}) {
-
         const allocation = answer.getAllocation();
         const expression = allocation.getExpression();
-        const type = allocation.getType();
+        const type = new (allocation.getType());
 
         const evaluation = expression.accept(this.evaluationVisitor, this.memoryState);
 

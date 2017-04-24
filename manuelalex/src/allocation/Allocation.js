@@ -15,7 +15,7 @@ export class Allocation {
     }
 
     getType() {
-        return this.type;
+        return this.type.getType();
     }
 
     getExpression() {
