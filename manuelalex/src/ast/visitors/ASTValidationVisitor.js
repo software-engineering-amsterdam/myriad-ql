@@ -6,7 +6,7 @@ import find from 'lodash/find';
 import {AbstractVisitor} from '../../AbstractVisitor.js';
 import {QLBoolean, QLNumber} from '../../types/Types.js';
 
-export class ASTValidationVisitor extends AbstractVisitor{
+export class ASTValidationVisitor extends AbstractVisitor {
 
     constructor(memoryState) {
         super();
@@ -60,6 +60,8 @@ export class ASTValidationVisitor extends AbstractVisitor{
         const condition = ifStatement.getCondition();
         condition.accept(this);
 
+        this.checkIsBooleanConditional(condition);
+
         const ifBody = ifStatement.getIfBody();
         for (let statement of ifBody) {
             statement.accept(this);
@@ -108,7 +110,6 @@ export class ASTValidationVisitor extends AbstractVisitor{
             }
         }
         return expression.getType(leftHandType);
-
     }
 
     visitProperty(property) {
@@ -116,11 +117,11 @@ export class ASTValidationVisitor extends AbstractVisitor{
         return this.memoryState.getType(property.getName());
     }
 
-    visitNumbers(){
+    visitNumbers() {
         return QLNumber;
     }
 
-    visitReservedBooleanWord(reservedBooleanWord){
+    visitReservedBooleanWord(reservedBooleanWord) {
         return reservedBooleanWord.getType();
     }
 
@@ -160,11 +161,18 @@ export class ASTValidationVisitor extends AbstractVisitor{
         }
     }
 
+    checkIsBooleanConditional(expression) {
+        let isBoolean = expression.isBooleanType();
+        if (!isBoolean) {
+            this.errors.push(`Conditional "${expression.toString()}" is not a boolean conditional.`);
+        }
+    }
+
     getErrors() {
         return this.errors;
     }
 
-    getWarnings(){
+    getWarnings() {
         return this.warnings;
     }
 
@@ -172,7 +180,7 @@ export class ASTValidationVisitor extends AbstractVisitor{
         return !!this.errors.length;
     }
 
-    hasDetectedWarnings(){
+    hasDetectedWarnings() {
         return !!this.warnings.length;
     }
 }

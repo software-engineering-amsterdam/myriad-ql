@@ -28,7 +28,7 @@ export class ASTBuilder {
     }
 
     ifStatement(data, location) {
-        if (data[3] instanceof Expression){
+        if (data[3] instanceof Expression) {
             return new IfStatement(data[3], _.flattenDeep(data[5][3]), location);
         } else {
             return new IfStatement(_.flattenDeep(data[3])[0], _.flattenDeep(data[5][3]), location);
@@ -89,7 +89,7 @@ export class ASTBuilder {
     }
 
     property(data, location, reject) {
-        if(["true", "false"].includes(_.flattenDeep(data[0]).join(""))){
+        if (["true", "false"].includes(_.flattenDeep(data[0]).join(""))) {
             return reject;
         } else {
             return new Property(_.flattenDeep(data[0]).join(""), location);
@@ -100,9 +100,9 @@ export class ASTBuilder {
         return new ReservedBooleanWord(data[0], location);
     }
 
-    isNotKeyWord(data, location){
+    isNotKeyWord(data) {
         let string = _.flattenDeep(data[0]).join("");
-        if(string ==="true" || string ==="false"){
+        if (string === "true" || string === "false") {
             return false;
         } else {
             return true;

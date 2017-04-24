@@ -26,4 +26,8 @@ export class Numbers {
         return QLNumber;
     }
 
+    toString(){
+        return this.getValue().toString();
+    }
+
 }
