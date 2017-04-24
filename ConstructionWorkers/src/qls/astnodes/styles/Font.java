@@ -12,7 +12,7 @@
 package qls.astnodes.styles;
 
 import ql.astnodes.LineNumber;
-import qls.visitorinterfaces.StyleAndWidgetVisitor;
+import qls.visitorinterfaces.StyleVisitor;
 
 public class Font extends StyleType {
 
@@ -22,7 +22,7 @@ public class Font extends StyleType {
         super(NAME, value, lineNumber);
     }
 
-    public <T> T accept(StyleAndWidgetVisitor<T> visitor) {
+    public <T> T accept(StyleVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

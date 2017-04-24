@@ -13,7 +13,7 @@ package qls.astnodes.styles;
 
 import ql.astnodes.LineNumber;
 import ql.astnodes.Node;
-import qls.visitorinterfaces.StyleAndWidgetVisitor;
+import qls.visitorinterfaces.StyleVisitor;
 
 import java.util.Objects;
 
@@ -50,5 +50,5 @@ public abstract class StyleType extends Node {
         return Objects.equals(name, other.name);
     }
 
-    public abstract <T> T accept(StyleAndWidgetVisitor<T> visitor);
+    public abstract <T> T accept(StyleVisitor<T> visitor);
 }

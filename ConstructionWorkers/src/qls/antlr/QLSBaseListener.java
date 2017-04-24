@@ -1,4 +1,4 @@
-// Generated from C:/Users/LGGX/Documents/SC2017/ConstructionWorkers/src/qls\QLS.g4 by ANTLR 4.6
+// Generated from C:/Users/LGGX/Documents/SC2017/ConstructionWorkers/src/qls/grammar\QLS.g4 by ANTLR 4.6
 package qls.antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -23,6 +23,18 @@ public class QLSBaseListener implements QLSListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStylesheet(QLSParser.StylesheetContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPage(QLSParser.PageContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPage(QLSParser.PageContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

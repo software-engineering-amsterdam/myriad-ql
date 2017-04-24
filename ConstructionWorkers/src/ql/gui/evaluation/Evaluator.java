@@ -15,7 +15,6 @@ import ql.astnodes.expressions.Expression;
 import ql.astnodes.statements.ComputedQuestion;
 import ql.astnodes.statements.IfStatement;
 import ql.gui.formenvironment.Context;
-import ql.gui.formenvironment.values.BooleanValue;
 import ql.gui.formenvironment.values.Value;
 
 public class Evaluator {

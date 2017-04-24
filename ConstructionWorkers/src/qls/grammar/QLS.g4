@@ -1,7 +1,11 @@
 grammar QLS;
 
 stylesheet
-    : 'stylesheet' Identifier '{' (defaultStyle | section)* '}' ;
+    : 'stylesheet' Identifier '{' page* '}' ;
+
+page
+    : 'page' STRING '{' (section | defaultStyle)* '}'
+    ;
 
 defaultStyle
     : 'default' type widget                 # defaultWithoutStyleDeclaration

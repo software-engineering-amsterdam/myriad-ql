@@ -1,4 +1,4 @@
-// Generated from C:/Users/LGGX/Documents/SC2017/ConstructionWorkers/src/qls\QLS.g4 by ANTLR 4.6
+// Generated from C:/Users/LGGX/Documents/SC2017/ConstructionWorkers/src/qls/grammar\QLS.g4 by ANTLR 4.6
 package qls.antlr;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -18,6 +18,13 @@ public class QLSBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements QL
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitStylesheet(QLSParser.StylesheetContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitPage(QLSParser.PageContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -12,12 +12,14 @@
 package qls.visitorinterfaces;
 
 import qls.astnodes.StyleSheet;
+import qls.astnodes.sections.Page;
 import qls.astnodes.sections.DefaultStyle;
 import qls.astnodes.sections.Section;
 import qls.astnodes.sections.StyleQuestion;
 
 public interface StyleSheetVisitor {
     void visit(StyleSheet styleSheet);
+    void visit(Page page);
     void visit(Section section);
     void visit(DefaultStyle section);
     void visit(StyleQuestion question);

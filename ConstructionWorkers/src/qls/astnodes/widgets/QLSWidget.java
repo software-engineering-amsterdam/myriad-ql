@@ -14,7 +14,7 @@ package qls.astnodes.widgets;
 import ql.astnodes.LineNumber;
 import ql.astnodes.Node;
 import ql.astnodes.types.Type;
-import qls.visitorinterfaces.StyleAndWidgetVisitor;
+import qls.visitorinterfaces.WidgetVisitor;
 
 import javax.swing.*;
 import java.util.List;
@@ -38,5 +38,5 @@ public abstract class QLSWidget extends Node {
         return false;
     }
 
-    public abstract <T> T accept(StyleAndWidgetVisitor<T> visitor);
+    public abstract <T> T accept(WidgetVisitor<T> visitor);
 }

@@ -31,13 +31,10 @@ import ql.antlr.QLVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 import java.math.BigDecimal;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
-
-    private static final String GRAMMAR_ERROR = "Grammar error!";
 
     @Override
     public Form visitForm(QLParser.FormContext ctx) {
@@ -123,7 +120,7 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
             case "<=":
                 return new LTEQ(left, right, getLineNumber(ctx));
             default:
-                throw new AssertionError(getGrammarErrorMessage("EqualityExpressions"));
+                throw new AssertionError();
         }
     }
 
@@ -138,7 +135,7 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
             case "/":
                 return new Division(left, right, getLineNumber(ctx));
             default:
-                throw new AssertionError(getGrammarErrorMessage("MultDivExpressions"));
+                throw new AssertionError();
         }
     }
 
@@ -153,7 +150,7 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
             case "-":
                 return new Subtraction(left, right, getLineNumber(ctx));
             default:
-                throw new AssertionError(getGrammarErrorMessage("AddSubExpressions"));
+                throw new AssertionError();
         }
     }
 
@@ -176,7 +173,7 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
             case "-":
                 return new Negative(expression, getLineNumber(ctx));
             default:
-                throw new AssertionError(getGrammarErrorMessage("UnaryExpressions"));
+                throw new AssertionError();
         }
     }
 
@@ -219,10 +216,6 @@ public class ASTVisitor extends QLBaseVisitor<Node> implements QLVisitor<Node> {
     @Override
     public MyString visitStringExpression(QLParser.StringExpressionContext ctx) {
         return new MyString(ctx.getText().substring(1, ctx.getText().length() - 1), getLineNumber(ctx));
-    }
-
-    private String getGrammarErrorMessage(String expression) {
-        return MessageFormat.format(ASTVisitor.GRAMMAR_ERROR, expression);
     }
 
     private LineNumber getLineNumber(ParserRuleContext ctx) {

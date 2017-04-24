@@ -18,6 +18,7 @@ import ql.astnodes.types.*;
 import qls.antlr.QLSBaseVisitor;
 import qls.antlr.QLSParser;
 import qls.astnodes.sections.DefaultStyle;
+import qls.astnodes.sections.Page;
 import qls.astnodes.sections.Section;
 import qls.astnodes.sections.StyleQuestion;
 import qls.astnodes.styles.*;
@@ -31,6 +32,19 @@ public class QLSASTVisitor extends QLSBaseVisitor<Node> {
     @Override
     public Node visitStylesheet(QLSParser.StylesheetContext ctx) {
         String name = ctx.Identifier().getText();
+        List<Page> pages = new ArrayList<>();
+
+        for (QLSParser.PageContext pageContext : ctx.page()) {
+            Page page = (Page) pageContext.accept(this);
+            pages.add(page);
+        }
+
+        return new StyleSheet(name, pages, getLineNumber(ctx));
+    }
+
+    @Override
+    public Node visitPage(QLSParser.PageContext ctx) {
+        String name = ctx.STRING().getText();
         List<Section> sections = new ArrayList<>();
 
         for (QLSParser.SectionContext sectionContext : ctx.section()) {
@@ -45,9 +59,8 @@ public class QLSASTVisitor extends QLSBaseVisitor<Node> {
             defaultStyles.add(defaultStyle);
         }
 
-        return new StyleSheet(name, sections, defaultStyles, getLineNumber(ctx));
+        return new Page(name, sections, defaultStyles, getLineNumber(ctx));
     }
-    
 
     @Override
     public Node visitSection(QLSParser.SectionContext ctx) {
