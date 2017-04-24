@@ -1,7 +1,7 @@
 package com.matthewchapman.ql.ast.expression.literal;
 
 import com.matthewchapman.ql.ast.Expression;
-import com.matthewchapman.ql.validation.visitors.ExpressionVisitor;
+import com.matthewchapman.ql.visitors.ExpressionVisitor;
 
 /**
  * Created by matt on 27/02/2017.
@@ -31,5 +31,4 @@ public class BooleanLiteral extends Expression {
     public <T, C> T accept(ExpressionVisitor<T, C> visitor, C context) {
         return visitor.visit(this, context);
     }
-
 }

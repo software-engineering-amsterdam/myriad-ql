@@ -13,10 +13,10 @@ import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
 import com.matthewchapman.ql.ast.statement.IfStatement;
 import com.matthewchapman.ql.ast.statement.Question;
-import com.matthewchapman.ql.core.ErrorLogger;
+import com.matthewchapman.ql.errorhandling.ErrorLogger;
 import com.matthewchapman.ql.validation.type.TypeTable;
-import com.matthewchapman.ql.validation.visitors.ExpressionVisitor;
-import com.matthewchapman.ql.validation.visitors.StatementVisitor;
+import com.matthewchapman.ql.visitors.ExpressionVisitor;
+import com.matthewchapman.ql.visitors.StatementVisitor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +44,6 @@ public class ExpressionChecker implements StatementVisitor<Void, String>, Expres
         }
 
         checkForMissingParameters(typeTable);
-
         return logger;
     }
 
@@ -80,14 +79,12 @@ public class ExpressionChecker implements StatementVisitor<Void, String>, Expres
 
     @Override
     public Void visit(IfStatement ifStatement, String context) {
-
         ifStatement.getCondition().accept(this, "If Condition");
         return null;
     }
 
     @Override
     public Void visit(IfElseStatement ifElseStatement, String context) {
-
         ifElseStatement.getCondition().accept(this, "If Condition");
         return null;
     }
@@ -218,6 +215,5 @@ public class ExpressionChecker implements StatementVisitor<Void, String>, Expres
             assert context != null;
         }
         return null;
-
     }
 }

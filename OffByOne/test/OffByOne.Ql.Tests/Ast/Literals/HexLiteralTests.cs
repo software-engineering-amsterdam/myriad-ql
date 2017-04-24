@@ -22,7 +22,7 @@
         [Fact]
         public void CreatingNewObject_ShouldThrowExceptionWhenIncorectDataGiven()
         {
-            Assert.Throws<ArgumentNullException>(() => new HexLiteral(null));
+            Assert.Throws<ArgumentException>(() => new HexLiteral(null));
         }
     }
 }

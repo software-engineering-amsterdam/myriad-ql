@@ -1,51 +1,73 @@
 package org.uva.taxfree.qls;
 
+import org.uva.taxfree.ql.gui.MessageList;
+import org.uva.taxfree.ql.gui.widgets.Widget;
+import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.types.Type;
-import org.uva.taxfree.qls.styleoption.StyleOption;
 
-import javax.swing.*;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 public class QlsStyle {
-    private final Map<String, String> mWidgetDeclarations;
-    private final Map<Type, List<StyleOption>> mVariableStyleDeclarations;
-    private final Map<String, String> mQuestionStyleDeclarations;
+    private final List<Page> mPages;
 
-    public QlsStyle() {
-        mWidgetDeclarations = new HashMap<>();
-        mVariableStyleDeclarations = new HashMap<>();
-        mQuestionStyleDeclarations = new HashMap<>();
+    public QlsStyle(List<Page> pages) {
+        mPages = pages;
     }
 
-    public void addWidgetDeclaration(String likesToPayTaxes, String widgetType) {
-        if (mWidgetDeclarations.containsKey(likesToPayTaxes)) {
-            throw new AssertionError("This question has already been declared earlier");
+    public void applyStyle(Type type, Widget widget) {
+        for (Page page : mPages) {
+            if (page.contains(widget.getId())) {
+                page.applyStyle(type, widget);
+            }
         }
-        mWidgetDeclarations.put(likesToPayTaxes, widgetType);
     }
 
-    public void addVariableStyleDeclaration(Type variableType, List<StyleOption> styleOptions) {
-        if (mVariableStyleDeclarations.containsKey(variableType)) {
-            throw new AssertionError("This variable has already been declared");
+    public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
+        checkMissingIdentifiers(symbolTable, semanticsMessages);
+        for (Page page : mPages) {
+            page.checkSemantics(symbolTable, semanticsMessages);
         }
-        mVariableStyleDeclarations.put(variableType, styleOptions);
     }
 
-
-    public void applyStyle(Type type, JComponent component) {
-        Iterator<Map.Entry<Type, List<StyleOption>>> variableDeclarations = mVariableStyleDeclarations.entrySet().iterator();
-        while (variableDeclarations.hasNext()) {
-            Map.Entry<Type, List<StyleOption>> thisEntry = variableDeclarations.next();
-            Type key = thisEntry.getKey();
-            if (key.equals(type)) {
-                List<StyleOption> styleOptions = thisEntry.getValue();
-                for (StyleOption styleOption : styleOptions) {
-                    styleOption.applyStyle(component);
+    private void checkMissingIdentifiers(SymbolTable symbolTable, MessageList semanticsMessages) {
+        Set<String> declaredQuestions = symbolTable.getUsedVariables();
+        for (Page page : mPages) {
+            for (String pageQuestion : page.getUsedVariables()) {
+                if (!declaredQuestions.remove(pageQuestion)) {
+                    semanticsMessages.addError("page " + page.getName() + ", question assigned multiple times: " + pageQuestion);
                 }
             }
         }
+        for (String questionName : declaredQuestions) {
+            semanticsMessages.addError("qls file. Unassigned question: " + questionName);
+        }
+    }
+
+    protected List<String> getPageNames() {
+        List<String> pageNames = new ArrayList<>();
+        for (Page page : mPages) {
+            pageNames.add(page.getName());
+        }
+        return pageNames;
+    }
+
+    protected List<String> getSectionNames(String pageName) {
+        for (Page page : mPages) {
+            if (pageName.equals(page.getName())) {
+                return page.getSectionNames();
+            }
+        }
+        throw new RuntimeException("Unknown page queried: " + pageName);
+    }
+
+    public String getSectionName(String variableId) {
+        for (Page page : mPages) {
+            if (page.contains(variableId)) {
+                return page.getSectionName(variableId);
+            }
+        }
+        throw new RuntimeException("Unknown variable id queried: " + variableId);
     }
 }

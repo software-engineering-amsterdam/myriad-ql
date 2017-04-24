@@ -2,9 +2,11 @@ package com.matthewchapman.ql.environment.values;
 
 /**
  * Created by matt on 18/03/2017.
+ * <p>
+ * Concrete implementation of boolean values
  */
 
-public class BooleanValue extends Value {
+public class BooleanValue implements Value {
 
     private final boolean value;
 
@@ -13,17 +15,24 @@ public class BooleanValue extends Value {
     }
 
     @Override
+    public String getTypeAsString() {
+        return "BOOLEAN";
+    }
+
+    @Override
     public Boolean getValue() {
         return value;
     }
 
     @Override
-    public Value equalTo(BooleanValue value) {
-        return new BooleanValue(this.value == value.getValue());
+    public String toString() {
+        return Boolean.toString(value);
     }
 
     @Override
-    public Value equalTo(Value value) { return value.equalTo(this); }
+    public Value equalTo(Value value) {
+        return new BooleanValue(value.getValue().equals(this.value));
+    }
 
     @Override
     public Value notEqualTo(BooleanValue value) {
@@ -31,7 +40,9 @@ public class BooleanValue extends Value {
     }
 
     @Override
-    public Value notEqualTo(Value value) { return value.notEqualTo(this); }
+    public Value notEqualTo(Value value) {
+        return value.notEqualTo(this);
+    }
 
     @Override
     public Value logicalAnd(BooleanValue value) {
@@ -39,7 +50,9 @@ public class BooleanValue extends Value {
     }
 
     @Override
-    public Value logicalAnd(Value value) { return value.logicalAnd(this); }
+    public Value logicalAnd(Value value) {
+        return value.logicalAnd(this);
+    }
 
     @Override
     public Value logicalOr(BooleanValue value) {
@@ -47,7 +60,9 @@ public class BooleanValue extends Value {
     }
 
     @Override
-    public Value logicalOr(Value value) { return value.logicalOr(this); }
+    public Value logicalOr(Value value) {
+        return value.logicalOr(this);
+    }
 
     @Override
     public Value negate(BooleanValue value) {
@@ -55,5 +70,7 @@ public class BooleanValue extends Value {
     }
 
     @Override
-    public Value negate(Value value) { return value.negate(this); }
+    public Value negate(Value value) {
+        return value.negate(this);
+    }
 }

@@ -1,7 +1,5 @@
 package sc.ql.model;
 
-import sc.ql.model.types.Type;
-
 public abstract class Node {
 	private Integer lineNumber;
 	private Integer charPosition;

@@ -1,6 +1,6 @@
 package org.ql.typechecker.issues.error;
 
-import org.ql.ast.Identifier;
+import org.ql.ast.identifier.Identifier;
 import org.ql.typechecker.circular_dependencies.DependencyPair;
 import org.ql.typechecker.issues.Issue;
 

@@ -18,29 +18,6 @@ public class DateLiteral extends ComparableLiteral<LocalDate> implements Compara
         return visitor.visit(this);
     }
 
-    @Override
-    public BooleanLiteral gT(final ComparableLiteral<?> that) {
-        evaluateType(that);
-        return new BooleanLiteral(this.compareTo((DateLiteral) that) >= 1);
-    }
-
-    @Override
-    public BooleanLiteral gTEq(final ComparableLiteral<?> that) {
-        evaluateType(that);
-        return new BooleanLiteral(this.compareTo((DateLiteral) that) >= 0);
-    }
-
-    @Override
-    public BooleanLiteral lT(final ComparableLiteral<?> that) {
-        evaluateType(that);
-        return new BooleanLiteral(this.compareTo((DateLiteral) that) <= -1);
-    }
-
-    @Override
-    public BooleanLiteral lTEq(final ComparableLiteral<?> that) {
-        evaluateType(that);
-        return new BooleanLiteral(this.compareTo((DateLiteral) that) <= 0);
-    }
 
     @Override
     public String toString() {

@@ -6,16 +6,16 @@ import com.matthewchapman.ql.ast.Expression;
 import com.matthewchapman.ql.ast.Form;
 import com.matthewchapman.ql.ast.Statement;
 import com.matthewchapman.ql.ast.TreeNode;
-import com.matthewchapman.ql.ast.atomic.*;
-import com.matthewchapman.ql.ast.expression.literal.BooleanLiteral;
-import com.matthewchapman.ql.ast.expression.literal.IntegerLiteral;
-import com.matthewchapman.ql.ast.expression.literal.StringLiteral;
+import com.matthewchapman.ql.ast.atomic.Type;
 import com.matthewchapman.ql.ast.atomic.type.BooleanType;
 import com.matthewchapman.ql.ast.atomic.type.IntegerType;
 import com.matthewchapman.ql.ast.atomic.type.StringType;
 import com.matthewchapman.ql.ast.expression.Parameter;
 import com.matthewchapman.ql.ast.expression.ParameterGroup;
 import com.matthewchapman.ql.ast.expression.binary.*;
+import com.matthewchapman.ql.ast.expression.literal.BooleanLiteral;
+import com.matthewchapman.ql.ast.expression.literal.IntegerLiteral;
+import com.matthewchapman.ql.ast.expression.literal.StringLiteral;
 import com.matthewchapman.ql.ast.expression.unary.Negation;
 import com.matthewchapman.ql.ast.statement.CalculatedQuestion;
 import com.matthewchapman.ql.ast.statement.IfElseStatement;
@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Created by matt on 24/02/2017.
  */
-public class ParseTreeVisitor extends QLBaseVisitor<TreeNode> {
+class ParseTreeVisitor extends QLBaseVisitor<TreeNode> {
 
     @Override
     public TreeNode visitFormDeclaration(QLParser.FormDeclarationContext ctx) {
@@ -134,7 +134,6 @@ public class ParseTreeVisitor extends QLBaseVisitor<TreeNode> {
         }
 
         return new IfElseStatement((Expression) visit(ctx.expression()), ifCaseStatements, elseCaseStatements, ctx.start.getLine(), ctx.start.getCharPositionInLine());
-
     }
 
     @Override

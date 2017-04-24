@@ -1,14 +1,19 @@
 package org.ql.gui.widgets;
 
-import javafx.scene.control.TextField;
 
-public class TextInputWidget extends InputWidget<String> {
-    public TextInputWidget(String label) {
-        super(label);
+import org.ql.ast.statement.Question;
+import org.ql.evaluator.value.StringValue;
+import org.ql.evaluator.value.Value;
+import org.ql.gui.ValueReviser;
+
+public class TextInputWidget extends InputWidget {
+
+    public TextInputWidget(ValueReviser valueReviser, Question question) {
+        super(valueReviser, question);
     }
 
     @Override
-    protected String extractValue(TextField textField) {
-        return textField.getText();
+    protected Value value(String textFieldText) {
+        return new StringValue(textFieldText);
     }
 }

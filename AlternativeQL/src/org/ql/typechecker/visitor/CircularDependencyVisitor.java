@@ -1,7 +1,7 @@
 package org.ql.typechecker.visitor;
 
-import org.ql.ast.Form;
-import org.ql.ast.Identifier;
+import org.ql.ast.form.Form;
+import org.ql.ast.identifier.Identifier;
 import org.ql.ast.expression.BinaryExpression;
 import org.ql.ast.expression.Parameter;
 import org.ql.ast.expression.arithmetic.*;
@@ -10,6 +10,7 @@ import org.ql.ast.expression.literal.DecimalLiteral;
 import org.ql.ast.expression.literal.IntegerLiteral;
 import org.ql.ast.expression.literal.StringLiteral;
 import org.ql.ast.expression.relational.*;
+import org.ql.ast.statement.ComputableQuestion;
 import org.ql.ast.statement.IfThen;
 import org.ql.ast.statement.IfThenElse;
 import org.ql.ast.statement.Question;
@@ -173,10 +174,13 @@ public class CircularDependencyVisitor extends AbstractTypeCheckVisitor<Void, Id
     }
 
     @Override
-    public Void visitQuestion(Question question, Identifier questionId) {
-        if (question.getValue() != null) {
-            visitExpression(question.getValue(), question.getId());
-        }
+    public Void visitComputableQuestion(ComputableQuestion question, Identifier questionId) {
+        visitExpression(question.getComputableValue(), question.getId());
+        return null;
+    }
+
+    @Override
+    public Void visitQuestion(Question question, Identifier context) {
         return null;
     }
 

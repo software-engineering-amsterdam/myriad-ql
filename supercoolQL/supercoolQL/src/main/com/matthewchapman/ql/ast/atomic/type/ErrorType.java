@@ -1,10 +1,12 @@
 package com.matthewchapman.ql.ast.atomic.type;
 
 import com.matthewchapman.ql.ast.atomic.Type;
-import com.matthewchapman.ql.validation.visitors.TypeVisitor;
+import com.matthewchapman.ql.visitors.TypeVisitor;
 
 /**
  * Created by matt on 13/03/2017.
+ * <p>
+ * Exceptional value for types
  */
 public class ErrorType extends Type {
 

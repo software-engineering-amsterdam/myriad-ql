@@ -28,22 +28,12 @@
                     ""String two:""
                         stringtwo: string
 
-                    if(equation == 11){
+                    if(true){
                         ""Do you like pie?""
-                            pie: boolean (existentialism)
+                            pie: boolean (existentialismi)
                     } else {
                         ""Some numbers""
                             comments: decimal (favDecimal + equation)
-                    }
-
-                    if (x){ 
-                        ""Y?"" 
-                            y: boolean 
-                    }
-
-                    if (y) { 
-                        ""X?"" 
-                            x: boolean 
                     }
                 }
             ";

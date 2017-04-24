@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     using MoreDotNet.Extensions.Collections;
 
@@ -15,9 +14,10 @@
     using OffByOne.Ql.Checker.Collectors;
     using OffByOne.Ql.Checker.Contracts;
     using OffByOne.Ql.Checker.Messages;
-    using OffByOne.Ql.Visitors.Base;
+    using OffByOne.Ql.Common.Visitors.Base;
+    using OffByOne.Ql.Common.Visitors.Contracts;
 
-    public class CyclicDependencyAnalyzer : BaseQlVisitor<object, QuestionVisitorTypeEnvironment>, IAnalyzer
+    public class CyclicDependencyAnalyzer : BaseQlDfsVisitor<object, IEnvironment>, IAnalyzer
     {
         private readonly CircularDependencyChecker circularDependencyChecker;
 
@@ -41,13 +41,18 @@
 
         public void Analyze(FormStatement root)
         {
-            this.Visit(root, new QuestionVisitorTypeEnvironment());
+            if (root == null)
+            {
+                throw new ArgumentNullException(nameof(root));
+            }
+
+            this.Visit(root, new QuestionEnvironment());
             var errors = this.circularDependencyChecker.CircularDependencies;
 
             errors.ForEach(x => this.Report.Add(new CircularDependencyMessage(x.StartPointId)));
         }
 
-        public override object Visit(QuestionStatement statement, QuestionVisitorTypeEnvironment environment)
+        public override object Visit(QuestionStatement statement, IEnvironment environment)
         {
             if (statement.ComputationExpression != null)
             {
@@ -58,7 +63,7 @@
             return base.Visit(statement, environment);
         }
 
-        public override object Visit(IfStatement statement, QuestionVisitorTypeEnvironment environment)
+        public override object Visit(IfStatement statement, IEnvironment environment)
         {
             var conditionVars = this.GetVariables(statement.Condition);
             var bodyVars = this.GetVariables(statement);

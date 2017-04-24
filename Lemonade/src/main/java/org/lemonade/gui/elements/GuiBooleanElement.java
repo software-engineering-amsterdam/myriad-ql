@@ -6,7 +6,7 @@ import org.lemonade.gui.values.GuiValue;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Control;
 
-public class GuiBooleanElement implements GuiElement {
+public class GuiBooleanElement extends GuiMutableElement {
 
     private GuiValue<Boolean> value;
     private CheckBox checkBox;
@@ -25,6 +25,12 @@ public class GuiBooleanElement implements GuiElement {
     @Override
     public void update() {
         ((GuiBooleanValue) value).update(checkBox.isSelected());
+    }
+
+    @Override
+    public void clear() {
+        ((GuiBooleanValue) value).update(false);
+        checkBox.setSelected(false);
     }
 
     @Override

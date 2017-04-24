@@ -14,7 +14,7 @@ public class IntegerWidget extends TextFieldWidget {
     }
 
     @Override
-    public Value resolveValue() {
+    public Value resolve() {
         return new IntValue(Integer.valueOf(currentValue()));
     }
 }

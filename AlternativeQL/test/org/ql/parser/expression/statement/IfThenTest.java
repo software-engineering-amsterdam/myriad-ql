@@ -2,6 +2,7 @@ package org.ql.parser.expression.statement;
 
 import org.junit.Test;
 import org.ql.ast.expression.literal.BooleanLiteral;
+import org.ql.ast.statement.ComputableQuestion;
 import org.ql.ast.statement.IfThen;
 import org.ql.ast.statement.Question;
 import org.ql.ast.type.MoneyType;
@@ -41,6 +42,6 @@ public class IfThenTest {
         assertSame(expectedBodySize, actualIfThenElse.getThenStatements().size());
         assertTrue(actualQuestion.getType() instanceof MoneyType);
         assertEquals(expectedId, actualQuestion.getId().toString());
-        assertEquals(expectedQuestionText, actualQuestion.getQuestionLabel().toString());
+        assertEquals(expectedQuestionText, actualQuestion.getLabel().toString());
     }
 }

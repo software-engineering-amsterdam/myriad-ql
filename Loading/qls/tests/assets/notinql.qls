@@ -1,0 +1,19 @@
+stylesheet TestingExample
+    page Housing {
+        default integer {
+            width: 400
+            font: "Arial"
+            fontsize: 14
+            color: "#000000"
+            widget spinbox
+        }
+        default boolean widget checkbox
+        default integer widget spinbox
+
+        section "Buying"
+        default boolean widget dropdown("Yes", "No")
+
+        question Name0
+        question Name1
+        question Name2
+    }

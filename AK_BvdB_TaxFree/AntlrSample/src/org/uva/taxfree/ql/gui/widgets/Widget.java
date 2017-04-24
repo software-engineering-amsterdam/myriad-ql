@@ -6,57 +6,79 @@ import org.uva.taxfree.ql.model.values.Value;
 import org.uva.taxfree.qls.QlsStyle;
 
 import javax.swing.*;
+import java.awt.*;
 
-public abstract class Widget {
-    private final JPanel mPanel;
-    private final JLabel mLabel;
-    private final String mId;
+public abstract class Widget implements Resolvable {
+    private final GuiComponent mGuiComponent;
+    private Resolvable mResolver;
 
     public Widget(String label, String id) {
-        mLabel = new JLabel(label);
-        mPanel = createPanel(label);
-        mId = id;
-    }
-
-    private JPanel createPanel(String label) {
-        JPanel widgetPanel = new JPanel();
-        widgetPanel.setName(label);
-        widgetPanel.add(mLabel);
-        widgetPanel.setVisible(true);
-        return widgetPanel;
+        mGuiComponent = new GuiComponent(label, id);
+        mResolver = this;
     }
 
     public void registerToPanel(JPanel widgetPanel) {
-        fillPanel(mPanel);
-        widgetPanel.add(mPanel);
+        fillPanel(mGuiComponent);
+        mGuiComponent.registerToPanel(widgetPanel);
     }
 
-    protected abstract void fillPanel(JPanel widgetPanel);
+    protected abstract void fillPanel(GuiComponent widgetPanel);
 
-    public abstract Value resolveValue();
+    public Value resolveValue() {
+        return mResolver.resolve();
+    }
 
-    public abstract void callOnUpdate(FormListener listener);
+    public void setListener(FormListener listener) {
+        mResolver.callOnUpdate(listener);
+    }
 
     public void updateVisibility(SymbolTable symbolTable) {
-        mPanel.setVisible(symbolTable.isVisible(mId));
+        mGuiComponent.setVisible(symbolTable.isVisible(mGuiComponent.getId()));
     }
 
     public abstract void updateValues(SymbolTable symbolTable);
 
     protected void writeToTable(SymbolTable symbolTable) {
-        symbolTable.updateValue(mId, resolveValue());
+        symbolTable.updateValue(mGuiComponent.getId(), resolveValue());
     }
 
     protected String readFromTable(SymbolTable symbolTable) {
-        return symbolTable.resolveValue(mId).toString();
+        return symbolTable.resolveValue(getId()).toString();
     }
 
     public void updateStyle(QlsStyle qlsStyle) {
-        applyStyle(mPanel, mLabel, qlsStyle);
+        applyStyle(this, qlsStyle);
     }
 
-    protected void applyStyle(JPanel panel, JLabel label, QlsStyle qlsStyle) {
-        // Only used for QLS
+    protected void applyStyle(Widget component, QlsStyle qlsStyle) {
+        // Intentionally left blank
     }
 
+    public String getId() {
+        return mGuiComponent.getId();
+    }
+
+    public void setResolver(Resolvable externalResolver) {
+        mResolver = externalResolver;
+    }
+
+    public void setBackgroundColor(Color backgroundColor) {
+        mGuiComponent.setBackgroundColor(backgroundColor);
+    }
+
+    public void setFontName(String fontName) {
+        mGuiComponent.setFontName(fontName);
+    }
+
+    public void setFontSize(int fontSize) {
+        mGuiComponent.setFontSize(fontSize);
+    }
+
+    public void setForegroundColor(Color foregroundColor) {
+        mGuiComponent.setForegroundColor(foregroundColor);
+    }
+
+    public void setValueCompoent(JComponent component) {
+        mGuiComponent.setValueComponent(component);
+    }
 }

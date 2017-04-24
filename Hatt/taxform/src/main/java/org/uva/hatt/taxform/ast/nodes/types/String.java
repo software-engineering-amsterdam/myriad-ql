@@ -6,4 +6,12 @@ public class String extends ValueType{
         super(lineNumber);
     }
 
+    @Override
+    public java.lang.String name(){
+        return "String";
+    }
+
+    public <T> T accept(TypeVisitor<T> visitor){
+        return visitor.visit(this);
+    }
 }

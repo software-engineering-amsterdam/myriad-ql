@@ -4,6 +4,8 @@ import com.matthewchapman.ql.ast.Expression;
 
 /**
  * Created by matt on 27/02/2017.
+ * <p>
+ * Abstract class for expressions with a left and a right
  */
 public abstract class BinaryOperation extends Expression {
 
@@ -22,5 +24,4 @@ public abstract class BinaryOperation extends Expression {
     public Expression getRight() {
         return this.right;
     }
-
 }

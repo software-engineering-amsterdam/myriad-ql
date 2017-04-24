@@ -10,7 +10,8 @@
             var report = qlLanguageBuilder.CheckSyntax(astTree);
             if (!report.HasErrors())
             {
-                qlLanguageBuilder.RunApplication(astTree);
+                var widget = qlLanguageBuilder.CreateFormWidget(astTree);
+                qlLanguageBuilder.RunApplication(widget);
             }
         }
 

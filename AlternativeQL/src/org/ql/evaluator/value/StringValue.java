@@ -23,13 +23,13 @@ public class StringValue extends Value {
     }
 
     @Override
-    public Value addition(Value addition) {
-        return addition.addition(this);
+    public Value addition(Value augend) {
+        return augend.addition(this);
     }
 
     @Override
-    public Value addition(StringValue comparable) {
-        return new StringValue(comparable.value + value);
+    public Value addition(StringValue addend) {
+        return new StringValue(addend.value + value);
     }
 
     @Override
@@ -41,6 +41,11 @@ public class StringValue extends Value {
 
         return value != null ? value.equals(that.value) : that.value == null;
 
+    }
+
+    @Override
+    public String toString() {
+        return getPlainValue();
     }
 
     @Override

@@ -2,7 +2,7 @@ package org.lemonade.gui.values;
 
 import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 
-public class GuiIntegerValue extends GuiNumericalValue<Integer> implements Comparable<GuiIntegerValue>{
+public class GuiIntegerValue extends GuiNumericalValue<Integer> implements Comparable<GuiIntegerValue> {
 
     private Integer value;
 
@@ -11,7 +11,7 @@ public class GuiIntegerValue extends GuiNumericalValue<Integer> implements Compa
     }
 
     @Override
-    Integer getValue() {
+    public Integer getValue() {
         return value;
     }
 
@@ -26,76 +26,135 @@ public class GuiIntegerValue extends GuiNumericalValue<Integer> implements Compa
     }
 
     @Override
-    public boolean isInteger() {
-        return true;
+    public GuiValue<?> plus(GuiValue<?> that) {
+        return that.add(this);
     }
 
-    public GuiIntegerValue plus(GuiIntegerValue that) {
-        return new GuiIntegerValue(this.getValue() + that.getValue());
+    @Override
+    public GuiValue<?> min(GuiValue<?> that) {
+        return that.minus(this);
     }
 
-    public GuiDecimalValue plus(GuiDecimalValue that) {
-        return new GuiDecimalValue(this.getValue() + that.getValue());
+    @Override
+    public GuiValue<?> prod(GuiValue<?> that) {
+        return that.product(this);
     }
 
-    public GuiMoneyValue plus(GuiMoneyValue that) {
-        return new GuiMoneyValue(this.getValue() + that.getValue());
+    @Override
+    public GuiValue<?> div(GuiValue<?> that) {
+        if (!(this.getValue() == 0)) {
+            return that.divide(this);
+        }
+        return new GuiUndefinedValue();
     }
 
-    public GuiIntegerValue product(GuiIntegerValue that) {
-        return new GuiIntegerValue(this.getValue() * that.getValue());
+    @Override
+    public GuiValue<?> lT(GuiValue<?> that) {
+        return that.doLt(this);
     }
 
-    public GuiDecimalValue product(GuiDecimalValue that) {
-        return new GuiDecimalValue(this.getValue() * that.getValue());
+    @Override
+    public GuiValue<?> gT(GuiValue<?> that) {
+        return that.doGt(this);
     }
 
-    public GuiMoneyValue product(GuiMoneyValue that) {
-        return new GuiMoneyValue(this.getValue() * that.getValue());
+    @Override
+    public GuiValue<?> lTEq(GuiValue<?> that) {
+        return that.doLtE(this);
     }
 
-    public GuiIntegerValue minus(GuiIntegerValue that) {
-        return new GuiIntegerValue(this.getValue() - that.getValue());
+    @Override
+    public GuiValue<?> gTEq(GuiValue<?> that) {
+        return that.doGtE(this);
     }
 
+    @Override
+    public GuiDecimalValue add(GuiDecimalValue that) {
+        return new GuiDecimalValue(that.getValue() + this.getValue());
+    }
+
+    @Override
+    public GuiIntegerValue add(GuiIntegerValue that) {
+        return new GuiIntegerValue(that.getValue() + this.getValue());
+    }
+
+    @Override
+    public GuiMoneyValue add(GuiMoneyValue that) {
+        return new GuiMoneyValue(that.getValue() + this.getValue());
+    }
+
+    @Override
     public GuiDecimalValue minus(GuiDecimalValue that) {
-        return new GuiDecimalValue(this.getValue() - that.getValue());
+        return new GuiDecimalValue(that.getValue() - this.getValue());
     }
 
+    @Override
+    public GuiIntegerValue minus(GuiIntegerValue that) {
+        return new GuiIntegerValue(that.getValue() - this.getValue());
+    }
+
+    @Override
     public GuiMoneyValue minus(GuiMoneyValue that) {
-        return new GuiMoneyValue(this.getValue() - that.getValue());
-    }
-
-    public GuiIntegerValue divide(GuiIntegerValue that) {
-        return new GuiIntegerValue(this.getValue() / that.getValue());
-    }
-
-    public GuiDecimalValue divide(GuiDecimalValue that) {
-        return new GuiDecimalValue(this.getValue() / that.getValue());
-    }
-
-    public GuiMoneyValue divide(GuiMoneyValue that) {
-        return new GuiMoneyValue(this.getValue() / that.getValue());
+        return new GuiMoneyValue(that.getValue() - this.getValue());
     }
 
     @Override
-    public GuiBooleanValue gT(final GuiComparableValue<?> that) {
-        return new GuiBooleanValue(this.compareTo((GuiIntegerValue) that) == 1);
+    public GuiDecimalValue product(GuiDecimalValue that) {
+        return new GuiDecimalValue(that.getValue() * this.getValue());
     }
 
     @Override
-    public GuiBooleanValue gTEq(final GuiComparableValue<?> that) {
-        return new GuiBooleanValue(this.compareTo((GuiIntegerValue) that) >= 0);
+    public GuiIntegerValue product(GuiIntegerValue that) {
+        return new GuiIntegerValue(that.getValue() * this.getValue());
     }
 
     @Override
-    public GuiBooleanValue lT(final GuiComparableValue<?> that) {
-        return new GuiBooleanValue(this.compareTo((GuiIntegerValue) that) == -1);
+    public GuiMoneyValue product(GuiMoneyValue that) {
+        return new GuiMoneyValue(that.getValue() * this.getValue());
     }
 
     @Override
-    public GuiBooleanValue lTEq(final GuiComparableValue<?> that) {
-        return new GuiBooleanValue(this.compareTo((GuiIntegerValue) that) <= 0);
+    public GuiValue<?> divide(GuiDecimalValue that) {
+        if (!(this.getValue() == 0.0)) {
+            return new GuiDecimalValue((Double) (that.getValue() / this.getValue()));
+        }
+        return new GuiUndefinedValue();
+    }
+
+    @Override
+    public GuiValue<?> divide(GuiIntegerValue that) {
+        if (!(this.getValue() == 0.0)) {
+            return new GuiIntegerValue((that.getValue() / this.getValue()));
+        }
+        return new GuiUndefinedValue();
+    }
+
+    @Override
+    public GuiValue<?> divide(GuiMoneyValue that) {
+        if (!(this.getValue() == 0.0)) {
+            return new GuiMoneyValue((Double) (that.getValue() / this.getValue()));
+        }
+        return new GuiUndefinedValue();
+    }
+
+    @Override
+    public GuiValue<?> doGt(GuiIntegerValue that) {
+        return new GuiBooleanValue(that.compareTo(this) == 1);
+    }
+
+    @Override
+    public GuiValue<?> doLt(GuiIntegerValue that) {
+        return new GuiBooleanValue(that.compareTo(this) == -1);
+    }
+
+    @Override
+    public GuiValue<?> doGtE(GuiIntegerValue that) {
+        return new GuiBooleanValue(that.compareTo(this) >= 0);
+    }
+
+    @Override
+    public GuiValue<?> doLtE(GuiIntegerValue that) {
+        return new GuiBooleanValue(that.compareTo(this) <= 0);
     }
 
     @Override

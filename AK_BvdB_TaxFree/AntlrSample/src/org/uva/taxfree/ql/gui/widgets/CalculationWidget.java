@@ -21,12 +21,12 @@ public class CalculationWidget extends Widget {
     }
 
     @Override
-    protected void fillPanel(JPanel parent) {
-        parent.add(mTextField);
+    protected void fillPanel(GuiComponent parent) {
+        parent.setValueComponent(mTextField);
     }
 
     @Override
-    public Value resolveValue() {
+    public Value resolve() {
         return mExpression.evaluate();
     }
 

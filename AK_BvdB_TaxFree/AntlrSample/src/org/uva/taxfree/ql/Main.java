@@ -1,9 +1,13 @@
 package org.uva.taxfree.ql;
 
-import org.uva.taxfree.ql.ast.AstBuilder;
+import org.uva.taxfree.ql.ast.QlAstBuilder;
 import org.uva.taxfree.ql.gui.*;
 import org.uva.taxfree.ql.model.environment.SymbolTable;
 import org.uva.taxfree.ql.model.node.blocks.FormNode;
+import org.uva.taxfree.ql.util.FileUtility;
+import org.uva.taxfree.qls.QlsForm;
+import org.uva.taxfree.qls.QlsStyle;
+import org.uva.taxfree.qls.QlsStyleBuilder;
 
 import java.io.File;
 
@@ -17,37 +21,42 @@ public class Main {
             return;
         }
 
-        AstBuilder builder = new AstBuilder(inputFile);
+        QlAstBuilder builder = new QlAstBuilder(inputFile);
         MessageList semanticsMessages = new MessageList();
-        FormNode ast = builder.generateTree(semanticsMessages);
+        FormNode ast = builder.generateAst(semanticsMessages);
 
-        checkMessages(semanticsMessages);
-
-        if (semanticsMessages.hasFatalErrors()) {
-            System.exit(1);
-        }
-
+        processMessages(semanticsMessages);
         SymbolTable symbolTable = new SymbolTable();
         ast.fillSymbolTable(symbolTable);
         ast.checkSemantics(symbolTable, semanticsMessages);
+        processMessages(semanticsMessages);
 
-        checkMessages(semanticsMessages);
-
-        if (semanticsMessages.hasFatalErrors()) {
-            System.exit(2);
-        }
         QuestionForm taxForm = new QuestionForm(ast.toString(), symbolTable);
+        File qlsFile = createStyleFile(inputFile);
+        if (qlsFile.exists()) {
+            QlsStyleBuilder qlsStyleBuilder = new QlsStyleBuilder(qlsFile);
+            QlsStyle qlsStyle = qlsStyleBuilder.generateStyle(semanticsMessages);
+            processMessages(semanticsMessages);
+            qlsStyle.checkSemantics(symbolTable, semanticsMessages);
+            processMessages(semanticsMessages);
+            QlsForm qls = new QlsForm(ast.toString(), symbolTable, qlsStyle);
+            taxForm = qls;
+        }
         ast.fillQuestionForm(taxForm);
         taxForm.show();
     }
 
-    private static void checkMessages(MessageList semanticsMessages) {
+    private static void processMessages(MessageList semanticsMessages) {
         if (semanticsMessages.hasMessages()) {
             MessageWindow.showMessages(semanticsMessages);
         }
+        if (semanticsMessages.hasFatalErrors()) {
+            System.exit(1);
+        }
+    }
+
+    private static File createStyleFile(File inputFile) {
+        String qlsFile = FileUtility.replaceExtension(inputFile.getAbsolutePath(), ".qls");
+        return new File(qlsFile);
     }
 }
-
-
-
-

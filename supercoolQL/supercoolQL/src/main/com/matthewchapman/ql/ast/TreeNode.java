@@ -27,5 +27,4 @@ public abstract class TreeNode {
     protected void setColumn(int column) {
         this.column = column;
     }
-
 }

@@ -1,6 +1,6 @@
 package org.lemonade.gui;
 
-import org.lemonade.visitors.EvaluateVisitor;
+import org.lemonade.visitors.interfaces.GuiBaseElementsVisitor;
 
 public abstract class GuiBody {
 
@@ -12,8 +12,8 @@ public abstract class GuiBody {
         return false;
     }
 
-    public void accept(EvaluateVisitor visitor) {
-        visitor.visit(this);
-    }
+    public abstract void accept(GuiBaseElementsVisitor visitor);
+
+    public abstract void isVisible(boolean flag);
 
 }

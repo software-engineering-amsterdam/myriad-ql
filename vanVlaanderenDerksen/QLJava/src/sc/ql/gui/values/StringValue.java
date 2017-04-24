@@ -7,8 +7,29 @@ public class StringValue extends Value {
 		this.value = value;
 	}
 	
-	public String getValue() {
-		return value;
+	@Override
+	public String toString() {
+		return value.toString();
 	}
+	
+	@Override
+	public Value equals(Value value) {
+        return value.equals(this);
+    }
+	
+	@Override
+	public BooleanValue equals(StringValue value) {
+        return new BooleanValue(value.toString() == this.value);
+    }
+	
+	@Override
+	public Value equalsNot(Value value) {
+        return value.equalsNot(this);
+    }
+	
+	@Override
+	public BooleanValue equalsNot(StringValue value) {
+        return new BooleanValue(value.toString() != this.value);
+    }
 	
 }

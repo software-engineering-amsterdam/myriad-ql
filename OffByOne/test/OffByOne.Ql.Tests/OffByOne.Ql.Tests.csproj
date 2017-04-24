@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\Xunit.StaFact.0.1.44-beta\build\net45\Xunit.StaFact.props" Condition="Exists('..\..\packages\Xunit.StaFact.0.1.44-beta\build\net45\Xunit.StaFact.props')" />
   <Import Project="..\..\packages\xunit.runner.visualstudio.2.2.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\..\packages\xunit.runner.visualstudio.2.2.0\build\net20\xunit.runner.visualstudio.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -46,6 +47,8 @@
     <Reference Include="MoreDotNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MoreDotNet.0.6\lib\MoreDotNet.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -61,6 +64,7 @@
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="WindowsBase" />
     <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\xunit.abstractions.2.0.1\lib\net35\xunit.abstractions.dll</HintPath>
     </Reference>
@@ -72,6 +76,9 @@
     </Reference>
     <Reference Include="xunit.execution.desktop, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\xunit.extensibility.execution.2.2.0\lib\net452\xunit.execution.desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="Xunit.StaFact, Version=0.1.0.0, Culture=neutral, PublicKeyToken=593f35978b459a4b, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xunit.StaFact.0.1.44-beta\lib\net45\Xunit.StaFact.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +95,7 @@
     <Compile Include="Checker\Analyzers\Environment\QuestionVisitorTypeEnvironmentTests.cs" />
     <Compile Include="Checker\Analyzers\Environment\VisitorTypeEnvironmentTests.cs" />
     <Compile Include="Checker\Analyzers\TypeAnalyzerTests.cs" />
+    <Compile Include="Common\ThreadHelper.cs" />
     <Compile Include="Evaluator\BooleanValueTests.cs" />
     <Compile Include="Evaluator\DateValueTests.cs" />
     <Compile Include="Evaluator\DecimalValueTests.cs" />
@@ -95,11 +103,14 @@
     <Compile Include="Evaluator\MoneyValueTests.cs" />
     <Compile Include="Evaluator\StringValueTests.cs" />
     <Compile Include="Evaluator\TypeEnvironmentTests.cs" />
+    <Compile Include="Interpreter\Base\InterpreterTest.cs" />
+    <Compile Include="Interpreter\BasicInterpreterTests.cs" />
     <Compile Include="Parser\FormTest.cs" />
     <Compile Include="Parser\Base\ParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="OffByOne.Ql.Tests.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -113,6 +124,10 @@
       <Project>{2c16acf6-fcc1-4513-bc05-646e7dbbecaa}</Project>
       <Name>OffByOne.Ql</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\OffByOne.Runner\OffByOne.Runner.csproj">
+      <Project>{8887118f-1bac-4e1e-ba02-565be977f780}</Project>
+      <Name>OffByOne.Runner</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -122,6 +137,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets'))" />
     <Error Condition="!Exists('..\..\packages\xunit.runner.visualstudio.2.2.0\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\xunit.runner.visualstudio.2.2.0\build\net20\xunit.runner.visualstudio.props'))" />
+    <Error Condition="!Exists('..\..\packages\Xunit.StaFact.0.1.44-beta\build\net45\Xunit.StaFact.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xunit.StaFact.0.1.44-beta\build\net45\Xunit.StaFact.props'))" />
   </Target>
   <Import Project="..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets" Condition="Exists('..\..\packages\StyleCop.Analyzers.Error.1.0.2\build\StyleCop.Analyzers.Error.targets')" />
 </Project>

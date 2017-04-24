@@ -1,6 +1,0 @@
-stylesheet OurTaxFreeSolution {
-  page Taxes {
-    section "Meta"
-      question likesToPayTaxes widget checkbox
-  }
-}

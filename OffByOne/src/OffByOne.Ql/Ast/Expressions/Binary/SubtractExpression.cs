@@ -1,7 +1,7 @@
 ﻿namespace OffByOne.Ql.Ast.Expressions.Binary
 {
     using OffByOne.Ql.Ast.Expressions.Binary.Base;
-    using OffByOne.Ql.Visitors.Contracts;
+    using OffByOne.Ql.Common.Visitors.Contracts;
 
     public class SubtractExpression : BinaryExpression
     {

@@ -1,32 +1,55 @@
 package org.lemonade.visitors;
 
-import org.lemonade.nodes.Body;
-import org.lemonade.nodes.Conditional;
-import org.lemonade.nodes.Form;
-import org.lemonade.nodes.Question;
-import org.lemonade.nodes.expressions.BinaryExpression;
-import org.lemonade.nodes.expressions.Expression;
-import org.lemonade.nodes.expressions.binary.*;
-import org.lemonade.nodes.expressions.literal.*;
-import org.lemonade.nodes.expressions.unary.BangUnary;
-import org.lemonade.nodes.expressions.unary.NegUnary;
-import org.lemonade.nodes.types.*;
-import org.lemonade.visitors.interfaces.BaseVisitor;
-import org.lemonade.visitors.interfaces.ExpressionVisitor;
-import org.lemonade.visitors.interfaces.TypeVisitor;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- *
- */
+import org.lemonade.nodes.Body;
+import org.lemonade.nodes.ComputedQuestion;
+import org.lemonade.nodes.Conditional;
+import org.lemonade.nodes.Form;
+import org.lemonade.nodes.Position;
+import org.lemonade.nodes.Question;
+import org.lemonade.nodes.expressions.BinaryExpression;
+import org.lemonade.nodes.expressions.Expression;
+import org.lemonade.nodes.expressions.binary.AndBinary;
+import org.lemonade.nodes.expressions.binary.DivideBinary;
+import org.lemonade.nodes.expressions.binary.EqBinary;
+import org.lemonade.nodes.expressions.binary.GTBinary;
+import org.lemonade.nodes.expressions.binary.GTEBinary;
+import org.lemonade.nodes.expressions.binary.LTBinary;
+import org.lemonade.nodes.expressions.binary.LTEBinary;
+import org.lemonade.nodes.expressions.binary.MinusBinary;
+import org.lemonade.nodes.expressions.binary.NEqBinary;
+import org.lemonade.nodes.expressions.binary.OrBinary;
+import org.lemonade.nodes.expressions.binary.PlusBinary;
+import org.lemonade.nodes.expressions.binary.ProductBinary;
+import org.lemonade.nodes.expressions.literal.BooleanLiteral;
+import org.lemonade.nodes.expressions.literal.DateLiteral;
+import org.lemonade.nodes.expressions.literal.DecimalLiteral;
+import org.lemonade.nodes.expressions.literal.IdentifierLiteral;
+import org.lemonade.nodes.expressions.literal.IntegerLiteral;
+import org.lemonade.nodes.expressions.literal.MoneyLiteral;
+import org.lemonade.nodes.expressions.literal.StringLiteral;
+import org.lemonade.nodes.expressions.unary.BangUnary;
+import org.lemonade.nodes.expressions.unary.NegUnary;
+import org.lemonade.nodes.types.QLBooleanType;
+import org.lemonade.nodes.types.QLDateType;
+import org.lemonade.nodes.types.QLDecimalType;
+import org.lemonade.nodes.types.QLIntegerType;
+import org.lemonade.nodes.types.QLMoneyType;
+import org.lemonade.nodes.types.QLNumberType;
+import org.lemonade.nodes.types.QLStringType;
+import org.lemonade.nodes.types.QLType;
+import org.lemonade.visitors.interfaces.BaseVisitor;
+import org.lemonade.visitors.interfaces.ExpressionVisitor;
+import org.lemonade.visitors.interfaces.TypeVisitor;
+
 public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<QLType>, TypeVisitor<QLType> {
+
     Map<String, QLType> symbolTable;
     private List<String> errors;
-
 
     public List<String> getErrors() {
         return errors;
@@ -53,6 +76,26 @@ public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<
             errors.add("QLQuestion identifier: " + identifier + " found at " + question.getPosition() + " already declared.");
         }
         symbolTable.put(identifier.getValue(), type);
+        return null;
+    }
+
+    @Override
+    public QLType visit(ComputedQuestion question) {
+        IdentifierLiteral identifier = question.getIdentifier();
+        QLType questionType = question.getType();
+
+        if (symbolTable.containsKey(identifier.getValue())) {
+            errors.add("QLComputedQuestion identifier: " + identifier + " found at " + question.getPosition() + " already declared.");
+        }
+        symbolTable.put(identifier.getValue(), questionType);
+        findCycle(identifier.getValue(), question.getExpression(), question.getPosition());
+
+        QLType expressionType = question.getExpression().accept(this);
+
+        if (!expressionType.isOf(questionType.getClass())) {
+            errors.add("QLComputedQuestion type mismatch at: " + question.getPosition() + " " + expressionType + " cannot be cast to " + questionType);
+        }
+
         return null;
     }
 
@@ -176,6 +219,7 @@ public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<
 
         if (!(leftType.isNumeric() && rightType.isNumeric())) {
             errors.add("QLNumeric type mismatch at " + binaryExpression.getPosition() + ", " + leftType + " with " + rightType);
+            return leftType;
         }
         return QLNumberType.precedence((QLNumberType) leftType, (QLNumberType) rightType);
     }
@@ -184,8 +228,6 @@ public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<
         QLType leftType = binaryExpression.getLeft().accept(this);
         QLType rightType = binaryExpression.getRight().accept(this);
 
-        //Doesn't return it's own type because this can evaluate to a new type.
-        // TODO!
         if (!(leftType.isOf(rightType.getClass()) && leftType.isComparable())) {
             errors.add("QLComparable type mismatch at " + binaryExpression.getPosition() + ", " + leftType + " with " + rightType);
         }
@@ -230,5 +272,12 @@ public class TypeCheckVisitor implements BaseVisitor<QLType>, ExpressionVisitor<
     @Override
     public QLType visit(final QLStringType qlStringType) {
         return qlStringType;
+    }
+
+    private void findCycle(String identifier, Expression expression, Position position) {
+        CycleDetector cycleDetector = new CycleDetector(identifier, position);
+        if (expression.accept(cycleDetector)) {
+            errors.add(cycleDetector.getError());
+        }
     }
 }

@@ -11,10 +11,10 @@
             this.Environment = env;
         }
 
-        public string Identifier { get; private set; }
+        public string Identifier { get; }
 
-        public IValue Value { get; private set; }
+        public IValue Value { get; }
 
-        public GuiEnvironment Environment { get; private set; }
+        public GuiEnvironment Environment { get; }
     }
 }

@@ -2,19 +2,24 @@ package org.lemonade.gui;
 
 import java.util.List;
 
-import org.lemonade.visitors.EvaluateVisitor;
+import org.lemonade.visitors.interfaces.GuiBaseElementsVisitor;
 
 public class GuiConditional extends GuiBody {
 
-    private GuiExpression expression;
-    private boolean isVisible;
+    private GuiExpression condition;
     private List<GuiBody> bodies;
 
-    // TODO: add expression?
     public GuiConditional(List<GuiBody> bodies, GuiExpression expression) {
-        this.isVisible = false;
         this.bodies = bodies;
-        this.expression = expression;
+        this.condition = expression;
+    }
+
+    public GuiExpression getCondition() {
+        return condition;
+    }
+
+    public List<GuiBody> getBodies() {
+        return bodies;
     }
 
     @Override
@@ -22,8 +27,17 @@ public class GuiConditional extends GuiBody {
         return true;
     }
 
-    public void accept(EvaluateVisitor visitor) {
+    public void accept(GuiBaseElementsVisitor visitor) {
         visitor.visit(this);
     }
 
+    @Override
+    public void isVisible(final boolean flag) {
+        bodies.forEach(body -> {
+            if (body.isQuestion() && flag)
+                body.isVisible(flag);
+            else if (!flag)
+                body.isVisible(flag);
+        });
+    }
 }

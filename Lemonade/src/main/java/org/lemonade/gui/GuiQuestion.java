@@ -3,21 +3,16 @@ package org.lemonade.gui;
 import org.lemonade.gui.elements.GuiElement;
 import org.lemonade.gui.elements.GuiLabelElement;
 import org.lemonade.gui.values.GuiIdentifierValue;
-import org.lemonade.visitors.EvaluateVisitor;
+import org.lemonade.visitors.interfaces.GuiBaseElementsVisitor;
 
-/**
- *
- */
-public class GuiQuestion extends GuiBody {
+public abstract class GuiQuestion extends GuiBody {
 
     private GuiIdentifierValue identifier;
-    private GuiLabelElement labelElement;
-    private GuiElement element;
+    GuiLabelElement labelElement;
 
-    public GuiQuestion(GuiIdentifierValue identifier, GuiLabelElement labelElement, GuiElement element) {
+    public GuiQuestion(GuiIdentifierValue identifier, GuiLabelElement labelElement) {
         this.identifier = identifier;
         this.labelElement = labelElement;
-        this.element = element;
     }
 
     public GuiIdentifierValue getIdentifier() {
@@ -28,17 +23,22 @@ public class GuiQuestion extends GuiBody {
         return labelElement;
     }
 
-    public GuiElement getElement() {
-        return element;
-    }
-
     @Override
     public boolean isQuestion() {
         return true;
     }
 
-    public void accept(EvaluateVisitor visitor) {
+    public void accept(GuiBaseElementsVisitor visitor) {
         visitor.visit(this);
+    }
+
+    public abstract GuiElement getElement();
+
+    @Override
+    public void isVisible(boolean flag) {
+        getElement().getWidget().getParent().setVisible(flag);
+        if (!flag)
+            getElement().clear();
     }
 
 }

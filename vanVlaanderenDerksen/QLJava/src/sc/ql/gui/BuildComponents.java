@@ -1,6 +1,7 @@
 package sc.ql.gui;
 
-import java.awt.Component;
+import java.awt.Font;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JLabel;
@@ -8,6 +9,7 @@ import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
 import sc.ql.gui.values.*;
+import sc.ql.gui.widgets.Widget;
 import sc.ql.model.Form;
 import sc.ql.model.FormElement;
 import sc.ql.model.expressions.*;
@@ -18,12 +20,29 @@ import sc.ql.model.form_elements.*;
 import sc.ql.model.visitors.*;
 
 public class BuildComponents implements FormVisitor<JPanel>, FormElementVisitor<JPanel>, ExpressionVisitor<Value> {
+	private Form form;
+	private Map<String, Value> questionValues;
 	private JPanel panel;
-	private Map<String, Value> fieldValues;
 	
-	public BuildComponents(JPanel jPanel, Map<String, Value> fieldValues) {
-		this.panel = jPanel;
-		this.fieldValues = fieldValues;
+	public BuildComponents(Form form, Map<String, Value> questionValues, JPanel panel) {
+		this.form = form;
+		this.questionValues = questionValues;
+		this.panel = panel;
+		
+		visit(this.form);
+	}
+	
+	public void updatePanel(String questionId, Value value) {		
+		panel.removeAll();
+		questionValues.put(questionId, value);
+		
+		visit(this.form);
+		panel.validate();
+		panel.repaint();
+	}
+	
+	public JPanel getPanel() {
+		return this.panel;
 	}
 	
 	@Override
@@ -37,50 +56,34 @@ public class BuildComponents implements FormVisitor<JPanel>, FormElementVisitor<
 	
 	@Override
 	public JPanel visit(IfThenStatement statement) {
-		Boolean condition = true; //statement.getCondition().accept(this);
+		Value condition = statement.getCondition().accept(this);
+		Boolean visible = condition.toBoolean();
 		
 		JPanel statementPanel = new JPanel();
 		statementPanel.setLayout(new MigLayout());
 		
-		JPanel thenPanel = new JPanel();
-		thenPanel.setLayout(new MigLayout());
-		
-		thenPanel.setVisible(condition);
-		
-		for(FormElement formElement : statement.getThenBody()) {
-			thenPanel.add(formElement.accept(this), "span");
+		if (visible) {
+			for(FormElement formElement : statement.getThenBody()) {
+				statementPanel.add(formElement.accept(this), "span");
+			}
 		}
-		
-		statementPanel.add(thenPanel);
 		
 		return statementPanel;
 	}
 	
 	@Override
 	public JPanel visit(IfThenElseStatement statement) {
-		Boolean condition = true; //statement.getCondition().accept(this);
+		Value condition = statement.getCondition().accept(this);
+		Boolean visible = condition.toBoolean();
 		
 		JPanel statementPanel = new JPanel();
 		statementPanel.setLayout(new MigLayout());
 		
-		JPanel thenPanel = new JPanel();
-		thenPanel.setLayout(new MigLayout());
-		JPanel elsePanel = new JPanel();
-		elsePanel.setLayout(new MigLayout());
+		List<FormElement> visibleBody = visible ? statement.getThenBody() : statement.getElseBody();
 		
-		thenPanel.setVisible(condition);
-		elsePanel.setVisible(!condition);
-		
-		for(FormElement formElement : statement.getThenBody()) {
-			thenPanel.add(formElement.accept(this), "span");
+		for(FormElement formElement : visibleBody) {
+			statementPanel.add(formElement.accept(this), "span");
 		}
-
-		for(FormElement formElement : statement.getElseBody()) {
-			elsePanel.add(formElement.accept(this), "span");
-		}
-		
-		statementPanel.add(thenPanel);
-		statementPanel.add(elsePanel);
 		
 		return statementPanel;
 	}
@@ -88,25 +91,35 @@ public class BuildComponents implements FormVisitor<JPanel>, FormElementVisitor<
 	@Override
 	public JPanel visit(Question question) {	
 		JPanel questionPanel = new JPanel();
+		String questionId = question.getId();
+		
+		Value value = questionValues.containsKey(questionId) ? questionValues.get(questionId) : new EmptyValue();
+		questionValues.put(questionId, value);
 		
 		JLabel label = new JLabel(question.getLabel());
+		label.setFont(new Font("Arial", Font.PLAIN, 18));
 		questionPanel.add(label);
 		
-		Component widgetComponent = question.getType().getWidget();
-		questionPanel.add(widgetComponent);
-		
+		Widget widgetComponent = question.getType().getWidget(this, questionId, value);
+		questionPanel.add(widgetComponent.getComponent());
+
 		return questionPanel;
 	}
 	
 	@Override
 	public JPanel visit(CalculatedQuestion question) {
 		JPanel questionPanel = new JPanel();
+		String questionId = question.getId();
+		
+		Value value = question.getExpression().accept(this);
+		questionValues.put(question.getId(), value);
 		
 		JLabel label = new JLabel(question.getLabel());
+		label.setFont(new Font("Arial", Font.PLAIN, 18));
 		questionPanel.add(label);
 		
-		Component widgetComponent = question.getType().getWidget();
-		questionPanel.add(widgetComponent);
+		Widget widgetComponent = question.getType().getWidget(this, questionId, value);
+		questionPanel.add(widgetComponent.getComponent());
 		
 		return questionPanel;
 	}
@@ -133,98 +146,117 @@ public class BuildComponents implements FormVisitor<JPanel>, FormElementVisitor<
 
 	@Override
 	public Value visit(Divide expression) {
-		// TODO Auto-generated method stub
-		return null;
+		Value value_left = expression.getLeft().accept(this);
+		Value value_right = expression.getRight().accept(this);
+		
+		return value_left.divide(value_right);
 	}
 
 	@Override
 	public Value visit(Multiply expression) {
-		// TODO Auto-generated method stub
-		return null;
+		Value value_left = expression.getLeft().accept(this);
+		Value value_right = expression.getRight().accept(this);
+		
+		return value_left.multiply(value_right);
 	}
 
 	@Override
-	public Value visit(Substract expression) {
-		// TODO Auto-generated method stub
-		return null;
+	public Value visit(Subtract expression) {
+		Value value_left = expression.getLeft().accept(this);
+		Value value_right = expression.getRight().accept(this);
+		
+		return value_left.subtract(value_right);
 	}
 
 	@Override
 	public Value visit(BooleanLiteral expression) {
-		// TODO Auto-generated method stub
-		return null;
+		return new BooleanValue(expression.getValue());
 	}
 
 	@Override
 	public Value visit(IdLiteral expression) {
-		// TODO Auto-generated method stub
-		return null;
+		String questionId = expression.getValue();
+		Value value = questionValues.containsKey(questionId) ? questionValues.get(questionId) : new EmptyValue();		
+		return value;
 	}
 
 	@Override
 	public Value visit(IntegerLiteral expression) {
-		// TODO Auto-generated method stub
-		return null;
+		return new IntegerValue(expression.getValue());
 	}
 
 	@Override
 	public Value visit(MoneyLiteral expression) {
-		// TODO Auto-generated method stub
-		return null;
+		return new MoneyValue(expression.getValue());
 	}
 
 	@Override
 	public Value visit(StringLiteral expression) {
-		// TODO Auto-generated method stub
-		return null;
+		return new StringValue(expression.getValue());
 	}
 
 	@Override
 	public Value visit(And expression) {
-		// TODO Auto-generated method stub
-		return null;
+		Value value_left = expression.getLeft().accept(this);
+		Value value_right = expression.getRight().accept(this);
+		
+		return value_left.and(value_right);
+	}
+	
+	@Override
+	public Value visit(Or expression) {
+		Value value_left = expression.getLeft().accept(this);
+		Value value_right = expression.getRight().accept(this);
+		
+		return value_left.or(value_right);
 	}
 
 	@Override
 	public Value visit(Equals expression) {
-		// TODO Auto-generated method stub
-		return null;
+		Value value_left = expression.getLeft().accept(this);
+		Value value_right = expression.getRight().accept(this);
+		
+		return value_left.equals(value_right);
 	}
 
 	@Override
 	public Value visit(EqualsNot expression) {
-		// TODO Auto-generated method stub
-		return null;
+		Value value_left = expression.getLeft().accept(this);
+		Value value_right = expression.getRight().accept(this);
+		
+		return value_left.equalsNot(value_right);
 	}
 
 	@Override
 	public Value visit(GreaterThen expression) {
-		// TODO Auto-generated method stub
-		return null;
+		Value value_left = expression.getLeft().accept(this);
+		Value value_right = expression.getRight().accept(this);
+		
+		return value_left.greaterThen(value_right);
 	}
 
 	@Override
 	public Value visit(GreaterThenEqual expression) {
-		// TODO Auto-generated method stub
-		return null;
+		Value value_left = expression.getLeft().accept(this);
+		Value value_right = expression.getRight().accept(this);
+		
+		return value_left.greaterThenEqual(value_right);
 	}
 
 	@Override
 	public Value visit(LessThen expression) {
-		// TODO Auto-generated method stub
-		return null;
+		Value value_left = expression.getLeft().accept(this);
+		Value value_right = expression.getRight().accept(this);
+		
+		return value_left.lessThen(value_right);
 	}
 
 	@Override
 	public Value visit(LessThenEqual expression) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Value visit(Or expression) {
-		// TODO Auto-generated method stub
-		return null;
+		Value value_left = expression.getLeft().accept(this);
+		Value value_right = expression.getRight().accept(this);
+		
+		return value_left.lessThenEqual(value_right);
 	}
 	
 }

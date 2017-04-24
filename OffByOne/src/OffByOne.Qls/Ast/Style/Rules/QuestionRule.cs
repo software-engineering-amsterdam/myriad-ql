@@ -1,24 +1,32 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Rules
 {
+    using System;
     using System.Collections.Generic;
+
+    using MoreDotNet.Wrappers;
 
     using OffByOne.Qls.Ast.Style.Properties.Base;
     using OffByOne.Qls.Ast.Style.Rules.Base;
     using OffByOne.Qls.Ast.Style.Widgets.Base;
-    using OffByOne.Qls.Visitors.Contracts;
+    using OffByOne.Qls.Common.Visitors.Contracts;
 
     public class QuestionRule : Rule
     {
         public QuestionRule(
-            string name,
+            string identifier,
             Widget widget,
             IEnumerable<Property> properties)
             : base(widget, properties)
         {
-            this.Name = name;
+            if (identifier.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("A non-null, non-empty identifier must be given.");
+            }
+
+            this.Identifier = identifier;
         }
 
-        public string Name { get; private set; }
+        public string Identifier { get; }
 
         public override TResult Accept<TResult, TContext>(
             IRuleVisitor<TResult, TContext> visitor,

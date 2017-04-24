@@ -1,7 +1,7 @@
 package org.ql.typechecker.circular_dependencies;
 
 import org.junit.Test;
-import org.ql.ast.Identifier;
+import org.ql.ast.identifier.Identifier;
 
 import static org.junit.Assert.*;
 

@@ -14,7 +14,17 @@ public class UnknownValue extends Value {
     }
 
     @Override
-    public boolean isUndefined() {
+    public boolean isUnknown() {
         return true;
+    }
+
+    @Override
+    public boolean toBoolean() {
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "";
     }
 }

@@ -1,7 +1,12 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Literals
 {
+    using System;
+    using System.Globalization;
+
+    using MoreDotNet.Wrappers;
+
     using OffByOne.Qls.Ast.Style.Literals.Base;
-    using OffByOne.Qls.Visitors.Contracts;
+    using OffByOne.Qls.Common.Visitors.Contracts;
 
     public class DecimalLiteral : Literal
     {
@@ -11,11 +16,16 @@
         }
 
         public DecimalLiteral(string value)
-            : this(double.Parse(value))
         {
+            if (value.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("A non-null, non-empty string must be given", nameof(value));
+            }
+
+            this.Value = double.Parse(value, CultureInfo.InvariantCulture);
         }
 
-        public double Value { get; private set; }
+        public double Value { get; }
 
         public override TResult Accept<TResult, TContext>(
             ILiteralVisitor<TResult, TContext> visitor,

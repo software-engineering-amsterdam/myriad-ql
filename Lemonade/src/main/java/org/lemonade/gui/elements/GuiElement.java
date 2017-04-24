@@ -2,17 +2,14 @@ package org.lemonade.gui.elements;
 
 import org.lemonade.gui.values.GuiValue;
 
-import javafx.scene.control.Control;
+public abstract class GuiElement implements GuiWidgetElement {
 
-/**
- *
- */
-public interface GuiElement {
+    public abstract GuiValue<?> getValue();
 
-    GuiValue<?> getValue();
-
-    Control getWidget();
-
-    void update();
+    // Implemented for writing to JSON
+    @Override
+    public String toString() {
+        return getValue().toString();
+    }
 
 }

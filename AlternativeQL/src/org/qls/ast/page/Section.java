@@ -1,17 +1,22 @@
 package org.qls.ast.page;
 
 import org.ql.ast.Node;
-import org.qls.ast.widget.defaultWidget.DefaultWidget;
+import org.qls.ast.widget.default_widget.DefaultWidget;
+import org.qls.ast.widget.default_widget.DefaultWidgetSet;
 
 import java.util.List;
+import java.util.Set;
 
 public class Section extends Node {
-    private String name;
-    private List<Question> questions;
-    private List<Section> sections;
-    private List<DefaultWidget> defaultWidgets;
+    private final String name;
+    private final List<WidgetQuestion> questions;
+    private final List<Section> sections;
+    private final DefaultWidgetSet defaultWidgets;
 
-    public Section(String name, List<Question> questions, List<Section> sections, List<DefaultWidget> defaultWidgets) {
+    public Section(String name,
+                   List<WidgetQuestion> questions,
+                   List<Section> sections,
+                   DefaultWidgetSet defaultWidgets) {
         this.name = name;
         this.questions = questions;
         this.sections = sections;
@@ -22,31 +27,15 @@ public class Section extends Node {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Question> getQuestions() {
+    public List<WidgetQuestion> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-    }
-
-    public List<DefaultWidget> getDefaultWidgets() {
+    public DefaultWidgetSet getDefaultWidgets() {
         return defaultWidgets;
-    }
-
-    public void setDefaultWidgets(List<DefaultWidget> defaultWidgets) {
-        this.defaultWidgets = defaultWidgets;
     }
 
     public List<Section> getSections() {
         return sections;
-    }
-
-    public void setSections(List<Section> sections) {
-        this.sections = sections;
     }
 }

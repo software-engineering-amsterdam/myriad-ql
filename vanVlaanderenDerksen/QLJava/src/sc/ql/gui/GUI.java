@@ -1,7 +1,5 @@
 package sc.ql.gui;
 
-import net.miginfocom.swing.MigLayout;
-
 import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import net.miginfocom.swing.MigLayout;
 import sc.ql.gui.values.Value;
 import sc.ql.checkform.Message;
 import sc.ql.model.Form;
@@ -24,20 +23,21 @@ public class GUI {
 	}
 	
 	public void launchGUI() {
-		JPanel jPanel = new JPanel();
-		jPanel.setLayout(new MigLayout());
-		jPanel.setPreferredSize(new Dimension(1000, 800));
+		JPanel panel = new JPanel();
+		panel.setLayout(new MigLayout());
+		panel.setPreferredSize(new Dimension(1000, 800));
 		
 		if (this.messages.isEmpty()) {
-			jPanel = this.form.accept(new BuildComponents(jPanel, new HashMap<String, Value>()));
+			BuildComponents buildComponents = new BuildComponents(this.form, new HashMap<String, Value>(), panel);
+			panel = buildComponents.getPanel();
 		}
 		else {
-			jPanel = buildMessages(jPanel);
+			panel = buildMessages(panel);
 		}
 		
 		JFrame frame = new JFrame("QL Form: "+this.form.getFormName());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(jPanel);
+        frame.getContentPane().add(panel);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -51,53 +51,5 @@ public class GUI {
 		
 		return jPanel;
 	}
-	
-	/*private void buildForm() {
-		
-		JLabel nameLabel = new JLabel("test");
-		nameLabel.setFont(new Font("Verdana", Font.PLAIN, 14));
-		JTextField fNameField = new JTextField(30);
-		fNameField.setFont(new Font("Verdana", Font.PLAIN, 14));
-		
-		add(nameLabel);
-		add(fNameField, "wrap");
-		
-		JLabel condLabel = new JLabel("Conditional label");
-		condLabel.setFont(new Font("Verdana", Font.PLAIN, 14));
-		JTextField condField = new JTextField(30);
-		condField.setFont(new Font("Verdana", Font.PLAIN, 14));
-	
-		add(condLabel).setVisible(false);
-		add(condField).setVisible(false);
-		
-		fNameField.getDocument().addDocumentListener(new DocumentListener() {
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				showHide(e);
-			}
 
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				showHide(e);
-			}
-
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				showHide(e);
-			}
-			
-			private void showHide(DocumentEvent e) {
-				if(e.getDocument().getLength() == 0) {
-					add(condLabel).setVisible(false);
-					add(condField).setVisible(false);
-				}
-				else {
-					add(condLabel).setVisible(true);
-					add(condField).setVisible(true);
-				}
-			}
-		});
-	}
-	*/
-	
 }

@@ -1,12 +1,9 @@
 package org.ql.typechecker.visitor;
 
-import org.ql.ast.Form;
-import org.ql.ast.Statement;
+import org.ql.ast.form.Form;
+import org.ql.ast.statement.Statement;
 import org.ql.ast.form.FormVisitor;
-import org.ql.ast.statement.IfThen;
-import org.ql.ast.statement.IfThenElse;
-import org.ql.ast.statement.Question;
-import org.ql.ast.statement.StatementVisitor;
+import org.ql.ast.statement.*;
 import org.ql.ast.statement.question.QuestionLabel;
 import org.ql.ast.statement.question.QuestionLabelVisitor;
 import org.ql.typechecker.SymbolTable;
@@ -63,7 +60,14 @@ public class QuestionsVisitor implements FormVisitor<Void, SymbolTable>,
             symbolTable.declare(question.getId(), question.getType());
         }
 
-        question.getQuestionLabel().accept(this, question);
+        question.getLabel().accept(this, question);
+
+        return null;
+    }
+
+    @Override
+    public Void visitComputableQuestion(ComputableQuestion question, SymbolTable symbolTable) {
+        visitQuestion(question, symbolTable);
 
         return null;
     }

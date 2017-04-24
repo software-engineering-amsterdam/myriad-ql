@@ -3,7 +3,7 @@ package test.org.uva.taxfree.ql.ast;
 import org.testng.Assert;
 import org.testng.TestException;
 import org.testng.annotations.Test;
-import org.uva.taxfree.ql.ast.AstBuilder;
+import org.uva.taxfree.ql.ast.QlAstBuilder;
 import org.uva.taxfree.ql.gui.MessageList;
 
 import java.io.File;
@@ -20,8 +20,8 @@ public class AstBuilderTest {
         boolean passedAllTests = true;
         for (File file : validFilesDir.listFiles()) {
             System.out.println("    - Input file: " + file.getName());
-            AstBuilder builder = new AstBuilder(file);
-            builder.generateTree(semanticsMessages);
+            QlAstBuilder builder = new QlAstBuilder(file);
+            builder.generateAst(semanticsMessages);
         }
         if (semanticsMessages.hasMessages()) {
             throw new TestException("Some tests failed!");
@@ -40,9 +40,9 @@ public class AstBuilderTest {
         for (File file : files) {
             int messageSize = 0;
             try {
-                AstBuilder builder = new AstBuilder(file);
+                QlAstBuilder builder = new QlAstBuilder(file);
                 messageSize = semanticsMessages.messageAmount();
-                builder.generateTree(semanticsMessages);
+                builder.generateAst(semanticsMessages);
             } catch (UnsupportedOperationException e) {
                 Assert.assertTrue(messageSize < semanticsMessages.messageAmount());
             }

@@ -76,6 +76,7 @@ class QLLexer(object):
     # Regular expressions for tokens that require special interactions.
     ID = r'[a-zA-Z_][a-zA-Z_0-9]*'
     COMMENT = r'\/\/.*'
+    NEW_LINE = r'\n+'
     WHITESPACE = r'\s+'
     DECIMAL = r'\d+(.\d+)?'
 
@@ -99,6 +100,11 @@ class QLLexer(object):
         """White spaces are ignored"""
         pass
 
+    @TOKEN(NEW_LINE)
+    def t_newline(self, t):
+        """Tracks the line number for error reporting purposes."""
+        t.lexer.lineno += len(t.value)
+
     @TOKEN(DECIMAL)
     def t_DECIMAL(self, t):
         """We make sure the value returned is an float"""
@@ -110,8 +116,11 @@ class QLLexer(object):
         Error handler. It logs when a character is not recognised by any token
         of the lexer.
         """
+        msg = 'Illegal character {}'.format(t.value[0])
+        self.checker.register_error(t.lineno, msg)
         t.lexer.skip(1)
 
-    def __init__(self, **kwargs):
+    def __init__(self, checker):
         """Initialises the lexer. It complies with PLY requirements."""
-        self.lexer = lex.lex(module=self, debug=0, **kwargs)
+        self.checker = checker
+        self.lexer = lex.lex(module=self, debug=0)

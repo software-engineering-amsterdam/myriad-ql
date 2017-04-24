@@ -45,7 +45,7 @@ public class VariableLiteralNode extends LiteralNode {
     @Override
     public void checkSemantics(SymbolTable symbolTable, MessageList semanticsMessages) {
         if (!symbolTable.contains(mId)) {
-            semanticsMessages.addError("Variable name not declared: " + mId);
+            semanticsMessages.addError(sourceString() + "Variable name not declared: " + mId);
         }
     }
 

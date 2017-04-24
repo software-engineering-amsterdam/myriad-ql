@@ -3,7 +3,7 @@
     using MoreDotNet.Extensions.Common;
 
     using OffByOne.Ql.Ast.ValueTypes.Base;
-    using OffByOne.Ql.Visitors.Contracts;
+    using OffByOne.Ql.Common.Visitors.Contracts;
 
     public class DecimalValueType : NumericalValueType
     {

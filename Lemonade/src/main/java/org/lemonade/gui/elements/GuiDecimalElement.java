@@ -1,12 +1,12 @@
 package org.lemonade.gui.elements;
 
-import javafx.scene.control.TextField;
-
 import org.lemonade.gui.values.GuiDecimalValue;
 import org.lemonade.gui.values.GuiUndefinedValue;
 import org.lemonade.gui.values.GuiValue;
 
-public class GuiDecimalElement implements GuiElement {
+import javafx.scene.control.TextField;
+
+public class GuiDecimalElement extends GuiMutableElement {
 
     private GuiValue<?> value;
     private TextField textField;
@@ -29,11 +29,17 @@ public class GuiDecimalElement implements GuiElement {
 
     private void validate(String text) {
         if (!text.matches("[-+]?[0-9]*\\.?[0-9]+")) {
-            this.value = new GuiUndefinedValue();
-        } else if (this.value.isDefined()) {
-            ((GuiDecimalValue) this.value).update(Double.parseDouble(text));
+            value = new GuiUndefinedValue();
+        } else if (value.isDefined()) {
+            ((GuiDecimalValue) value).update(Double.parseDouble(text));
         } else
-            this.value = new GuiDecimalValue(Double.parseDouble(text));
+            value = new GuiDecimalValue(Double.parseDouble(text));
+    }
+
+    @Override
+    public void clear() {
+        value = new GuiUndefinedValue();
+        textField.setText("");
     }
 
     @Override

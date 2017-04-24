@@ -2,6 +2,7 @@
 {
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Common;
+    using OffByOne.Ql.Common.Observers.Conracts;
     using OffByOne.Ql.Evaluator;
     using OffByOne.Ql.Values.Contracts;
 
@@ -9,7 +10,7 @@
     {
         private IValue value;
 
-        public QuestionWidget(IValue value, QuestionStatement statement, GuiEnvironment guiEnvironment)
+        protected QuestionWidget(IValue value, QuestionStatement statement, GuiEnvironment guiEnvironment)
             : base(guiEnvironment)
         {
             this.Statement = statement;
@@ -31,6 +32,11 @@
                 this.value = value;
                 this.Environment.UpdateValues(this.Statement.Identifier, this.value);
             }
+        }
+
+        public bool IsReadOnly()
+        {
+            return this.Statement.ComputationExpression != null;
         }
 
         public override void OnObserve(AnswerInput value)

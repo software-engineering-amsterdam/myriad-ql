@@ -113,7 +113,7 @@ public class SymbolTable {
     }
 
     // We use a string of dependencies because this terminates when a cyclic dependency is found.
-    // If you REALLY want to use an ArrayList you can pass in the varname and compare it inside the if.
+    // If you REALLY want to use an ArrayList you can pass in the var name and compare it inside the if.
     public void generateDependencies(Set<String> usedVariables) {
         Set<String> dependencies = new HashSet<>(usedVariables);
         for (String variableName : usedVariables) {
@@ -152,5 +152,13 @@ public class SymbolTable {
             results.write(declaration.getId() + ":" + declaration.getValue() + "\r\n");
         }
         results.close();
+    }
+
+    public Set<String> getUsedVariables() {
+        Set<String> usedVariables = new HashSet<>();
+        for (Declaration declaration : mDeclarations) {
+            usedVariables.add(declaration.getId());
+        }
+        return usedVariables;
     }
 }

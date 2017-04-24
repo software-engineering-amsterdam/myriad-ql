@@ -8,6 +8,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class PageTest {
+
     @Test
     public void shouldContainSection() {
         Parser parser = new Parser();
@@ -18,7 +19,7 @@ public class PageTest {
 
         assertTrue(page != null);
         assertEquals(1, page.getSections().size());
-        assertEquals("\"Buying\"", page.getSections().get(0).getName());
+        assertEquals("Buying", page.getSections().get(0).getName());
     }
 
     @Test
@@ -32,8 +33,8 @@ public class PageTest {
 
         assertTrue(page != null);
         assertEquals(2, page.getSections().size());
-        assertEquals("\"Buying\"", page.getSections().get(0).getName());
-        assertEquals("\"Loaning\"", page.getSections().get(1).getName());
+        assertEquals("Buying", page.getSections().get(0).getName());
+        assertEquals("Loaning", page.getSections().get(1).getName());
     }
 
     @Test
@@ -49,7 +50,7 @@ public class PageTest {
 
         assertTrue(page != null);
         assertEquals(1, page.getSections().size());
-        assertEquals("\"Buying\"", page.getSections().get(0).getName());
-        assertEquals("\"Loaning\"", page.getSections().get(0).getSections().get(0).getName());
+        assertEquals("Buying", page.getSections().get(0).getName());
+        assertEquals("Loaning", page.getSections().get(0).getSections().get(0).getName());
     }
 }

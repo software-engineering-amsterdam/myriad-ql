@@ -1,7 +1,6 @@
 package org.ql.ast.statement;
 
-import org.ql.ast.Expression;
-import org.ql.ast.Statement;
+import org.ql.ast.expression.Expression;
 
 import java.util.List;
 

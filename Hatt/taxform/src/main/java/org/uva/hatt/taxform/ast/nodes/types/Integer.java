@@ -6,4 +6,12 @@ public class Integer extends ValueType {
         super(lineNumber);
     }
 
+    @Override
+    public java.lang.String name(){
+        return "Integer";
+    }
+
+    public <T> T accept(TypeVisitor<T> visitor){
+        return visitor.visit(this);
+    }
 }

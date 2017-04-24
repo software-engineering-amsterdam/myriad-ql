@@ -3,14 +3,15 @@
     using System;
     using System.Globalization;
 
+    using MoreDotNet.Wrappers;
+
     using OffByOne.Ql.Ast.Literals.Base;
+    using OffByOne.Ql.Common;
+    using OffByOne.Ql.Common.Visitors.Contracts;
     using OffByOne.Ql.Values;
-    using OffByOne.Ql.Visitors.Contracts;
 
     public class DateLiteral : Literal
     {
-        public const string Format = "dd-MM-yyyy";
-
         public DateLiteral(DateTime value)
         {
             this.Value = new DateValue(value);
@@ -18,18 +19,20 @@
 
         public DateLiteral(string value)
         {
-            if (value == null)
+            if (value.IsNullOrWhiteSpace())
             {
-                throw new ArgumentNullException(nameof(value), "Literal must have a value.");
+                throw new ArgumentException(
+                    "Literal must have a value.",
+                    nameof(value));
             }
 
             this.Value = new DateValue(DateTime.ParseExact(
                 value.Trim('\''),
-                DateLiteral.Format,
+                GlobalConstants.SystemDateFormat,
                 CultureInfo.InvariantCulture));
         }
 
-        public DateValue Value { get; private set; }
+        public DateValue Value { get; }
 
         public override TResult Accept<TResult, TContext>(
             IExpressionVisitor<TResult, TContext> visitor,

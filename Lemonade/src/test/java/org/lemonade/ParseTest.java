@@ -23,18 +23,18 @@ public class ParseTest {
     public void setUp() throws Exception {
 
         simpleForm = "form name {" +
-                "tmp1: \"Hoe groot is jouw decimal?\" decimal \n" +
-                "if(((-2) + 4.0) * 8.0 >= tmp1) \n{tmp: \"yu\" money}" +
-                "\ntmp1: \"ben dubbel\" money}";
+                "\"Hoe groot is jouw decimal?\" tmp1 : decimal \n" +
+                "if(((-2) + 4.0) * 8.0 >= tmp1) \n{\"yu\" tmp : money}" +
+                "\n\"ben dubbel\" tmp1 : money}";
 
         dateForm = "form name {\n" +
-                "tmp1: \"Wanneer?\" date \n" +
-                "if (11/12/2001 > tmp1) {tmp: \"oke?\" boolean}}";
+                "\"Wanneer?\" tmp1 : date \n" +
+                "if (11/12/2001 > tmp1) {\"oke?\" tmp : boolean}}";
 
     }
 
     @Test
-    public void astTest() throws IOException{
+    public void astTest() throws IOException {
         ANTLRInputStream input = new ANTLRInputStream(new StringReader(dateForm));
         QLLexer lexer = new QLLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -44,16 +44,16 @@ public class ParseTest {
         parser.addErrorListener(errorListener);
         ParseTree tree = parser.form();
 
-        if (errorListener.hasErrors()){
+        if (errorListener.hasErrors()) {
             System.err.printf("%s\n", errorListener);
-            throw new IllegalStateException();//TODO fix error type.
+            throw new IllegalStateException();
         }
 
         Form root = (Form) tree.accept(visitor);
         TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
         root.accept(typeCheckVisitor);
-        if (typeCheckVisitor.hasErrors()){
-            for (String error : typeCheckVisitor.getErrors()){
+        if (typeCheckVisitor.hasErrors()) {
+            for (String error : typeCheckVisitor.getErrors()) {
                 System.err.println(error);
             }
         }

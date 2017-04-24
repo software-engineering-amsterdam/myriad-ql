@@ -23,7 +23,7 @@
         [Fact]
         public void CreatingNewObject_ShouldThrowExceptionWhenIncorectDataGiven()
         {
-            Assert.Throws<ArgumentNullException>(() => new DateLiteral(null));
+            Assert.Throws<ArgumentException>(() => new DateLiteral(null));
             Assert.Throws<FormatException>(() => new DateLiteral("XaX"));
         }
     }

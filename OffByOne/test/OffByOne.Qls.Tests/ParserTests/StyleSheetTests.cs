@@ -70,7 +70,7 @@
             var castAstTree = (StyleSheet)astTree;
 
             Assert.Equal("taxOfficeExample", castAstTree.Id);
-            Assert.Equal(2, castAstTree.Pages.Count);
+            Assert.Equal(2, castAstTree.Pages.Count());
 
             var sectionsOnFirstPage = castAstTree
                 .Pages
@@ -89,7 +89,7 @@
                 .SelectMany(x => x.Sections)
                 .Where(x => x.Name.Value == "You sold a house")
                 .SelectMany(x => x.QuestionRules)
-                .Any(x => x.Name == "valueResidue");
+                .Any(x => x.Identifier == "valueResidue");
 
             Assert.True(assumption);
         }

@@ -18,15 +18,16 @@
     using OffByOne.Ql.Ast.ValueTypes.Base;
     using OffByOne.Ql.Checker.Analyzers.Contracts;
     using OffByOne.Ql.Checker.Analyzers.Environment;
+    using OffByOne.Ql.Checker.Analyzers.Environment.Contracts;
     using OffByOne.Ql.Checker.Contracts;
     using OffByOne.Ql.Checker.Messages;
-    using OffByOne.Ql.Visitors.Contracts;
+    using OffByOne.Ql.Common.Visitors.Contracts;
 
     using ValueType = OffByOne.Ql.Ast.ValueTypes.Base.ValueType;
 
     public class TypeAnalyzer
-        : IExpressionVisitor<ValueType, VisitorTypeEnvironment>,
-        IStatementVisitor<VoidValueType, VisitorTypeEnvironment>,
+        : IExpressionVisitor<ValueType, ITypeEnvironment>,
+        IStatementVisitor<VoidValueType, ITypeEnvironment>,
         IAnalyzer
     {
         private static readonly IEnumerable<ValueType> NumericValueTypes = new List<ValueType>
@@ -55,90 +56,95 @@
 
         public void Analyze(FormStatement root)
         {
-            this.Visit(root, new VisitorTypeEnvironment());
+            if (root == null)
+            {
+                throw new ArgumentNullException(nameof(root));
+            }
+
+            this.Visit(root, new TypeEnvironment());
         }
 
-        public ValueType Visit(Expression expression, VisitorTypeEnvironment environment)
+        public ValueType Visit(Expression expression, ITypeEnvironment environment)
         {
             return expression.Accept(this, environment);
         }
 
-        public ValueType Visit(AddExpression expression, VisitorTypeEnvironment environment)
+        public ValueType Visit(AddExpression expression, ITypeEnvironment environment)
         {
             return this.CheckBinaryMatematicalExpression(expression, environment);
         }
 
-        public ValueType Visit(SubtractExpression expression, VisitorTypeEnvironment environment)
+        public ValueType Visit(SubtractExpression expression, ITypeEnvironment environment)
         {
             return this.CheckBinaryMatematicalExpression(expression, environment);
         }
 
-        public ValueType Visit(MultiplyExpression expression, VisitorTypeEnvironment environment)
+        public ValueType Visit(MultiplyExpression expression, ITypeEnvironment environment)
         {
             return this.CheckBinaryMatematicalExpression(expression, environment);
         }
 
-        public ValueType Visit(DivideExpression expression, VisitorTypeEnvironment environment)
+        public ValueType Visit(DivideExpression expression, ITypeEnvironment environment)
         {
             return this.CheckBinaryMatematicalExpression(expression, environment);
         }
 
-        public ValueType Visit(AndExpression expression, VisitorTypeEnvironment environment)
+        public ValueType Visit(AndExpression expression, ITypeEnvironment environment)
         {
             return this.CheckBinaryBooleanLogicExpression(expression, environment);
         }
 
-        public ValueType Visit(OrExpression expression, VisitorTypeEnvironment environment)
+        public ValueType Visit(OrExpression expression, ITypeEnvironment environment)
         {
             return this.CheckBinaryBooleanLogicExpression(expression, environment);
         }
 
-        public ValueType Visit(EqualExpression expression, VisitorTypeEnvironment environment)
+        public ValueType Visit(EqualExpression expression, ITypeEnvironment environment)
         {
             return this.CheckBinaryComparisonExpression(expression, environment);
         }
 
-        public ValueType Visit(NotEqualExpression expression, VisitorTypeEnvironment environment)
+        public ValueType Visit(NotEqualExpression expression, ITypeEnvironment environment)
         {
             return this.CheckBinaryComparisonExpression(expression, environment);
         }
 
-        public ValueType Visit(GreaterThanExpression expression, VisitorTypeEnvironment environment)
+        public ValueType Visit(GreaterThanExpression expression, ITypeEnvironment environment)
         {
             return this.CheckBinaryComparisonExpression(expression, environment);
         }
 
-        public ValueType Visit(GreaterThanOrEqualExpression expression, VisitorTypeEnvironment environment)
+        public ValueType Visit(GreaterThanOrEqualExpression expression, ITypeEnvironment environment)
         {
             return this.CheckBinaryComparisonExpression(expression, environment);
         }
 
-        public ValueType Visit(LessThanExpression expression, VisitorTypeEnvironment environment)
+        public ValueType Visit(LessThanExpression expression, ITypeEnvironment environment)
         {
             return this.CheckBinaryComparisonExpression(expression, environment);
         }
 
-        public ValueType Visit(LessThanOrEqualExpression expression, VisitorTypeEnvironment environment)
+        public ValueType Visit(LessThanOrEqualExpression expression, ITypeEnvironment environment)
         {
             return this.CheckBinaryComparisonExpression(expression, environment);
         }
 
-        public ValueType Visit(NotExpression expression, VisitorTypeEnvironment environment)
+        public ValueType Visit(NotExpression expression, ITypeEnvironment environment)
         {
             return this.CheckUnaryBooleanLogicExpression(expression, environment);
         }
 
-        public ValueType Visit(NegativeExpression expression, VisitorTypeEnvironment environment)
+        public ValueType Visit(NegativeExpression expression, ITypeEnvironment environment)
         {
             return this.CheckUnaryMatematicalExpression(expression, environment);
         }
 
-        public ValueType Visit(PositiveExpression expression, VisitorTypeEnvironment environment)
+        public ValueType Visit(PositiveExpression expression, ITypeEnvironment environment)
         {
             return this.CheckUnaryMatematicalExpression(expression, environment);
         }
 
-        public ValueType Visit(VariableExpression expression, VisitorTypeEnvironment environment)
+        public ValueType Visit(VariableExpression expression, ITypeEnvironment environment)
         {
             var quetionType = environment.GetTypeOf(expression.Identifier);
             if (quetionType == null)
@@ -150,18 +156,18 @@
             return quetionType;
         }
 
-        public ValueType Visit(BracketExpression expression, VisitorTypeEnvironment environment)
+        public ValueType Visit(BracketExpression expression, ITypeEnvironment environment)
         {
             return expression.Expression.Accept(this, environment);
         }
 
-        public VoidValueType Visit(QuestionStatement statement, VisitorTypeEnvironment environment)
+        public VoidValueType Visit(QuestionStatement statement, ITypeEnvironment environment)
         {
             environment.AddSymbol(statement.Identifier, statement.Type);
             return new VoidValueType();
         }
 
-        public VoidValueType Visit(IfStatement statement, VisitorTypeEnvironment environment)
+        public VoidValueType Visit(IfStatement statement, ITypeEnvironment environment)
         {
             var result = this.CheckIfStatement(statement, environment);
             statement.Statements.ForEach(x => x.Accept(this, environment));
@@ -170,55 +176,55 @@
             return new VoidValueType();
         }
 
-        public VoidValueType Visit(Statement statement, VisitorTypeEnvironment environment)
+        public VoidValueType Visit(Statement statement, ITypeEnvironment environment)
         {
             statement.Accept(this, environment);
             return new VoidValueType();
         }
 
-        public VoidValueType Visit(FormStatement statement, VisitorTypeEnvironment environment)
+        public VoidValueType Visit(FormStatement statement, ITypeEnvironment environment)
         {
             statement.Statements.ForEach(x => x.Accept(this, environment));
 
             return new VoidValueType();
         }
 
-        public ValueType Visit(IntegerLiteral literal, VisitorTypeEnvironment environment)
+        public ValueType Visit(IntegerLiteral literal, ITypeEnvironment environment)
         {
             return new IntegerValueType();
         }
 
-        public ValueType Visit(MoneyLiteral literal, VisitorTypeEnvironment environment)
+        public ValueType Visit(MoneyLiteral literal, ITypeEnvironment environment)
         {
             return new MoneyValueType();
         }
 
-        public ValueType Visit(DecimalLiteral literal, VisitorTypeEnvironment environment)
+        public ValueType Visit(DecimalLiteral literal, ITypeEnvironment environment)
         {
             return new DecimalValueType();
         }
 
-        public ValueType Visit(BooleanLiteral literal, VisitorTypeEnvironment environment)
+        public ValueType Visit(BooleanLiteral literal, ITypeEnvironment environment)
         {
             return new BooleanValueType();
         }
 
-        public ValueType Visit(StringLiteral literal, VisitorTypeEnvironment environment)
+        public ValueType Visit(StringLiteral literal, ITypeEnvironment environment)
         {
             return new StringValueType();
         }
 
-        public ValueType Visit(DateLiteral literal, VisitorTypeEnvironment environment)
+        public ValueType Visit(DateLiteral literal, ITypeEnvironment environment)
         {
             return new DateValueType();
         }
 
-        public ValueType Visit(HexLiteral literal, VisitorTypeEnvironment environment)
+        public ValueType Visit(HexLiteral literal, ITypeEnvironment environment)
         {
             return new StringValueType();
         }
 
-        private ValueType CheckBinaryMatematicalExpression(BinaryExpression expression, VisitorTypeEnvironment context)
+        private ValueType CheckBinaryMatematicalExpression(BinaryExpression expression, ITypeEnvironment context)
         {
             var leftExpressionType = expression.LeftExpression.Accept(this, context);
             var rightExpressionType = expression.RightExpression.Accept(this, context);
@@ -268,7 +274,7 @@
             return new VoidValueType();
         }
 
-        private ValueType CheckUnaryMatematicalExpression(UnaryExpression expression, VisitorTypeEnvironment context)
+        private ValueType CheckUnaryMatematicalExpression(UnaryExpression expression, ITypeEnvironment context)
         {
             var subExpressionType = expression.Expression.Accept(this, context);
             if (subExpressionType.IsNot<NumericalValueType>())
@@ -282,7 +288,7 @@
             return subExpressionType;
         }
 
-        private ValueType CheckBinaryComparisonExpression(BinaryExpression expression, VisitorTypeEnvironment context)
+        private ValueType CheckBinaryComparisonExpression(BinaryExpression expression, ITypeEnvironment context)
         {
             var leftExpressionType = expression.LeftExpression.Accept(this, context);
             var rightExpressionType = expression.RightExpression.Accept(this, context);
@@ -298,7 +304,7 @@
             return new BooleanValueType();
         }
 
-        private ValueType CheckBinaryBooleanLogicExpression(BinaryExpression expression, VisitorTypeEnvironment context)
+        private ValueType CheckBinaryBooleanLogicExpression(BinaryExpression expression, ITypeEnvironment context)
         {
             var leftExpressionType = expression.LeftExpression.Accept(this, context);
             var rightEpressionType = expression.RightExpression.Accept(this, context);
@@ -326,7 +332,7 @@
             return new BooleanValueType();
         }
 
-        private ValueType CheckUnaryBooleanLogicExpression(UnaryExpression expression, VisitorTypeEnvironment context)
+        private ValueType CheckUnaryBooleanLogicExpression(UnaryExpression expression, ITypeEnvironment context)
         {
             var subExpressionType = expression.Expression.Accept(this, context);
 
@@ -343,7 +349,7 @@
             return new BooleanValueType();
         }
 
-        private ValueType CheckIfStatement(IfStatement statement, VisitorTypeEnvironment context)
+        private ValueType CheckIfStatement(IfStatement statement, ITypeEnvironment context)
         {
             var conditionType = statement.Condition.Accept(this, context);
             if (conditionType != new BooleanValueType())

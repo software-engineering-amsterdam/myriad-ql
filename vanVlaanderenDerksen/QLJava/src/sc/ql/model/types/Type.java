@@ -1,7 +1,8 @@
 package sc.ql.model.types;
 
-import java.awt.Component;
-
+import sc.ql.gui.BuildComponents;
+import sc.ql.gui.values.*;
+import sc.ql.gui.widgets.Widget;
 import sc.ql.model.Node;
 
 public class Type extends Node {
@@ -41,8 +42,9 @@ public class Type extends Node {
 	public Boolean isCompatibleWith(StringType type) {
 		return false;
 	}
-	
-	public Component getWidget() {
+
+	public Widget getWidget(BuildComponents buildComponents, String questionId, Value value) {
 		return null;
 	}
+	
 }

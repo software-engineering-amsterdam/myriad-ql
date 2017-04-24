@@ -4,14 +4,14 @@ import org.lemonade.gui.values.GuiStringValue;
 
 import javafx.scene.control.Label;
 
-public class GuiLabelElement implements GuiElement {
+public class GuiLabelElement extends GuiElement {
 
     private GuiStringValue value;
     private Label label;
 
     public GuiLabelElement(String labelText) {
-        this.value = new GuiStringValue(labelText);
-        this.label = new Label(labelText.replace("\"", ""));
+        value = new GuiStringValue(labelText);
+        label = new Label(labelText.replace("\"", ""));
     }
 
     @Override
@@ -24,8 +24,8 @@ public class GuiLabelElement implements GuiElement {
         return label;
     }
 
-    // Intentionally left empty as labels are immutable
     @Override
-    public void update() {
+    public void clear() {
+        label.setText("");
     }
 }

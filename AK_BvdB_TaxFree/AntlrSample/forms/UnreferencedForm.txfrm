@@ -6,5 +6,5 @@ form TheirTaxFreeSolution {
   }
   "Do you see this duplicate label?" -> myDuplicateLabel : boolean
   "Do you know the has sold house:" -> isSoldHouse : boolean = hasSoldHouses
-  "Did you sell multiple houses?" -> hasSoldHouses : boolean
+  //"Did you sell multiple houses?" -> hasSoldHouses : boolean
 }

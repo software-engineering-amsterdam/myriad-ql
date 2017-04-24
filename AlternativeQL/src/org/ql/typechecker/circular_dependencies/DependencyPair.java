@@ -1,6 +1,6 @@
 package org.ql.typechecker.circular_dependencies;
 
-import org.ql.ast.Identifier;
+import org.ql.ast.identifier.Identifier;
 
 public class DependencyPair {
     private final Identifier left;

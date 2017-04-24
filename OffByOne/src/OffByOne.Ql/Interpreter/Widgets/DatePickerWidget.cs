@@ -26,22 +26,19 @@
             this.Input.SelectedDate = ((DateValue)this.Value).Value;
         }
 
-        protected virtual void UpdateValue(object target, object eventArgs)
+        protected virtual void UpdateValue()
         {
             this.Value = new DateValue(this.Input.SelectedDate.Value);
         }
 
         private void CreateControls(QuestionStatement statement, WidgetStyle style)
         {
-            var label = new Label { Content = statement.Label };
             this.Input = new DatePicker { SelectedDateFormat = DatePickerFormat.Short };
-            this.Input.SelectedDateChanged += this.UpdateValue;
+            this.Input.SelectedDateChanged += (e, a) => this.UpdateValue();
+            this.Input.IsEnabled = !this.IsReadOnly();
+            this.Input.SelectedDate = ((DateValue)this.Value).Value;
 
-            style.Apply(label);
-            style.Apply(this.Input);
-
-            this.Controls.Add(label);
-            this.Controls.Add(this.Input);
+            this.CreateControls(this.Input, statement, style);
         }
     }
 }

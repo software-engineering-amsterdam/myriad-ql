@@ -1,7 +1,7 @@
 package com.matthewchapman.ql.ast.expression.binary;
 
 import com.matthewchapman.ql.ast.Expression;
-import com.matthewchapman.ql.validation.visitors.ExpressionVisitor;
+import com.matthewchapman.ql.visitors.ExpressionVisitor;
 
 /**
  * Created by matt on 24/02/2017.
@@ -25,5 +25,4 @@ public class Addition extends BinaryOperation {
     public <T, C> T accept(ExpressionVisitor<T, C> visitor, C context) {
         return visitor.visit(this, context);
     }
-
 }

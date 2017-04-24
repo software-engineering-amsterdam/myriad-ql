@@ -1,7 +1,7 @@
 package com.matthewchapman.ql.ast.expression.binary;
 
 import com.matthewchapman.antlr.QLParser;
-import com.matthewchapman.ql.core.CoreParser;
+import com.matthewchapman.ql.parsing.ASTBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,20 +9,22 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by matt on 15/03/2017.
+ * <p>
+ * Tests parsing of Division objects
  */
 public class DivisionTest {
-    private CoreParser coreParser;
+    private ASTBuilder ASTBuilder;
 
     @Before
     public void setUp() {
-        coreParser = new CoreParser();
+        ASTBuilder = new ASTBuilder();
     }
 
     @Test
     public void checkDivisionParse() {
         final String EXPECTED_RESULT = "(1 / 2)";
-        QLParser parser = coreParser.getQlParser("1/2");
-        Division expression = (Division) coreParser.getExpression(parser);
+        QLParser parser = ASTBuilder.getQlParser("1/2");
+        Division expression = (Division) ASTBuilder.getExpression(parser);
 
         assertEquals(EXPECTED_RESULT, expression.toString());
     }
@@ -30,8 +32,8 @@ public class DivisionTest {
     @Test
     public void checkDivisionNestedParse() {
         final String EXPECTED_RESULT = "((1 / 2) / 3)";
-        QLParser parser = coreParser.getQlParser("1/2/3");
-        Division expression = (Division) coreParser.getExpression(parser);
+        QLParser parser = ASTBuilder.getQlParser("1/2/3");
+        Division expression = (Division) ASTBuilder.getExpression(parser);
 
         assertEquals(EXPECTED_RESULT, expression.toString());
     }

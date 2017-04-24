@@ -1,0 +1,9 @@
+stylesheet OurTaxFreeSolution {
+  page Taxes {
+    section "Meta" {
+        question likesToPayTaxes widget checkbox
+        question likesToPayTaxesToo widget text
+        question likesToPayTaxesThree widget radio("Yes", "No")
+    }
+  }
+}

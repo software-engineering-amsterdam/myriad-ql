@@ -1,6 +1,7 @@
 package org.qls.parser.widget;
 
 import org.junit.Test;
+import org.qls.ast.page.CustomWidgetQuestion;
 import org.qls.ast.page.Page;
 import org.qls.ast.widget.*;
 import org.qls.parser.Parser;
@@ -9,6 +10,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class WidgetTest {
+
     @Test
     public void shouldContainQuestionWithSpinboxWidget() {
         Parser parser = new Parser();
@@ -19,8 +21,9 @@ public class WidgetTest {
                     "widget spinbox" +
                 "}");
 
-        assertTrue(page.getSections().get(0).getQuestions().get(0).getWidget() != null);
-        assertTrue(page.getSections().get(0).getQuestions().get(0).getWidget() instanceof SpinboxWidget);
+        CustomWidgetQuestion actualQuestion = (CustomWidgetQuestion) page.getSections().get(0).getQuestions().get(0);
+
+        assertTrue(actualQuestion.getWidget() instanceof Spinbox);
     }
 
     @Test
@@ -33,8 +36,9 @@ public class WidgetTest {
                 "widget slider" +
                 "}");
 
-        assertTrue(page.getSections().get(0).getQuestions().get(0).getWidget() != null);
-        assertTrue(page.getSections().get(0).getQuestions().get(0).getWidget() instanceof SliderWidget);
+        CustomWidgetQuestion actualQuestion = (CustomWidgetQuestion) page.getSections().get(0).getQuestions().get(0);
+
+        assertTrue(actualQuestion.getWidget() instanceof Slider);
     }
 
     @Test
@@ -47,8 +51,9 @@ public class WidgetTest {
                 "widget text" +
                 "}");
 
-        assertTrue(page.getSections().get(0).getQuestions().get(0).getWidget() != null);
-        assertTrue(page.getSections().get(0).getQuestions().get(0).getWidget() instanceof TextWidget);
+        CustomWidgetQuestion actualQuestion = (CustomWidgetQuestion) page.getSections().get(0).getQuestions().get(0);
+
+        assertTrue(actualQuestion.getWidget() instanceof Text);
     }
 
     @Test
@@ -61,8 +66,9 @@ public class WidgetTest {
                 "widget checkbox" +
                 "}");
 
-        assertTrue(page.getSections().get(0).getQuestions().get(0).getWidget() != null);
-        assertTrue(page.getSections().get(0).getQuestions().get(0).getWidget() instanceof CheckboxWidget);
+        CustomWidgetQuestion actualQuestion = (CustomWidgetQuestion) page.getSections().get(0).getQuestions().get(0);
+
+        assertTrue(actualQuestion.getWidget() instanceof Checkbox);
     }
 
     @Test
@@ -75,11 +81,11 @@ public class WidgetTest {
                 "widget radio(\"yes\", \"no\")" +
                 "}");
 
-        Widget widget = page.getSections().get(0).getQuestions().get(0).getWidget();
-        assertTrue(widget != null);
-        assertTrue(widget instanceof RadioWidget);
-        assertEquals("\"yes\"", ((RadioWidget) widget).getYesText());
-        assertEquals("\"no\"", ((RadioWidget) widget).getNoText());
+        CustomWidgetQuestion actualQuestion = (CustomWidgetQuestion) page.getSections().get(0).getQuestions().get(0);
+
+        assertTrue(actualQuestion.getWidget() instanceof Radio);
+        assertEquals("yes", ((Radio) actualQuestion.getWidget()).getYesText());
+        assertEquals("no", ((Radio) actualQuestion.getWidget()).getNoText());
     }
 
     @Test
@@ -92,11 +98,11 @@ public class WidgetTest {
                 "widget dropdown(\"yes\", \"no\")" +
                 "}");
 
-        Widget widget = page.getSections().get(0).getQuestions().get(0).getWidget();
-        assertTrue(widget != null);
-        assertTrue(widget instanceof DropdownWidget);
-        assertEquals("\"yes\"", ((DropdownWidget) widget).getYesText());
-        assertEquals("\"no\"", ((DropdownWidget) widget).getNoText());
+        CustomWidgetQuestion actualQuestion = (CustomWidgetQuestion) page.getSections().get(0).getQuestions().get(0);
+
+        assertTrue(actualQuestion.getWidget() instanceof Dropdown);
+        assertEquals("yes", ((Dropdown) actualQuestion.getWidget()).getYesText());
+        assertEquals("no", ((Dropdown) actualQuestion.getWidget()).getNoText());
     }
 
 }

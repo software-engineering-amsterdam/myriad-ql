@@ -1,7 +1,7 @@
 package org.ql.parser;
 
 import org.junit.Test;
-import org.ql.ast.Form;
+import org.ql.ast.form.Form;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

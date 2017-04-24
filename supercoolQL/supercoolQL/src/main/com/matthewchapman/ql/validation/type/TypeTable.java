@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class TypeTable {
 
-    Map<String, Type> table;
+    private final Map<String, Type> table;
 
     public TypeTable() {
         this.table = new HashMap<>();
@@ -20,7 +20,7 @@ public class TypeTable {
         this.table.put(name, type);
     }
 
-    public Type getEntryByName(String name) {
+    Type getEntryByName(String name) {
         return this.table.get(name);
     }
 
@@ -28,5 +28,7 @@ public class TypeTable {
         return this.table.containsKey(name);
     }
 
-    public int size() { return this.table.size(); }
+    public int size() {
+        return this.table.size();
+    }
 }

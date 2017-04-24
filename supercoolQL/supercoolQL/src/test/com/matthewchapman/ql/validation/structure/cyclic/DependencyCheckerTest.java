@@ -9,6 +9,8 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by matt on 17/03/2017.
+ * <p>
+ * Tests dependency checks
  */
 public class DependencyCheckerTest {
 
@@ -23,7 +25,11 @@ public class DependencyCheckerTest {
         DependencyPair pair2 = new DependencyPair("test2", "test3");
         DependencyPair pair3 = new DependencyPair("test3", "test1");
 
-        Set<DependencyPair> dependencySet = new HashSet<DependencyPair>(){{add(pair1); add(pair2); add(pair3);}};
+        Set<DependencyPair> dependencySet = new HashSet<DependencyPair>() {{
+            add(pair1);
+            add(pair2);
+            add(pair3);
+        }};
 
         Set<DependencyPair> closure = checker.makeClosure(dependencySet);
         int reflexiveCount = 0;

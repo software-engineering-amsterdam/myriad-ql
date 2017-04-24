@@ -1,5 +1,5 @@
 form houseForm {
-    // We do not have questions in this form
+    // We do not have questionStyles in this form
     if (hasSoldHouse) {
         // Empty form with an if statement
     }

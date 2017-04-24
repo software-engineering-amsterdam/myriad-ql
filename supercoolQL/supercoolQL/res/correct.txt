@@ -3,9 +3,6 @@ form testForm {
     "Question 1"
     question1:boolean;
 
-    "Question 1"
-    question6:boolean;
-
     "Question 2"
     question2: boolean;
 
@@ -17,5 +14,10 @@ form testForm {
 
     "Question 5"
     question5: integer = 12 + question4;
+
+    if(question1) {
+        "should never appear"
+        falseQuestion: boolean;
+    }
 
 }

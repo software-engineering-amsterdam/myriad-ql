@@ -1,13 +1,15 @@
 ﻿namespace OffByOne.Qls.Ast.Style.Widgets
 {
+    using System.Collections.Generic;
+
     using OffByOne.Qls.Ast.Style.Literals;
     using OffByOne.Qls.Ast.Style.Widgets.Base;
-    using OffByOne.Qls.Visitors.Contracts;
+    using OffByOne.Qls.Common.Visitors.Contracts;
 
     public class RadioButtonWidget : ListWidget
     {
         public RadioButtonWidget(
-            OptionsList<StringLiteral> values)
+            IList<StringLiteral> values)
             : base(values)
         {
         }

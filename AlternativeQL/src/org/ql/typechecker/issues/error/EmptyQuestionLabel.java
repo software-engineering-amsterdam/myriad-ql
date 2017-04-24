@@ -12,7 +12,7 @@ public class EmptyQuestionLabel extends Issue {
 
     @Override
     public String getMessage() {
-        return "Question label/text cannot be empty";
+        return "ComputableQuestion label/text cannot be empty";
     }
 
     @Override

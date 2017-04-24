@@ -35,7 +35,7 @@ public class SymbolTableTest extends SemanticsTester {
 
     @Test
     public void testSymbolContents() throws Exception {
-        assertSemantics("SimpleForm.txfrm", 0, "Simple tax form without errors");
+        assertSemantics("DemoForm.txfrm", 0, "Simple tax form without errors");
     }
 
     @Override

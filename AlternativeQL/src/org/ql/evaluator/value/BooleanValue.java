@@ -8,13 +8,13 @@ public class BooleanValue extends Value {
     }
 
     @Override
-    public BooleanValue or(Value or) {
-        return new BooleanValue(value || ((BooleanValue) or).getPlainValue());
+    public BooleanValue or(Value value) {
+        return new BooleanValue(this.value || ((BooleanValue) value).getPlainValue());
     }
 
     @Override
-    public BooleanValue and(Value and) {
-        return new BooleanValue(value && ((BooleanValue) and).getPlainValue());
+    public BooleanValue and(Value value) {
+        return new BooleanValue(this.value && ((BooleanValue) value).getPlainValue());
     }
 
     @Override
@@ -33,6 +33,11 @@ public class BooleanValue extends Value {
     }
 
     public Boolean getPlainValue() {
+        return value;
+    }
+
+    @Override
+    public boolean toBoolean() {
         return value;
     }
 

@@ -5,11 +5,12 @@
     using OffByOne.Ql.Ast.Statements;
     using OffByOne.Ql.Checker.Analyzers.Contracts;
     using OffByOne.Ql.Checker.Analyzers.Environment;
+    using OffByOne.Ql.Checker.Analyzers.Environment.Contracts;
     using OffByOne.Ql.Checker.Contracts;
     using OffByOne.Ql.Checker.Messages;
-    using OffByOne.Ql.Visitors.Base;
+    using OffByOne.Ql.Common.Visitors.Base;
 
-    public class QuestionAnalyzer : BaseQlVisitor<object, QuestionVisitorTypeEnvironment>, IAnalyzer
+    public class QuestionAnalyzer : BaseQlDfsVisitor<object, IQuestionEnvironment>, IAnalyzer
     {
         public QuestionAnalyzer()
             : this(new CheckerReport())
@@ -30,14 +31,16 @@
 
         public void Analyze(FormStatement root)
         {
-            this.Visit(root, new QuestionVisitorTypeEnvironment());
+            if (root == null)
+            {
+                throw new ArgumentNullException(nameof(root));
+            }
+
+            this.Visit(root, new QuestionEnvironment());
         }
 
-        public override object Visit(QuestionStatement statement, QuestionVisitorTypeEnvironment environment)
+        public override object Visit(QuestionStatement statement, IQuestionEnvironment environment)
         {
-            // TODO: change string primitives to StringValue?
-            // [...].Value.Value is ugly. Since StringValues replace string primitives,
-            // maybe we should replace them in the code too?
             if (environment.IsIdentifierDuplicate(statement.Identifier))
             {
                 this.Report.Add(new DuplicateQuestionIdentifierMessage(statement));
@@ -47,13 +50,13 @@
                 environment.AddQuestionIdentifier(statement.Identifier);
             }
 
-            if (environment.IsLableDuplicate(statement.Label.Value.Value))
+            if (environment.IsLabelDuplicate(statement.Label.Value))
             {
                 this.Report.Add(new DuplicateQuestionLabelMessage(statement));
             }
             else
             {
-                environment.AddQuestionLabel(statement.Label.Value.Value);
+                environment.AddQuestionLabel(statement.Label.Value);
             }
 
             return base.Visit(statement, environment);

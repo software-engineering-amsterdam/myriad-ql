@@ -1,10 +1,12 @@
 package com.matthewchapman.ql.ast.atomic.type;
 
 import com.matthewchapman.ql.ast.atomic.Type;
-import com.matthewchapman.ql.validation.visitors.TypeVisitor;
+import com.matthewchapman.ql.visitors.TypeVisitor;
 
 /**
  * Created by matt on 08/03/2017.
+ * <p>
+ * Concrete type class for booleans
  */
 public class BooleanType extends Type {
 

@@ -25,8 +25,8 @@ public abstract class TextFieldWidget extends Widget {
     public abstract Object getFormatObject();
 
     @Override
-    public void fillPanel(JPanel parentPanel) {
-        parentPanel.add(mTextField);
+    public void fillPanel(GuiComponent parentPanel) {
+        parentPanel.setValueComponent(mTextField);
     }
 
     protected String currentValue() {
@@ -44,11 +44,8 @@ public abstract class TextFieldWidget extends Widget {
     }
 
     @Override
-    protected void applyStyle(JPanel panel, JLabel label, QlsStyle qlsStyle) {
-        super.applyStyle(panel, label, qlsStyle);
-        // Only used for QLS
-        qlsStyle.applyStyle(new StringType(), panel);
-        qlsStyle.applyStyle(new StringType(), label);
-        qlsStyle.applyStyle(new StringType(), mTextField);
+    protected void applyStyle(Widget widget, QlsStyle qlsStyle) {
+        super.applyStyle(widget, qlsStyle);
+        qlsStyle.applyStyle(new StringType(), widget);
     }
 }

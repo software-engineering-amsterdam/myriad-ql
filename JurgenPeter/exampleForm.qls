@@ -52,4 +52,8 @@ stylesheet taxOfficeExample {
         question bigBoldFont {weight: bold size: 20}
         default integer {color: #0000ff}
   }
+
+  page Hidden {
+        question hideWhenTrue
+  }
 }

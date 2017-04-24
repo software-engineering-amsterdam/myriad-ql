@@ -4,9 +4,6 @@ import org.lemonade.gui.GuiExpression;
 import org.lemonade.gui.expressions.GuiBinaryExpression;
 import org.lemonade.visitors.interfaces.GuiExpressionVisitor;
 
-/**
- *
- */
 public class GuiGTBinary extends GuiBinaryExpression {
 
     public GuiGTBinary(GuiExpression left, GuiExpression right) {

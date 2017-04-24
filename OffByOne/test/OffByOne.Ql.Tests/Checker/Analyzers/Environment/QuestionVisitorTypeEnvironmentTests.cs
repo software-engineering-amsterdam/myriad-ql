@@ -3,6 +3,7 @@
     using System;
 
     using OffByOne.Ql.Checker.Analyzers.Environment;
+    using OffByOne.Ql.Values;
 
     using Xunit;
 
@@ -14,14 +15,14 @@
         [InlineData(null)]
         public void AddQuestionName_ShouldThrowExceptionIfInvalidNameIsGiven(string questionName)
         {
-            var typeEnv = new QuestionVisitorTypeEnvironment();
+            var typeEnv = new QuestionEnvironment();
             Assert.Throws<ArgumentException>(() => typeEnv.AddQuestionIdentifier(questionName));
         }
 
         [Fact]
         public void AddQuestionName_ShouldShouldAddQuestionNameValidNameIsGiven()
         {
-            var typeEnv = new QuestionVisitorTypeEnvironment();
+            var typeEnv = new QuestionEnvironment();
             var questionName = "HeyWorld!";
             typeEnv.AddQuestionIdentifier(questionName);
 
@@ -31,21 +32,20 @@
         [Theory]
         [InlineData("")]
         [InlineData("         ")]
-        [InlineData(null)]
         public void AddQuestionLabel_ShouldThrowExceptionIfInvalidNameIsGiven(string questionLabel)
         {
-            var typeEnv = new QuestionVisitorTypeEnvironment();
-            Assert.Throws<ArgumentException>(() => typeEnv.AddQuestionLabel(questionLabel));
+            var typeEnv = new QuestionEnvironment();
+            Assert.Throws<ArgumentException>(() => typeEnv.AddQuestionLabel(new StringValue(questionLabel)));
         }
 
         [Fact]
         public void AddQuestionLabel_ShouldShouldAddQuestionLabelValidNameIsGiven()
         {
-            var typeEnv = new QuestionVisitorTypeEnvironment();
+            var typeEnv = new QuestionEnvironment();
             var questionLabel = "HeyWorld!";
-            typeEnv.AddQuestionLabel(questionLabel);
+            typeEnv.AddQuestionLabel(new StringValue(questionLabel));
 
-            Assert.True(typeEnv.IsLableDuplicate(questionLabel));
+            Assert.True(typeEnv.IsLabelDuplicate(new StringValue(questionLabel)));
         }
 
         [Theory]
@@ -54,18 +54,17 @@
         [InlineData(null)]
         public void IsNameDuplicate_ShouldThrowExceptionIfInvalidNameIsGiven(string questionLabel)
         {
-            var typeEnv = new QuestionVisitorTypeEnvironment();
+            var typeEnv = new QuestionEnvironment();
             Assert.Throws<ArgumentException>(() => typeEnv.IsIdentifierDuplicate(questionLabel));
         }
 
         [Theory]
         [InlineData("")]
         [InlineData("         ")]
-        [InlineData(null)]
         public void IsLableDuplicate_ShouldThrowExceptionIfInvalidNameIsGiven(string questionLabel)
         {
-            var typeEnv = new QuestionVisitorTypeEnvironment();
-            Assert.Throws<ArgumentException>(() => typeEnv.IsLableDuplicate(questionLabel));
+            var typeEnv = new QuestionEnvironment();
+            Assert.Throws<ArgumentException>(() => typeEnv.IsLabelDuplicate(new StringValue(questionLabel)));
         }
     }
 }

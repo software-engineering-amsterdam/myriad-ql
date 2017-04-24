@@ -3,7 +3,7 @@ package com.matthewchapman.ql.environment.values;
 /**
  * Created by matt on 18/03/2017.
  */
-public class StringValue extends Value {
+public class StringValue implements Value {
 
     private final String value;
 
@@ -12,15 +12,32 @@ public class StringValue extends Value {
     }
 
     @Override
+    public String getTypeAsString() {
+        return "STRING";
+    }
+
+    @Override
+    public String toString() {
+        return this.value;
+    }
+
+    @Override
     public String getValue() {
         return this.value;
     }
 
     @Override
-    public Value equalTo(StringValue value) {
+    public Value equalTo(Value value) {
         return new BooleanValue(this.value.equals(value.getValue()));
     }
 
     @Override
-    public Value equalTo(Value value) { return value.equalTo(this); }
+    public Value notEqualTo(StringValue value) {
+        return new BooleanValue(!this.value.equals(value.getValue()));
+    }
+
+    @Override
+    public Value notEqualTo(Value value) {
+        return value.notEqualTo(this);
+    }
 }

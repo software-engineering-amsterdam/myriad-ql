@@ -124,8 +124,6 @@
 
                 Assert.IsType<DivideExpression>(rightLhs.LeftExpression);
             }
-
-            // TODO: Test that leafs of expressions are Literals (they are null until refactored)
         }
 
         [Fact]

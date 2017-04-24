@@ -7,6 +7,8 @@ import java.util.Map;
 
 /**
  * Created by matt on 20/03/2017.
+ * <p>
+ * Stores question ID's with conditional expressions
  */
 public class ConditionTable {
 
@@ -20,7 +22,12 @@ public class ConditionTable {
         conditions.put(name, expression);
     }
 
+    public boolean questionHasCondition(String name) {
+        return conditions.containsKey(name);
+    }
+
     public Expression getConditionByID(String name) {
         return conditions.get(name);
     }
+
 }
