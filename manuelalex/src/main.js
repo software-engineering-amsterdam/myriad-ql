@@ -4,7 +4,7 @@
 
 import {Parser} from './Parser.js';
 import {ASTValidationVisitor} from './ast/visitors/ASTValidationVisitor.js';
-import {ASTDependencyVisitor} from './ast/visitors/ASTDependencyVisitor.js';
+import {ASTCyclicDependencyVisitor} from './ast/visitors/ASTCyclicDependencyVisitor.js';
 import {ASTMemoryAllocationVisitor} from './ast/visitors/ASTMemoryAllocationVisitor.js';
 import {MemoryState} from './memory/MemoryState';
 
@@ -35,7 +35,7 @@ if (errors.length) {
     let validationVisitor = new ASTValidationVisitor(memoryState);
     validationVisitor.visitAST(ast);
 
-    let dependencyVisitor = new ASTDependencyVisitor();
+    let dependencyVisitor = new ASTCyclicDependencyVisitor();
     dependencyVisitor.visitAST(ast);
 
     let gui = new GUI(null, null);

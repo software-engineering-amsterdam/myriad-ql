@@ -5,13 +5,13 @@ import chai from 'chai';
 import JspmImport       from './JspmImport.js';
 const expect = chai.expect;
 
-describe('AST Dependency Visitor', () => {
+describe('AST AST Cyclic Dependency Visitor', () => {
 
     let imports = {};
 
     beforeEach(function () {
-        return Promise.all([JspmImport('./src/ast/visitors/ASTDependencyVisitor.js'), JspmImport('./src/Form.js'), JspmImport('./src/statements/IFStatement.js'), JspmImport('./src/statements/Question.js'), JspmImport('./src/expressions/Expression.js'), JspmImport('./src/types/Property.js'), JspmImport('./src/memory/MemoryState.js'), JspmImport('./src/types/Types.js')]).then(([{ ASTDependencyVisitor }, { Form }, { IfStatement }, { Question }, { Expression, PrefixExpression }, { Property }, { MemoryState }, { QLMoney, QLString, QLBoolean, QLNumber, QLDate }]) => {
-            imports.ASTDependencyVisitor = ASTDependencyVisitor;
+        return Promise.all([JspmImport('./src/ast/visitors/ASTCyclicDependencyVisitor.js'), JspmImport('./src/Form.js'), JspmImport('./src/statements/IFStatement.js'), JspmImport('./src/statements/Question.js'), JspmImport('./src/expressions/Expression.js'), JspmImport('./src/types/Property.js'), JspmImport('./src/memory/MemoryState.js'), JspmImport('./src/types/Types.js')]).then(([{ ASTCyclicDependencyVisitor }, { Form }, { IfStatement }, { Question }, { Expression, PrefixExpression }, { Property }, { MemoryState }, { QLMoney, QLString, QLBoolean, QLNumber, QLDate }]) => {
+            imports.ASTCyclicDependencyVisitor = ASTCyclicDependencyVisitor;
             imports.Form = Form;
             imports.IfStatement = IfStatement;
             imports.Question = Question;
@@ -52,7 +52,7 @@ describe('AST Dependency Visitor', () => {
             let ifstatement2 = new imports.IfStatement(expressionY, [questionB], 4);
 
 
-            let astDependencyVisitor = new imports.ASTDependencyVisitor();
+            let astDependencyVisitor = new imports.ASTCyclicDependencyVisitor();
             astDependencyVisitor.visitStatements([ifstatement1, ifstatement2]);
 
 
@@ -85,7 +85,7 @@ describe('AST Dependency Visitor', () => {
             let ifstatement2 = new imports.IfStatement(expressionY, [questionX], 4);
 
 
-            let astDependencyVisitor = new imports.ASTDependencyVisitor();
+            let astDependencyVisitor = new imports.ASTCyclicDependencyVisitor();
             astDependencyVisitor.visitStatements([ifstatement1, ifstatement2]);
 
 
@@ -133,7 +133,7 @@ describe('AST Dependency Visitor', () => {
             let ifstatementZ = new imports.IfStatement(expressionX, [questionX], 2);
 
 
-            let astDependencyVisitor = new imports.ASTDependencyVisitor();
+            let astDependencyVisitor = new imports.ASTCyclicDependencyVisitor();
             astDependencyVisitor.visitStatements([ifstatementX, ifstatementZ]);
 
 
@@ -166,7 +166,7 @@ describe('AST Dependency Visitor', () => {
             let ifstatement2 = new imports.IfStatement(expressionNotX, [questionA2], 4);
             form.statements = [ifstatement1, ifstatement2];
 
-            let astDependencyVisitor = new imports.ASTDependencyVisitor();
+            let astDependencyVisitor = new imports.ASTCyclicDependencyVisitor();
             astDependencyVisitor.visitStatements([ifstatement1, ifstatement2]);
             console.log(astDependencyVisitor.innerGraph);
             console.log(astDependencyVisitor.graph);

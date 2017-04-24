@@ -7,7 +7,11 @@ import {AbstractVisitor} from '../../AbstractVisitor.js';
 import {Expression} from '../../expressions/Expression.js';
 import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from '../../types/Types.js';
 
-export class ASTDependencyVisitor extends AbstractVisitor {
+
+/**
+ * This class checks for cyclic dependencies
+ **/
+export class ASTCyclicDependencyVisitor extends AbstractVisitor {
 
     constructor() {
         super();
