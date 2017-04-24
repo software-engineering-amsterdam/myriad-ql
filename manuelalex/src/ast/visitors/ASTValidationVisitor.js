@@ -126,7 +126,7 @@ export class ASTValidationVisitor {
         const propertyInMemory = memoryElement !== undefined;
 
         if (propertyInMemory && question.getPropertyType() !== memoryElement.getType()) {
-            this.warnings.push(`Property "${question.getPropertyType()}" is being used with multiple types`);
+            this.warnings.push(`Property "${propertyName}" is being used with multiple types`);
         }
     }
 

@@ -44,36 +44,39 @@ export class GUI {
 
     showValidationErrors(errors) {
         let innerHTML = document.body.innerHTML;
-        innerHTML = innerHTML + 'The following errors have occurred during validation:';
+        innerHTML = innerHTML + `The following errors have occurred during validation:`;
 
         innerHTML = innerHTML + '<ul>';
         for (const errorStatement of errors) {
             innerHTML = innerHTML + '<li>' + errorStatement + '</li>';
         }
         innerHTML = innerHTML + '</ul>';
+        document.body.innerHTML = innerHTML;
 
     }
 
     showValidationWarnings(warnings) {
         let innerHTML = document.body.innerHTML;
-        innerHTML = innerHTML + 'The following errors have occurred during validation:';
+        innerHTML = innerHTML + `The following warnings have occurred during validation:`;
 
         innerHTML = innerHTML + '<ul>';
         for (const warningStatement of warnings) {
             innerHTML = innerHTML + '<li>' + warningStatement + '</li>';
         }
         innerHTML = innerHTML + '</ul>';
+        document.body.innerHTML = innerHTML;
     }
 
 
     showParserErrors(parseString, errors) {
         let innerHTML = document.body.innerHTML;
-        innerHTML = innerHTML + 'The following errors have occurred during parsing:';
+        innerHTML = innerHTML + `The following errors have occurred during parsing:`;
 
         parseString = parseString.replace(/\n/g, '<br>');
         for (const error of errors) {
-            innerHTML = `${innerHTML} <br> <div ="error"> ${error}</div>`;
+            innerHTML = innerHTML + `<br> <div ="error"> ${error}</div>`;
         }
-        innerHTML = `${innerHTML} <br> <div>${parseString}</div>`;
+        innerHTML = innerHTML + `<br> <div>${parseString}</div>`;
+        document.body.innerHTML = innerHTML;
     }
 }
