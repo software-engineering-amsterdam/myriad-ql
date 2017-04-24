@@ -23,8 +23,8 @@ export class ReservedWords {
         return this.location;
     }
 
-    accept(visitor) {
-        return visitor.visitReservedWords(this);
+    accept() {
+        throw new Error('Accept method should have been overwritten');
     }
 
     toString() {
@@ -40,6 +40,10 @@ export class ReservedBooleanWords extends ReservedWords {
 
     getType(){
         return new QLBoolean();
+    }
+
+    accept(visitor, ...params){
+        return visitor.visitReservedBooleanWords(this, ...params);
     }
 
 }

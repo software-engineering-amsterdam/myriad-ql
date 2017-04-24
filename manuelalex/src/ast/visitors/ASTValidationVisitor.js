@@ -114,6 +114,10 @@ export class ASTValidationVisitor {
         return this.memoryState.getType(property.getName());
     }
 
+    visitReservedBooleanWords(reservedBooleanWord){
+        return reservedBooleanWord.getType();
+    }
+
     /**
      * Check duplicate question declarations with different types
      * @param question

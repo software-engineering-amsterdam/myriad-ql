@@ -2,11 +2,7 @@
  * Created by Manuel on 24/04/2017.
  */
 
-import {QLBoolean} from '../../types/Types.js';
-
 export class ASTMemoryAllocationVisitor {
-
-    _reservedBooleanNames = ['true', 'false'];
 
     constructor(memoryState) {
         this.memoryState = memoryState;
@@ -75,16 +71,10 @@ export class ASTMemoryAllocationVisitor {
 
     visitProperty(property, propertyType) {
         const name = property.getName();
-
-        /* Return QLBoolean for a reserved boolean name */
-        if (this._reservedBooleanNames.includes(name)) {
-            propertyType = new QLBoolean(property.getLocation());
-            this.memoryState.set(name, propertyType, property.getName()); // todo name is duplicated per reserved keyword, find out if this is a problem
-            return propertyType;
-        }
-
         this.memoryState.set(name, this.memoryState.getType(name) || propertyType);
         return this.memoryState.getType(name);
     }
+
+    visitReservedBooleanWords(){}
 
 }

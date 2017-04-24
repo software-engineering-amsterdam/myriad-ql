@@ -32,9 +32,7 @@ export class ASTDependencyVisitor {
         }
     }
 
-    visitAnswer(answer) {
-
-    }
+    visitAnswer(answer) {}
 
     visitIfStatement(ifStatement) {
         const temporaryGraph = this.innerGraph.slice(0);
@@ -46,9 +44,7 @@ export class ASTDependencyVisitor {
         this.innerGraph = temporaryGraph;
     }
 
-    visitIfElseStatement(ifElseStatement) {
-    }
-
+    visitIfElseStatement(ifElseStatement) {}
 
     visitPrefixExpression(prefixExpression) {
 
@@ -64,6 +60,8 @@ export class ASTDependencyVisitor {
     visitProperty(property) {
         this.innerGraph.push(property.getName());
     }
+
+    visitReservedBooleanWords(){}
 
     checkForCyclicDependencies() {
         /**

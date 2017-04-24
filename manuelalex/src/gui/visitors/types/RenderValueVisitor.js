@@ -6,23 +6,29 @@ import Surface from 'famous/core/Surface.js';
 
 export class RenderValueVisitor {
 
-    renderMoney() {
+    visitMoney() {
         return new Surface();
     }
 
-    renderString(){
+    visitString(){
         return new Surface();
     }
 
-    renderBoolean(){
+    visitBoolean(){
         return new Surface();
     }
 
-    renderNumber(){
+    visitNumber(){
         return new Surface();
     }
 
-    renderDate(){
+    visitDate(){
         return new Surface();
     }
+
+    visitReservedBooleanWords(){
+        return new Surface();
+    }
+
+
 }

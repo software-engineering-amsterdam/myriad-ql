@@ -20,17 +20,13 @@ export class Parser {
         }
 
         if (result.length > 1) {
-            errors.push(`Ambiguous parsing: ${result.length} options. Choosing the first parsing.`);
-            [result] = result;
-            // result = [result[0]];
+            // errors.push(`Ambiguous parsing: ${result.length} options. Choosing the first parsing.`);
+            // [result] = result;
+            result = [result[0]];
         }
         return { result, errors, parseString };
     }
 
-
-    _removeLineBreaks(string) {
-        return string.replace(/(\r\n|\n|\r)/gm, '');
-    }
 
     /**
      * The nearley parser contains a state, thus can only be used once
@@ -38,8 +34,6 @@ export class Parser {
      * @private
      */
     createParser(importedNearley = null, grammar = null) {
-
-
         if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
             return new importedNearley.Parser(grammar.ParserRules, grammar.ParserStart);
         } else {
@@ -50,6 +44,10 @@ export class Parser {
             /* Grammar is defined on the window scope by grammar.js due to the nature of the nearley module */
             return new (importedNearley || nearley).Parser((grammar || window.grammar).ParserRules, (grammar || window.grammar).ParserStart);
         }
+    }
+
+    _removeLineBreaks(string) {
+        return string.replace(/(\r\n|\n|\r)/gm, '');
     }
 }
 

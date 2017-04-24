@@ -28,5 +28,9 @@ export class EvaluationVisitor {
     visitNumbers(number) {
         return eval(number.getValue());
     }
+
+    visitReservedBooleanWords(reservedBooleanWord){
+        return Boolean(eval(reservedBooleanWord.getValue()));
+    }
 }
 
