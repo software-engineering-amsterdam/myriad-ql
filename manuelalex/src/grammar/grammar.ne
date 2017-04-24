@@ -27,13 +27,12 @@ not_expression              -> comparison | "!" not_expression  {% ASTBuilder.pr
 comparison                  -> plus_minus_expression | comparison _ ("<" | ">" | ">=" | "<=" | "!=" | "==") _ comparison    {% ASTBuilder.deepExpression %}
 plus_minus_expression       -> multiply_divide_expression | plus_minus_expression _ ("-" | "+") _ plus_minus_expression     {% ASTBuilder.deepExpression %}
 multiply_divide_expression  -> factor | multiply_divide_expression _ ("/" | "*") _ multiply_divide_expression   {% ASTBuilder.deepExpression %}
-factor  -> digits
+factor ->  [0-9]:+               {% ASTBuilder.numbers %}
+       | "true" | "false"        {% ASTBuilder.reservedBooleanWords %}
        | propertyName
-       | "(" expression ")"    {% (data)=> data[1] %}
-boolean -> "true" | "false"    {% ASTBuilder.boolean %}
-digits -> [0-9]:+   {% ASTBuilder.numbers %}
+       | "(" expression ")"      {% (data)=> data[1] %}
 
-propertyName -> [A-Za-z0-9]:+   {% ASTBuilder.property %}
+propertyName -> [A-Za-z0-9]:+    {% ASTBuilder.property %}
 propertyType -> "boolean"        {% ASTBuilder.boolean %}
             | "string"           {% ASTBuilder.string %}
             | "integer"          {% ASTBuilder.number %}
