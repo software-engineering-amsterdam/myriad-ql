@@ -22,7 +22,7 @@ export class EvaluationVisitor {
 
     evaluateProperty(property, memoryState) {
         const value = memoryState.getValue(property.getName()) || undefined;
-        return eval(value)
+        return eval(value);
     }
 
     evaluateNumbers(number) {

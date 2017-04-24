@@ -23,13 +23,7 @@ export class ASTValidationVisitor {
     }
 
     visitAST(ast) {
-        this.visitForm(ast.getProgram()); // todo maybe remove this
         this.visitStatements(ast.getStatements());
-    }
-
-
-    visitForm(form) {
-        /* TODO, and fix visitor pattern */
     }
 
     visitStatements(statements) {

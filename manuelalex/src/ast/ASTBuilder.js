@@ -32,8 +32,6 @@ export class ASTBuilder {
         } else {
             return new IfStatement(_.flattenDeep(data[3])[0], _.flattenDeep(data[5][3]), location);
         }
-
-
     }
 
     ifElseStatement(data, location) {

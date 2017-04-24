@@ -62,7 +62,6 @@ export class QLBoolean extends Type {
         return visitor.renderBooleanInput(this);
     }
 
-
     isValidOperator(operator){
         return ['||', '&&', '==', '!='].includes(operator);
     }

@@ -21,8 +21,8 @@ export class Property {
         return visitor.evaluateProperty(this, memoryState);
     }
 
-    accept(visitor) {
-        return visitor.visitProperty(this);
+    accept(visitor, type) {
+        return visitor.visitProperty(this, type);
     }
 
     toString() {
