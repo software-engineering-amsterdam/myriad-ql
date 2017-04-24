@@ -41,7 +41,7 @@ export class ASTValidationVisitor {
     visitQuestion(question) {
 
         let property = question.getProperty();
-        property.accept(this);
+        property.accept(this, question.getPropertyType());
 
         this.checkDuplicateDeclarations(question);
         this.checkDuplicateLabels(question);
@@ -115,18 +115,19 @@ export class ASTValidationVisitor {
         return expression.getType();
     }
 
-    visitProperty(property) {
+    visitProperty(property, propertyType) {
         let name = property.getName();
 
         // todo we need a way to check for non allocated properties for Answers and Expressions.
 
         /* Return QLBoolean for a reserved boolean name */
         if (this._reservedBooleanNames.includes(name)) {
-            this.memoryState.set(name, this.memoryState.getType(name), property.getName()); // todo type is not set correctly
-            return new QLBoolean();
+            propertyType = new QLBoolean(property.getLocation());
+            this.memoryState.set(name, propertyType, property.getName()); // todo name is duplicated per reserved keyword, find out if this is a problem
+            return propertyType;
         }
 
-        this.memoryState.set(name, this.memoryState.getType(name)); // todo type is not set correctly
+        this.memoryState.set(name, this.memoryState.getType(name) || propertyType);
         return this.memoryState.getType(name);
     }
 
