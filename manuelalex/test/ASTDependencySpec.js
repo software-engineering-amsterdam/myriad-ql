@@ -10,7 +10,7 @@ describe('AST Dependency Visitor', () => {
     let imports = {};
 
     beforeEach(function () {
-        return Promise.all([JspmImport('./src/ASTDependencyVisitor.js'), JspmImport('./src/Form.js'), JspmImport('./src/statements/IFStatement.js'), JspmImport('./src/statements/Question.js'), JspmImport('./src/expressions/Expression.js'), JspmImport('./src/types/Property.js'), JspmImport('./src/memory/MemoryState.js'), JspmImport('./src/types/Types.js')]).then(([{ ASTDependencyVisitor }, { Form }, { IfStatement }, { Question }, { Expression, PrefixExpression }, { Property }, { MemoryState }, { QLMoney, QLString, QLBoolean, QLNumber, QLDate }]) => {
+        return Promise.all([JspmImport('./src/ast/visitors/ASTDependencyVisitor.js'), JspmImport('./src/Form.js'), JspmImport('./src/statements/IFStatement.js'), JspmImport('./src/statements/Question.js'), JspmImport('./src/expressions/Expression.js'), JspmImport('./src/types/Property.js'), JspmImport('./src/memory/MemoryState.js'), JspmImport('./src/types/Types.js')]).then(([{ ASTDependencyVisitor }, { Form }, { IfStatement }, { Question }, { Expression, PrefixExpression }, { Property }, { MemoryState }, { QLMoney, QLString, QLBoolean, QLNumber, QLDate }]) => {
             imports.ASTDependencyVisitor = ASTDependencyVisitor;
             imports.Form = Form;
             imports.IfStatement = IfStatement;

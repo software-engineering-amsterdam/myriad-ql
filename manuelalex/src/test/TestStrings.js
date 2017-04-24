@@ -73,7 +73,7 @@ export let test7 =
     question 'A'
     A: boolean
     question 'B'
-    B: boolean
+    A: string
     question 'C'
     C: boolean
     if ((A && B) && !(A && C)) {

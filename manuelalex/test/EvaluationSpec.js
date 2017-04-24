@@ -12,7 +12,7 @@ describe('Evaluation', () => {
     let imports = {};
 
     beforeEach(function () {
-        return Promise.all([JspmImport('./src/gui/EvaluationVisitor.js'), JspmImport('./src/expressions/Expression.js'), JspmImport('./src/types/Property.js'), JspmImport('./src/memory/MemoryState.js'), JspmImport('./src/types/Types.js'), JspmImport('./src/types/Numbers.js')]).then(([{ EvaluationVisitor }, { Expression, PrefixExpression }, { Property }, { MemoryState }, { QLMoney, QLString, QLBoolean, QLNumber, QLDate }, {Numbers}]) => {
+        return Promise.all([JspmImport('./src/gui/visitors/EvaluationVisitor.js'), JspmImport('./src/expressions/Expression.js'), JspmImport('./src/types/Property.js'), JspmImport('./src/memory/MemoryState.js'), JspmImport('./src/types/Types.js'), JspmImport('./src/types/Numbers.js')]).then(([{ EvaluationVisitor }, { Expression, PrefixExpression }, { Property }, { MemoryState }, { QLMoney, QLString, QLBoolean, QLNumber, QLDate }, {Numbers}]) => {
             imports.EvaluationVisitor = EvaluationVisitor;
             imports.Expression = Expression;
             imports.PrefixExpression = PrefixExpression;

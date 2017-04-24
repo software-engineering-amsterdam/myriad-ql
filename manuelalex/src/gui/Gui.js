@@ -5,14 +5,13 @@
 import {Router} from 'arva-js/core/Router.js';
 import {Injection} from 'arva-js/utils/Injection.js';
 import {Program} from './Program.js';
-import {RenderVisitor} from './renderers/RenderVisitor.js';
-import {EvaluationVisitor} from './EvaluationVisitor.js';
-import {RenderInputVisitor} from './renderers/types/RenderInputVisitor.js';
-import {RenderValueVisitor} from './renderers/types/RenderValueVisitor.js';
+import {RenderVisitor} from './visitors/RenderVisitor.js';
+import {EvaluationVisitor} from './visitors/EvaluationVisitor.js';
+import {RenderInputVisitor} from './visitors/types/RenderInputVisitor.js';
+import {RenderValueVisitor} from './visitors/types/RenderValueVisitor.js';
 
 export class GUI {
 
-    program;
     ast;
 
     constructor(ast = {}, memoryState = {}) {

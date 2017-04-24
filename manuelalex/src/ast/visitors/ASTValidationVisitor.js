@@ -3,16 +3,14 @@
  */
 
 import find from 'lodash/find';
-import {Expression} from './expressions/Expression.js';
-import {MemoryState} from './memory/MemoryState.js';
-import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from './types/Types.js';
+import {Expression} from '../../expressions/Expression.js';
+import {MemoryState} from '../../memory/MemoryState.js';
+import {QLBoolean} from '../../types/Types.js';
 
 export class ASTValidationVisitor {
 
-    _reservedBooleanNames = ['true', 'false'];
-
-    constructor() {
-        this.memoryState = new MemoryState();
+    constructor(memoryState) {
+        this.memoryState = memoryState;
         this.errors = [];
         this.warnings = [];
         this.labels = [];
@@ -51,8 +49,11 @@ export class ASTValidationVisitor {
     visitAllocation(allocation) {
         let expression = allocation.getExpression();
         let returnType = expression.accept(this);
-        if (returnType.constructor.name !== allocation.getType().constructor.name) {
-            this.errors.push(`Invalid allocation. The return type should be the same as the type proviced, at location ${allocation.getLocation()}. `);
+
+        if (!returnType) {
+            this.errors.push(`Invalid allocation. Allocation ${allocation.toString()} does not have a valid return type.`);
+        } else if (returnType.constructor.name !== allocation.getType().constructor.name) {
+            this.errors.push(`Invalid allocation. The return type should be the same as the type provided, for allocation ${allocation.toString()}.`);
         }
     }
 
@@ -92,6 +93,7 @@ export class ASTValidationVisitor {
         const leftHandType = leftHand.accept(this);
         const rightHandType = rightHand.accept(this);
 
+
         if (!leftHandType || !rightHandType) {
             // todo add error for no return type of part of the expression
             return undefined;
@@ -111,20 +113,9 @@ export class ASTValidationVisitor {
         return expression.getType();
     }
 
-    visitProperty(property, propertyType) {
-        let name = property.getName();
-
-        // todo we need a way to check for non allocated properties for Answers and Expressions.
-
-        /* Return QLBoolean for a reserved boolean name */
-        if (this._reservedBooleanNames.includes(name)) {
-            propertyType = new QLBoolean(property.getLocation());
-            this.memoryState.set(name, propertyType, property.getName()); // todo name is duplicated per reserved keyword, find out if this is a problem
-            return propertyType;
-        }
-
-        this.memoryState.set(name, this.memoryState.getType(name) || propertyType);
-        return this.memoryState.getType(name);
+    visitProperty(property) {
+        this.checkPropertyIsUndefined(property);
+        return this.memoryState.getType(property.getName());
     }
 
     /**
@@ -133,7 +124,8 @@ export class ASTValidationVisitor {
      */
     checkDuplicateDeclarations(question) {
         const property = question.getProperty();
-        const memoryElement = this.memoryState.getElement(property);
+        const propertyName = property.getName();
+        const memoryElement = this.memoryState.getElement(propertyName);
 
         const propertyInMemory = memoryElement !== undefined;
 
@@ -155,14 +147,15 @@ export class ASTValidationVisitor {
     }
 
     checkPropertyIsUndefined(property) {
-        const memoryElement = this.memoryState.getElement(property);
-        const propertyInMemory = memoryElement !== undefined;
-        if (propertyInMemory) {
-            this.errors.push(`Property "${property.getName()}" is being used but is not defined.`)
+        const propertyName = property.getName();
+        const memoryElement = this.memoryState.getElement(propertyName);
+        const propertyHasNoType = memoryElement.getType() === undefined;
+        if (propertyHasNoType) {
+            this.errors.push(`Property "${property.getName()}" is being used but is not defined with a type.`)
         }
     }
 
-    getErrors(){
+    getErrors() {
         return this.errors;
     }
 

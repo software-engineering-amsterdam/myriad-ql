@@ -11,7 +11,7 @@ describe('Test Types', () => {
     let imports = {};
 
     beforeEach(function () {
-        return Promise.all([JspmImport('./src/ASTValidationVisitor.js'), JspmImport('./src/Form.js'), JspmImport('./src/expressions/Expression.js'), JspmImport('./src/types/Property.js'), JspmImport('./src/memory/MemoryState.js'), JspmImport('./src/types/Types.js')]).then(([{ASTValidationVisitor}, {Form}, {Expression}, {Property}, {MemoryState}, {QLMoney, QLString, QLBoolean, QLNumber, QLDate}]) => {
+        return Promise.all([JspmImport('./src/ast/visitors/ASTValidationVisitor.js'), JspmImport('./src/Form.js'), JspmImport('./src/expressions/Expression.js'), JspmImport('./src/types/Property.js'), JspmImport('./src/memory/MemoryState.js'), JspmImport('./src/types/Types.js')]).then(([{ASTValidationVisitor}, {Form}, {Expression}, {Property}, {MemoryState}, {QLMoney, QLString, QLBoolean, QLNumber, QLDate}]) => {
             imports.ASTValidationVisitor = ASTValidationVisitor;
             imports.Form = Form;
             imports.Expression = Expression;

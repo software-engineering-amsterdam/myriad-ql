@@ -126,6 +126,18 @@ export let validStrings = {
                 sellingPrice: money
                 }
         }`,
+    9: `form taxOfficeExample {
+            if (false) {
+                question 'What was the selling price?'
+                sellingPrice: money
+                }
+        }`,
+    10: `form taxOfficeExample {
+            if (1 < 2) {
+                question 'What was the selling price?'
+                sellingPrice: money
+                }
+        }`,
 };
 
 export let invalidStrings = {

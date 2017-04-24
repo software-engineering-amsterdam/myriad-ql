@@ -29,4 +29,8 @@ export class Allocation {
     accept(visitor){
         return visitor.visitAllocation(this);
     }
+
+    toString(){
+        return this.getExpression().toString();
+    }
 }

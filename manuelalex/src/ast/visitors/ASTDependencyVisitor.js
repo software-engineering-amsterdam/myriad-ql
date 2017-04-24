@@ -3,8 +3,8 @@
  */
 
 import find     from 'lodash/find';
-import {Expression} from './expressions/Expression.js';
-import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from './types/Types.js';
+import {Expression} from '../../expressions/Expression.js';
+import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from '../../types/Types.js';
 
 export class ASTDependencyVisitor {
 
