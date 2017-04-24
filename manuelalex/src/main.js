@@ -33,6 +33,7 @@ dependencyVisitor.visitAST(ast);
 
 // todo (Maybe, not sure) Maybe make a new class for allocation the memory state, as it is currenlty done by validating the AST. this is needed by the GUI to properly render
 
+// todo show warnings somewehere
 
 if (visitor.hasDetectedErrors() || dependencyVisitor.hasDetectedErrors()) {
     let gui = new GUI(null, null);
