@@ -3,8 +3,6 @@
  */
 
 import find from 'lodash/find';
-import {Expression} from '../../expressions/Expression.js';
-import {MemoryState} from '../../memory/MemoryState.js';
 import {QLBoolean} from '../../types/Types.js';
 
 export class ASTValidationVisitor {
