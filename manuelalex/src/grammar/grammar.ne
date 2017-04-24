@@ -28,7 +28,7 @@ comparison                  -> plus_minus_expression | comparison _ ("<" | ">" |
 plus_minus_expression       -> multiply_divide_expression | plus_minus_expression _ ("-" | "+") _ plus_minus_expression     {% ASTBuilder.deepExpression %}
 multiply_divide_expression  -> atom | multiply_divide_expression _ ("/" | "*") _ multiply_divide_expression   {% ASTBuilder.deepExpression %}
 atom ->  [0-9]:+               {% ASTBuilder.numbers %}
-       | "true"                {% ASTBuilder.reservedBooleanWords %}
+       | "true" | "false"      {% ASTBuilder.reservedBooleanWords %}
        | propertyName
        | "(" expression ")"      {% (data)=> data[1] %}
 
