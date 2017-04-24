@@ -29,7 +29,6 @@ export class ASTValidationVisitor {
     }
 
     visitQuestion(question) {
-
         let property = question.getProperty();
         property.accept(this, question.getPropertyType());
 
@@ -91,10 +90,8 @@ export class ASTValidationVisitor {
         const leftHandType = leftHand.accept(this);
         const rightHandType = rightHand.accept(this);
 
-
         if (!leftHandType || !rightHandType) {
-            // todo add error for no return type of part of the expression
-            return undefined;
+            this.errors.push(`Expression ${expression.toString()} does not have a valid leftHand or rightHand type`);
         } else {
             if (leftHandType.getType() !== rightHandType.getType()) {
                 this.errors.push(`Invalid expression. The operator ${operator} can not be applied 
@@ -109,6 +106,7 @@ export class ASTValidationVisitor {
             }
         }
         return expression.getType();
+
     }
 
     visitProperty(property) {
@@ -127,7 +125,6 @@ export class ASTValidationVisitor {
 
         const propertyInMemory = memoryElement !== undefined;
 
-        // TODO check if error should be thrown with a duplicate declaration with the same type
         if (propertyInMemory && question.getPropertyType() !== memoryElement.getType()) {
             this.warnings.push(`Property "${question.getPropertyType()}" is being used with multiple types`);
         }
