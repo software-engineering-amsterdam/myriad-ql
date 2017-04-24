@@ -23,7 +23,7 @@ export class ASTDependencyVisitor {
         for (const statement of statements) {
             statement.accept(this);
         }
-
+        this.checkForCyclicDependencies();
     }
 
     visitQuestion(question) {
@@ -84,7 +84,6 @@ export class ASTDependencyVisitor {
     }
 
     hasDetectedErrors() {
-        this.checkForCyclicDependencies(); // todo remove this ?
         return this.errors.length > 0;
     }
 }

@@ -5,14 +5,12 @@ import chai from 'chai';
 import JspmImport       from './JspmImport.js';
 const expect = chai.expect;
 
-describe('Test ASTValidator', () => {
+describe('AST Dependency Visitor', () => {
 
     let imports = {};
 
-
-
     beforeEach(function () {
-        return Promise.all([JspmImport('./src/ASTDependencyVisitor.js'), JspmImport('./src/Form.js'), JspmImport('./src/statements/IFStatement.js'), JspmImport('./src/statements/Question.js'), JspmImport('./src/expressions/Expression.js'), JspmImport('./src/types/Property.js'), JspmImport('./src/memory/MemoryState.js'), JspmImport('./src/types/Types.js')]).then(([{ASTDependencyVisitor}, {Form}, {IfStatement}, {Question}, {Expression, PrefixExpression}, {Property}, {MemoryState}, {QLMoney, QLString, QLBoolean, QLNumber, QLDate}]) => {
+        return Promise.all([JspmImport('./src/ASTDependencyVisitor.js'), JspmImport('./src/Form.js'), JspmImport('./src/statements/IFStatement.js'), JspmImport('./src/statements/Question.js'), JspmImport('./src/expressions/Expression.js'), JspmImport('./src/types/Property.js'), JspmImport('./src/memory/MemoryState.js'), JspmImport('./src/types/Types.js')]).then(([{ ASTDependencyVisitor }, { Form }, { IfStatement }, { Question }, { Expression, PrefixExpression }, { Property }, { MemoryState }, { QLMoney, QLString, QLBoolean, QLNumber, QLDate }]) => {
             imports.ASTDependencyVisitor = ASTDependencyVisitor;
             imports.Form = Form;
             imports.IfStatement = IfStatement;
@@ -31,8 +29,6 @@ describe('Test ASTValidator', () => {
         });
     });
 
-
-
     /**
      * testing the following case
      * if (x) { y: "Y?" boolean }
@@ -41,8 +37,8 @@ describe('Test ASTValidator', () => {
     describe('Test cyclic dependencies between questions', () => {
         it('if (x) { y: "Y?" boolean } \n if (y) { x: "X?" boolean }', (done) => {
             let form = new imports.Form();
-            let x = new imports.Property("x",2);
-            let y = new imports.Property("y",4);
+            let x = new imports.Property("x", 2);
+            let y = new imports.Property("y", 4);
 
             let expressionX = new imports.PrefixExpression();
             expressionX.expression = x;
@@ -56,14 +52,13 @@ describe('Test ASTValidator', () => {
             form.statements = [ifstatement1, ifstatement2];
 
             let astDependencyVisitor = new imports.ASTDependencyVisitor();
-            astDependencyVisitor.visitStatements([ifstatement1,ifstatement2]);
+            astDependencyVisitor.visitStatements([ifstatement1, ifstatement2]);
 
 
             expect(astDependencyVisitor.hasDetectedErrors()).to.equal(true);
             done();
         })
     });
-
 
     /**
      * testing the following case
@@ -75,7 +70,7 @@ describe('Test ASTValidator', () => {
 
         it('if (x) { a: "A?" boolean } \n if (!x) { a: "A?" boolean }', (done) => {
             let form = new imports.Form();
-            let x = new imports.Property("x",2);
+            let x = new imports.Property("x", 2);
 
             let expressionX = new imports.PrefixExpression();
             expressionX.expression = x;
@@ -90,7 +85,7 @@ describe('Test ASTValidator', () => {
             form.statements = [ifstatement1, ifstatement2];
 
             let astDependencyVisitor = new imports.ASTDependencyVisitor();
-            astDependencyVisitor.visitStatements([ifstatement1,ifstatement2]);
+            astDependencyVisitor.visitStatements([ifstatement1, ifstatement2]);
             console.log(astDependencyVisitor.innerGraph);
             console.log(astDependencyVisitor.graph);
 
@@ -100,8 +95,5 @@ describe('Test ASTValidator', () => {
             done();
         })
     });
-
-
-
 
 });
