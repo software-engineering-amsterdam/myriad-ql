@@ -92,8 +92,11 @@ export class ASTValidationVisitor {
         const leftHandType = leftHand.accept(this);
         const rightHandType = rightHand.accept(this);
 
+
+
         if (!leftHandType || !rightHandType) {
-            return leftHandType; // todo what's the purpose if this??
+            // todo add error for no return type of part of the expression
+            return undefined;
         } else {
             if (leftHandType.getType() !== rightHandType.getType()) {
                 this.errors.push(`Invalid expression. The operator ${operator} can not be applied 
@@ -153,8 +156,7 @@ export class ASTValidationVisitor {
         }
     }
 
-    // todo naming?
-    checkProperty(property) {
+    checkPropertyIsUndefined(property) {
         const memoryElement = this.memoryState.getElement(property);
         const propertyInMemory = memoryElement !== undefined;
         if (propertyInMemory) {
