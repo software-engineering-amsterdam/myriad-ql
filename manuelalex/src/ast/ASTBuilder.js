@@ -68,11 +68,6 @@ export class ASTBuilder {
         return data;
     }
 
-    // todo maybe remove
-    operator(data) {
-        return data;
-    }
-
     money(location) {
         return new QLMoney(location);
     }

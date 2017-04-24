@@ -3,26 +3,33 @@
  */
 
 import Surface from 'famous/core/Surface.js';
+import {AbstractVisitor} from '../../../AbstractVisitor.js';
 
-export class RenderValueVisitor {
+export class RenderValueVisitor extends AbstractVisitor{
 
-    renderMoney() {
+    visitMoney() {
         return new Surface();
     }
 
-    renderString(){
+    visitString(){
         return new Surface();
     }
 
-    renderBoolean(){
+    visitBoolean(){
         return new Surface();
     }
 
-    renderNumber(){
+    visitNumber(){
         return new Surface();
     }
 
-    renderDate(){
+    visitDate(){
         return new Surface();
     }
+
+    visitReservedBooleanWords(){
+        return new Surface();
+    }
+
+
 }

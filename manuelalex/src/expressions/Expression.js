@@ -37,6 +37,8 @@ export class Expression {
     }
 
     getType() {
+
+        //
         // todo return also the other types
         if (['<', '>', '>=', '<=', '!=', '==', '&&', '||'].includes(this.getOperator())) {
             return new QLBoolean();

@@ -3,11 +3,13 @@
  */
 
 import find from 'lodash/find';
-import {QLBoolean} from '../../types/Types.js';
+import {AbstractVisitor} from '../../AbstractVisitor.js';
+import {QLBoolean, QLNumber} from '../../types/Types.js';
 
-export class ASTValidationVisitor {
+export class ASTValidationVisitor extends AbstractVisitor{
 
     constructor(memoryState) {
+        super();
         this.memoryState = memoryState;
         this.errors = [];
         this.warnings = [];
@@ -112,6 +114,14 @@ export class ASTValidationVisitor {
     visitProperty(property) {
         this.checkPropertyIsUndefined(property);
         return this.memoryState.getType(property.getName());
+    }
+
+    visitNumbers(){
+        return new QLNumber();
+    }
+
+    visitReservedBooleanWords(reservedBooleanWord){
+        return reservedBooleanWord.getType();
     }
 
     /**

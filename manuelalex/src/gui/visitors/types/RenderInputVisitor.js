@@ -2,12 +2,13 @@
  * Created by Manuel on 24/04/2017.
  */
 
+import {AbstractVisitor} from '../../../AbstractVisitor.js';
 import {Checkbox} from 'arva-kit/components/Checkbox.js';
 import {SingleLineTextInput} from 'arva-kit/input/SingleLineTextInput.js';
 
-export class RenderInputVisitor {
+export class RenderInputVisitor extends AbstractVisitor{
 
-    renderBoolean(qlBoolean) {
+    visitBoolean(qlBoolean) {
         const renderable = new Checkbox({
             state: false,
             enabled: true
@@ -26,7 +27,7 @@ export class RenderInputVisitor {
         return renderable;
     }
 
-    renderString(qlString) {
+    visitString(qlString) {
         const renderable = new SingleLineTextInput({});
         renderable.on('message', (message) => {
             renderable._eventOutput.emit('state', { value: message, type: qlString });
@@ -37,7 +38,7 @@ export class RenderInputVisitor {
         return renderable;
     }
 
-    renderDate(qlData) {
+    visitDate(qlData) {
         const renderable = new SingleLineTextInput({
             inputOptions: { type: 'date' }
         });
@@ -50,7 +51,7 @@ export class RenderInputVisitor {
         return renderable;
     }
 
-    renderNumber(qlNumber) {
+    visitNumber(qlNumber) {
         const renderable = new SingleLineTextInput({
             inputOptions: { type: 'number' }
         });
@@ -63,7 +64,7 @@ export class RenderInputVisitor {
         return renderable;
     }
 
-    renderMoney(qlMoney) {
+    visitMoney(qlMoney) {
         const renderable = new SingleLineTextInput({
             inputOptions: { type: 'number' }
         });

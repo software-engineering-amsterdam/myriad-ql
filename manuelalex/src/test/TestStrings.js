@@ -54,10 +54,10 @@ export let test6 =
     question 'Did you sell a house in 2010?'
     hasSoldHouse: boolean
     question 'Did you buy a house in 2010?'
-    hasMaintLoan: boolean
+    hasBoughtHouse: boolean
     question 'Did you enter a loan? TEST'
     hasMaintLoan: string
-    if (hasBoughtHouse && ZZ) {
+    if (true && true) {
         question 'What was the selling price?'
         sellingPrice: money
         question 'What was the private debts for the sold house?'

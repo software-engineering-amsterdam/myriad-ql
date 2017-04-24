@@ -35,7 +35,7 @@ export class Type {
 
 export class QLMoney extends Type {
     accept(visitor, ...params) {
-        return visitor.renderMoney(this, ...params);
+        return visitor.visitMoney(this, ...params);
     }
 
     isValidOperator(operator){
@@ -46,7 +46,7 @@ export class QLMoney extends Type {
 
 export class QLString extends Type {
     accept(visitor, ...params) {
-        return visitor.renderString(this, ...params);
+        return visitor.visitString(this, ...params);
     }
 
     isValidOperator(operator){
@@ -56,7 +56,7 @@ export class QLString extends Type {
 
 export class QLBoolean extends Type {
     accept(visitor, ...params) {
-        return visitor.renderBoolean(this, ...params);
+        return visitor.visitBoolean(this, ...params);
     }
 
     isValidOperator(operator){
@@ -66,7 +66,7 @@ export class QLBoolean extends Type {
 
 export class QLNumber extends Type {
     accept(visitor, ...params) {
-        return visitor.renderNumber(this, ...params);
+        return visitor.visitNumber(this, ...params);
     }
 
     isValidOperator(operator){
@@ -76,7 +76,7 @@ export class QLNumber extends Type {
 
 export class QLDate extends Type {
     accept(visitor, ...params) {
-        return visitor.renderDate(this, ...params);
+        return visitor.visitDate(this, ...params);
     }
 
     isValidOperator(operator){

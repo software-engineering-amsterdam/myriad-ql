@@ -9,12 +9,15 @@ import {layout} from 'arva-js/layout/Decorators.js';
 import {Checkbox} from 'arva-kit/components/Checkbox.js';
 import {SingleLineTextInput} from 'arva-kit/input/SingleLineTextInput.js';
 
-export class RenderVisitor {
+import {AbstractVisitor} from '../../AbstractVisitor.js';
+
+export class RenderVisitor extends AbstractVisitor{
 
     _viewCount = 0;
     memoryState;
 
     constructor(memoryState, evaluationVisitor, renderValueVisitor, renderInputVisitor) {
+        super();
         this.memoryState = memoryState;
         this.evaluationVisitor = evaluationVisitor;
         this.renderValueVisitor = renderValueVisitor;
