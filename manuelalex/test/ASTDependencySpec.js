@@ -29,6 +29,40 @@ describe('AST Dependency Visitor', () => {
         });
     });
 
+
+    /**
+     * testing the following case
+     * if (x) { a: "a?" boolean }
+     * if (y) { b: "b?" boolean }
+     **/
+    describe('Test cyclic dependencies between questions', () => {
+        it('if (x) { a: "a?" boolean } \n f (y) { b: "b?" boolean }', (done) => {
+            let form = new imports.Form();
+            let x = new imports.Property("x", 2);
+            let y = new imports.Property("y", 4);
+
+            let expressionX = new imports.PrefixExpression();
+            expressionX.expression = x;
+            let expressionY = new imports.PrefixExpression();
+            expressionY.expression = y;
+            let questionA = new imports.Question("A?", "a", "QLBoolean", 3);
+            let questionB = new imports.Question("B?", "b", "QLBoolean", 5);
+
+            let ifstatement1 = new imports.IfStatement(expressionX, [questionA], 2);
+            let ifstatement2 = new imports.IfStatement(expressionY, [questionB], 4);
+
+
+            let astDependencyVisitor = new imports.ASTDependencyVisitor();
+            astDependencyVisitor.visitStatements([ifstatement1, ifstatement2]);
+
+
+            expect(astDependencyVisitor.hasDetectedErrors()).to.equal(false);
+            done();
+        })
+    });
+
+
+
     /**
      * testing the following case
      * if (x) { y: "Y?" boolean }
@@ -49,10 +83,58 @@ describe('AST Dependency Visitor', () => {
 
             let ifstatement1 = new imports.IfStatement(expressionX, [questionY], 2);
             let ifstatement2 = new imports.IfStatement(expressionY, [questionX], 4);
-            form.statements = [ifstatement1, ifstatement2];
+
 
             let astDependencyVisitor = new imports.ASTDependencyVisitor();
             astDependencyVisitor.visitStatements([ifstatement1, ifstatement2]);
+
+
+            expect(astDependencyVisitor.hasDetectedErrors()).to.equal(true);
+            done();
+        })
+    });
+
+
+    /**
+     * testing the following case
+     * if (x) {
+     *      if(y) {
+     *          z: "Z?" boolean
+     *      }
+     * }
+     * if (z) {
+     *      if(y) {
+     *          x: "X?" boolean
+     *      }
+     * }
+     **/
+    describe('Test cyclic dependencies between questions', () => {
+        it('if (x) { y: "Y?" boolean } \n if (y) { x: "X?" boolean }', (done) => {
+            let form = new imports.Form();
+            let x = new imports.Property("x", 2);
+            let y = new imports.Property("y", 4);
+            let z = new imports.Property("z", 6);
+
+            let expressionX = new imports.PrefixExpression();
+            expressionX.expression = x;
+            let expressionY = new imports.PrefixExpression();
+            expressionY.expression = y;
+            let expressionZ = new imports.PrefixExpression();
+            expressionZ.expression = z;
+
+
+            let questionZ = new imports.Question("Z?", "z", "QLBoolean", 3);
+            let questionX = new imports.Question("X?", "x", "QLBoolean", 5);
+
+            let ifstatementY1 = new imports.IfStatement(expressionX, [questionZ], 2);
+            let ifstatementX = new imports.IfStatement(expressionX, [ifstatementY1], 2);
+
+            let ifstatementY2 = new imports.IfStatement(expressionX, [ifstatementY2], 2);
+            let ifstatementZ = new imports.IfStatement(expressionX, [questionX], 2);
+
+
+            let astDependencyVisitor = new imports.ASTDependencyVisitor();
+            astDependencyVisitor.visitStatements([ifstatementX, ifstatementZ]);
 
 
             expect(astDependencyVisitor.hasDetectedErrors()).to.equal(true);
