@@ -96,3 +96,17 @@ export let test8 =
             sellingPrice: money
         }
      }`;
+
+export let test9 =
+    `form taxOfficeExample {
+        question 'Did you buy a house in 2010?'
+        hasSoldHouse: boolean
+        if (x) {
+            question 'Y'
+            y: boolean
+        }
+        if (y) {
+            question 'X'
+            x: boolean
+        }
+     }`;

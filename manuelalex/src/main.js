@@ -14,12 +14,12 @@ import {AST} from './ast/AST.js';
 import {
     test1, test2, test3,
     test4, test5, test6,
-    test7, test8
+    test7, test8, test9
 } from './test/TestStrings.js';
 
 
 let parser = new Parser();
-let { result, errors, parseString } = parser.parse(test8);
+let { result, errors, parseString } = parser.parse(test9);
 
 if (errors.length) {
     let gui = new GUI(null, null);
