@@ -22,11 +22,8 @@ export class Answer extends Statement {
         return this.allocation;
     }
 
-    accept(visitor) {
-        visitor.visitAnswer(this);
+    accept(visitor, ...params) {
+        visitor.visitAnswer(this, ...params);
     }
 
-    render(visitor, view) {
-        visitor.renderAnswer(this, view);
-    }
 }

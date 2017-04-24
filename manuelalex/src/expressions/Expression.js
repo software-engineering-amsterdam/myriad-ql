@@ -28,12 +28,8 @@ export class Expression {
         return this.operator;
     }
 
-    accept(visitor) {
-        return visitor.visitExpression(this);
-    }
-
-    evaluate(visitor, memoryState) {
-        return visitor.evaluateExpression(this, memoryState);
+    accept(visitor, ...params) {
+        return visitor.visitExpression(this, ...params);
     }
 
     toString() {
@@ -67,12 +63,8 @@ export class PrefixExpression {
         return this.expression;
     }
 
-    accept(visitor) {
-        return visitor.visitPrefixExpression(this);
-    }
-
-    evaluate(visitor, memoryState) {
-        return visitor.evaluatePrefixExpression(this, memoryState);
+    accept(visitor, ...params) {
+        return visitor.visitPrefixExpression(this, ...params);
     }
 
     toString() {

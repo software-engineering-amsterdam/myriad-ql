@@ -39,7 +39,7 @@ describe('Evaluation', () => {
         memoryState.set('leftHand', new imports.QLBoolean(), true);
         memoryState.set('rightHand', new imports.QLBoolean(), true);
 
-        expect(expression.evaluate(evaluationVisitor, memoryState)).to.equal(true);
+        expect(expression.accept(evaluationVisitor, memoryState)).to.equal(true);
     });
 
     it('Evaluates true || false -> true', function () {
@@ -54,7 +54,7 @@ describe('Evaluation', () => {
         memoryState.set('leftHand', new imports.QLBoolean(), true);
         memoryState.set('rightHand', new imports.QLBoolean(), false);
 
-        expect(expression.evaluate(evaluationVisitor, memoryState)).to.equal(true);
+        expect(expression.accept(evaluationVisitor, memoryState)).to.equal(true);
     });
 
     it('Evaluates false || true -> false', function () {
@@ -69,7 +69,7 @@ describe('Evaluation', () => {
         memoryState.set('leftHand', new imports.QLBoolean(), false);
         memoryState.set('rightHand', new imports.QLBoolean(), true);
 
-        expect(expression.evaluate(evaluationVisitor, memoryState)).to.equal(true);
+        expect(expression.accept(evaluationVisitor, memoryState)).to.equal(true);
     });
 
     it('Evaluates 1 || false -> true', function () {
@@ -83,7 +83,7 @@ describe('Evaluation', () => {
         let expression = new imports.Expression(leftHandProperty, operator, rightHandProperty);
         memoryState.set('rightHand', new imports.QLBoolean(), false);
 
-        expect(expression.evaluate(evaluationVisitor, memoryState)).to.equal(true);
+        expect(expression.accept(evaluationVisitor, memoryState)).to.equal(true);
     });
 
     it('Evaluates 1 < 2 -> true', function () {
@@ -96,7 +96,7 @@ describe('Evaluation', () => {
         let memoryState = new imports.MemoryState();
         let expression = new imports.Expression(leftHandProperty, operator, rightHandProperty);
 
-        expect(expression.evaluate(evaluationVisitor, memoryState)).to.equal(true);
+        expect(expression.accept(evaluationVisitor, memoryState)).to.equal(true);
     });
 
     it('Evaluates 10000 == 10000 -> true', function () {
@@ -109,7 +109,7 @@ describe('Evaluation', () => {
         let memoryState = new imports.MemoryState();
         let expression = new imports.Expression(leftHandProperty, operator, rightHandProperty);
 
-        expect(expression.evaluate(evaluationVisitor, memoryState)).to.equal(true);
+        expect(expression.accept(evaluationVisitor, memoryState)).to.equal(true);
     });
 
     it('Evaluates -1 == -1 -> true', function () {
@@ -122,7 +122,7 @@ describe('Evaluation', () => {
         let memoryState = new imports.MemoryState();
         let expression = new imports.Expression(leftHandProperty, operator, rightHandProperty);
 
-        expect(expression.evaluate(evaluationVisitor, memoryState)).to.equal(true);
+        expect(expression.accept(evaluationVisitor, memoryState)).to.equal(true);
     });
 
     it('Evaluates (true && true) && (true || false) -> true', function () {
@@ -145,7 +145,7 @@ describe('Evaluation', () => {
 
         let evaluationVisitor = new imports.EvaluationVisitor();
 
-        expect(finalExpression.evaluate(evaluationVisitor, memoryState)).to.equal(true);
+        expect(finalExpression.accept(evaluationVisitor, memoryState)).to.equal(true);
     });
 
     it('Evaluates !(true && true) -> false', function () {
@@ -161,7 +161,7 @@ describe('Evaluation', () => {
         memoryState.set('rightHand', new imports.QLBoolean(), true);
 
         let prefixExpression = new imports.PrefixExpression('!', expression);
-        expect(prefixExpression.evaluate(evaluationVisitor, memoryState)).to.equal(false);
+        expect(prefixExpression.accept(evaluationVisitor, memoryState)).to.equal(false);
     });
 
 });

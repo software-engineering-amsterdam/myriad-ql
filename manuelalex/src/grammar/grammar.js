@@ -1,8 +1,5 @@
 // Generated automatically by nearley
 // http://github.com/Hardmath123/nearley
-import {ASTBuilder as Builder} from 'src/ast/ASTBuilder.js';  var ASTBuilder = new Builder();
-
-
 (function () {
 function id(x) {return x[0]; }
 

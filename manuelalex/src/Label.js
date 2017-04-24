@@ -11,8 +11,8 @@ export class Label {
         return this.value;
     }
 
-    render(visitor) {
-        return visitor.renderLabel(this);
+    accept(visitor, ...params) {
+        return visitor.visitLabel(this, ...params);
     }
 
     contains(obj) {

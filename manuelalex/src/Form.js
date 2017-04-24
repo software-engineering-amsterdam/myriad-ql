@@ -23,7 +23,7 @@ export class Form {
         return this.location;
     }
 
-    renderTitle(visitor, view) {
-        return visitor.renderProgamTitle(this.getName(), view);
+    accept(visitor, ...params) {
+        return visitor.visitProgramTitle(this.getName(), ...params);
     }
 }

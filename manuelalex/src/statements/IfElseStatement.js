@@ -17,12 +17,8 @@ export class IfElseStatement extends IfStatement {
     }
 
 
-    accept(visitor) {
-        visitor.visitIfElseStatement(this);
-    }
-
-    render(visitor, view) {
-        visitor.renderIfElseStatement(this, view);
+    accept(visitor, ...params) {
+        visitor.visitIfElseStatement(this, ...params);
     }
 
 }

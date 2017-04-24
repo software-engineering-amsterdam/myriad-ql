@@ -12,8 +12,8 @@ export class Type {
         return this.location;
     }
 
-    render() {
-        throw new Error('Render method should have been overwritten');
+    accept() {
+        throw new Error('Accept method should have been overwritten');
     }
 
     toString() {
@@ -31,16 +31,11 @@ export class Type {
         throw new Error('validOperator method should have been overwritten');
     }
 
-
 }
 
 export class QLMoney extends Type {
-    render(visitor) {
-        return visitor.renderMoneyInput(this);
-    }
-
-    renderValue(visitor) {
-        return visitor.renderMoneyValue(this);
+    accept(visitor, ...params) {
+        return visitor.renderMoney(this, ...params);
     }
 
     isValidOperator(operator){
@@ -48,18 +43,20 @@ export class QLMoney extends Type {
     }
 
 }
+
 export class QLString extends Type {
-    render(visitor) {
-        return visitor.renderStringInput(this);
+    accept(visitor, ...params) {
+        return visitor.renderString(this, ...params);
     }
 
     isValidOperator(operator){
         return ['<', '>', '>=', '<=', '!=', '=='].includes(operator);
     }
 }
+
 export class QLBoolean extends Type {
-    render(visitor) {
-        return visitor.renderBooleanInput(this);
+    accept(visitor, ...params) {
+        return visitor.renderBoolean(this, ...params);
     }
 
     isValidOperator(operator){
@@ -68,17 +65,18 @@ export class QLBoolean extends Type {
 }
 
 export class QLNumber extends Type {
-    render(visitor) {
-        return visitor.renderNumberInput(this);
+    accept(visitor, ...params) {
+        return visitor.renderNumber(this, ...params);
     }
 
     isValidOperator(operator){
         return ['<', '>', '>=', '<=', '!=', '==', '*', '/', '+', '-'].includes(operator);
     }
 }
+
 export class QLDate extends Type {
-    render(visitor) {
-        return visitor.renderDateInput(this);
+    accept(visitor, ...params) {
+        return visitor.renderDate(this, ...params);
     }
 
     isValidOperator(operator){

@@ -17,12 +17,8 @@ export class Property {
         return this.location;
     }
 
-    evaluate(visitor, memoryState = {}) {
-        return visitor.evaluateProperty(this, memoryState);
-    }
-
-    accept(visitor, type) {
-        return visitor.visitProperty(this, type);
+    accept(visitor, ...params) {
+        return visitor.visitProperty(this, ...params);
     }
 
     toString() {

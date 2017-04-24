@@ -26,11 +26,7 @@ export class Question extends Statement {
         return this.propertyType;
     }
 
-    accept(visitor) {
-        visitor.visitQuestion(this);
-    }
-
-    render(visitor, view) {
-        visitor.renderQuestion(this, view);
+    accept(visitor, ...params) {
+        visitor.visitQuestion(this, ...params);
     }
 }

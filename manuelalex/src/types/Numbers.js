@@ -3,23 +3,21 @@
  */
 
 export class Numbers {
-    constructor(value, location){
+    constructor(value, location) {
         this.value = value;
         this.location = location;
     }
 
-    getValue(){
+    getValue() {
         return this.value;
     }
 
-    getLocation(){
+    getLocation() {
         return this.location;
     }
 
-    evaluate(visitor){
-        return visitor.evaluateNumbers(this);
+    accept(visitor, ...params) {
+        return visitor.visitNumbers(this, ...params);
     }
-
-
 
 }

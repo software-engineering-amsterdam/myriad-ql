@@ -5,8 +5,10 @@
 import {Router} from 'arva-js/core/Router.js';
 import {Injection} from 'arva-js/utils/Injection.js';
 import {Program} from './Program.js';
-import {RenderVisitor} from './RenderVisitor.js';
+import {RenderVisitor} from './renderers/RenderVisitor.js';
 import {EvaluationVisitor} from './EvaluationVisitor.js';
+import {RenderInputVisitor} from './renderers/types/RenderInputVisitor.js';
+import {RenderValueVisitor} from './renderers/types/RenderValueVisitor.js';
 
 export class GUI {
 
@@ -32,7 +34,9 @@ export class GUI {
         program.setViewForControllerMethod('QL', 'Index', view);
 
         const evaluationVisitor = new EvaluationVisitor();
-        const renderVisitor = new RenderVisitor(memoryState, evaluationVisitor);
+        const renderInputVisitor = new RenderInputVisitor();
+        const renderValueVisitor = new RenderValueVisitor();
+        const renderVisitor = new RenderVisitor(memoryState, evaluationVisitor, renderValueVisitor, renderInputVisitor);
         renderVisitor.visitProgram(ast.getProgram(), view);
 
         const router = Injection.get(Router);

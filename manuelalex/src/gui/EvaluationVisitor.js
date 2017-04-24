@@ -4,9 +4,9 @@
 
 export class EvaluationVisitor {
 
-    evaluateExpression(expression, memoryState) {
-        const leftValue = expression.getLeftHand().evaluate(this, memoryState);
-        const rightValue = expression.getRightHand().evaluate(this, memoryState);
+    visitExpression(expression, memoryState) {
+        const leftValue = expression.getLeftHand().accept(this, memoryState);
+        const rightValue = expression.getRightHand().accept(this, memoryState);
 
         const leftHandValue = leftValue || undefined;
         const rightHandValue = rightValue || undefined;
@@ -14,18 +14,18 @@ export class EvaluationVisitor {
         return Boolean(eval(`${leftHandValue} ${expression.getOperator()} ${rightHandValue}`));
     }
 
-    evaluatePrefixExpression(prefixExpression, memoryState) {
-        const value = prefixExpression.getExpression().evaluate(this, memoryState);
+    visitPrefixExpression(prefixExpression, memoryState) {
+        const value = prefixExpression.getExpression().accept(this, memoryState);
         return Boolean(eval(`${prefixExpression.getPrefix()} ${value}`));
     }
 
 
-    evaluateProperty(property, memoryState) {
+    visitProperty(property, memoryState) {
         const value = memoryState.getValue(property.getName()) || undefined;
         return eval(value);
     }
 
-    evaluateNumbers(number) {
+    visitNumbers(number) {
         return eval(number.getValue());
     }
 }

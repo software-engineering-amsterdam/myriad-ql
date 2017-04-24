@@ -22,11 +22,7 @@ export class IfStatement extends Statement {
         return this.ifBody;
     }
 
-    accept(visitor) {
-        visitor.visitIfStatement(this);
-    }
-
-    render(visitor, view) {
-        visitor.renderIfStatement(this, view);
+    accept(visitor, ...params) {
+        visitor.visitIfStatement(this, ...params);
     }
 }
