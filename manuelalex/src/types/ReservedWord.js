@@ -32,7 +32,7 @@ export class ReservedWord {
     }
 }
 
-export class ReservedBooleanWord extends ReservedWords {
+export class ReservedBooleanWords extends ReservedWords {
 
     getValue(){
         return this.value;
@@ -43,7 +43,7 @@ export class ReservedBooleanWord extends ReservedWords {
     }
 
     accept(visitor, ...params){
-        return visitor.visitReservedBooleanWords(this, ...params);
+        return visitor.visitReservedBooleanWord(this, ...params);
     }
 
 }

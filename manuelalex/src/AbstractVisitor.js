@@ -13,7 +13,7 @@ export class AbstractVisitor {
     visitPrefixExpression() {}
     visitExpression() {}
     visitProperty() {}
-    visitReservedBooleanWords() {}
+    visitReservedBooleanWord() {}
     visitNumbers() {}
     visitBoolean() {}
     visitString() {}

@@ -120,7 +120,7 @@ export class ASTValidationVisitor extends AbstractVisitor{
         return new QLNumber();
     }
 
-    visitReservedBooleanWords(reservedBooleanWord){
+    visitReservedBooleanWord(reservedBooleanWord){
         return reservedBooleanWord.getType();
     }
 

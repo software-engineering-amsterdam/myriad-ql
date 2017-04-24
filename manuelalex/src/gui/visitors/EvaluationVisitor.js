@@ -32,7 +32,7 @@ export class EvaluationVisitor extends AbstractVisitor {
         return eval(number.getValue());
     }
 
-    visitReservedBooleanWords(reservedBooleanWord){
+    visitReservedBooleanWord(reservedBooleanWord){
         return Boolean(eval(reservedBooleanWord.getValue()));
     }
 }

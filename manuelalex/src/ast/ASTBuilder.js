@@ -15,7 +15,7 @@ import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from '../types/Types.js'
 import {Property} from '../types/Property.js';
 import {Numbers} from '../types/Numbers.js';
 import {Label} from '../Label.js';
-import {ReservedBooleanWords} from '../types/ReservedWord.js';
+import {ReservedBooleanWord} from '../types/ReservedWord.js';
 
 export class ASTBuilder {
 
