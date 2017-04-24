@@ -1,7 +1,7 @@
 /**
  * Created by Manuel on 13/02/2017.
  */
-import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from '../types/Types';
+import {QLMoney, QLBoolean} from '../types/Types';
 
 export class Expression {
 

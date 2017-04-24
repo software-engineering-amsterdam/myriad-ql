@@ -23,13 +23,13 @@ export class ASTValidationVisitor {
     }
 
     visitStatements(statements) {
-        for (const statement of statements) {
+        for (let statement of statements) {
             statement.accept(this);
         }
     }
 
     visitQuestion(question) {
-        let property = question.getProperty();
+        const property = question.getProperty();
         property.accept(this, question.getPropertyType());
 
         this.checkDuplicateDeclarations(question);
@@ -38,14 +38,14 @@ export class ASTValidationVisitor {
     }
 
     visitAnswer(answer) {
-        let allocation = answer.getAllocation();
+        const allocation = answer.getAllocation();
         this.checkDuplicateLabels(answer);
         return allocation.accept(this);
     }
 
     visitAllocation(allocation) {
-        let expression = allocation.getExpression();
-        let returnType = expression.accept(this);
+        const expression = allocation.getExpression();
+        const returnType = expression.accept(this);
 
         if (!returnType) {
             this.errors.push(`Invalid allocation. Allocation ${allocation.toString()} does not have a valid return type.`);
@@ -55,17 +55,17 @@ export class ASTValidationVisitor {
     }
 
     visitIfStatement(ifStatement) {
-        let condition = ifStatement.getCondition();
+        const condition = ifStatement.getCondition();
         condition.accept(this);
 
-        let ifBody = ifStatement.getIfBody();
+        const ifBody = ifStatement.getIfBody();
         for (let statement of ifBody) {
             statement.accept(this);
         }
     }
 
     visitIfElseStatement(ifElseStatement) {
-        let elseBody = ifElseStatement.getElseBody();
+        const elseBody = ifElseStatement.getElseBody();
         for (let statement of elseBody) {
             statement.accept(this);
         }
@@ -74,8 +74,8 @@ export class ASTValidationVisitor {
 
 
     visitPrefixExpression(prefixExpression) {
-        let expression = prefixExpression.getExpression();
-        let returnType = expression.accept(this);
+        const expression = prefixExpression.getExpression();
+        const returnType = expression.accept(this);
         if (!(returnType instanceof QLBoolean)) {
             this.errors.push(`Invalid expression. The prefix operator ${prefixExpression.getPrefix()} can not be applied to ${expression.getName}, because it is not a boolean`);
         }
@@ -126,7 +126,7 @@ export class ASTValidationVisitor {
         const propertyInMemory = memoryElement !== undefined;
 
         if (propertyInMemory && question.getPropertyType() !== memoryElement.getType()) {
-            this.warnings.push(`Property "${question.getPropertyType()}" is being used with multiple types`);
+            this.warnings.push(`Property "${propertyName}" is being used with multiple types`);
         }
     }
 
@@ -146,7 +146,7 @@ export class ASTValidationVisitor {
         const memoryElement = this.memoryState.getElement(propertyName);
         const propertyHasNoType = memoryElement.getType() === undefined;
         if (propertyHasNoType) {
-            this.errors.push(`Property "${property.getName()}" is being used but is not defined with a type.`)
+            this.errors.push(`Property "${property.getName()}" is being used but is not defined with a type.`);
         }
     }
 
@@ -154,7 +154,15 @@ export class ASTValidationVisitor {
         return this.errors;
     }
 
+    getWarnings(){
+        return this.warnings;
+    }
+
     hasDetectedErrors() {
         return !!this.errors.length;
+    }
+
+    hasDetectedWarnings(){
+        return !!this.warnings.length;
     }
 }

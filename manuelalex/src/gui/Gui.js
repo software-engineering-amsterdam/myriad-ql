@@ -43,24 +43,40 @@ export class GUI {
     }
 
     showValidationErrors(errors) {
-        document.body.innerHTML = 'The following errors have occurred during validation:';
+        let innerHTML = document.body.innerHTML;
+        innerHTML = innerHTML + `The following errors have occurred during validation:`;
 
-        document.body.innerHTML = document.body.innerHTML + '<ul>';
+        innerHTML = innerHTML + '<ul>';
         for (const errorStatement of errors) {
-            document.body.innerHTML = document.body.innerHTML + '<li>' + errorStatement + '</li>';
+            innerHTML = innerHTML + '<li>' + errorStatement + '</li>';
         }
-        document.body.innerHTML = document.body.innerHTML + '</ul>';
+        innerHTML = innerHTML + '</ul>';
+        document.body.innerHTML = innerHTML;
 
+    }
+
+    showValidationWarnings(warnings) {
+        let innerHTML = document.body.innerHTML;
+        innerHTML = innerHTML + `The following warnings have occurred during validation:`;
+
+        innerHTML = innerHTML + '<ul>';
+        for (const warningStatement of warnings) {
+            innerHTML = innerHTML + '<li>' + warningStatement + '</li>';
+        }
+        innerHTML = innerHTML + '</ul>';
+        document.body.innerHTML = innerHTML;
     }
 
 
     showParserErrors(parseString, errors) {
-        document.body.innerHTML = 'The following errors have occurred during parsing:';
+        let innerHTML = document.body.innerHTML;
+        innerHTML = innerHTML + `The following errors have occurred during parsing:`;
 
         parseString = parseString.replace(/\n/g, '<br>');
         for (const error of errors) {
-            document.body.innerHTML = `${document.body.innerHTML} <br> <div ="error"> ${error}</div>`;
+            innerHTML = innerHTML + `<br> <div ="error"> ${error}</div>`;
         }
-        document.body.innerHTML = `${document.body.innerHTML} <br> <div>${parseString}</div>`;
+        innerHTML = innerHTML + `<br> <div>${parseString}</div>`;
+        document.body.innerHTML = innerHTML;
     }
 }

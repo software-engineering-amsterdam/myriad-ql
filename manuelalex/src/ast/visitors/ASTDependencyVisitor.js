@@ -20,7 +20,7 @@ export class ASTDependencyVisitor {
     }
 
     visitStatements(statements) {
-        for (const statement of statements) {
+        for (let statement of statements) {
             statement.accept(this);
         }
         this.checkForCyclicDependencies();
@@ -37,9 +37,9 @@ export class ASTDependencyVisitor {
     }
 
     visitIfStatement(ifStatement) {
-        let temporaryGraph = this.innerGraph.slice(0);
+        const temporaryGraph = this.innerGraph.slice(0);
 
-        let condition = ifStatement.getCondition();
+        const condition = ifStatement.getCondition();
         condition.accept(this);
 
         this.visitStatements(ifStatement.getIfBody());
@@ -52,7 +52,7 @@ export class ASTDependencyVisitor {
 
     visitPrefixExpression(prefixExpression) {
 
-        let expression = prefixExpression.getExpression();
+        const expression = prefixExpression.getExpression();
         expression.accept(this);
     }
 
@@ -74,7 +74,7 @@ export class ASTDependencyVisitor {
          * Knuth, D. E. (1974). Structured Programming with go to Statements. ACM Computing Surveys (CSUR), 6(4), 261-301.
          */
         for (let node of this.graph) {
-            console.log("node: " + node);
+            console.log('node: ' + node);
             for (let innernode of this.graph) {
                 if (node[0] === innernode[1] && node[1] === innernode[0]) {
                     this.errors.push(`Cyclic dependency detected between ${node[0]} and ${node[1]}`);

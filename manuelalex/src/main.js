@@ -32,21 +32,25 @@ if (errors.length) {
     let memoryVisitor = new ASTMemoryAllocationVisitor(memoryState);
     memoryVisitor.visitAST(ast);
 
-    let visitor = new ASTValidationVisitor(memoryState);
-    visitor.visitAST(ast);
+    let validationVisitor = new ASTValidationVisitor(memoryState);
+    validationVisitor.visitAST(ast);
 
     let dependencyVisitor = new ASTDependencyVisitor();
     dependencyVisitor.visitAST(ast);
 
-// todo (Maybe, not sure) Maybe make a new class for allocation the memory state, as it is currenlty done by validating the AST. this is needed by the GUI to properly render
+    let gui = new GUI(null, null);
 
-// todo show warnings somewehere
+    /* Show any detected warnings */
+    if (validationVisitor.hasDetectedWarnings()) {
+        let warnings = validationVisitor.getWarnings();
+        gui.showValidationWarnings(warnings);
+    }
 
-    if (visitor.hasDetectedErrors() || dependencyVisitor.hasDetectedErrors()) {
-        let gui = new GUI(null, null);
-        gui.showValidationErrors(visitor.getErrors().concat(dependencyVisitor.getErrors()));
+    /* Show any detected errors */
+    if (validationVisitor.hasDetectedErrors() || dependencyVisitor.hasDetectedErrors()) {
+        gui.showValidationErrors(validationVisitor.getErrors().concat(dependencyVisitor.getErrors()));
     } else {
-        let memoryState = visitor.getMemoryState();
+        let memoryState = validationVisitor.getMemoryState();
         let gui = new GUI(ast, memoryState);
         gui.createGUI();
     }

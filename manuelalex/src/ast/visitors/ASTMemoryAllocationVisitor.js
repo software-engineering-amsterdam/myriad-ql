@@ -17,44 +17,44 @@ export class ASTMemoryAllocationVisitor {
     }
 
     visitAST(ast) {
-        let statements = ast.getStatements();
+        const statements = ast.getStatements();
         this.visitStatements(statements);
     }
 
     visitStatements(statements) {
-        for (const statement of statements) {
+        for (let statement of statements) {
             statement.accept(this);
         }
     }
 
     visitQuestion(question) {
-        let property = question.getProperty();
+        const property = question.getProperty();
         return property.accept(this, question.getPropertyType());
     }
 
     visitAnswer(answer) {
-        let allocation = answer.getAllocation();
+        const allocation = answer.getAllocation();
         return allocation.accept(this);
     }
 
     visitAllocation(allocation) {
-        let expression = allocation.getExpression();
+        const expression = allocation.getExpression();
         return expression.accept(this);
     }
 
     visitIfStatement(ifStatement) {
-        let condition = ifStatement.getCondition();
+        const condition = ifStatement.getCondition();
         condition.accept(this);
 
-        let ifBody = ifStatement.getIfBody();
+        const ifBody = ifStatement.getIfBody();
         for (let statement of ifBody) {
             statement.accept(this);
         }
     }
 
     visitIfElseStatement(ifElseStatement) {
-        let elseBody = ifElseStatement.getElseBody();
-        for (let statement of elseBody) {
+        const elseBody = ifElseStatement.getElseBody();
+        for (const statement of elseBody) {
             statement.accept(this);
         }
         return this.visitIfStatement(ifElseStatement);
@@ -62,7 +62,7 @@ export class ASTMemoryAllocationVisitor {
 
 
     visitPrefixExpression(prefixExpression) {
-        let expression = prefixExpression.getExpression();
+        const expression = prefixExpression.getExpression();
         return expression.accept(this);
     }
 
@@ -74,7 +74,7 @@ export class ASTMemoryAllocationVisitor {
     }
 
     visitProperty(property, propertyType) {
-        let name = property.getName();
+        const name = property.getName();
 
         /* Return QLBoolean for a reserved boolean name */
         if (this._reservedBooleanNames.includes(name)) {
