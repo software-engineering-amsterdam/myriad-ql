@@ -87,7 +87,7 @@ export class ASTCyclicDependencyVisitor extends AbstractVisitor {
         for (let node of this.graph) {
             let element = memory.get(node[1]);
             if(element === node[0]){
-                this.errors.push(`Cyclic dependency detected between ${node[0]} and ${node[1]}`);
+                this.errors.push(`Cyclic dependency detected between properties ${node[0]} and ${node[1]}`);
                 memory.delete(node[0]); // preventing the twin error to be shown.
             }
         }
