@@ -138,6 +138,27 @@ export let validStrings = {
                 sellingPrice: money
                 }
         }`,
+    11: `form QLExample {
+        question 'What is your name?'
+        name: string
+        question 'Did you sell a house?'
+        hasSoldHouse: boolean
+        question 'Did you bought a house?'
+        hasBoughtHouse: boolean
+        if(hasSoldHouse){
+            question 'For what price did you sell the house?'
+            sellPrice: money
+            question 'When did you sell the house?'
+            sellDate: date
+        }
+        if(hasBoughtHouse){
+            question 'For what price dit you bought the house?'
+            boughtPrice: money
+            question 'When did you bought the house?'
+            buyDate: date
+            }
+            }     
+    `
 };
 
 export let invalidStrings = {

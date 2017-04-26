@@ -2,11 +2,7 @@
  * Created by alexvanmanen on 24-02-17.
  */
 
-import find     from 'lodash/find';
 import {AbstractVisitor} from '../../AbstractVisitor.js';
-import {Expression} from '../../expressions/Expression.js';
-import {QLMoney, QLNumber, QLDate, QLBoolean, QLString} from '../../types/Types.js';
-
 
 /**
  * This class checks for cyclic dependencies
@@ -37,9 +33,6 @@ export class ASTCyclicDependencyVisitor extends AbstractVisitor {
         }
     }
 
-    // todo
-    visitAnswer(answer) {}
-
     visitIfStatement(ifStatement) {
         const temporaryGraph = this.innerGraph.slice(0);
 
@@ -48,11 +41,6 @@ export class ASTCyclicDependencyVisitor extends AbstractVisitor {
 
         this.visitStatements(ifStatement.getIfBody());
         this.innerGraph = temporaryGraph;
-    }
-
-    // todo
-    visitIfElseStatement(ifElseStatement) {
-
     }
 
     visitPrefixExpression(prefixExpression) {
@@ -71,7 +59,6 @@ export class ASTCyclicDependencyVisitor extends AbstractVisitor {
     }
 
     checkForCyclicDependencies() {
-        console.log(this.graph);
         /**
          * Not yet optimized with the algorithm of Johnson, because Donald Knuth (Knuth, 1974) states that:
          * "We should forget about small efficiencies, say about 97% of the time: premature optimization
@@ -88,7 +75,7 @@ export class ASTCyclicDependencyVisitor extends AbstractVisitor {
             let element = memory.get(node[1]);
             if(element === node[0]){
                 this.errors.push(`Cyclic dependency detected between properties ${node[0]} and ${node[1]}`);
-                memory.delete(node[0]); // preventing the twin error to be shown.
+                memory.delete(node[0]);
             }
         }
     }
