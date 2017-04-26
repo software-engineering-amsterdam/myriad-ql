@@ -129,8 +129,9 @@ describe('AST AST Cyclic Dependency Visitor', () => {
             let ifstatementY1 = new imports.IfStatement(expressionX, [questionZ], 2);
             let ifstatementX = new imports.IfStatement(expressionX, [ifstatementY1], 2);
 
-            let ifstatementY2 = new imports.IfStatement(expressionX, [ifstatementY2], 2);
-            let ifstatementZ = new imports.IfStatement(expressionX, [questionX], 2);
+
+            let ifstatementY2 = new imports.IfStatement(expressionY, [questionX], 2);
+            let ifstatementZ = new imports.IfStatement(expressionX, [ifstatementY2], 2);
 
 
             let astDependencyVisitor = new imports.ASTCyclicDependencyVisitor();
