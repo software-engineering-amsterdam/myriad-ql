@@ -17,7 +17,7 @@ import {
 
 
 let parser = new Parser();
-let { result, errors, parseString } = parser.parse(validStrings['8']);
+let { result, errors, parseString } = parser.parse(validStrings['11']);
 
 if (errors.length) {
     let gui = new GUI(null, null);
