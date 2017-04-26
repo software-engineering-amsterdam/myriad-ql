@@ -72,20 +72,6 @@ describe('Evaluation', () => {
         expect(expression.accept(evaluationVisitor, memoryState)).to.equal(true);
     });
 
-    it('Evaluates 1 || false -> true', function () {
-
-        let evaluationVisitor = new imports.EvaluationVisitor();
-        let leftHandProperty = new imports.Numbers(1);
-        let rightHandProperty = new imports.Property('rightHand');
-        let operator = '||';
-
-        let memoryState = new imports.MemoryState();
-        let expression = new imports.Expression(leftHandProperty, operator, rightHandProperty);
-        memoryState.set('rightHand', new imports.QLBoolean(), false);
-
-        expect(expression.accept(evaluationVisitor, memoryState)).to.equal(true);
-    });
-
     it('Evaluates 1 < 2 -> true', function () {
 
         let evaluationVisitor = new imports.EvaluationVisitor();

@@ -1,4 +1,3 @@
-import {ASTBuilder as Builder} from 'src/ast/ASTBuilder.js';  var ASTBuilder = new Builder();
 // Generated automatically by nearley
 // http://github.com/Hardmath123/nearley
 (function () {

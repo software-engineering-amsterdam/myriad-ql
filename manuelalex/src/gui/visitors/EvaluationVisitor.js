@@ -14,7 +14,7 @@ export class EvaluationVisitor extends AbstractVisitor {
         const leftHandValue = leftValue || undefined;
         const rightHandValue = rightValue || undefined;
 
-        return Boolean(eval(`${leftHandValue} ${expression.getOperator()} ${rightHandValue}`));
+        return eval(`${leftHandValue} ${expression.getOperator()} ${rightHandValue}`);
     }
 
     visitPrefixExpression(prefixExpression, memoryState) {

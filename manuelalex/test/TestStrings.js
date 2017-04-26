@@ -151,23 +151,7 @@ export const validStrings = {
                 answer 'Value residue:'
                 valueResidue: money = (sellingPrice-buyPrice)
                 }
-        }`,
-    12: `form QLExample {
-        question 'What is your name?'
-        name: string
-        question 'Did you sell a house?'
-        hasSoldHouse: boolean
-        question 'Did you bought a house?'
-        hasBoughtHouse: boolean
-        if(hasSoldHouse){
-            question 'For what price did you sell the house?'
-            sellPrice: money
-            question 'When did you sell the house?'
-            sellDate: date
-        }
-        
-     }     
-    `
+        }`
 };
 
 export const invalidStrings = {
