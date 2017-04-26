@@ -46,4 +46,8 @@ export class ReservedBooleanWord extends ReservedWord {
         return visitor.visitReservedBooleanWord(this, ...params);
     }
 
+    isBooleanType(){
+        return true;
+    };
+
 }

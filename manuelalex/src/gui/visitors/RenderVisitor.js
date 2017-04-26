@@ -71,7 +71,7 @@ export class RenderVisitor extends AbstractVisitor {
         const expression = allocation.getExpression();
         const type = new (allocation.getType());
 
-        const evaluation = expression.accept(this.evaluationVisitor, this.memoryState);
+        const evaluation = expression.accept(this.evaluationVisitor, this.memoryState) || undefined;
 
         if (evaluation !== undefined && evaluation !== null) {
             const label = answer.getLabel();

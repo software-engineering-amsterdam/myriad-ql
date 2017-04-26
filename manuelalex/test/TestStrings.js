@@ -3,7 +3,7 @@
  */
 
 
-export let validStrings = {
+export const validStrings = {
     1: 'form y{}',
     2: `form taxOfficeExample {
             question 'Did you sell a house in 2010?'
@@ -138,13 +138,27 @@ export let validStrings = {
                 sellingPrice: money
                 }
         }`,
+    11: `form taxOfficeExample {
+            question 'What is your name?'
+            name: string
+            question 'Did you sell a house?'
+            hasSoldHouse: boolean
+            if ((2 > 1) && hasSoldHouse) {
+                question 'What was the selling price?'
+                sellingPrice: money
+                question 'For what price did you buy the house?'
+                buyPrice: money
+                answer 'Value residue:'
+                valueResidue: money = (sellingPrice-buyPrice)
+                }
+        }`
 };
 
-export let invalidStrings = {
+export const invalidStrings = {
     1: 'forn y{}',
     2: 'form y{{',
     3:  `form y{
             question When did you sell the house?
             hasSoldHouse: date
-    }`,
+    }`
 };
