@@ -5,7 +5,7 @@ require_relative 'lib/ql/ql'
 
 # QL
 ql = QL::QL.new
-ql.build('examples/simple_questionnaire.ql')
+ql.build('examples/example.ql')
 # ql.run_gui
 
 # QLS

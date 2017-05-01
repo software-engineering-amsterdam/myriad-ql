@@ -42,7 +42,6 @@ module QLS
 
       # example stylesheet with errors
       def generate_stylesheet
-        print WidgetOptions.new(0, 10)
         question = Question.new(Variable.new('hasSoldHouse'), [SliderWidget.new(WidgetOptions.new(0, 10))])
         question_2 = Question.new(Variable.new('valueResidue'), [CheckboxWidget.new])
         section = Section.new('_', [question, question_2, question_2])
