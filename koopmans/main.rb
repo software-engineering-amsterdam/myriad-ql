@@ -3,10 +3,10 @@ require 'require_all'
 require_rel 'lib'
 require_relative 'lib/ql/ql'
 
-# filename = 'example'
-# filename = 'example_error'
-filename = 'example_style'
-# filename = 'example_widget'
+# filename = 'original'
+# filename = 'errors'
+# filename = 'styles'
+filename = 'widgets'
 
 # QL
 ql = QL::QL.new
