@@ -1,0 +1,28 @@
+stylesheet taxOfficeExample
+  page Housing {
+    section "Buying" {
+      question defaultPage
+      question hasMaintLoan
+    }
+    section "Section2" {
+      question defaultSection
+      question defaultSection2
+      question colorFont {
+        color: #33FF33
+        fontsize: 12
+        font: "Georgia"
+      }
+      default boolean {
+        fontsize: 16
+        color: #FF3333
+      }
+    }
+
+    default boolean {
+      width: 400
+      font: "Arial"
+      fontsize: 20
+      color: #000000
+      widget checkbox
+    }
+  }

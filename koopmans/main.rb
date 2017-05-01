@@ -3,12 +3,17 @@ require 'require_all'
 require_rel 'lib'
 require_relative 'lib/ql/ql'
 
+# filename = 'example'
+# filename = 'example_error'
+filename = 'example_style'
+# filename = 'example_widget'
+
 # QL
 ql = QL::QL.new
-ql.build('examples/example.ql')
-# ql.run_gui
+ql.build("examples/#{filename}.ql")
 
-# QLS
-qls = QLS::QLS.new(ql)
-qls.build('examples/example.qls')
-qls.run_gui
+# apply QLS
+ql = QLS::QLS.new(ql)
+ql.build("examples/#{filename}.qls")
+
+ql.run_gui

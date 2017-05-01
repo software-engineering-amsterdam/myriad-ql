@@ -15,16 +15,16 @@ stylesheet taxOfficeExample
         question sellingPrice
           widget spinbox
         question privateDebt
-          widget slider(0, 100)
+          widget spinbox
         question valueResidue
         default money {
-          width: 800
-          font: "Georgia"
-          fontsize: 20
-          color: #FF3333
+          width: 400
+          font: "Arial"
+          fontsize: 14
+          color: #999999
           widget spinbox
         }
       }
     }
-    default boolean widget radio("Yes", "No")
+    default boolean widget radio("True", "False")
   }

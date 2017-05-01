@@ -1,0 +1,23 @@
+stylesheet taxOfficeExample
+  page Housing {
+    section "Section1" {
+      question question1
+        widget radio
+      question question2
+        widget checkbox
+    }
+    section "Section2" {
+      question question3
+        widget slider(0,10)
+      question question4
+      question question5
+        widget spinbox
+      question question6 {
+        widget text
+      }
+    }
+
+    default money {
+      widget slider(10000, 1000000)
+    }
+  }
