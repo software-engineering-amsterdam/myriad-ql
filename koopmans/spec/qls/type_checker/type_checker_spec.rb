@@ -17,7 +17,6 @@ module QLS
 
       describe 'questions placed checker' do
         it 'does detect unplaced questions' do
-          print(notification_messages)
           expect(notification_messages).to include('undefined of the QL program is not placed by the QLS program.')
         end
       end
