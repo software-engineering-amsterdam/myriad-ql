@@ -1,6 +1,3 @@
-#<QL::GUI::Label:0x007ffe89b68b10> true
-#<QL::GUI::Label:0x007ffe89b12f58> true
-#<QL::GUI::Label:0x007ffe89b12850> true
-#<QL::GUI::Label:0x007ffe89b120f8> 3
-#<QL::GUI::Label:0x007ffe89b119c8> 44
-#<QL::GUI::Label:0x007ffe89b10fa0> -41
+Did you sell a house in 2010? false
+Did you buy a house in 2010? false
+Did you enter a loan? false

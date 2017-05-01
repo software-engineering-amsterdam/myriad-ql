@@ -1,7 +1,7 @@
 module QL
   module GUI
     class Label
-      attr_reader :tk_label
+      attr_reader :tk_label, :text
 
       def initialize(text)
         @text = text

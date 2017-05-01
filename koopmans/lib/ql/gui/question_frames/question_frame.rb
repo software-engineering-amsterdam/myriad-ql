@@ -61,7 +61,7 @@ module QL
       end
 
       def print
-        "#{@label} #{@value}"
+        "#{@label.text} #{@value}"
       end
     end
   end
