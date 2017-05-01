@@ -38,32 +38,41 @@ module QL
       context 'comparison order' do
         it 'evaluates' do
           # 5 < 10 -> true
-          expression_1 = ExpressionSequence.new([IntegerLiteral.new(5), ComparisonOrderExpression.new('<', IntegerLiteral.new(10))])
-          expect(expression_1.accept(evaluator).value).to eq(true)
+          expression = ExpressionSequence.new([IntegerLiteral.new(5), ComparisonOrderExpression.new('<', IntegerLiteral.new(10))])
+          expect(expression.accept(evaluator).value).to eq(true)
         end
       end
 
       context 'comparison equal' do
         it 'evaluates' do
           # 5 != 10 -> true
-          expression_2 = ExpressionSequence.new([IntegerLiteral.new(5), ComparisonEqualExpression.new('!=', IntegerLiteral.new(10))])
-          expect(expression_2.accept(evaluator).value).to eq(true)
+          expression = ExpressionSequence.new([IntegerLiteral.new(5), ComparisonEqualExpression.new('!=', IntegerLiteral.new(10))])
+          expect(expression.accept(evaluator).value).to eq(true)
         end
       end
 
       context 'boolean negation' do
         it 'evaluates' do
-          # !false -> true2
-          expression_1 = BooleanNegation.new('!', BooleanLiteral.new(false))
-          expect(expression_1.accept(evaluator).value).to eq(true)
+          # !false -> true
+          expression = BooleanNegation.new('!', BooleanLiteral.new(false))
+          expect(expression.accept(evaluator).value).to eq(true)
         end
       end
 
       context 'integer negation' do
         it 'evaluates' do
           # -5 -> -5
-          expression_2 = IntegerNegation.new('-', IntegerLiteral.new(5))
-          expect(expression_2.accept(evaluator).value).to eq(-5)
+          expression = IntegerNegation.new('-', IntegerLiteral.new(5))
+          expect(expression.accept(evaluator).value).to eq(-5)
+        end
+      end
+
+      context 'expression inside an expression' do
+        it 'evaluates' do
+          # 1 + (2 + 3) -> 6
+          sub_expression = ExpressionSequence.new([IntegerLiteral.new(2), ArithmeticExpression.new('+', IntegerLiteral.new(3))])
+          expression = ExpressionSequence.new([IntegerLiteral.new(1), ArithmeticExpression.new('+', sub_expression)])
+          expect(expression.accept(evaluator).value).to eq(6)
         end
       end
     end
