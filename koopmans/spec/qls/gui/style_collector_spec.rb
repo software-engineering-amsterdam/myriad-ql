@@ -10,7 +10,7 @@ module QLS
     include AST
 
     describe StyleCollector do
-      let(:styles) { generate_styles}
+      let(:styles) { generate_styles }
 
       it 'collects page style' do
         expect(styles[@page.object_id].width).to be(300)

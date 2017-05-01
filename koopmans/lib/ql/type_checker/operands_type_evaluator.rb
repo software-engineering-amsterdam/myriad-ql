@@ -112,9 +112,9 @@ module QL
         @variable_type_map[variable.name]
       end
 
-      def check_if_condition(if_statement, condition_type)
+      def check_if_condition(_, condition_type)
         return if condition_type.is_a?(AST::BooleanType)
-        error = Notification::Error.new("if statement is not of the type boolean")
+        error = Notification::Error.new('if statement is not of the type boolean')
         NotificationTable.store(error)
       end
 
