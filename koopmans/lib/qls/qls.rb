@@ -4,7 +4,7 @@ require_rel %w(../ql ../notification ../notification_table ast gui parser type_c
 
 module QLS
   class QLS < SimpleDelegator
-    attr_reader :ql, :content, :parse_tree, :ast, :styles, :question_frame_styles, :gui
+    attr_reader :ql, :gui
 
     def initialize(ql)
       @ql = ql
@@ -12,13 +12,13 @@ module QLS
     end
 
     def build(filename)
-      @content = read_file(filename)
-      @parse_tree = parse_form
-      @ast = transform_form
-      check_types
-      @styles = collect_styles
-      @question_frame_styles = style_question_frame
-      @gui = build_gui
+      content = read_file(filename)
+      parse_tree = parse_form(content)
+      ast = transform_form(parse_tree)
+      check_types(ast)
+      styles = collect_styles(ast)
+      question_frame_styles = style_question_frame(ast, styles)
+      @gui = build_gui(question_frame_styles)
     end
 
     def read_file(file_name)
@@ -29,7 +29,7 @@ module QLS
       'stylesheet _'
     end
 
-    def parse_form
+    def parse_form(content)
       Parser::FormParser.new.parse(content)
     rescue
       error = Notification::Error.new('Error while creating parse tree')
@@ -37,7 +37,7 @@ module QLS
       { stylesheet: { id: '_', pages: [] } }
     end
 
-    def transform_form
+    def transform_form(parse_tree)
       Parser::FormTransformer.new.apply(parse_tree)
     rescue
       error = Notification::Error.new('Error while creating AST')
@@ -45,14 +45,14 @@ module QLS
       AST::Stylesheet.new('_', [])
     end
 
-    def check_types
+    def check_types(ast)
       TypeChecker::TypeChecker.new.check(ast, ql.ast)
     rescue
       error = Notification::Error.new('Error while type checking')
       NotificationTable.store(error)
     end
 
-    def collect_styles
+    def collect_styles(ast)
       style_collector = GUI::StyleCollector.new
       ast.accept(style_collector)
       style_collector.styles
@@ -62,7 +62,7 @@ module QLS
       {}
     end
 
-    def style_question_frame
+    def style_question_frame(ast, styles)
       question_frame_styler = GUI::QuestionFrameStyleBuilder.new(styles)
       ast.accept(question_frame_styler)
       question_frame_styler.question_frame_styles
@@ -72,7 +72,7 @@ module QLS
       {}
     end
 
-    def build_gui
+    def build_gui(question_frame_styles)
       gui_with_style = GUI::GUIWithStyle.new(ql.gui)
       gui_with_style.question_frame_styles = question_frame_styles
       gui_with_style

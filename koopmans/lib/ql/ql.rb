@@ -4,12 +4,12 @@ require_rel %w(../notification ../notification_table ast gui parser type_checker
 
 module QL
   class QL
-    attr_reader :content, :parse_tree, :ast, :gui
+    attr_reader :ast, :gui
 
     def build(filename)
-      @content = read_file(filename)
-      @parse_tree = parse_form
-      @ast = transform_form
+      content = read_file(filename)
+      parse_tree = parse_form(content)
+      @ast = transform_form(parse_tree)
       check_types
       @gui = build_gui
     end
@@ -22,7 +22,7 @@ module QL
       'form _ {}'
     end
 
-    def parse_form
+    def parse_form(content)
       Parser::FormParser.new.parse(content)
     rescue
       error = Notification::Error.new('Error while creating parse tree')
@@ -30,7 +30,7 @@ module QL
       { form: { id: '_', body: {} } }
     end
 
-    def transform_form
+    def transform_form(parse_tree)
       Parser::FormTransformer.new.apply(parse_tree)
     rescue
       error = Notification::Error.new('Error while creating AST')
