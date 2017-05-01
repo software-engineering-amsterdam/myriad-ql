@@ -66,6 +66,15 @@ module QL
           expect(expression.accept(evaluator).value).to eq(-5)
         end
       end
+
+      context 'expression inside an expression' do
+        it 'evaluates' do
+          # 1 + (2 + 3) -> 6
+          sub_expression = ExpressionSequence.new([IntegerLiteral.new(2), ArithmeticExpression.new('+', IntegerLiteral.new(3))])
+          expression = ExpressionSequence.new([IntegerLiteral.new(1), ArithmeticExpression.new('+', sub_expression)])
+          expect(expression.accept(evaluator).value).to eq(6)
+        end
+      end
     end
   end
 end
