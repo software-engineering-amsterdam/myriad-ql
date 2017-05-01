@@ -20,13 +20,14 @@ module QL
         end
 
         it 'does detect duplicate variable' do
-          expect(notification_messages).to include('variable \'hasSoldHouse\' is defined multiple times')
+          expect(notification_messages).to include('hasSoldHouse is defined multiple times')
         end
       end
 
       describe 'undefined variable' do
         it 'does detect undefined variable' do
-          expect(notification_messages).to include('variable \'_\' is undefined')
+          pp notification_messages
+          expect(notification_messages).to include('_ is undefined')
         end
       end
 
@@ -42,8 +43,8 @@ module QL
 
       describe 'cyclic dependency' do
         it 'does detect a cyclic dependency' do
-          expect(notification_messages).to include('question \'privateDebt\' has a cyclic dependency')
-          expect(notification_messages).to include('question \'sellingPrice\' has a cyclic dependency')
+          expect(notification_messages).to include('privateDebt has a cyclic dependency')
+          expect(notification_messages).to include('sellingPrice has a cyclic dependency')
         end
       end
 
