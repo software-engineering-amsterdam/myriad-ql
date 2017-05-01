@@ -10,11 +10,11 @@ module QLS
 
       def apply_style(style)
         return unless style
-        return if computed_question?
-
-        apply_widget(style.widget)
         apply_width(style.width)
         apply_style_to_label(style)
+
+        return if computed_question?
+        apply_widget(style.widget)
       end
 
       def apply_widget(widget)
