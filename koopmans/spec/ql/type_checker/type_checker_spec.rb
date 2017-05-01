@@ -26,7 +26,6 @@ module QL
 
       describe 'undefined variable' do
         it 'does detect undefined variable' do
-          pp notification_messages
           expect(notification_messages).to include('_ is undefined')
         end
       end
