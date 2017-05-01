@@ -1,3 +1,6 @@
-#<QL::GUI::Label:0x007feacf5dc840> false
-#<QL::GUI::Label:0x007fead0c3e480> false
-#<QL::GUI::Label:0x007fead0c3dd78> false
+#<QL::GUI::Label:0x007ffe89b68b10> true
+#<QL::GUI::Label:0x007ffe89b12f58> true
+#<QL::GUI::Label:0x007ffe89b12850> true
+#<QL::GUI::Label:0x007ffe89b120f8> 3
+#<QL::GUI::Label:0x007ffe89b119c8> 44
+#<QL::GUI::Label:0x007ffe89b10fa0> -41

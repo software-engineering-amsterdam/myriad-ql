@@ -24,7 +24,7 @@ module QL
       def duplicate_variable_checker(questions)
         duplicate_variables = select_duplicates(questions.map(&:variable).map(&:name)).uniq
         duplicate_variables.each do |variable|
-          error = Notification::Error.new("variable '#{variable}' is defined multiple times")
+          error = Notification::Error.new("#{variable} is defined multiple times")
           NotificationTable.store(error)
         end
       end
@@ -36,7 +36,7 @@ module QL
         expression_variables = expression_variable_collector.variables.map(&:name)
 
         (expression_variables - question_variables).each do |undefined_variable|
-          error = Notification::Error.new("variable '#{undefined_variable}' is undefined")
+          error = Notification::Error.new("#{undefined_variable} is undefined")
           NotificationTable.store(error)
         end
       end
@@ -84,7 +84,7 @@ module QL
       # check for cyclic dependency if there is a dependency on itself, else visit the next variable
       def cyclic_dependency?(variable_name)
         return unless @variable_dependencies_map[variable_name].map(&:name).include?(variable_name)
-        error = Notification::Error.new("question '#{variable_name}' has a cyclic dependency")
+        error = Notification::Error.new("#{variable_name} has a cyclic dependency")
         NotificationTable.store(error)
       end
 

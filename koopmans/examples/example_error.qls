@@ -1,0 +1,20 @@
+stylesheet taxOfficeExample
+  page Housing {
+    section "Buying"
+      question hasBoughtHouse
+      question hasBoughtHouse
+  }
+
+  page Selling {
+    section "Selling" {
+      question hasSoldHouse
+        widget slider(0, 10)
+      section "You sold a house" {
+        question valueResidue
+        default money {
+          width: 400
+          widget spinbox
+        }
+      }
+    }
+  }
