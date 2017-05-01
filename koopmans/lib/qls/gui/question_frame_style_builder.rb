@@ -30,15 +30,6 @@ module QLS
       end
 
       def visit_default_properties(_, _) end
-
-      # def merge_styles(style, parent_style)
-      #   style.widget = style.widget || parent_style.widget
-      #   style.width = style.width || parent_style.width
-      #   style.font = style.font || parent_style.font
-      #   style.fontsize = style.fontsize || parent_style.fontsize
-      #   style.color = style.color || parent_style.color
-      #   style
-      # end
     end
   end
 end
